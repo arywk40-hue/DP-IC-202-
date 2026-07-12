@@ -1,0 +1,330 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Decentralized Edge AI Environmental Hazard Network: \\
+First Prototype Stage (PS) Architecture and Feasibility}
+
+\author{
+\IEEEauthorblockN{Abhinav P. Nair}
+\IEEEauthorblockA{
+\textit{Department of Electrical Engineering} \\
+\textit{Indian Institute of Technology Mandi} \\
+Mandi, Himachal Pradesh, India \\
+}
+}
+
+\maketitle
+
+\begin{abstract}
+Traditional meteorological monitoring relies on centralized, high-cost
+macro-stations that report generalized weather data over broad geographic
+radii. This paradigm degrades sharply in mountainous topographies, where
+elevation change, ridge shadowing, and valley confinement create sharply
+isolated microclimates. We present the First Prototype Stage (PS) of a
+Decentralized Edge AI Environmental Hazard Network: a single, standalone,
+solar-powered Edge AI node built around the ESP32-S3, a 12-parameter
+environmental and hazard sensor suite, an on-device boosted-tree inference
+pipeline, and a LoRa (865 MHz) multi-hop mesh radio layer. The node performs
+sensor fusion and anomaly classification locally, transmitting only
+event-driven, low-bandwidth alerts rather than raw telemetry, and remains
+fully operational during cellular and internet blackouts. We detail the
+compute, sensing, intelligence, and communication layers of the
+architecture, contrast the design against commercial monitoring stations,
+and present a bill-of-materials-based cost analysis showing per-node cost
+of approximately INR 19,055 (full hazard configuration) or INR 6,600
+(baseline configuration), against INR 1,20,000--2,50,000 for comparable
+commercial units. We conclude with a scaling and optimization roadmap
+toward a custom 4-layer PCB and mesh-wide deployment.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Edge AI, LoRa mesh network, environmental sensing, microclimate monitoring,
+disaster early-warning, ESP32-S3, TinyML, wildfire detection, flash flood
+prediction
+\end{IEEEkeywords}
+
+\section{Introduction}
+\label{sec:intro}
+
+Traditional meteorological monitoring relies on centralized, high-cost
+macro-stations that provide generalized weather data for a broad geographic
+radius. While effective for flat terrain, this paradigm fundamentally fails
+in mountainous topographies characterized by complex elevation changes,
+steep ridges, and deep valleys. The unique topography surrounding the IIT
+Mandi campus and the greater Himachal Pradesh region creates isolated
+microclimates, where weather on one side of a ridge can drastically differ
+from the other.
+
+The First Prototype Stage (PS) of the Edge AI Portable Weather Station
+project aims to validate a paradigm shift: moving from centralized data
+collection to a decentralized, self-healing swarm of hyper-local
+intelligence nodes. The objective of the PS is to design, fabricate, and
+test a single, standalone Edge AI node that integrates high-fidelity
+atmospheric and environmental hazard sensors.
+
+By executing machine learning models directly on the microcontroller (Edge
+AI), the node locally processes raw sensor telemetry, identifies patterns
+indicative of imminent environmental hazards such as flash floods or
+approaching wildfire smoke, and transmits low-bandwidth alerts via a LoRa
+mesh network. The PS serves as the fundamental building block: once the
+standalone node's hardware, firmware, and power budget are validated, the
+architecture can scale into a spatial mesh network for real-time tracking
+of localized weather phenomena without reliance on vulnerable cellular
+infrastructure.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{../figures/system_architecture.png}
+\caption{High-level system architecture of a single Edge AI hazard node,
+showing the Compute, Sensing, Intelligence, and Communication layers.}
+\label{fig:architecture}
+\end{figure}
+
+\section{Approach and System Architecture}
+\label{sec:architecture}
+
+Developing the PS requires a multi-disciplinary approach synthesizing
+custom PCB design, ultra-low-power embedded systems, environmental
+physics, and machine learning. To avoid compounding errors, the
+architecture is isolated into four distinct layers: Compute, Sensing,
+Intelligence, and Communication, as shown in Fig.~\ref{fig:architecture}.
+
+\subsection{The Compute Core: ESP32-S3}
+\label{subsec:compute}
+
+The processing engine of the node is the ESP32-S3-WROOM-1 module. Selected
+for its integrated Processor Instruction Extensions (PIE), the S3 provides
+hardware-accelerated 128-bit vector math, critical for executing neural
+networks and decision trees efficiently on battery power. The S3 offers 45
+programmable GPIO pins, allowing simultaneous operation of an SPI bus (for
+LoRa), an I2C bus (for multiple environmental sensors), hardware UART (for
+optical particulate counters), and external hardware interrupts, all
+buffered by 8 MB of PSRAM to handle dynamic mesh routing tables.
+
+\subsection{The Sensor Array}
+\label{subsec:sensors}
+
+The PS is equipped with a robust sensor suite monitoring 12 distinct
+parameters, categorized into baseline weather and severe environmental
+hazards (Table~\ref{tab:sensors}).
+
+\begin{itemize}
+    \item \textbf{Core Meteorological Baseline:} Temperature, humidity, and
+    barometric pressure via the Bosch BME280 (I2C). Wind speed and
+    direction via the SparkFun Weather Meter Kit. Precipitation via a
+    piezoelectric acoustic sensor (DFRobot SEN0575), avoiding the leveling
+    requirement of tipping-bucket designs. UV Index via the LTR390.
+    \item \textbf{Hazard and Air Quality Array:} A PMS5003 laser-scattering
+    sensor (UART) for PM2.5/PM10 particulate counting. A Sensirion SCD41
+    photoacoustic NDIR sensor for true CO\textsubscript{2}. An SGP41 for
+    VOCs and NOx. A MICS-6814 for multi-gas detection (CO, NO2, NH3).
+    \item \textbf{Predictive Hardware:} An AS3935 lightning sensor analyzes
+    RF emissions to estimate distance to approaching storm fronts up to 40
+    km away, providing a leading indicator for the predictive models.
+    \item \textbf{System Telemetry:} On-board 18650 battery voltage and
+    internal enclosure temperature (DS18B20) for power-cycle regulation
+    and water-ingress detection.
+\end{itemize}
+
+\begin{table}[htbp]
+\caption{Sensor Array Summary}
+\label{tab:sensors}
+\centering
+\begin{tabular}{@{}p{2.1cm}p{2.9cm}p{2.2cm}@{}}
+\toprule
+\textbf{Category} & \textbf{Component} & \textbf{Interface} \\
+\midrule
+Temp/Hum/Pressure & Bosch BME280 & I2C \\
+Wind Speed/Dir & SparkFun Weather Meter Kit & Analog/Digital \\
+Precipitation & DFRobot SEN0575 (piezo) & Analog \\
+UV Index & LTR390 & I2C \\
+PM2.5 / PM10 & Plantower PMS5003 & UART \\
+CO\textsubscript{2} & Sensirion SCD41 & I2C \\
+VOC / NOx & Sensirion SGP41 & I2C \\
+Multi-gas (CO, NO2, NH3) & MICS-6814 & Analog \\
+Lightning distance & AS3935 & I2C/SPI \\
+Enclosure temp & DS18B20 & 1-Wire \\
+Battery voltage & Onboard ADC divider & Analog \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Edge AI Implementation}
+\label{subsec:edgeai}
+
+Rather than functioning as a passive data logger, the PS acts as an
+intelligent agent. Using historical weather data, regression models based
+on boosting algorithms (XGBoost or AdaBoost) are trained offline in
+Python. These models use feature combinations, e.g., rapid barometric
+drops coupled with rising PM2.5 levels and decreasing lightning distances,
+to classify and predict localized anomalies.
+
+Using conversion toolkits such as \texttt{micromlgen}, the trained model
+is exported as a raw C++ header and integrated into the ESP32-S3 firmware.
+The Ultra-Low-Power (ULP) coprocessor continuously polls the sensors in
+the background; only when specific thresholds are breached does the main
+dual-core processor wake, execute the boosted-tree inference, and
+determine whether an alert should be broadcast.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{../figures/edge_ai_flowchart.png}
+\caption{Edge AI decision flow: from ULP sensor polling to threshold
+breach, wake, inference, and mesh alert broadcast.}
+\label{fig:flowchart}
+\end{figure}
+
+\subsection{Communication Layer: LoRa Mesh}
+\label{subsec:comms}
+
+To achieve a 10 km operational range in mountainous terrain without
+cellular dependency, the PS uses the Semtech SX1276 (RFM95W) transceiver
+tuned to the legal 865 MHz ISM band. Rather than a direct point-to-point
+link, which would be blocked by topology, the network employs a multi-hop
+mesh routing protocol (e.g., Meshtastic or RadioHead). The node transmits
+event-driven insights, using federated-learning principles to distribute
+small AI parameter updates or threat alerts to neighboring nodes,
+eventually routing data to a local base-station dashboard.
+
+\subsection{Enclosure and Power Management}
+\label{subsec:power}
+
+Physical survival of the electronics is provided by an FDM 3D-printed
+Stevenson screen in PETG filament, ensuring natural airflow while
+shielding sensors from direct insolation and precipitation. Power is
+sustained via a high-capacity 18650 lithium-ion cell, managed by a
+dedicated TP4056 or CN3065 charge controller, and replenished by a 5 W
+external solar panel.
+
+\section{Difference from Commercial Monitoring Stations}
+\label{sec:comparison}
+
+The Edge AI mesh architecture diverges fundamentally from legacy
+commercial systems, offering distinct operational advantages in
+constrained, dynamic environments (Table~\ref{tab:comparison}).
+
+\begin{table*}[htbp]
+\caption{Architectural Comparison Between Legacy and Edge AI Weather Systems}
+\label{tab:comparison}
+\centering
+\begin{tabular}{@{}p{2.6cm}p{6.8cm}p{6.8cm}@{}}
+\toprule
+\textbf{Feature Domain} & \textbf{Traditional Commercial Station} & \textbf{Edge AI Mesh Node} \\
+\midrule
+Data Resolution & Macro-level; generalized data over $>$50 km radius. & Hyper-local; maps precise spatial microclimates and topographical variation. \\
+Processing Paradigm & Passive telemetry; raw, continuous streams to a central cloud server. & Edge inference; ingests raw data locally, runs ML models (e.g., XGBoost), transmits insights. \\
+Connectivity & Fragile; relies on Wi-Fi, 4G, or Satellite IoT; fails during blackouts. & Zero-cloud survivability; ad-hoc LoRa mesh reroutes dynamically around failed nodes. \\
+Bandwidth Usage & High; raw data matrices choke low-bandwidth networks. & Event-driven; small payload alerts only (e.g., ``Flood Risk 85\%''). \\
+Deployment Logistics & Static, heavy; requires professional installation and leveling. & Portable, agile, solar-powered; rapid deployment along supply chains or ridges. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Zero-Cloud Survivability}
+
+The most significant differentiator is resilience. Commercial IoT
+stations become inert when cellular networks fail during severe storms.
+Because the PS runs its predictive algorithms natively on the ESP32-S3
+bare metal, it retains full analytical capability offline. The LoRa mesh
+acts as an independent intranet, bypassing ISP infrastructure to deliver
+warnings directly to localized physical sirens or base stations.
+
+\subsection{High-Fidelity Hazard Detection}
+
+Commercial stations prioritize broad meteorological trends. By
+integrating the PMS5003 laser particulate counter and Sensirion gas
+arrays alongside acoustic precipitation and lightning RF detection, the
+PS doubles as an environmental hazard node, tuned for wildfire smoke
+tracking and localized flash-flood prediction.
+
+\section{Cost Breakdown and Economic Viability}
+\label{sec:cost}
+
+Commercial weather stations with equivalent granular hazard detection
+(PM2.5, true CO\textsubscript{2}, lightning distance, multi-gas)
+typically cost between INR 1,20,000 and INR 2,50,000 per unit, rendering
+dense spatial microclimate mapping financially impractical for
+independent researchers or local municipalities. By using off-the-shelf
+breakout modules and the open-source C++ ecosystem, the Edge AI PS
+achieves comparable analytical density at a fraction of the cost
+(Table~\ref{tab:bom}).
+
+\begin{table}[htbp]
+\caption{Estimated Bill of Materials for the PS Node}
+\label{tab:bom}
+\centering
+\begin{tabular}{@{}p{2.3cm}p{3.4cm}r@{}}
+\toprule
+\textbf{Category} & \textbf{Components} & \textbf{Cost (INR)} \\
+\midrule
+Compute \& Radio & ESP32-S3 WROOM-1, RFM95W SX1276, passives & 1,430 \\
+Core Meteorological & BME280, Weather Meter Kit, DS18B20, SEN0575, LTR390 & 3,350 \\
+Particulate \& Gases & PMS5003, SGP41, MICS-6814, SCD41 & 9,055 \\
+Specialized Sensing & AS3935 & 935 \\
+Power Architecture & 18650 cell, 5W solar panel, CN3065 & 2,380 \\
+Fabrication & PCB (5x batch), PETG, conformal coating & 1,905 \\
+\midrule
+\textbf{Total per Node} & \textbf{Complete research-grade node} & \textbf{19,055} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Scalability and Optimization}
+
+At approximately INR 19,055 per node, a 20-node mesh network represents a
+capital expenditure of INR 3.8 Lakhs, still substantially lower than a
+two-unit commercial deployment. Transitioning from prototype to
+production mesh, a unified schematic in KiCad and a custom 4-layer PCB
+integrating all sensor ICs directly (bypassing redundant regulators and
+LEDs found on commercial breakout boards) is projected to reduce per-node
+cost by an additional 20--30\%. For baseline nodes where hazard gases are
+not required, removing the SCD41, SGP41, and MICS-6814 reduces cost to
+approximately INR 6,600, enabling mass spatial deployment while reserving
+fully equipped INR 19k nodes for strategic choke points in the valley.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The First Prototype Stage of the Edge AI Portable Weather Station
+represents a feasible, economically disruptive approach to microclimate
+monitoring. By pairing the machine-learning acceleration of the ESP32-S3
+with the offline resilience of an 865 MHz LoRa mesh network, the system
+overcomes the geographic and infrastructural limitations of centralized
+weather tracking. The immediate next phase involves finalizing hardware
+integration of the 12-sensor array, capturing baseline tabular data, and
+deploying the C++-converted boosting algorithm to validate power
+consumption during localized inference loops. Once validated, the node is
+ready to replicate and scale across mountainous topography, establishing
+the foundation of a true swarm-intelligence environmental network.
+
+\section*{Acknowledgment}
+The author thanks the Prayas 4.0 program at IIT Mandi for lab access and
+support.
+
+\begin{thebibliography}{00}
+\bibitem{b1} Bosch Sensortec, ``BME280 Combined Humidity and Pressure Sensor Datasheet,'' 2020.
+\bibitem{b2} Semtech Corporation, ``SX1276/77/78/79 Datasheet,'' 2020.
+\bibitem{b3} Espressif Systems, ``ESP32-S3 Series Datasheet,'' 2023.
+\bibitem{b4} Sensirion AG, ``SCD41 CO2 Sensor Datasheet,'' 2021.
+\bibitem{b5} T. Chen and C. Guestrin, ``XGBoost: A Scalable Tree Boosting System,'' \textit{Proc. 22nd ACM SIGKDD}, 2016.
+\bibitem{b6} Meshtastic Project, ``Meshtastic Documentation,'' \url{https://meshtastic.org}, 2026.
+\end{thebibliography}
+
+\end{document}

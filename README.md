@@ -1,221 +1,150 @@
-# Enhanced Design Practicum Project Proposals
+# Edge AI Portable Weather Station - Design Practicum
 
-## 📋 Overview
+## Overview
 
-This package contains **three comprehensive, research-backed project proposals** for your design practicum, each enhanced with:
-- **Current state analysis** (What EXISTS in 2025-2026)
-- **Critical gap identification** (What is MISSING)
-- **Innovative solutions** addressing real research gaps
-- **Detailed methodology** and technology stack
-- **Budget estimates** and risk mitigation
-- **Recent academic references** (2025-2026 research)
+This repository contains the design practicum project for an **Edge AI-Enabled Portable Automatic Weather Station with Hyperlocal Forecasting for Military Aviation**. The project is based on IAF Compendium Challenge #49 and follows the implementation architecture from IIT Mandi's Decentralized Edge AI Environmental Hazard Network.
 
-## 🎯 Three Projects
-
-### Project 1: Smart Campus Energy Management with Federated Learning
-**Domain:** Sustainability, IoT, Machine Learning  
-**Innovation:** Privacy-preserving federated learning + real-time digital twins  
-**Impact:** 20-30% energy reduction, $300k-500k annual savings  
-**Budget:** $3,300 | **Timeline:** 7-9 months  
-**Best for:** Students interested in environmental tech, IoT hardware, distributed ML
-
-### Project 2: Multimodal AI Accessibility Platform 🌟 **RECOMMENDED**
-**Domain:** Accessibility, AI, Mobile Development  
-**Innovation:** GPT-4V + haptic feedback + spatial audio + AR navigation  
-**Impact:** Help 2.2 billion people with vision impairment  
-**Budget:** $1,724 | **Timeline:** 5-7 months  
-**Best for:** Students wanting maximum social impact with modern AI/mobile tech
-
-### Project 3: Blockchain Agriculture with Digital Twin & SSI
-**Domain:** Blockchain, Agriculture, Supply Chain  
-**Innovation:** Self-sovereign identity + digital twins + edge-blockchain integration  
-**Impact:** 25-35% farmer revenue increase, fraud reduction  
-**Budget:** $3,500 | **Timeline:** 8-10 months  
-**Best for:** Students interested in distributed systems, AgTech, social impact
-
-## 📁 Files Included
+## Repository Structure
 
 ```
-design_practicum_main.tex          - Main document with comparison matrix
-project1_energy.tex                - Project 1 detailed proposal
-project2_accessibility.tex         - Project 2 detailed proposal (RECOMMENDED)
-project3_agriculture.tex           - Project 3 detailed proposal
-README.md                          - This file
+Dp/
+├── README.md                              # This file
+├── proposal/                              # Project proposals and LaTeX documents
+│   ├── design_practicum_proposals.tex     # Main compilable document (all projects)
+│   └── project5_hardware_weather_station.tex  # Project 5 detailed section
+├── implementation/                        # Reference implementation (IIT Mandi)
+│   ├── edge-ai-weather-mesh-main.tex      # IEEE paper - ESP32-S3 + LoRa mesh
+│   ├── edge-ai-weather-mesh-paper.pdf     # Compiled PDF
+│   └── edge-ai-weather-mesh.zip           # Source files
+├── docs/                                  # Documentation and guides
+│   ├── QUICK_START.md                     # Quick start and pitch guide
+│   ├── RESEARCH_SUMMARY.md                # Web research and gap analysis
+│   ├── WEATHER_STATION_SUMMARY.md         # Project 5 detailed summary
+│   ├── SENSORS.md                         # Low-cost sensors (IIT Mandi)
+│   └── SENSORS_AVIATION.md                # Aviation-grade sensors (Project 5)
+└── references/                            # Reference documents
+    └── Problem_49_Portable_Automatic_Weather_Station.pdf  # IAF requirement
 ```
 
-## 🔨 How to Compile
+## Projects
 
-### Option 1: Using Overleaf (Easiest - Online)
-1. Go to [overleaf.com](https://www.overleaf.com)
-2. Create free account
-3. Click "New Project" → "Upload Project"
-4. Upload all `.tex` files
-5. Click "Recompile" - Done! 🎉
+### Main Project: Edge AI Portable Weather Station (Project 5)
+- **Domain:** Meteorology, Defense, Edge AI, Sensors
+- **Innovation:** First portable AWOS-grade station with edge AI nowcasting
+- **Budget:** $19,000 (prototype) | **Timeline:** 9-10 months
+- **IAF Alignment:** Compendium Challenge #49
 
-### Option 2: Using Local LaTeX (Mac)
+### Additional Proposals (in `proposal/`)
+| Project | Domain | Budget | Timeline |
+|---------|--------|--------|----------|
+| 1 - Energy | Sustainability, IoT | $3,300 | 7-9 mo |
+| 2 - Accessibility | AI, Mobile | $1,724 | 5-7 mo |
+| 3 - Agriculture | Blockchain | $3,500 | 8-10 mo |
+
+## Implementation Architecture (from IIT Mandi)
+
+The implementation follows the **Decentralized Edge AI Environmental Hazard Network** architecture:
+
+### Compute Core
+- **ESP32-S3-WROOM-1** with 8MB PSRAM
+- Hardware-accelerated 128-bit vector math
+- 45 programmable GPIO pins
+- Ultra-Low-Power (ULP) coprocessor
+
+### Sensor Array (12 Parameters)
+
+| Category | Component | Interface |
+|----------|-----------|-----------|
+| Temp/Hum/Pressure | Bosch BME280 | I2C |
+| Wind Speed/Dir | SparkFun Weather Meter Kit | Analog/Digital |
+| Precipitation | DFRobot SEN0575 (piezo) | Analog |
+| UV Index | LTR390 | I2C |
+| PM2.5 / PM10 | Plantower PMS5003 | UART |
+| CO2 | Sensirion SCD41 | I2C |
+| VOC / NOx | Sensirion SGP41 | I2C |
+| Multi-gas | MICS-6814 (CO, NO2, NH3) | Analog |
+| Lightning | AS3935 (0-40 km) | I2C/SPI |
+| Enclosure temp | DS18B20 | 1-Wire |
+| Battery voltage | Onboard ADC divider | Analog |
+
+### Edge AI
+- XGBoost/AdaBoost models trained offline in Python
+- Converted to C++ via `micromlgen`
+- On-device inference on ESP32-S3
+- Event-driven alerts (not raw telemetry)
+
+### Communication
+- **LoRa SX1276 (RFM95W)** at 865 MHz
+- Multi-hop mesh routing (Meshtastic/RadioHead)
+- 10 km range in mountainous terrain
+- Zero-cloud survivability
+
+### Power
+- 18650 Li-ion cell + 5W solar panel
+- CN3065 charge controller
+- FDM 3D-printed Stevenson screen (PETG)
+
+### Cost Breakdown
+
+| Category | Components | Cost (INR) |
+|----------|-----------|------------|
+| Compute & Radio | ESP32-S3, RFM95W, passives | 1,430 |
+| Core Meteorological | BME280, Weather Meter, DS18B20, SEN0575, LTR390 | 3,350 |
+| Particulate & Gases | PMS5003, SGP41, MICS-6814, SCD41 | 9,055 |
+| Specialized Sensing | AS3935 | 935 |
+| Power Architecture | 18650, 5W solar, CN3065 | 2,380 |
+| Fabrication | PCB, PETG, coating | 1,905 |
+| **Total per Node** | | **19,055** |
+
+## Key Differences from Commercial Stations
+
+| Feature | Traditional Station | Edge AI Mesh Node |
+|---------|-------------------|-------------------|
+| Data Resolution | Macro-level (>50 km) | Hyper-local microclimates |
+| Processing | Passive cloud telemetry | Edge inference (XGBoost) |
+| Connectivity | Wi-Fi/4G (fails in storms) | LoRa mesh (zero-cloud) |
+| Bandwidth | High (raw data streams) | Event-driven alerts only |
+| Deployment | Static, heavy, professional | Portable, solar, rapid |
+
+## How to Compile
+
+### Proposal Documents
 ```bash
-# Install MacTeX (5GB, includes everything)
-brew install --cask mactex-no-gui
-
-# Or install BasicTeX (smaller, 100MB)
-brew install --cask basictex
-sudo tlmgr update --self
-sudo tlmgr install collection-latexextra
-
-# Compile
-cd /Users/ariyanbhakat/Desktop/Dp
-pdflatex design_practicum_main.tex
-pdflatex design_practicum_main.tex  # Run twice for TOC
+cd proposal/
+pdflatex design_practicum_proposals.tex
+pdflatex design_practicum_proposals.tex  # Run twice for TOC
 ```
 
-### Option 3: Using Docker (Cross-platform)
+### Implementation Paper
 ```bash
-cd /Users/ariyanbhakat/Desktop/Dp
-docker run --rm -v $(pwd):/work texlive/texlive pdflatex design_practicum_main.tex
+cd implementation/
+pdflatex edge-ai-weather-mesh-main.tex
 ```
 
-### Option 4: Online LaTeX Compiler
-- Visit: https://latexbase.com
-- Copy-paste each `.tex` file content
-- Compile online
+### Or use Overleaf
+1. Upload `proposal/design_practicum_proposals.tex` and `proposal/project5_hardware_weather_station.tex`
+2. Click Recompile
 
-## 📊 Research Backing (2025-2026 Sources)
+## Research Sources
 
-### Project 1 (Energy)
-- Springer 2026: Federated learning improves prediction by 12%
-- Frontiers 2026: Modular middleware for smart campus IoT
-- MDPI 2026: IoT-AI integration gaps in smart buildings
-- 89 peer-reviewed studies analyzed (2019-2025)
+- **Vaisala sensors:** HMP155, PTB330, PWD22, DRD11A (verified specs)
+- **Campbell Scientific:** CS135 ceilometer, CR1000Xe data logger
+- **Gill Instruments:** WindSonic M ultrasonic anemometer
+- **NVIDIA:** Jetson Orin Nano Super (67 TOPS, $249)
+- **ESP32-S3:** IIT Mandi implementation (12 sensors, LoRa mesh)
+- **ACM 2026:** Edge AI for aviation traffic forecasting
+- **IAF Compendium:** Challenge #49 - Portable Automatic Weather Station
 
-### Project 2 (Accessibility) ⭐
-- ArXiv 2026: Current apps "limited to advanced users only"
-- NIH 2026: Multimodal feedback improves navigation by 40%
-- OpenAI 2023-2026: Be My Eyes + GPT-4V case study
-- Google Research 2026: Natively Adaptive Interfaces (NAI)
+## Author
 
-### Project 3 (Agriculture)
-- Frontiers 2026: Only 3% achieve full ECBT integration
-- MDPI 2026: Digital twins + blockchain for product identity
-- Springer 2026: AI reduces fraud by 85%
-- StartUs Insights 2026: Blockchain in Agriculture Report
+**Ariyan Bhakat**
+Department of Engineering
 
-## 🎓 Recommendation for Academic Success
-
-### PRIMARY CHOICE: **Project 2 (AI Accessibility)**
-
-**Why?**
-1. **Highest Publication Potential:** CHI/ASSETS conferences actively seek accessibility research
-2. **Fastest Validation:** Can prototype and user-test in 2-3 months
-3. **Lowest Infrastructure Barrier:** Just need smartphone, no campus facility access
-4. **Maximum Social Impact:** 2.2 billion potential beneficiaries
-5. **Hot Technology:** GPT-4V, spatial audio, haptics = cutting-edge
-6. **Career Boost:** Demonstrates AI/ML, mobile dev, UX research, HCI skills
-
-### When to Choose Project 1:
-- You have **guaranteed access** to campus buildings
-- You can **deploy IoT hardware** (permission from facilities)
-- You're passionate about **sustainability and climate tech**
-
-### When to Choose Project 3:
-- You have **access to farmer communities** or agricultural networks
-- You're comfortable with **complex distributed systems**
-- You want **entrepreneurial opportunities** in AgTech
-
-## 💡 Pitch Strategy
-
-### For Your Presentation:
-1. **Start with the problem** (with statistics)
-2. **Show what exists** (demonstrate you did market research)
-3. **Highlight critical gaps** (this is your opportunity!)
-4. **Present your innovation** (how you fill those gaps)
-5. **Show feasibility** (methodology, budget, timeline)
-6. **End with impact** (social, research, career)
-
-### Key Talking Points:
-- "Based on 2025-2026 research, current solutions lack X, Y, Z..."
-- "Our innovation directly addresses the gap identified in [Recent Paper]..."
-- "This project has publication potential in [Top Conference]..."
-- "Expected outcomes are validated by [Research Study]..."
-
-## 📈 Success Metrics for Practicum
-
-Each project includes measurable outcomes:
-- **Technical:** Accuracy, performance, scalability metrics
-- **Research:** Publication targets (specific venues identified)
-- **Social:** User studies, impact assessments
-- **Economic:** Cost savings, revenue improvements
-
-## 🔍 What Makes These Proposals Strong
-
-✅ **Research-Backed:** Every claim supported by 2025-2026 academic sources  
-✅ **Gap Analysis:** Clear articulation of what exists vs. what's missing  
-✅ **Feasibility:** Realistic budgets ($1,724 - $3,500) and timelines (5-10 months)  
-✅ **Innovation:** Novel combinations of technologies (not incremental improvements)  
-✅ **Impact:** Quantifiable social/environmental/economic outcomes  
-✅ **Publication Path:** Specific conferences identified with acceptance rates  
-✅ **Risk Mitigation:** Anticipated challenges with concrete solutions  
-
-## 🚀 Next Steps
-
-1. **Read all three proposals** (40-50 pages total in PDF)
-2. **Pick one based on your interests** and resource access
-3. **Customize the proposal** with your institution details
-4. **Prepare 10-15 slide pitch deck** using key points
-5. **Practice your pitch** focusing on the problem → gap → solution flow
-
-## 📞 Questions to Ask Yourself
-
-- Do I have **access to deployment environments** (campus buildings, farmers, beta testers)?
-- What **skills do I want to develop** (IoT hardware, mobile AI, blockchain)?
-- What **impact domain** excites me most (environment, accessibility, economic equity)?
-- What **publication venue** do I want to target (IoT/ML journals, HCI conferences, blockchain symposiums)?
-
-## 🎯 Why Project 2 is THE Choice for Most Students
-
-```
-✨ ACCESSIBILITY PLATFORM ✨
-
-Advantages:
-✅ Can start TODAY with just a smartphone
-✅ User testing available through accessibility organizations  
-✅ GPT-4V API = instant world-class AI (no training needed)
-✅ 5-7 month timeline = perfect for practicum
-✅ CHI/ASSETS = top-tier publication venues
-✅ Immediate real-world adoption potential
-✅ Portfolio piece for FAANG interviews
-
-Challenges:
-⚠️ API costs (~$200) - but minimal compared to others
-⚠️ Need to recruit visually impaired participants
-   → Solution: Partner with NFB, Lighthouse Guild
-```
-
-## 📚 Document Structure
-
-Each project proposal includes:
-1. **Enhanced Problem Statement** (with 2026 data)
-2. **What Currently EXISTS** (5-6 existing solutions analyzed)
-3. **What is MISSING** (5-7 critical gaps with research citations)
-4. **Our Innovative Solution** (novel combination)
-5. **Detailed Objectives** (8-9 specific goals)
-6. **Proposed Methodology** (phase-by-phase plan)
-7. **Expected Outcomes** (quantifiable impact metrics)
-8. **Technology Stack** (specific tools/frameworks)
-9. **Budget Estimate** (itemized)
-10. **Risk Mitigation** (challenges + solutions)
-11. **Key References** (2025-2026 research)
-12. **Publication Strategy** (target venues)
-
-## 🏆 Good Luck with Your Practicum!
-
-These proposals represent **genuine research gaps** identified in recent academic literature. You're not just building something cool – you're **contributing to open problems** in these fields.
-
-**Pro Tip:** Whichever project you choose, reach out to the authors of the cited 2025-2026 papers. They might offer guidance, collaboration, or even co-authorship opportunities!
+With implementation reference from:
+**Abhinav P. Nair**
+Department of Electrical Engineering, IIT Mandi
 
 ---
 
-**Generated:** July 2026  
-**Research Sources:** 30+ recent papers (2025-2026)  
-**Total Pages:** ~50 pages of comprehensive proposals  
-**Compilation Time:** ~3 minutes with LaTeX
-# DP-IC-202-
+**Generated:** July 2026
+**Research Sources:** 40+ papers and manufacturer specifications

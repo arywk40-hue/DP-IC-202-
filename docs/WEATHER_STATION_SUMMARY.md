@@ -96,29 +96,38 @@
 ## 🛠️ Hardware Components (WHAT MAKES IT HARDWARE!)
 
 ### Meteorological Sensors ($12,700):
-1. **Temperature/Humidity** (Vaisala HMP155) - \$800
-2. **Barometer** (Vaisala PTB330) - \$1,200
-3. **Wind** (Gill WindSonic 3D ultrasonic) - \$1,000
-4. **Visibility/Fog** (Vaisala PWD22 forward scatter) - \$4,500
-5. **Cloud Ceiling** (Campbell CS135 ceilometer) - \$3,000
-6. **Precipitation** (Vaisala DRD11A optical) - \$1,500
-7. **Solar Radiation** (Apogee SP-110) - \$300
-8. **Lightning Detection** (Boltek LD-250) - \$400
+
+| # | Sensor | Model | Key Specs | Price |
+|---|--------|-------|-----------|-------|
+| 1 | Temperature/Humidity | Vaisala HMP155 HUMICAP | ±1% RH, -80 to +60°C, IP66, RS-485, NIST-traceable | $800 |
+| 2 | Barometer | Vaisala PTB330 BAROCAP | ±0.10 hPa Class A, 500-1100 hPa, QNH/QFE modes | $1,200 |
+| 3 | Wind Speed/Direction | Gill WindSonic M | 0-60 m/s, ±2% accuracy, ultrasonic, no moving parts, IP66, -40 to +70°C | $1,000 |
+| 4 | Visibility/Fog | Vaisala PWD22 | 10-20,000 m MOR, 7 precip types, forward scatter, WMO METAR output | $4,500 |
+| 5 | Cloud Ceiling | Campbell CS135 | 10 km LIDAR, 5 cloud layers, ICAO compliant, -24° tilt, built-in heater | $3,000 |
+| 6 | Precipitation | Vaisala DRD11A | Capacitive RAINCAP, droplet detection, heating to -15°C, intensity estimation | $1,500 |
+| 7 | Solar Radiation | Apogee SP-110 | Pyranometer | $300 |
+| 8 | Lightning Detection | Boltek LD-250 | 0-40 km range | $400 |
 
 ### Computing & Communication ($3,200):
-- **NVIDIA Jetson Orin Nano 8GB** - \$500
-- **Campbell CR1000X Data Logger** - \$2,000
-- **LoRa Gateway** - \$300
-- **4G Cellular Modem** - \$100
-- **Iridium Satellite Modem** - \$300
+
+| Component | Model | Key Specs | Price |
+|-----------|-------|-----------|-------|
+| Edge AI | NVIDIA Jetson Orin Nano 8GB Super | 67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere, 8GB LPDDR5 | $500 |
+| Data Logger | Campbell Scientific CR1000Xe | -40 to +70°C, 24-bit ADC, SDI-12/RS-232/RS-485, PakBus | $2,000 |
+| LoRa Gateway | RAKwireless RAK7268 | Multi-protocol gateway + modules | $300 |
+| 4G Modem | Quectel EG25-G | Cellular connectivity | $100 |
+| Satellite Modem | RockBLOCK 9603 | Iridium satellite backup | $300 |
 
 ### Power & Enclosure ($2,250):
-- **100W Solar Panel + MPPT** - \$200
-- **200Wh LiFePO4 Battery** - \$250
-- **IP67 Weatherproof Enclosure** - \$800
-- **Foldable Tripod** - \$200
-- **MIL-Spec Cables** - \$300
-- **Misc Hardware** - \$500
+
+| Component | Specs | Price |
+|-----------|-------|-------|
+| Solar Panel | 100W monocrystalline + MPPT controller | $200 |
+| Battery | 200Wh LiFePO4 (12V 16Ah) | $250 |
+| Enclosure | Custom IP67 aluminum+polycarbonate | $800 |
+| Tripod | Portable aluminum with leveling | $200 |
+| Cables/Connectors | MIL-spec weatherproof | $300 |
+| Misc Hardware | Mounts, brackets, fasteners | $500 |
 
 ---
 
