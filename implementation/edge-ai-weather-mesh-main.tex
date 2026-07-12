@@ -52,8 +52,9 @@ architecture, contrast the design against commercial monitoring stations,
 and present a bill-of-materials-based cost analysis, repriced to July 2026
 market rates, showing a per-node cost of approximately INR 19,130 (full
 hazard configuration) and a two-node PS build cost of approximately INR
-40,000--41,000 including shared tooling and spares, against INR
-1,20,000--2,50,000 per unit for comparable commercial stations. We conclude with a scaling and optimization roadmap
+50,000 including shared NRE, calibration jigs, spare sensors, and
+contingency, against INR 1,20,000--2,50,000 per unit for comparable
+commercial stations. We conclude with a scaling and optimization roadmap
 toward a custom 4-layer PCB and mesh-wide deployment.
 \end{abstract}
 
@@ -343,9 +344,9 @@ Power Architecture & 18650 cell, 5W solar panel, CN3065, holder/wiring & 1,370 &
 Fabrication & PCB (5x batch), PETG, conformal coating & 2,000 & 4,000 \\
 \midrule
 \textbf{Subtotal} & & \textbf{19,129} & \textbf{38,258} \\
-Shared spares/tools buffer & Flux, spare sensors, calibration jigs & --- & 1,742 \\
+Shared NRE \& contingency & Calibration jigs, spare sensors, shipping, testing & --- & 11,742 \\
 \midrule
-\textbf{Total} & \textbf{Complete research-grade node(s)} & \textbf{19,129} & \textbf{40,000} \\
+\textbf{Total} & \textbf{Complete research-grade node(s)} & \textbf{19,129} & \textbf{50,000} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -359,8 +360,9 @@ is required.}
 \subsection{Scalability and Optimization}
 
 At approximately INR 19,130 per node, the two-node PS build totals roughly
-INR 40,000 including shared tooling and spares --- itself substantially
-lower than a single commercial unit (INR 1.2--2.5 Lakhs). Scaling the same
+INR 50,000 including shared NRE, calibration jigs, spare sensors, and
+contingency --- itself substantially lower than a single commercial unit
+(INR 1.2--2.5 Lakhs). Scaling the same
 per-node rate to a full 20-node mesh network represents a capital
 expenditure of approximately INR 3.83 Lakhs, still substantially lower
 than a two-unit commercial deployment. Transitioning from prototype to
@@ -389,33 +391,6 @@ validating power consumption and LoRa mesh handoff between the two nodes
 during localized inference loops. Once validated, the node pair is ready
 to replicate and scale across mountainous topography, establishing the
 foundation of a true swarm-intelligence environmental network.
-
-\section{Variant Comparison: Low-Cost vs. Aviation-Grade}
-\label{sec:variants}
-
-Two distinct implementation tracks have been developed for different use cases:
-
-\begin{table}[htbp]
-\caption{Comparison of Low-Cost and Aviation-Grade Variants}
-\label{tab:variants}
-\centering
-\begin{tabular}{@{}p{2.5cm}p{2.5cm}p{2.5cm}@{}}
-\toprule
-\textbf{Feature} & \textbf{Low-Cost (IIT Mandi)} & \textbf{Aviation-Grade (Project 5)} \\
-\midrule
-Compute & ESP32-S3 & NVIDIA Jetson Orin \\
-Sensors & 12 (BME280, PMS5003) & 15 (Vaisala, Campbell) \\
-ML Model & XGBoost (16 trees) & Physics-informed LSTM \\
-Cost & INR 19,130 (\$228) & \$18,749 \\
-Range & 10 km (LoRa mesh) & Multi-protocol \\
-Use Case & Research, agriculture & Military aviation \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The low-cost variant demonstrates the core Edge AI architecture at
-accessible price points, while the aviation-grade variant adds specialized
-sensors and computing power for safety-critical applications.
 
 \section*{Acknowledgment}
 The author thanks the Prayas 4.0 program at IIT Mandi for lab access and
