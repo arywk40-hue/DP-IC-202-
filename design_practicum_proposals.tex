@@ -1,0 +1,181 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\titleformat{\section}{\Large\bfseries\color{blue!60!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\title{\textbf{Design Practicum Project Proposals}}
+\author{Your Name}
+\date{July 2026}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+%% ========================================
+%% PROJECT 1
+%% ========================================
+\section{Project 1: Intelligent Energy Management System for Smart Campuses}
+
+\subsection{Problem Statement}
+Modern educational campuses consume significant energy with limited real-time monitoring and optimization capabilities. Current systems lack predictive analytics and fail to adapt to dynamic occupancy patterns, resulting in 25-40\% energy wastage. Students and administrators have no visibility into consumption patterns or actionable insights to reduce their carbon footprint.
+
+\subsection{Objectives}
+\begin{itemize}[leftmargin=*]
+    \item Design an IoT-based energy monitoring system with real-time data acquisition from campus buildings
+    \item Develop machine learning models to predict energy consumption based on occupancy, weather, and historical patterns
+    \item Create an intuitive dashboard for administrators and students to visualize energy usage
+    \item Implement automated control mechanisms to optimize HVAC, lighting, and equipment based on occupancy
+    \item Generate personalized recommendations for energy conservation at individual and building levels
+\end{itemize}
+
+\subsection{Proposed Methodology}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data Collection Layer:} Deploy smart meters and occupancy sensors across 3-5 campus buildings
+    \item \textbf{Analytics Engine:} Implement LSTM/Prophet models for time-series forecasting of energy demand
+    \item \textbf{Control System:} Design rule-based and ML-driven automation for HVAC and lighting systems
+    \item \textbf{User Interface:} Develop web and mobile applications with real-time dashboards and alerts
+    \item \textbf{Validation:} Pilot test over 3 months, measure energy savings and user engagement metrics
+\end{enumerate}
+
+\subsection{Expected Outcomes}
+\begin{itemize}[leftmargin=*]
+    \item 15-30\% reduction in campus energy consumption
+    \item Real-time monitoring system with 95\%+ accuracy in consumption prediction
+    \item Scalable architecture deployable across multiple institutions
+    \item Published research paper and potential patent for novel optimization algorithms
+\end{itemize}
+
+\subsection{Technologies}
+IoT sensors, MQTT/LoRaWAN, Python (TensorFlow/PyTorch), React.js, Node.js, InfluxDB, Grafana, AWS IoT Core
+
+\newpage
+
+%% ========================================
+%% PROJECT 2
+%% ========================================
+\section{Project 2: AI-Powered Accessibility Assistant for Visual Impairment}
+
+\subsection{Problem Statement}
+Approximately 2.2 billion people worldwide have vision impairment, facing significant barriers in navigating physical spaces, reading documents, and accessing digital content. Existing assistive technologies are expensive (costing \$500-\$3000), require specialized hardware, and lack real-time contextual understanding. There is a critical need for an affordable, integrated solution that combines computer vision, natural language processing, and spatial awareness.
+
+\subsection{Objectives}
+\begin{itemize}[leftmargin=*]
+    \item Develop a smartphone-based application leveraging camera and sensors for environmental awareness
+    \item Implement real-time object detection, text recognition (OCR), and scene understanding
+    \item Create audio-based navigation assistance with obstacle detection and path guidance
+    \item Design natural language interface for document reading, currency identification, and facial recognition
+    \item Ensure accessibility compliance and conduct user studies with visually impaired individuals
+\end{itemize}
+
+\subsection{Proposed Methodology}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Computer Vision Module:} Fine-tune YOLO/EfficientDet for real-time object detection on mobile devices
+    \item \textbf{OCR \& Scene Understanding:} Integrate Tesseract/PaddleOCR with GPT-based context extraction
+    \item \textbf{Navigation System:} Implement depth estimation using ARKit/ARCore for obstacle avoidance
+    \item \textbf{Audio Interface:} Design spatial audio feedback system with natural voice synthesis
+    \item \textbf{User Testing:} Conduct iterative design with 20+ visually impaired participants for usability validation
+\end{enumerate}
+
+\subsection{Expected Outcomes}
+\begin{itemize}[leftmargin=*]
+    \item Cross-platform mobile application (iOS/Android) with 90\%+ accuracy in object and text recognition
+    \item Real-time processing (15-30 fps) on commodity smartphones without cloud dependency
+    \item Improved independence scores (measured via standardized accessibility surveys)
+    \item Open-source release to benefit global accessibility community
+\end{itemize}
+
+\subsection{Technologies}
+Swift/Kotlin, TensorFlow Lite, CoreML, OpenCV, ARKit/ARCore, Google Cloud Vision API, Text-to-Speech engines, React Native
+
+\newpage
+
+%% ========================================
+%% PROJECT 3
+%% ========================================
+\section{Project 3: Blockchain-Based Supply Chain Transparency Platform for Agricultural Products}
+
+\subsection{Problem Statement}
+The agricultural supply chain suffers from opacity, leading to food fraud, safety concerns, and unfair farmer compensation. Consumers lack verifiable information about product origin, quality certifications, and environmental impact. Farmers receive only 10-15\% of final retail prices due to multiple intermediaries. Current tracking systems are centralized, prone to data manipulation, and don't provide end-to-end traceability from farm to consumer.
+
+\subsection{Objectives}
+\begin{itemize}[leftmargin=*]
+    \item Design a decentralized blockchain platform for immutable tracking of agricultural products
+    \item Enable farmers to register products with origin data, certifications, and farming practices
+    \item Create QR-code based consumer interface for instant product history verification
+    \item Implement smart contracts for automated payments and fair price distribution
+    \item Develop analytics dashboard for supply chain stakeholders to monitor quality and compliance
+\end{itemize}
+
+\subsection{Proposed Methodology}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Blockchain Architecture:} Build on Hyperledger Fabric/Ethereum for permissioned supply chain network
+    \item \textbf{Data Layer:} Design schema for product registration, transfer events, and certification verification
+    \item \textbf{IoT Integration:} Incorporate sensor data (temperature, humidity) during transportation
+    \item \textbf{Smart Contracts:} Implement automated payment distribution and quality-based incentives
+    \item \textbf{User Applications:} Develop mobile apps for farmers, distributors, and consumers with role-based access
+    \item \textbf{Pilot Study:} Deploy with 50+ farmers and 3 distribution networks in a specific region
+\end{enumerate}
+
+\subsection{Expected Outcomes}
+\begin{itemize}[leftmargin=*]
+    \item Fully functional blockchain platform with 100\% traceability for participating products
+    \item 20-30\% increase in farmer revenue through intermediary reduction
+    \item Enhanced consumer trust measured through adoption rates and willingness-to-pay surveys
+    \item Scalable solution applicable to multiple agricultural sectors (organic, fair-trade, etc.)
+\end{itemize}
+
+\subsection{Technologies}
+Hyperledger Fabric/Ethereum, Solidity, Node.js, React.js, Flutter, IPFS, MongoDB, QR code generation, IoT sensors (DHT22, GPS modules)
+
+\newpage
+
+%% ========================================
+%% COMPARISON MATRIX
+%% ========================================
+\section{Project Comparison Matrix}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Criteria} & \textbf{Project 1} & \textbf{Project 2} & \textbf{Project 3} \\
+\hline
+\textbf{Domain} & Sustainability \& IoT & Accessibility \& AI & Blockchain \& Agriculture \\
+\hline
+\textbf{Complexity} & High (hardware + ML) & Medium (mobile AI) & High (distributed systems) \\
+\hline
+\textbf{Social Impact} & Environmental & Humanitarian & Economic equity \\
+\hline
+\textbf{Budget Est.} & \$2000-3000 & \$500-1000 & \$1500-2500 \\
+\hline
+\textbf{Timeline} & 6-8 months & 4-6 months & 6-9 months \\
+\hline
+\textbf{Innovation Level} & Medium-High & High & Medium \\
+\hline
+\textbf{Research Potential} & Strong (publications) & Very Strong & Strong (industry) \\
+\hline
+\end{tabular}
+\caption{Comparative analysis of the three proposed projects}
+\end{table}
+
+\section{Recommendation}
+
+\textbf{Choose based on your interests:}
+\begin{itemize}
+    \item If you're passionate about \textbf{sustainability and hardware}, go with \textbf{Project 1}
+    \item If you want maximum \textbf{social impact and AI experience}, choose \textbf{Project 2}
+    \item If you're interested in \textbf{emerging tech (blockchain) and real-world economics}, select \textbf{Project 3}
+\end{itemize}
+
+\textbf{For academic excellence:} Project 2 offers the best balance of feasibility, innovation, and research publication potential.
+
+\end{document}
