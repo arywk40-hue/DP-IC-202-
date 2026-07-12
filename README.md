@@ -36,13 +36,30 @@ Dp/
 │   └── components/
 ├── code/
 │   └── ml/
-│       ├── train_model.py            # XGBoost training script
-│       └── convert_to_c.py           # Model export helper
+│       ├── prepare_dataset.py        # CSV → features + labels
+│       ├── train_model.py            # XGBoost training
+│       └── convert_to_c.py           # JSON → C headers
+├── dataset/                          # Raw weather data source
+│   └── weatherHistory.csv
 ├── docs/
-│   ├── SENSORS.md                    # Full low-cost sensor reference
-│   ├── QUICK_START.md               # Compilation & quick reference
-│   ├── PROJECT_STATUS.md             # Repo review and gap list
-│   └── FOUR_MONTH_BUILD_PLAN.md      # 6-person execution plan
+│   ├── index.md                      # Documentation index
+│   ├── architecture/
+│   │   └── SYSTEM_ARCHITECTURE.md    # Hardware/software architecture
+│   ├── guides/
+│   │   ├── QUICK_START.md            # 5-min build & flash
+│   │   ├── BUILD_GUIDE.md            # Detailed ESP-IDF build
+│   │   ├── FLASH_GUIDE.md            # Flashing & debugging
+│   │   └── ML_PIPELINE.md            # Training & export
+│   ├── reference/
+│   │   ├── SENSORS.md                # 11 sensors: specs, pins, APIs
+│   │   ├── MESH_PROTOCOL.md          # Packet format, routing, ACK
+│   │   ├── ML_INFERENCE.md           # Model format, inference API
+│   │   ├── FIRMWARE_API.md           # All component APIs
+│   │   └── PIN_MAP.md                # ESP32-S3 GPIO assignments
+│   └── planning/
+│       ├── PROJECT_STATUS.md         # Completed prompts, gaps
+│       ├── FOUR_MONTH_BUILD_PLAN.md  # 6-person execution plan
+│       └── ACCEPTANCE_TESTS.md       # 72-test sign-off checklist
 └── README.md
 ```
 
