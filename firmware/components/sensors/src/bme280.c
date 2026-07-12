@@ -219,7 +219,7 @@ bool bme280_read(bme280_handle_t *handle, bme280_data_t *data) {
     uint8_t raw[8];
     
     // Read raw data (0xF7-0xFE: press, temp, humidity)
-    if (bme280_read_reg(handle, BME270_REG_DATA_START, raw, 8) != ESP_OK) {
+    if (bme280_read_reg(handle, BME280_REG_DATA_START, raw, 8) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to read sensor data");
         return false;
     }
