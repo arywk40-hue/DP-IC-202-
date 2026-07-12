@@ -28,6 +28,8 @@ extern "C" {
 #define MESH_BROADCAST_ID       0xFFFFFFFF
 #define MESH_DEFAULT_TTL        5
 #define MESH_MAX_PACKET_SIZE    (sizeof(mesh_packet_t))
+#define MESH_HEARTBEAT_INTERVAL_MS    30000   // 30s heartbeat broadcast
+#define MESH_NEIGHBOR_TIMEOUT_MS      90000   // 90s = 3 missed heartbeats
 
 /**
  * @brief Mesh packet header — fixed-size, precedes payload.
@@ -160,6 +162,32 @@ typedef void (*mesh_rx_callback_t)(const mesh_packet_t *packet,
  * @param cb  Callback function pointer.
  */
 void mesh_set_rx_callback(mesh_rx_callback_t cb);
+
+/**
+ * @brief Set the LoRa radio handle for transmit operations.
+ * Must be called before mesh_send() will transmit.
+ * @param handle  SX1276 handle from sx1276_init().
+ */
+void mesh_set_lora_handle(sx1276_handle_t *handle);
+
+/**
+ * @brief Periodic maintenance — call from mesh_comms_task loop.
+ * Handles neighbor pruning, ACK retries, heartbeat timer.
+ * @param now_ms  Current time in milliseconds (esp_timer_get_time()/1000).
+ */
+void mesh_periodic(uint32_t now_ms);
+
+/**
+ * @brief Send periodic heartbeat broadcast.
+ * Call every MESH_HEARTBEAT_INTERVAL_MS (~30s) to announce presence.
+ */
+void mesh_send_heartbeat(void);
+
+/**
+ * @brief Get current time in milliseconds since boot.
+ * @return Boot time in ms.
+ */
+uint32_t mesh_get_time_ms(void);
 
 #ifdef __cplusplus
 }

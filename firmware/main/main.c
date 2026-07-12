@@ -929,6 +929,9 @@ static void mesh_comms_task(void *pvParameters)
         while (1) { vTaskDelay(pdMS_TO_TICKS(60000)); }
     }
 
+    /* Pass LoRa handle to mesh layer for TX */
+    mesh_set_lora_handle(g_lora_handle);
+
     /* Register RX callback */
     mesh_set_rx_callback(mesh_rx_handler);
 
@@ -939,8 +942,13 @@ static void mesh_comms_task(void *pvParameters)
     /* Packet buffer for received data */
     uint8_t rx_buffer[MAX_PACKET_PAYLOAD + sizeof(mesh_packet_t)];
 
-    /* Main loop: poll radio + drain alert queue */
+    uint32_t last_heartbeat = 0;
+    uint32_t last_mesh_periodic = 0;
+
+    /* Main loop: poll radio + mesh periodic + drain alert queue */
     while (1) {
+        uint32_t now = (uint32_t)(esp_timer_get_time() / 1000);
+
         /*
          * Check for incoming radio packets.
          * sx1276_received() is non-blocking — it reads the IRQ flags register
@@ -963,6 +971,18 @@ static void mesh_comms_task(void *pvParameters)
             }
         }
 
+        /* Run mesh periodic tasks (heartbeat, retries, neighbor pruning) */
+        if (now - last_mesh_periodic >= 100) {
+            mesh_periodic(now);
+            last_mesh_periodic = now;
+        }
+
+        /* Send heartbeat periodically */
+        if (now - last_heartbeat >= MESH_HEARTBEAT_INTERVAL_MS) {
+            mesh_send_heartbeat();
+            last_heartbeat = now;
+        }
+
         /*
          * Drain the alert queue.
          * Any alerts queued by sensor_ml_task are transmitted here so that
@@ -974,7 +994,7 @@ static void mesh_comms_task(void *pvParameters)
             esp_err_t send_ret = mesh_send(MESH_BROADCAST_ID,
                                             alert.payload,
                                             alert.payload_len,
-                                            MESH_FLAG_ALERT);
+                                            MESH_FLAG_ALERT | MESH_FLAG_ACK_REQ);
             if (send_ret != ESP_OK) {
                 ESP_LOGW(TAG, "mesh_send failed: %s", esp_err_to_name(send_ret));
             }

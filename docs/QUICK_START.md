@@ -12,8 +12,7 @@ Dp/
 └── README.md
 ```
 
-Current state: the hardware driver tree exists, but the application-level firmware
-integration is still in progress. Use the docs below to track the missing pieces.
+Current state: **All 3 firmware prompts complete** — sensor drivers, ML inference, task orchestration, mesh comms.
 
 ## Compile in 5 Minutes (Overleaf)
 
@@ -32,24 +31,61 @@ cd ../implementation/
 pdflatex edge-ai-weather-mesh-main.tex
 ```
 
-## Implementation Summary
+## ML Model Training & Export
 
-The `implementation/` folder contains the IIT Mandi IEEE-style paper:
+```bash
+cd code/ml/
+pip install xgboost scikit-learn pandas numpy
+
+# Generate synthetic dataset (20k samples) and train
+python prepare_dataset.py --generate-synthetic --samples 20000 --output ./data/
+python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+
+# Or in one step:
+python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+```
+
+## Firmware Build (requires ESP-IDF v5.x)
+
+```bash
+cd firmware/
+idf.py set-target esp32s3
+idf.py build
+idf.py flash
+```
+
+## Implementation Summary
 
 | Component | Detail |
 |-----------|--------|
-| **Compute** | ESP32-S3 with 8MB PSRAM |
-| **Sensors** | 12-parameter suite (BME280, PMS5003, SCD41, AS3935, etc.) |
-| **AI** | XGBoost on-device via exported C headers (~50 μs/inference) |
-| **Comms** | LoRa SX1276 mesh at 865 MHz, 10 km range |
+| **Compute** | ESP32-S3 with 8MB PSRAM, dual-core FreeRTOS |
+| **Sensors** | 12-parameter suite (BME280, PMS5003, SCD41, AS3935, SGP41, MICS-6814, LTR-390, SEN0575, Anemometer, DS18B20, Battery ADC) |
+| **AI** | XGBoost 16-tree × 4-class model, on-device inference (~50 μs/inference) |
+| **Comms** | LoRa SX1276 mesh at 865 MHz, 10 km range, multi-hop |
 | **Cost** | ~₹19,130 per node, ~₹50,000 for 2-node prototype pair |
+
+## Firmware Architecture
+
+```
+firmware/
+├── main/
+│   └── main.c              # app_main, hardware init, FreeRTOS task creation
+├── components/
+│   ├── common/             # Shared types (sensor_reading_t, feature_vector_t)
+│   ├── sensors/            # 11 sensor drivers (I2C, UART, ADC, 1-Wire)
+│   ├── ml/                 # XGBoost inference engine (auto-generated model_data.h)
+│   ├── lora/               # SX1276 SPI driver
+│   └── mesh/               # Multi-hop mesh (CRC, neighbor table, forwarding)
+```
+
+### Task Architecture (main.c)
+- **sensor_ml_task** (Core 0, prio 5, 4KB stack): Polls all 11 sensors → builds 14-feature vector → runs ML inference → queues alerts
+- **mesh_comms_task** (Core 1, prio 4, 4KB stack): LoRa RX loop → mesh_receive() → drains alert queue via mesh_send()
 
 ## Key Design Decisions
 
-- **Wind sensing:** Generic analog anemometer + wind vane (~₹2,300) instead of branded
-  SparkFun kit (₹9,589) — keeps per-node cost in ₹19k territory
-- **Edge AI over cloud:** All inference runs on-device; only event-driven alerts
-  transmitted via LoRa mesh
+- **Wind sensing:** Generic analog anemometer + wind vane (~₹2,300) instead of branded SparkFun kit (₹9,589)
+- **Edge AI over cloud:** All inference runs on-device; only event-driven alerts transmitted via LoRa mesh
 - **Zero-cloud survivability:** Fully operational during cellular/internet blackouts
 
 ## Scaling Path
@@ -62,8 +98,11 @@ savings from a custom 4-layer PCB.
 
 1. `implementation/edge-ai-weather-mesh-main.tex` — Full system architecture
 2. `docs/SENSORS.md` — Detailed sensor specs and interface map
-3. `firmware/components/sensors/include/bme280.h` — Sensor driver interface example
-4. `firmware/components/lora/src/sx1276.c` — LoRa driver implementation
-5. `code/ml/train_model.py` — XGBoost training pipeline
-6. `docs/PROJECT_STATUS.md` — Gap review and current status
-7. `docs/FOUR_MONTH_BUILD_PLAN.md` — 6-person build plan
+3. `firmware/main/main.c` — Application entry point and task orchestration
+4. `firmware/components/sensors/` — All 11 sensor driver implementations
+5. `firmware/components/ml/src/ml.c` — XGBoost inference engine
+6. `firmware/components/lora/src/sx1276.c` — LoRa driver implementation
+7. `code/ml/train_model.py` — XGBoost training pipeline
+8. `code/ml/convert_to_c.py` — Model-to-C header converter
+9. `docs/PROJECT_STATUS.md` — Gap review and current status
+10. `docs/FOUR_MONTH_BUILD_PLAN.md` — 6-person build plan

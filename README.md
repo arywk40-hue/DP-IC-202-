@@ -106,8 +106,7 @@ pdflatex edge-ai-weather-mesh-main.tex
 # ML model training
 cd code/ml/
 pip install xgboost scikit-learn pandas numpy
-python train_model.py --data ./data/ --output ./model/
-python convert_to_c.py --model ./model/ --output ../firmware/path/to/model_data.h  # update to the final include path
+python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
 
 # Firmware build
 cd firmware/
