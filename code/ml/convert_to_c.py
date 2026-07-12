@@ -1,381 +1,393 @@
 """
-convert_to_c.py - Convert XGBoost model to C header for ESP32-S3
-
-Reads trained XGBoost model JSON files and generates optimized C code
-for inference on embedded systems.
+convert_to_c.py - Convert XGBoost JSON models to C headers for ESP32-S3
 
 Usage:
-    python convert_to_c.py --model ./model/ --output ./firmware/lib/model_data.h
+    python convert_to_c.py --model ./model/ --output ./firmware/components/ml/include/model_data.h
 """
 
-import numpy as np
-import xgboost as xgb
+import os
 import json
 import argparse
-import os
+import xgboost as xgb
+import numpy as np
+from typing import List, Dict, Any
+
 
 # ============================================
-# XGBOOST TREE PARSER
+# CONFIGURATION
 # ============================================
 
-def parse_tree_dump(tree_dump):
-    """Parse XGBoost tree dump string into structured nodes"""
+FEATURE_NAMES = [
+    'temp_current', 'humidity_current', 'pressure_current',
+    'wind_speed_current', 'pm25_current', 'co2_current',
+    'lightning_dist_current', 'temp_humidity_ratio', 'pressure_trend',
+    'heat_index', 'dew_point', 'fire_risk_index', 'flood_risk_index',
+    'lightning_threat',
+]
+
+HAZARD_CLASSES = ['wildfire', 'flood', 'storm', 'air_quality']
+NUM_FEATURES = len(FEATURE_NAMES)
+NUM_CLASSES = len(HAZARD_CLASSES)
+
+# Firmware constraints
+MAX_TREES_PER_CLASS = 16
+MAX_NODES_PER_TREE = 32
+
+
+# ============================================
+# TREE PARSING
+# ============================================
+
+def parse_xgb_tree(tree_dict: Dict[str, Any]) -> List[Dict]:
+    """Parse XGBoost tree JSON into flat node list (pre-order)."""
     nodes = []
-    node_id = 0
     
-    lines = tree_dump.strip().split('\n')
-    indent_stack = []  # Track parent nodes
-    
-    for line in lines:
-        # Count indentation
-        indent = len(line) - len(line.lstrip())
+    def traverse(node: Dict):
+        if len(nodes) >= MAX_NODES_PER_TREE:
+            return
         
-        # Parse node
-        content = line.strip()
-        
-        if '[f' in content and '<' in content:
-            # Internal node: [f{feature_idx}{<,>}{threshold}]
-            parts = content.split(']')
-            if len(parts) >= 2:
-                # Extract feature index and threshold
-                node_info = parts[0].replace('[f', '').replace('[', '')
-                if '<' in node_info:
-                    feature_idx, threshold = node_info.split('<')
-                    threshold = float(threshold)
-                else:
-                    feature_idx, threshold = node_info.split('>')[0], 0.0
-                
-                # Extract leaf value from children info
-                remaining = parts[1]
-                if 'yes=' in remaining:
-                    yes_id = int(remaining.split('yes=')[1].split(',')[0])
-                    no_id = int(remaining.split('no=')[1].split(',')[0])
-                else:
-                    yes_id = node_id + 1
-                    no_id = node_id + 2
-                
-                # Extract gain if present
-                gain = 0.0
-                if 'gain=' in remaining:
-                    gain = float(remaining.split('gain=')[1].split(',')[0])
-                
-                nodes.append({
-                    'id': node_id,
-                    'feature_idx': int(feature_idx),
-                    'threshold': threshold,
-                    'left_child': yes_id,
-                    'right_child': no_id,
-                    'leaf_value': 0.0,
-                    'is_leaf': False,
-                    'gain': gain,
-                })
-                node_id += 1
-                
-        elif '[leaf=' in content:
-            # Leaf node: [leaf=value]
-            leaf_value = float(content.split('leaf=')[1].rstrip(']'))
-            
+        if 'leaf' in node:
+            # Leaf node
             nodes.append({
-                'id': node_id,
                 'feature_idx': -1,
                 'threshold': 0.0,
                 'left_child': -1,
                 'right_child': -1,
-                'leaf_value': leaf_value,
-                'is_leaf': True,
-                'gain': 0.0,
+                'leaf_value': node['leaf'],
             })
-            node_id += 1
+        else:
+            # Split node
+            feature_name = node.get('split', '')
+            feature_idx = FEATURE_NAMES.index(feature_name) if feature_name in FEATURE_NAMES else 0
+            threshold = node.get('split_condition', 0.0)
+            
+            current_idx = len(nodes)
+            left_idx = current_idx + 1
+            
+            # Placeholder for right child (will fix after left subtree)
+            nodes.append({
+                'feature_idx': feature_idx,
+                'threshold': threshold,
+                'left_child': left_idx,
+                'right_child': -1,
+                'leaf_value': 0.0,
+            })
+            
+            # Traverse left
+            if 'children' in node and len(node['children']) > 0:
+                traverse(node['children'][0])
+            
+            # Fix right child index
+            right_idx = len(nodes)
+            nodes[current_idx]['right_child'] = right_idx
+            
+            # Traverse right
+            if 'children' in node and len(node['children']) > 1:
+                traverse(node['children'][1])
     
-    # Fix child indices (XGBoost uses 0-based, we need sequential)
-    # Rebuild with sequential IDs
-    fixed_nodes = []
-    node_map = {}  # old_id -> new_id
-    
-    for i, node in enumerate(nodes):
-        node_map[node['id']] = i
-        fixed_node = node.copy()
-        fixed_node['id'] = i
-        fixed_nodes.append(fixed_node)
-    
-    # Fix child references
-    for node in fixed_nodes:
-        if not node['is_leaf']:
-            if node['left_child'] in node_map:
-                node['left_child'] = node_map[node['left_child']]
-            if node['right_child'] in node_map:
-                node['right_child'] = node_map[node['right_child']]
-    
-    return fixed_nodes
+    traverse(tree_dict)
+    return nodes
 
-def model_to_trees(model, num_trees):
-    """Convert XGBoost model to list of tree structures"""
-    dump = model.get_dump(with_stats=True)
-    trees = []
+
+def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> Dict[str, List[List[Dict]]]:
+    """Load all models and convert to tree node lists."""
+    trees_by_class = {}
     
-    for i in range(min(num_trees, len(dump))):
-        tree_nodes = parse_tree_dump(dump[i])
-        trees.append(tree_nodes)
+    for cls in HAZARD_CLASSES:
+        model_path = os.path.join(model_dir, f'xgboost_{cls}.json')
+        if not os.path.exists(model_path):
+            print(f"Warning: {model_path} not found")
+            trees_by_class[cls] = []
+            continue
+        
+        model = xgb.Booster()
+        model.load_model(model_path)
+        
+        # Get tree dump as JSON
+        dump = model.get_dump(dump_format='json')
+        class_trees = []
+        
+        for i, tree_json in enumerate(dump):
+            if i >= max_trees:
+                break
+            tree_dict = json.loads(tree_json)
+            nodes = parse_xgb_tree(tree_dict)
+            class_trees.append(nodes)
+        
+        trees_by_class[cls] = class_trees
+        print(f"  {cls}: loaded {len(class_trees)} trees")
     
-    return trees
+    return trees_by_class
+
 
 # ============================================
-# C CODE GENERATOR
+# C CODE GENERATION
 # ============================================
 
-def generate_c_header(trees_by_class, feature_names, output_path):
-    """Generate C header file with model data"""
+def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: str):
+    """Generate model_data.h with trees and inference functions."""
+    
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
     with open(output_path, 'w') as f:
-        # Header guard
+        # Header
         f.write("/**\n")
         f.write(" * model_data.h - Auto-generated XGBoost model for ESP32-S3\n")
-        f.write(" *\n")
-        f.write(" * This file is generated by convert_to_c.py\n")
-        f.write(" * DO NOT EDIT MANUALLY\n")
+        f.write(" * Generated by convert_to_c.py - DO NOT EDIT\n")
         f.write(" */\n\n")
         f.write("#ifndef MODEL_DATA_H\n")
         f.write("#define MODEL_DATA_H\n\n")
         f.write("#include <stdint.h>\n\n")
         
-        # Constants
+        # Model configuration
         f.write("// Model configuration\n")
-        f.write("#define NUM_CLASSES 4\n")
-        f.write("#define NUM_FEATURES 14\n")
-        max_trees = max(len(t) for t in trees_by_class.values()) if trees_by_class else 16
-        f.write(f"#define MAX_TREES_PER_CLASS {max_trees}\n")
-        
-        # Count total nodes per tree type
-        max_nodes = 0
-        for trees in trees_by_class.values():
-            for tree in trees:
-                max_nodes = max(max_nodes, len(tree))
-        f.write(f"#define MAX_NODES_PER_TREE {max_nodes}\n\n")
+        f.write(f"#define NUM_CLASSES {NUM_CLASSES}\n")
+        f.write(f"#define NUM_FEATURES {NUM_FEATURES}\n")
+        f.write(f"#define MAX_NODES_PER_TREE {MAX_NODES_PER_TREE}\n")
+        for cls in HAZARD_CLASSES:
+            n = len(trees_by_class.get(cls, []))
+            f.write(f"#define {cls.upper()}_NUM_TREES {n}\n")
+        f.write("\n")
         
         # Node structure
         f.write("// XGBoost tree node\n")
         f.write("typedef struct {\n")
-        f.write("    int8_t feature_idx;     // -1 for leaf\n")
-        f.write("    float threshold;        // split threshold\n")
-        f.write("    int16_t left_child;     // index of left child (-1 for leaf)\n")
-        f.write("    int16_t right_child;    // index of right child (-1 for leaf)\n")
-        f.write("    float leaf_value;       // prediction value (only for leaves)\n")
+        f.write("    int8_t  feature_idx;   // -1 for leaf\n")
+        f.write("    float   threshold;     // split threshold\n")
+        f.write("    int16_t left_child;    // index of left child\n")
+        f.write("    int16_t right_child;   // index of right child\n")
+        f.write("    float   leaf_value;    // leaf prediction\n")
         f.write("} xgb_node_t;\n\n")
         
-        # Tree structure
-        f.write("// XGBoost tree\n")
         f.write("typedef struct {\n")
         f.write("    uint8_t num_nodes;\n")
-        f.write("    const xgb_node_t *nodes;\n")
+        f.write("    xgb_node_t nodes[MAX_NODES_PER_TREE];\n")
         f.write("} xgb_tree_t;\n\n")
         
-        # Feature names
-        f.write("// Feature names for debugging\n")
-        f.write("static const char *FEATURE_NAMES[NUM_FEATURES] = {\n")
-        for name in feature_names:
-            f.write(f'    "{name}",\n')
-        f.write("};\n\n")
-        
-        # Export each class
-        class_names = ['wildfire', 'flood', 'storm', 'air_quality']
-        
-        for class_idx, class_name in enumerate(class_names):
-            if class_name not in trees_by_class:
-                continue
-                
-            trees = trees_by_class[class_name]
-            num_trees = len(trees)
+        # Generate trees for each class
+        for cls in HAZARD_CLASSES:
+            class_trees = trees_by_class.get(cls, [])
+            f.write(f"// {cls.upper()} class - {len(class_trees)} trees\n")
             
-            f.write(f"// {class_name.upper()} model\n")
-            f.write(f"#define {class_name.upper()}_NUM_TREES {num_trees}\n\n")
-            
-            # Write each tree
-            for tree_idx, tree_nodes in enumerate(trees):
-                num_nodes = len(tree_nodes)
-                f.write(f"static const xgb_node_t {class_name.upper()}_TREE_{tree_idx}_NODES[{num_nodes}] = {{\n")
+            for t_idx, tree in enumerate(class_trees):
+                f.write(f"static const xgb_tree_t {cls.upper()}_TREE_{t_idx} = {{\n")
+                f.write(f"    .num_nodes = {len(tree)},\n")
+                f.write("    .nodes = {\n")
                 
-                for node in tree_nodes:
-                    f.write("    {")
-                    f.write(f"{node['feature_idx']}, ")  # feature_idx
-                    f.write(f"{node['threshold']:.6f}f, ")  # threshold
-                    f.write(f"{node['left_child']}, ")  # left_child
-                    f.write(f"{node['right_child']}, ")  # right_child
-                    f.write(f"{node['leaf_value']:.6f}f")  # leaf_value
-                    f.write("},\n")
+                for node in tree:
+                    f.write("        {")
+                    f.write(f" .feature_idx = {node['feature_idx']},")
+                    f.write(f" .threshold = {node['threshold']:.6f}f,")
+                    f.write(f" .left_child = {node['left_child']},")
+                    f.write(f" .right_child = {node['right_child']},")
+                    f.write(f" .leaf_value = {node['leaf_value']:.6f}f")
+                    f.write(" },\n")
                 
+                # Pad remaining nodes
+                for _ in range(len(tree), MAX_NODES_PER_TREE):
+                    f.write("        { .feature_idx = -1, .threshold = 0, .left_child = -1, .right_child = -1, .leaf_value = 0 },\n")
+                
+                f.write("    }\n")
                 f.write("};\n\n")
             
-            # Tree array
-            f.write(f"static const xgb_tree_t {class_name.upper()}_TREES[{num_trees}] = {{\n")
-            for tree_idx, tree_nodes in enumerate(trees):
-                f.write(f"    {{ {len(tree_nodes)}, {class_name.upper()}_TREE_{tree_idx}_NODES }},\n")
+            # Tree pointer array
+            f.write(f"static const xgb_tree_t *{cls.upper()}_TREES[{len(class_trees)}] = {{\n")
+            for t_idx in range(len(class_trees)):
+                f.write(f"    &{cls.upper()}_TREE_{t_idx},\n")
             f.write("};\n\n")
         
-        # Sigmoid function
-        f.write("// Sigmoid activation (for binary classification)\n")
-        f.write("static inline float sigmoid(float x) {\n")
-        f.write("    return 1.0f / (1.0f + __expf(-x));\n")
+        # Normalization constants
+        f.write("// Feature normalization (z-score)\n")
+        f.write(f"static const float NORM_MEAN[{NUM_FEATURES}] = {{\n")
+        for i, val in enumerate(norm_stats['mean']):
+            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.write("};\n\n")
+        
+        f.write(f"static const float NORM_STD[{NUM_FEATURES}] = {{\n")
+        for i, val in enumerate(norm_stats['std']):
+            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.write("};\n\n")
+        
+        # Normalization function
+        f.write("// Normalize feature vector in-place\n")
+        f.write("static inline void normalize_features(float *features, int num_features) {\n")
+        f.write("    int n = num_features < NUM_FEATURES ? num_features : NUM_FEATURES;\n")
+        f.write("    for (int i = 0; i < n; i++) {\n")
+        f.write("        features[i] = (features[i] - NORM_MEAN[i]) / NORM_STD[i];\n")
+        f.write("    }\n")
         f.write("}\n\n")
         
-        # Inference helper
-        f.write("// Run inference on a single tree\n")
+        # Sigmoid
+        f.write("// Sigmoid activation\n")
+        f.write("static inline float sigmoid(float x) {\n")
+        f.write("    if (x > 50.0f) return 1.0f;\n")
+        f.write("    if (x < -50.0f) return 0.0f;\n")
+        f.write("    return 1.0f / (1.0f + expf(-x));\n")
+        f.write("}\n\n")
+        
+        # Tree inference
+        f.write("// Single tree inference (iterative, no recursion)\n")
         f.write("static inline float xgb_tree_inference(const xgb_tree_t *tree, const float *features) {\n")
         f.write("    int16_t node_idx = 0;\n")
-        f.write("    const xgb_node_t *node;\n")
-        f.write("    \n")
         f.write("    while (node_idx >= 0 && node_idx < tree->num_nodes) {\n")
-        f.write("        node = &tree->nodes[node_idx];\n")
-        f.write("        \n")
+        f.write("        const xgb_node_t *node = &tree->nodes[node_idx];\n")
         f.write("        if (node->feature_idx < 0) {\n")
-        f.write("            // Leaf node\n")
         f.write("            return node->leaf_value;\n")
         f.write("        }\n")
-        f.write("        \n")
-        f.write("        // Traverse left or right\n")
         f.write("        if (features[node->feature_idx] < node->threshold) {\n")
         f.write("            node_idx = node->left_child;\n")
         f.write("        } else {\n")
         f.write("            node_idx = node->right_child;\n")
         f.write("        }\n")
         f.write("    }\n")
-        f.write("    \n")
-        f.write("    return 0.0f;  // Should not reach here\n")
+        f.write("    return 0.0f;\n")
         f.write("}\n\n")
         
         # Full model inference
-        f.write("// Run full model inference\n")
+        f.write("// Full model inference for all 4 hazard classes\n")
         f.write("static inline void xgb_model_inference(\n")
-        f.write("    const float *features,\n")
+        f.write("    const float *features_raw,\n")
         f.write("    float *output_wildfire,\n")
         f.write("    float *output_flood,\n")
         f.write("    float *output_storm,\n")
         f.write("    float *output_air_quality\n")
         f.write(") {\n")
-        f.write("    float sum;\n")
-        f.write("    \n")
-        f.write("    // Wildfire\n")
-        f.write("    sum = 0.0f;\n")
-        f.write("    for (int i = 0; i < WILDFIRE_NUM_TREES; i++) {\n")
-        f.write("        sum += xgb_tree_inference(&WILDFIRE_TREES[i], features);\n")
+        f.write("    // Normalize features\n")
+        f.write("    float features[NUM_FEATURES];\n")
+        f.write("    for (int i = 0; i < NUM_FEATURES; i++) {\n")
+        f.write("        features[i] = features_raw[i];\n")
         f.write("    }\n")
-        f.write("    *output_wildfire = sigmoid(sum);\n")
-        f.write("    \n")
-        f.write("    // Flood\n")
-        f.write("    sum = 0.0f;\n")
-        f.write("    for (int i = 0; i < FLOOD_NUM_TREES; i++) {\n")
-        f.write("        sum += xgb_tree_inference(&FLOOD_TREES[i], features);\n")
-        f.write("    }\n")
-        f.write("    *output_flood = sigmoid(sum);\n")
-        f.write("    \n")
-        f.write("    // Storm\n")
-        f.write("    sum = 0.0f;\n")
-        f.write("    for (int i = 0; i < STORM_NUM_TREES; i++) {\n")
-        f.write("        sum += xgb_tree_inference(&STORM_TREES[i], features);\n")
-        f.write("    }\n")
-        f.write("    *output_storm = sigmoid(sum);\n")
-        f.write("    \n")
-        f.write("    // Air Quality\n")
-        f.write("    sum = 0.0f;\n")
-        f.write("    for (int i = 0; i < AIR_QUALITY_NUM_TREES; i++) {\n")
-        f.write("        sum += xgb_tree_inference(&AIR_QUALITY_TREES[i], features);\n")
-        f.write("    }\n")
-        f.write("    *output_air_quality = sigmoid(sum);\n")
+        f.write("    normalize_features(features, NUM_FEATURES);\n\n")
+        
+        for cls in HAZARD_CLASSES:
+            upper = cls.upper()
+            f.write(f"    // {cls}\n")
+            f.write(f"    float sum_{cls} = 0.0f;\n")
+            f.write(f"    for (int i = 0; i < {upper}_NUM_TREES; i++) {{\n")
+            f.write(f"        sum_{cls} += xgb_tree_inference({upper}_TREES[i], features);\n")
+            f.write(f"    }}\n")
+            f.write(f"    float prob_{cls} = sigmoid(sum_{cls});\n\n")
+        
+        f.write("    *output_wildfire = prob_wildfire;\n")
+        f.write("    *output_flood = prob_flood;\n")
+        f.write("    *output_storm = prob_storm;\n")
+        f.write("    *output_air_quality = prob_air_quality;\n")
         f.write("}\n\n")
         
         f.write("#endif // MODEL_DATA_H\n")
     
-    print(f"Generated C header: {output_path}")
-    return True
+    print(f"Generated model header: {output_path}")
 
-# ============================================
-# NORMALIZATION DATA
-# ============================================
 
-def generate_normalization_header(norm_stats, output_path):
-    """Generate normalization constants header"""
+def generate_normalization_header(norm_stats: Dict, output_path: str):
+    """Generate normalization.h with feature z-score constants."""
+    norm_path = os.path.join(os.path.dirname(output_path), 'normalization.h')
     
-    base = output_path.replace('model_data.h', 'normalization.h')
-    
-    with open(base, 'w') as f:
+    with open(norm_path, 'w') as f:
         f.write("/**\n")
         f.write(" * normalization.h - Feature normalization for Edge AI Weather Station\n")
+        f.write(" * Auto-generated from training data\n")
         f.write(" */\n\n")
         f.write("#ifndef NORMALIZATION_H\n")
         f.write("#define NORMALIZATION_H\n\n")
         f.write("#include <stdint.h>\n\n")
         
         f.write("// Z-score normalization: (x - mean) / std\n")
-        f.write("static const float NORM_MEAN[14] = {\n")
-        for val in norm_stats['mean']:
-            f.write(f"    {val:.6f}f,\n")
+        f.write(f"static const float NORM_MEAN[{NUM_FEATURES}] = {{\n")
+        for i, val in enumerate(norm_stats['mean']):
+            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
         f.write("};\n\n")
         
-        f.write("static const float NORM_STD[14] = {\n")
-        for val in norm_stats['std']:
-            f.write(f"    {val:.6f}f,\n")
+        f.write(f"static const float NORM_STD[{NUM_FEATURES}] = {{\n")
+        for i, val in enumerate(norm_stats['std']):
+            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
         f.write("};\n\n")
         
         f.write("// Normalize a feature vector in-place\n")
         f.write("static inline void normalize_features(float *features, int num_features) {\n")
-        f.write("    for (int i = 0; i < num_features && i < 14; i++) {\n")
+        f.write("    int n = num_features < NUM_FEATURES ? num_features : NUM_FEATURES;\n")
+        f.write("    for (int i = 0; i < n; i++) {\n")
         f.write("        features[i] = (features[i] - NORM_MEAN[i]) / NORM_STD[i];\n")
         f.write("    }\n")
         f.write("}\n\n")
         
         f.write("#endif // NORMALIZATION_H\n")
     
-    print(f"Generated normalization header: {base}")
+    print(f"Generated normalization header: {norm_path}")
 
-# ============================================
-# MAIN
-# ============================================
+
+def generate_model_metadata_header(output_path: str):
+    """Generate model_metadata.h with feature/class names for debugging."""
+    meta_path = os.path.join(os.path.dirname(output_path), 'model_metadata.h')
+    
+    with open(meta_path, 'w') as f:
+        f.write("/**\n")
+        f.write(" * model_metadata.h - Model metadata for debugging\n")
+        f.write(" * Auto-generated\n")
+        f.write(" */\n\n")
+        f.write("#ifndef MODEL_METADATA_H\n")
+        f.write("#define MODEL_METADATA_H\n\n")
+        
+        f.write("static const char *FEATURE_NAMES[14] = {\n")
+        for name in FEATURE_NAMES:
+            f.write(f'    "{name}",\n')
+        f.write("};\n\n")
+        
+        f.write("static const char *HAZARD_CLASS_NAMES[4] = {\n")
+        for name in HAZARD_CLASSES:
+            f.write(f'    "{name}",\n')
+        f.write("};\n\n")
+        
+        f.write("static const float ALERT_THRESHOLDS[4] = {\n")
+        f.write("    0.70f,  // wildfire\n")
+        f.write("    0.70f,  // flood\n")
+        f.write("    0.75f,  // storm\n")
+        f.write("    0.65f,  // air_quality\n")
+        f.write("};\n\n")
+        
+        f.write("#endif // MODEL_METADATA_H\n")
+    
+    print(f"Generated metadata header: {meta_path}")
+
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert XGBoost model to C')
-    parser.add_argument('--model', type=str, required=True, help='Model directory')
+    parser = argparse.ArgumentParser(description='Convert XGBoost models to C headers')
+    parser.add_argument('--model', type=str, required=True, help='Model directory with xgboost_*.json')
     parser.add_argument('--output', type=str, required=True, help='Output C header path')
-    parser.add_argument('--trees', type=int, default=16, help='Max trees per class')
+    parser.add_argument('--max-trees', type=int, default=MAX_TREES_PER_CLASS, help='Max trees per class')
     args = parser.parse_args()
     
-    # Load models
-    class_names = ['wildfire', 'flood', 'storm', 'air_quality']
-    trees_by_class = {}
-    
-    for class_name in class_names:
-        model_path = os.path.join(args.model, f'xgboost_{class_name}.json')
-        if os.path.exists(model_path):
-            print(f"Loading {class_name} model...")
-            model = xgb.Booster()
-            model.load_model(model_path)
-            trees_by_class[class_name] = model_to_trees(model, args.trees)
-        else:
-            print(f"Warning: {model_path} not found, skipping")
-    
-    if not trees_by_class:
-        print("Error: No models found!")
-        return
-    
-    # Feature names
-    feature_names = [
-        'temp_current', 'humidity_current', 'pressure_current',
-        'wind_speed_current', 'pm25_current', 'co2_current',
-        'lightning_dist_current', 'temp_humidity_ratio', 'pressure_trend',
-        'heat_index', 'dew_point', 'fire_risk_index', 'flood_risk_index',
-        'lightning_threat',
-    ]
-    
-    # Generate C header
-    generate_c_header(trees_by_class, feature_names, args.output)
-    
-    # Generate normalization header if stats exist
+    # Load normalization stats
     norm_path = os.path.join(args.model, 'normalization.json')
-    if os.path.exists(norm_path):
-        with open(norm_path, 'r') as f:
-            norm_stats = json.load(f)
-        generate_normalization_header(norm_stats, args.output)
+    if not os.path.exists(norm_path):
+        print(f"Error: {norm_path} not found. Run train_model.py first.")
+        return 1
+    
+    with open(norm_path, 'r') as f:
+        norm_stats = json.load(f)
+    
+    # Load and parse trees
+    trees_by_class = load_model_trees(args.model, args.max_trees)
+    
+    if not any(trees_by_class.values()):
+        print("Error: No models loaded!")
+        return 1
+    
+    # Generate header
+    generate_model_header(trees_by_class, norm_stats, args.output)
+    generate_normalization_header(norm_stats, args.output)
+    generate_model_metadata_header(args.output)
     
     print("\nConversion complete!")
-    print(f"Add to your firmware: #include \"model_data.h\"")
+    print(f"  Model data: {args.output}")
+    print(f"  Normalization: {os.path.join(os.path.dirname(args.output), 'normalization.h')}")
+    print(f"  Metadata: {os.path.join(os.path.dirname(args.output), 'model_metadata.h')}")
+    print(f"\nAdd to firmware:")
+    print(f'  #include "model_data.h"')
+    print(f'  xgb_model_inference(features, &wf, &flood, &storm, &aq);')
+    
+    return 0
+
 
 if __name__ == '__main__':
-    main()
+    exit(main())
