@@ -2,7 +2,7 @@
 
 Professional meteorological sensors for IAF-compliant portable AWOS.
 
-**Target Cost:** $19,000 (prototype) | $12,000-15,000 (production)
+**Target Cost:** $18,749 (prototype) | $12,000-15,000 (production)
 
 ---
 
@@ -279,13 +279,13 @@ NVIDIA Jetson Orin Nano
 | Category | Components | Cost (USD) |
 |----------|-----------|------------|
 | Meteorological Sensors | HMP155, PTB330, WindSonic M, PWD22, CS135, DRD11A, SP-110, LD-250 | 12,700 |
-| Computing | Jetson Orin Nano 8GB, CR1000Xe | 2,500 |
+| Computing | Jetson Orin Nano 8GB, CR1000Xe | 2,249 |
 | Communication | LoRa RAK7268, Quectel 4G, RockBLOCK satellite | 700 |
 | Power | 100W solar, 200Wh LiFePO4, MPPT | 450 |
 | Mechanical | IP67 enclosure, tripod, mounts | 1,000 |
 | Development | Tools, testing equipment | 1,000 |
 | Miscellaneous | Cables, connectors, shipping | 650 |
-| **Total per Unit** | | **19,000** |
+| **Total per Unit** | | **18,749** |
 
 **Production cost (100+ units):** $12,000-15,000
 
@@ -295,7 +295,7 @@ NVIDIA Jetson Orin Nano
 
 | Feature | This System | Vaisala AWOS | Military TAMMS |
 |---------|------------|--------------|----------------|
-| Cost | $19k | $150-300k | $80k+ |
+| Cost | $18.7k | $150-300k | $80k+ |
 | Weight | <50 lbs | N/A (fixed) | 300+ lbs |
 | Deployment | <30 min, 1 person | 2-3 days, team | Hours, 2-3 people |
 | AI Prediction | Yes (0-30 min) | No | No |

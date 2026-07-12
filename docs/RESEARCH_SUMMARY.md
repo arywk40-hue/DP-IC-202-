@@ -34,7 +34,7 @@ This document summarizes the extensive web research conducted to identify curren
 | Precipitation | Vaisala | DRD11A | Capacitive, droplet detection, heating to -15°C | $1,500 |
 | Solar Radiation | Apogee | SP-110 | Pyranometer | $300 |
 | Lightning | Boltek | LD-250 | 0-40 km range | $400 |
-| Edge AI | NVIDIA | Jetson Orin Nano 8GB Super | 67 TOPS, 1024 CUDA cores, 8GB LPDDR5 | $500 |
+| Edge AI | NVIDIA | Jetson Orin Nano 8GB Super | 67 TOPS, 1024 CUDA cores, 8GB LPDDR5 | $249 |
 | Data Logger | Campbell Scientific | CR1000Xe | -40 to +70°C, 24-bit ADC, SDI-12/RS-485 | $2,000 |
 
 #### Critical GAPS Identified:

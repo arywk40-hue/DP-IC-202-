@@ -242,6 +242,65 @@ A \textcolor{innovationcolor}{\textbf{Portable Edge AI Weather Intelligence Syst
     \item Prepare for technology transfer to BEL/ECIL
 \end{itemize}
 
+\subsection{Low-Level Firmware Architecture}
+
+The firmware is implemented in C using ESP-IDF with FreeRTOS, organized into modular components (Fig.~\ref{fig:firmware_lowlevel}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{../figures/firmware_lowlevel_architecture.png}
+\caption{Low-level firmware architecture showing sensor pipeline, ML inference, and mesh communication layers.}
+\label{fig:firmware_lowlevel}
+\end{figure}
+
+\subsubsection{Sensor Pipeline (\texttt{sensor\_pipeline})}
+Handles 12-sensor data acquisition via HAL drivers:
+\begin{itemize}
+    \item I2C: BME280, SCD41, SGP41, LTR390, AS3935
+    \item UART: PMS5003 (particulate matter)
+    \item 1-Wire: DS18B20 (enclosure temperature)
+    \item ADC: MICS-6814 (multi-gas), wind speed/direction
+\end{itemize}
+
+Computes 14 derived features: heat index, dew point, fire risk index, flood risk index, pressure trend, and lightning threat score.
+
+\subsubsection{ML Inference Engine (\texttt{ml\_pipeline})}
+XGBoost inference optimized for ESP32-S3:
+\begin{itemize}
+    \item 16 shallow trees (max depth 4) per hazard class
+    \item 14 normalized input features
+    \item Binary sigmoid output for 4 hazard types
+    \item Inference latency: $\sim$50 $\mu$s per prediction
+\end{itemize}
+
+The model is trained offline in Python (\texttt{code/ml/train\_model.py}) and converted to C header (\texttt{code/ml/convert\_to\_c.py}) for embedded deployment.
+
+\subsubsection{Mesh Communication (\texttt{mesh\_comm})}
+LoRa SX1276 driver at 865 MHz with multi-hop routing:
+\begin{itemize}
+    \item Packet types: Alert, Heartbeat, Sensor Data, Model Update
+    \item Automatic forwarding with hop count limit
+    \item Federated learning support for model distribution
+\end{itemize}
+
+\subsubsection{Main Entry Point (\texttt{main.c})}
+Three FreeRTOS tasks on dual-core ESP32-S3:
+\begin{enumerate}
+    \item \textbf{Sensor Task (Core 0):} 5-second sensor reads, feature computation, ML inference, alert generation
+    \item \textbf{Mesh Task (Core 1):} Packet TX/RX, forwarding, heartbeat broadcasts
+    \item \textbf{Monitor Task (Core 1):} Status reporting, battery monitoring, mesh statistics
+\end{enumerate}
+
+\textbf{Key Files:}
+\begin{itemize}
+    \item \texttt{code/firmware/src/main.c} - Main entry point and task orchestration
+    \item \texttt{code/firmware/src/sensor\_pipeline.c} - Sensor drivers and feature computation
+    \item \texttt{code/firmware/src/ml\_pipeline.c} - XGBoost inference engine
+    \item \texttt{code/firmware/src/mesh\_comm.c} - LoRa mesh communication
+    \item \texttt{code/ml/train\_model.py} - Python training script
+    \item \texttt{code/ml/convert\_to\_c.py} - Model conversion to C header
+\end{itemize}
+
 \subsection{Expected Outcomes \& Impact}
 
 \begin{enumerate}[leftmargin=*]
@@ -276,7 +335,7 @@ A \textcolor{innovationcolor}{\textbf{Portable Edge AI Weather Intelligence Syst
 
 \textit{Computing \& Communication:}
 \begin{itemize}
-    \item \textbf{Edge AI:} NVIDIA Jetson Orin Nano 8GB Super (67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere GPU, 8GB LPDDR5 unified memory, 68 GB/s bandwidth, \$249) - \$500
+    \item \textbf{Edge AI:} NVIDIA Jetson Orin Nano 8GB Super (67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere GPU, 8GB LPDDR5 unified memory, 68 GB/s bandwidth, \$249) - \$249
     \item \textbf{Data Logger:} Campbell Scientific CR1000Xe (flagship logger, -40 to +70°C operation, 24-bit ADC, SDI-12/RS-232/RS-485, Ethernet, PakBus networking, microSD) - \$2,000
     \item \textbf{LoRa:} RAKwireless RAK7268 gateway + modules - \$300
     \item \textbf{Cellular:} Quectel EG25-G 4G modem - \$100
@@ -308,23 +367,23 @@ A \textcolor{innovationcolor}{\textbf{Portable Edge AI Weather Intelligence Syst
 
 \begin{itemize}
     \item Meteorological Sensors: \$12,700
-    \item Edge Computing (Jetson + Data Logger): \$2,500
+    \item Edge Computing (Jetson \$249 + Data Logger): \$2,249
     \item Communication Hardware: \$700
     \item Power System (Solar + Battery): \$450
     \item Enclosure \& Mechanical: \$1,000
     \item Development Tools \& Testing: \$1,000
     \item Miscellaneous (cables, connectors, shipping): \$650
-    \item \textbf{Total Single Unit: \$19,000}
+    \item \textbf{Total Single Unit: \$18,749}
 \end{itemize}
 
 \textit{Note: Production cost will drop to \$12k-15k at scale (100+ units) due to bulk procurement and indigenization}
 
 \textbf{Field Deployment Budget (3 Test Stations):}
 \begin{itemize}
-    \item 3× Weather Stations: \$57,000
+    \item 3× Weather Stations: \$56,247
     \item Travel \& Installation: \$5,000
     \item 6-month Field Trial Support: \$8,000
-    \item \textbf{Total Field Trial: \$70,000}
+    \item \textbf{Total Field Trial: \$69,247}
 \end{itemize}
 
 \subsection{Risk Mitigation}
@@ -332,27 +391,27 @@ A \textcolor{innovationcolor}{\textbf{Portable Edge AI Weather Intelligence Syst
 \begin{itemize}
     \item \textbf{Risk:} Aviation-grade sensors expensive (\$12k+ per unit)
     \begin{itemize}
-        \item \textit{Mitigation:} Use commercial-off-the-shelf (COTS) sensors with proven reliability; negotiate bulk pricing with Vaisala/Campbell Scientific; explore indigenous sensor development with IIT partnerships}
+        \item \textit{Mitigation:} Use commercial-off-the-shelf (COTS) sensors with proven reliability; negotiate bulk pricing with Vaisala/Campbell Scientific; explore indigenous sensor development with IIT partnerships
     \end{itemize}
     
     \item \textbf{Risk:} AI model accuracy insufficient for operational use
     \begin{itemize}
-        \item \textit{Mitigation:} Physics-informed neural networks constrain predictions to physical plausibility; ensemble methods (multiple models); human-in-loop validation during initial deployment}
+        \item \textit{Mitigation:} Physics-informed neural networks constrain predictions to physical plausibility; ensemble methods (multiple models); human-in-loop validation during initial deployment
     \end{itemize}
     
     \item \textbf{Risk:} Extreme weather damages equipment
     \begin{itemize}
-        \item \textit{Mitigation:} MIL-STD-810H testing before deployment; IP67 sealing; temperature-controlled enclosure with thermoelectric cooling/heating; redundant sensors for critical parameters}
+        \item \textit{Mitigation:} MIL-STD-810H testing before deployment; IP67 sealing; temperature-controlled enclosure with thermoelectric cooling/heating; redundant sensors for critical parameters
     \end{itemize}
     
     \item \textbf{Risk:} Solar power insufficient in prolonged bad weather
     \begin{itemize}
-        \item \textit{Mitigation:} 7-day battery reserve; adaptive power management (reduce sampling frequency in low-power mode); optional generator/grid connection for extended operations}
+        \item \textit{Mitigation:} 7-day battery reserve; adaptive power management (reduce sampling frequency in low-power mode); optional generator/grid connection for extended operations
     \end{itemize}
     
     \item \textbf{Risk:} Difficult to get field testing access at IAF bases
     \begin{itemize}
-        \item \textit{Mitigation:} Partner with ASTE (Aircraft \& Systems Testing Establishment); leverage IAF's Directorate of Aerospace Design (DAD) industry outreach; start with civilian airports (AAI collaboration)}
+        \item \textit{Mitigation:} Partner with ASTE (Aircraft \& Systems Testing Establishment); leverage IAF's Directorate of Aerospace Design (DAD) industry outreach; start with civilian airports (AAI collaboration)
     \end{itemize}
 \end{itemize}
 

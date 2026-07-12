@@ -108,11 +108,11 @@
 | 7 | Solar Radiation | Apogee SP-110 | Pyranometer | $300 |
 | 8 | Lightning Detection | Boltek LD-250 | 0-40 km range | $400 |
 
-### Computing & Communication ($3,200):
+### Computing & Communication ($2,949):
 
 | Component | Model | Key Specs | Price |
 |-----------|-------|-----------|-------|
-| Edge AI | NVIDIA Jetson Orin Nano 8GB Super | 67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere, 8GB LPDDR5 | $500 |
+| Edge AI | NVIDIA Jetson Orin Nano 8GB Super | 67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere, 8GB LPDDR5 | $249 |
 | Data Logger | Campbell Scientific CR1000Xe | -40 to +70°C, 24-bit ADC, SDI-12/RS-232/RS-485, PakBus | $2,000 |
 | LoRa Gateway | RAKwireless RAK7268 | Multi-protocol gateway + modules | $300 |
 | 4G Modem | Quectel EG25-G | Cellular connectivity | $100 |
@@ -133,9 +133,9 @@
 
 ## 📊 Budget Breakdown
 
-### Single Prototype: \$19,000
+### Single Prototype: \$18,749
 - Sensors: \$12,700
-- Computing: \$2,500
+- Computing: \$2,249
 - Communication: \$700
 - Power: \$450
 - Mechanical: \$1,000
@@ -147,8 +147,8 @@
 - Indigenous component substitution
 - Optimized manufacturing
 
-### Field Trial (3 Stations): \$70,000
-- 3× stations: \$57,000
+### Field Trial (3 Stations): \$69,247
+- 3× stations: \$56,247
 - Travel/installation: \$5,000
 - 6-month support: \$8,000
 
@@ -278,7 +278,7 @@ WEATHER_STATION_SUMMARY.md            - This summary document
 - [x] Research-backed gap analysis (7 critical gaps)
 - [x] Novel innovation (first portable + edge AI + hyperlocal)
 - [x] Measurable outcomes (accuracy, deployment time, cost)
-- [x] Realistic budget (\$19k prototype, \$15k production)
+- [x] Realistic budget (\$18.7k prototype, \$15k production)
 - [x] Feasible timeline (9-10 months)
 - [x] National importance (aviation safety, IAF operations)
 - [x] Publication potential (aerospace + meteorology journals)

@@ -34,7 +34,7 @@ The `implementation/` folder contains the IIT Mandi IEEE paper:
 - **Sensors:** 12-parameter suite (BME280, PMS5003, SCD41, AS3935, etc.)
 - **AI:** XGBoost on-device via micromlgen
 - **Comms:** LoRa SX1276 mesh at 865 MHz
-- **Cost:** INR 19,055 per node (~$230)
+- **Cost:** INR 19,130 per node (~$228)
 
 ## Project 5 Sensor Specs (Verified)
 
@@ -46,7 +46,7 @@ The `implementation/` folder contains the IIT Mandi IEEE paper:
 | Visibility | Vaisala PWD22 | 10-20,000 m, forward scatter | $4,500 |
 | Cloud Ceiling | Campbell CS135 | 10 km LIDAR, ICAO | $3,000 |
 | Precipitation | Vaisala DRD11A | RAINCAP, heating -15°C | $1,500 |
-| Edge AI | Jetson Orin Nano | 67 TOPS, 8GB LPDDR5 | $500 |
+| Edge AI | Jetson Orin Nano | 67 TOPS, 8GB LPDDR5 | $249 |
 | Data Logger | Campbell CR1000Xe | -40 to +70°C, 24-bit | $2,000 |
 
 ## Pitch Talking Points
@@ -62,7 +62,7 @@ The `implementation/` folder contains the IIT Mandi IEEE paper:
 5. IAF requirement (Compendium #49)
 
 ### IIT Mandi Validation
-The implementation architecture is validated by IIT Mandi's ESP32-S3 + LoRa mesh node at INR 19,055 per unit with 12-parameter sensing and on-device XGBoost inference.
+The implementation architecture is validated by IIT Mandi's ESP32-S3 + LoRa mesh node at INR 19,130 per unit with 12-parameter sensing and on-device XGBoost inference.
 
 ## Files to Read
 

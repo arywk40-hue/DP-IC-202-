@@ -2,7 +2,7 @@
 
 ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 
-**Target Cost:** INR 19,055 (~$230) per node
+**Target Cost:** INR 19,130 (~$228) per node
 
 ---
 
@@ -27,25 +27,25 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Current** | 3.6 uA @ 1 Hz |
 | **Package** | 2.5 x 2.5 mm LGA |
 | **Use Case** | Core meteorological baseline |
-| **Price** | ~INR 350 |
+| **Price** | ~INR 60 |
 
 ---
 
-### 2. SparkFun Weather Meter Kit - Wind Speed / Direction
+### 2. Generic Anemometer + Wind Vane - Wind Speed / Direction
 
 | Parameter | Value |
 |-----------|-------|
-| **Manufacturer** | SparkFun (DAVIS Instruments components) |
-| **Type** | Cup anemometer + wind vane |
-| **Interface** | Analog/Digital |
-| **Wind Speed Range** | 0-89 mph (0-40 m/s) |
-| **Wind Speed Accuracy** | +/-1 mph |
+| **Manufacturer** | Generic (reed-switch/analog voltage) |
+| **Type** | Cup anemometer + wind vane (combo module) |
+| **Interface** | Analog (0-5V) |
+| **Wind Speed Range** | 0-60 m/s |
+| **Wind Speed Accuracy** | +/-0.3 m/s |
 | **Wind Direction** | 0-360 degrees |
 | **Direction Resolution** | 16 directions (22.5 deg) |
-| **Starting Threshold** | 1 mph |
+| **Starting Threshold** | 0.5 m/s |
 | **Supply Voltage** | 5-12V |
 | **Use Case** | Wind speed and direction measurement |
-| **Price** | ~INR 2,500 |
+| **Price** | ~INR 2,300 (anemometer ~INR 1,548 + wind-vane module ~INR 750) |
 
 ---
 
@@ -61,7 +61,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Rain Intensity** | Light / Moderate / Heavy categories |
 | **Supply Voltage** | 3.3-5V |
 | **Use Case** | Precipitation detection and intensity |
-| **Price** | ~INR 500 |
+| **Price** | ~INR 1,800 |
 
 ---
 
@@ -78,7 +78,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Supply Voltage** | 2.7-3.6V |
 | **Current** | 70 uA active |
 | **Use Case** | UV Index measurement |
-| **Price** | ~INR 200 |
+| **Price** | ~INR 700 |
 
 ---
 
@@ -97,7 +97,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Supply Voltage** | 4.5-5.5V |
 | **Current** | 100mA (fan on) |
 | **Use Case** | Wildfire smoke, air quality |
-| **Price** | ~INR 3,000 |
+| **Price** | ~INR 1,900 |
 
 ---
 
@@ -115,7 +115,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Current** | 17mA (avg) |
 | **Package** | 10 x 10 x 7 mm |
 | **Use Case** | True CO2 (not equivalent) |
-| **Price** | ~INR 3,500 |
+| **Price** | ~INR 1,900 |
 
 ---
 
@@ -132,7 +132,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Supply Voltage** | 1.8-5.5V |
 | **Current** | 45mA (heater active) |
 | **Use Case** | Air quality, combustion detection |
-| **Price** | ~INR 2,000 |
+| **Price** | ~INR 1,700 |
 
 ---
 
@@ -151,7 +151,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Supply Voltage** | 5V (heater), 3.3V (sensor) |
 | **Response Time** | <30s |
 | **Use Case** | Multi-gas hazard detection |
-| **Price** | ~INR 500 |
+| **Price** | ~INR 2,000 |
 
 ---
 
@@ -170,7 +170,7 @@ ESP32-S3 based Edge AI node with off-the-shelf breakout modules.
 | **Supply Voltage** | 2.4-5.5V |
 | **Current** | 180uA (standby) |
 | **Use Case** | Storm approach warning |
-| **Price** | ~INR 800 |
+| **Price** | ~INR 1,800 |
 
 ---
 
@@ -225,11 +225,11 @@ ESP32-S3 GPIO
 │   ├── MICS-6814 CH1 - CO
 │   ├── MICS-6814 CH2 - NO2
 │   ├── MICS-6814 CH3 - NH3
-│   ├── Weather Meter - Wind Speed
-│   ├── Weather Meter - Wind Direction
+│   ├── Anemometer - Wind Speed
+│   ├── Wind Vane - Wind Direction
 │   └── Voltage Divider - Battery
 └── Digital
-    └── Weather Meter - Wind Direction (digital)
+    └── Wind Vane - Wind Direction (digital)
 ```
 
 ---
@@ -256,15 +256,15 @@ ESP32-S3 GPIO
 
 | Category | Components | Cost (INR) |
 |----------|-----------|------------|
-| Compute & Radio | ESP32-S3 WROOM-1, RFM95W SX1276, passives | 1,430 |
-| Core Meteorological | BME280, Weather Meter Kit, DS18B20, SEN0575, LTR390 | 3,350 |
-| Particulate & Gases | PMS5003, SGP41, MICS-6814, SCD41 | 9,055 |
-| Specialized Sensing | AS3935 | 935 |
-| Power Architecture | 18650 cell, 5W solar panel, CN3065 | 2,380 |
-| Fabrication | PCB (5x batch), PETG, conformal coating | 1,905 |
-| **Total per Node** | | **19,055** |
+| Compute & Radio | ESP32-S3 WROOM-1, RFM95W SX1276, passives | 1,499 |
+| Core Meteorological | BME280, Anemometer + Wind Vane, DS18B20, SEN0575, LTR390 | 4,960 |
+| Particulate & Gases | PMS5003, SGP41, MICS-6814, SCD41 | 7,500 |
+| Specialized Sensing | AS3935 | 1,800 |
+| Power Architecture | 18650 cell, 5W solar panel, CN3065 | 1,370 |
+| Fabrication | PCB (5x batch), PETG, conformal coating | 2,000 |
+| **Total per Node** | | **19,130** |
 
-**Baseline (no gas sensors):** INR 6,600 (remove SCD41, SGP41, MICS-6814)
+**Baseline (no gas sensors):** INR 13,530 (remove SCD41, SGP41, MICS-6814)
 
 ---
 

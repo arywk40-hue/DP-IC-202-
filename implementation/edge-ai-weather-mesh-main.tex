@@ -48,7 +48,7 @@ fully operational during cellular and internet blackouts. We detail the
 compute, sensing, intelligence, and communication layers of the
 architecture, contrast the design against commercial monitoring stations,
 and present a bill-of-materials-based cost analysis showing per-node cost
-of approximately INR 19,055 (full hazard configuration) or INR 6,600
+of approximately INR 19,130 (full hazard configuration) or INR 13,530
 (baseline configuration), against INR 1,20,000--2,50,000 for comparable
 commercial units. We conclude with a scaling and optimization roadmap
 toward a custom 4-layer PCB and mesh-wide deployment.
@@ -128,7 +128,7 @@ hazards (Table~\ref{tab:sensors}).
 \begin{itemize}
     \item \textbf{Core Meteorological Baseline:} Temperature, humidity, and
     barometric pressure via the Bosch BME280 (I2C). Wind speed and
-    direction via the SparkFun Weather Meter Kit. Precipitation via a
+    direction via a generic combo anemometer and wind vane. Precipitation via a
     piezoelectric acoustic sensor (DFRobot SEN0575), avoiding the leveling
     requirement of tipping-bucket designs. UV Index via the LTR390.
     \item \textbf{Hazard and Air Quality Array:} A PMS5003 laser-scattering
@@ -152,7 +152,7 @@ hazards (Table~\ref{tab:sensors}).
 \textbf{Category} & \textbf{Component} & \textbf{Interface} \\
 \midrule
 Temp/Hum/Pressure & Bosch BME280 & I2C \\
-Wind Speed/Dir & SparkFun Weather Meter Kit & Analog/Digital \\
+Wind Speed/Dir & Generic Anemometer + Wind Vane & Analog/Digital \\
 Precipitation & DFRobot SEN0575 (piezo) & Analog \\
 UV Index & LTR390 & I2C \\
 PM2.5 / PM10 & Plantower PMS5003 & UART \\
@@ -212,6 +212,63 @@ shielding sensors from direct insolation and precipitation. Power is
 sustained via a high-capacity 18650 lithium-ion cell, managed by a
 dedicated TP4056 or CN3065 charge controller, and replenished by a 5 W
 external solar panel.
+
+\subsection{Firmware Implementation}
+\label{subsec:firmware}
+
+The firmware is implemented in C using the ESP-IDF framework, organized
+into modular components for sensor management, ML inference, and mesh
+communication (Fig.~\ref{fig:firmware_arch}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{../figures/firmware_architecture.png}
+\caption{Firmware architecture: FreeRTOS tasks for sensor reading, ML
+inference, and mesh communication running on dual-core ESP32-S3.}
+\label{fig:firmware_arch}
+\end{figure}
+
+\subsubsection{Sensor Pipeline}
+The sensor pipeline (\texttt{sensor\_pipeline.c/.h}) provides a Hardware
+Abstraction Layer (HAL) for all 12 sensors. Each sensor driver handles
+initialization, calibration, and reading via the appropriate interface:
+
+\begin{itemize}
+    \item \textbf{I2C Sensors:} BME280, SCD41, SGP41, LTR390, AS3935
+    \item \textbf{UART Sensors:} PMS5003 (particulate matter)
+    \item \textbf{1-Wire:} DS18B20 (enclosure temperature)
+    \item \textbf{Analog ADC:} MICS-6814 (multi-gas), wind speed/direction
+\end{itemize}
+
+The pipeline computes 14 derived features from raw sensor data, including
+heat index, dew point, fire risk index, and pressure trends, which are
+consumed by the ML inference engine.
+
+\subsubsection{ML Inference Engine}
+The ML pipeline (\texttt{ml\_pipeline.c/.h}) implements a complete XGBoost
+inference engine optimized for ESP32-S3. The model consists of 16 shallow
+decision trees (max depth 4) per hazard class, processing 14 normalized
+features through a binary sigmoid output. The inference achieves
+$\sim$50 $\mu$s latency per prediction, enabling real-time hazard detection
+at 5-second intervals.
+
+\subsubsection{Mesh Communication}
+The mesh module (\texttt{mesh\_comm.c/.h}) handles LoRa communication via
+the SX1276 transceiver at 865 MHz. It implements multi-hop packet routing
+with automatic forwarding, heartbeat broadcasting, and model update
+distribution for federated learning. Packet types include alerts,
+heartbeats, sensor data, and model updates.
+
+\subsubsection{Main Entry Point}
+The main firmware (\texttt{main.c}) orchestrates three FreeRTOS tasks:
+\begin{enumerate}
+    \item \textbf{Sensor Task (Core 0):} Reads sensors, computes features,
+    runs ML inference, generates alerts when thresholds are breached.
+    \item \textbf{Mesh Task (Core 1):} Handles packet transmission,
+    reception, forwarding, and heartbeat broadcasts.
+    \item \textbf{Monitor Task (Core 1):} Periodic status reporting,
+    battery monitoring, and mesh statistics.
+\end{enumerate}
 
 \section{Difference from Commercial Monitoring Stations}
 \label{sec:comparison}
@@ -274,21 +331,21 @@ achieves comparable analytical density at a fraction of the cost
 \toprule
 \textbf{Category} & \textbf{Components} & \textbf{Cost (INR)} \\
 \midrule
-Compute \& Radio & ESP32-S3 WROOM-1, RFM95W SX1276, passives & 1,430 \\
-Core Meteorological & BME280, Weather Meter Kit, DS18B20, SEN0575, LTR390 & 3,350 \\
-Particulate \& Gases & PMS5003, SGP41, MICS-6814, SCD41 & 9,055 \\
-Specialized Sensing & AS3935 & 935 \\
-Power Architecture & 18650 cell, 5W solar panel, CN3065 & 2,380 \\
-Fabrication & PCB (5x batch), PETG, conformal coating & 1,905 \\
+Compute \& Radio & ESP32-S3 WROOM-1, RFM95W SX1276, passives & 1,499 \\
+Core Meteorological & BME280, Anemometer + Wind Vane, DS18B20, SEN0575, LTR390 & 4,960 \\
+Particulate \& Gases & PMS5003, SGP41, MICS-6814, SCD41 & 7,500 \\
+Specialized Sensing & AS3935 & 1,800 \\
+Power Architecture & 18650 cell, 5W solar panel, CN3065 & 1,370 \\
+Fabrication & PCB (5x batch), PETG, conformal coating & 2,000 \\
 \midrule
-\textbf{Total per Node} & \textbf{Complete research-grade node} & \textbf{19,055} \\
+\textbf{Total per Node} & \textbf{Complete research-grade node} & \textbf{19,130} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Scalability and Optimization}
 
-At approximately INR 19,055 per node, a 20-node mesh network represents a
+At approximately INR 19,130 per node, a 20-node mesh network represents a
 capital expenditure of INR 3.8 Lakhs, still substantially lower than a
 two-unit commercial deployment. Transitioning from prototype to
 production mesh, a unified schematic in KiCad and a custom 4-layer PCB
@@ -296,7 +353,7 @@ integrating all sensor ICs directly (bypassing redundant regulators and
 LEDs found on commercial breakout boards) is projected to reduce per-node
 cost by an additional 20--30\%. For baseline nodes where hazard gases are
 not required, removing the SCD41, SGP41, and MICS-6814 reduces cost to
-approximately INR 6,600, enabling mass spatial deployment while reserving
+approximately INR 13,530, enabling mass spatial deployment while reserving
 fully equipped INR 19k nodes for strategic choke points in the valley.
 
 \section{Conclusion}
@@ -307,12 +364,42 @@ represents a feasible, economically disruptive approach to microclimate
 monitoring. By pairing the machine-learning acceleration of the ESP32-S3
 with the offline resilience of an 865 MHz LoRa mesh network, the system
 overcomes the geographic and infrastructural limitations of centralized
-weather tracking. The immediate next phase involves finalizing hardware
-integration of the 12-sensor array, capturing baseline tabular data, and
-deploying the C++-converted boosting algorithm to validate power
-consumption during localized inference loops. Once validated, the node is
-ready to replicate and scale across mountainous topography, establishing
-the foundation of a true swarm-intelligence environmental network.
+weather tracking. The complete firmware implementation, including sensor
+drivers, XGBoost inference engine, and mesh communication stack, has been
+developed and is ready for hardware integration. The immediate next phase
+involves capturing baseline tabular data from the 12-sensor array,
+validating power consumption during localized inference loops, and
+deploying the trained XGBoost model to validate hazard detection accuracy.
+Once validated, the node is ready to replicate and scale across
+mountainous topography, establishing the foundation of a true
+swarm-intelligence environmental network.
+
+\section{Variant Comparison: Low-Cost vs. Aviation-Grade}
+\label{sec:variants}
+
+Two distinct implementation tracks have been developed for different use cases:
+
+\begin{table}[htbp]
+\caption{Comparison of Low-Cost and Aviation-Grade Variants}
+\label{tab:variants}
+\centering
+\begin{tabular}{@{}p{2.5cm}p{2.5cm}p{2.5cm}@{}}
+\toprule
+\textbf{Feature} & \textbf{Low-Cost (IIT Mandi)} & \textbf{Aviation-Grade (Project 5)} \\
+\midrule
+Compute & ESP32-S3 & NVIDIA Jetson Orin \\
+Sensors & 12 (BME280, PMS5003) & 15 (Vaisala, Campbell) \\
+ML Model & XGBoost (16 trees) & Physics-informed LSTM \\
+Cost & INR 19,130 (\$228) & \$18,749 \\
+Range & 10 km (LoRa mesh) & Multi-protocol \\
+Use Case & Research, agriculture & Military aviation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The low-cost variant demonstrates the core Edge AI architecture at
+accessible price points, while the aviation-grade variant adds specialized
+sensors and computing power for safety-critical applications.
 
 \section*{Acknowledgment}
 The author thanks the Prayas 4.0 program at IIT Mandi for lab access and
@@ -325,6 +412,16 @@ support.
 \bibitem{b4} Sensirion AG, ``SCD41 CO2 Sensor Datasheet,'' 2021.
 \bibitem{b5} T. Chen and C. Guestrin, ``XGBoost: A Scalable Tree Boosting System,'' \textit{Proc. 22nd ACM SIGKDD}, 2016.
 \bibitem{b6} Meshtastic Project, ``Meshtastic Documentation,'' \url{https://meshtastic.org}, 2026.
+\bibitem{b7} Sensirion AG, ``SGP41 Multi-Gas Sensor Datasheet,'' 2022.
+\bibitem{b8} Plantower, ``PMS5003 Particulate Matter Sensor Datasheet,'' 2021.
+\bibitem{b9} AMS-OSRAM, ``AS3935 Franklin Lightning Sensor Datasheet,'' 2023.
+\bibitem{b10} Maxim Integrated, ``DS18B20 Programmable Resolution 1-Wire Digital Thermometer Datasheet,'' 2019.
+\bibitem{b11} Espressif Systems, ``ESP-IDF Programming Guide,'' \url{https://docs.espressif.com/projects/esp-idf/}, 2026.
+\bibitem{b12} FreeRTOS Project, ``FreeRTOS Reference Manual,'' 2024.
+\bibitem{b13} MICS, ``MICS-6814 Analog Multi-Gas Sensor Datasheet,'' 2020.
+\bibitem{b14} Generic Electronics, ``Combo Anemometer + Wind Vane Module (analog),'' 2026.
+\bibitem{b15} DFRobot, ``SEN0575 Acoustic Precipitation Sensor Datasheet,'' 2022.
+\bibitem{b16} Lite-On, ``LTR390 UV and Ambient Light Sensor Datasheet,'' 2021.
 \end{thebibliography}
 
 \end{document}

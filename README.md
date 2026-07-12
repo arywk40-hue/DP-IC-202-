@@ -16,6 +16,21 @@ Dp/
 │   ├── edge-ai-weather-mesh-main.tex      # IEEE paper - ESP32-S3 + LoRa mesh
 │   ├── edge-ai-weather-mesh-paper.pdf     # Compiled PDF
 │   └── edge-ai-weather-mesh.zip           # Source files
+├── code/                                  # Firmware and ML code
+│   ├── firmware/                          # ESP32-S3 firmware
+│   │   ├── src/
+│   │   │   ├── main.c                     # Main entry point (FreeRTOS tasks)
+│   │   │   ├── sensor_pipeline.c          # 12-sensor drivers + feature computation
+│   │   │   ├── ml_pipeline.c              # XGBoost inference engine
+│   │   │   └── mesh_comm.c               # LoRa SX1276 mesh communication
+│   │   └── lib/
+│   │       ├── sensor_pipeline.h          # Sensor HAL and data structures
+│   │       ├── ml_pipeline.h              # ML inference API
+│   │       └── mesh_comm.h               # Mesh packet structures
+│   └── ml/                                # Machine learning tools
+│       ├── train_model.py                 # XGBoost training (Python)
+│       ├── convert_to_c.py                # Model conversion to C header
+│       └── model/                         # Trained models (generated)
 ├── docs/                                  # Documentation and guides
 │   ├── QUICK_START.md                     # Quick start and pitch guide
 │   ├── RESEARCH_SUMMARY.md                # Web research and gap analysis
@@ -31,7 +46,7 @@ Dp/
 ### Main Project: Edge AI Portable Weather Station (Project 5)
 - **Domain:** Meteorology, Defense, Edge AI, Sensors
 - **Innovation:** First portable AWOS-grade station with edge AI nowcasting
-- **Budget:** $19,000 (prototype) | **Timeline:** 9-10 months
+- **Budget:** $18,749 (prototype) | **Timeline:** 9-10 months
 - **IAF Alignment:** Compendium Challenge #49
 
 ### Additional Proposals (in `proposal/`)
@@ -56,7 +71,7 @@ The implementation follows the **Decentralized Edge AI Environmental Hazard Netw
 | Category | Component | Interface |
 |----------|-----------|-----------|
 | Temp/Hum/Pressure | Bosch BME280 | I2C |
-| Wind Speed/Dir | SparkFun Weather Meter Kit | Analog/Digital |
+| Wind Speed/Dir | Generic Anemometer + Wind Vane | Analog/Digital |
 | Precipitation | DFRobot SEN0575 (piezo) | Analog |
 | UV Index | LTR390 | I2C |
 | PM2.5 / PM10 | Plantower PMS5003 | UART |
@@ -68,9 +83,11 @@ The implementation follows the **Decentralized Edge AI Environmental Hazard Netw
 | Battery voltage | Onboard ADC divider | Analog |
 
 ### Edge AI
-- XGBoost/AdaBoost models trained offline in Python
-- Converted to C++ via `micromlgen`
-- On-device inference on ESP32-S3
+- XGBoost models trained offline in Python (`code/ml/train_model.py`)
+- Model converted to C header via `code/ml/convert_to_c.py`
+- On-device inference on ESP32-S3 (~50 μs per prediction)
+- 16 shallow trees (max depth 4) per hazard class
+- 14 normalized features, binary sigmoid output
 - Event-driven alerts (not raw telemetry)
 
 ### Communication
@@ -88,13 +105,13 @@ The implementation follows the **Decentralized Edge AI Environmental Hazard Netw
 
 | Category | Components | Cost (INR) |
 |----------|-----------|------------|
-| Compute & Radio | ESP32-S3, RFM95W, passives | 1,430 |
-| Core Meteorological | BME280, Weather Meter, DS18B20, SEN0575, LTR390 | 3,350 |
-| Particulate & Gases | PMS5003, SGP41, MICS-6814, SCD41 | 9,055 |
-| Specialized Sensing | AS3935 | 935 |
-| Power Architecture | 18650, 5W solar, CN3065 | 2,380 |
-| Fabrication | PCB, PETG, coating | 1,905 |
-| **Total per Node** | | **19,055** |
+| Compute & Radio | ESP32-S3, RFM95W, passives | 1,499 |
+| Core Meteorological | BME280, Anemometer + Wind Vane, DS18B20, SEN0575, LTR390 | 4,960 |
+| Particulate & Gases | PMS5003, SGP41, MICS-6814, SCD41 | 7,500 |
+| Specialized Sensing | AS3935 | 1,800 |
+| Power Architecture | 18650, 5W solar, CN3065 | 1,370 |
+| Fabrication | PCB, PETG, coating | 2,000 |
+| **Total per Node** | | **19,130** |
 
 ## Key Differences from Commercial Stations
 
@@ -124,6 +141,21 @@ pdflatex edge-ai-weather-mesh-main.tex
 ### Or use Overleaf
 1. Upload `proposal/design_practicum_proposals.tex` and `proposal/project5_hardware_weather_station.tex`
 2. Click Recompile
+
+### ML Model Training
+```bash
+cd code/ml/
+pip install xgboost scikit-learn pandas numpy
+python train_model.py --data ./data/ --output ./model/
+python convert_to_c.py --model ./model/ --output ../firmware/lib/model_data.h
+```
+
+### Firmware Build (ESP-IDF)
+```bash
+cd code/firmware/
+idf.py build
+idf.py flash
+```
 
 ## Research Sources
 
