@@ -335,7 +335,7 @@ Three FreeRTOS tasks on dual-core ESP32-S3:
 
 \textit{Computing \& Communication:}
 \begin{itemize}
-    \item \textbf{Edge AI:} NVIDIA Jetson Orin Nano 8GB Super (67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere GPU, 8GB LPDDR5 unified memory, 68 GB/s bandwidth, \$249) - \$249
+    \item \textbf{Edge AI:} NVIDIA Jetson Orin Nano 8GB Super (67 TOPS, 1024 CUDA cores, 32 Tensor Cores, Ampere GPU, 8GB LPDDR5 unified memory, 68 GB/s bandwidth) - \$249 (confirmed current NVIDIA list price, July 2026)
     \item \textbf{Data Logger:} Campbell Scientific CR1000Xe (flagship logger, -40 to +70°C operation, 24-bit ADC, SDI-12/RS-232/RS-485, Ethernet, PakBus networking, microSD) - \$2,000
     \item \textbf{LoRa:} RAKwireless RAK7268 gateway + modules - \$300
     \item \textbf{Cellular:} Quectel EG25-G 4G modem - \$100
@@ -363,27 +363,42 @@ Three FreeRTOS tasks on dual-core ESP32-S3:
     \item \textbf{Visualization:} D3.js for weather charts, Mapbox for spatial data
 \end{itemize}
 
-\subsection{Budget Estimate (Single Unit Prototype)}
+\subsection{Budget Estimate (2-Unit Prototype Build)}
+
+Per-unit costs, July 2026 pricing (Jetson Orin Nano Super corrected to its confirmed
+\$249 list price; all other line items are quote-based industrial instruments and are
+carried forward unchanged pending fresh distributor quotes):
 
 \begin{itemize}
     \item Meteorological Sensors: \$12,700
-    \item Edge Computing (Jetson \$249 + Data Logger): \$2,249
+    \item Edge Computing (Jetson + Data Logger): \$2,249
     \item Communication Hardware: \$700
     \item Power System (Solar + Battery): \$450
     \item Enclosure \& Mechanical: \$1,000
     \item Development Tools \& Testing: \$1,000
     \item Miscellaneous (cables, connectors, shipping): \$650
-    \item \textbf{Total Single Unit: \$18,749}
+    \item \textbf{Total per Unit: \$18,749}
 \end{itemize}
 
-\textit{Note: Production cost will drop to \$12k-15k at scale (100+ units) due to bulk procurement and indigenization}
-
-\textbf{Field Deployment Budget (3 Test Stations):}
+\textbf{2-Unit Prototype Build:}
 \begin{itemize}
-    \item 3× Weather Stations: \$56,247
+    \item 2× Weather Stations: \$37,498
+    \item Shared NRE (calibration jigs, spares, consolidated shipping): \$3,000--4,000
+    \item \textbf{Total 2-Unit Build: \$40,500--41,500}
+\end{itemize}
+
+\textit{Note: Production cost will drop to \$12k-15k per unit at scale (100+ units) due
+to bulk procurement and indigenization. Meteorological sensor pricing (Vaisala, Gill,
+Campbell Scientific, Apogee, Boltek) is quote-based and industrially stable; request
+fresh distributor quotes before finalizing a submission budget.}
+
+\textbf{Field Deployment (2-Unit Prototype Trial):}
+The two prototype units themselves serve as the field trial hardware — no additional
+station purchases needed. Total incremental trial costs:
+\begin{itemize}
     \item Travel \& Installation: \$5,000
     \item 6-month Field Trial Support: \$8,000
-    \item \textbf{Total Field Trial: \$69,247}
+    \item \textbf{Total Field Trial (incremental): \$13,000}
 \end{itemize}
 
 \subsection{Risk Mitigation}

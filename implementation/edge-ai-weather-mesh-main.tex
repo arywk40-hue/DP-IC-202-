@@ -38,19 +38,22 @@ macro-stations that report generalized weather data over broad geographic
 radii. This paradigm degrades sharply in mountainous topographies, where
 elevation change, ridge shadowing, and valley confinement create sharply
 isolated microclimates. We present the First Prototype Stage (PS) of a
-Decentralized Edge AI Environmental Hazard Network: a single, standalone,
-solar-powered Edge AI node built around the ESP32-S3, a 12-parameter
-environmental and hazard sensor suite, an on-device boosted-tree inference
-pipeline, and a LoRa (865 MHz) multi-hop mesh radio layer. The node performs
+Decentralized Edge AI Environmental Hazard Network: a two-node pair of
+standalone, solar-powered Edge AI nodes, each built around the ESP32-S3, a
+12-parameter environmental and hazard sensor suite, an on-device
+boosted-tree inference pipeline, and a LoRa (865 MHz) multi-hop mesh radio
+layer, enabling first-order validation of multi-hop routing between nodes.
+Each node performs
 sensor fusion and anomaly classification locally, transmitting only
 event-driven, low-bandwidth alerts rather than raw telemetry, and remains
 fully operational during cellular and internet blackouts. We detail the
 compute, sensing, intelligence, and communication layers of the
 architecture, contrast the design against commercial monitoring stations,
-and present a bill-of-materials-based cost analysis showing per-node cost
-of approximately INR 19,130 (full hazard configuration) or INR 13,530
-(baseline configuration), against INR 1,20,000--2,50,000 for comparable
-commercial units. We conclude with a scaling and optimization roadmap
+and present a bill-of-materials-based cost analysis, repriced to July 2026
+market rates, showing a per-node cost of approximately INR 19,130 (full
+hazard configuration) and a two-node PS build cost of approximately INR
+40,000--41,000 including shared tooling and spares, against INR
+1,20,000--2,50,000 per unit for comparable commercial stations. We conclude with a scaling and optimization roadmap
 toward a custom 4-layer PCB and mesh-wide deployment.
 \end{abstract}
 
@@ -76,8 +79,9 @@ The First Prototype Stage (PS) of the Edge AI Portable Weather Station
 project aims to validate a paradigm shift: moving from centralized data
 collection to a decentralized, self-healing swarm of hyper-local
 intelligence nodes. The objective of the PS is to design, fabricate, and
-test a single, standalone Edge AI node that integrates high-fidelity
-atmospheric and environmental hazard sensors.
+test a pair of standalone Edge AI nodes that integrate high-fidelity
+atmospheric and environmental hazard sensors, validating both single-node
+sensing performance and inter-node LoRa mesh handoff.
 
 By executing machine learning models directly on the microcontroller (Edge
 AI), the node locally processes raw sensor telemetry, identifies patterns
@@ -324,30 +328,42 @@ achieves comparable analytical density at a fraction of the cost
 (Table~\ref{tab:bom}).
 
 \begin{table}[htbp]
-\caption{Estimated Bill of Materials for the PS Node}
+\caption{Estimated Bill of Materials for the PS Node Pair (July 2026 pricing)}
 \label{tab:bom}
 \centering
-\begin{tabular}{@{}p{2.3cm}p{3.4cm}r@{}}
+\begin{tabular}{@{}p{2.1cm}p{2.8cm}rr@{}}
 \toprule
-\textbf{Category} & \textbf{Components} & \textbf{Cost (INR)} \\
+\textbf{Category} & \textbf{Components} & \textbf{Per Node} & \textbf{2 Nodes} \\
 \midrule
-Compute \& Radio & ESP32-S3 WROOM-1, RFM95W SX1276, passives & 1,499 \\
-Core Meteorological & BME280, Anemometer + Wind Vane, DS18B20, SEN0575, LTR390 & 4,960 \\
-Particulate \& Gases & PMS5003, SGP41, MICS-6814, SCD41 & 7,500 \\
-Specialized Sensing & AS3935 & 1,800 \\
-Power Architecture & 18650 cell, 5W solar panel, CN3065 & 1,370 \\
-Fabrication & PCB (5x batch), PETG, conformal coating & 2,000 \\
+Compute \& Radio & ESP32-S3-WROOM-1 DevKit N16R8, RFM95W SX1276 (865 MHz), passives & 1,499 & 2,998 \\
+Core Meteorological & BME280, wind speed/direction pair, DS18B20, SEN0575, LTR-390 & 4,960 & 9,920 \\
+Particulate \& Gases & PMS5003, SGP41, MICS-6814, SCD41 & 7,500 & 15,000 \\
+Specialized Sensing & AS3935 (CJMCU-3935) & 1,800 & 3,600 \\
+Power Architecture & 18650 cell, 5W solar panel, CN3065, holder/wiring & 1,370 & 2,740 \\
+Fabrication & PCB (5x batch), PETG, conformal coating & 2,000 & 4,000 \\
 \midrule
-\textbf{Total per Node} & \textbf{Complete research-grade node} & \textbf{19,130} \\
+\textbf{Subtotal} & & \textbf{19,129} & \textbf{38,258} \\
+Shared spares/tools buffer & Flux, spare sensors, calibration jigs & --- & 1,742 \\
+\midrule
+\textbf{Total} & \textbf{Complete research-grade node(s)} & \textbf{19,129} & \textbf{40,000} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\textit{Note: wind speed/direction uses a generic analog anemometer +
+wind-vane pair (\textasciitilde INR 2,300) rather than the genuine SparkFun
+Weather Meter Kit, which now retails in India at INR 9,589 due to import
+markup on branded mechanical sensors --- swap in if brand-matched hardware
+is required.}
+
 \subsection{Scalability and Optimization}
 
-At approximately INR 19,130 per node, a 20-node mesh network represents a
-capital expenditure of INR 3.8 Lakhs, still substantially lower than a
-two-unit commercial deployment. Transitioning from prototype to
+At approximately INR 19,130 per node, the two-node PS build totals roughly
+INR 40,000 including shared tooling and spares --- itself substantially
+lower than a single commercial unit (INR 1.2--2.5 Lakhs). Scaling the same
+per-node rate to a full 20-node mesh network represents a capital
+expenditure of approximately INR 3.83 Lakhs, still substantially lower
+than a two-unit commercial deployment. Transitioning from prototype to
 production mesh, a unified schematic in KiCad and a custom 4-layer PCB
 integrating all sensor ICs directly (bypassing redundant regulators and
 LEDs found on commercial breakout boards) is projected to reduce per-node
@@ -366,13 +382,13 @@ with the offline resilience of an 865 MHz LoRa mesh network, the system
 overcomes the geographic and infrastructural limitations of centralized
 weather tracking. The complete firmware implementation, including sensor
 drivers, XGBoost inference engine, and mesh communication stack, has been
-developed and is ready for hardware integration. The immediate next phase
-involves capturing baseline tabular data from the 12-sensor array,
-validating power consumption during localized inference loops, and
-deploying the trained XGBoost model to validate hazard detection accuracy.
-Once validated, the node is ready to replicate and scale across
-mountainous topography, establishing the foundation of a true
-swarm-intelligence environmental network.
+developed and is ready for hardware integration. The immediate next phase involves finalizing hardware
+integration of the 12-sensor array across both nodes, capturing baseline
+tabular data, deploying the C++-converted boosting algorithm, and
+validating power consumption and LoRa mesh handoff between the two nodes
+during localized inference loops. Once validated, the node pair is ready
+to replicate and scale across mountainous topography, establishing the
+foundation of a true swarm-intelligence environmental network.
 
 \section{Variant Comparison: Low-Cost vs. Aviation-Grade}
 \label{sec:variants}
