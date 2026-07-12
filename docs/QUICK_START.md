@@ -1,73 +1,69 @@
-# Quick Start Guide - Edge AI Weather Station
+# Quick Start Guide — Low-Cost Edge AI Weather Node
 
 ## Repository Layout
 
 ```
 Dp/
-├── proposal/          # LaTeX proposals (compile these)
-├── implementation/    # IIT Mandi reference implementation
-├── docs/              # This guide + research docs
-└── references/        # IAF requirement PDF
+├── proposal/          # LaTeX design practicum proposals (3 projects)
+├── implementation/    # IEEE paper — ESP32-S3 + LoRa mesh implementation
+├── firmware/          # ESP-IDF bring-up tree and hardware drivers
+├── code/              # ML training and export scripts
+├── docs/              # Sensor reference + quick start
+└── README.md
 ```
+
+Current state: the hardware driver tree exists, but the application-level firmware
+integration is still in progress. Use the docs below to track the missing pieces.
 
 ## Compile in 5 Minutes (Overleaf)
 
 1. Go to https://www.overleaf.com
-2. Upload these 2 files from `proposal/`:
-   - `design_practicum_proposals.tex`
-   - `project5_hardware_weather_station.tex`
+2. Upload `proposal/design_practicum_proposals.tex`
 3. Click Recompile
-4. Download PDF
 
-## Compile Locally (Mac)
+## Compile Locally
 
 ```bash
-cd /Users/ariyanbhakat/Desktop/Dp/proposal
+cd proposal/
 pdflatex design_practicum_proposals.tex
 pdflatex design_practicum_proposals.tex  # twice for TOC
+
+cd ../implementation/
+pdflatex edge-ai-weather-mesh-main.tex
 ```
 
-## Implementation Reference
+## Implementation Summary
 
-The `implementation/` folder contains the IIT Mandi IEEE paper:
-- **Compute:** ESP32-S3 with 8MB PSRAM
-- **Sensors:** 12-parameter suite (BME280, PMS5003, SCD41, AS3935, etc.)
-- **AI:** XGBoost on-device via micromlgen
-- **Comms:** LoRa SX1276 mesh at 865 MHz
-- **Cost:** INR 19,130 per node (~$228)
+The `implementation/` folder contains the IIT Mandi IEEE-style paper:
 
-## Project 5 Sensor Specs (Verified)
+| Component | Detail |
+|-----------|--------|
+| **Compute** | ESP32-S3 with 8MB PSRAM |
+| **Sensors** | 12-parameter suite (BME280, PMS5003, SCD41, AS3935, etc.) |
+| **AI** | XGBoost on-device via exported C headers (~50 μs/inference) |
+| **Comms** | LoRa SX1276 mesh at 865 MHz, 10 km range |
+| **Cost** | ~₹19,130 per node, ~₹50,000 for 2-node prototype pair |
 
-| Sensor | Model | Key Specs | Price |
-|--------|-------|-----------|-------|
-| Temp/Humidity | Vaisala HMP155 | ±1% RH, -80 to +60°C | $800 |
-| Barometer | Vaisala PTB330 | ±0.10 hPa, QNH/QFE | $1,200 |
-| Wind | Gill WindSonic M | 0-60 m/s, ±2%, ultrasonic | $1,000 |
-| Visibility | Vaisala PWD22 | 10-20,000 m, forward scatter | $4,500 |
-| Cloud Ceiling | Campbell CS135 | 10 km LIDAR, ICAO | $3,000 |
-| Precipitation | Vaisala DRD11A | RAINCAP, heating -15°C | $1,500 |
-| Edge AI | Jetson Orin Nano | 67 TOPS, 8GB LPDDR5 | $249 |
-| Data Logger | Campbell CR1000Xe | -40 to +70°C, 24-bit | $2,000 |
+## Key Design Decisions
 
-## Pitch Talking Points
+- **Wind sensing:** Generic analog anemometer + wind vane (~₹2,300) instead of branded
+  SparkFun kit (₹9,589) — keeps per-node cost in ₹19k territory
+- **Edge AI over cloud:** All inference runs on-device; only event-driven alerts
+  transmitted via LoRa mesh
+- **Zero-cloud survivability:** Fully operational during cellular/internet blackouts
 
-### Hook
-"60% of military aviation accidents are weather-related. Forward bases have zero visibility forecast. This project builds the first portable edge AI weather station that predicts fog 30 minutes ahead, costs 10x less, and deploys in 30 minutes."
+## Scaling Path
 
-### Key Differentiators
-1. Edge AI nowcasting (0-30 min ahead)
-2. Tactical portability ($15k, <50 lbs)
-3. Physics-informed AI (42% accuracy boost)
-4. Autonomous operation (7+ days solar)
-5. IAF requirement (Compendium #49)
-
-### IIT Mandi Validation
-The implementation architecture is validated by IIT Mandi's ESP32-S3 + LoRa mesh node at INR 19,130 per unit with 12-parameter sensing and on-device XGBoost inference.
+The 2-node prototype validates single-node sensing and inter-node mesh handoff.
+Production scaling to 20+ nodes uses the same per-node BOM with projected 20–30%
+savings from a custom 4-layer PCB.
 
 ## Files to Read
 
-1. `proposal/design_practicum_proposals.tex` - Full proposal
-2. `implementation/edge-ai-weather-mesh-main.tex` - Implementation paper
-3. `references/Problem_49_Portable_Automatic_Weather_Station.pdf` - IAF requirement
-4. `docs/WEATHER_STATION_SUMMARY.md` - Quick summary
-5. `docs/RESEARCH_SUMMARY.md` - Research sources
+1. `implementation/edge-ai-weather-mesh-main.tex` — Full system architecture
+2. `docs/SENSORS.md` — Detailed sensor specs and interface map
+3. `firmware/components/sensors/include/bme280.h` — Sensor driver interface example
+4. `firmware/components/lora/src/sx1276.c` — LoRa driver implementation
+5. `code/ml/train_model.py` — XGBoost training pipeline
+6. `docs/PROJECT_STATUS.md` — Gap review and current status
+7. `docs/FOUR_MONTH_BUILD_PLAN.md` — 6-person build plan
