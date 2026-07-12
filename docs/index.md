@@ -74,15 +74,17 @@ docs/
 
 ---
 
-## 🤖 ML Pipeline
+## 🤖 ML Pipeline (Real Data Only)
 
 ```bash
 cd code/ml/
-pip install xgboost scikit-learn pandas numpy
+pip install -r requirements.txt
 
-# Full pipeline
-python prepare_dataset.py --generate-synthetic --samples 20000 --output ./data/
-python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+# Prepare real weather data
+python prepare_dataset.py --input dataset/weatherHistory.csv --output data/
+
+# Train on real data
+python train_model.py --data data/ --output model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
 ```
 
 Generated headers (in `firmware/components/ml/include/`):

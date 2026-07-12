@@ -18,15 +18,13 @@ Raw Data → prepare_dataset.py → train_model.py → convert_to_c.py → Firmw
 
 ```bash
 cd code/ml/
-pip install xgboost scikit-learn pandas numpy
+pip install -r requirements.txt
 
-# Option 1: Synthetic data (fast, for development)
-python prepare_dataset.py --generate-synthetic --samples 20000 --output ./data/
-python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+# Prepare real weather data
+python prepare_dataset.py --input dataset/weatherHistory.csv --output data/
 
-# Option 2: Real weather data
-python prepare_dataset.py --input /path/to/weatherHistory.csv --output ./data/
-python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+# Train on real data
+python train_model.py --data data/ --output model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
 ```
 
 ---
