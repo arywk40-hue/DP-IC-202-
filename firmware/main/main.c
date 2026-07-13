@@ -59,6 +59,10 @@
 #include "crypto.h"
 #include "key_provisioning.h"
 
+#ifdef CONFIG_MESH_TEST_MODE
+#include "test_mesh_standalone.c"
+#endif
+
 static const char *TAG = "MAIN";
 
 /*
@@ -1047,7 +1051,7 @@ void app_main(void)
 
     ESP_LOGI(TAG, "System boot successful — creating application tasks");
 
-    /* Initialize key provisioning and load/generate network key */
+/* Initialize key provisioning and load/generate network key */
     esp_err_t kp_ret = key_provisioning_init();
     if (kp_ret != ESP_OK) {
         ESP_LOGE(TAG, "Key provisioning init failed: %s", esp_err_to_name(kp_ret));
@@ -1067,17 +1071,15 @@ void app_main(void)
         }
     }
 
-    /*
-     * Create the alert queue before spawning tasks.
-    g_alert_queue = xQueueCreate(ALERT_QUEUE_LENGTH, sizeof(alert_queue_item_t));
-    if (g_alert_queue == NULL) {
-        ESP_LOGE(TAG, "Failed to create alert queue — aborting");
-        while (1) { vTaskDelay(pdMS_TO_TICKS(60000)); }
-    }
+#ifdef CONFIG_MESH_TEST_MODE
+    /* Run mesh standalone test instead of normal sensor/ML tasks */
+    mesh_test_init();
+    return;  // Don't proceed to normal sensor/ML initialization
+#else
 
     /*
-     * Create sensor/ML task on Core 0.
-     * Priority 5 — sensor reads are time-critical for feature freshness.
+     * Create the alert queue before spawning tasks.
+     * sensor_ml_task enqueues alert_queue_item_t; mesh_comms_task dequeues.
      */
     TaskHandle_t sensor_task_handle = NULL;
     BaseType_t task_ret = xTaskCreatePinnedToCore(
