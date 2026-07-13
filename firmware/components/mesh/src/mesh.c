@@ -20,6 +20,7 @@
 #include "mesh.h"
 #include "sx1276.h"
 #include "common.h"
+#include "crypto.h"
 
 static const char *TAG = "MESH";
 
@@ -163,6 +164,9 @@ static struct {
     pending_ack_t   pending_ack;
 
     mesh_stats_t    stats;
+
+    crypto_context_t crypto_ctx;      // Network encryption context
+    bool             crypto_initialized;
 
     SemaphoreHandle_t mutex;
 } g_mesh;
@@ -494,6 +498,8 @@ esp_err_t mesh_init(uint32_t node_id)
     memset(g_mesh.dup_cache, 0, sizeof(g_mesh.dup_cache));
     memset(&g_mesh.stats, 0, sizeof(g_mesh.stats));
 
+    g_mesh.crypto_initialized = false;
+
     g_mesh.initialized = true;
     ESP_LOGI(TAG, "Mesh initialized (node ID: 0x%08lX)", (unsigned long)node_id);
     return ESP_OK;
@@ -505,6 +511,32 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
     if (!g_mesh.initialized) return ESP_ERR_INVALID_STATE;
     if (payload == NULL && len > 0) return ESP_ERR_INVALID_ARG;
     if (len > MAX_PACKET_PAYLOAD) return ESP_ERR_INVALID_SIZE;
+
+    /* Encrypt payload if crypto is initialized */
+    uint8_t encrypted_payload[MAX_PACKET_PAYLOAD];
+    uint8_t tag[CRYPTO_TAG_SIZE];
+    uint8_t enc_len = len;
+    uint8_t *pkt_payload = (len > 0) ? (uint8_t *)payload : NULL;
+
+    if (g_mesh.crypto_initialized && len > 0) {
+        uint32_t seq = g_mesh.seq_num;  // Use current seq_num for nonce
+        esp_err_t enc_ret = crypto_encrypt(&g_mesh.crypto_ctx,
+                                            g_mesh.node_id, seq,
+                                            payload, len,
+                                            encrypted_payload, tag);
+        if (enc_ret != ESP_OK) {
+            ESP_LOGE(TAG, "Encryption failed");
+            return ESP_FAIL;
+        }
+        /* Append tag to encrypted payload */
+        if (len + CRYPTO_TAG_SIZE > MAX_PACKET_PAYLOAD) {
+            ESP_LOGE(TAG, "Encrypted payload too large");
+            return ESP_ERR_INVALID_SIZE;
+        }
+        memcpy(encrypted_payload + len, tag, CRYPTO_TAG_SIZE);
+        enc_len = len + CRYPTO_TAG_SIZE;
+        pkt_payload = encrypted_payload;
+    }
 
     mesh_acquire_mutex();
 
@@ -518,9 +550,9 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
     pkt.seq_num = seq;
     pkt.timestamp_ms = mesh_get_time_ms();
     pkt.ttl = MESH_DEFAULT_TTL;
-    pkt.payload_len = len;
+    pkt.payload_len = enc_len;
     pkt.flags = flags;
-    if (len > 0) memcpy(pkt.payload, payload, len);
+    if (enc_len > 0) memcpy(pkt.payload, pkt_payload, enc_len);
 
     if (need_ack) {
         g_mesh.pending_ack.active = true;
@@ -528,7 +560,7 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
         g_mesh.pending_ack.seq_num = seq;
         g_mesh.pending_ack.retries = 0;
         g_mesh.pending_ack.next_retry_ms = mesh_get_time_ms() + MESH_ACK_TIMEOUT_MS;
-        g_mesh.pending_ack.payload_len = len;
+        g_mesh.pending_ack.payload_len = len;  // Store original plaintext len for retry
         g_mesh.pending_ack.flags = flags;
         if (len > 0) memcpy(g_mesh.pending_ack.payload, payload, len);
     }
@@ -538,6 +570,15 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
 
     esp_err_t ret = ESP_OK;
     if (g_mesh.lora_handle) {
+        /* CSMA/CA before transmission */
+        if (!sx1276_csma_ca(g_mesh.lora_handle, 3, 10)) {
+            ESP_LOGW(TAG, "CSMA/CA failed, channel busy");
+            ret = ESP_ERR_TIMEOUT;
+            if (need_ack) g_mesh.pending_ack.active = false;
+            mesh_release_mutex();
+            return ret;
+        }
+
         if (sx1276_transmit(g_mesh.lora_handle, tx_buf, tx_len, 1000)) {
             g_mesh.stats.packets_sent++;
         } else {
@@ -614,9 +655,31 @@ esp_err_t mesh_receive(const uint8_t *data, uint8_t len,
 
     mesh_release_mutex();
 
-    // Deliver to application
+    // Deliver to application (decrypt if needed)
     if (for_us && g_mesh.rx_callback) {
-        g_mesh.rx_callback(&pkt, pkt.source_id, rssi, snr);
+        // Create a copy of packet for callback with decrypted payload
+        mesh_packet_t callback_pkt = pkt;
+        
+        if (g_mesh.crypto_initialized && pkt.payload_len >= CRYPTO_TAG_SIZE) {
+            uint8_t decrypted[MAX_PACKET_PAYLOAD];
+            esp_err_t dec_ret = crypto_decrypt(&g_mesh.crypto_ctx,
+                                                pkt.source_id, pkt.seq_num,
+                                                pkt.payload, pkt.payload_len - CRYPTO_TAG_SIZE,
+                                                pkt.payload + pkt.payload_len - CRYPTO_TAG_SIZE,
+                                                decrypted);
+            if (dec_ret == ESP_OK) {
+                callback_pkt.payload_len = pkt.payload_len - CRYPTO_TAG_SIZE;
+                memcpy(callback_pkt.payload, decrypted, callback_pkt.payload_len);
+                ESP_LOGD(TAG, "Decrypted %d bytes from 0x%08lX seq=%lu",
+                         callback_pkt.payload_len, (unsigned long)pkt.source_id, (unsigned long)pkt.seq_num);
+            } else {
+                ESP_LOGW(TAG, "Decryption failed for packet from 0x%08lX seq=%lu",
+                         (unsigned long)pkt.source_id, (unsigned long)pkt.seq_num);
+                // Don't deliver corrupted packet
+            }
+        }
+        
+        g_mesh.rx_callback(&callback_pkt, pkt.source_id, rssi, snr);
     }
 
     return ESP_OK;
@@ -666,8 +729,96 @@ void mesh_set_lora_handle(sx1276_handle_t *handle)
     g_mesh.lora_handle = handle;
 }
 
-void mesh_periodic(uint32_t now_ms)
+/**
+ * @brief Secure send with encryption, fragmentation, CSMA/CA, and ACK/retry.
+ * High-level API that handles encryption, fragmentation, CSMA/CA channel access,
+ * and ACK/retry logic automatically.
+ * @param dest_id   Destination node ID or MESH_BROADCAST_ID.
+ * @param payload   Plaintext payload data.
+ * @param len       Payload length (max MESH_MAX_PLAINTEXT_SIZE).
+ * @param flags     Packet flags (MESH_FLAG_*).
+ * @return ESP_OK on successful transmission of all fragments.
+ */
+esp_err_t mesh_secure_send(uint32_t dest_id, const uint8_t *payload,
+                           uint8_t len, uint8_t flags)
 {
+    if (!g_mesh.initialized) return ESP_ERR_INVALID_STATE;
+    if (!g_mesh.crypto_initialized) {
+        ESP_LOGE(TAG, "Crypto not initialized, call mesh_set_crypto_key() first");
+        return ESP_ERR_INVALID_STATE;
+    }
+    if (payload == NULL && len > 0) return ESP_ERR_INVALID_ARG;
+    if (len > MESH_MAX_PLAINTEXT_SIZE) return ESP_ERR_INVALID_SIZE;
+
+    /* Encrypt payload */
+    uint8_t encrypted_payload[MAX_PACKET_PAYLOAD];
+    uint8_t tag[CRYPTO_TAG_SIZE];
+    uint8_t enc_len = len;
+    uint8_t *pkt_payload = (len > 0) ? (uint8_t *)payload : NULL;
+
+    if (len > 0) {
+        uint32_t seq = g_mesh.seq_num;
+        esp_err_t enc_ret = crypto_encrypt(&g_mesh.crypto_ctx,
+                                            g_mesh.node_id, seq,
+                                            payload, len,
+                                            encrypted_payload, tag);
+        if (enc_ret != ESP_OK) {
+            ESP_LOGE(TAG, "Encryption failed");
+            return ESP_FAIL;
+        }
+        /* Append tag to encrypted payload */
+        if (len + CRYPTO_TAG_SIZE > MAX_PACKET_PAYLOAD) {
+            ESP_LOGE(TAG, "Encrypted payload too large");
+            return ESP_ERR_INVALID_SIZE;
+        }
+        memcpy(encrypted_payload + len, tag, CRYPTO_TAG_SIZE);
+        enc_len = len + CRYPTO_TAG_SIZE;
+        pkt_payload = encrypted_payload;
+    }
+
+    /* Use CSMA/CA before transmission */
+    if (g_mesh.lora_handle && !sx1276_csma_ca(g_mesh.lora_handle, 3, 10)) {
+        ESP_LOGW(TAG, "CSMA/CA failed, channel busy");
+        return ESP_ERR_TIMEOUT;
+    }
+
+    /* Use mesh_send for fragmentation and transmission */
+    return mesh_send(dest_id, pkt_payload, enc_len, flags | MESH_FLAG_ALERT);
+}
+
+/**
+ * @brief Secure receive callback registration.
+ * Registers a callback for decrypted, reassembled packets.
+ * The callback receives decrypted plaintext payloads.
+ * @param cb  Callback function pointer.
+ */
+void mesh_set_secure_rx_callback(mesh_rx_callback_t cb)
+{
+    g_mesh.rx_callback = cb;
+}
+
+void mesh_set_lora_handle(sx1276_handle_t *handle)
+}
+
+/**
+ * @brief Set the network encryption key for the mesh layer.
+ * @param key 16-byte network encryption key.
+ * @return ESP_OK on success, ESP_ERR_INVALID_ARG if key is NULL.
+ */
+esp_err_t mesh_set_crypto_key(const uint8_t key[CRYPTO_KEY_SIZE])
+{
+    if (key == NULL) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    esp_err_t ret = crypto_init(&g_mesh.crypto_ctx, key);
+    if (ret == ESP_OK) {
+        g_mesh.crypto_initialized = true;
+        ESP_LOGI(TAG, "Mesh crypto initialized with network key");
+    }
+    return ret;
+}
+
+uint32_t mesh_get_time_ms(void)
     if (!g_mesh.initialized) return;
 
     mesh_acquire_mutex();

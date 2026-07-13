@@ -425,6 +425,34 @@ bool sx1276_channel_activity_detect(sx1276_handle_t *handle) {
     return false;  // Timeout, assume channel busy
 }
 
+bool sx1276_csma_ca(sx1276_handle_t *handle, uint8_t max_retries, uint16_t base_backoff_ms)
+{
+    if (handle == NULL) return false;
+    
+    for (uint8_t retry = 0; retry <= max_retries; retry++) {
+        // Perform CAD to check if channel is free
+        if (sx1276_channel_activity_detect(handle)) {
+            ESP_LOGD(TAG, "Channel free, proceeding to transmit");
+            return true;  // Channel free, ready to transmit
+        }
+        
+        if (retry < max_retries) {
+            // Exponential backoff with jitter
+            uint32_t backoff = base_backoff_ms * (1 << retry);
+            // Add jitter: ±25% of backoff
+            uint32_t jitter = (esp_random() % (backoff / 2)) - (backoff / 4);
+            backoff = backoff + jitter;
+            
+            ESP_LOGD(TAG, "Channel busy, backing off for %lu ms (retry %d/%d)",
+                     backoff, retry + 1, max_retries);
+            vTaskDelay(pdMS_TO_TICKS(backoff));
+        }
+    }
+    
+    ESP_LOGW(TAG, "CSMA/CA failed after %d retries", max_retries);
+    return false;
+}
+
 int16_t sx1276_get_rssi(sx1276_handle_t *handle) {
     uint8_t rssi_raw = sx1276_read_register(handle, SX1276_REG_RSSI_VALUE);
     return -164 + rssi_raw;
@@ -436,4 +464,198 @@ void sx1276_reset(sx1276_handle_t *handle) {
     vTaskDelay(pdMS_TO_TICKS(1));
     gpio_set_level(handle->pin_rst, 1);
     vTaskDelay(pdMS_TO_TICKS(10));  // Wait for reset
+}
+
+/* ============================================
+ * EXTENDED LORA PARAMETER SETTERS
+ * ============================================ */
+
+void sx1276_set_implicit_header(sx1276_handle_t *handle, bool implicit)
+{
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG1);
+    if (implicit) {
+        reg |= 0x01;  // Implicit header mode
+    } else {
+        reg &= ~0x01; // Explicit header mode
+    }
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG1, reg);
+    handle->implicit_header = implicit;
+}
+
+void sx1276_set_crc(sx1276_handle_t *handle, bool enable)
+{
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG2);
+    if (enable) {
+        reg |= 0x04;  // CRC on
+    } else {
+        reg &= ~0x04; // CRC off
+    }
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG2, reg);
+}
+
+void sx1276_set_iq_inversion(sx1276_handle_t *handle, bool invert)
+{
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_INVERTIQ);
+    if (invert) {
+        reg = 0x66;  // Inverted IQ
+    } else {
+        reg = 0x27;  // Normal IQ
+    }
+    sx1276_write_register(handle, SX1276_REG_INVERTIQ, reg);
+    
+    // Also set INVERTIQ2
+    sx1276_write_register(handle, SX1276_REG_INVERTIQ2, invert ? 0x19 : 0x1D);
+}
+
+void sx1276_set_sync_word(sx1276_handle_t *handle, uint8_t sync_word)
+{
+    sx1276_write_register(handle, SX1276_REG_SYNC_VALUE1, sync_word);
+    handle->sync_word = sync_word;
+}
+
+void sx1276_set_preamble_length(sx1276_handle_t *handle, uint16_t length)
+{
+    sx1276_write_register(handle, SX1276_REG_PREAMBLE_MSB, (length >> 8) & 0xFF);
+    sx1276_write_register(handle, SX1276_REG_PREAMBLE_LSB, length & 0xFF);
+    handle->preamble_length = length;
+}
+
+void sx1276_set_coding_rate(sx1276_handle_t *handle, uint8_t cr)
+{
+    // CR values: 1=4/5, 2=4/6, 3=4/7, 4=4/8
+    if (cr < 1) cr = 1;
+    if (cr > 4) cr = 4;
+    
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG1);
+    reg = (reg & 0xF1) | ((cr - 1) << 1);
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG1, reg);
+}
+
+bool sx1276_switch_tx_to_rx(sx1276_handle_t *handle)
+{
+    if (handle == NULL) return false;
+    
+    // Clear IRQ flags
+    sx1276_clear_irq_flags(handle, SX1276_IRQ_TX_DONE);
+    
+    // Set DIO0 for RX done
+    sx1276_write_register(handle, SX1276_REG_DIO_MAPPING1, SX1276_DIO0_RX_DONE);
+    
+    // Switch to continuous RX mode
+    sx1276_set_mode(handle, SX1276_MODE_RX_CONTINUOUS);
+    handle->is_transmitting = false;
+    handle->is_receiving = true;
+    
+    return true;
+}
+
+bool sx1276_switch_rx_to_tx(sx1276_handle_t *handle)
+{
+    if (handle == NULL) return false;
+    
+    // Clear IRQ flags
+    sx1276_clear_irq_flags(handle, SX1276_IRQ_RX_DONE | SX1276_IRQ_RX_TIMEOUT);
+    
+    // Set DIO0 for TX done
+    sx1276_write_register(handle, SX1276_REG_DIO_MAPPING1, SX1276_DIO0_TX_DONE);
+    
+    // Standby first
+    sx1276_set_mode(handle, SX1276_MODE_STANDBY);
+    handle->is_receiving = false;
+    
+    return true;
+}
+
+bool sx1276_wake_from_sleep(sx1276_handle_t *handle)
+{
+    if (handle == NULL) return false;
+    
+    // Sleep to Standby
+    sx1276_set_mode(handle, SX1276_MODE_STANDBY);
+    vTaskDelay(pdMS_TO_TICKS(10));
+    
+    return true;
+}
+
+void sx1276_set_bandwidth(sx1276_handle_t *handle, uint8_t bw)
+{
+    // BW values: 0=7.8kHz, 1=10.4kHz, 2=15.6kHz, 3=20.8kHz, 4=31.25kHz, 
+    //            5=41.7kHz, 6=62.5kHz, 7=125kHz, 8=250kHz, 9=500kHz
+    if (bw > 9) bw = 9;
+    
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG1);
+    reg = (reg & 0x0F) | (bw << 4);
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG1, reg);
+}
+
+void sx1276_set_spreading_factor(sx1276_handle_t *handle, uint8_t sf)
+{
+    if (sf < 6) sf = 6;
+    if (sf > 12) sf = 12;
+    
+    uint8_t reg = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG2);
+    reg = (reg & 0x0F) | (sf << 4);
+    
+    // Low data rate optimization for SF11, SF12
+    uint8_t reg3 = sx1276_read_register(handle, SX1276_REG_MODEM_CONFIG3);
+    if (sf >= 11) {
+        reg3 |= 0x08;  // Low data rate optimize
+    } else {
+        reg3 &= ~0x08;
+    }
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG3, reg3);
+    
+    sx1276_write_register(handle, SX1276_REG_MODEM_CONFIG2, reg);
+    handle->spreading_factor = sf;
+}
+
+float sx1276_get_snr(sx1276_handle_t *handle)
+{
+    int8_t snr_raw = (int8_t)sx1276_read_register(handle, SX1276_REG_PKT_SNR_VALUE);
+    return snr_raw * 0.25f;
+}
+
+bool sx1276_set_all_params(sx1276_handle_t *handle, uint32_t freq, uint8_t sf, 
+                           uint8_t bw, uint8_t cr, uint8_t sync_word,
+                           uint16_t preamble, int8_t tx_power)
+{
+    if (handle == NULL) return false;
+    
+    // Set frequency
+    sx1276_set_frequency(handle, freq);
+    
+    // Set spreading factor
+    sx1276_set_spreading_factor(handle, sf);
+    
+    // Set bandwidth
+    sx1276_set_bandwidth(handle, bw);
+    
+    // Set coding rate
+    sx1276_set_coding_rate(handle, cr);
+    
+    // Set sync word
+    sx1276_set_sync_word(handle, sync_word);
+    
+    // Set preamble length
+    sx1276_set_preamble_length(handle, preamble);
+    
+    // Set TX power
+    sx1276_set_tx_power(handle, tx_power);
+    
+    // Explicit header mode by default
+    sx1276_set_implicit_header(handle, false);
+    
+    // CRC on by default
+    sx1276_set_crc(handle, true);
+    
+    // Normal IQ
+    sx1276_set_iq_inversion(handle, false);
+    
+    return true;
+}
+
+uint8_t sx1276_get_mode(sx1276_handle_t *handle)
+{
+    if (handle == NULL) return 0;
+    return sx1276_read_register(handle, SX1276_REG_OP_MODE) & 0x07;
 }

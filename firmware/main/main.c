@@ -56,6 +56,8 @@
 #include "sx1276.h"
 #include "ml.h"
 #include "mesh.h"
+#include "crypto.h"
+#include "key_provisioning.h"
 
 static const char *TAG = "MAIN";
 
@@ -1045,10 +1047,28 @@ void app_main(void)
 
     ESP_LOGI(TAG, "System boot successful — creating application tasks");
 
+    /* Initialize key provisioning and load/generate network key */
+    esp_err_t kp_ret = key_provisioning_init();
+    if (kp_ret != ESP_OK) {
+        ESP_LOGE(TAG, "Key provisioning init failed: %s", esp_err_to_name(kp_ret));
+    } else {
+        uint8_t netkey[CRYPTO_KEY_SIZE];
+        kp_ret = key_provisioning_load_network_key(netkey, true);  // Auto-generate if not found
+        if (kp_ret == ESP_OK) {
+            /* Initialize mesh crypto with the network key */
+            esp_err_t mesh_crypto_ret = mesh_set_crypto_key(netkey);
+            if (mesh_crypto_ret != ESP_OK) {
+                ESP_LOGE(TAG, "Mesh crypto init failed: %s", esp_err_to_name(mesh_crypto_ret));
+            } else {
+                ESP_LOGI(TAG, "Mesh encryption enabled with network key");
+            }
+        } else {
+            ESP_LOGW(TAG, "Could not load/generate network key, mesh will run unencrypted");
+        }
+    }
+
     /*
      * Create the alert queue before spawning tasks.
-     * sensor_ml_task enqueues alert_queue_item_t; mesh_comms_task dequeues.
-     */
     g_alert_queue = xQueueCreate(ALERT_QUEUE_LENGTH, sizeof(alert_queue_item_t));
     if (g_alert_queue == NULL) {
         ESP_LOGE(TAG, "Failed to create alert queue — aborting");

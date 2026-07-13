@@ -6,6 +6,7 @@ idf_component_register(
         sensors
         ml
         mesh
+        crypto
         driver
         esp_timer
         nvs_flash

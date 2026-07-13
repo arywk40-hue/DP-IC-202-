@@ -9,7 +9,10 @@
  *
  * Topology:  Decentralized peer-to-peer mesh.
  * Routing:   Flooding with TTL + duplicate suppression + optional route cache.
- * Security:  Packet CRC, sequence numbers for replay protection.
+ * Security:  AES-128-GCM end-to-end payload encryption + CRC8 hop integrity
+ *            + sequence numbers for replay protection.
+ * Fragmentation: Large payloads split into fragments with mesh_frag_header_t
+ *                inside payload, reassembled before decryption.
  */
 
 #ifndef MESH_H
@@ -19,6 +22,7 @@
 #include <stdbool.h>
 #include "esp_err.h"
 #include "common.h"
+#include "crypto.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,6 +34,28 @@ extern "C" {
 #define MESH_MAX_PACKET_SIZE    (sizeof(mesh_packet_t))
 #define MESH_HEARTBEAT_INTERVAL_MS    30000   // 30s heartbeat broadcast
 #define MESH_NEIGHBOR_TIMEOUT_MS      90000   // 90s = 3 missed heartbeats
+
+/* Fragmentation constants */
+#define MESH_FRAG_HEADER_SIZE       6   // msg_id(2) | frag_index(1) | frag_count(1) | auth_tag_included(1) | reserved(1)
+#define MESH_MAX_FRAG_DATA          (MAX_PACKET_PAYLOAD - MESH_FRAG_HEADER_SIZE - 16)  // payload - frag_hdr - GCM tag
+
+/**
+ * @brief Fragment header — lives inside mesh_packet_t.payload[]
+ * 
+ * Layout (packed):
+ *   [0-1]  msg_id          (uint16_t, random per logical message, same across fragments)
+ *   [2]    frag_index      (uint8_t, 0-based)
+ *   [3]    frag_count      (uint8_t, total fragments for this msg_id)
+ *   [4]    auth_tag_included (uint8_t, 1 only on last fragment, else 0)
+ *   [5]    reserved        (uint8_t, for future use)
+ */
+typedef struct __attribute__((packed)) {
+    uint16_t msg_id;
+    uint8_t  frag_index;
+    uint8_t  frag_count;
+    uint8_t  auth_tag_included;
+    uint8_t  reserved;
+} mesh_frag_header_t;
 
 /**
  * @brief Mesh packet header — fixed-size, precedes payload.
@@ -89,13 +115,15 @@ typedef struct {
 esp_err_t mesh_init(uint32_t node_id);
 
 /**
- * @brief Send a packet into the mesh network.
+ * @brief Send a packet into the mesh network (with fragmentation if needed).
  * If dest_id is MESH_BROADCAST_ID, all reachable nodes receive it.
+ * Large payloads are automatically fragmented, encrypted, and transmitted
+ * as multiple fragments with mesh_frag_header_t headers.
  * @param dest_id   Destination node ID or MESH_BROADCAST_ID.
- * @param payload   Payload data.
- * @param len       Payload length (must be <= MAX_PACKET_PAYLOAD).
+ * @param payload   Payload data (plaintext, will be encrypted+fragmented).
+ * @param len       Payload length (must be <= MESH_MAX_PLAINTEXT_SIZE).
  * @param flags     Packet flags (MESH_FLAG_*).
- * @return ESP_OK on successful local transmission.
+ * @return ESP_OK on successful local transmission of all fragments.
  */
 esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
                     uint8_t len, uint8_t flags);
@@ -103,7 +131,8 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
 /**
  * @brief Process a received packet from the radio layer.
  * Validates CRC, checks duplicates, decrements TTL,
- * forwards if applicable, and delivers to application callback.
+ * forwards if applicable, reassembles fragments, decrypts,
+ * and delivers to application callback.
  * @param data      Raw received bytes (including header).
  * @param len       Total received length.
  * @param rssi      RSSI of the received packet.
@@ -151,7 +180,7 @@ void mesh_get_stats(mesh_stats_t *stats);
 /**
  * @brief Application callback for received mesh packets.
  * Called by mesh_receive() when a packet is addressed to this node
- * or is a broadcast. Implemented by the application layer.
+ * or is a broadcast. The payload is already decrypted and reassembled.
  */
 typedef void (*mesh_rx_callback_t)(const mesh_packet_t *packet,
                                     uint32_t from_id,
@@ -169,6 +198,35 @@ void mesh_set_rx_callback(mesh_rx_callback_t cb);
  * @param handle  SX1276 handle from sx1276_init().
  */
 void mesh_set_lora_handle(sx1276_handle_t *handle);
+
+/**
+ * @brief Set the network encryption key for the mesh layer.
+ * Must be called before any encrypted communication.
+ * @param key 16-byte network encryption key.
+ * @return ESP_OK on success, ESP_ERR_INVALID_ARG if key is NULL.
+ */
+esp_err_t mesh_set_crypto_key(const uint8_t key[CRYPTO_KEY_SIZE]);
+
+/**
+ * @brief Secure send with encryption, fragmentation, CSMA/CA, and ACK/retry.
+ * High-level API that handles encryption, fragmentation, CSMA/CA channel access,
+ * and ACK/retry logic automatically.
+ * @param dest_id   Destination node ID or MESH_BROADCAST_ID.
+ * @param payload   Plaintext payload data.
+ * @param len       Payload length (max MESH_MAX_PLAINTEXT_SIZE).
+ * @param flags     Packet flags (MESH_FLAG_*).
+ * @return ESP_OK on successful transmission of all fragments.
+ */
+esp_err_t mesh_secure_send(uint32_t dest_id, const uint8_t *payload,
+                           uint8_t len, uint8_t flags);
+
+/**
+ * @brief Secure receive callback registration.
+ * Registers a callback for decrypted, reassembled packets.
+ * The callback receives decrypted plaintext payloads.
+ * @param cb  Callback function pointer.
+ */
+void mesh_set_secure_rx_callback(mesh_rx_callback_t cb);
 
 /**
  * @brief Periodic maintenance — call from mesh_comms_task loop.

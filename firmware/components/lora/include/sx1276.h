@@ -226,6 +226,15 @@ void sx1276_standby(sx1276_handle_t *handle);
 bool sx1276_channel_activity_detect(sx1276_handle_t *handle);
 
 /**
+ * @brief Perform CSMA/CA with exponential backoff before transmission
+ * @param handle Device handle
+ * @param max_retries Maximum number of backoff retries (0 = no retry)
+ * @param base_backoff_ms Base backoff time in milliseconds
+ * @return true if channel became free and ready to transmit, false if max retries exceeded
+ */
+bool sx1276_csma_ca(sx1276_handle_t *handle, uint8_t max_retries, uint16_t base_backoff_ms);
+
+/**
  * @brief Get current RSSI
  * @param handle Device handle
  * @return RSSI in dBm
@@ -233,26 +242,111 @@ bool sx1276_channel_activity_detect(sx1276_handle_t *handle);
 int16_t sx1276_get_rssi(sx1276_handle_t *handle);
 
 /**
- * @brief Reset SX1276 via reset pin
+ * @brief Set implicit/explicit header mode
  * @param handle Device handle
+ * @param implicit true for implicit header, false for explicit
  */
-void sx1276_reset(sx1276_handle_t *handle);
+void sx1276_set_implicit_header(sx1276_handle_t *handle, bool implicit);
 
 /**
- * @brief Read register
+ * @brief Set CRC enable/disable
  * @param handle Device handle
- * @param reg Register address
- * @return Register value
+ * @param enable true to enable CRC, false to disable
  */
-uint8_t sx1276_read_register(sx1276_handle_t *handle, uint8_t reg);
+void sx1276_set_crc(sx1276_handle_t *handle, bool enable);
 
 /**
- * @brief Write register
+ * @brief Set IQ inversion (for relay/hop)
  * @param handle Device handle
- * @param reg Register address
- * @param value Value to write
+ * @param invert true to invert IQ
  */
-void sx1276_write_register(sx1276_handle_t *handle, uint8_t reg, uint8_t value);
+void sx1276_set_iq_inversion(sx1276_handle_t *handle, bool invert);
+
+/**
+ * @brief Set LoRa sync word
+ * @param handle Device handle
+ * @param sync_word Sync word value
+ */
+void sx1276_set_sync_word(sx1276_handle_t *handle, uint8_t sync_word);
+
+/**
+ * @brief Set preamble length
+ * @param handle Device handle
+ * @param length Preamble length in symbols
+ */
+void sx1276_set_preamble_length(sx1276_handle_t *handle, uint16_t length);
+
+/**
+ * @brief Set coding rate
+ * @param handle Device handle
+ * @param cr Coding rate (1-4 for 4/5, 4/6, 4/7, 4/8)
+ */
+void sx1276_set_coding_rate(sx1276_handle_t *handle, uint8_t cr);
+
+/**
+ * @brief Mode switch helper: TX -> RX continuous
+ * @param handle Device handle
+ * @return true on success
+ */
+bool sx1276_switch_tx_to_rx(sx1276_handle_t *handle);
+
+/**
+ * @brief Mode switch helper: RX -> TX
+ * @param handle Device handle
+ * @return true on success
+ */
+bool sx1276_switch_rx_to_tx(sx1276_handle_t *handle);
+
+/**
+ * @brief Mode switch helper: Sleep -> Standby
+ * @param handle Device handle
+ * @return true on success
+ */
+bool sx1276_wake_from_sleep(sx1276_handle_t *handle);
+
+/**
+ * @brief Set LoRa bandwidth
+ * @param handle Device handle
+ * @param bw Bandwidth setting (0-9)
+ */
+void sx1276_set_bandwidth(sx1276_handle_t *handle, uint8_t bw);
+
+/**
+ * @brief Set spreading factor
+ * @param handle Device handle
+ * @param sf Spreading factor (6-12)
+ */
+void sx1276_set_spreading_factor(sx1276_handle_t *handle, uint8_t sf);
+
+/**
+ * @brief Get current SNR
+ * @param handle Device handle
+ * @return SNR in dB
+ */
+float sx1276_get_snr(sx1276_handle_t *handle);
+
+/**
+ * @brief Configure all LoRa parameters at once
+ * @param handle Device handle
+ * @param freq Frequency in Hz
+ * @param sf Spreading factor (6-12)
+ * @param bw Bandwidth (0-9)
+ * @param cr Coding rate (1-4)
+ * @param sync_word Network sync word
+ * @param preamble Preamble length
+ * @param tx_power TX power in dBm
+ * @return true on success
+ */
+bool sx1276_set_all_params(sx1276_handle_t *handle, uint32_t freq, uint8_t sf, 
+                           uint8_t bw, uint8_t cr, uint8_t sync_word,
+                           uint16_t preamble, int8_t tx_power);
+
+/**
+ * @brief Get current operating mode
+ * @param handle Device handle
+ * @return Current mode register value
+ */
+uint8_t sx1276_get_mode(sx1276_handle_t *handle);
 
 #ifdef __cplusplus
 }
