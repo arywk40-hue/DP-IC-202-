@@ -25,6 +25,8 @@
 #include "key_provisioning.h"
 #include "crypto.h"
 
+#ifdef CONFIG_MESH_TEST_MODE
+
 static const char *TAG = "MESH_TEST";
 
 /* Test payload size: ~500 bytes to force 2-3 fragments (MAX_PACKET_PAYLOAD=240, minus 6-byte frag header + 16-byte GCM tag = 218 per fragment) */
@@ -115,9 +117,7 @@ static void test_mesh_rx_callback(const mesh_packet_t *packet,
     if (!packet) return;
     
     g_recv_count++;
-    mesh_acquire_mutex();
-    g_mesh.stats.packets_received++;
-    mesh_release_mutex();
+    /* Note: mesh_get_stats() reflects packets_received automatically via mesh_receive() */
 
     ESP_LOGI(TAG, "Received packet from 0x%08lX (seq=%lu, len=%u, RSSI=%d, SNR=%.1f)",
              (unsigned long)from_id,
@@ -192,7 +192,7 @@ static void listener_task(void *pvParameters)
     }
 }
 
-void mesh_test_mode_init(void)
+void mesh_test_init(void)
 {
     /* Determine role from Kconfig */
 #ifdef CONFIG_MESH_TEST_ROLE

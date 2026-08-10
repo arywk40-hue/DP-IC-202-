@@ -1,0 +1,97 @@
+# ============================================================
+# Root .gitignore — Decentralized Edge AI Environmental Hazard Network
+# ============================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+*.whl
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Byte-compiled
+*.pyc
+
+# Test / runtime output
+results/
+field-logs/
+*.log
+*.xml
+*.html
+coverage/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Model artifacts (regenerate via train_model.py + convert_to_c.py)
+code/ml/data/
+# model_data.h is committed because it represents the current exported model
+
+# Firmware build artifacts (covered in firmware/.gitignore too)
+firmware/build/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/managed_components/
+firmware/size.log
+firmware/size_components.log
+firmware/BENCHMARK_REPORT.md
+firmware/benchmark.log
+firmware/test_build.log
+firmware/test_results.log
+firmware/size_report.txt
+firmware/size_components.txt
+firmware/size_summary.md
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.orig
+
+# LaTeX build artifacts
+proposal/*.aux
+proposal/*.log
+proposal/*.out
+proposal/*.fls
+proposal/*.fdb_latexmk
+proposal/*.synctex.gz
+implementation/*.aux
+implementation/*.log
+implementation/*.out
+implementation/*.fls
+implementation/*.fdb_latexmk
+implementation/*.synctex.gz
+
+# Secrets / credentials (never commit these)
+*.pem
+*.key
+*.p12
+*.pfx
+.env.local
+secrets.json

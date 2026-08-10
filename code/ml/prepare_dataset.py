@@ -93,7 +93,7 @@ def compute_derived_features(df: pd.DataFrame) -> pd.DataFrame:
     out['pressure_trend'] = out['pressure_current'].rolling(window).apply(
         lambda x: np.polyfit(np.arange(len(x)), x, 1)[0] if len(x) == window else 0,
         raw=True
-    ).fillna(0))
+    ).fillna(0)
 
     # Heat index (simplified)
     out['heat_index'] = out['temp_current'] + 0.5 * out['humidity_current']

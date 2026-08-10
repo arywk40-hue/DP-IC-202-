@@ -57,7 +57,7 @@ fi
 
 echo -e "\n${YELLOW}[6/6] Generating markdown report...${NC}"
 
-cat > "$REPORT_FILE" << 'EOF'
+cat > "$REPORT_FILE" << EOF
 # Edge AI Weather Mesh - Benchmark Report
 
 **Date:** $(date)
@@ -127,7 +127,7 @@ if [ -f "size.log" ]; then
     echo "\`\`\`" >> "$REPORT_FILE"
 fi
 
-cat >> "$REPORT_FILE" << 'EOF'
+cat >> "$REPORT_FILE" << EOF
 
 ---
 

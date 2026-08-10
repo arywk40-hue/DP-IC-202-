@@ -19,8 +19,13 @@ Current repo status:
 
 - `firmware/` contains the ESP-IDF hardware tree and driver layer.
 - `code/ml/` contains the training and export scripts.
-- The missing pieces are tracked in [docs/PROJECT_STATUS.md](./docs/PROJECT_STATUS.md)
-  and [docs/FOUR_MONTH_BUILD_PLAN.md](./docs/FOUR_MONTH_BUILD_PLAN.md).
+- `scripts/` contains the acceptance test runner and size report tools.
+- The project specification PDFs are:
+  - `tinyml_esp32_architecture_report.pdf` — ML subsystem spec (22-feature vector, 5-class model, inference interface, dataset design)
+  - `implementation/dp_202.pdf` — IEEE-format architecture and feasibility paper
+- Missing pieces and open work items are tracked in [docs/planning/PROJECT_STATUS.md](./docs/planning/PROJECT_STATUS.md)
+  and [docs/planning/FOUR_MONTH_BUILD_PLAN.md](./docs/planning/FOUR_MONTH_BUILD_PLAN.md).
+- A full gap analysis against the PDFs is in [docs/planning/PDF_GAP_ANALYSIS.md](./docs/planning/PDF_GAP_ANALYSIS.md).
 
 ## Repository Structure
 
@@ -38,7 +43,11 @@ Dp/
 │   └── ml/
 │       ├── prepare_dataset.py        # CSV → features + labels
 │       ├── train_model.py            # XGBoost training
-│       └── convert_to_c.py           # JSON → C headers
+│       ├── convert_to_c.py           # JSON → C headers
+│       └── requirements.txt
+├── scripts/                          # Tooling (not ML source)
+│   ├── acceptance_test.py            # 72-test hardware + software runner
+│   └── size_report.py               # Firmware flash/RAM size analyser
 ├── dataset/                          # Raw weather data source
 │   └── weatherHistory.csv
 ├── docs/
@@ -57,8 +66,9 @@ Dp/
 │   │   ├── FIRMWARE_API.md           # All component APIs
 │   │   └── PIN_MAP.md                # ESP32-S3 GPIO assignments
 │   └── planning/
-│       ├── PROJECT_STATUS.md         # Completed prompts, gaps
+│       ├── PROJECT_STATUS.md         # Completed prompts, gaps, code bugs
 │       ├── FOUR_MONTH_BUILD_PLAN.md  # 6-person execution plan
+│       ├── PDF_GAP_ANALYSIS.md       # Implementation vs PDF spec gap analysis
 │       └── ACCEPTANCE_TESTS.md       # 72-test sign-off checklist
 └── README.md
 ```

@@ -38,6 +38,7 @@ extern "C" {
 /* Fragmentation constants */
 #define MESH_FRAG_HEADER_SIZE       6   // msg_id(2) | frag_index(1) | frag_count(1) | auth_tag_included(1) | reserved(1)
 #define MESH_MAX_FRAG_DATA          (MAX_PACKET_PAYLOAD - MESH_FRAG_HEADER_SIZE - 16)  // payload - frag_hdr - GCM tag
+#define MESH_MAX_PLAINTEXT_SIZE     (MESH_MAX_FRAG_DATA * 4)  // max 4 fragments = 872 bytes
 
 /**
  * @brief Fragment header — lives inside mesh_packet_t.payload[]
@@ -89,6 +90,7 @@ typedef struct __attribute__((packed)) {
 #define MESH_FLAG_ACK_REQ       (1 << 0)
 #define MESH_FLAG_ACK           (1 << 1)
 #define MESH_FLAG_ALERT         (1 << 2)
+#define MESH_FLAG_PRE_ENCRYPTED (1 << 3)  /* Payload is already encrypted (with GCM tag appended) */
 
 /* Packet version */
 #define MESH_VERSION            0x01

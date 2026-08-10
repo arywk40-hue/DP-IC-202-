@@ -147,6 +147,18 @@ typedef struct {
     uint8_t  neighbor_count;
 } mesh_stats_t;
 
+/* Fragment reassembly entry — must be declared before g_mesh */
+typedef struct {
+    uint16_t msg_id;
+    uint32_t source_id;
+    uint8_t  frag_count;
+    uint8_t  frag_received;        /* Bitmap of received fragments (max 32 fragments) */
+    uint8_t  buffer[MESH_MAX_PLAINTEXT_SIZE + CRYPTO_TAG_SIZE];
+    uint16_t total_len;
+    uint32_t last_seen_ms;
+    bool     active;
+} reassembly_entry_t;
+
 /* Global mesh state */
 static struct {
     uint32_t         node_id;
@@ -167,6 +179,8 @@ static struct {
 
     crypto_context_t crypto_ctx;      // Network encryption context
     bool             crypto_initialized;
+
+    reassembly_entry_t reassembly_table[4];  // Up to 4 concurrent fragmented messages
 
     SemaphoreHandle_t mutex;
 } g_mesh;
@@ -383,6 +397,7 @@ static void mesh_retry_pending(void)
             g_mesh.pending_ack.retries++;
             g_mesh.pending_ack.next_retry_ms = now + MESH_ACK_TIMEOUT_MS * (1 << g_mesh.pending_ack.retries);
 
+            /* Re-encrypt the payload for retry (crypto handles it in mesh_send) */
             mesh_packet_t pkt = {0};
             pkt.version_flags = (MESH_VERSION << 4) | g_mesh.pending_ack.flags;
             pkt.source_id = g_mesh.node_id;
@@ -512,13 +527,16 @@ esp_err_t mesh_send(uint32_t dest_id, const uint8_t *payload,
     if (payload == NULL && len > 0) return ESP_ERR_INVALID_ARG;
     if (len > MAX_PACKET_PAYLOAD) return ESP_ERR_INVALID_SIZE;
 
-    /* Encrypt payload if crypto is initialized */
+    /* Check if payload is already encrypted (pre-encrypted by mesh_secure_send) */
+    bool pre_encrypted = (flags & MESH_FLAG_PRE_ENCRYPTED) != 0;
+
+    /* Encrypt payload if crypto is initialized and not pre-encrypted */
     uint8_t encrypted_payload[MAX_PACKET_PAYLOAD];
     uint8_t tag[CRYPTO_TAG_SIZE];
     uint8_t enc_len = len;
     uint8_t *pkt_payload = (len > 0) ? (uint8_t *)payload : NULL;
 
-    if (g_mesh.crypto_initialized && len > 0) {
+    if (g_mesh.crypto_initialized && len > 0 && !pre_encrypted) {
         uint32_t seq = g_mesh.seq_num;  // Use current seq_num for nonce
         esp_err_t enc_ret = crypto_encrypt(&g_mesh.crypto_ctx,
                                             g_mesh.node_id, seq,
@@ -623,6 +641,18 @@ esp_err_t mesh_receive(const uint8_t *data, uint8_t len,
     }
     mesh_add_duplicate(pkt.source_id, pkt.seq_num);
 
+    /* Check if this is a fragment (payload contains fragment header) */
+    bool is_fragment = (pkt.payload_len >= MESH_FRAG_HEADER_SIZE);
+    mesh_frag_header_t *frag_hdr = NULL;
+    uint8_t *frag_data = NULL;
+    uint8_t frag_data_len = 0;
+
+    if (is_fragment) {
+        frag_hdr = (mesh_frag_header_t *)pkt.payload;
+        frag_data = pkt.payload + MESH_FRAG_HEADER_SIZE;
+        frag_data_len = pkt.payload_len - MESH_FRAG_HEADER_SIZE;
+    }
+
     // Update neighbor table
     mesh_acquire_mutex();
     mesh_update_neighbor(pkt.source_id, rssi, snr);
@@ -653,36 +683,124 @@ esp_err_t mesh_receive(const uint8_t *data, uint8_t len,
         mesh_forward_packet(&pkt, rssi, snr);
     }
 
-    mesh_release_mutex();
+    /* Fragment reassembly logic */
+    if (is_fragment && for_us && g_mesh.crypto_initialized) {
+        uint16_t msg_id = frag_hdr->msg_id;
+        uint8_t frag_idx = frag_hdr->frag_index;
+        uint8_t frag_count = frag_hdr->frag_count;
 
-    // Deliver to application (decrypt if needed)
-    if (for_us && g_mesh.rx_callback) {
-        // Create a copy of packet for callback with decrypted payload
-        mesh_packet_t callback_pkt = pkt;
-        
-        if (g_mesh.crypto_initialized && pkt.payload_len >= CRYPTO_TAG_SIZE) {
-            uint8_t decrypted[MAX_PACKET_PAYLOAD];
-            esp_err_t dec_ret = crypto_decrypt(&g_mesh.crypto_ctx,
-                                                pkt.source_id, pkt.seq_num,
-                                                pkt.payload, pkt.payload_len - CRYPTO_TAG_SIZE,
-                                                pkt.payload + pkt.payload_len - CRYPTO_TAG_SIZE,
-                                                decrypted);
-            if (dec_ret == ESP_OK) {
-                callback_pkt.payload_len = pkt.payload_len - CRYPTO_TAG_SIZE;
-                memcpy(callback_pkt.payload, decrypted, callback_pkt.payload_len);
-                ESP_LOGD(TAG, "Decrypted %d bytes from 0x%08lX seq=%lu",
-                         callback_pkt.payload_len, (unsigned long)pkt.source_id, (unsigned long)pkt.seq_num);
-            } else {
-                ESP_LOGW(TAG, "Decryption failed for packet from 0x%08lX seq=%lu",
-                         (unsigned long)pkt.source_id, (unsigned long)pkt.seq_num);
-                // Don't deliver corrupted packet
+        /* Find or create reassembly entry */
+        int slot = -1;
+        uint32_t now = mesh_get_time_ms();
+        for (int i = 0; i < 4; i++) {
+            if (g_mesh.reassembly_table[i].active &&
+                g_mesh.reassembly_table[i].msg_id == msg_id &&
+                g_mesh.reassembly_table[i].source_id == pkt.source_id) {
+                slot = i;
+                break;
+            }
+            if (!g_mesh.reassembly_table[i].active && slot == -1) {
+                slot = i;  // Empty slot
             }
         }
-        
-        g_mesh.rx_callback(&callback_pkt, pkt.source_id, rssi, snr);
-    }
 
-    return ESP_OK;
+        if (slot == -1) {
+            /* No free slot, evict oldest */
+            slot = 0;
+            uint32_t oldest = UINT32_MAX;
+            for (int i = 0; i < 4; i++) {
+                if (g_mesh.reassembly_table[i].active &&
+                    g_mesh.reassembly_table[i].last_seen_ms < oldest) {
+                    oldest = g_mesh.reassembly_table[i].last_seen_ms;
+                    slot = i;
+                }
+            }
+        }
+
+        reassembly_entry_t *re = &g_mesh.reassembly_table[slot];
+
+        if (!re->active || re->msg_id != msg_id || re->source_id != pkt.source_id) {
+            /* New reassembly session */
+            re->msg_id = msg_id;
+            re->source_id = pkt.source_id;
+            re->frag_count = frag_count;
+            re->frag_received = 0;
+            re->total_len = 0;
+            re->active = true;
+        }
+
+        /* Check bounds */
+        if (frag_idx >= frag_count || frag_idx >= 32) {
+            mesh_release_mutex();
+            ESP_LOGW(TAG, "Invalid fragment index %u/%u", frag_idx, frag_count);
+            return ESP_OK;
+        }
+
+        /* Check for duplicate fragment */
+        if (re->frag_received & (1 << frag_idx)) {
+            mesh_release_mutex();
+            return ESP_OK;  // Duplicate fragment
+        }
+
+        /* Store fragment data */
+        uint16_t offset = frag_idx * MESH_MAX_FRAG_DATA;
+        if (offset + frag_data_len <= sizeof(re->buffer)) {
+            memcpy(re->buffer + offset, frag_data, frag_data_len);
+            re->frag_received |= (1 << frag_idx);
+            if (frag_idx == frag_count - 1) {
+                /* Last fragment carries auth tag, update total length */
+                re->total_len = offset + frag_data_len;
+            }
+        }
+        re->last_seen_ms = now;
+
+        /* Check if all fragments received */
+        bool complete = true;
+        for (int i = 0; i < frag_count; i++) {
+            if (!(re->frag_received & (1 << i))) {
+                complete = false;
+                break;
+            }
+        }
+
+        if (complete) {
+            /* Reassembled complete message */
+            uint16_t total_len = re->total_len;
+            if (total_len >= CRYPTO_TAG_SIZE) {
+                uint8_t decrypted[MAX_PACKET_PAYLOAD];
+                esp_err_t dec_ret = crypto_decrypt(&g_mesh.crypto_ctx,
+                                                    pkt.source_id, pkt.seq_num,
+                                                    re->buffer, total_len - CRYPTO_TAG_SIZE,
+                                                    re->buffer + total_len - CRYPTO_TAG_SIZE,
+                                                    decrypted);
+                if (dec_ret == ESP_OK) {
+                    /* Create callback packet with decrypted data */
+                    mesh_packet_t callback_pkt = pkt;
+                    callback_pkt.payload_len = total_len - CRYPTO_TAG_SIZE;
+                    memcpy(callback_pkt.payload, decrypted, callback_pkt.payload_len);
+                    
+                    /* Clear reassembly slot */
+                    re->active = false;
+
+                    mesh_release_mutex();
+
+                    /* Deliver to application */
+                    if (g_mesh.rx_callback) {
+                        g_mesh.rx_callback(&callback_pkt, pkt.source_id, rssi, snr);
+                    }
+                    return ESP_OK;
+                } else {
+                    ESP_LOGW(TAG, "Decryption failed for reassembled message from 0x%08lX",
+                             (unsigned long)pkt.source_id);
+                }
+            }
+            /* Clear reassembly slot on failure */
+            re->active = false;
+        }
+
+        mesh_release_mutex();
+        return ESP_OK;  // Fragment processed, don't deliver yet
+    }
 }
 
 uint32_t mesh_get_node_id(void)
@@ -750,40 +868,14 @@ esp_err_t mesh_secure_send(uint32_t dest_id, const uint8_t *payload,
     if (payload == NULL && len > 0) return ESP_ERR_INVALID_ARG;
     if (len > MESH_MAX_PLAINTEXT_SIZE) return ESP_ERR_INVALID_SIZE;
 
-    /* Encrypt payload */
-    uint8_t encrypted_payload[MAX_PACKET_PAYLOAD];
-    uint8_t tag[CRYPTO_TAG_SIZE];
-    uint8_t enc_len = len;
-    uint8_t *pkt_payload = (len > 0) ? (uint8_t *)payload : NULL;
-
-    if (len > 0) {
-        uint32_t seq = g_mesh.seq_num;
-        esp_err_t enc_ret = crypto_encrypt(&g_mesh.crypto_ctx,
-                                            g_mesh.node_id, seq,
-                                            payload, len,
-                                            encrypted_payload, tag);
-        if (enc_ret != ESP_OK) {
-            ESP_LOGE(TAG, "Encryption failed");
-            return ESP_FAIL;
-        }
-        /* Append tag to encrypted payload */
-        if (len + CRYPTO_TAG_SIZE > MAX_PACKET_PAYLOAD) {
-            ESP_LOGE(TAG, "Encrypted payload too large");
-            return ESP_ERR_INVALID_SIZE;
-        }
-        memcpy(encrypted_payload + len, tag, CRYPTO_TAG_SIZE);
-        enc_len = len + CRYPTO_TAG_SIZE;
-        pkt_payload = encrypted_payload;
-    }
-
     /* Use CSMA/CA before transmission */
     if (g_mesh.lora_handle && !sx1276_csma_ca(g_mesh.lora_handle, 3, 10)) {
         ESP_LOGW(TAG, "CSMA/CA failed, channel busy");
         return ESP_ERR_TIMEOUT;
     }
 
-    /* Use mesh_send for fragmentation and transmission */
-    return mesh_send(dest_id, pkt_payload, enc_len, flags | MESH_FLAG_ALERT);
+    /* Pass plaintext to mesh_send which handles encryption */
+    return mesh_send(dest_id, payload, len, flags | MESH_FLAG_ALERT);
 }
 
 /**
@@ -795,9 +887,6 @@ esp_err_t mesh_secure_send(uint32_t dest_id, const uint8_t *payload,
 void mesh_set_secure_rx_callback(mesh_rx_callback_t cb)
 {
     g_mesh.rx_callback = cb;
-}
-
-void mesh_set_lora_handle(sx1276_handle_t *handle)
 }
 
 /**
@@ -818,7 +907,13 @@ esp_err_t mesh_set_crypto_key(const uint8_t key[CRYPTO_KEY_SIZE])
     return ret;
 }
 
-uint32_t mesh_get_time_ms(void)
+/**
+ * @brief Periodic maintenance — call from mesh_comms_task loop.
+ * Handles neighbor pruning, ACK retries, heartbeat timer.
+ * @param now_ms  Current time in milliseconds (esp_timer_get_time()/1000).
+ */
+void mesh_periodic(uint32_t now_ms)
+{
     if (!g_mesh.initialized) return;
 
     mesh_acquire_mutex();
