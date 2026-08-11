@@ -120,6 +120,14 @@ def train_model(X, y, output_dir: str, max_trees: int = NUM_BOOST_ROUND):
     with open(os.path.join(output_dir, 'normalization.json'), 'w') as f:
         json.dump(norm_stats, f, indent=2)
 
+    # Production alert thresholds (from architecture docs)
+    ALERT_THRESHOLDS = {
+        'wildfire': 0.70,
+        'flood': 0.70,
+        'storm': 0.75,
+        'air_quality': 0.65,
+    }
+
     # Train one model per class
     models = {}
     all_metrics = {}
@@ -127,12 +135,21 @@ def train_model(X, y, output_dir: str, max_trees: int = NUM_BOOST_ROUND):
     for idx, hazard in enumerate(HAZARD_CLASSES):
         print(f"\nTraining {hazard} model...")
 
+        # Calculate class weight for imbalanced data
+        pos_count = y_train[:, idx].sum()
+        neg_count = len(y_train) - pos_count
+        scale_pos_weight = neg_count / pos_count if pos_count > 0 else 1.0
+        print(f"  Class balance: {pos_count:.0f} pos, {neg_count:.0f} neg, scale_pos_weight={scale_pos_weight:.1f}")
+
+        class_params = XGB_PARAMS.copy()
+        class_params['scale_pos_weight'] = scale_pos_weight
+
         dtrain = xgb.DMatrix(X_train_norm, label=y_train[:, idx])
         dval = xgb.DMatrix(X_val_norm, label=y_val[:, idx])
         dtest = xgb.DMatrix(X_test_norm, label=y_test[:, idx])
 
         model = xgb.train(
-            XGB_PARAMS,
+            class_params,
             dtrain,
             num_boost_round=max_trees,
             evals=[(dtrain, 'train'), (dval, 'val')],
@@ -140,16 +157,19 @@ def train_model(X, y, output_dir: str, max_trees: int = NUM_BOOST_ROUND):
             verbose_eval=False,
         )
 
-        # Evaluate on test set
-        y_pred = (model.predict(dtest) > 0.5).astype(int)
+        # Evaluate on test set at production threshold
+        y_pred_prob = model.predict(dtest)
+        threshold = ALERT_THRESHOLDS[hazard]
+        y_pred = (y_pred_prob > threshold).astype(int)
         report = classification_report(y_test[:, idx], y_pred, output_dict=True, zero_division=0)
 
         metrics = {
             'accuracy': report['accuracy'],
-            'precision': report.get('1', {}).get('precision', 0),
-            'recall': report.get('1', {}).get('recall', 0),
-            'f1': report.get('1', {}).get('f1-score', 0),
-            'num_trees': model.best_ntree_limit,
+            'precision': report.get('1.0', {}).get('precision', report.get('1', {}).get('precision', 0)),
+            'recall': report.get('1.0', {}).get('recall', report.get('1', {}).get('recall', 0)),
+            'f1': report.get('1.0', {}).get('f1-score', report.get('1', {}).get('f1-score', 0)),
+            'num_trees': model.best_iteration + 1 if hasattr(model, 'best_iteration') else max_trees,
+            'threshold': threshold,
         }
 
         models[hazard] = model
