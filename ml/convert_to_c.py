@@ -4,8 +4,8 @@ convert_to_c.py - Convert XGBoost JSON Models to C Headers for ESP32-S3
 Parses trained XGBoost models (JSON format) and generates embedded C headers
 with tree structures and normalization constants for on-device inference.
 
-Usage:
-    python convert_to_c.py --model ./model/ --output ./firmware/components/ml/include/model_data.h
+Usage (run from the ml/ directory):
+    python convert_to_c.py --model ./model/ --output ../other/firmware/components/ml/include/model_data.h
 """
 
 import os

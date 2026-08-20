@@ -337,7 +337,7 @@ typedef struct {
 
 ## ML (`components/ml/`)
 
-See `docs/reference/ML_INFERENCE.md` for full details.
+See `ml/docs/ML_INFERENCE.md` for full details.
 
 ```c
 esp_err_t ml_init(void);

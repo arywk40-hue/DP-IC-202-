@@ -32,7 +32,7 @@ All were fixed in the same session.
 
 | # | File | Bug | Fix Applied |
 |---|------|-----|-------------|
-| B1 | `code/ml/prepare_dataset.py` line 96 | Extra closing `)` on `.fillna(0))` — SyntaxError, file cannot be imported or run | Removed the stray `)` |
+| B1 | `ml/prepare_dataset.py` line 96 | Extra closing `)` on `.fillna(0))` — SyntaxError, file cannot be imported or run | Removed the stray `)` |
 | B2 | `firmware/components/mesh/src/mesh.c` | `mesh_set_lora_handle()` defined twice — linker error (duplicate symbol) | Removed the second definition |
 | B3 | `firmware/components/mesh/src/mesh.c` | `mesh_get_time_ms()` defined twice — linker error (duplicate symbol) | Removed the second definition |
 | B4 | `firmware/components/mesh/src/mesh.c` | `reassembly_entry_t` typedef declared **inside** the anonymous `g_mesh` struct body — invalid C99, GCC rejects it | Moved typedef to file scope before the `g_mesh` struct |
@@ -197,7 +197,7 @@ human-readable report.
 ### 17 — Real-world dataset collection pipeline
 ```
 Month 2 of docs/planning/FOUR_MONTH_BUILD_PLAN.md calls for "a first real dataset from
-repeated indoor and outdoor tests" — right now code/ml/prepare_dataset.py only has
+repeated indoor and outdoor tests" — right now ml/prepare_dataset.py only has
 dataset/weatherHistory.csv (a historical proxy dataset) to work from. Add a field-
 logging mode to main.c (behind a Kconfig flag) that timestamps and writes every
 sensor_reading_t plus the derived 14-feature vector to a CSV over serial or to an SD/
@@ -210,7 +210,7 @@ docs/guides/DATA_COLLECTION.md, matching the "CSV or JSON dataset schema" and
 ### 18 — Retrain the model on real collected data
 ```
 Once code/tools/calibration_wizard.py (prompt 16) and the field-logging mode (prompt
-17) have produced real sensor data, rerun code/ml/train_model.py against that dataset
+17) have produced real sensor data, rerun ml/train_model.py against that dataset
 instead of dataset/weatherHistory.csv, regenerate firmware/components/ml/include/
 model_data.h, normalization.h, and model_metadata.h, and diff the new metrics
 (accuracy/AUC per hazard class, inference time, RAM/flash usage) against the current
@@ -304,7 +304,7 @@ docs/guides/HARDWARE_BRINGUP.md.
 crypto/mesh unit tests, and generates the size report. Extend it with a host-side-only
 job (no hardware needed) that dry-runs code/tools/calibration_wizard.py and
 code/tools/build_signoff.py against fixture/sample data, and lints/type-checks
-code/ml/prepare_dataset.py, so regressions in the new Python tooling from prompts
+ml/prepare_dataset.py, so regressions in the new Python tooling from prompts
 16/18/23 get caught the same way firmware regressions already do.
 ```
 

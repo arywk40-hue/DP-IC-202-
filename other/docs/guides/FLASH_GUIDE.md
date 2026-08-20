@@ -3,7 +3,7 @@
 ## Quick Flash Commands
 
 ```bash
-cd firmware/
+cd ../../firmware/       # from other/docs/guides/ into other/firmware/
 
 # Full flash + monitor (most common)
 idf.py -p /dev/ttyUSB0 flash monitor

@@ -30,15 +30,15 @@ jobs:
           
       - name: Run ruff (Python linting)
         run: |
-          ruff check code/ --exit-zero
+          ruff check ml/ --exit-zero
           
       - name: Run mypy (type checking)
         run: |
-          mypy code/ --ignore-missing-imports || true
+          mypy ml/ --ignore-missing-imports || true
           
       - name: Check C formatting
         run: |
-          find firmware -name "*.c" -o -name "*.h" | xargs clang-format --dry-run --Werror
+          find other/firmware -name "*.c" -o -name "*.h" | xargs clang-format --dry-run --Werror
           
   # Firmware build
   build:
@@ -56,17 +56,17 @@ jobs:
           
       - name: Configure target
         run: |
-          cd firmware
+          cd other/firmware
           idf.py set-target ${{ env.IDF_TARGET }}
           
       - name: Build firmware
         run: |
-          cd firmware
+          cd other/firmware
           idf.py build
           
       - name: Size analysis
         run: |
-          cd firmware
+          cd other/firmware
           idf.py size > size_output.txt
           python3 ../scripts/size_report.py size_output.txt size_report.md
           
@@ -75,16 +75,16 @@ jobs:
         with:
           name: firmware-bin
           path: |
-            firmware/build/*.bin
-            firmware/build/*.elf
-            firmware/build/*.map
+            other/firmware/build/*.bin
+            other/firmware/build/*.elf
+            other/firmware/build/*.map
           retention-days: 7
           
       - name: Upload size report
         uses: actions/upload-artifact@v4
         with:
           name: size-report
-          path: firmware/size_report.md
+          path: other/firmware/size_report.md
           retention-days: 7
 
   # Model verification
@@ -106,16 +106,16 @@ jobs:
           
       - name: Check model headers exist
         run: |
-          test -f firmware/components/ml/include/model_data.h
-          test -f firmware/components/ml/include/normalization.h
-          test -f firmware/components/ml/include/model_metadata.h
+          test -f other/firmware/components/ml/include/model_data.h
+          test -f other/firmware/components/ml/include/normalization.h
+          test -f other/firmware/components/ml/include/model_metadata.h
           echo "Model headers present"
           
       - name: Verify model constants match firmware
         run: |
           python3 -c "
           import re
-          with open('firmware/components/ml/include/model_data.h') as f:
+          with open('other/firmware/components/ml/include/model_data.h') as f:
               content = f.read()
           assert 'NUM_CLASSES 4' in content
           assert 'NUM_FEATURES 14' in content
@@ -142,12 +142,12 @@ jobs:
           
       - name: Run crypto tests
         run: |
-          cd firmware
+          cd other/firmware
           idf.py -DTEST_COMPONENT=crypto build
           
       - name: Run mesh tests
         run: |
-          cd firmware
+          cd other/firmware
           idf.py -DTEST_COMPONENT=mesh build
 
   # Documentation check
@@ -160,26 +160,26 @@ jobs:
       
       - name: Check docs structure
         run: |
-          test -f docs/index.md
-          test -f docs/architecture/SYSTEM_ARCHITECTURE.md
-          test -f docs/guides/QUICK_START.md
-          test -f docs/guides/BUILD_GUIDE.md
-          test -f docs/guides/FLASH_GUIDE.md
-          test -f docs/guides/ML_PIPELINE.md
-          test -f docs/reference/SENSORS.md
-          test -f docs/reference/MESH_PROTOCOL.md
-          test -f docs/reference/ML_INFERENCE.md
-          test -f docs/reference/FIRMWARE_API.md
-          test -f docs/reference/PIN_MAP.md
-          test -f docs/planning/PROJECT_STATUS.md
-          test -f docs/planning/FOUR_MONTH_BUILD_PLAN.md
-          test -f docs/planning/ACCEPTANCE_TESTS.md
+          test -f other/docs/index.md
+          test -f other/docs/architecture/SYSTEM_ARCHITECTURE.md
+          test -f other/docs/guides/QUICK_START.md
+          test -f other/docs/guides/BUILD_GUIDE.md
+          test -f other/docs/guides/FLASH_GUIDE.md
+          test -f ml/docs/ML_PIPELINE.md
+          test -f other/docs/reference/SENSORS.md
+          test -f other/docs/reference/MESH_PROTOCOL.md
+          test -f ml/docs/ML_INFERENCE.md
+          test -f other/docs/reference/FIRMWARE_API.md
+          test -f other/docs/reference/PIN_MAP.md
+          test -f other/docs/planning/PROJECT_STATUS.md
+          test -f other/docs/planning/FOUR_MONTH_BUILD_PLAN.md
+          test -f other/docs/planning/ACCEPTANCE_TESTS.md
           echo "All docs present"
           
       - name: Check markdown lint
         run: |
           pip install markdownlint-cli
-          markdownlint docs/ --disable MD013 MD033
+          markdownlint other/docs/ ml/docs/ --disable MD013 MD033
 
   # Final gate
   release-gate:

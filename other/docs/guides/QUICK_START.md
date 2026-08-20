@@ -4,11 +4,12 @@
 
 ```
 Dp/
-├── proposal/          # LaTeX design practicum proposals (3 projects)
-├── implementation/    # IEEE paper — ESP32-S3 + LoRa mesh implementation
-├── firmware/          # ESP-IDF bring-up tree and hardware drivers
-├── code/              # ML training and export scripts
-├── docs/              # Sensor reference + quick start
+├── ml/                # All ML work — data, training, models, ML docs
+├── other/
+│   ├── proposal/      # LaTeX design practicum proposals (3 projects)
+│   ├── implementation/# IEEE paper — ESP32-S3 + LoRa mesh implementation
+│   ├── firmware/      # ESP-IDF bring-up tree and hardware drivers
+│   └── docs/          # Sensor reference + quick start (you are here)
 └── README.md
 ```
 
@@ -23,7 +24,7 @@ Current state: **All 3 firmware prompts complete** — sensor drivers, ML infere
 ## Compile Locally
 
 ```bash
-cd proposal/
+cd ../../proposal/      # from other/docs/guides/ into other/proposal/
 pdflatex design_practicum_proposals.tex
 pdflatex design_practicum_proposals.tex  # twice for TOC
 
@@ -34,21 +35,21 @@ pdflatex edge-ai-weather-mesh-main.tex
 ## ML Model Training & Export
 
 ```bash
-cd code/ml/
+cd ../../../ml/          # from other/docs/guides/ into ml/
 pip install xgboost scikit-learn pandas numpy
 
 # Generate synthetic dataset (20k samples) and train
 python prepare_dataset.py --generate-synthetic --samples 20000 --output ./data/
-python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../other/firmware/components/ml/include/model_data.h
 
 # Or in one step:
-python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../firmware/components/ml/include/model_data.h
+python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../other/firmware/components/ml/include/model_data.h
 ```
 
 ## Firmware Build (requires ESP-IDF v5.x)
 
 ```bash
-cd firmware/
+cd ../../firmware/       # from other/docs/guides/ into other/firmware/
 idf.py set-target esp32s3
 idf.py build
 idf.py flash
@@ -96,13 +97,13 @@ savings from a custom 4-layer PCB.
 
 ## Files to Read
 
-1. `implementation/edge-ai-weather-mesh-main.tex` — Full system architecture
-2. `docs/SENSORS.md` — Detailed sensor specs and interface map
-3. `firmware/main/main.c` — Application entry point and task orchestration
-4. `firmware/components/sensors/` — All 11 sensor driver implementations
-5. `firmware/components/ml/src/ml.c` — XGBoost inference engine
-6. `firmware/components/lora/src/sx1276.c` — LoRa driver implementation
-7. `code/ml/train_model.py` — XGBoost training pipeline
-8. `code/ml/convert_to_c.py` — Model-to-C header converter
-9. `docs/PROJECT_STATUS.md` — Gap review and current status
-10. `docs/FOUR_MONTH_BUILD_PLAN.md` — 6-person build plan
+1. `other/implementation/edge-ai-weather-mesh-main.tex` — Full system architecture
+2. `other/docs/reference/SENSORS.md` — Detailed sensor specs and interface map
+3. `other/firmware/main/main.c` — Application entry point and task orchestration
+4. `other/firmware/components/sensors/` — All 11 sensor driver implementations
+5. `other/firmware/components/ml/src/ml.c` — XGBoost inference engine
+6. `other/firmware/components/lora/src/sx1276.c` — LoRa driver implementation
+7. `ml/train_model.py` — XGBoost training pipeline
+8. `ml/convert_to_c.py` — Model-to-C header converter
+9. `other/docs/planning/PROJECT_STATUS.md` — Gap review and current status
+10. `other/docs/planning/FOUR_MONTH_BUILD_PLAN.md` — 6-person build plan

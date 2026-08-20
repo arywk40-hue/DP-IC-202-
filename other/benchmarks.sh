@@ -4,9 +4,10 @@
 
 set -e
 
-BUILD_DIR="firmware/build"
-PROJECT_DIR="firmware"
-REPORT_FILE="BENCHMARK_REPORT.md"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUILD_DIR="$SCRIPT_DIR/firmware/build"
+PROJECT_DIR="$SCRIPT_DIR/firmware"
+REPORT_FILE="$SCRIPT_DIR/BENCHMARK_REPORT.md"
 
 echo "========================================"
 echo "Edge AI Weather Mesh - Benchmark Suite"
