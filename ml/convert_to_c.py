@@ -5,7 +5,7 @@ Parses trained XGBoost models (JSON format) and generates embedded C headers
 with tree structures and normalization constants for on-device inference.
 
 Usage (run from the ml/ directory):
-    python convert_to_c.py --model ./model/ --output ../other/firmware/components/ml/include/model_data.h
+    python convert_to_c.py --model ./model/ --output ./generated/model_data.h
 """
 
 import os

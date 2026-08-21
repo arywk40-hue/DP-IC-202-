@@ -24,7 +24,7 @@ pip install -r requirements.txt
 python prepare_dataset.py --input dataset/weatherHistory.csv --output data/
 
 # Train on real data
-python train_model.py --data data/ --output model/ --export-c --c-output ../other/firmware/components/ml/include/model_data.h
+python train_model.py --data data/ --output model/ --export-c --c-output ./generated/model_data.h
 ```
 
 ---

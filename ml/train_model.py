@@ -5,7 +5,7 @@ Trains 4 binary XGBoost classifiers (one per hazard class) from real prepared da
 Exports models to JSON for convert_to_c.py.
 
 Usage:
-    python train_model.py --data ./data/ --output ./model/ --export-c --c-output ../other/firmware/components/ml/include/model_data.h
+    python train_model.py --data ./data/ --output ./model/ --export-c --c-output ./generated/model_data.h
 """
 
 import numpy as np
