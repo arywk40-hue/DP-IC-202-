@@ -8,15 +8,16 @@ Usage:
     python train_model.py --data ./data/ --output ./model/ --export-c --c-output ./generated/model_data.h
 """
 
-import numpy as np
-import pandas as pd
-import xgboost as xgb
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
 import argparse
 import json
 import os
+import sys
 
+import numpy as np
+import pandas as pd
+import xgboost as xgb
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
 
 # ============================================
 # FEATURE DEFINITIONS (must match prepare_dataset.py)
@@ -216,7 +217,7 @@ def main():
     X, y = load_prepared_data(args.data)
 
     # Train
-    models, metrics, norm_stats = train_model(X, y, args.output, args.max_trees)
+    _models, _metrics, norm_stats = train_model(X, y, args.output, args.max_trees)
 
     # Export to C if requested
     if args.export_c:
@@ -224,8 +225,8 @@ def main():
             print("Error: --c-output required when --export-c is used")
             return 1
 
-        print(f"\nGenerating C headers...")
-        from convert_to_c import load_model_trees, generate_model_header
+        print("\nGenerating C headers...")
+        from convert_to_c import generate_model_header, load_model_trees
 
         trees_by_class = load_model_trees(args.output, args.max_trees)
         generate_model_header(trees_by_class, norm_stats, args.c_output)
@@ -236,4 +237,4 @@ def main():
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())

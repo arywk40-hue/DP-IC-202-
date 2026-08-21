@@ -1,9 +1,10 @@
-import os
 import json
+import os
 import random
+
 import numpy as np
-import xgboost as xgb
 import streamlit as st
+import xgboost as xgb
 
 # Configure the Streamlit page
 st.set_page_config(
@@ -219,8 +220,7 @@ with tab_manual:
             manual_inputs['pm25_current'] = st.slider('PM2.5 (μg/m³)', 0.0, 500.0, 15.0)
             manual_inputs['co2_current'] = st.slider('CO2 (ppm)', 400.0, 5000.0, 450.0)
             
-    with col2:
-        with st.expander("⚠️ Hazard & Derived Indicators", expanded=True):
+    with col2, st.expander("⚠️ Hazard & Derived Indicators", expanded=True):
             manual_inputs['lightning_dist_current'] = st.slider('Lightning Dist (km)', 0.0, 40.0, 40.0)
             manual_inputs['temp_humidity_ratio'] = st.slider('T/H Ratio', 0.0, 2.0, 0.4)
             manual_inputs['heat_index'] = st.slider('Heat Index (°C)', -10.0, 60.0, 26.0)

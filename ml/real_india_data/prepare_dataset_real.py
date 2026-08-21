@@ -24,12 +24,13 @@ Usage:
     python prepare_dataset_real.py --input real_weather_india.csv --output data/
 """
 
-import pandas as pd
-import numpy as np
 import argparse
-import os
 import json
+import os
+import sys
 
+import numpy as np
+import pandas as pd
 
 FEATURE_NAMES = [
     'temp_current',
@@ -243,4 +244,4 @@ def main():
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())

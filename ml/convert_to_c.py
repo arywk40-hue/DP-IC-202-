@@ -8,13 +8,12 @@ Usage (run from the ml/ directory):
     python convert_to_c.py --model ./model/ --output ./generated/model_data.h
 """
 
-import os
-import json
 import argparse
-import xgboost as xgb
-import numpy as np
-from typing import List, Dict, Any
+import json
+import os
+import sys
 
+import xgboost as xgb
 
 # ============================================
 # CONFIGURATION
@@ -42,11 +41,11 @@ MAX_NODES_PER_TREE = 31  # 2^(MAX_DEPTH+1) - 1
 # TREE PARSING
 # ============================================
 
-def parse_xgb_tree(tree_dict: Dict) -> List[Dict]:
+def parse_xgb_tree(tree_dict: dict) -> list[dict]:
     """Parse a single XGBoost tree JSON into flat node list (pre-order)."""
     nodes = []
 
-    def traverse(node: Dict, idx: int):
+    def traverse(node: dict, idx: int):
         if idx >= MAX_NODES_PER_TREE:
             return
 
@@ -93,7 +92,7 @@ def parse_xgb_tree(tree_dict: Dict) -> List[Dict]:
     return nodes
 
 
-def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> Dict[str, List[List[Dict]]]:
+def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> dict[str, list[list[dict]]]:
     """Load all XGBoost models and convert to tree node lists."""
     trees_by_class = {}
 
@@ -127,7 +126,7 @@ def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> Di
 # C CODE GENERATION
 # ============================================
 
-def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: str):
+def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: str):
     """Generate model_data.h with tree structures and inference functions."""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
@@ -170,8 +169,7 @@ def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: s
         # Feature names
         f.write("// Feature names (for debugging)\n")
         f.write("static const char *FEATURE_NAMES[NUM_FEATURES] = {\n")
-        for name in FEATURE_NAMES:
-            f.write(f'    "{name}",\n')
+        f.writelines(f'    "{name}",\n' for name in FEATURE_NAMES)
         f.write("};\n\n")
 
         # Generate trees for each class
@@ -197,8 +195,7 @@ def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: s
                     f.write(" },\n")
 
                 # Pad remaining nodes
-                for _ in range(num_nodes, MAX_NODES_PER_TREE):
-                    f.write("        { .feature_idx = -1, .threshold = 0, .left_child = -1, .right_child = -1, .leaf_value = 0 },\n")
+                f.writelines("        { .feature_idx = -1, .threshold = 0, .left_child = -1, .right_child = -1, .leaf_value = 0 },\n" for _ in range(num_nodes, MAX_NODES_PER_TREE))
 
                 f.write("    }\n")
                 f.write("};\n\n")
@@ -211,14 +208,12 @@ def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: s
 
         # Normalization constants
         f.write("// Feature normalization (z-score from training data)\n")
-        f.write(f"static const float NORM_MEAN[NUM_FEATURES] = {{\n")
-        for i, val in enumerate(norm_stats['mean']):
-            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.write("static const float NORM_MEAN[NUM_FEATURES] = {\n")
+        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['mean']))
         f.write("};\n\n")
 
-        f.write(f"static const float NORM_STD[NUM_FEATURES] = {{\n")
-        for i, val in enumerate(norm_stats['std']):
-            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.write("static const float NORM_STD[NUM_FEATURES] = {\n")
+        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['std']))
         f.write("};\n\n")
 
         # Inline inference functions
@@ -283,7 +278,7 @@ def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: s
             f.write(f"    float sum_{cls} = 0.0f;\n")
             f.write(f"    for (int i = 0; i < {upper}_NUM_TREES; i++) {{\n")
             f.write(f"        sum_{cls} += xgb_tree_inference({upper}_TREES[i], features);\n")
-            f.write(f"    }}\n")
+            f.write("    }\n")
             f.write(f"    float prob_{cls} = sigmoid(sum_{cls});\n\n")
 
         f.write("    *output_wildfire     = prob_wildfire;\n")
@@ -295,7 +290,7 @@ def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: s
         f.write("#endif // MODEL_DATA_H\n")
 
 
-def generate_normalization_header(norm_stats: Dict, output_path: str):
+def generate_normalization_header(norm_stats: dict, output_path: str):
     """Generate normalization.h with just mean/std arrays."""
     norm_path = os.path.join(os.path.dirname(output_path), 'normalization.h')
 
@@ -309,13 +304,11 @@ def generate_normalization_header(norm_stats: Dict, output_path: str):
         f.write("#include <stdint.h>\n\n")
 
         f.write(f"static const float NORM_MEAN[{NUM_FEATURES}] = {{\n")
-        for i, val in enumerate(norm_stats['mean']):
-            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['mean']))
         f.write("};\n\n")
 
         f.write(f"static const float NORM_STD[{NUM_FEATURES}] = {{\n")
-        for i, val in enumerate(norm_stats['std']):
-            f.write(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n")
+        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['std']))
         f.write("};\n\n")
 
         f.write("// Normalize feature vector in-place\n")
@@ -344,13 +337,11 @@ def generate_metadata_header(output_path: str):
         f.write("#define MODEL_METADATA_H\n\n")
 
         f.write("static const char *FEATURE_NAMES[14] = {\n")
-        for name in FEATURE_NAMES:
-            f.write(f'    "{name}",\n')
+        f.writelines(f'    "{name}",\n' for name in FEATURE_NAMES)
         f.write("};\n\n")
 
         f.write("static const char *HAZARD_CLASS_NAMES[4] = {\n")
-        for name in HAZARD_CLASSES:
-            f.write(f'    "{name}",\n')
+        f.writelines(f'    "{name}",\n' for name in HAZARD_CLASSES)
         f.write("};\n\n")
 
         f.write("static const float ALERT_THRESHOLDS[4] = {\n")
@@ -406,4 +397,4 @@ def main():
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())
