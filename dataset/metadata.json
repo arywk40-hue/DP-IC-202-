@@ -1,0 +1,45 @@
+{
+  "source": "real_weather_india.csv (543 India locations, Aug-Oct 2023)",
+  "feature_names": [
+    "temp_current",
+    "humidity_current",
+    "pressure_current",
+    "wind_speed_current",
+    "pm25_current",
+    "co2_current",
+    "lightning_dist_current",
+    "temp_humidity_ratio",
+    "pressure_trend",
+    "heat_index",
+    "dew_point",
+    "fire_risk_index",
+    "flood_risk_index",
+    "lightning_threat"
+  ],
+  "label_names": [
+    "wildfire",
+    "flood",
+    "storm",
+    "air_quality"
+  ],
+  "num_features": 14,
+  "num_classes": 4,
+  "num_samples": 24070,
+  "label_distribution": {
+    "wildfire": 155,
+    "flood": 2090,
+    "storm": 10006,
+    "air_quality": 7017
+  },
+  "synthetic_fields": [
+    "co2_current",
+    "lightning_dist_current"
+  ],
+  "real_fields": [
+    "temp_current",
+    "humidity_current",
+    "pressure_current",
+    "wind_speed_current",
+    "pm25_current"
+  ]
+}
