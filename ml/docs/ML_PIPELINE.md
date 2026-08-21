@@ -2,12 +2,12 @@
 
 ## Overview
 
-```
+```text
 Raw Data → prepare_dataset.py → train_model.py → convert_to_c.py → Firmware Headers
 ```
 
 | Script | Purpose | Output |
-|--------|---------|--------|
+| -------- | --------- | -------- |
 | `prepare_dataset.py` | CSV → features + labels | `data/features.csv`, `data/labels.csv` |
 | `train_model.py` | Train 4× XGBoost binary classifiers | `model/xgboost_*.json`, `normalization.json` |
 | `convert_to_c.py` | JSON → C headers | `model_data.h`, `normalization.h`, `model_metadata.h` |
@@ -36,7 +36,7 @@ python train_model.py --data data/ --output model/ --export-c --c-output ./gener
 Expected columns (flexible naming):
 
 | Standard Name | Accepted Aliases |
-|---------------|------------------|
+| --------------- | ------------------ |
 | `temperature` | `temp`, `air_temp` |
 | `humidity` | `rh`, `relative_humidity` |
 | `pressure` | `barometric_pressure`, `bp` |
@@ -50,7 +50,7 @@ Expected columns (flexible naming):
 14 columns in fixed order (must match firmware):
 
 | Index | Feature | Source |
-|-------|---------|--------|
+| ------- | --------- | -------- |
 | 0 | `temp_current` | Raw |
 | 1 | `humidity_current` | Raw |
 | 2 | `pressure_current` | Raw |
@@ -71,7 +71,7 @@ Expected columns (flexible naming):
 4 binary columns (one-vs-rest):
 
 | Column | Positive Condition |
-|--------|-------------------|
+| -------- | ------------------- |
 | `wildfire` | temp>30 & hum<35 & wind>5 & pm25>40 |
 | `flood` | pres<1000 & hum>85 & wind>8 |
 | `storm` | lightning<15 & pres<1005 |
@@ -257,6 +257,7 @@ for (int cls = 0; cls < NUM_HAZARD_CLASSES; cls++) {
 ### Fixed Seed
 
 All randomness uses `seed=42`:
+
 - Data generation
 - Train/val/test split
 - XGBoost training
@@ -297,7 +298,7 @@ print('Firmware:', out);
 ## Performance Targets
 
 | Metric | Target | Typical |
-|--------|--------|---------|
+| -------- | -------- | --------- |
 | Inference time (4 classes) | < 100 μs | ~50 μs |
 | Flash usage | < 64 KB | ~45 KB |
 | RAM (runtime) | < 4 KB | ~2 KB |
@@ -321,7 +322,7 @@ print('Firmware:', out);
 ## Troubleshooting
 
 | Issue | Fix |
-|-------|-----|
+| ------- | ----- |
 | `ModuleNotFoundError: xgboost` | `pip install xgboost` |
 | Feature count mismatch | Check `FEATURE_NAMES` order matches firmware |
 | Accuracy too low | Increase `num_boost_round`, check label quality |
