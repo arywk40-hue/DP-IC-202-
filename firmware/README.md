@@ -1,56 +1,23 @@
-# ESP32-S3 Firmware
+# INDRA ESP32-S3 Firmware
 
-This PlatformIO project compiles the promoted 14-feature edge model for an
-ESP32-S3 DevKitC-1. It currently provides a deterministic model smoke test;
-sensor drivers and field alert transport are separate follow-up work.
+INDRA is a sensor-only weather node. It has no CO2, lightning, rain, or wind-direction sensor, and never replaces unavailable data with zero or generated values.
 
-## Requirements
+| Module | Interface | ESP32-S3 pins |
+| --- | --- | --- |
+| BME280, INA219, DS3231 | shared I2C | SDA GPIO8, SCL GPIO9 |
+| PMS7003 | UART1 | RX GPIO17, TX GPIO18 |
+| Neo-M8N | UART2 | RX GPIO15, TX GPIO16 |
+| 600-PPR encoder | interrupt | GPIO4 |
 
-- Python 3.10 or newer
-- PlatformIO Core
-- ESP32-S3 DevKitC-1 or a compatible ESP32-S3 board
-
-Install PlatformIO:
+Pins, sampling, and wind calibration live in `lib/IndraSensors/src/BoardConfig.h`. Cross TX/RX on both UARTs and calibrate `kWindMetersPerRevolution` against the installed rotor.
 
 ```bash
 python3 -m pip install platformio
+pio test -d firmware -e native
+pio run -d firmware -e esp32-s3-devkitc-1
+pio test -d firmware -e esp32-s3-devkitc-1
+pio run -d firmware -e esp32-s3-devkitc-1 --target upload
+pio device monitor -d firmware --baud 115200
 ```
 
-## Host Tests
-
-```bash
-pio test -e native
-```
-
-## Build and Flash
-
-```bash
-pio run -e esp32-s3-devkitc-1
-pio run -e esp32-s3-devkitc-1 --target upload
-pio device monitor --baud 115200
-```
-
-The smoke firmware prints one JSON prediction every five seconds.
-
-## Test on the ESP32-S3
-
-Connect the board over USB and run:
-
-```bash
-pio test -e esp32-s3-devkitc-1
-```
-
-The same inference checks run on the target and report through serial.
-
-## Model Contract
-
-The firmware compiles
-`ml/generated/model_data_india_26_masked_distilled_edge.h`. The build fails at
-compile time if the model no longer has exactly 14 ordered features and four
-hazard outputs. Inputs containing NaN or infinity are rejected before
-inference.
-
-The hard-coded feature vector in `src/main.cpp` is a smoke-test vector near the
-training mean. Replace it with a sensor adapter only after units and feature
-derivations match the training contract exactly.
-
+Serial emits a JSON record every five seconds. The firmware reports model status `NOT_READY`: the existing promoted model needs CO2 and lightning, while no independently validated real-data `sensor_only_v1` model is bundled.
