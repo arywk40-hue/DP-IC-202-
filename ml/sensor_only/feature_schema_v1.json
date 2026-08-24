@@ -1,0 +1,33 @@
+{
+  "schema_version": "indra_sensor_only_v1",
+  "features": [
+    {"name": "temperature_c", "unit": "degC", "source": "BME280"},
+    {"name": "relative_humidity_pct", "unit": "percent", "source": "BME280"},
+    {"name": "pressure_hpa", "unit": "hPa", "source": "BME280"},
+    {"name": "wind_speed_mps", "unit": "m/s", "source": "600-PPR encoder and calibrated anemometer"},
+    {"name": "pm25_ug_m3", "unit": "ug/m3", "source": "PMS7003"},
+    {"name": "pressure_trend_hpa_per_hour", "unit": "hPa/hour", "source": "trailing BME280 history"},
+    {"name": "dew_point_c", "unit": "degC", "source": "derived from BME280"},
+    {"name": "heat_index_c", "unit": "degC", "source": "derived from BME280"},
+    {"name": "hour_sin", "unit": "unitless", "source": "DS3231 or GPS time"},
+    {"name": "hour_cos", "unit": "unitless", "source": "DS3231 or GPS time"},
+    {"name": "day_of_year_sin", "unit": "unitless", "source": "DS3231 or GPS time"},
+    {"name": "day_of_year_cos", "unit": "unitless", "source": "DS3231 or GPS time"},
+    {"name": "latitude_deg", "unit": "degrees", "source": "Neo-M8N"},
+    {"name": "longitude_deg", "unit": "degrees", "source": "Neo-M8N"}
+  ],
+  "telemetry_only": [
+    "pm1_ug_m3",
+    "pm10_ug_m3",
+    "gps_altitude_m",
+    "battery_voltage_v",
+    "battery_current_a",
+    "battery_power_w"
+  ],
+  "forbidden_features": [
+    "co2_current",
+    "lightning_dist_current",
+    "lightning_threat"
+  ]
+}
+
