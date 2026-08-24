@@ -1,75 +1,88 @@
-# Edge AI Weather Station — ML Pipeline
+# Edge AI Environmental Hazard Node
 
-On-device hazard classification for a solar-powered environmental monitoring
-node: XGBoost trained offline in Python, exported to a plain C header for
-inference on an ESP32-S3 (14 derived features → 4 hazard classes: wildfire,
-flood, storm, air quality).
+An offline XGBoost training pipeline and an ESP32-S3 inference target for four
+environmental hazard signals: wildfire, flood, storm, and air quality.
 
-This repo now contains **only the ML pipeline** — the firmware, hardware docs,
-and papers that used to live alongside it have been removed.
+The edge contract uses 14 ordered features and exports four binary XGBoost
+heads as a plain C header. The repository keeps offline ML work and board
+firmware in separate, testable areas.
 
-## Repository Structure
+## Repository Layout
 
-```
-ml/
-├── prepare_dataset.py       # CSV → features + labels
-├── train_model.py           # XGBoost training, optional C export
-├── convert_to_c.py          # JSON models → C header
-├── streamlit_app.py         # Local model demo/inspector
-├── requirements.txt
-├── model/                   # Trained XGBoost JSON models + stats
-│   ├── xgboost_wildfire.json
-│   ├── xgboost_flood.json
-│   ├── xgboost_storm.json
-│   ├── xgboost_air_quality.json
-│   ├── feature_names.json
-│   ├── normalization.json
-│   └── metrics.json
-├── dataset/
-│   └── weatherHistory.csv   # Szeged/Hungary weather data (original baseline)
-├── real_india_data/         # Alternate pipeline: real India weather+AQ data
-│   ├── merge_real_dataset.py
-│   ├── prepare_dataset_real.py
-│   ├── metadata.json
-│   ├── model_data.h         # Distinct trained model — not yet promoted
-│   └── README.md
-├── kriging/
-│   └── kriging.py           # Spatial interpolation for multi-node coverage
-├── docs/
-│   ├── ML_PIPELINE.md       # Training & export guide
-│   └── ML_INFERENCE.md      # Model format, inference API
-└── generated/
-    └── model_data.h         # Auto-generated C header (see note below)
+| Path | Purpose |
+|---|---|
+| `ml/` | Data preparation, training, evaluation, distillation, and C export |
+| `ml/generated/` | Generated edge-model headers |
+| `firmware/` | PlatformIO application for ESP32-S3 |
+| `tests/model/` | Host compiler smoke test for the promoted C model |
+| `docs/REPOSITORY_STRUCTURE.md` | Boundaries and model promotion gates |
+
+See [ml/README.md](ml/README.md) for the experiment layout and
+[firmware/README.md](firmware/README.md) for build, flash, and board-test
+instructions.
+
+## Current Edge Release
+
+The firmware consumes:
+
+```text
+ml/generated/model_data_india_26_masked_distilled_edge.h
 ```
 
-## Quick Start
+This model passed the existing Python/C parity check. Several independently
+labelled India hazard heads remain research-only because verified event
+coverage and geographic validation are still limited. A successful firmware
+build is not evidence that the model is ready for safety-critical deployment.
+
+## Quick Checks
+
+### ML export contract
 
 ```bash
-cd ml/
-pip install -r requirements.txt
-
-# Prepare data
-python prepare_dataset.py --input dataset/weatherHistory.csv --output data/
-
-# Train and export to C
-python train_model.py --data data/ --output model/ --export-c --c-output ./generated/model_data.h
+cc -std=c99 -Iml/generated tests/model/test_model_smoke.c -lm -o /tmp/model_smoke
+/tmp/model_smoke
 ```
 
-See [ml/docs/ML_PIPELINE.md](ml/docs/ML_PIPELINE.md) for the full walkthrough
-and [ml/docs/ML_INFERENCE.md](ml/docs/ML_INFERENCE.md) for the generated
-header format and inference API.
+### Firmware host tests
 
-## Two Datasets, Two Models
+```bash
+cd firmware
+python3 -m pip install platformio
+pio test -e native
+```
 
-- **Baseline** (`ml/dataset/`, `ml/model/`, `ml/generated/`): trained on the
-  Szeged/Hungary `weatherHistory.csv` that shipped with the project.
-- **Real India data** (`ml/real_india_data/`): a self-contained alternate
-  pipeline trained on 543 real Indian weather/air-quality locations
-  (Aug–Oct 2023). Its `model_data.h` is a real, distinct trained model — see
-  [ml/real_india_data/README.md](ml/real_india_data/README.md) for what's
-  real vs. still synthetic in its features, and note it hasn't been promoted
-  anywhere yet.
+### ESP32-S3 build
+
+```bash
+cd firmware
+pio run -e esp32-s3-devkitc-1
+```
+
+### Flash and monitor
+
+```bash
+pio run -e esp32-s3-devkitc-1 --target upload
+pio device monitor --baud 115200
+```
+
+The current board application runs a deterministic inference smoke test and
+prints JSON probabilities over serial. Real sensor drivers are not wired into
+this application yet.
+
+## ML Pipeline
+
+```bash
+cd ml
+python3 -m pip install -r requirements.txt
+python3 prepare_dataset.py --input dataset/weatherHistory.csv --output data
+python3 train_model.py --data data --output model --export-c \
+  --c-output generated/model_data.h
+```
+
+The India pipeline and its evidence are documented in
+[ml/docs/INDIA_WEATHER_ARCHITECTURE.md](ml/docs/INDIA_WEATHER_ARCHITECTURE.md).
 
 ## Author
 
 **Ariyan Bhakat**
+

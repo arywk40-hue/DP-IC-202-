@@ -1,7 +1,3 @@
-# ============================================================
-# Root .gitignore — Decentralized Edge AI Environmental Hazard Network
-# ============================================================
-
 # macOS
 .DS_Store
 .AppleDouble
@@ -19,54 +15,43 @@ __pycache__/
 .Python
 *.egg
 *.egg-info/
-dist/
-build/
 .eggs/
-pip-wheel-metadata/
-*.whl
+build/
+dist/
 .venv/
 venv/
 env/
 .env
-
-# Jupyter
 .ipynb_checkpoints/
-*.ipynb_checkpoints
-
-# Byte-compiled
-*.pyc
-
-# Test / runtime output
-results/
-field-logs/
-*.log
-*.xml
-*.html
-coverage/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 
-# Model artifacts (regenerate via train_model.py + convert_to_c.py)
-code/ml/data/
-# model_data.h is committed because it represents the current exported model
+# Local ML datasets and outputs
+ml/data_baseline/
+ml/data_v2_baseline/
+ml/data_india_pilot/
+*.partial
+results/
+field-logs/
+coverage/
+*.log
+*.xml
+*.html
 
-# Firmware build artifacts (covered in firmware/.gitignore too)
+# PlatformIO and firmware output
+.pio/
+firmware/.pio/
 firmware/build/
 firmware/sdkconfig
 firmware/sdkconfig.old
 firmware/managed_components/
-firmware/size.log
-firmware/size_components.log
-firmware/BENCHMARK_REPORT.md
+firmware/size*.txt
+firmware/size*.log
 firmware/benchmark.log
-firmware/test_build.log
-firmware/test_results.log
-firmware/size_report.txt
-firmware/size_components.txt
-firmware/size_summary.md
+firmware/test_*.log
 
-# Editor / IDE
+# Editors
 .vscode/
 .idea/
 *.swp
@@ -74,21 +59,13 @@ firmware/size_summary.md
 *~
 *.orig
 
-# LaTeX build artifacts
-proposal/*.aux
-proposal/*.log
-proposal/*.out
-proposal/*.fls
-proposal/*.fdb_latexmk
-proposal/*.synctex.gz
-implementation/*.aux
-implementation/*.log
-implementation/*.out
-implementation/*.fls
-implementation/*.fdb_latexmk
-implementation/*.synctex.gz
+# Document build output
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 
-# Secrets / credentials (never commit these)
+# Secrets
 *.pem
 *.key
 *.p12
@@ -96,20 +73,3 @@ implementation/*.synctex.gz
 .env.local
 secrets.json
 
-# Local ML artifacts
-.DS_Store
-__pycache__/
-*.py[cod]
-*.partial
-ml/data_baseline/
-ml/data_v2_baseline/
-ml/data_india_pilot/
-
-# Local ML artifacts
-.DS_Store
-__pycache__/
-*.py[cod]
-*.partial
-ml/data_baseline/
-ml/data_v2_baseline/
-ml/data_india_pilot/
