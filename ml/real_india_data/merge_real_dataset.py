@@ -14,27 +14,41 @@ Usage:
 
 import argparse
 import os
-
 import pandas as pd
 
 
 def merge(input_dir: str, output_path: str):
-    loc = pd.read_excel(os.path.join(input_dir, 'Location_information.xlsx'))
-    wd = pd.read_excel(os.path.join(input_dir, 'Weather_data.xlsx'))
-    aq = pd.read_excel(os.path.join(input_dir, 'Air_quality_information.xlsx'))
-    astro = pd.read_excel(os.path.join(input_dir, 'Astronomical.xlsx'))
+    files = {
+        'location': 'Location_information.xlsx',
+        'weather': 'Weather_data.xlsx',
+        'air_quality': 'Air_quality_information.xlsx',
+        'astronomical': 'Astronomical.xlsx',
+    }
+    frames = {
+        name: pd.read_excel(os.path.join(input_dir, filename))
+        for name, filename in files.items()
+    }
 
-    # Sanity check: all 4 files must be row-aligned on the same epoch key
-    assert (loc['last_updated_epoch'] == wd['last_updated_epoch']).all(), "Weather_data epoch mismatch"
-    assert (loc['last_updated_epoch'] == aq['last_updated_epoch']).all(), "Air_quality epoch mismatch"
-    assert (loc['last_updated_epoch'] == astro['last_updated_epoch']).all(), "Astronomical epoch mismatch"
+    key = 'last_updated_epoch'
+    for name, frame in frames.items():
+        if key not in frame.columns:
+            raise ValueError(f"{name} input is missing required key {key!r}")
+        if frame[key].duplicated().any():
+            raise ValueError(f"{name} input contains duplicate {key} values")
 
-    # Drop the duplicate epoch columns before concatenating
-    wd = wd.drop(columns=['last_updated_epoch'])
-    aq = aq.drop(columns=['last_updated_epoch'])
-    astro = astro.drop(columns=['last_updated_epoch'])
+    # Join by the epoch key rather than concatenating by row position. This
+    # prevents a source export with a different ordering from pairing weather
+    # values with the wrong location or air-quality record.
+    df = frames['location'].copy()
+    for name in ('weather', 'air_quality', 'astronomical'):
+        frame = frames[name]
+        overlap = (set(df.columns) & set(frame.columns)) - {key}
+        if overlap:
+            raise ValueError(f"Column name collision while merging {name}: {sorted(overlap)}")
+        df = df.merge(frame, on=key, how='inner', validate='one_to_one')
 
-    df = pd.concat([loc, wd, aq, astro], axis=1)
+    if df.empty:
+        raise ValueError('No rows remain after joining India source files on last_updated_epoch')
 
     before = len(df)
     df = df.drop_duplicates()

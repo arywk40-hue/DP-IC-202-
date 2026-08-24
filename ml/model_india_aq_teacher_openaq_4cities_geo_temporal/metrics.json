@@ -1,0 +1,15 @@
+{
+  "rows": 701,
+  "train_rows": 283,
+  "test_rows": 418,
+  "cutoff_utc": "2020-05-24T00:00:00+00:00",
+  "split_strategy": "geo-temporal",
+  "holdout_locations": [
+    "Kolkata",
+    "Mumbai"
+  ],
+  "mae": 28.199647903442383,
+  "rmse": 34.3855825329863,
+  "target_min": 1.25,
+  "target_max": 318.0833435058594
+}

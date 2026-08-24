@@ -1,0 +1,14 @@
+{
+  "strategy": "geo-temporal",
+  "cutoff_utc": "2019-12-09T00:00:00+00:00",
+  "holdout_locations": [
+    "Mumbai",
+    "Patna",
+    "Shillong",
+    "Talcher",
+    "Thiruvananthapuram",
+    "Visakhapatnam"
+  ],
+  "train_rows": 15481,
+  "test_rows": 9380
+}

@@ -1,9 +1,8 @@
 """
 prepare_dataset_real.py - Prepare REAL India weather+AQ data for training
 
-Drop-in replacement for prepare_dataset.py that consumes the merged
-real_weather_india.csv (built by merge_real_dataset.py from the 4 uploaded
-xlsx exports) instead of the Szeged/Hungary weatherHistory.csv.
+Drop-in replacement for prepare_dataset.py that consumes a canonical India
+weather+air-quality CSV instead of the Szeged/Hungary weatherHistory.csv.
 
 Output feature schema is IDENTICAL to the original prepare_dataset.py
 (same 14 FEATURE_NAMES, same 4 HAZARD_CLASSES) so it stays a drop-in
@@ -24,13 +23,12 @@ Usage:
     python prepare_dataset_real.py --input real_weather_india.csv --output data/
 """
 
-import argparse
-import json
-import os
-import sys
-
-import numpy as np
 import pandas as pd
+import numpy as np
+import argparse
+import os
+import json
+
 
 FEATURE_NAMES = [
     'temp_current',
@@ -60,6 +58,11 @@ def load_raw_data(csv_path: str) -> pd.DataFrame:
     out = pd.DataFrame(index=df.index)
     out['location_name'] = df['location_name']
     out['last_updated'] = pd.to_datetime(df['last_updated'])
+
+    # Preserve identifiers needed for chronological and geographic holdouts.
+    for col in ('latitude', 'longitude', 'last_updated_epoch'):
+        if col in df.columns:
+            out[col] = df[col]
 
     # Real sensor-equivalent columns
     out['temp_current'] = df['temperature_celsius']
@@ -208,10 +211,19 @@ def prepare_dataset(input_path: str, output_dir: str):
 
     X.to_csv(os.path.join(output_dir, 'features.csv'), index=False)
     y.to_csv(os.path.join(output_dir, 'labels.csv'), index=False)
+    identifier_columns = [
+        c for c in ('location_name', 'latitude', 'longitude',
+                    'last_updated', 'last_updated_epoch') if c in df.columns
+    ]
+    if not identifier_columns:
+        raise ValueError('Prepared India data has no location/time identifiers')
+    df[identifier_columns].to_csv(
+        os.path.join(output_dir, 'identifiers.csv'), index=False
+    )
     print(f"\nSaved to {output_dir}/")
 
     metadata = {
-        'source': 'real_weather_india.csv (543 India locations, Aug-Oct 2023)',
+        'source': os.path.basename(input_path),
         'feature_names': FEATURE_NAMES,
         'label_names': HAZARD_CLASSES,
         'num_features': len(FEATURE_NAMES),
@@ -220,6 +232,12 @@ def prepare_dataset(input_path: str, output_dir: str):
         'label_distribution': {c: int(y[c].sum()) for c in HAZARD_CLASSES},
         'synthetic_fields': ['co2_current', 'lightning_dist_current'],
         'real_fields': ['temp_current', 'humidity_current', 'pressure_current', 'wind_speed_current', 'pm25_current'],
+        'identifier_columns': identifier_columns,
+        'location_count': int(df['location_name'].nunique()),
+        'date_range': {
+            'start': str(df['last_updated'].min()),
+            'end': str(df['last_updated'].max()),
+        },
     }
     with open(os.path.join(output_dir, 'metadata.json'), 'w') as f:
         json.dump(metadata, f, indent=2)
@@ -244,4 +262,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

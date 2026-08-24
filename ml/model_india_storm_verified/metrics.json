@@ -1,0 +1,10 @@
+{
+  "accuracy": 0.9987966305655837,
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "threshold": 0.5,
+  "train_positive": 4,
+  "test_positive": 5,
+  "known_rows": 11370
+}

@@ -1,0 +1,38 @@
+{
+  "wildfire": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "threshold": 0.7,
+    "train_positive": 2280,
+    "test_positive": 155
+  },
+  "flood": {
+    "accuracy": 0.9987437185929648,
+    "precision": 0.9791044776119403,
+    "recall": 1.0,
+    "f1": 0.9894419306184012,
+    "threshold": 0.7,
+    "train_positive": 623,
+    "test_positive": 328
+  },
+  "storm": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "threshold": 0.75,
+    "train_positive": 4568,
+    "test_positive": 1133
+  },
+  "air_quality": {
+    "accuracy": 0.8806532663316583,
+    "precision": 0.9953440248318676,
+    "recall": 0.7457364341085271,
+    "f1": 0.8526479060491913,
+    "threshold": 0.65,
+    "train_positive": 10046,
+    "test_positive": 2580
+  }
+}

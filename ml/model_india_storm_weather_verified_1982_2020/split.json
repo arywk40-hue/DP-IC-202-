@@ -1,0 +1,26 @@
+{
+  "strategy": "geo-temporal",
+  "cutoff_utc": "2013-03-14T04:48:00.000001+00:00",
+  "train_locations": [
+    "Ahmedabad",
+    "Aizawl",
+    "Amaravati",
+    "Amritsar",
+    "Bengaluru",
+    "Bhopal",
+    "Brajrajnagar",
+    "Chandigarh",
+    "Chennai",
+    "Coimbatore",
+    "Delhi",
+    "Ernakulam"
+  ],
+  "holdout_locations": [
+    "Gurugram",
+    "Guwahati",
+    "Hyderabad",
+    "Jaipur"
+  ],
+  "train_rows": 102564,
+  "test_rows": 39886
+}

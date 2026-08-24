@@ -95,3 +95,21 @@ implementation/*.synctex.gz
 *.pfx
 .env.local
 secrets.json
+
+# Local ML artifacts
+.DS_Store
+__pycache__/
+*.py[cod]
+*.partial
+ml/data_baseline/
+ml/data_v2_baseline/
+ml/data_india_pilot/
+
+# Local ML artifacts
+.DS_Store
+__pycache__/
+*.py[cod]
+*.partial
+ml/data_baseline/
+ml/data_v2_baseline/
+ml/data_india_pilot/

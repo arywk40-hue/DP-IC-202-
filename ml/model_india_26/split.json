@@ -1,0 +1,36 @@
+{
+  "strategy": "complete-location-holdout",
+  "holdout_fraction": 0.2,
+  "train_locations": [
+    "Ahmedabad",
+    "Aizawl",
+    "Amaravati",
+    "Amritsar",
+    "Bengaluru",
+    "Bhopal",
+    "Brajrajnagar",
+    "Chandigarh",
+    "Chennai",
+    "Coimbatore",
+    "Delhi",
+    "Ernakulam",
+    "Gurugram",
+    "Guwahati",
+    "Hyderabad",
+    "Jaipur",
+    "Jorapokhar",
+    "Kochi",
+    "Kolkata",
+    "Lucknow"
+  ],
+  "holdout_locations": [
+    "Mumbai",
+    "Patna",
+    "Shillong",
+    "Talcher",
+    "Thiruvananthapuram",
+    "Visakhapatnam"
+  ],
+  "train_rows": 19289,
+  "test_rows": 5572
+}

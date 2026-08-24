@@ -8,12 +8,15 @@ Usage (run from the ml/ directory):
     python convert_to_c.py --model ./model/ --output ./generated/model_data.h
 """
 
-import argparse
-import json
 import os
-import sys
-
+import json
+import argparse
 import xgboost as xgb
+import numpy as np
+import re
+import math
+from typing import List, Dict, Any
+
 
 # ============================================
 # CONFIGURATION
@@ -41,13 +44,16 @@ MAX_NODES_PER_TREE = 31  # 2^(MAX_DEPTH+1) - 1
 # TREE PARSING
 # ============================================
 
-def parse_xgb_tree(tree_dict: dict) -> list[dict]:
+def parse_xgb_tree(tree_dict: Dict) -> List[Dict]:
     """Parse a single XGBoost tree JSON into flat node list (pre-order)."""
     nodes = []
 
-    def traverse(node: dict, idx: int):
-        if idx >= MAX_NODES_PER_TREE:
-            return
+    def traverse(node: Dict, idx: int):
+        if len(nodes) >= MAX_NODES_PER_TREE:
+            raise ValueError(
+                f"Tree exceeds MAX_NODES_PER_TREE={MAX_NODES_PER_TREE}; "
+                "reduce model depth before exporting"
+            )
 
         if 'leaf' in node:
             # Leaf node
@@ -61,7 +67,20 @@ def parse_xgb_tree(tree_dict: dict) -> list[dict]:
         else:
             # Split node
             feature_name = node.get('split', '')
-            feature_idx = FEATURE_NAMES.index(feature_name) if feature_name in FEATURE_NAMES else 0
+            if feature_name in FEATURE_NAMES:
+                feature_idx = FEATURE_NAMES.index(feature_name)
+            else:
+                # XGBoost models trained from NumPy arrays commonly store
+                # feature names as f0, f1, ... rather than semantic names.
+                match = re.fullmatch(r'f(\d+)', feature_name)
+                if not match:
+                    raise ValueError(f"Unknown feature name in model tree: {feature_name!r}")
+                feature_idx = int(match.group(1))
+                if feature_idx >= NUM_FEATURES:
+                    raise ValueError(
+                        f"Model references feature index {feature_idx}, but exporter "
+                        f"supports only {NUM_FEATURES} features"
+                    )
             threshold = node.get('split_condition', 0.0)
 
             current_idx = len(nodes)
@@ -92,7 +111,7 @@ def parse_xgb_tree(tree_dict: dict) -> list[dict]:
     return nodes
 
 
-def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> dict[str, list[list[dict]]]:
+def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> Dict[str, List[List[Dict]]]:
     """Load all XGBoost models and convert to tree node lists."""
     trees_by_class = {}
 
@@ -109,9 +128,13 @@ def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> di
         dump = model.get_dump(dump_format='json')
         class_trees = []
 
-        for i, tree_json in enumerate(dump):
-            if i >= max_trees:
-                break
+        if len(dump) > max_trees:
+            raise ValueError(
+                f"{cls} model contains {len(dump)} trees, exceeding the export "
+                f"limit of {max_trees}; refusing to truncate the model"
+            )
+
+        for tree_json in dump:
             tree_dict = json.loads(tree_json)
             nodes = parse_xgb_tree(tree_dict)
             class_trees.append(nodes)
@@ -122,12 +145,43 @@ def load_model_trees(model_dir: str, max_trees: int = MAX_TREES_PER_CLASS) -> di
     return trees_by_class
 
 
+def load_model_base_scores(model_dir: str) -> Dict[str, float]:
+    """Load XGBoost base scores and convert probabilities to log-odds."""
+    base_scores = {}
+    for cls in HAZARD_CLASSES:
+        model_path = os.path.join(model_dir, f'xgboost_{cls}.json')
+        if not os.path.exists(model_path):
+            base_scores[cls] = 0.0
+            continue
+        model = xgb.Booster()
+        model.load_model(model_path)
+        config = json.loads(model.save_config())
+        raw = config['learner']['learner_model_param'].get('base_score', '[0.5]')
+        probability = float(str(raw).strip('[]').split(',')[0])
+        probability = min(max(probability, 1e-7), 1.0 - 1e-7)
+        base_scores[cls] = math.log(probability / (1.0 - probability))
+    return base_scores
+
+
 # ============================================
 # C CODE GENERATION
 # ============================================
 
-def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: str):
+def generate_model_header(trees_by_class: Dict, norm_stats: Dict, output_path: str,
+                          base_scores: Dict[str, float] = None):
     """Generate model_data.h with tree structures and inference functions."""
+    if len(norm_stats.get('mean', [])) != NUM_FEATURES or len(norm_stats.get('std', [])) != NUM_FEATURES:
+        raise ValueError(
+            f"Normalization statistics must contain exactly {NUM_FEATURES} features"
+        )
+    model_feature_names = norm_stats.get('feature_names')
+    if model_feature_names is not None and model_feature_names != FEATURE_NAMES:
+        raise ValueError(
+            "Model feature schema does not match the exporter feature schema; "
+            "create a versioned exporter for the new schema"
+        )
+    if base_scores is None:
+        base_scores = {cls: 0.0 for cls in HAZARD_CLASSES}
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     with open(output_path, 'w') as f:
@@ -138,7 +192,8 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
         f.write(" */\n\n")
         f.write("#ifndef MODEL_DATA_H\n")
         f.write("#define MODEL_DATA_H\n\n")
-        f.write("#include <stdint.h>\n\n")
+        f.write("#include <stdint.h>\n")
+        f.write("#include <math.h>\n\n")
 
         # Model configuration
         f.write("// Model configuration\n")
@@ -169,7 +224,8 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
         # Feature names
         f.write("// Feature names (for debugging)\n")
         f.write("static const char *FEATURE_NAMES[NUM_FEATURES] = {\n")
-        f.writelines(f'    "{name}",\n' for name in FEATURE_NAMES)
+        for name in FEATURE_NAMES:
+            f.write(f'    "{name}",\n')
         f.write("};\n\n")
 
         # Generate trees for each class
@@ -188,14 +244,17 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
                 for node in tree:
                     f.write("        {")
                     f.write(f" .feature_idx = {node['feature_idx']},")
-                    f.write(f" .threshold = {node['threshold']:.6f}f,")
+                    # Preserve enough precision to avoid changing a branch near
+                    # a split threshold after converting the JSON model to C.
+                    f.write(f" .threshold = {node['threshold']:.9f}f,")
                     f.write(f" .left_child = {node['left_child']},")
                     f.write(f" .right_child = {node['right_child']},")
-                    f.write(f" .leaf_value = {node['leaf_value']:.6f}f")
+                    f.write(f" .leaf_value = {node['leaf_value']:.9f}f")
                     f.write(" },\n")
 
                 # Pad remaining nodes
-                f.writelines("        { .feature_idx = -1, .threshold = 0, .left_child = -1, .right_child = -1, .leaf_value = 0 },\n" for _ in range(num_nodes, MAX_NODES_PER_TREE))
+                for _ in range(num_nodes, MAX_NODES_PER_TREE):
+                    f.write("        { .feature_idx = -1, .threshold = 0, .left_child = -1, .right_child = -1, .leaf_value = 0 },\n")
 
                 f.write("    }\n")
                 f.write("};\n\n")
@@ -208,12 +267,20 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
 
         # Normalization constants
         f.write("// Feature normalization (z-score from training data)\n")
-        f.write("static const float NORM_MEAN[NUM_FEATURES] = {\n")
-        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['mean']))
+        f.write(f"static const float NORM_MEAN[NUM_FEATURES] = {{\n")
+        for i, val in enumerate(norm_stats['mean']):
+            f.write(f"    {val:.9f}f,  // {FEATURE_NAMES[i]}\n")
         f.write("};\n\n")
 
-        f.write("static const float NORM_STD[NUM_FEATURES] = {\n")
-        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['std']))
+        f.write(f"static const float NORM_STD[NUM_FEATURES] = {{\n")
+        for i, val in enumerate(norm_stats['std']):
+            f.write(f"    {val:.9f}f,  // {FEATURE_NAMES[i]}\n")
+        f.write("};\n\n")
+
+        f.write("// XGBoost base score in log-odds (from model configuration)\n")
+        f.write("static const float BASE_SCORE_LOGIT[NUM_CLASSES] = {\n")
+        for cls in HAZARD_CLASSES:
+            f.write(f"    {base_scores.get(cls, 0.0):.9f}f,  // {cls}\n")
         f.write("};\n\n")
 
         # Inline inference functions
@@ -275,10 +342,10 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
         for cls in HAZARD_CLASSES:
             upper = cls.upper()
             f.write(f"    // {cls}\n")
-            f.write(f"    float sum_{cls} = 0.0f;\n")
+            f.write(f"    float sum_{cls} = BASE_SCORE_LOGIT[{HAZARD_CLASSES.index(cls)}];\n")
             f.write(f"    for (int i = 0; i < {upper}_NUM_TREES; i++) {{\n")
             f.write(f"        sum_{cls} += xgb_tree_inference({upper}_TREES[i], features);\n")
-            f.write("    }\n")
+            f.write(f"    }}\n")
             f.write(f"    float prob_{cls} = sigmoid(sum_{cls});\n\n")
 
         f.write("    *output_wildfire     = prob_wildfire;\n")
@@ -290,7 +357,7 @@ def generate_model_header(trees_by_class: dict, norm_stats: dict, output_path: s
         f.write("#endif // MODEL_DATA_H\n")
 
 
-def generate_normalization_header(norm_stats: dict, output_path: str):
+def generate_normalization_header(norm_stats: Dict, output_path: str):
     """Generate normalization.h with just mean/std arrays."""
     norm_path = os.path.join(os.path.dirname(output_path), 'normalization.h')
 
@@ -304,11 +371,13 @@ def generate_normalization_header(norm_stats: dict, output_path: str):
         f.write("#include <stdint.h>\n\n")
 
         f.write(f"static const float NORM_MEAN[{NUM_FEATURES}] = {{\n")
-        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['mean']))
+        for i, val in enumerate(norm_stats['mean']):
+            f.write(f"    {val:.9f}f,  // {FEATURE_NAMES[i]}\n")
         f.write("};\n\n")
 
         f.write(f"static const float NORM_STD[{NUM_FEATURES}] = {{\n")
-        f.writelines(f"    {val:.6f}f,  // {FEATURE_NAMES[i]}\n" for i, val in enumerate(norm_stats['std']))
+        for i, val in enumerate(norm_stats['std']):
+            f.write(f"    {val:.9f}f,  // {FEATURE_NAMES[i]}\n")
         f.write("};\n\n")
 
         f.write("// Normalize feature vector in-place\n")
@@ -337,11 +406,13 @@ def generate_metadata_header(output_path: str):
         f.write("#define MODEL_METADATA_H\n\n")
 
         f.write("static const char *FEATURE_NAMES[14] = {\n")
-        f.writelines(f'    "{name}",\n' for name in FEATURE_NAMES)
+        for name in FEATURE_NAMES:
+            f.write(f'    "{name}",\n')
         f.write("};\n\n")
 
         f.write("static const char *HAZARD_CLASS_NAMES[4] = {\n")
-        f.writelines(f'    "{name}",\n' for name in HAZARD_CLASSES)
+        for name in HAZARD_CLASSES:
+            f.write(f'    "{name}",\n')
         f.write("};\n\n")
 
         f.write("static const float ALERT_THRESHOLDS[4] = {\n")
@@ -378,13 +449,14 @@ def main():
 
     # Load and parse trees
     trees_by_class = load_model_trees(args.model, args.max_trees)
+    base_scores = load_model_base_scores(args.model)
 
     if not any(trees_by_class.values()):
         print("Error: No model trees loaded!")
         return 1
 
     # Generate headers
-    generate_model_header(trees_by_class, norm_stats, args.output)
+    generate_model_header(trees_by_class, norm_stats, args.output, base_scores)
     generate_normalization_header(norm_stats, args.output)
     generate_metadata_header(args.output)
 
@@ -397,4 +469,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

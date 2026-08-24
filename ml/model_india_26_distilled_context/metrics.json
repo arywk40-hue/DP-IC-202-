@@ -1,0 +1,20 @@
+{
+  "alpha_hard_label": 0.5,
+  "teacher_f1": 0.9713653680717709,
+  "hard_edge_student": {
+    "accuracy": 0.8740938166311301,
+    "precision": 0.9972982100641675,
+    "recall": 0.71570528356762,
+    "f1": 0.8333568505714689,
+    "threshold": 0.65
+  },
+  "distilled_edge_student": {
+    "accuracy": 0.8776119402985074,
+    "precision": 0.990125082290981,
+    "recall": 0.7290353853611246,
+    "f1": 0.8397543271915131,
+    "threshold": 0.65
+  },
+  "train_rows": 15481,
+  "test_rows": 9380
+}

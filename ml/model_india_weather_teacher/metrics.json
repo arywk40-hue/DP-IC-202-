@@ -1,0 +1,37 @@
+{
+  "task": "next_day_weather_context",
+  "targets": [
+    "temperature_celsius",
+    "humidity",
+    "pressure_mb",
+    "wind_kph",
+    "precipitation_mm"
+  ],
+  "input_rows": 52208,
+  "train_rows": 37986,
+  "test_rows": 14222,
+  "locations": 26,
+  "cutoff_utc": "2019-01-01T00:00:00+00:00",
+  "metrics": {
+    "temperature_celsius": {
+      "mae": 0.7043776512145996,
+      "rmse": 0.9789796136520045
+    },
+    "humidity": {
+      "mae": 4.0900492668151855,
+      "rmse": 5.674253023031733
+    },
+    "pressure_mb": {
+      "mae": 0.9065667390823364,
+      "rmse": 1.2016353550366263
+    },
+    "wind_kph": {
+      "mae": 1.6928948163986206,
+      "rmse": 2.3298032715224224
+    },
+    "precipitation_mm": {
+      "mae": 3.168935537338257,
+      "rmse": 7.764019498899837
+    }
+  }
+}

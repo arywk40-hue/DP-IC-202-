@@ -1,0 +1,11 @@
+{
+  "accuracy": 0.6883681375791364,
+  "precision": 0.20778598139802473,
+  "recall": 0.5704132666491182,
+  "f1": 0.30461062693280855,
+  "threshold": 0.5,
+  "known_rows": 86387,
+  "positive_rows": 6602,
+  "train_positive": 2803,
+  "test_positive": 3799
+}

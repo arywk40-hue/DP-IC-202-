@@ -8,13 +8,13 @@ Usage:
     python prepare_dataset.py --input dataset/weatherHistory.csv --output data/
 """
 
-import argparse
-import json
-import os
-import sys
-
-import numpy as np
 import pandas as pd
+import numpy as np
+import argparse
+import os
+import json
+from pathlib import Path
+
 
 # ============================================
 # FEATURE DEFINITIONS (must match firmware)
@@ -84,6 +84,8 @@ def add_synthetic_sensors(df: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(42)
 
     # Humidity is 0-1 scale
+    humidity_pct = out['humidity_current'] * 100
+
     # PM2.5: Correlated with humidity (higher humidity -> more particles)
     # and temperature inversions (low wind, high pressure)
     base_pm25 = 15 + 20 * out['humidity_current']  # 15-35 baseline (humidity 0-1)
@@ -229,7 +231,7 @@ def prepare_dataset(input_path: str, output_dir: str):
 
     print(f"\nFeature matrix shape: {X.shape}")
     print(f"Label matrix shape: {y.shape}")
-    print("\nLabel distribution:")
+    print(f"\nLabel distribution:")
     for c in HAZARD_CLASSES:
         pos = y[c].sum()
         print(f"  {c}: {pos}/{len(y)} ({100*pos/len(y):.1f}%)")
@@ -273,4 +275,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

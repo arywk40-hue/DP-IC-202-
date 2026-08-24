@@ -1,0 +1,99 @@
+{
+  "task": "next_day_weather_context",
+  "targets": [
+    "temperature_celsius",
+    "humidity",
+    "pressure_mb",
+    "wind_kph",
+    "precipitation_mm"
+  ],
+  "input_rows": 112448,
+  "train_rows": 64284,
+  "test_rows": 48164,
+  "locations": 56,
+  "train_locations": [
+    "Agra",
+    "Ahmedabad",
+    "Aizawl",
+    "Allahabad",
+    "Amaravati",
+    "Amritsar",
+    "Aurangabad",
+    "Bengaluru",
+    "Bhopal",
+    "Bhubaneswar",
+    "Brajrajnagar",
+    "Chandigarh",
+    "Chennai",
+    "Coimbatore",
+    "Dehradun",
+    "Delhi",
+    "Ernakulam",
+    "Gurugram",
+    "Guwahati",
+    "Gwalior",
+    "Hyderabad",
+    "Indore",
+    "Jaipur",
+    "Jammu",
+    "Jamshedpur",
+    "Jorapokhar",
+    "Kanpur",
+    "Kochi",
+    "Kolkata",
+    "Kota",
+    "Kozhikode",
+    "Kurnool",
+    "Lucknow",
+    "Ludhiana",
+    "Madurai",
+    "Mangalore",
+    "Mumbai",
+    "Mysuru",
+    "Nagpur",
+    "Nashik",
+    "Panaji",
+    "Patna",
+    "Pune",
+    "Raipur"
+  ],
+  "holdout_locations": [
+    "Rajkot",
+    "Ranchi",
+    "Shillong",
+    "Shimla",
+    "Srinagar",
+    "Surat",
+    "Talcher",
+    "Thiruvananthapuram",
+    "Vadodara",
+    "Varanasi",
+    "Vijayawada",
+    "Visakhapatnam"
+  ],
+  "split_strategy": "geo-temporal",
+  "holdout_fraction": 0.2,
+  "cutoff_utc": "2019-01-01T00:00:00+00:00",
+  "metrics": {
+    "temperature_celsius": {
+      "mae": 0.9296800494194031,
+      "rmse": 1.8227540370512945
+    },
+    "humidity": {
+      "mae": 4.2719879150390625,
+      "rmse": 5.987206807454091
+    },
+    "pressure_mb": {
+      "mae": 0.9547863006591797,
+      "rmse": 1.3660493309306707
+    },
+    "wind_kph": {
+      "mae": 1.6058788299560547,
+      "rmse": 2.2143082551643887
+    },
+    "precipitation_mm": {
+      "mae": 3.1439015865325928,
+      "rmse": 8.503436571922839
+    }
+  }
+}

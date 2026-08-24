@@ -1,0 +1,34 @@
+{
+  "wildfire": {
+    "accuracy": 0.9993261106215333,
+    "precision": 0.986639260020555,
+    "recall": 1.0,
+    "f1": 0.9932747025349198,
+    "num_trees": 16,
+    "threshold": 0.7
+  },
+  "flood": {
+    "accuracy": 0.9991187600435436,
+    "precision": 0.9878744650499287,
+    "recall": 1.0,
+    "f1": 0.9939002511661285,
+    "num_trees": 16,
+    "threshold": 0.7
+  },
+  "storm": {
+    "accuracy": 0.9996371364885179,
+    "precision": 0.9974802015838733,
+    "recall": 1.0,
+    "f1": 0.9987385114435033,
+    "num_trees": 16,
+    "threshold": 0.75
+  },
+  "air_quality": {
+    "accuracy": 0.9981338447980924,
+    "precision": 1.0,
+    "recall": 0.9966808039830353,
+    "f1": 0.9983376431473956,
+    "num_trees": 16,
+    "threshold": 0.65
+  }
+}

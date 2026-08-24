@@ -1,0 +1,16 @@
+[
+  "temp_current",
+  "humidity_current",
+  "pressure_current",
+  "wind_speed_current",
+  "pm25_current",
+  "co2_current",
+  "lightning_dist_current",
+  "temp_humidity_ratio",
+  "pressure_trend",
+  "heat_index",
+  "dew_point",
+  "fire_risk_index",
+  "flood_risk_index",
+  "lightning_threat"
+]

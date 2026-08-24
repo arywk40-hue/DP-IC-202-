@@ -1,0 +1,2 @@
+event_id,event_type,location_name,start_utc,end_utc,coverage_start_utc,coverage_end_utc,source_name,source_url,verified
+REPLACE_ME,storm,Delhi,2020-01-01T00:00:00Z,2020-01-01T06:00:00Z,2020-01-01T00:00:00Z,2020-12-31T23:59:59Z,REPLACE_WITH_AUTHORITATIVE_SOURCE,https://example.org,false

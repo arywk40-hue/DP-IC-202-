@@ -17,10 +17,11 @@ Reference:
     overview.pdf §7 — Spatial Kriging Engine.
 """
 
-import argparse
-import json
-
 import numpy as np
+import json
+import argparse
+from typing import List, Dict, Tuple
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Variogram model
@@ -146,11 +147,11 @@ class OrdinaryKriging:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def build_geojson_grid(
-    lat_range: tuple[float, float],
-    lon_range: tuple[float, float],
+    lat_range: Tuple[float, float],
+    lon_range: Tuple[float, float],
     grid_size: int,
-    interpolated: dict[str, np.ndarray],
-) -> dict:
+    interpolated: Dict[str, np.ndarray],
+) -> Dict:
     """
     Build a GeoJSON FeatureCollection from a grid of interpolated values.
     Each cell is a Point feature with properties for each weather parameter.

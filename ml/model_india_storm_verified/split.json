@@ -1,0 +1,37 @@
+{
+  "strategy": "geo-temporal",
+  "cutoff_utc": "2019-12-09T00:00:00+00:00",
+  "train_locations": [
+    "Ahmedabad",
+    "Aizawl",
+    "Amaravati",
+    "Amritsar",
+    "Bengaluru",
+    "Bhopal",
+    "Brajrajnagar",
+    "Chandigarh",
+    "Chennai",
+    "Coimbatore",
+    "Delhi",
+    "Ernakulam",
+    "Gurugram",
+    "Guwahati",
+    "Hyderabad",
+    "Jaipur",
+    "Jorapokhar",
+    "Kochi",
+    "Kolkata",
+    "Lucknow"
+  ],
+  "holdout_locations": [
+    "Mumbai",
+    "Patna",
+    "Shillong",
+    "Talcher",
+    "Thiruvananthapuram",
+    "Visakhapatnam"
+  ],
+  "train_rows": 5553,
+  "test_rows": 5817,
+  "known_rows": 11370
+}
