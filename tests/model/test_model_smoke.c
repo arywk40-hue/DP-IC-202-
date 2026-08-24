@@ -1,9 +1,16 @@
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "model_data_india_26_masked_distilled_edge.h"
 
 int main(void) {
+    if (strcmp(FEATURE_NAMES[0], "temp_current") != 0 ||
+        strcmp(FEATURE_NAMES[NUM_FEATURES - 1], "lightning_threat") != 0) {
+        fprintf(stderr, "unexpected edge feature schema\n");
+        return 1;
+    }
+
     const float features[NUM_FEATURES] = {
         25.427949905f, 0.654353499f, 1009.034484863f, 9.865414619f,
         68.366226196f, 422.665649414f, 41.132045746f, 44.399394989f,
@@ -30,4 +37,3 @@ int main(void) {
            probabilities[0], probabilities[1], probabilities[2], probabilities[3]);
     return 0;
 }
-
