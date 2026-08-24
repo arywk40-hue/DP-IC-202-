@@ -22,7 +22,20 @@ void RtcDriver::sample(SensorSnapshot* s) { if (!ready_) { s->time = {0, 0, 0, S
 void Pms7003Driver::begin(HardwareSerial& serial) { serial_ = &serial; serial.begin(9600, SERIAL_8N1, board::kPmsRxPin, board::kPmsTxPin); }
 void Pms7003Driver::poll(SensorSnapshot* s, uint32_t now) { if (serial_ == nullptr) return; while (serial_->available()) { const uint8_t byte = static_cast<uint8_t>(serial_->read()); if (index_ == 0 && byte != 0x42) continue; if (index_ == 1 && byte != 0x4d) { index_ = 0; continue; } frame_[index_++] = byte; if (index_ != sizeof(frame_)) continue; index_ = 0; uint16_t sum = 0; for (size_t i = 0; i < 30; ++i) sum += frame_[i]; if (sum != u16(&frame_[30])) { s->pm25_ug_m3.status = SensorStatus::Invalid; continue; } const float pm1 = u16(&frame_[10]), pm25 = u16(&frame_[12]), pm10 = u16(&frame_[14]); s->pm1_ug_m3 = reading(pm1, range(pm1, 0, 1000), now); s->pm25_ug_m3 = reading(pm25, range(pm25, 0, 1000), now); s->pm10_ug_m3 = reading(pm10, range(pm10, 0, 1000), now); } }
 void GpsDriver::begin(HardwareSerial& serial) { serial_ = &serial; serial.begin(9600, SERIAL_8N1, board::kGpsRxPin, board::kGpsTxPin); }
-void GpsDriver::poll(SensorSnapshot* s, uint32_t now) { if (serial_ == nullptr) return; while (serial_->available()) parser_.encode(static_cast<char>(serial_->read())); if (!parser_.location.isValid()) return; const float lat = parser_.location.lat(), lon = parser_.location.lng(); s->latitude_deg = reading(lat, range(lat, -90, 90), now); s->longitude_deg = reading(lon, range(lon, -180, 180), now); if (parser_.altitude.isValid()) s->altitude_m = reading(parser_.altitude.meters(), SensorStatus::Valid, now); }
+void GpsDriver::poll(SensorSnapshot* s, uint32_t now) {
+  if (serial_ == nullptr) return;
+  while (serial_->available()) parser_.encode(static_cast<char>(serial_->read()));
+  if (parser_.location.isValid()) {
+    const float lat = parser_.location.lat(), lon = parser_.location.lng();
+    s->latitude_deg = reading(lat, range(lat, -90, 90), now);
+    s->longitude_deg = reading(lon, range(lon, -180, 180), now);
+  }
+  if (parser_.altitude.isValid()) s->altitude_m = reading(parser_.altitude.meters(), SensorStatus::Valid, now);
+  if (parser_.date.isValid() && parser_.time.isValid()) {
+    const uint16_t year = parser_.date.year();
+    s->gps_time = ClockTime{year, day_of_year(year, parser_.date.month(), parser_.date.day()), parser_.time.hour(), SensorStatus::Valid};
+  }
+}
 volatile uint32_t WindEncoder::pulses_ = 0;
 void IRAM_ATTR WindEncoder::on_pulse() { ++pulses_; }
 void WindEncoder::begin(uint8_t pin) { pinMode(pin, INPUT_PULLUP); attachInterrupt(digitalPinToInterrupt(pin), on_pulse, RISING); }

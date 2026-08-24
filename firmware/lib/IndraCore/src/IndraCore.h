@@ -40,6 +40,7 @@ struct SensorSnapshot {
   Reading battery_current_ma;
   Reading battery_power_mw;
   ClockTime time;
+  ClockTime gps_time;
 };
 
 struct FeatureVector {

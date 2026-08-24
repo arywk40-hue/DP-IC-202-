@@ -18,4 +18,4 @@ This is a new, unpromoted contract. It preserves every existing model. The statu
 
 PM1.0, PM10, GPS altitude and INA219 measurements are telemetry only. Missing, stale, invalid, non-finite and out-of-range inputs are rejected. Two real pressure samples are required before calculating trend.
 
-`ml/sensor_only_v1/train.py` rejects unlabelled data and makes a disjoint holdout covering recent time and held-out geographic cells. It records `NOT_READY`; no model is trained until suitable labelled field data and independent validation exist, so Python/C prediction parity cannot yet be claimed.
+`ml/sensor_only_v1/train.py` rejects unlabelled data and makes a disjoint holdout covering recent time and held-out geographic cells. `check_feature_parity.py` compares the firmware and Python feature vectors. It records `NOT_READY`; no model is trained until suitable labelled field data and independent validation exist, so Python/C **prediction** parity cannot yet be claimed.

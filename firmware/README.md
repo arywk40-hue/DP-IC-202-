@@ -20,4 +20,4 @@ pio run -d firmware -e esp32-s3-devkitc-1 --target upload
 pio device monitor -d firmware --baud 115200
 ```
 
-Serial emits a JSON record every five seconds. The firmware reports model status `NOT_READY`: the existing promoted model needs CO2 and lightning, while no independently validated real-data `sensor_only_v1` model is bundled.
+Serial emits a JSON record every five seconds, including separate GPS and DS3231 time objects. The firmware reports model status `NOT_READY`: the existing promoted model needs CO2 and lightning, while no independently validated real-data `sensor_only_v1` model is bundled.
