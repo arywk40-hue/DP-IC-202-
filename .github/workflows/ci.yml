@@ -37,6 +37,16 @@ jobs:
             -o /tmp/model_smoke
           /tmp/model_smoke
 
+      - name: Compile sensor-only C contract
+        run: |
+          cc -std=c99 -Wall -Wextra -Werror \
+            -Iml/generated tests/model/test_sensor_only_v1_contract.c \
+            -o /tmp/sensor_only_v1_contract
+          /tmp/sensor_only_v1_contract
+
+      - name: Check sensor-only Python/C feature parity
+        run: python ml/sensor_only_v1/check_feature_parity.py
+
   firmware:
     name: Firmware host test and ESP32-S3 build
     runs-on: ubuntu-latest
