@@ -1,4 +1,4 @@
-name: ML CI
+name: CI
 
 on:
   push:
@@ -6,75 +6,60 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
-    name: Lint & Static Analysis
+  ml-quality:
+    name: Python and model contract
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install linters
+      - name: Install lint tools
+        run: python -m pip install ruff
+
+      - name: Check Python syntax
+        run: python -m compileall -q ml
+
+      - name: Lint Python
+        run: ruff check ml
+
+      - name: Compile and run promoted C model
         run: |
-          pip install ruff mypy
+          cc -std=c99 -Wall -Wextra -Werror \
+            -Iml/generated tests/model/test_model_smoke.c -lm \
+            -o /tmp/model_smoke
+          /tmp/model_smoke
 
-      - name: Run ruff (Python linting)
-        run: |
-          ruff check ml/ --exit-zero
-
-      - name: Run mypy (type checking)
-        run: |
-          mypy ml/ --ignore-missing-imports || true
-
-  verify-model:
-    name: Verify ML Model Export
+  firmware:
+    name: Firmware host test and ESP32-S3 build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check model artifacts exist
-        run: |
-          test -f ml/model/feature_names.json
-          test -f ml/model/normalization.json
-          test -f ml/model/metrics.json
-          test -f ml/model/xgboost_wildfire.json
-          test -f ml/model/xgboost_flood.json
-          test -f ml/model/xgboost_storm.json
-          test -f ml/model/xgboost_air_quality.json
-          test -f ml/generated/model_data.h
-          echo "Model artifacts present"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-      - name: Verify model constants in generated header
-        run: |
-          python3 -c "
-          with open('ml/generated/model_data.h') as f:
-              content = f.read()
-          assert 'NUM_CLASSES' in content
-          assert 'NUM_FEATURES' in content
-          assert 'WILDFIRE_NUM_TREES' in content
-          print('Model constants verified')
-          "
+      - name: Cache PlatformIO packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: platformio-${{ runner.os }}-${{ hashFiles('firmware/platformio.ini') }}
 
-  docs:
-    name: Documentation Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
+      - name: Install PlatformIO
+        run: python -m pip install platformio
 
-      - name: Check docs structure
-        run: |
-          test -f ml/docs/ML_PIPELINE.md
-          test -f ml/docs/ML_INFERENCE.md
-          echo "All docs present"
+      - name: Run native firmware tests
+        run: pio test -d firmware -e native
 
-      - name: Check markdown lint
-        run: |
-          pip install markdownlint-cli
-          markdownlint ml/docs/ --disable MD013 MD033
+      - name: Build ESP32-S3 firmware
+        run: pio run -d firmware -e esp32-s3-devkitc-1
+
