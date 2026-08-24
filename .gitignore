@@ -31,6 +31,8 @@ env/
 ml/data_baseline/
 ml/data_v2_baseline/
 ml/data_india_pilot/
+ml/data_sensor_only_v1/
+ml/model_sensor_only_v1*/
 *.partial
 results/
 field-logs/
@@ -72,4 +74,3 @@ firmware/test_*.log
 *.pfx
 .env.local
 secrets.json
-
