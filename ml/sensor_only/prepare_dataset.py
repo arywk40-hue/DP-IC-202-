@@ -71,7 +71,8 @@ def _trailing_pressure_slope(
     pressure_hpa: pd.Series,
     window: int,
 ) -> np.ndarray:
-    times = pd.to_datetime(timestamps, utc=True).astype("int64").to_numpy(dtype=np.float64)
+    parsed_times = pd.to_datetime(timestamps, utc=True).dt.tz_convert(None)
+    times = parsed_times.to_numpy(dtype="datetime64[ns]").astype(np.float64)
     values = pressure_hpa.to_numpy(dtype=np.float64)
     slopes = np.full(len(values), np.nan, dtype=np.float64)
     ns_per_hour = 3_600_000_000_000.0
@@ -229,4 +230,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
