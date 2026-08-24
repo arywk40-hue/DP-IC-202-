@@ -18,4 +18,19 @@ This is a new, unpromoted contract. It preserves every existing model. The schem
 
 PM1.0, PM10, GPS altitude and INA219 measurements are telemetry only. Missing, stale, invalid, non-finite and out-of-range inputs are rejected. Two real pressure samples are required before calculating trend.
 
+## Features versus labels
+
+The ESP32 model input is limited to the 14 values above. Official storm, fire,
+flood, or air-quality records are permitted only as training labels: they are
+never ESP32 inputs and do not imply an extra sensor. The legacy promoted model
+and `code/ml/data` are rejected for this contract because they contain CO2 and
+lightning fields and synthetic hazard labels.
+
 `ml/sensor_only_v1/train.py` rejects unlabelled data and makes a disjoint holdout covering recent time and held-out geographic cells. `check_feature_parity.py` compares the firmware and Python feature vectors. It records `NOT_READY`; no model is trained until suitable labelled field data and independent validation exist, so Python/C **prediction** parity cannot yet be claimed.
+
+## Intended claims
+
+- PM2.5-based particulate air-quality alert is feasible after calibration.
+- Storm-risk estimation requires independently sourced storm labels.
+- Smoke/wildfire output, if trained, is a risk indication and not confirmed wildfire detection.
+- Weather-based flood output, if trained, is experimental risk indication and not direct flood detection.
