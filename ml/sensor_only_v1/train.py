@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from feature_contract import FEATURE_NAMES, MODEL_CHECKSUM, MODEL_STATUS, SCHEMA_VERSION
+from feature_contract import FEATURE_NAMES, MODEL_CHECKSUM, MODEL_STATUS, SCHEMA_VERSION, schema_checksum
 
 REQUIRED_COLUMNS = set(FEATURE_NAMES[:5]) | {"timestamp", "latitude_deg", "longitude_deg", "label"}
 
@@ -37,7 +37,7 @@ def main() -> None:
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "manifest.json").write_text(json.dumps({
         "schema_version": SCHEMA_VERSION, "model_status": MODEL_STATUS,
-        "model_checksum": MODEL_CHECKSUM, "feature_names": FEATURE_NAMES,
+        "schema_checksum": schema_checksum(), "model_checksum": MODEL_CHECKSUM, "feature_names": FEATURE_NAMES,
         "train_rows": len(train), "test_rows": len(test),
         "reason": "No independently validated sensor-only model is bundled by this repository."
     }, indent=2) + "\n")

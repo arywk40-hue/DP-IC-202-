@@ -6,6 +6,7 @@
 int main(void) {
     if (SENSOR_ONLY_V1_NUM_FEATURES != 14) return 1;
     if (strcmp(SENSOR_ONLY_V1_SCHEMA_VERSION, "sensor_only_v1") != 0) return 2;
+    if (strcmp(SENSOR_ONLY_V1_SCHEMA_CHECKSUM, "a85fd11ea784026b6b27a0157a4498567102e71c82b9e689ddcbbb5698c2c441") != 0) return 6;
     if (strcmp(SENSOR_ONLY_V1_MODEL_STATUS, "NOT_READY") != 0) return 3;
     if (strcmp(sensor_only_v1_feature_names[0], "temperature_c") != 0) return 4;
     if (strcmp(sensor_only_v1_feature_names[13], "longitude_deg") != 0) return 5;

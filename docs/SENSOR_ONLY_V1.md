@@ -1,6 +1,6 @@
 # INDRA sensor_only_v1 contract
 
-This is a new, unpromoted contract. It preserves every existing model. The status and checksum are respectively `NOT_READY` and `NOT_READY-no-trained-model`.
+This is a new, unpromoted contract. It preserves every existing model. The schema checksum is `a85fd11ea784026b6b27a0157a4498567102e71c82b9e689ddcbbb5698c2c441`; the model status and checksum are respectively `NOT_READY` and `NOT_READY-no-trained-model`.
 
 | Index | Feature | Unit / derivation |
 | ---: | --- | --- |

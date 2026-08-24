@@ -2,11 +2,13 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <math.h>
 
 namespace indra {
 
 constexpr size_t kSensorOnlyFeatureCount = 14;
 constexpr const char* kSchemaVersion = "sensor_only_v1";
+constexpr const char* kSchemaChecksum = "a85fd11ea784026b6b27a0157a4498567102e71c82b9e689ddcbbb5698c2c441";
 constexpr const char* kModelChecksum = "NOT_READY-no-trained-model";
 
 enum class SensorStatus : uint8_t { Valid, Missing, Stale, Invalid, OutOfRange };
@@ -16,6 +18,9 @@ struct Reading {
   float value;
   SensorStatus status;
   uint32_t sampled_at_ms;
+  Reading() : value(NAN), status(SensorStatus::Missing), sampled_at_ms(0) {}
+  Reading(float reading_value, SensorStatus reading_status, uint32_t sampled_at)
+      : value(reading_value), status(reading_status), sampled_at_ms(sampled_at) {}
 };
 
 struct ClockTime {
@@ -23,6 +28,9 @@ struct ClockTime {
   uint16_t day_of_year;
   uint8_t hour;
   SensorStatus status;
+  ClockTime() : year(0), day_of_year(0), hour(0), status(SensorStatus::Missing) {}
+  ClockTime(uint16_t clock_year, uint16_t clock_day, uint8_t clock_hour, SensorStatus clock_status)
+      : year(clock_year), day_of_year(clock_day), hour(clock_hour), status(clock_status) {}
 };
 
 struct SensorSnapshot {
@@ -51,6 +59,7 @@ struct ModelResult {
   ModelStatus status;
   const char* missing_feature;
   const char* schema_version;
+  const char* schema_checksum;
   const char* model_checksum;
 };
 

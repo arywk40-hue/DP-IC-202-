@@ -2,6 +2,7 @@
 
 /* Schema export only: no predictor is present until a real model is validated. */
 #define SENSOR_ONLY_V1_SCHEMA_VERSION "sensor_only_v1"
+#define SENSOR_ONLY_V1_SCHEMA_CHECKSUM "a85fd11ea784026b6b27a0157a4498567102e71c82b9e689ddcbbb5698c2c441"
 #define SENSOR_ONLY_V1_MODEL_STATUS "NOT_READY"
 #define SENSOR_ONLY_V1_MODEL_CHECKSUM "NOT_READY-no-trained-model"
 #define SENSOR_ONLY_V1_NUM_FEATURES 14

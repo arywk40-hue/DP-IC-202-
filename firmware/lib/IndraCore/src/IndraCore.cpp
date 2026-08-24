@@ -50,6 +50,7 @@ const char* model_status_name(ModelStatus status) {
 bool FeatureBuilder::build(const SensorSnapshot& s, FeatureVector* output, ModelResult* result) {
   if (output == nullptr || result == nullptr) return false;
   result->schema_version = kSchemaVersion;
+  result->schema_checksum = kSchemaChecksum;
   result->model_checksum = kModelChecksum;
   result->missing_feature = nullptr;
   const char* missing = nullptr;
