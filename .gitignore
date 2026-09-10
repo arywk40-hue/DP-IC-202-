@@ -1,76 +1,32 @@
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.Spotlight-V100
-.Trashes
+# Downloaded dataset; retain README and provenance manifest.
+data/uci_beijing_air_quality/source.zip
+data/uci_beijing_air_quality/observations.csv
+*.partial
 
-# Python
+# Python and test caches
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.Python
-*.egg
-*.egg-info/
-.eggs/
-build/
-dist/
 .venv/
 venv/
-env/
-.env
-.ipynb_checkpoints/
 .pytest_cache/
-.mypy_cache/
 .ruff_cache/
+.mypy_cache/
+*.egg-info/
 
-# Local ML datasets and outputs
-ml/data_baseline/
-ml/data_v2_baseline/
-ml/data_india_pilot/
-ml/data_sensor_only_v1/
-ml/model_sensor_only_v1*/
-*.partial
-results/
-field-logs/
-coverage/
-*.log
-*.xml
-*.html
-
-# PlatformIO and firmware output
+# Generated build/runtime outputs
 .pio/
-firmware/.pio/
-firmware/build/
-firmware/sdkconfig
-firmware/sdkconfig.old
-firmware/managed_components/
-firmware/size*.txt
-firmware/size*.log
-firmware/benchmark.log
-firmware/test_*.log
+build/
+dist/
+results/
+*.log
 
-# Editors
+# Local editor, OS and secrets
+.DS_Store
 .vscode/
 .idea/
 *.swp
-*.swo
-*~
-*.orig
-
-# Document build output
-*.aux
-*.fls
-*.fdb_latexmk
-*.synctex.gz
-
-# Secrets
+.env
+.env.*
 *.pem
 *.key
-*.p12
-*.pfx
-.env.local
 secrets.json

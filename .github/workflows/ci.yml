@@ -1,77 +1,41 @@
-name: CI
+name: Model tests
 
 on:
   push:
-    branches: [main, develop]
   pull_request:
-    branches: [main, develop]
 
 permissions:
   contents: read
 
 jobs:
-  ml-quality:
-    name: Python and model contract
+  model:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
+      - name: Install model dependencies and lint tools
+        run: python -m pip install -r requirements.txt ruff
+      - name: Lint model code
+        run: ruff check ml/six_sensor_forecast tests --select E9,F63,F7,F82
+      - name: Run model, data contract and compiled C parity tests
+        run: python -m unittest discover -s tests
 
-      - name: Install test and lint tools
-        run: python -m pip install ruff numpy pandas scikit-learn
-
-      - name: Check Python syntax
-        run: python -m compileall -q ml
-
-      - name: Check Python correctness rules
-        run: ruff check ml --select E9,F63,F7,F82
-
-      - name: Run sensor-only pipeline tests
-        run: python -m unittest discover -s tests/ml -p "test_*.py"
-
-      - name: Compile and run promoted C model
-        run: |
-          cc -std=c99 -Wall -Wextra -Werror \
-            -Iml/generated tests/model/test_model_smoke.c -lm \
-            -o /tmp/model_smoke
-          /tmp/model_smoke
-
-      - name: Compile sensor-only C contract
-        run: |
-          cc -std=c99 -Wall -Wextra -Werror \
-            -Iml/generated tests/model/test_sensor_only_v1_contract.c \
-            -o /tmp/sensor_only_v1_contract
-          /tmp/sensor_only_v1_contract
-
-      - name: Check sensor-only Python/C feature parity
-        run: python ml/sensor_only_v1/check_feature_parity.py
-
-  firmware:
-    name: Firmware host test and ESP32-S3 build
+  esp32-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
-      - name: Cache PlatformIO packages
-        uses: actions/cache@v4
+          python-version: "3.13"
+      - uses: actions/cache@v4
         with:
           path: ~/.platformio
-          key: platformio-${{ runner.os }}-${{ hashFiles('firmware/platformio.ini') }}
-
+          key: platformio-${{ runner.os }}-${{ hashFiles('esp32/model_test/platformio.ini') }}
       - name: Install PlatformIO
         run: python -m pip install platformio
-
-      - name: Run native firmware tests
-        run: pio test -d firmware -e native
-
-      - name: Build ESP32-S3 firmware
-        run: pio run -d firmware -e esp32-s3-devkitc-1
+      - name: Build isolated ESP32-S3 model test
+        run: pio run -d esp32/model_test
