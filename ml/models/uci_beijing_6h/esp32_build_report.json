@@ -1,0 +1,19 @@
+{
+  "board": "esp32-s3-devkitc-1",
+  "environment": "esp32-s3-model-test",
+  "platform": "espressif32 7.0.1",
+  "build_status": "PASSED",
+  "flash_program_bytes": 282445,
+  "static_ram_bytes": 18448,
+  "size_scope": "Complete isolated Arduino model test image, including framework; not model-only size",
+  "firmware_bin_bytes": 282816,
+  "firmware_bin_sha256": "35125d18cdaa84a1a61bd28d6023e41e84c76f3d644100d5cb7ff50c95eac6cd",
+  "physical_device_connected": false,
+  "flashed": false,
+  "on_device_latency_us": null,
+  "on_device_test_status": "NOT_RUN_NO_CONNECTED_ESP32",
+  "project_path": "esp32/model_test",
+  "build_command": "pio run -d esp32/model_test",
+  "verified_at_utc": "2026-09-10T03:56:24.079098+00:00",
+  "header_sha256": "7bf0227105ce9477c36e63be3dbaa78f2008a3d412b0dfd7222f97b4105835af"
+}

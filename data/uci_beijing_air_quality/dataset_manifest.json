@@ -1,0 +1,49 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "source_name": "UCI Beijing Multi-Site Air Quality (501)",
+  "source_url": "https://archive.ics.uci.edu/static/public/501/beijing+multi+site+air+quality+data.zip",
+  "doi": "https://doi.org/10.24432/C5RK5G",
+  "attribution": "Chen, S. (2017). Beijing Multi-Site Air Quality. UCI Machine Learning Repository.",
+  "license": "CC BY 4.0",
+  "retrieved_at_utc": "2026-09-09T17:37:13.058403+00:00",
+  "archive_sha256": "b04da438b2f331ac0ffd45aebdfec0d20d2367feb5f6948c4b1f7ce1191e33c4",
+  "observations_sha256": "ade928f48271f5323a893f0dd6dc7094270eea4eb110838336e1e26c7432eb8a",
+  "rows": 420768,
+  "locations": [
+    "Aotizhongxin",
+    "Changping",
+    "Dingling",
+    "Dongsi",
+    "Guanyuan",
+    "Gucheng",
+    "Huairou",
+    "Nongzhanguan",
+    "Shunyi",
+    "Tiantan",
+    "Wanliu",
+    "Wanshouxigong"
+  ],
+  "coverage_start_utc": "2013-02-28T16:00:00+00:00",
+  "coverage_end_utc": "2017-02-28T15:00:00+00:00",
+  "sensor_columns": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "missing_measurements": {
+    "temperature_c": 398,
+    "relative_humidity_pct": 403,
+    "pressure_hpa": 393,
+    "pm25_ug_m3": 8739,
+    "pm10_ug_m3": 6449,
+    "wind_speed_mps": 318
+  },
+  "relative_humidity": "Magnus approximation derived from observed temperature and dew point; not directly measured RH",
+  "weather_alignment": "UCI source matches air-quality sites to nearest meteorological station",
+  "timestamp_policy": "Source local hours interpreted as Asia/Shanghai and converted to UTC",
+  "label_provenance": "Exact future station measurements; no hazard labels or synthetic sensor values",
+  "geographic_limit": "Beijing, China; external pretraining/benchmark only, not India field validation"
+}

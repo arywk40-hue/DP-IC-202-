@@ -1,0 +1,34 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "status": "OFFLINE_RESEARCH_ONLY",
+  "input_features": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "horizon_hours": 6,
+  "heads": 6,
+  "trees_per_head": 16,
+  "max_depth": 3,
+  "total_nodes": 1438,
+  "header_bytes": 66620,
+  "header_sha256": "7bf0227105ce9477c36e63be3dbaa78f2008a3d412b0dfd7222f97b4105835af",
+  "model_report_sha256": "334ea55b254051c33f013a12e35e411c3fc1c4ad791d6002d3aee695d9ee5da9",
+  "parity": {
+    "valid_rows": 4063,
+    "invalid_rows": 18,
+    "absolute_tolerance": 0.0002,
+    "max_absolute_error_by_target": {
+      "temperature_c": 4.9975586335904154e-08,
+      "relative_humidity_pct": 7.674023436265998e-06,
+      "pressure_hpa": 5.000000101063051e-06,
+      "pm25_ug_m3": 3.094921873980638e-05,
+      "pm10_ug_m3": 3.1007812481220753e-05,
+      "wind_speed_mps": 4.472656200960046e-08
+    },
+    "passed": true
+  }
+}
