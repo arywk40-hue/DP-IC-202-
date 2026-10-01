@@ -27,10 +27,13 @@ The six listed columns are `AT (degC)`, `RH (%)`, `BP (mmHg)`, `PM2.5 (ug/m3)`,
 training records.** Jahangirpuri's pressure median is near 976 under a header
 that claims mmHg. Its true units and whether it is station or sea-level
 pressure must be confirmed with the provider before converting it to the
-model's station-pressure hPa input. CSV timestamps have no UTC offset;
-provider documentation calls them UTC, but that has not been verified against
-raw records. Missing values, outliers and 15-minute-to-hourly aggregation need
-a documented quality review. These Delhi stations cannot validate Mandi
+model's station-pressure hPa input. CSV timestamps have no UTC offset and the
+resource page does not establish their timezone. The local solar-radiation
+pattern suggests the timestamps are in India Standard Time, but this remains
+an inference. See [source verification](SOURCE_VERIFICATION.md) for evidence
+and the exact questions still open. Missing values, outliers and
+15-minute-to-hourly aggregation need a documented quality review. These Delhi
+stations cannot validate Mandi
 performance and contain no independent hazard event labels.
 
 Reproduce the source audit from the repository root:
