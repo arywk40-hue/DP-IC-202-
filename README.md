@@ -74,6 +74,15 @@ records seven downloaded station samples and their missing-input/unit issues.
 The Indian research profiles exclude unresolved channels and document their
 remaining source assumptions.
 
+Two newer [Delhi station exports](data/india_delhi_station_samples/README.md)
+are retained locally with a reproducible audit in Git. The raw CSVs are
+excluded from Git. Jahangirpuri has
+simultaneous values for all six channels in many 15-minute rows, but its
+pressure header conflicts with its numeric values; CRRI Mathura Road lacks all
+four weather channels in this export. Neither is approved for six-input
+training or Mandi validation until source units, pressure reference, time and
+quality checks are resolved.
+
 ## Run from the repository root
 
 Python 3.11 or newer and a C compiler are required for host tests/export.

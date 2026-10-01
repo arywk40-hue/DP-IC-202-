@@ -43,6 +43,9 @@ data/imd_north_access/*.response
 # Downloaded independent field observations
 data/field_sources/raw/
 
+# User-supplied Delhi station exports; retain local originals and commit the audit.
+data/india_delhi_station_samples/raw/
+
 # Supplied raw Himachal exports and generated local heatmap arrays
 /himachal 4-sensor dataset/*.csv
 /data/himachal_weather_audit/temperature_1961_2020_download.csv

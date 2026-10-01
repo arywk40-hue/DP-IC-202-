@@ -1,0 +1,70 @@
+{
+  "status": "SOURCE_AUDIT_ONLY_NOT_TRAINING_APPROVED",
+  "time_reference": "NAIVE_IN_CSV_PROVIDER_CLAIMS_UTC_NOT_YET_VERIFIED",
+  "pressure_reference_and_units": "UNRESOLVED_HEADER_MM_HG_CONFLICTS_WITH_MOST_NUMERIC_VALUES",
+  "aggregation": "No hourly training rows created; four complete 15-minute slots per hour are counted only",
+  "stations": {
+    "jahangirpuri_dpcc": {
+      "file": "raw/jahangirpuri_dpcc_2024_2025.csv",
+      "source_url": "https://data.opencity.in/dataset/delhi-hourly-air-quality-reports/resource/734c459f-3e47-44c7-b0b8-8270090cecf0",
+      "sha256": "a859deb7a75f587d650ddeef84108018cb8e07e761030ee231298bd7cd4e217f",
+      "bytes": 11869148,
+      "raw_rows": 70177,
+      "malformed_or_separator_rows": 1,
+      "valid_timestamp_rows": 70176,
+      "station_ids": {
+        "site_1423": 70176
+      },
+      "station_names": {
+        "Jahangirpuri, Delhi - DPCC": 70176
+      },
+      "first_timestamp_as_supplied": "2024-01-01 00:00:00",
+      "last_timestamp_as_supplied": "2025-12-31 23:45:00",
+      "duplicate_station_timestamp_rows": 0,
+      "non_null_by_channel": {
+        "temperature_c": 66993,
+        "relative_humidity_pct": 67047,
+        "pressure_raw": 66866,
+        "pm25_ug_m3": 57564,
+        "pm10_ug_m3": 65570,
+        "wind_speed_mps": 66335
+      },
+      "complete_six_channel_15_minute_rows": 55309,
+      "hours_with_four_complete_15_minute_rows": 7191,
+      "pressure_raw_header": "BP (mmHg)",
+      "pressure_raw_median": 976.0,
+      "pressure_raw_values_above_850": 66819
+    },
+    "crri_mathura_road_imd": {
+      "file": "raw/crri_mathura_road_imd_2024_2025.csv",
+      "source_url": "https://data.opencity.in/dataset/delhi-hourly-air-quality-reports/resource/c4ec16f3-edfc-465e-8fb8-5bfaa14f8baa",
+      "sha256": "c0ffa88c5682c143d94bf20f46408bd65800698aa5ed3a1bd0fc8fde132104fc",
+      "bytes": 9593389,
+      "raw_rows": 70177,
+      "malformed_or_separator_rows": 1,
+      "valid_timestamp_rows": 70176,
+      "station_ids": {
+        "site_103": 70176
+      },
+      "station_names": {
+        "CRRI Mathura Road, Delhi - IMD": 70176
+      },
+      "first_timestamp_as_supplied": "2024-01-01 00:00:00",
+      "last_timestamp_as_supplied": "2025-12-31 23:45:00",
+      "duplicate_station_timestamp_rows": 0,
+      "non_null_by_channel": {
+        "temperature_c": 0,
+        "relative_humidity_pct": 0,
+        "pressure_raw": 0,
+        "pm25_ug_m3": 61128,
+        "pm10_ug_m3": 61477,
+        "wind_speed_mps": 0
+      },
+      "complete_six_channel_15_minute_rows": 0,
+      "hours_with_four_complete_15_minute_rows": 0,
+      "pressure_raw_header": "BP (mmHg)",
+      "pressure_raw_median": null,
+      "pressure_raw_values_above_850": 0
+    }
+  }
+}
