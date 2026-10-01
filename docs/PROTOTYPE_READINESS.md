@@ -59,6 +59,44 @@ The earlier missing-PM diagnostic is not a valid production evaluation.
 
 ## Independent field evaluation
 
+The six-hour forecast can be tested without event labels. Once a verified
+six-channel file exists, use `ml.deployment.evaluate_forecast` before local
+retraining. It rejects incomplete/out-of-range rows, naive timestamps and
+unverified source declarations. Each test forecast is paired only with an
+observation from the same station at exactly `t + 6 hours`; the saved student
+is compared with the unchanged-current-value (persistence) baseline.
+
+`observations.csv` must have exactly `timestamp_utc,location_id,temperature_c,relative_humidity_pct,pressure_hpa,pm25_ug_m3,pm10_ug_m3,wind_speed_mps`.
+Every timestamp needs an explicit UTC offset, and all six measurements must be
+observed at the same location and hour. The provenance JSON needs
+`observation_source`, `timezone_verified: true`, `units_verified: true`, and
+`pressure_reference: "station"`, supported by the provider's metadata.
+Choose and freeze the test start before inspecting model errors:
+
+```sh
+python3 -m ml.deployment.evaluate_forecast --observations observations.csv --provenance provenance.json --test-start 2025-01-01T00:00:00Z --output reports/deployment/local_forecast_test.json
+```
+
+The date is an example. The four Himachal weather files cannot be passed to
+this command as a six-input test because neither PM channel is present. The
+Indian five-channel experiment also lacks verified station pressure. Potential
+particulate routes are the [CPCB data repository](https://airquality.cpcb.gov.in/AQI_India/)
+and [government hourly AQI data](https://www.data.gov.in/catalog/real-time-air-quality-index),
+but neither source has yet yielded verified, colocated hourly PM2.5 **and** PM10
+measurements for AWS IIT Mandi. AQI values or other-town PM must not be used as
+substitutes. The IIT Mandi environmental-engineering lab
+[lists a PM2.5 sampler](https://scene.iitmandi.ac.in/teaching_labs_details/environmental-engineering-lab),
+which is a possible inquiry route, not evidence of hourly PM10 coverage.
+
+For board testing, no ESP32 serial port was visible during the latest local
+check. Once a board is connected, follow the upload and replay commands in
+[the ML integration guide](../esp32/ml_integration/README.md); the generated
+`results/esp32_board_test.json` will contain measured inference latency.
+
+For event validation, collect independently recorded positive and negative
+examples with timestamps and sites. Unknown labels stay blank. The current
+rainfall file contains only wet records, so it cannot supply negative examples.
+
 Prepare three files after obtaining observations:
 
 1. `observations.csv`: timestamp_utc, location_id, temperature_c,
