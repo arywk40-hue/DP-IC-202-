@@ -5,6 +5,23 @@ Field hazard alert deployment is not approved by the available evidence.
 No model weights were retrained as part of this preparation; preserving their
 provenance prevents silently changing model behavior without validation.
 
+## Field-test scope
+
+Mandi, Himachal Pradesh is the first target site. Start with a connected-board
+replay, then collect six synchronized, calibrated local measurements at hourly
+times and compare the six-hour forecasts with observed outcomes and persistence.
+Record the station location, elevation, sensor identity, pressure reference and
+clock source. This tests the saved model in Mandi; it does not require a Delhi
+dataset. The existing Delhi export has unresolved pressure units and timestamp
+semantics and should remain outside six-channel evaluation until verified.
+
+The firmware's input format and field evaluator are location-independent, so
+the **same test procedure** can be repeated at any site with the six channels
+and verified timestamps. A successful Mandi test establishes Mandi-site
+performance for the tested period, not accuracy throughout India. Each new
+site needs its own held-out evaluation; retraining should follow the baseline
+test only if the local evidence warrants it.
+
 ## Fixed software gaps
 
 - Event inference checks model hashes, feature order and objective.

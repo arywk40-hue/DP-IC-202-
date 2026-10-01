@@ -4,6 +4,12 @@ Train, test and export a six-hour environmental forecast model for ESP32-S3.
 Inputs: **temperature, relative humidity, pressure, PM2.5, PM10 and wind speed**.
 Outputs: the same six measurements, forecast six hours ahead.
 
+**First field site: Mandi, Himachal Pradesh.** The six-channel input contract,
+ESP32 replay procedure and evaluation tools can be used at another site with
+its own synchronized measurements. This makes the prototype *testable* at other
+locations; forecast accuracy must be measured separately at each site. The
+current saved six-input model has not yet been validated on Mandi observations.
+
 ## Required release: all six inputs
 
 The deployment requirement is temperature, humidity, **station-level pressure**,
@@ -122,7 +128,10 @@ LoRa transport and live sensor drivers remain separate integration work.
 history-aware heatmaps (both strategies), verified event inference, independent
 field evaluation and chronological calibration. The supplied Himachal files
 and newly downloaded official rainfall source have reproducible coverage audits.
-Field deployment remains gated on complete local measurements, independent
-positive and negative event labels, spatial validation and physical testing.
+The first field evaluation should use complete Mandi measurements and a
+connected ESP32-S3. Independent event labels are needed if event detection is
+claimed; spatial validation is needed if heatmaps are claimed. The same
+protocol can then be repeated at other locations without assuming Mandi
+results transfer to them.
 See [model inputs and outputs](docs/MODEL_INPUTS_AND_OUTPUTS.md) for the exact
 six-channel and event-score contracts.
