@@ -1,0 +1,14 @@
+{
+  "board": "esp32-s3-devkitc-1",
+  "environment": "india-pm-test",
+  "build_status": "PASSED",
+  "build_command": "pio run -d esp32/model_test -e india-pm-test",
+  "verified_at_utc": "2026-09-10T05:55:18.316933+00:00",
+  "firmware_bin_bytes": 269808,
+  "firmware_bin_sha256": "13b7c3641bb528f1bc5705335f5b0911990bd7d3b09ce44ab3023602521ff83e",
+  "size_scope": "Complete isolated Arduino firmware binary, not model-only flash or RAM",
+  "header_sha256": "1967422e0571df6de6f6be6c65c6b4ec22247e9badd4b398546bcc2b9ed6c5ed",
+  "physical_device_test_status": "NOT_RUN",
+  "flashed": false,
+  "on_device_latency_us": null
+}

@@ -1,0 +1,104 @@
+{
+  "source_files": {
+    "wind_speed_mps": {
+      "path": "himachal 4-sensor dataset/22ef7020-904b-4ef8-a975-d6baa5701988.csv",
+      "sha256": "832c59791d527d46cffd191ee0b745c52065f571d534625d2c93cb69ad52cf18",
+      "raw_rows": 237225,
+      "stations": 13,
+      "duplicate_key_rows": 132882,
+      "invalid_rows": 0,
+      "screened_rows": 104343,
+      "first_timestamp": "2007-01-03 01:00:00",
+      "last_timestamp": "2025-12-23 07:00:00",
+      "common_values": {
+        "0.0": 13719,
+        "0.19444444444444445": 9461,
+        "0.16666666666666666": 8227,
+        "0.22222222222222224": 7467,
+        "0.1388888888888889": 7323
+      }
+    },
+    "temperature_c": {
+      "path": "himachal 4-sensor dataset/6b64941e-8646-4020-b7e8-a8024d86fae2.csv",
+      "sha256": "715f8a65c184084c26b5ac071f1b54106df6717ace6c965237372ff5960a8f9a",
+      "raw_rows": 611048,
+      "stations": 30,
+      "duplicate_key_rows": 290884,
+      "invalid_rows": 19387,
+      "screened_rows": 308837,
+      "first_timestamp": "2022-01-09 17:00:00",
+      "last_timestamp": "2025-12-31 23:00:00",
+      "common_values": {
+        "0.0": 24046,
+        "-40.0": 10591,
+        "4.0": 3977,
+        "15.8": 2819,
+        "15.4": 2735
+      }
+    },
+    "relative_humidity_pct": {
+      "path": "himachal 4-sensor dataset/b9377211-44a9-4380-b99a-f40bd4bbdfde.csv",
+      "sha256": "694502b45b465a903bb6c35ef87a9b9baef1b9d7d57befec2a16323bb3598c67",
+      "raw_rows": 609428,
+      "stations": 30,
+      "duplicate_key_rows": 282692,
+      "invalid_rows": 14146,
+      "screened_rows": 312870,
+      "first_timestamp": "2022-01-09 17:00:00",
+      "last_timestamp": "2025-12-31 23:00:00",
+      "common_values": {
+        "0": 52673,
+        "100": 36991,
+        "99": 13369,
+        "101": 9372,
+        "96": 7222
+      }
+    },
+    "pressure_hpa": {
+      "path": "himachal 4-sensor dataset/bbb7d941-de74-438c-a19a-bfe9e42a5fad.csv",
+      "sha256": "1b861883c4243e073c47225637abc452ed3895fcfca7b337f9e0fb0392746d86",
+      "raw_rows": 113594,
+      "stations": 12,
+      "duplicate_key_rows": 0,
+      "invalid_rows": 0,
+      "screened_rows": 113594,
+      "first_timestamp": "2023-10-21 06:00:00",
+      "last_timestamp": "2025-12-23 07:00:00",
+      "common_values": {
+        "925.0": 49130,
+        "1021.5": 2490,
+        "927.2": 328,
+        "928.2": 309,
+        "928.0": 305
+      }
+    }
+  },
+  "timezone": "UNRESOLVED_IN_SOURCE_FILES",
+  "missing_channels": [
+    "pm25_ug_m3",
+    "pm10_ug_m3"
+  ],
+  "independent_event_labels": "ABSENT_IN_THESE_FOUR_FILES",
+  "six_input_training_ready": false,
+  "aligned_screened_four_channel_rows": 43909,
+  "aligned_by_station": {
+    "Barsar_1": 9478,
+    "Kala Amb_1": 8452,
+    "AWS Sansarpur Terrace": 6210,
+    "Ghumarwin": 5605,
+    "Bangana_1": 3035,
+    "Bara Bhangal": 2648,
+    "Tisa_1": 2319,
+    "AWS IIT Mandi": 2047,
+    "Dharmshala_1": 1554,
+    "Junga_1": 1379,
+    "Jogindernagar": 842,
+    "Arki_3": 340
+  },
+  "blockers": [
+    "No colocated hourly PM2.5/PM10 in supplied files",
+    "Timezone and station pressure reference require source confirmation",
+    "Repeated pressure values require quality investigation",
+    "No independently observed event labels in supplied files"
+  ]
+}

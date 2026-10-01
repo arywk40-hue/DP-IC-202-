@@ -17,3 +17,13 @@ PHYSICAL_RANGES = {
     "pm10_ug_m3": (0.0, 5000.0),
     "wind_speed_mps": (0.0, 100.0),
 }
+
+
+def sensor_profile(columns: list[str] | None = None) -> list[str]:
+    """Validate a nonempty canonical ordered subset of the funded measurements."""
+    selected = list(RAW_SENSOR_COLUMNS if columns is None else columns)
+    if not selected or selected != [c for c in RAW_SENSOR_COLUMNS if c in selected]:
+        raise ValueError(
+            "Sensor profile must be a nonempty canonical ordered subset without duplicates"
+        )
+    return selected

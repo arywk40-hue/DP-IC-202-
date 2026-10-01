@@ -1,4 +1,9 @@
-# Six-Sensor Model: Implementation, Training and ESP32 Testing
+# Original Six-Input Baseline: Implementation, Training and ESP32 Testing
+
+The current Indian five-input and two-input candidates, matched Beijing
+baselines, profile-aware architecture, and measured Indian/Baddi results are
+specified in [INDIA_RESULTS.md](ml/evaluation/INDIA_RESULTS.md). This document
+describes the original six-input Beijing baseline, whose artifacts are retained.
 
 ## Scope and actual completion
 
@@ -14,7 +19,7 @@ Physical flashing and on-device tests are not complete: no ESP32 serial device
 was connected during this run. A perfect or production-validated model is not
 claimed. The results below are measured offline benchmark results.
 
-## Dataset used by every retained model
+## Dataset used by the original six-input baseline
 
 The retained model family is **`uci_beijing_6h`**. All six teacher heads and all
 six ESP32 student heads were trained on the **UCI Beijing Multi-Site Air

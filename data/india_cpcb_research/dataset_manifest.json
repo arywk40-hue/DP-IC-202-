@@ -1,0 +1,202 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "source_name": "Indian CPCB secondary compilation, seven-station research subset",
+  "source_url": "https://www.kaggle.com/datasets/abhisheksjha/time-series-air-quality-data-of-india-2010-2023",
+  "source_version": 2,
+  "license": "CC BY-NC-SA 4.0",
+  "rows": 368462,
+  "observations_sha256": "fbdb8d04917ae363c21971a5618be488c768a721c189a112bd7f8dfbf5d6f779",
+  "stations": [
+    {
+      "station_id": "HP001",
+      "city": "Baddi",
+      "state": "Himachal Pradesh",
+      "source_sha256": "aa8391ce413c1ffc0bc4f932defb0c604a7432ba32bc4ddb6adffa7936155e0d",
+      "source_columns": {
+        "temperature_c": "AT (degree C)",
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 9247,
+      "retained_rows": 9247,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 8846,
+        "relative_humidity_pct": 8184,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 8742,
+        "pm10_ug_m3": 8724,
+        "wind_speed_mps": 8845
+      }
+    },
+    {
+      "station_id": "UK001",
+      "city": "Dehradun",
+      "state": "Uttarakhand",
+      "source_sha256": "6417c3ec9ad31fcdd7ddaebef7cdd995bd43c787a777af64d3b7661c18dd5716",
+      "source_columns": {
+        "temperature_c": null,
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 8240,
+      "retained_rows": 8240,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 0,
+        "relative_humidity_pct": 5691,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 5612,
+        "pm10_ug_m3": 5602,
+        "wind_speed_mps": 5763
+      }
+    },
+    {
+      "station_id": "JK001",
+      "city": "Srinagar",
+      "state": "Jammu and Kashmir",
+      "source_sha256": "3445c01e5141b0604ca442570e452c20c1b9f4baac712471b9f370cf9fb35371",
+      "source_columns": {
+        "temperature_c": "Temp (degree C)",
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 18733,
+      "retained_rows": 18733,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 13983,
+        "relative_humidity_pct": 15279,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 16052,
+        "pm10_ug_m3": 16049,
+        "wind_speed_mps": 16525
+      }
+    },
+    {
+      "station_id": "DL001",
+      "city": "Delhi",
+      "state": "Delhi",
+      "source_sha256": "13edc9df083638be3d504efce4f807a33d8828b58e6160bbdd8a07ba839257e0",
+      "source_columns": {
+        "temperature_c": null,
+        "relative_humidity_pct": null,
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": null
+      },
+      "raw_rows": 116112,
+      "retained_rows": 116112,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 0,
+        "relative_humidity_pct": 0,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 76836,
+        "pm10_ug_m3": 45000,
+        "wind_speed_mps": 0
+      }
+    },
+    {
+      "station_id": "RJ001",
+      "city": "Jodhpur",
+      "state": "Rajasthan",
+      "source_sha256": "367a8f3cc176a07450335a16f048084515d6501ad33dc78dc0766a9ceb81f8bf",
+      "source_columns": {
+        "temperature_c": "Temp (degree C)",
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 64272,
+      "retained_rows": 64272,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 50929,
+        "relative_humidity_pct": 51614,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 50431,
+        "pm10_ug_m3": 50102,
+        "wind_speed_mps": 51648
+      }
+    },
+    {
+      "station_id": "KA001",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "source_sha256": "bf9375300ac5e65060a2786715299418213154165d12624b22167fe65b2046ef",
+      "source_columns": {
+        "temperature_c": "Temp (degree C)",
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 116050,
+      "retained_rows": 116050,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 44306,
+        "relative_humidity_pct": 93259,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 54114,
+        "pm10_ug_m3": 17345,
+        "wind_speed_mps": 83610
+      }
+    },
+    {
+      "station_id": "AS001",
+      "city": "Guwahati",
+      "state": "Assam",
+      "source_sha256": "ff8f93cfe861640aa92885c636baa7144871310a2ad57bc6f80d50f5c2435544",
+      "source_columns": {
+        "temperature_c": "AT (degree C)",
+        "relative_humidity_pct": "RH (%)",
+        "pressure_hpa": null,
+        "pm25_ug_m3": "PM2.5 (ug/m3)",
+        "pm10_ug_m3": "PM10 (ug/m3)",
+        "wind_speed_mps": "WS (m/s)"
+      },
+      "raw_rows": 35808,
+      "retained_rows": 35808,
+      "invalid_intervals": 0,
+      "duplicate_end_rows_excluded": 0,
+      "finite_rows_by_sensor": {
+        "temperature_c": 34124,
+        "relative_humidity_pct": 34190,
+        "pressure_hpa": 0,
+        "pm25_ug_m3": 33733,
+        "pm10_ug_m3": 34290,
+        "wind_speed_mps": 34144
+      }
+    }
+  ],
+  "pressure_policy": "All pressure excluded, including columns labelled mmHg; no pressure target trained",
+  "temperature_policy": "Only explicit degree C headers accepted; Dehradun AT (degree) excluded",
+  "timestamp_policy": "Assume source local intervals are Asia/Kolkata; UTC timestamp is interval END, when hourly mean becomes available",
+  "timestamp_verification": "Timezone is a documented research assumption, not confirmed in provider metadata; no time/calendar predictors",
+  "forecast_target": "Observed hourly mean whose interval END is six hours after current interval END",
+  "source_alignment_limit": "Indian inputs are hourly interval means; Beijing source describes hourly measurements; aggregation equivalence is not independently verified",
+  "missing_policy": "No imputation. Unavailable or physically invalid sensors remain NaN; model profiles select required sensors",
+  "geographic_limit": "Seven sampled stations, Baddi held out; no Mandi station or national representativeness claim",
+  "status": "RESEARCH_WITH_DOCUMENTED_SOURCE_ASSUMPTIONS"
+}

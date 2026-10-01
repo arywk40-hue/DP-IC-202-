@@ -1,0 +1,79 @@
+{
+  "source": "NWIC Himachal Pradesh telemetry hourly rainfall 2021-2025 resource",
+  "download_sha256": "30ecc21d21d6d7b6631cd54d73184021f07dddb32450c1e4e8c3626fcfff68c5",
+  "download_bytes": 21007727,
+  "raw_rows": 166355,
+  "stations": 110,
+  "actual_start": "2021-05-08 17:30:00",
+  "actual_end": "2025-12-22 17:00:00",
+  "duplicate_key_rows": 42634,
+  "invalid_rows": 98,
+  "screened_rainfall_rows": 123629,
+  "matched_four_weather_plus_rain_rows": 1431,
+  "wet_hour_candidates": 1431,
+  "exact_six_hour_future_pairs": 269,
+  "future_wet_hour_candidates": 269,
+  "by_station": {
+    "AWS IIT Mandi": {
+      "rows": 45,
+      "wet_hour_candidates": 45
+    },
+    "AWS Sansarpur Terrace": {
+      "rows": 239,
+      "wet_hour_candidates": 239
+    },
+    "Arki_3": {
+      "rows": 3,
+      "wet_hour_candidates": 3
+    },
+    "Bangana_1": {
+      "rows": 37,
+      "wet_hour_candidates": 37
+    },
+    "Bara Bhangal": {
+      "rows": 134,
+      "wet_hour_candidates": 134
+    },
+    "Barsar_1": {
+      "rows": 216,
+      "wet_hour_candidates": 216
+    },
+    "Dharmshala_1": {
+      "rows": 111,
+      "wet_hour_candidates": 111
+    },
+    "Ghumarwin": {
+      "rows": 143,
+      "wet_hour_candidates": 143
+    },
+    "Jogindernagar": {
+      "rows": 48,
+      "wet_hour_candidates": 48
+    },
+    "Junga_1": {
+      "rows": 32,
+      "wet_hour_candidates": 32
+    },
+    "Kala Amb_1": {
+      "rows": 361,
+      "wet_hour_candidates": 361
+    },
+    "Tisa_1": {
+      "rows": 62,
+      "wet_hour_candidates": 62
+    }
+  },
+  "deployment_ready": false,
+  "limitations": [
+    "No zero-rainfall records in this downloaded source; missing hours cannot be labeled dry",
+    "Positive-only overlap cannot train or validate a binary rain detector",
+    "No PM2.5/PM10 in aligned records",
+    "Timezone remains unresolved; matching uses source-local clock strings",
+    "Gauge accumulation interval and quality flags require verification",
+    "Wet hour is not a confirmed light/moderate rain, squall, snow, or other hazard label",
+    "Pressure quality/reference remains unresolved; no model trained from these candidates"
+  ],
+  "zero_rainfall_rows": 0,
+  "negative_rainfall_rows": 98,
+  "max_reported_rainfall_mm": 938.0
+}

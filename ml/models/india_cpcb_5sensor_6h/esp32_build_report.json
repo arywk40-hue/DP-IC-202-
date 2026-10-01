@@ -1,0 +1,14 @@
+{
+  "board": "esp32-s3-devkitc-1",
+  "environment": "india-five-sensor-test",
+  "build_status": "PASSED",
+  "build_command": "pio run -d esp32/model_test -e india-five-sensor-test",
+  "verified_at_utc": "2026-09-10T05:55:18.315714+00:00",
+  "firmware_bin_bytes": 280288,
+  "firmware_bin_sha256": "6a5237ad0320e5fdc2523334989c799a9e980905df6b6388d3b75fe06fb0d4ea",
+  "size_scope": "Complete isolated Arduino firmware binary, not model-only flash or RAM",
+  "header_sha256": "b7325628410438b01751e7f2d033e5c00803c6b4d216950cf9f7f8ac00a01639",
+  "physical_device_test_status": "NOT_RUN",
+  "flashed": false,
+  "on_device_latency_us": null
+}

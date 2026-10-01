@@ -14,7 +14,7 @@ import pandas as pd
 import xgboost as xgb
 
 from ml.six_sensor_forecast.c_codegen import _c_float, _parse_tree, _tree_depth
-from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, sensor_profile
 from ml.six_sensor_forecast.data import SCHEMA, sha256
 
 
@@ -27,16 +27,14 @@ def export(
     if compiler is None:
         raise RuntimeError("A C compiler is required to verify exported predictions")
     report = json.loads((model_dir / "training_report.json").read_text())
-    if report["schema_version"] != SCHEMA or set(report["models"]) != set(
-        RAW_SENSOR_COLUMNS
-    ):
+    sensors = sensor_profile(report.get("sensor_profile"))
+    count = len(sensors)
+    if report["schema_version"] != SCHEMA or set(report["models"]) != set(sensors):
         raise ValueError("Incomplete or incompatible forecast model")
-    if report["architecture"]["student_features"] != RAW_SENSOR_COLUMNS:
-        raise ValueError(
-            "Student must use exactly the six funded inputs in canonical order"
-        )
+    if report["architecture"]["student_features"] != sensors:
+        raise ValueError("Student feature order differs from sensor profile")
     source = pd.read_csv(observations)
-    sample = source[RAW_SENSOR_COLUMNS].dropna()
+    sample = source[sensors].dropna()
     sample = sample[np.isfinite(sample).all(axis=1)]
     if sample.empty:
         raise ValueError("No complete observations for parity")
@@ -51,21 +49,21 @@ def export(
         "#define INDRA_SIX_SENSOR_FORECAST_H",
         "#include <math.h>",
         "#include <stddef.h>",
-        "#define INDRA_FORECAST_INPUTS 6",
-        "#define INDRA_FORECAST_OUTPUTS 6",
+        f"#define INDRA_FORECAST_INPUTS {count}",
+        f"#define INDRA_FORECAST_OUTPUTS {count}",
         f"#define INDRA_FORECAST_HORIZON_HOURS {int(report['horizon_hours'])}",
         '#define INDRA_FORECAST_STATUS "OFFLINE_RESEARCH_ONLY"',
-        "/* Input/output order: " + ", ".join(RAW_SENSOR_COLUMNS) + " */",
+        "/* Input/output order: " + ", ".join(sensors) + " */",
     ]
     total_nodes = 0
-    for target_index, target in enumerate(RAW_SENSOR_COLUMNS):
+    for target_index, target in enumerate(sensors):
         entry = report["models"][target]
         path = model_dir / entry["student_file"]
         if sha256(path) != entry["student_sha256"]:
             raise ValueError(f"Student checksum mismatch: {target}")
         model = xgb.Booster()
         model.load_model(path)
-        if model.feature_names != RAW_SENSOR_COLUMNS:
+        if model.feature_names != sensors:
             raise ValueError("Student model feature order mismatch")
         config = json.loads(model.save_config())["learner"]
         if config["objective"]["name"] != "reg:squarederror":
@@ -76,7 +74,7 @@ def export(
             raise ValueError("Student exceeds 16-tree / depth-3 budget")
         models.append(model)
         for tree_index, tree in enumerate(trees):
-            nodes = _parse_tree(tree, RAW_SENSOR_COLUMNS)
+            nodes = _parse_tree(tree, sensors)
             total_nodes += len(nodes)
             lines.append(
                 f"static inline float indra_fc_{target_index}_{tree_index}(const float *x) {{"
@@ -125,17 +123,17 @@ def export(
             " * Pass distinct arrays. Outputs are NAN on invalid sensor data. No heap allocation. */",
             "static inline int indra_forecast_predict(const float *input, float *output) {",
             "  if (!input || !output) return 0;",
-            "  float x[6];",
-            "  for (int i = 0; i < 6; ++i) x[i] = input[i];",
-            "  for (int i = 0; i < 6; ++i) output[i] = NAN;",
+            f"  float x[{count}];",
+            f"  for (int i = 0; i < {count}; ++i) x[i] = input[i];",
+            f"  for (int i = 0; i < {count}; ++i) output[i] = NAN;",
         ]
     )
-    for index, target in enumerate(RAW_SENSOR_COLUMNS):
+    for index, target in enumerate(sensors):
         lower, upper = PHYSICAL_RANGES[target]
         lines.append(
             f"  if (!isfinite(x[{index}]) || x[{index}] < {_c_float(lower)} || x[{index}] > {_c_float(upper)}) return 0;"
         )
-    for index in range(6):
+    for index in range(count):
         lines.append(f"  output[{index}] = indra_fc_head_{index}(x);")
     lines.extend(["  return 1;", "}", "#endif", ""])
     samples = np.vstack([sample, boundary_rows]).astype(np.float32)
@@ -143,11 +141,11 @@ def export(
     samples = np.vstack(
         [
             samples,
-            [PHYSICAL_RANGES[t][0] for t in RAW_SENSOR_COLUMNS],
-            [PHYSICAL_RANGES[t][1] for t in RAW_SENSOR_COLUMNS],
+            [PHYSICAL_RANGES[t][0] for t in sensors],
+            [PHYSICAL_RANGES[t][1] for t in sensors],
         ]
     ).astype(np.float32)
-    dmatrix = xgb.DMatrix(samples, feature_names=RAW_SENSOR_COLUMNS)
+    dmatrix = xgb.DMatrix(samples, feature_names=sensors)
     expected = np.column_stack(
         [
             np.clip(
@@ -155,23 +153,29 @@ def export(
                 + report["models"][t]["student_weight"] * model.predict(dmatrix),
                 *PHYSICAL_RANGES[t],
             )
-            for i, (t, model) in enumerate(zip(RAW_SENSOR_COLUMNS, models))
+            for i, (t, model) in enumerate(zip(sensors, models))
         ]
     )
-    invalid_samples = np.tile(sample[0], (18, 1))
-    for i, target in enumerate(RAW_SENSOR_COLUMNS):
+    invalid_samples = np.tile(sample[0], (3 * count, 1))
+    for i, target in enumerate(sensors):
         invalid_samples[i, i] = np.nan
-        invalid_samples[6 + i, i] = np.inf
-        invalid_samples[12 + i, i] = PHYSICAL_RANGES[target][1] + 1
+        invalid_samples[count + i, i] = np.inf
+        invalid_samples[2 * count + i, i] = PHYSICAL_RANGES[target][1] + 1
     all_samples = np.vstack([samples, invalid_samples])
     runner = """#include <stdio.h>
 #include "indra_six_sensor_forecast.h"
 int main(void) {
-  float x[6], y[6];
-  while (scanf("%f %f %f %f %f %f", x, x+1, x+2, x+3, x+4, x+5) == 6) {
+  float x[INDRA_FORECAST_INPUTS], y[INDRA_FORECAST_OUTPUTS];
+  while (1) {
+    int got = 0;
+    for (int i=0; i<INDRA_FORECAST_INPUTS; ++i) {
+      if (scanf(" %f", &x[i]) != 1) { got = -1; break; }
+      got++;
+    }
+    if (got != INDRA_FORECAST_INPUTS) break;
     int ok = indra_forecast_predict(x, y);
     printf("%d", ok);
-    for (int i=0; i<6; ++i) printf(" %.9g", y[i]);
+    for (int i=0; i<INDRA_FORECAST_OUTPUTS; ++i) printf(" %.9g", y[i]);
     puts("");
   }
   return 0;
@@ -210,7 +214,7 @@ int main(void) {
             [[float(v) for v in line.split()] for line in process.stdout.splitlines()]
         )
         if (
-            actual.shape != (len(all_samples), 7)
+            actual.shape != (len(all_samples), count + 1)
             or not (actual[: len(samples), 0] == 1).all()
         ):
             raise RuntimeError(
@@ -230,9 +234,9 @@ int main(void) {
     metadata = {
         "schema_version": SCHEMA,
         "status": "OFFLINE_RESEARCH_ONLY",
-        "input_features": RAW_SENSOR_COLUMNS,
+        "input_features": sensors,
         "horizon_hours": report["horizon_hours"],
-        "heads": 6,
+        "heads": count,
         "trees_per_head": 16,
         "max_depth": 3,
         "total_nodes": total_nodes,
@@ -244,7 +248,7 @@ int main(void) {
             "invalid_rows": len(invalid_samples),
             "absolute_tolerance": tolerance,
             "max_absolute_error_by_target": dict(
-                zip(RAW_SENSOR_COLUMNS, error.tolist())
+                zip(sensors, error.tolist())
             ),
             "passed": True,
         },

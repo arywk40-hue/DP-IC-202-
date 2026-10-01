@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-29",
+  "status": "BENCH_PROTOTYPE_SOFTWARE_PREPARED_NOT_FIELD_VALIDATED",
+  "tests": {
+    "main_regression_run": "PASS: 30 tests before two additional tests were added",
+    "additional_model_tamper_test": "PASS",
+    "additional_end_to_end_evaluation": "PASS as standalone synthetic smoke with origin/main forecast model copied into /private/tmp; local report was cloud-blocked",
+    "final_full_local_rerun": "BLOCKED by iCloud placeholder reads; not counted as a completed run",
+    "changed_module_lint": "PASS: E9,F63,F7,F82",
+    "two_strategy_cli_demo": "PASS: synthetic 10x10 grid; not field evidence"
+  },
+  "himachal_weather_aligned_rows": 43909,
+  "himachal_mandi_weather_rows": 2047,
+  "new_rainfall_raw_rows": 166355,
+  "new_rainfall_matched_rows": 1431,
+  "new_rainfall_mandi_matches": 45,
+  "new_rainfall_zero_rows": 0,
+  "model_weights_retrained": false,
+  "hardware": "Not newly tested; existing ESP32-S3 builds retained; physical replay pending",
+  "lora": "Deferred under ML-first scope; not implemented or tested in this update",
+  "artifacts": {
+    "ml/deployment/audit_rainfall.py": "d294deb7fc4339fc4263f13a024bdd3d66eea6cda82aa6fe943b896e4dee0178",
+    "ml/deployment/audit_himachal.py": "f379d2f9c4e315c64b2505d5fccd54ffa76b79cc7596e4a9b073eb6bdd232fd5",
+    "ml/deployment/field_validation.py": "97d54095edae25b0241dc884bbd60c4f4d02c1c9ecc32389973bb8aba582a4a9",
+    "ml/deployment/__init__.py": "7c22913c3958e27d87567d07785be79d7493900d36d18cbb1b88246dcca89d17",
+    "ml/deployment/readiness.py": "6f6de79f05b7322fac7e0fab6c58d57773fd89d02e5aa50d3a8c174c1244a556",
+    "ml/event_classifier/predict.py": "4f953e0be31a3f88d35c1adadfd5a922db964e6873abe25f9674e5e340961472",
+    "ml/event_classifier/heatmap.py": "0b2ab15d79df5291aeca3ac331b3841559ed77781db5bcdff58e7a8ced8eb385",
+    "reports/deployment/himachal_readiness.json": "ea96f2c658dd57cb52f0426dbf77f1d6b3eb6ace36427f3222d6d7d15fea9a05",
+    "reports/deployment/rainfall_overlap.json": "fae2f6c3c43473266fd148b77cbe6254831dda94a6c8ed1db1bcac0c6571786f",
+    "reports/deployment/readiness.json": "58eef3879259cbecfe12ae3a3eb4b77e900769c8c8fdc3e42c49f10077110043"
+  }
+}

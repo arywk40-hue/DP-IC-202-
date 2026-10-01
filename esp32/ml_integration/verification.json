@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-09-28",
+  "scope": "ESP32-S3 ML integration; serial replay; no radio transport",
+  "host_tests": {
+    "passed": 19,
+    "suites": [
+      "test_esp32_ml_integration",
+      "test_event_classifier",
+      "test_midpoint",
+      "test_six_sensor_forecast"
+    ],
+    "new_runtime_tests": 4,
+    "model_absolute_tolerance": 0.0005
+  },
+  "builds": {
+    "esp32-s3-ml": {
+      "status": "PASS",
+      "flash_bytes": 315805,
+      "static_ram_bytes": 18812,
+      "firmware_sha256": "3d3b77a554d86f3a2d4fe6c36f5b85ccaecad445f7531e27cda91a6a869ede72"
+    },
+    "esp32-s3-ml-usb": {
+      "status": "PASS",
+      "flash_bytes": 313049,
+      "static_ram_bytes": 19044,
+      "firmware_sha256": "5e5ef1df9b9780b10b9b7ed5f3056fcc482366118414e2639bccf2b384ffefb0"
+    }
+  },
+  "physical_board": "NOT_RUN: no ESP32-S3 serial device detected",
+  "ruff": "NOT_RUN: ruff unavailable in current Python environment",
+  "python_syntax": "PASS",
+  "field_accuracy": "NOT_VALIDATED; event outputs imitate sensor rules",
+  "artifacts": {
+    "ml/models/uci_beijing_6h/esp32_student/export/indra_six_sensor_forecast.h": "7bf0227105ce9477c36e63be3dbaa78f2008a3d412b0dfd7222f97b4105835af",
+    "ml/models/uci_beijing_event_rules_6sensor/esp32_student/export/indra_event_classifier.h": "71590148435803b332c37420c99a925c5cd7a3934fb789a4de7059c290708b55",
+    "esp32/ml_integration/include/indra_ml_runtime.h": "d5c5ed507adfe0ef6675529b658816b2d816b2b9ba2ae1d85a345a4a8efc966f",
+    "esp32/ml_integration/self_test_fixture.json": "f431c52641122333a94df358a137d24126e4a96a3138f40b1a586ac2a95b5be3",
+    "esp32/ml_integration/src/main.cpp": "71ef4a451faed33cb21fd76a296b9d6268547d9c182730c046f36620cd72cae7"
+  }
+}

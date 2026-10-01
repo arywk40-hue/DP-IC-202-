@@ -1,0 +1,21 @@
+{
+  "requested_contract": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "status": "BLOCKED_ON_OFFICIAL_HISTORICAL_OBSERVATIONS_AND_MATCHED_PM",
+  "official_northern_catalogue_rows": 101,
+  "official_observation_rows_downloaded": 0,
+  "complete_six_input_training_rows": 0,
+  "imd_api_result": "HTTP 401: API key missing",
+  "historical_route": "IMD Data Service Portal registration/data procurement",
+  "required_pressure": "Station level pressure; never silently replace with mean sea level pressure",
+  "pm_requirement": "Matching measured PM2.5 and PM10 concentrations with verified units, station coordinates, time semantics and quality flags",
+  "new_six_input_model_trained": false,
+  "new_six_input_model_tested": false,
+  "existing_five_and_two_input_models": "Exploratory experiments; do not satisfy the six-input release requirement"
+}

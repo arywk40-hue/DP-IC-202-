@@ -1,0 +1,262 @@
+{
+  "status": "BENCH_PROTOTYPE_ONLY",
+  "events": {
+    "light_moderate_rain": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 1429,
+      "evaluation_rule_matches": {
+        "validation": 118,
+        "future_test": 522,
+        "geographic_test": 161
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "severe_rainstorm_squall": {
+      "trained": false,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 0,
+      "evaluation_rule_matches": {
+        "validation": 0,
+        "future_test": 0,
+        "geographic_test": 0
+      },
+      "flags": [
+        "UNTRAINED",
+        "FEWER_THAN_100_TRAINING_RULE_MATCHES",
+        "NO_POSITIVE_RULE_MATCHES_IN_AT_LEAST_ONE_EVALUATION_SPLIT"
+      ],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "snowstorm_blizzard": {
+      "trained": false,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 0,
+      "evaluation_rule_matches": {
+        "validation": 0,
+        "future_test": 0,
+        "geographic_test": 0
+      },
+      "flags": [
+        "UNTRAINED",
+        "FEWER_THAN_100_TRAINING_RULE_MATCHES",
+        "NO_POSITIVE_RULE_MATCHES_IN_AT_LEAST_ONE_EVALUATION_SPLIT"
+      ],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "freezing_rain_sleet": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 503,
+      "evaluation_rule_matches": {
+        "validation": 3,
+        "future_test": 119,
+        "geographic_test": 35
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "radiation_fog": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 5521,
+      "evaluation_rule_matches": {
+        "validation": 72,
+        "future_test": 691,
+        "geographic_test": 166
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "ground_frost": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 13394,
+      "evaluation_rule_matches": {
+        "validation": 3183,
+        "future_test": 5022,
+        "geographic_test": 1935
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "extreme_heatwave": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 1297,
+      "evaluation_rule_matches": {
+        "validation": 101,
+        "future_test": 403,
+        "geographic_test": 76
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "wildfire_evaporative_risk": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 461,
+      "evaluation_rule_matches": {
+        "validation": 160,
+        "future_test": 14,
+        "geographic_test": 0
+      },
+      "flags": [
+        "NO_POSITIVE_RULE_MATCHES_IN_AT_LEAST_ONE_EVALUATION_SPLIT"
+      ],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "dust_storm_haboob": {
+      "trained": true,
+      "physical_channels": [
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 42,
+      "evaluation_rule_matches": {
+        "validation": 0,
+        "future_test": 0,
+        "geographic_test": 0
+      },
+      "flags": [
+        "FEWER_THAN_100_TRAINING_RULE_MATCHES",
+        "NO_POSITIVE_RULE_MATCHES_IN_AT_LEAST_ONE_EVALUATION_SPLIT"
+      ],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "smoke_plume": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 4059,
+      "evaluation_rule_matches": {
+        "validation": 676,
+        "future_test": 814,
+        "geographic_test": 196
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "smog_inversion_trap": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 1225,
+      "evaluation_rule_matches": {
+        "validation": 118,
+        "future_test": 428,
+        "geographic_test": 30
+      },
+      "flags": [],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    },
+    "cold_frontal_passage": {
+      "trained": true,
+      "physical_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "wind_speed_mps"
+      ],
+      "channel_availability_fraction_with_complete_six_sensor_history": 1.0,
+      "train_rule_matches": 12,
+      "evaluation_rule_matches": {
+        "validation": 1,
+        "future_test": 6,
+        "geographic_test": 2
+      },
+      "flags": [
+        "FEWER_THAN_100_TRAINING_RULE_MATCHES"
+      ],
+      "independent_hazard_validation": false,
+      "public_alerts_enabled": false
+    }
+  },
+  "screening_note": "100 positives is a descriptive sparsity flag, not a statistical certification threshold.",
+  "unmet_deployment_gates": [
+    "Colocated six-channel local observations with verified timestamps and pressure",
+    "Independent observed event labels and untouched temporal/geographic evaluation",
+    "Future-event labels and separate lead-time evaluation before advance hazard warnings",
+    "Calibration evaluated on independent held-out observations",
+    "Independent withheld-node spatial validation",
+    "Physical ESP32 serial replay and measured latency",
+    "LoRa delivery/loss/latency tests when radio integration resumes"
+  ]
+}

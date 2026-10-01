@@ -1,0 +1,864 @@
+{
+  "method": "Exact station name, coordinates and original timestamp join. Timezone not assumed. Broad project physical ranges only; passing these is not full quality validation. Duplicate keys excluded from usable overlap. Wind divided by 3.6; mb numerically equals hPa.",
+  "files": {
+    "temperature_c": {
+      "file": "himachal 4-sensor dataset/6b64941e-8646-4020-b7e8-a8024d86fae2.csv",
+      "sha256": "715f8a65c184084c26b5ac071f1b54106df6717ace6c965237372ff5960a8f9a",
+      "source_value_column": "Air Temperature Telemetry Hourly (AoC)",
+      "rows": 611048,
+      "stations": 30,
+      "start": "2022-01-09 17:00:00",
+      "end": "2025-12-31 23:00:00",
+      "outside_range_or_missing": 19387,
+      "unparseable_times": 0,
+      "duplicate_station_time_keys": 145442,
+      "min": -942.0,
+      "max": 9976.7,
+      "most_common_values": [
+        [
+          0.0,
+          24046
+        ],
+        [
+          -40.0,
+          10591
+        ],
+        [
+          4.0,
+          3977
+        ],
+        [
+          15.8,
+          2819
+        ],
+        [
+          15.4,
+          2735
+        ]
+      ],
+      "station_details": [
+        {
+          "station": "Arki_3",
+          "latitude": "31.20777600",
+          "longitude": "76.87724300",
+          "district": "SOLAN",
+          "rows": 17769,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "AWS IIT Mandi",
+          "latitude": "31.78027778",
+          "longitude": "76.99305556",
+          "district": "MANDI",
+          "rows": 23909,
+          "outside_range_or_missing": 1
+        },
+        {
+          "station": "AWS Sansarpur Terrace",
+          "latitude": "31.92444444",
+          "longitude": "75.93027778",
+          "district": "KANGRA",
+          "rows": 25807,
+          "outside_range_or_missing": 3
+        },
+        {
+          "station": "Bangana_1",
+          "latitude": "31.47977900",
+          "longitude": "76.38662600",
+          "district": "UNA",
+          "rows": 8248,
+          "outside_range_or_missing": 2
+        },
+        {
+          "station": "Bara Bhangal",
+          "latitude": "32.32333300",
+          "longitude": "76.81305600",
+          "district": "CHAMBA",
+          "rows": 3017,
+          "outside_range_or_missing": 357
+        },
+        {
+          "station": "Barot_3",
+          "latitude": "32.08166667",
+          "longitude": "76.80083333",
+          "district": "MANDI",
+          "rows": 83,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Barsar_1",
+          "latitude": "31.47034300",
+          "longitude": "76.55186300",
+          "district": "HAMIRPUR",
+          "rows": 20405,
+          "outside_range_or_missing": 4
+        },
+        {
+          "station": "Chattru",
+          "latitude": "32.31777800",
+          "longitude": "77.37166700",
+          "district": "LAHUL and SPITI",
+          "rows": 504,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Chitkul_1",
+          "latitude": "31.35055556",
+          "longitude": "78.43694444",
+          "district": "KINNAUR",
+          "rows": 40805,
+          "outside_range_or_missing": 4901
+        },
+        {
+          "station": "Churdhar",
+          "latitude": "30.83750100",
+          "longitude": "77.45277800",
+          "district": "SIRMAUR",
+          "rows": 4926,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Dharmshala_1",
+          "latitude": "32.21616000",
+          "longitude": "76.33917800",
+          "district": "KANGRA",
+          "rows": 16644,
+          "outside_range_or_missing": 3
+        },
+        {
+          "station": "Dodra at Chanshal",
+          "latitude": "31.20918800",
+          "longitude": "78.09099600",
+          "district": "SHIMLA",
+          "rows": 19410,
+          "outside_range_or_missing": 4972
+        },
+        {
+          "station": "Ghumarwin",
+          "latitude": "31.45062900",
+          "longitude": "76.72965400",
+          "district": "BILASPUR",
+          "rows": 24908,
+          "outside_range_or_missing": 2
+        },
+        {
+          "station": "Gondhla",
+          "latitude": "32.51027778",
+          "longitude": "77.02277778",
+          "district": "LAHUL and SPITI",
+          "rows": 26123,
+          "outside_range_or_missing": 19
+        },
+        {
+          "station": "Haripudhar",
+          "latitude": "30.77094400",
+          "longitude": "77.53294400",
+          "district": "SIRMAUR",
+          "rows": 12314,
+          "outside_range_or_missing": 4509
+        },
+        {
+          "station": "Jogindernagar",
+          "latitude": "31.99692100",
+          "longitude": "76.79831160",
+          "district": "MANDI",
+          "rows": 23967,
+          "outside_range_or_missing": 6
+        },
+        {
+          "station": "Jot_1",
+          "latitude": "32.48638889",
+          "longitude": "76.06138889",
+          "district": "CHAMBA",
+          "rows": 41763,
+          "outside_range_or_missing": 544
+        },
+        {
+          "station": "Junga_1",
+          "latitude": "31.04393200",
+          "longitude": "77.19559900",
+          "district": "SHIMLA",
+          "rows": 20672,
+          "outside_range_or_missing": 185
+        },
+        {
+          "station": "Kala Amb_1",
+          "latitude": "32.49938900",
+          "longitude": "77.20688900",
+          "district": "SIRMAUR",
+          "rows": 13458,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kaza_1",
+          "latitude": "32.22694444",
+          "longitude": "78.06944444",
+          "district": "LAHUL and SPITI",
+          "rows": 53095,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kheer Ganga",
+          "latitude": "31.99411100",
+          "longitude": "77.44088900",
+          "district": "KULLU",
+          "rows": 9192,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kundi_2",
+          "latitude": "32.79722222",
+          "longitude": "75.93111111",
+          "district": "CHAMBA",
+          "rows": 42942,
+          "outside_range_or_missing": 1292
+        },
+        {
+          "station": "Salooni_1",
+          "latitude": "32.72222222",
+          "longitude": "76.04611111",
+          "district": "CHAMBA",
+          "rows": 43221,
+          "outside_range_or_missing": 1212
+        },
+        {
+          "station": "Shikari Devi",
+          "latitude": "31.48010100",
+          "longitude": "77.16555600",
+          "district": "MANDI",
+          "rows": 40,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Shilaru",
+          "latitude": "31.20611111",
+          "longitude": "77.42444444",
+          "district": "SHIMLA",
+          "rows": 41166,
+          "outside_range_or_missing": 297
+        },
+        {
+          "station": "Solang Nallah_1",
+          "latitude": "32.31533300",
+          "longitude": "77.15550100",
+          "district": "KULLU",
+          "rows": 65,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Tabo_1",
+          "latitude": "32.09382900",
+          "longitude": "78.38510100",
+          "district": "LAHUL and SPITI",
+          "rows": 14396,
+          "outside_range_or_missing": 761
+        },
+        {
+          "station": "Theog",
+          "latitude": "31.08565833",
+          "longitude": "77.30100000",
+          "district": "SHIMLA",
+          "rows": 19113,
+          "outside_range_or_missing": 56
+        },
+        {
+          "station": "Tisa_1",
+          "latitude": "32.69344000",
+          "longitude": "76.08609400",
+          "district": "CHAMBA",
+          "rows": 15927,
+          "outside_range_or_missing": 2
+        },
+        {
+          "station": "Triund",
+          "latitude": "32.28500000",
+          "longitude": "76.24861111",
+          "district": "KANGRA",
+          "rows": 27159,
+          "outside_range_or_missing": 259
+        }
+      ]
+    },
+    "relative_humidity_pct": {
+      "file": "himachal 4-sensor dataset/b9377211-44a9-4380-b99a-f40bd4bbdfde.csv",
+      "sha256": "694502b45b465a903bb6c35ef87a9b9baef1b9d7d57befec2a16323bb3598c67",
+      "source_value_column": "Telemetry Hourly Relative Humidity (%)",
+      "rows": 609428,
+      "stations": 30,
+      "start": "2022-01-09 17:00:00",
+      "end": "2025-12-31 23:00:00",
+      "outside_range_or_missing": 14146,
+      "unparseable_times": 0,
+      "duplicate_station_time_keys": 141346,
+      "min": -99999.0,
+      "max": 1012.0,
+      "most_common_values": [
+        [
+          0.0,
+          52673
+        ],
+        [
+          100.0,
+          36991
+        ],
+        [
+          99.0,
+          13369
+        ],
+        [
+          101.0,
+          9372
+        ],
+        [
+          96.0,
+          7222
+        ]
+      ],
+      "station_details": [
+        {
+          "station": "Arki_3",
+          "latitude": "31.20777600",
+          "longitude": "76.87724300",
+          "district": "SOLAN",
+          "rows": 13328,
+          "outside_range_or_missing": 1764
+        },
+        {
+          "station": "AWS IIT Mandi",
+          "latitude": "31.78027778",
+          "longitude": "76.99305556",
+          "district": "MANDI",
+          "rows": 23955,
+          "outside_range_or_missing": 284
+        },
+        {
+          "station": "AWS Sansarpur Terrace",
+          "latitude": "31.92444444",
+          "longitude": "75.93027778",
+          "district": "KANGRA",
+          "rows": 25862,
+          "outside_range_or_missing": 37
+        },
+        {
+          "station": "Bangana_1",
+          "latitude": "31.47977900",
+          "longitude": "76.38662600",
+          "district": "UNA",
+          "rows": 8292,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Bara Bhangal",
+          "latitude": "32.32333300",
+          "longitude": "76.81305600",
+          "district": "CHAMBA",
+          "rows": 3017,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Barot_3",
+          "latitude": "32.08166667",
+          "longitude": "76.80083333",
+          "district": "MANDI",
+          "rows": 83,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Barsar_1",
+          "latitude": "31.47034300",
+          "longitude": "76.55186300",
+          "district": "HAMIRPUR",
+          "rows": 20434,
+          "outside_range_or_missing": 84
+        },
+        {
+          "station": "Chattru",
+          "latitude": "32.31777800",
+          "longitude": "77.37166700",
+          "district": "LAHUL and SPITI",
+          "rows": 504,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Chitkul_1",
+          "latitude": "31.35055556",
+          "longitude": "78.43694444",
+          "district": "KINNAUR",
+          "rows": 41328,
+          "outside_range_or_missing": 61
+        },
+        {
+          "station": "Churdhar",
+          "latitude": "30.83750100",
+          "longitude": "77.45277800",
+          "district": "SIRMAUR",
+          "rows": 4926,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Dharmshala_1",
+          "latitude": "32.21616000",
+          "longitude": "76.33917800",
+          "district": "KANGRA",
+          "rows": 16707,
+          "outside_range_or_missing": 260
+        },
+        {
+          "station": "Dodra at Chanshal",
+          "latitude": "31.20918800",
+          "longitude": "78.09099600",
+          "district": "SHIMLA",
+          "rows": 19449,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Ghumarwin",
+          "latitude": "31.45062900",
+          "longitude": "76.72965400",
+          "district": "BILASPUR",
+          "rows": 23595,
+          "outside_range_or_missing": 1252
+        },
+        {
+          "station": "Gondhla",
+          "latitude": "32.51027778",
+          "longitude": "77.02277778",
+          "district": "LAHUL and SPITI",
+          "rows": 27059,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Haripudhar",
+          "latitude": "30.77094400",
+          "longitude": "77.53294400",
+          "district": "SIRMAUR",
+          "rows": 12314,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Jogindernagar",
+          "latitude": "31.99692100",
+          "longitude": "76.79831160",
+          "district": "MANDI",
+          "rows": 20776,
+          "outside_range_or_missing": 3997
+        },
+        {
+          "station": "Jot_1",
+          "latitude": "32.48638889",
+          "longitude": "76.06138889",
+          "district": "CHAMBA",
+          "rows": 42291,
+          "outside_range_or_missing": 59
+        },
+        {
+          "station": "Junga_1",
+          "latitude": "31.04393200",
+          "longitude": "77.19559900",
+          "district": "SHIMLA",
+          "rows": 20736,
+          "outside_range_or_missing": 8
+        },
+        {
+          "station": "Kala Amb_1",
+          "latitude": "32.49938900",
+          "longitude": "77.20688900",
+          "district": "SIRMAUR",
+          "rows": 13583,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kaza_1",
+          "latitude": "32.22694444",
+          "longitude": "78.06944444",
+          "district": "LAHUL and SPITI",
+          "rows": 57442,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kheer Ganga",
+          "latitude": "31.99411100",
+          "longitude": "77.44088900",
+          "district": "KULLU",
+          "rows": 9192,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kundi_2",
+          "latitude": "32.79722222",
+          "longitude": "75.93111111",
+          "district": "CHAMBA",
+          "rows": 43463,
+          "outside_range_or_missing": 51
+        },
+        {
+          "station": "Salooni_1",
+          "latitude": "32.72222222",
+          "longitude": "76.04611111",
+          "district": "CHAMBA",
+          "rows": 43735,
+          "outside_range_or_missing": 38
+        },
+        {
+          "station": "Shikari Devi",
+          "latitude": "31.48010100",
+          "longitude": "77.16555600",
+          "district": "MANDI",
+          "rows": 39,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Shilaru",
+          "latitude": "31.20611111",
+          "longitude": "77.42444444",
+          "district": "SHIMLA",
+          "rows": 41687,
+          "outside_range_or_missing": 28
+        },
+        {
+          "station": "Solang Nallah_1",
+          "latitude": "32.31533300",
+          "longitude": "77.15550100",
+          "district": "KULLU",
+          "rows": 65,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Tabo_1",
+          "latitude": "32.09382900",
+          "longitude": "78.38510100",
+          "district": "LAHUL and SPITI",
+          "rows": 14443,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Theog",
+          "latitude": "31.08565833",
+          "longitude": "77.30100000",
+          "district": "SHIMLA",
+          "rows": 19444,
+          "outside_range_or_missing": 4477
+        },
+        {
+          "station": "Tisa_1",
+          "latitude": "32.69344000",
+          "longitude": "76.08609400",
+          "district": "CHAMBA",
+          "rows": 13925,
+          "outside_range_or_missing": 1685
+        },
+        {
+          "station": "Triund",
+          "latitude": "32.28500000",
+          "longitude": "76.24861111",
+          "district": "KANGRA",
+          "rows": 27754,
+          "outside_range_or_missing": 61
+        }
+      ]
+    },
+    "pressure_hpa": {
+      "file": "himachal 4-sensor dataset/bbb7d941-de74-438c-a19a-bfe9e42a5fad.csv",
+      "sha256": "1b861883c4243e073c47225637abc452ed3895fcfca7b337f9e0fb0392746d86",
+      "source_value_column": "Telemetry_Hourly_Atmospheric Pressure (mb)",
+      "rows": 113594,
+      "stations": 12,
+      "start": "2023-10-21 06:00:00",
+      "end": "2025-12-23 07:00:00",
+      "outside_range_or_missing": 0,
+      "unparseable_times": 0,
+      "duplicate_station_time_keys": 0,
+      "min": 900.0,
+      "max": 1021.9,
+      "most_common_values": [
+        [
+          925.0,
+          49130
+        ],
+        [
+          1021.5,
+          2490
+        ],
+        [
+          927.2,
+          328
+        ],
+        [
+          928.2,
+          309
+        ],
+        [
+          928.0,
+          305
+        ]
+      ],
+      "station_details": [
+        {
+          "station": "Arki_3",
+          "latitude": "31.20777600",
+          "longitude": "76.87724300",
+          "district": "SOLAN",
+          "rows": 3572,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "AWS IIT Mandi",
+          "latitude": "31.78027778",
+          "longitude": "76.99305556",
+          "district": "MANDI",
+          "rows": 10817,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "AWS Sansarpur Terrace",
+          "latitude": "31.92444444",
+          "longitude": "75.93027778",
+          "district": "KANGRA",
+          "rows": 16064,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Bangana_1",
+          "latitude": "31.47977900",
+          "longitude": "76.38662600",
+          "district": "UNA",
+          "rows": 3389,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Bara Bhangal",
+          "latitude": "32.32333300",
+          "longitude": "76.81305600",
+          "district": "CHAMBA",
+          "rows": 3005,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Barsar_1",
+          "latitude": "31.47034300",
+          "longitude": "76.55186300",
+          "district": "HAMIRPUR",
+          "rows": 15008,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Dharmshala_1",
+          "latitude": "32.21616000",
+          "longitude": "76.33917800",
+          "district": "KANGRA",
+          "rows": 7287,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Ghumarwin",
+          "latitude": "31.45062900",
+          "longitude": "76.72965400",
+          "district": "BILASPUR",
+          "rows": 15367,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Jogindernagar",
+          "latitude": "31.99692100",
+          "longitude": "76.79831160",
+          "district": "MANDI",
+          "rows": 11307,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Junga_1",
+          "latitude": "31.04393200",
+          "longitude": "77.19559900",
+          "district": "SHIMLA",
+          "rows": 8925,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kala Amb_1",
+          "latitude": "32.49938900",
+          "longitude": "77.20688900",
+          "district": "SIRMAUR",
+          "rows": 11047,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Tisa_1",
+          "latitude": "32.69344000",
+          "longitude": "76.08609400",
+          "district": "CHAMBA",
+          "rows": 7806,
+          "outside_range_or_missing": 0
+        }
+      ]
+    },
+    "wind_speed_mps": {
+      "file": "himachal 4-sensor dataset/22ef7020-904b-4ef8-a975-d6baa5701988.csv",
+      "sha256": "832c59791d527d46cffd191ee0b745c52065f571d534625d2c93cb69ad52cf18",
+      "source_value_column": "Telemetry Hourly Wind Speed (Km/Hr)",
+      "rows": 237225,
+      "stations": 13,
+      "start": "2007-01-03 01:00:00",
+      "end": "2025-12-23 07:00:00",
+      "outside_range_or_missing": 0,
+      "unparseable_times": 0,
+      "duplicate_station_time_keys": 66441,
+      "min": 0.0,
+      "max": 27.5,
+      "most_common_values": [
+        [
+          0.0,
+          13719
+        ],
+        [
+          0.19444444444444442,
+          9461
+        ],
+        [
+          0.16666666666666666,
+          8227
+        ],
+        [
+          0.22222222222222224,
+          7467
+        ],
+        [
+          0.1388888888888889,
+          7323
+        ]
+      ],
+      "station_details": [
+        {
+          "station": "Arki_3",
+          "latitude": "31.20777600",
+          "longitude": "76.87724300",
+          "district": "SOLAN",
+          "rows": 18091,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "AWS IIT Mandi",
+          "latitude": "31.78027778",
+          "longitude": "76.99305556",
+          "district": "MANDI",
+          "rows": 24052,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "AWS Sansarpur Terrace",
+          "latitude": "31.92444444",
+          "longitude": "75.93027778",
+          "district": "KANGRA",
+          "rows": 25860,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Bangana_1",
+          "latitude": "31.47977900",
+          "longitude": "76.38662600",
+          "district": "UNA",
+          "rows": 8250,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Bara Bhangal",
+          "latitude": "32.32333300",
+          "longitude": "76.81305600",
+          "district": "CHAMBA",
+          "rows": 3017,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Barsar_1",
+          "latitude": "31.47034300",
+          "longitude": "76.55186300",
+          "district": "HAMIRPUR",
+          "rows": 20532,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Dharmshala_1",
+          "latitude": "32.21616000",
+          "longitude": "76.33917800",
+          "district": "KANGRA",
+          "rows": 16947,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Ghumarwin",
+          "latitude": "31.45062900",
+          "longitude": "76.72965400",
+          "district": "BILASPUR",
+          "rows": 24913,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Jogindernagar",
+          "latitude": "31.99692100",
+          "longitude": "76.79831160",
+          "district": "MANDI",
+          "rows": 25821,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Junga_1",
+          "latitude": "31.04393200",
+          "longitude": "77.19559900",
+          "district": "SHIMLA",
+          "rows": 20834,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Kala Amb_1",
+          "latitude": "32.49938900",
+          "longitude": "77.20688900",
+          "district": "SIRMAUR",
+          "rows": 13538,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Theog",
+          "latitude": "31.08565833",
+          "longitude": "77.30100000",
+          "district": "SHIMLA",
+          "rows": 19443,
+          "outside_range_or_missing": 0
+        },
+        {
+          "station": "Tisa_1",
+          "latitude": "32.69344000",
+          "longitude": "76.08609400",
+          "district": "CHAMBA",
+          "rows": 15927,
+          "outside_range_or_missing": 0
+        }
+      ]
+    }
+  },
+  "overlap": {
+    "all_four_raw_keys": 112799,
+    "all_four_broad_range_valid_unique_keys": 43909,
+    "stations_in_all_four": 12,
+    "valid_overlap_by_station": {
+      "Dharmshala_1": 1554,
+      "Junga_1": 1379,
+      "Tisa_1": 2319,
+      "Kala Amb_1": 8452,
+      "AWS Sansarpur Terrace": 6210,
+      "AWS IIT Mandi": 2047,
+      "Ghumarwin": 5605,
+      "Bara Bhangal": 2648,
+      "Barsar_1": 9478,
+      "Bangana_1": 3035,
+      "Jogindernagar": 842,
+      "Arki_3": 340
+    },
+    "exact_six_hour_pairs_broad_range_valid": 32281
+  },
+  "limitations": [
+    "PM2.5 and PM10 absent; no complete six-input training set",
+    "Timezone and pressure reference require confirmation",
+    "Air temperature explicitly named in CSV header; encoding of degree-C unit needs metadata confirmation",
+    "Broad range filtering does not detect sensor freezing, calibration errors or spikes",
+    "No model trained or tested in this audit"
+  ]
+}

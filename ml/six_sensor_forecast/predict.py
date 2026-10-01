@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 
-from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.contract import sensor_profile
 from ml.six_sensor_forecast.data import SCHEMA, sha256
 from ml.six_sensor_forecast.features import build_features
 from ml.six_sensor_forecast.train import bounded
@@ -22,17 +22,18 @@ def predict(
     if kind not in ("teacher", "student"):
         raise ValueError("kind must be teacher or student")
     report = json.loads((model_dir / "training_report.json").read_text())
-    if report["schema_version"] != SCHEMA or set(report["models"]) != set(
-        RAW_SENSOR_COLUMNS
-    ):
+    sensors = sensor_profile(report.get("sensor_profile"))
+    if report["schema_version"] != SCHEMA or set(report["models"]) != set(sensors):
         raise ValueError("Incomplete or incompatible forecast model")
     frame, temporal = build_features(observations)
     features = (
-        temporal if kind == "teacher" else frame[RAW_SENSOR_COLUMNS].astype(np.float32)
+        temporal[report["architecture"]["teacher_features"]]
+        if kind == "teacher"
+        else frame[sensors].astype(np.float32)
     )
     if features.columns.tolist() != report["architecture"][f"{kind}_features"]:
         raise ValueError("Model feature schema mismatch")
-    valid = np.isfinite(frame[RAW_SENSOR_COLUMNS].to_numpy()).all(axis=1)
+    valid = np.isfinite(frame[sensors].to_numpy()).all(axis=1)
     result = frame[["location_id", "timestamp_utc"]].copy()
     result["forecast_timestamp_utc"] = frame.timestamp_utc + pd.Timedelta(
         hours=report["horizon_hours"]
@@ -40,8 +41,12 @@ def predict(
     result["status"] = np.where(
         valid, "OFFLINE_RESEARCH_ONLY", "MISSING_CURRENT_SENSOR"
     )
-    matrix = xgb.DMatrix(features.loc[valid]) if valid.any() else None
-    for target in RAW_SENSOR_COLUMNS:
+    matrix = (
+        xgb.DMatrix(features.loc[valid], feature_names=features.columns.tolist())
+        if valid.any()
+        else None
+    )
+    for target in sensors:
         entry = report["models"][target]
         path = model_dir / entry[f"{kind}_file"]
         if sha256(path) != entry[f"{kind}_sha256"]:

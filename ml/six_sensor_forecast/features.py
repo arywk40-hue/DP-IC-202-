@@ -26,8 +26,9 @@ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("Empty location")
     if frame.duplicated(["location_id", "timestamp_utc"]).any():
         raise ValueError("Duplicate station-hour")
-    if not frame.timestamp_utc.eq(frame.timestamp_utc.dt.floor("h")).all():
-        raise ValueError("Forecast pipeline requires exact hourly timestamps")
+    offsets = frame.timestamp_utc - frame.timestamp_utc.dt.floor("h")
+    if offsets.groupby(frame.location_id).nunique().gt(1).any():
+        raise ValueError("Forecast pipeline requires a consistent hourly grid per station")
     for column, (low, high) in PHYSICAL_RANGES.items():
         frame[column] = pd.to_numeric(frame[column], errors="raise")
         frame[column] = frame[column].where(frame[column].between(low, high))

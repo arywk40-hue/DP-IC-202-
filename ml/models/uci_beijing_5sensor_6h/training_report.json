@@ -1,0 +1,733 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "task": "available-sensor exact-future measurement regression",
+  "sensor_profile": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "excluded_sensors": [
+    "pressure_hpa"
+  ],
+  "horizon_hours": 6,
+  "deployment_status": "OFFLINE_RESEARCH_ONLY",
+  "hazard_detection_status": "NOT_VALIDATED",
+  "source": {
+    "schema_version": "indra_hourly_forecast_v1",
+    "source_name": "UCI Beijing Multi-Site Air Quality (501)",
+    "source_url": "https://archive.ics.uci.edu/static/public/501/beijing+multi+site+air+quality+data.zip",
+    "doi": "https://doi.org/10.24432/C5RK5G",
+    "attribution": "Chen, S. (2017). Beijing Multi-Site Air Quality. UCI Machine Learning Repository.",
+    "license": "CC BY 4.0",
+    "retrieved_at_utc": "2026-09-09T17:37:13.058403+00:00",
+    "archive_sha256": "b04da438b2f331ac0ffd45aebdfec0d20d2367feb5f6948c4b1f7ce1191e33c4",
+    "observations_sha256": "ade928f48271f5323a893f0dd6dc7094270eea4eb110838336e1e26c7432eb8a",
+    "rows": 420768,
+    "locations": [
+      "Aotizhongxin",
+      "Changping",
+      "Dingling",
+      "Dongsi",
+      "Guanyuan",
+      "Gucheng",
+      "Huairou",
+      "Nongzhanguan",
+      "Shunyi",
+      "Tiantan",
+      "Wanliu",
+      "Wanshouxigong"
+    ],
+    "coverage_start_utc": "2013-02-28T16:00:00+00:00",
+    "coverage_end_utc": "2017-02-28T15:00:00+00:00",
+    "sensor_columns": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pressure_hpa",
+      "pm25_ug_m3",
+      "pm10_ug_m3",
+      "wind_speed_mps"
+    ],
+    "missing_measurements": {
+      "temperature_c": 398,
+      "relative_humidity_pct": 403,
+      "pressure_hpa": 393,
+      "pm25_ug_m3": 8739,
+      "pm10_ug_m3": 6449,
+      "wind_speed_mps": 318
+    },
+    "relative_humidity": "Magnus approximation derived from observed temperature and dew point; not directly measured RH",
+    "weather_alignment": "UCI source matches air-quality sites to nearest meteorological station",
+    "timestamp_policy": "Source local hours interpreted as Asia/Shanghai and converted to UTC",
+    "label_provenance": "Exact future station measurements; no hazard labels or synthetic sensor values",
+    "geographic_limit": "Beijing, China; external pretraining/benchmark only, not India field validation"
+  },
+  "architecture": {
+    "teacher": "per-target residual XGBoost; causal lags, trailing means/stds; validation depth selection and early stopping",
+    "student": "per-target 16-tree depth-3 XGBoost; validation selects direct or teacher-assisted residual training",
+    "prediction": "physical_clip(current + validation_selected_weight * residual)",
+    "teacher_features": [
+      "temperature_c",
+      "temperature_c_lag_1h",
+      "temperature_c_lag_3h",
+      "temperature_c_lag_6h",
+      "temperature_c_lag_12h",
+      "temperature_c_lag_24h",
+      "temperature_c_delta_1h",
+      "temperature_c_mean_6h",
+      "temperature_c_std_6h",
+      "temperature_c_mean_24h",
+      "temperature_c_std_24h",
+      "relative_humidity_pct",
+      "relative_humidity_pct_lag_1h",
+      "relative_humidity_pct_lag_3h",
+      "relative_humidity_pct_lag_6h",
+      "relative_humidity_pct_lag_12h",
+      "relative_humidity_pct_lag_24h",
+      "relative_humidity_pct_delta_1h",
+      "relative_humidity_pct_mean_6h",
+      "relative_humidity_pct_std_6h",
+      "relative_humidity_pct_mean_24h",
+      "relative_humidity_pct_std_24h",
+      "pm25_ug_m3",
+      "pm25_ug_m3_lag_1h",
+      "pm25_ug_m3_lag_3h",
+      "pm25_ug_m3_lag_6h",
+      "pm25_ug_m3_lag_12h",
+      "pm25_ug_m3_lag_24h",
+      "pm25_ug_m3_delta_1h",
+      "pm25_ug_m3_mean_6h",
+      "pm25_ug_m3_std_6h",
+      "pm25_ug_m3_mean_24h",
+      "pm25_ug_m3_std_24h",
+      "pm10_ug_m3",
+      "pm10_ug_m3_lag_1h",
+      "pm10_ug_m3_lag_3h",
+      "pm10_ug_m3_lag_6h",
+      "pm10_ug_m3_lag_12h",
+      "pm10_ug_m3_lag_24h",
+      "pm10_ug_m3_delta_1h",
+      "pm10_ug_m3_mean_6h",
+      "pm10_ug_m3_std_6h",
+      "pm10_ug_m3_mean_24h",
+      "pm10_ug_m3_std_24h",
+      "wind_speed_mps",
+      "wind_speed_mps_lag_1h",
+      "wind_speed_mps_lag_3h",
+      "wind_speed_mps_lag_6h",
+      "wind_speed_mps_lag_12h",
+      "wind_speed_mps_lag_24h",
+      "wind_speed_mps_delta_1h",
+      "wind_speed_mps_mean_6h",
+      "wind_speed_mps_std_6h",
+      "wind_speed_mps_mean_24h",
+      "wind_speed_mps_std_24h"
+    ],
+    "student_features": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pm25_ug_m3",
+      "pm10_ug_m3",
+      "wind_speed_mps"
+    ],
+    "station_time_gps_as_features": false,
+    "missing_policy": "no imputation; require finite selected current inputs and observed future target; teacher allows missing historical features"
+  },
+  "split": {
+    "strategy": "fixed future blocks and complete held-out stations; label horizon purged at boundaries",
+    "validation_start": "2016-01-01T00:00:00Z",
+    "test_start": "2016-07-01T00:00:00Z",
+    "holdout_locations": [
+      "Changping",
+      "Dingling",
+      "Huairou"
+    ],
+    "raw_rows": {
+      "train": 223794,
+      "validation": 39258,
+      "future_test": 52416,
+      "geographic_test": 17472
+    },
+    "unused_rows": 87828
+  },
+  "environment": {
+    "python": "3.13.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "xgboost": "3.4.1",
+    "sklearn": "1.9.0"
+  },
+  "training": {
+    "seed": 42,
+    "threads": 4,
+    "max_rounds": 250,
+    "teacher_depth_candidates": [
+      4,
+      6
+    ],
+    "early_stopping_rounds": 25
+  },
+  "models": {
+    "temperature_c": {
+      "teacher_file": "teacher/temperature_c.ubj",
+      "student_file": "esp32_student/temperature_c.ubj",
+      "teacher_sha256": "d01f001ede2506a70603716f031d3601c86c938ac8676f8b2a029fec5c166f0a",
+      "student_sha256": "c4edc7e79df55a86475d38b9fb6b023c0039a982b3252e8892d52679e97a9c00",
+      "teacher_weight": 1.0,
+      "student_weight": 1.0,
+      "teacher_depth": 6,
+      "teacher_trees": 249,
+      "student_depth": 3,
+      "student_teacher_fraction": 0.5,
+      "student_candidates": [
+        {
+          "teacher_fraction": 0.0,
+          "validation_mae": 3.840785503387451,
+          "weight": 1.0
+        },
+        {
+          "teacher_fraction": 0.5,
+          "validation_mae": 3.8335516452789307,
+          "weight": 1.0
+        }
+      ],
+      "student_trees": 16,
+      "candidates": [
+        {
+          "depth": 4,
+          "trees": 250,
+          "validation_mae": 2.346312999725342,
+          "persistence_blend_weight": 1.0
+        },
+        {
+          "depth": 6,
+          "trees": 249,
+          "validation_mae": 2.215794324874878,
+          "persistence_blend_weight": 1.0
+        }
+      ],
+      "metrics": {
+        "validation": {
+          "persistence": {
+            "rows": 38401,
+            "mae": 4.4549360275268555,
+            "rmse": 5.423833224081597,
+            "r2": 0.7894458770751953
+          },
+          "teacher": {
+            "rows": 38401,
+            "mae": 2.215794324874878,
+            "rmse": 2.867472372013417,
+            "r2": 0.9411495923995972
+          },
+          "student": {
+            "rows": 38401,
+            "mae": 3.8335516452789307,
+            "rmse": 4.727647288028675,
+            "r2": 0.8400290012359619
+          }
+        },
+        "future_test": {
+          "persistence": {
+            "rows": 50964,
+            "mae": 3.608203887939453,
+            "rmse": 4.495614564019867,
+            "r2": 0.8641399145126343
+          },
+          "teacher": {
+            "rows": 50964,
+            "mae": 1.8646275997161865,
+            "rmse": 2.389006521842808,
+            "r2": 0.9616338014602661,
+            "mae_skill_vs_persistence": 0.48322554444642973,
+            "validation_p90_band_coverage": 0.9455301781649792
+          },
+          "student": {
+            "rows": 50964,
+            "mae": 3.1955292224884033,
+            "rmse": 3.8505494060133048,
+            "r2": 0.9003311991691589,
+            "mae_skill_vs_persistence": 0.11437121578146658,
+            "validation_p90_band_coverage": 0.9659759830468566
+          }
+        },
+        "geographic_test": {
+          "persistence": {
+            "rows": 16964,
+            "mae": 3.868699073791504,
+            "rmse": 4.829074210773148,
+            "r2": 0.8461406826972961
+          },
+          "teacher": {
+            "rows": 16964,
+            "mae": 2.0194756984710693,
+            "rmse": 2.609835738205341,
+            "r2": 0.9550610780715942,
+            "mae_skill_vs_persistence": 0.47799617908976055,
+            "validation_p90_band_coverage": 0.9238387172836595
+          },
+          "student": {
+            "rows": 16964,
+            "mae": 3.5133397579193115,
+            "rmse": 4.158573505037726,
+            "r2": 0.8859001994132996,
+            "mae_skill_vs_persistence": 0.0918549902936554,
+            "validation_p90_band_coverage": 0.9527234142890828
+          }
+        }
+      },
+      "train_rows": 219191,
+      "teacher_absolute_error_p90": 4.7342939376831055,
+      "student_absolute_error_p90": 7.612445831298828
+    },
+    "relative_humidity_pct": {
+      "teacher_file": "teacher/relative_humidity_pct.ubj",
+      "student_file": "esp32_student/relative_humidity_pct.ubj",
+      "teacher_sha256": "ebd7cbcb70df21b69f2573f5d950111a51c31041ce531b3f9dcd26142f3ea08a",
+      "student_sha256": "8e10c208ff63132415832fb6b27dbcc81612ecefeded0791228ac4d7d0820a34",
+      "teacher_weight": 1.0,
+      "student_weight": 0.75,
+      "teacher_depth": 6,
+      "teacher_trees": 250,
+      "student_depth": 3,
+      "student_teacher_fraction": 0.0,
+      "student_candidates": [
+        {
+          "teacher_fraction": 0.0,
+          "validation_mae": 13.468616485595703,
+          "weight": 0.75
+        },
+        {
+          "teacher_fraction": 0.5,
+          "validation_mae": 13.5100679397583,
+          "weight": 0.75
+        }
+      ],
+      "student_trees": 16,
+      "candidates": [
+        {
+          "depth": 4,
+          "trees": 243,
+          "validation_mae": 9.908876419067383,
+          "persistence_blend_weight": 1.0
+        },
+        {
+          "depth": 6,
+          "trees": 250,
+          "validation_mae": 9.623686790466309,
+          "persistence_blend_weight": 1.0
+        }
+      ],
+      "metrics": {
+        "validation": {
+          "persistence": {
+            "rows": 38401,
+            "mae": 14.866891860961914,
+            "rmse": 19.514990888667246,
+            "r2": 0.19090557098388672
+          },
+          "teacher": {
+            "rows": 38401,
+            "mae": 9.623686790466309,
+            "rmse": 12.891684378817489,
+            "r2": 0.6469129323959351
+          },
+          "student": {
+            "rows": 38401,
+            "mae": 13.468616485595703,
+            "rmse": 17.1744819307554,
+            "r2": 0.3733431100845337
+          }
+        },
+        "future_test": {
+          "persistence": {
+            "rows": 50964,
+            "mae": 15.927875518798828,
+            "rmse": 20.559112176985156,
+            "r2": 0.2762504816055298
+          },
+          "teacher": {
+            "rows": 50964,
+            "mae": 9.923376083374023,
+            "rmse": 13.117053141993548,
+            "r2": 0.7053868770599365,
+            "mae_skill_vs_persistence": 0.3769805601718831,
+            "validation_p90_band_coverage": 0.892963660623185
+          },
+          "student": {
+            "rows": 50964,
+            "mae": 14.292104721069336,
+            "rmse": 17.739756892623276,
+            "r2": 0.46114128828048706,
+            "mae_skill_vs_persistence": 0.10269861764043031,
+            "validation_p90_band_coverage": 0.8845067106192607
+          }
+        },
+        "geographic_test": {
+          "persistence": {
+            "rows": 16964,
+            "mae": 15.24767017364502,
+            "rmse": 19.480520838485603,
+            "r2": 0.3474324941635132
+          },
+          "teacher": {
+            "rows": 16964,
+            "mae": 9.580146789550781,
+            "rmse": 12.787230344671801,
+            "r2": 0.7188246250152588,
+            "mae_skill_vs_persistence": 0.3716976639414934,
+            "validation_p90_band_coverage": 0.8943055883046451
+          },
+          "student": {
+            "rows": 16964,
+            "mae": 13.936580657958984,
+            "rmse": 16.920731580713717,
+            "r2": 0.5076628923416138,
+            "mae_skill_vs_persistence": 0.0859862195833827,
+            "validation_p90_band_coverage": 0.9147606696533837
+          }
+        }
+      },
+      "train_rows": 219188,
+      "teacher_absolute_error_p90": 20.425527572631836,
+      "student_absolute_error_p90": 27.923662185668945
+    },
+    "pm25_ug_m3": {
+      "teacher_file": "teacher/pm25_ug_m3.ubj",
+      "student_file": "esp32_student/pm25_ug_m3.ubj",
+      "teacher_sha256": "8cb884fdebe9b1a5ffd303af5795610487d105c1765c8a05ff520689976a69e9",
+      "student_sha256": "ebb87cf19c64a6878a8ec18d6b5477e588c6fd9346cddd45476f65895910c518",
+      "teacher_weight": 0.75,
+      "student_weight": 0.5,
+      "teacher_depth": 4,
+      "teacher_trees": 193,
+      "student_depth": 3,
+      "student_teacher_fraction": 0.0,
+      "student_candidates": [
+        {
+          "teacher_fraction": 0.0,
+          "validation_mae": 28.45231819152832,
+          "weight": 0.5
+        },
+        {
+          "teacher_fraction": 0.5,
+          "validation_mae": 28.49843406677246,
+          "weight": 0.75
+        }
+      ],
+      "student_trees": 16,
+      "candidates": [
+        {
+          "depth": 4,
+          "trees": 193,
+          "validation_mae": 27.054515838623047,
+          "persistence_blend_weight": 0.75
+        },
+        {
+          "depth": 6,
+          "trees": 104,
+          "validation_mae": 27.05962371826172,
+          "persistence_blend_weight": 0.75
+        }
+      ],
+      "metrics": {
+        "validation": {
+          "persistence": {
+            "rows": 37819,
+            "mae": 29.47637367248535,
+            "rmse": 54.52196822869888,
+            "r2": 0.4253208041191101
+          },
+          "teacher": {
+            "rows": 37819,
+            "mae": 27.054515838623047,
+            "rmse": 47.54216621441828,
+            "r2": 0.5630413293838501
+          },
+          "student": {
+            "rows": 37819,
+            "mae": 28.45231819152832,
+            "rmse": 51.43395197742076,
+            "r2": 0.48857468366622925
+          }
+        },
+        "future_test": {
+          "persistence": {
+            "rows": 50479,
+            "mae": 36.381683349609375,
+            "rmse": 62.52424724969206,
+            "r2": 0.5525050163269043
+          },
+          "teacher": {
+            "rows": 50479,
+            "mae": 32.71950149536133,
+            "rmse": 54.762970245926674,
+            "r2": 0.6567068099975586,
+            "mae_skill_vs_persistence": 0.10066004420566121,
+            "validation_p90_band_coverage": 0.8531666633649636
+          },
+          "student": {
+            "rows": 50479,
+            "mae": 34.99390411376953,
+            "rmse": 59.368990238618046,
+            "r2": 0.5965306758880615,
+            "mae_skill_vs_persistence": 0.03814499792392767,
+            "validation_p90_band_coverage": 0.8488084153806533
+          }
+        },
+        "geographic_test": {
+          "persistence": {
+            "rows": 16831,
+            "mae": 26.886638641357422,
+            "rmse": 48.08863784558417,
+            "r2": 0.5828530788421631
+          },
+          "teacher": {
+            "rows": 16831,
+            "mae": 26.14398956298828,
+            "rmse": 44.35408150213954,
+            "r2": 0.6451283693313599,
+            "mae_skill_vs_persistence": 0.02762149215732701,
+            "validation_p90_band_coverage": 0.8995900421840651
+          },
+          "student": {
+            "rows": 16831,
+            "mae": 26.144168853759766,
+            "rmse": 45.87069174678015,
+            "r2": 0.6204450726509094,
+            "mae_skill_vs_persistence": 0.02761482376066071,
+            "validation_p90_band_coverage": 0.9020854375854078
+          }
+        }
+      },
+      "train_rows": 216849,
+      "teacher_absolute_error_p90": 62.42717361450195,
+      "student_absolute_error_p90": 65.10655975341797
+    },
+    "pm10_ug_m3": {
+      "teacher_file": "teacher/pm10_ug_m3.ubj",
+      "student_file": "esp32_student/pm10_ug_m3.ubj",
+      "teacher_sha256": "89b6853359ea88e345c5b9d15b7f44d88151cb3d7a23d056437156b6a0672b6c",
+      "student_sha256": "2a0e0ffcb01230666c21cdba7ea18e334b4364bbe8848a59f7dbe94cd2717c8f",
+      "teacher_weight": 0.75,
+      "student_weight": 0.75,
+      "teacher_depth": 6,
+      "teacher_trees": 162,
+      "student_depth": 3,
+      "student_teacher_fraction": 0.0,
+      "student_candidates": [
+        {
+          "teacher_fraction": 0.0,
+          "validation_mae": 39.96086883544922,
+          "weight": 0.75
+        },
+        {
+          "teacher_fraction": 0.5,
+          "validation_mae": 40.04390335083008,
+          "weight": 0.75
+        }
+      ],
+      "student_trees": 16,
+      "candidates": [
+        {
+          "depth": 4,
+          "trees": 160,
+          "validation_mae": 37.83942794799805,
+          "persistence_blend_weight": 0.75
+        },
+        {
+          "depth": 6,
+          "trees": 162,
+          "validation_mae": 37.235435485839844,
+          "persistence_blend_weight": 0.75
+        }
+      ],
+      "metrics": {
+        "validation": {
+          "persistence": {
+            "rows": 37924,
+            "mae": 42.44172668457031,
+            "rmse": 74.07535819289873,
+            "r2": 0.22682702541351318
+          },
+          "teacher": {
+            "rows": 37924,
+            "mae": 37.235435485839844,
+            "rmse": 61.55107960377807,
+            "r2": 0.46617305278778076
+          },
+          "student": {
+            "rows": 37924,
+            "mae": 39.96086883544922,
+            "rmse": 65.37139987697219,
+            "r2": 0.397849977016449
+          }
+        },
+        "future_test": {
+          "persistence": {
+            "rows": 50625,
+            "mae": 45.85056686401367,
+            "rmse": 73.93638722218411,
+            "r2": 0.4844534397125244
+          },
+          "teacher": {
+            "rows": 50625,
+            "mae": 40.339012145996094,
+            "rmse": 63.759759133528924,
+            "r2": 0.6166064739227295,
+            "mae_skill_vs_persistence": 0.12020690462484518,
+            "validation_p90_band_coverage": 0.8672395061728395
+          },
+          "student": {
+            "rows": 50625,
+            "mae": 43.59524917602539,
+            "rmse": 68.36333381394043,
+            "r2": 0.5592442750930786,
+            "mae_skill_vs_persistence": 0.049188436310443784,
+            "validation_p90_band_coverage": 0.8629530864197531
+          }
+        },
+        "geographic_test": {
+          "persistence": {
+            "rows": 16868,
+            "mae": 35.14352798461914,
+            "rmse": 58.07731368817238,
+            "r2": 0.4961996078491211
+          },
+          "teacher": {
+            "rows": 16868,
+            "mae": 33.674495697021484,
+            "rmse": 52.76492864879569,
+            "r2": 0.584150493144989,
+            "mae_skill_vs_persistence": 0.0418009338231663,
+            "validation_p90_band_coverage": 0.9050272705714963
+          },
+          "student": {
+            "rows": 16868,
+            "mae": 34.62746047973633,
+            "rmse": 54.21080183096585,
+            "r2": 0.5610479116439819,
+            "mae_skill_vs_persistence": 0.014684567386310077,
+            "validation_p90_band_coverage": 0.9110742233815509
+          }
+        }
+      },
+      "train_rows": 217557,
+      "teacher_absolute_error_p90": 79.39105224609375,
+      "student_absolute_error_p90": 83.42950439453125
+    },
+    "wind_speed_mps": {
+      "teacher_file": "teacher/wind_speed_mps.ubj",
+      "student_file": "esp32_student/wind_speed_mps.ubj",
+      "teacher_sha256": "fcecb79aa956a7af79d056f67c8dbd34cff614528ffcf5ea5ba54e96c5522374",
+      "student_sha256": "a1a738bad0683f450b5a0a2d7ffc14a61e1835c63be881eca94a7ff7d4e53e47",
+      "teacher_weight": 1.0,
+      "student_weight": 1.0,
+      "teacher_depth": 6,
+      "teacher_trees": 225,
+      "student_depth": 3,
+      "student_teacher_fraction": 0.0,
+      "student_candidates": [
+        {
+          "teacher_fraction": 0.0,
+          "validation_mae": 0.9357083439826965,
+          "weight": 1.0
+        },
+        {
+          "teacher_fraction": 0.5,
+          "validation_mae": 0.9370672702789307,
+          "weight": 1.0
+        }
+      ],
+      "student_trees": 16,
+      "candidates": [
+        {
+          "depth": 4,
+          "trees": 243,
+          "validation_mae": 0.8164306879043579,
+          "persistence_blend_weight": 1.0
+        },
+        {
+          "depth": 6,
+          "trees": 225,
+          "validation_mae": 0.8063490390777588,
+          "persistence_blend_weight": 1.0
+        }
+      ],
+      "metrics": {
+        "validation": {
+          "persistence": {
+            "rows": 38401,
+            "mae": 1.1608655452728271,
+            "rmse": 1.528149404506407,
+            "r2": -0.3573712110519409
+          },
+          "teacher": {
+            "rows": 38401,
+            "mae": 0.8063490390777588,
+            "rmse": 1.1033305595301617,
+            "r2": 0.2924155592918396
+          },
+          "student": {
+            "rows": 38401,
+            "mae": 0.9357083439826965,
+            "rmse": 1.2499699112131832,
+            "r2": 0.0918322205543518
+          }
+        },
+        "future_test": {
+          "persistence": {
+            "rows": 51019,
+            "mae": 0.89239102602005,
+            "rmse": 1.2237953997442468,
+            "r2": -0.21296226978302002
+          },
+          "teacher": {
+            "rows": 51019,
+            "mae": 0.668379545211792,
+            "rmse": 0.9380830541149829,
+            "r2": 0.2872909903526306,
+            "mae_skill_vs_persistence": 0.25102390575051015,
+            "validation_p90_band_coverage": 0.941590387894706
+          },
+          "student": {
+            "rows": 51019,
+            "mae": 0.7306907176971436,
+            "rmse": 0.9993223934391244,
+            "r2": 0.19120043516159058,
+            "mae_skill_vs_persistence": 0.18119894038386875,
+            "validation_p90_band_coverage": 0.9556047746917815
+          }
+        },
+        "geographic_test": {
+          "persistence": {
+            "rows": 16988,
+            "mae": 0.9236343502998352,
+            "rmse": 1.3182176301838968,
+            "r2": -0.36699795722961426
+          },
+          "teacher": {
+            "rows": 16988,
+            "mae": 0.6946315169334412,
+            "rmse": 0.9992122527650192,
+            "r2": 0.21456700563430786,
+            "mae_skill_vs_persistence": 0.2479366789379952,
+            "validation_p90_band_coverage": 0.9271250294325406
+          },
+          "student": {
+            "rows": 16988,
+            "mae": 0.7465372085571289,
+            "rmse": 1.0604771262709691,
+            "r2": 0.1152995228767395,
+            "mae_skill_vs_persistence": 0.19173944936675003,
+            "validation_p90_band_coverage": 0.9380739345420297
+          }
+        }
+      },
+      "train_rows": 219194,
+      "teacher_absolute_error_p90": 1.780144453048706,
+      "student_absolute_error_p90": 2.0380184650421143
+    }
+  }
+}

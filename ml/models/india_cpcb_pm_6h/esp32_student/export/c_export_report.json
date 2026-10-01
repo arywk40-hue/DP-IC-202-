@@ -1,0 +1,26 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "status": "OFFLINE_RESEARCH_ONLY",
+  "input_features": [
+    "pm25_ug_m3",
+    "pm10_ug_m3"
+  ],
+  "horizon_hours": 6,
+  "heads": 2,
+  "trees_per_head": 16,
+  "max_depth": 3,
+  "total_nodes": 438,
+  "header_bytes": 20671,
+  "header_sha256": "1967422e0571df6de6f6be6c65c6b4ec22247e9badd4b398546bcc2b9ed6c5ed",
+  "model_report_sha256": "22b64651ae1be17f9acc54ddf0a9b7ec473e1d5e0a4aae8051fb94d62b8e5d5f",
+  "parity": {
+    "valid_rows": 2659,
+    "invalid_rows": 6,
+    "absolute_tolerance": 0.0002,
+    "max_absolute_error_by_target": {
+      "pm25_ug_m3": 4.931640660288394e-07,
+      "pm10_ug_m3": 4.531249942374416e-06
+    },
+    "passed": true
+  }
+}

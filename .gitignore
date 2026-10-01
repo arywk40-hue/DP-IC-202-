@@ -30,3 +30,23 @@ results/
 *.pem
 *.key
 secrets.json
+
+# Indian source audit downloads; retain inventory, provenance and coverage report.
+data/india_station_audit/raw/
+
+# Canonical Indian research observations; retain provenance.
+data/india_cpcb_research/observations.csv
+
+# IMD access receipts refer to locally retained original web responses.
+data/imd_north_access/*.response
+
+# Downloaded independent field observations
+data/field_sources/raw/
+
+# Supplied raw Himachal exports and generated local heatmap arrays
+/himachal 4-sensor dataset/*.csv
+/data/himachal_weather_audit/temperature_1961_2020_download.csv
+/reports/deployment/synthetic_heatmap/
+
+# Generated firmware identity
+esp32/ml_integration/include/build_identity.h

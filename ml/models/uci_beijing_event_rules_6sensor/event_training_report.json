@@ -1,0 +1,688 @@
+{
+  "schema_version": "indra_event_rules_v1",
+  "task": "multi-label classification of deterministic sensor-derived rules",
+  "label_provenance": "Rules computed from six sensor channels; no independent observed hazard labels",
+  "source": {
+    "schema_version": "indra_hourly_forecast_v1",
+    "source_name": "UCI Beijing Multi-Site Air Quality (501)",
+    "source_url": "https://archive.ics.uci.edu/static/public/501/beijing+multi+site+air+quality+data.zip",
+    "doi": "https://doi.org/10.24432/C5RK5G",
+    "attribution": "Chen, S. (2017). Beijing Multi-Site Air Quality. UCI Machine Learning Repository.",
+    "license": "CC BY 4.0",
+    "retrieved_at_utc": "2026-09-25T18:03:07.690707+00:00",
+    "archive_sha256": "b04da438b2f331ac0ffd45aebdfec0d20d2367feb5f6948c4b1f7ce1191e33c4",
+    "observations_sha256": "ade928f48271f5323a893f0dd6dc7094270eea4eb110838336e1e26c7432eb8a",
+    "rows": 420768,
+    "locations": [
+      "Aotizhongxin",
+      "Changping",
+      "Dingling",
+      "Dongsi",
+      "Guanyuan",
+      "Gucheng",
+      "Huairou",
+      "Nongzhanguan",
+      "Shunyi",
+      "Tiantan",
+      "Wanliu",
+      "Wanshouxigong"
+    ],
+    "coverage_start_utc": "2013-02-28T16:00:00+00:00",
+    "coverage_end_utc": "2017-02-28T15:00:00+00:00",
+    "sensor_columns": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pressure_hpa",
+      "pm25_ug_m3",
+      "pm10_ug_m3",
+      "wind_speed_mps"
+    ],
+    "missing_measurements": {
+      "temperature_c": 398,
+      "relative_humidity_pct": 403,
+      "pressure_hpa": 393,
+      "pm25_ug_m3": 8739,
+      "pm10_ug_m3": 6449,
+      "wind_speed_mps": 318
+    },
+    "relative_humidity": "Magnus approximation derived from observed temperature and dew point; not directly measured RH",
+    "weather_alignment": "UCI source matches air-quality sites to nearest meteorological station",
+    "timestamp_policy": "Source local hours interpreted as Asia/Shanghai and converted to UTC",
+    "label_provenance": "Exact future station measurements; no hazard labels or synthetic sensor values",
+    "geographic_limit": "Beijing, China; external pretraining/benchmark only, not India field validation"
+  },
+  "event_names": [
+    "light_moderate_rain",
+    "severe_rainstorm_squall",
+    "snowstorm_blizzard",
+    "freezing_rain_sleet",
+    "radiation_fog",
+    "ground_frost",
+    "extreme_heatwave",
+    "wildfire_evaporative_risk",
+    "dust_storm_haboob",
+    "smoke_plume",
+    "smog_inversion_trap",
+    "cold_frontal_passage"
+  ],
+  "input_features": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps",
+    "T_dew",
+    "VPD",
+    "HI",
+    "PM_ratio",
+    "dP_dt",
+    "dP_6h",
+    "dT_dt",
+    "dPM25_dt",
+    "dPM10_dt",
+    "dRH_dt",
+    "pm25_mono_6h"
+  ],
+  "n_features": 17,
+  "n_events": 12,
+  "split": {
+    "strategy": "fixed future blocks and complete held-out stations",
+    "validation_start": "2016-01-01T00:00:00Z",
+    "test_start": "2016-07-01T00:00:00Z",
+    "holdout_locations": [
+      "Changping",
+      "Dingling",
+      "Huairou"
+    ],
+    "raw_rows": {
+      "train": 223848,
+      "validation": 39312,
+      "future_test": 52416,
+      "geographic_test": 17472
+    }
+  },
+  "architecture": {
+    "type": "one-vs-rest binary XGBoost",
+    "max_trees": 16,
+    "max_depth": 4,
+    "objective": "binary:logistic"
+  },
+  "environment": {
+    "python": "3.13.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "xgboost": "3.4.1",
+    "sklearn": "1.9.0"
+  },
+  "training": {
+    "student_trees": 16,
+    "student_depth": 4,
+    "threads": 4,
+    "seed": 42
+  },
+  "models": {
+    "light_moderate_rain": {
+      "student_file": "esp32_student/light_moderate_rain.ubj",
+      "student_sha256": "16b5edbf603a23f34f8545f0ae52b236ff7c4747da81e37576303b3fe01e33d9",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 151.3002166748047,
+      "train_rows": 217637,
+      "train_positives": 1429,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.999999158470471,
+          "f1": 0.9996502273522211,
+          "precision": 0.9993006993006993,
+          "recall": 1.0,
+          "tp": 1429,
+          "fp": 1,
+          "fn": 0,
+          "tn": 216207,
+          "positives_in_split": 1429
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 118,
+          "fp": 0,
+          "fn": 0,
+          "tn": 37958,
+          "positives_in_split": 118
+        },
+        "future_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 522,
+          "fp": 0,
+          "fn": 0,
+          "tn": 50075,
+          "positives_in_split": 522
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 161,
+          "fp": 0,
+          "fn": 0,
+          "tn": 16689,
+          "positives_in_split": 161
+        }
+      }
+    },
+    "severe_rainstorm_squall": {
+      "skipped": true,
+      "reason": "no_positive_training_labels",
+      "train_rows": 217637,
+      "train_positives": 0
+    },
+    "snowstorm_blizzard": {
+      "skipped": true,
+      "reason": "no_positive_training_labels",
+      "train_rows": 217637,
+      "train_positives": 0
+    },
+    "freezing_rain_sleet": {
+      "student_file": "esp32_student/freezing_rain_sleet.ubj",
+      "student_sha256": "392206f2d60534f5beccb9c0efd40d48c5787715c23cb00f445e632411b62576",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 431.67791748046875,
+      "train_rows": 217637,
+      "train_positives": 503,
+      "metrics": {
+        "train": {
+          "auc_roc": 1.0,
+          "f1": 0.9843444227005871,
+          "precision": 0.9691714836223507,
+          "recall": 1.0,
+          "tp": 503,
+          "fp": 16,
+          "fn": 0,
+          "tn": 217118,
+          "positives_in_split": 503
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "tn": 38073,
+          "positives_in_split": 3
+        },
+        "future_test": {
+          "auc_roc": 0.9999999999999999,
+          "f1": 0.9635627530364372,
+          "precision": 0.9296875,
+          "recall": 1.0,
+          "tp": 119,
+          "fp": 9,
+          "fn": 0,
+          "tn": 50469,
+          "positives_in_split": 119
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 0.9859154929577465,
+          "precision": 0.9722222222222222,
+          "recall": 1.0,
+          "tp": 35,
+          "fp": 1,
+          "fn": 0,
+          "tn": 16814,
+          "positives_in_split": 35
+        }
+      }
+    },
+    "radiation_fog": {
+      "student_file": "esp32_student/radiation_fog.ubj",
+      "student_sha256": "cacef570983fee0f4e0ec2975edbe8e3a9c5f0f27e0d3c23904e5a8f94ba6092",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 38.41985321044922,
+      "train_rows": 217637,
+      "train_positives": 5521,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9999999487657865,
+          "f1": 0.9955820034262014,
+          "precision": 0.9912028725314184,
+          "recall": 1.0,
+          "tp": 5521,
+          "fp": 49,
+          "fn": 0,
+          "tn": 212067,
+          "positives_in_split": 5521
+        },
+        "validation": {
+          "auc_roc": 0.9999939699329894,
+          "f1": 0.9161290322580645,
+          "precision": 0.8554216867469879,
+          "recall": 0.9861111111111112,
+          "tp": 71,
+          "fp": 12,
+          "fn": 1,
+          "tn": 37992,
+          "positives_in_split": 72
+        },
+        "future_test": {
+          "auc_roc": 0.9999895171953663,
+          "f1": 0.9716312056737588,
+          "precision": 0.952712100139082,
+          "recall": 0.9913169319826338,
+          "tp": 685,
+          "fp": 34,
+          "fn": 6,
+          "tn": 49872,
+          "positives_in_split": 691
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 0.9851632047477745,
+          "precision": 0.9707602339181286,
+          "recall": 1.0,
+          "tp": 166,
+          "fp": 5,
+          "fn": 0,
+          "tn": 16679,
+          "positives_in_split": 166
+        }
+      }
+    },
+    "ground_frost": {
+      "student_file": "esp32_student/ground_frost.ubj",
+      "student_sha256": "2b2a8c7db210c7d3d8df663d6630c86800f0ef6c8543e81ee0e4a5be9e67e585",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 15.2488431930542,
+      "train_rows": 217637,
+      "train_positives": 13394,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9999999999999999,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 13394,
+          "fp": 0,
+          "fn": 0,
+          "tn": 204243,
+          "positives_in_split": 13394
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3183,
+          "fp": 0,
+          "fn": 0,
+          "tn": 34893,
+          "positives_in_split": 3183
+        },
+        "future_test": {
+          "auc_roc": 0.9998874049082556,
+          "f1": 0.9985087980912616,
+          "precision": 0.9970220369267421,
+          "recall": 1.0,
+          "tp": 5022,
+          "fp": 15,
+          "fn": 0,
+          "tn": 45560,
+          "positives_in_split": 5022
+        },
+        "geographic_test": {
+          "auc_roc": 0.999983472234133,
+          "f1": 0.9994834710743802,
+          "precision": 0.9989674754775426,
+          "recall": 1.0,
+          "tp": 1935,
+          "fp": 2,
+          "fn": 0,
+          "tn": 14913,
+          "positives_in_split": 1935
+        }
+      }
+    },
+    "extreme_heatwave": {
+      "student_file": "esp32_student/extreme_heatwave.ubj",
+      "student_sha256": "932eac91129c1d26f8747ff9a3c54dfbb44a48747070b8557624f8ccf646c3a8",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 166.80030822753906,
+      "train_rows": 217637,
+      "train_positives": 1297,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9997245262515121,
+          "f1": 0.7126373626373627,
+          "precision": 0.5535638070849338,
+          "recall": 1.0,
+          "tp": 1297,
+          "fp": 1046,
+          "fn": 0,
+          "tn": 215294,
+          "positives_in_split": 1297
+        },
+        "validation": {
+          "auc_roc": 0.9999707989232103,
+          "f1": 0.8178137651821862,
+          "precision": 0.6917808219178082,
+          "recall": 1.0,
+          "tp": 101,
+          "fp": 45,
+          "fn": 0,
+          "tn": 37930,
+          "positives_in_split": 101
+        },
+        "future_test": {
+          "auc_roc": 0.9988523190072148,
+          "f1": 0.6716666666666666,
+          "precision": 0.5056461731493099,
+          "recall": 1.0,
+          "tp": 403,
+          "fp": 394,
+          "fn": 0,
+          "tn": 49800,
+          "positives_in_split": 403
+        },
+        "geographic_test": {
+          "auc_roc": 0.9988582737695557,
+          "f1": 0.5152542372881356,
+          "precision": 0.3470319634703196,
+          "recall": 1.0,
+          "tp": 76,
+          "fp": 143,
+          "fn": 0,
+          "tn": 16631,
+          "positives_in_split": 76
+        }
+      }
+    },
+    "wildfire_evaporative_risk": {
+      "student_file": "esp32_student/wildfire_evaporative_risk.ubj",
+      "student_sha256": "3bbc99014a658eec7c146910d71f8ef533bcf9b796236f154df4d2f450e71e3e",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 471.0976257324219,
+      "train_rows": 217637,
+      "train_positives": 461,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9999999999999999,
+          "f1": 0.9756613756613757,
+          "precision": 0.9524793388429752,
+          "recall": 1.0,
+          "tp": 461,
+          "fp": 23,
+          "fn": 0,
+          "tn": 217153,
+          "positives_in_split": 461
+        },
+        "validation": {
+          "auc_roc": 0.9999960438864859,
+          "f1": 0.9815950920245399,
+          "precision": 0.963855421686747,
+          "recall": 1.0,
+          "tp": 160,
+          "fp": 6,
+          "fn": 0,
+          "tn": 37910,
+          "positives_in_split": 160
+        },
+        "future_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 14,
+          "fp": 0,
+          "fn": 0,
+          "tn": 50583,
+          "positives_in_split": 14
+        },
+        "geographic_test": {
+          "auc_roc": null,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 16850,
+          "positives_in_split": 0
+        }
+      }
+    },
+    "dust_storm_haboob": {
+      "student_file": "esp32_student/dust_storm_haboob.ubj",
+      "student_sha256": "8d425aadcc5481bf4cea376d3c15b546c3466d59f89fabf50221f4534718ec71",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 5180.83349609375,
+      "train_rows": 217637,
+      "train_positives": 42,
+      "metrics": {
+        "train": {
+          "auc_roc": 1.0,
+          "f1": 0.9438202247191011,
+          "precision": 0.8936170212765957,
+          "recall": 1.0,
+          "tp": 42,
+          "fp": 5,
+          "fn": 0,
+          "tn": 217590,
+          "positives_in_split": 42
+        },
+        "validation": {
+          "auc_roc": null,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 38076,
+          "positives_in_split": 0
+        },
+        "future_test": {
+          "auc_roc": null,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 50597,
+          "positives_in_split": 0
+        },
+        "geographic_test": {
+          "auc_roc": null,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 16850,
+          "positives_in_split": 0
+        }
+      }
+    },
+    "smoke_plume": {
+      "student_file": "esp32_student/smoke_plume.ubj",
+      "student_sha256": "fc0d33de60028e7dc20b3283df923b85ad1f95cff3c80da774e29280e2820e88",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 52.618377685546875,
+      "train_rows": 217637,
+      "train_positives": 4059,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9999759664492878,
+          "f1": 0.9960736196319019,
+          "precision": 0.9921779516010756,
+          "recall": 1.0,
+          "tp": 4059,
+          "fp": 32,
+          "fn": 0,
+          "tn": 213546,
+          "positives_in_split": 4059
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 676,
+          "fp": 0,
+          "fn": 0,
+          "tn": 37400,
+          "positives_in_split": 676
+        },
+        "future_test": {
+          "auc_roc": 0.9999812700634266,
+          "f1": 0.996328029375765,
+          "precision": 0.9926829268292683,
+          "recall": 1.0,
+          "tp": 814,
+          "fp": 6,
+          "fn": 0,
+          "tn": 49777,
+          "positives_in_split": 814
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 0.9974554707379135,
+          "precision": 0.9949238578680203,
+          "recall": 1.0,
+          "tp": 196,
+          "fp": 1,
+          "fn": 0,
+          "tn": 16653,
+          "positives_in_split": 196
+        }
+      }
+    },
+    "smog_inversion_trap": {
+      "student_file": "esp32_student/smog_inversion_trap.ubj",
+      "student_sha256": "03a79e3fb17da53a83e5cd6ed4099ad7fe37773d86281102bd5f71b690e54eb4",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 176.66285705566406,
+      "train_rows": 217637,
+      "train_positives": 1225,
+      "metrics": {
+        "train": {
+          "auc_roc": 0.9999999999999999,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1225,
+          "fp": 0,
+          "fn": 0,
+          "tn": 216412,
+          "positives_in_split": 1225
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 118,
+          "fp": 0,
+          "fn": 0,
+          "tn": 37958,
+          "positives_in_split": 118
+        },
+        "future_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 428,
+          "fp": 0,
+          "fn": 0,
+          "tn": 50169,
+          "positives_in_split": 428
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 30,
+          "fp": 0,
+          "fn": 0,
+          "tn": 16820,
+          "positives_in_split": 30
+        }
+      }
+    },
+    "cold_frontal_passage": {
+      "student_file": "esp32_student/cold_frontal_passage.ubj",
+      "student_sha256": "b40911b258d042170083186c9d3024b25506c1361fce832f1026ad8676505686",
+      "student_trees": 16,
+      "student_depth": 4,
+      "scale_pos_weight": 18135.416015625,
+      "train_rows": 217637,
+      "train_positives": 12,
+      "metrics": {
+        "train": {
+          "auc_roc": 1.0,
+          "f1": 0.7272727272727273,
+          "precision": 0.5714285714285714,
+          "recall": 1.0,
+          "tp": 12,
+          "fp": 9,
+          "fn": 0,
+          "tn": 217616,
+          "positives_in_split": 12
+        },
+        "validation": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "tn": 38075,
+          "positives_in_split": 1
+        },
+        "future_test": {
+          "auc_roc": 0.9999802336383942,
+          "f1": 0.9230769230769231,
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "tp": 6,
+          "fp": 1,
+          "fn": 0,
+          "tn": 50590,
+          "positives_in_split": 6
+        },
+        "geographic_test": {
+          "auc_roc": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "tn": 16848,
+          "positives_in_split": 2
+        }
+      }
+    }
+  }
+}

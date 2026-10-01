@@ -1,0 +1,1818 @@
+[
+  {
+    "name": "AP001.csv",
+    "bytes": 8182557
+  },
+  {
+    "name": "AP002.csv",
+    "bytes": 4732698
+  },
+  {
+    "name": "AP003.csv",
+    "bytes": 7202521
+  },
+  {
+    "name": "AP004.csv",
+    "bytes": 7352690
+  },
+  {
+    "name": "AP005.csv",
+    "bytes": 6767691
+  },
+  {
+    "name": "AP006.csv",
+    "bytes": 756834
+  },
+  {
+    "name": "AP007.csv",
+    "bytes": 475684
+  },
+  {
+    "name": "AP008.csv",
+    "bytes": 493096
+  },
+  {
+    "name": "AP009.csv",
+    "bytes": 221639
+  },
+  {
+    "name": "AP010.csv",
+    "bytes": 242220
+  },
+  {
+    "name": "AR001.csv",
+    "bytes": 1729590
+  },
+  {
+    "name": "AS001.csv",
+    "bytes": 4923147
+  },
+  {
+    "name": "AS002.csv",
+    "bytes": 2340685
+  },
+  {
+    "name": "AS003.csv",
+    "bytes": 561864
+  },
+  {
+    "name": "AS004.csv",
+    "bytes": 563604
+  },
+  {
+    "name": "AS005.csv",
+    "bytes": 440490
+  },
+  {
+    "name": "AS006.csv",
+    "bytes": 329908
+  },
+  {
+    "name": "AS007.csv",
+    "bytes": 312865
+  },
+  {
+    "name": "AS008.csv",
+    "bytes": 246042
+  },
+  {
+    "name": "AS009.csv",
+    "bytes": 99811
+  },
+  {
+    "name": "BR001.csv",
+    "bytes": 9959101
+  },
+  {
+    "name": "BR002.csv",
+    "bytes": 8073405
+  },
+  {
+    "name": "BR003.csv",
+    "bytes": 7209138
+  },
+  {
+    "name": "BR004.csv",
+    "bytes": 4276746
+  },
+  {
+    "name": "BR005.csv",
+    "bytes": 4382639
+  },
+  {
+    "name": "BR006.csv",
+    "bytes": 4254043
+  },
+  {
+    "name": "BR007.csv",
+    "bytes": 4031610
+  },
+  {
+    "name": "BR008.csv",
+    "bytes": 3936217
+  },
+  {
+    "name": "BR009.csv",
+    "bytes": 3983316
+  },
+  {
+    "name": "BR010.csv",
+    "bytes": 3950897
+  },
+  {
+    "name": "BR011.csv",
+    "bytes": 3430057
+  },
+  {
+    "name": "BR012.csv",
+    "bytes": 1719919
+  },
+  {
+    "name": "BR013.csv",
+    "bytes": 1741233
+  },
+  {
+    "name": "BR014.csv",
+    "bytes": 1836980
+  },
+  {
+    "name": "BR015.csv",
+    "bytes": 1832784
+  },
+  {
+    "name": "BR016.csv",
+    "bytes": 1689470
+  },
+  {
+    "name": "BR017.csv",
+    "bytes": 1824986
+  },
+  {
+    "name": "BR018.csv",
+    "bytes": 1776671
+  },
+  {
+    "name": "BR019.csv",
+    "bytes": 1755057
+  },
+  {
+    "name": "BR020.csv",
+    "bytes": 1590129
+  },
+  {
+    "name": "BR021.csv",
+    "bytes": 1590548
+  },
+  {
+    "name": "BR022.csv",
+    "bytes": 1407525
+  },
+  {
+    "name": "BR023.csv",
+    "bytes": 1683332
+  },
+  {
+    "name": "BR024.csv",
+    "bytes": 1429987
+  },
+  {
+    "name": "BR025.csv",
+    "bytes": 1631500
+  },
+  {
+    "name": "BR026.csv",
+    "bytes": 1680097
+  },
+  {
+    "name": "BR027.csv",
+    "bytes": 1305111
+  },
+  {
+    "name": "BR028.csv",
+    "bytes": 1438457
+  },
+  {
+    "name": "BR029.csv",
+    "bytes": 1619142
+  },
+  {
+    "name": "BR030.csv",
+    "bytes": 1557829
+  },
+  {
+    "name": "BR031.csv",
+    "bytes": 1566297
+  },
+  {
+    "name": "BR032.csv",
+    "bytes": 1573221
+  },
+  {
+    "name": "BR033.csv",
+    "bytes": 1552497
+  },
+  {
+    "name": "BR034.csv",
+    "bytes": 1191479
+  },
+  {
+    "name": "BR035.csv",
+    "bytes": 1112982
+  },
+  {
+    "name": "CG001.csv",
+    "bytes": 1545563
+  },
+  {
+    "name": "CG002.csv",
+    "bytes": 815933
+  },
+  {
+    "name": "CG003.csv",
+    "bytes": 349901
+  },
+  {
+    "name": "CG004.csv",
+    "bytes": 354298
+  },
+  {
+    "name": "CG005.csv",
+    "bytes": 382188
+  },
+  {
+    "name": "CG006.csv",
+    "bytes": 378374
+  },
+  {
+    "name": "CG007.csv",
+    "bytes": 375895
+  },
+  {
+    "name": "CG008.csv",
+    "bytes": 355401
+  },
+  {
+    "name": "CG009.csv",
+    "bytes": 363576
+  },
+  {
+    "name": "CG010.csv",
+    "bytes": 373211
+  },
+  {
+    "name": "CG011.csv",
+    "bytes": 198406
+  },
+  {
+    "name": "CG012.csv",
+    "bytes": 224980
+  },
+  {
+    "name": "CG013.csv",
+    "bytes": 189020
+  },
+  {
+    "name": "CG014.csv",
+    "bytes": 234347
+  },
+  {
+    "name": "CH001.csv",
+    "bytes": 4676161
+  },
+  {
+    "name": "CH002.csv",
+    "bytes": 1996460
+  },
+  {
+    "name": "CH003.csv",
+    "bytes": 1473204
+  },
+  {
+    "name": "DL001.csv",
+    "bytes": 8974756
+  },
+  {
+    "name": "DL002.csv",
+    "bytes": 15876305
+  },
+  {
+    "name": "DL003.csv",
+    "bytes": 11535376
+  },
+  {
+    "name": "DL004.csv",
+    "bytes": 15360363
+  },
+  {
+    "name": "DL005.csv",
+    "bytes": 15084435
+  },
+  {
+    "name": "DL006.csv",
+    "bytes": 11464455
+  },
+  {
+    "name": "DL007.csv",
+    "bytes": 7896715
+  },
+  {
+    "name": "DL008.csv",
+    "bytes": 9300769
+  },
+  {
+    "name": "DL009.csv",
+    "bytes": 9187314
+  },
+  {
+    "name": "DL010.csv",
+    "bytes": 8888994
+  },
+  {
+    "name": "DL011.csv",
+    "bytes": 8374444
+  },
+  {
+    "name": "DL012.csv",
+    "bytes": 12409046
+  },
+  {
+    "name": "DL013.csv",
+    "bytes": 12675569
+  },
+  {
+    "name": "DL014.csv",
+    "bytes": 12758989
+  },
+  {
+    "name": "DL015.csv",
+    "bytes": 10576052
+  },
+  {
+    "name": "DL016.csv",
+    "bytes": 6635278
+  },
+  {
+    "name": "DL017.csv",
+    "bytes": 7292415
+  },
+  {
+    "name": "DL018.csv",
+    "bytes": 5489654
+  },
+  {
+    "name": "DL019.csv",
+    "bytes": 6232752
+  },
+  {
+    "name": "DL020.csv",
+    "bytes": 6143278
+  },
+  {
+    "name": "DL021.csv",
+    "bytes": 6057503
+  },
+  {
+    "name": "DL022.csv",
+    "bytes": 6257561
+  },
+  {
+    "name": "DL023.csv",
+    "bytes": 6204042
+  },
+  {
+    "name": "DL024.csv",
+    "bytes": 6034743
+  },
+  {
+    "name": "DL025.csv",
+    "bytes": 6278540
+  },
+  {
+    "name": "DL026.csv",
+    "bytes": 6192845
+  },
+  {
+    "name": "DL027.csv",
+    "bytes": 6208564
+  },
+  {
+    "name": "DL028.csv",
+    "bytes": 6156514
+  },
+  {
+    "name": "DL029.csv",
+    "bytes": 6149092
+  },
+  {
+    "name": "DL030.csv",
+    "bytes": 6194908
+  },
+  {
+    "name": "DL031.csv",
+    "bytes": 6181334
+  },
+  {
+    "name": "DL032.csv",
+    "bytes": 6139838
+  },
+  {
+    "name": "DL033.csv",
+    "bytes": 6067783
+  },
+  {
+    "name": "DL034.csv",
+    "bytes": 5688156
+  },
+  {
+    "name": "DL035.csv",
+    "bytes": 5368352
+  },
+  {
+    "name": "DL036.csv",
+    "bytes": 5663400
+  },
+  {
+    "name": "DL037.csv",
+    "bytes": 5653446
+  },
+  {
+    "name": "DL038.csv",
+    "bytes": 5109819
+  },
+  {
+    "name": "DL039.csv",
+    "bytes": 2072615
+  },
+  {
+    "name": "DL040.csv",
+    "bytes": 2533236
+  },
+  {
+    "name": "GJ001.csv",
+    "bytes": 12488859
+  },
+  {
+    "name": "GJ002.csv",
+    "bytes": 4872690
+  },
+  {
+    "name": "GJ003.csv",
+    "bytes": 4542176
+  },
+  {
+    "name": "GJ004.csv",
+    "bytes": 4266671
+  },
+  {
+    "name": "GJ005.csv",
+    "bytes": 4868824
+  },
+  {
+    "name": "GJ006.csv",
+    "bytes": 1668758
+  },
+  {
+    "name": "GJ007.csv",
+    "bytes": 1591517
+  },
+  {
+    "name": "GJ008.csv",
+    "bytes": 2045889
+  },
+  {
+    "name": "GJ009.csv",
+    "bytes": 1520043
+  },
+  {
+    "name": "GJ010.csv",
+    "bytes": 1769433
+  },
+  {
+    "name": "GJ011.csv",
+    "bytes": 1354199
+  },
+  {
+    "name": "GJ012.csv",
+    "bytes": 1861843
+  },
+  {
+    "name": "GJ013.csv",
+    "bytes": 1474252
+  },
+  {
+    "name": "GJ014.csv",
+    "bytes": 1463600
+  },
+  {
+    "name": "GJ015.csv",
+    "bytes": 1756660
+  },
+  {
+    "name": "GJ016.csv",
+    "bytes": 1798987
+  },
+  {
+    "name": "GJ017.csv",
+    "bytes": 408984
+  },
+  {
+    "name": "HP001.csv",
+    "bytes": 1237906
+  },
+  {
+    "name": "HR001.csv",
+    "bytes": 13600999
+  },
+  {
+    "name": "HR002.csv",
+    "bytes": 11815559
+  },
+  {
+    "name": "HR003.csv",
+    "bytes": 8238920
+  },
+  {
+    "name": "HR004.csv",
+    "bytes": 7919279
+  },
+  {
+    "name": "HR005.csv",
+    "bytes": 4060285
+  },
+  {
+    "name": "HR006.csv",
+    "bytes": 4221939
+  },
+  {
+    "name": "HR007.csv",
+    "bytes": 3988326
+  },
+  {
+    "name": "HR008.csv",
+    "bytes": 4500534
+  },
+  {
+    "name": "HR009.csv",
+    "bytes": 5193754
+  },
+  {
+    "name": "HR010.csv",
+    "bytes": 4741977
+  },
+  {
+    "name": "HR011.csv",
+    "bytes": 5073135
+  },
+  {
+    "name": "HR012.csv",
+    "bytes": 4969616
+  },
+  {
+    "name": "HR013.csv",
+    "bytes": 5196851
+  },
+  {
+    "name": "HR014.csv",
+    "bytes": 4876893
+  },
+  {
+    "name": "HR015.csv",
+    "bytes": 4982256
+  },
+  {
+    "name": "HR016.csv",
+    "bytes": 4776742
+  },
+  {
+    "name": "HR017.csv",
+    "bytes": 4749878
+  },
+  {
+    "name": "HR018.csv",
+    "bytes": 4933039
+  },
+  {
+    "name": "HR019.csv",
+    "bytes": 5033913
+  },
+  {
+    "name": "HR020.csv",
+    "bytes": 5903714
+  },
+  {
+    "name": "HR021.csv",
+    "bytes": 4972807
+  },
+  {
+    "name": "HR022.csv",
+    "bytes": 5007899
+  },
+  {
+    "name": "HR023.csv",
+    "bytes": 5127066
+  },
+  {
+    "name": "HR024.csv",
+    "bytes": 5112692
+  },
+  {
+    "name": "HR025.csv",
+    "bytes": 3394646
+  },
+  {
+    "name": "HR026.csv",
+    "bytes": 3482640
+  },
+  {
+    "name": "HR027.csv",
+    "bytes": 3741074
+  },
+  {
+    "name": "HR028.csv",
+    "bytes": 3668791
+  },
+  {
+    "name": "HR029.csv",
+    "bytes": 3618768
+  },
+  {
+    "name": "HR030.csv",
+    "bytes": 3246216
+  },
+  {
+    "name": "JH001.csv",
+    "bytes": 4232464
+  },
+  {
+    "name": "JH002.csv",
+    "bytes": 60824
+  },
+  {
+    "name": "JK001.csv",
+    "bytes": 2185935
+  },
+  {
+    "name": "KA001.csv",
+    "bytes": 13565058
+  },
+  {
+    "name": "KA002.csv",
+    "bytes": 13005562
+  },
+  {
+    "name": "KA003.csv",
+    "bytes": 12605248
+  },
+  {
+    "name": "KA004.csv",
+    "bytes": 5627081
+  },
+  {
+    "name": "KA005.csv",
+    "bytes": 5023914
+  },
+  {
+    "name": "KA006.csv",
+    "bytes": 5529281
+  },
+  {
+    "name": "KA007.csv",
+    "bytes": 5285021
+  },
+  {
+    "name": "KA008.csv",
+    "bytes": 4162487
+  },
+  {
+    "name": "KA009.csv",
+    "bytes": 3656831
+  },
+  {
+    "name": "KA010.csv",
+    "bytes": 5035113
+  },
+  {
+    "name": "KA011.csv",
+    "bytes": 5166298
+  },
+  {
+    "name": "KA012.csv",
+    "bytes": 4869526
+  },
+  {
+    "name": "KA013.csv",
+    "bytes": 3399024
+  },
+  {
+    "name": "KA014.csv",
+    "bytes": 5122167
+  },
+  {
+    "name": "KA015.csv",
+    "bytes": 4153225
+  },
+  {
+    "name": "KA016.csv",
+    "bytes": 3266311
+  },
+  {
+    "name": "KA017.csv",
+    "bytes": 3907970
+  },
+  {
+    "name": "KA018.csv",
+    "bytes": 3662200
+  },
+  {
+    "name": "KA019.csv",
+    "bytes": 3344639
+  },
+  {
+    "name": "KA020.csv",
+    "bytes": 3489387
+  },
+  {
+    "name": "KA021.csv",
+    "bytes": 3840857
+  },
+  {
+    "name": "KA022.csv",
+    "bytes": 3722875
+  },
+  {
+    "name": "KA023.csv",
+    "bytes": 2574033
+  },
+  {
+    "name": "KA024.csv",
+    "bytes": 2368733
+  },
+  {
+    "name": "KA025.csv",
+    "bytes": 2133171
+  },
+  {
+    "name": "KA026.csv",
+    "bytes": 2267731
+  },
+  {
+    "name": "KA027.csv",
+    "bytes": 1695616
+  },
+  {
+    "name": "KA028.csv",
+    "bytes": 2162775
+  },
+  {
+    "name": "KA029.csv",
+    "bytes": 1732726
+  },
+  {
+    "name": "KA030.csv",
+    "bytes": 1707266
+  },
+  {
+    "name": "KA031.csv",
+    "bytes": 1991678
+  },
+  {
+    "name": "KA032.csv",
+    "bytes": 997379
+  },
+  {
+    "name": "KA033.csv",
+    "bytes": 652130
+  },
+  {
+    "name": "KA034.csv",
+    "bytes": 553546
+  },
+  {
+    "name": "KA035.csv",
+    "bytes": 344256
+  },
+  {
+    "name": "KA036.csv",
+    "bytes": 335475
+  },
+  {
+    "name": "KA037.csv",
+    "bytes": 290825
+  },
+  {
+    "name": "KA038.csv",
+    "bytes": 330613
+  },
+  {
+    "name": "KA039.csv",
+    "bytes": 161811
+  },
+  {
+    "name": "KL001.csv",
+    "bytes": 6353441
+  },
+  {
+    "name": "KL002.csv",
+    "bytes": 3646523
+  },
+  {
+    "name": "KL003.csv",
+    "bytes": 3012349
+  },
+  {
+    "name": "KL004.csv",
+    "bytes": 2950402
+  },
+  {
+    "name": "KL005.csv",
+    "bytes": 2449200
+  },
+  {
+    "name": "KL006.csv",
+    "bytes": 3567464
+  },
+  {
+    "name": "KL007.csv",
+    "bytes": 3538062
+  },
+  {
+    "name": "KL008.csv",
+    "bytes": 3712286
+  },
+  {
+    "name": "KL009.csv",
+    "bytes": 2756775
+  },
+  {
+    "name": "MH001.csv",
+    "bytes": 10718353
+  },
+  {
+    "name": "MH002.csv",
+    "bytes": 10410648
+  },
+  {
+    "name": "MH003.csv",
+    "bytes": 9409121
+  },
+  {
+    "name": "MH004.csv",
+    "bytes": 9418139
+  },
+  {
+    "name": "MH005.csv",
+    "bytes": 6818467
+  },
+  {
+    "name": "MH006.csv",
+    "bytes": 8229514
+  },
+  {
+    "name": "MH007.csv",
+    "bytes": 7093755
+  },
+  {
+    "name": "MH008.csv",
+    "bytes": 6945116
+  },
+  {
+    "name": "MH009.csv",
+    "bytes": 6734813
+  },
+  {
+    "name": "MH010.csv",
+    "bytes": 6548167
+  },
+  {
+    "name": "MH011.csv",
+    "bytes": 4182530
+  },
+  {
+    "name": "MH012.csv",
+    "bytes": 3830347
+  },
+  {
+    "name": "MH013.csv",
+    "bytes": 3542971
+  },
+  {
+    "name": "MH014.csv",
+    "bytes": 4261658
+  },
+  {
+    "name": "MH015.csv",
+    "bytes": 4426709
+  },
+  {
+    "name": "MH016.csv",
+    "bytes": 4326766
+  },
+  {
+    "name": "MH017.csv",
+    "bytes": 4063789
+  },
+  {
+    "name": "MH018.csv",
+    "bytes": 4477706
+  },
+  {
+    "name": "MH019.csv",
+    "bytes": 4374191
+  },
+  {
+    "name": "MH020.csv",
+    "bytes": 3801275
+  },
+  {
+    "name": "MH021.csv",
+    "bytes": 4308696
+  },
+  {
+    "name": "MH022.csv",
+    "bytes": 2590753
+  },
+  {
+    "name": "MH023.csv",
+    "bytes": 2170421
+  },
+  {
+    "name": "MH024.csv",
+    "bytes": 1812397
+  },
+  {
+    "name": "MH025.csv",
+    "bytes": 2573699
+  },
+  {
+    "name": "MH026.csv",
+    "bytes": 2830387
+  },
+  {
+    "name": "MH027.csv",
+    "bytes": 1698758
+  },
+  {
+    "name": "MH028.csv",
+    "bytes": 1468258
+  },
+  {
+    "name": "MH029.csv",
+    "bytes": 2542267
+  },
+  {
+    "name": "MH030.csv",
+    "bytes": 1325759
+  },
+  {
+    "name": "MH031.csv",
+    "bytes": 1358581
+  },
+  {
+    "name": "MH032.csv",
+    "bytes": 2747068
+  },
+  {
+    "name": "MH033.csv",
+    "bytes": 2435067
+  },
+  {
+    "name": "MH034.csv",
+    "bytes": 1995121
+  },
+  {
+    "name": "MH035.csv",
+    "bytes": 2357108
+  },
+  {
+    "name": "MH036.csv",
+    "bytes": 2563980
+  },
+  {
+    "name": "MH037.csv",
+    "bytes": 2370272
+  },
+  {
+    "name": "MH038.csv",
+    "bytes": 1268785
+  },
+  {
+    "name": "MH039.csv",
+    "bytes": 2053352
+  },
+  {
+    "name": "MH040.csv",
+    "bytes": 1378513
+  },
+  {
+    "name": "MH041.csv",
+    "bytes": 2250135
+  },
+  {
+    "name": "ML001.csv",
+    "bytes": 3631910
+  },
+  {
+    "name": "ML002.csv",
+    "bytes": 803433
+  },
+  {
+    "name": "MN001.csv",
+    "bytes": 1046347
+  },
+  {
+    "name": "MN002.csv",
+    "bytes": 1060340
+  },
+  {
+    "name": "MP001.csv",
+    "bytes": 6489180
+  },
+  {
+    "name": "MP002.csv",
+    "bytes": 6488253
+  },
+  {
+    "name": "MP003.csv",
+    "bytes": 6578784
+  },
+  {
+    "name": "MP004.csv",
+    "bytes": 3772347
+  },
+  {
+    "name": "MP005.csv",
+    "bytes": 6241139
+  },
+  {
+    "name": "MP006.csv",
+    "bytes": 3894258
+  },
+  {
+    "name": "MP007.csv",
+    "bytes": 2417794
+  },
+  {
+    "name": "MP008.csv",
+    "bytes": 2622243
+  },
+  {
+    "name": "MP009.csv",
+    "bytes": 2578909
+  },
+  {
+    "name": "MP010.csv",
+    "bytes": 3883654
+  },
+  {
+    "name": "MP011.csv",
+    "bytes": 4057864
+  },
+  {
+    "name": "MP012.csv",
+    "bytes": 3871261
+  },
+  {
+    "name": "MP013.csv",
+    "bytes": 3917585
+  },
+  {
+    "name": "MP014.csv",
+    "bytes": 1849545
+  },
+  {
+    "name": "MP015.csv",
+    "bytes": 3665939
+  },
+  {
+    "name": "MP016.csv",
+    "bytes": 1513765
+  },
+  {
+    "name": "MP017.csv",
+    "bytes": 652775
+  },
+  {
+    "name": "MP018.csv",
+    "bytes": 537218
+  },
+  {
+    "name": "MP019.csv",
+    "bytes": 525191
+  },
+  {
+    "name": "MP020.csv",
+    "bytes": 387113
+  },
+  {
+    "name": "MP021.csv",
+    "bytes": 116435
+  },
+  {
+    "name": "MP022.csv",
+    "bytes": 31500
+  },
+  {
+    "name": "MZ001.csv",
+    "bytes": 3029494
+  },
+  {
+    "name": "NL001.csv",
+    "bytes": 2830169
+  },
+  {
+    "name": "OR001.csv",
+    "bytes": 4693453
+  },
+  {
+    "name": "OR002.csv",
+    "bytes": 5478765
+  },
+  {
+    "name": "OR003.csv",
+    "bytes": 393342
+  },
+  {
+    "name": "OR004.csv",
+    "bytes": 401664
+  },
+  {
+    "name": "OR005.csv",
+    "bytes": 408577
+  },
+  {
+    "name": "OR006.csv",
+    "bytes": 451451
+  },
+  {
+    "name": "OR007.csv",
+    "bytes": 429394
+  },
+  {
+    "name": "OR008.csv",
+    "bytes": 429878
+  },
+  {
+    "name": "OR009.csv",
+    "bytes": 438399
+  },
+  {
+    "name": "OR010.csv",
+    "bytes": 140174
+  },
+  {
+    "name": "OR011.csv",
+    "bytes": 143920
+  },
+  {
+    "name": "OR012.csv",
+    "bytes": 134331
+  },
+  {
+    "name": "PB001.csv",
+    "bytes": 6681936
+  },
+  {
+    "name": "PB002.csv",
+    "bytes": 6435020
+  },
+  {
+    "name": "PB003.csv",
+    "bytes": 6448529
+  },
+  {
+    "name": "PB004.csv",
+    "bytes": 5605923
+  },
+  {
+    "name": "PB005.csv",
+    "bytes": 6504062
+  },
+  {
+    "name": "PB006.csv",
+    "bytes": 6039066
+  },
+  {
+    "name": "PB007.csv",
+    "bytes": 3995532
+  },
+  {
+    "name": "PB008.csv",
+    "bytes": 4241741
+  },
+  {
+    "name": "PY001.csv",
+    "bytes": 2708722
+  },
+  {
+    "name": "RJ001.csv",
+    "bytes": 8247125
+  },
+  {
+    "name": "RJ002.csv",
+    "bytes": 6752424
+  },
+  {
+    "name": "RJ003.csv",
+    "bytes": 6755404
+  },
+  {
+    "name": "RJ004.csv",
+    "bytes": 6712395
+  },
+  {
+    "name": "RJ005.csv",
+    "bytes": 6773651
+  },
+  {
+    "name": "RJ006.csv",
+    "bytes": 6646597
+  },
+  {
+    "name": "RJ007.csv",
+    "bytes": 6492520
+  },
+  {
+    "name": "RJ008.csv",
+    "bytes": 6555181
+  },
+  {
+    "name": "RJ009.csv",
+    "bytes": 7229233
+  },
+  {
+    "name": "RJ010.csv",
+    "bytes": 6685057
+  },
+  {
+    "name": "RJ011.csv",
+    "bytes": 134220
+  },
+  {
+    "name": "RJ012.csv",
+    "bytes": 100475
+  },
+  {
+    "name": "RJ013.csv",
+    "bytes": 104963
+  },
+  {
+    "name": "RJ014.csv",
+    "bytes": 167950
+  },
+  {
+    "name": "RJ015.csv",
+    "bytes": 93444
+  },
+  {
+    "name": "RJ016.csv",
+    "bytes": 154923
+  },
+  {
+    "name": "RJ017.csv",
+    "bytes": 178410
+  },
+  {
+    "name": "RJ018.csv",
+    "bytes": 195465
+  },
+  {
+    "name": "RJ019.csv",
+    "bytes": 187901
+  },
+  {
+    "name": "RJ020.csv",
+    "bytes": 105708
+  },
+  {
+    "name": "RJ021.csv",
+    "bytes": 184090
+  },
+  {
+    "name": "RJ022.csv",
+    "bytes": 137058
+  },
+  {
+    "name": "RJ023.csv",
+    "bytes": 169910
+  },
+  {
+    "name": "RJ024.csv",
+    "bytes": 94809
+  },
+  {
+    "name": "RJ025.csv",
+    "bytes": 103079
+  },
+  {
+    "name": "RJ026.csv",
+    "bytes": 74841
+  },
+  {
+    "name": "RJ027.csv",
+    "bytes": 49744
+  },
+  {
+    "name": "RJ028.csv",
+    "bytes": 63577
+  },
+  {
+    "name": "RJ029.csv",
+    "bytes": 84256
+  },
+  {
+    "name": "RJ030.csv",
+    "bytes": 50797
+  },
+  {
+    "name": "RJ031.csv",
+    "bytes": 70632
+  },
+  {
+    "name": "RJ032.csv",
+    "bytes": 85386
+  },
+  {
+    "name": "RJ033.csv",
+    "bytes": 83550
+  },
+  {
+    "name": "RJ034.csv",
+    "bytes": 76784
+  },
+  {
+    "name": "RJ035.csv",
+    "bytes": 59508
+  },
+  {
+    "name": "SK001.csv",
+    "bytes": 1107172
+  },
+  {
+    "name": "TG001.csv",
+    "bytes": 12463141
+  },
+  {
+    "name": "TG002.csv",
+    "bytes": 6850649
+  },
+  {
+    "name": "TG003.csv",
+    "bytes": 8058401
+  },
+  {
+    "name": "TG004.csv",
+    "bytes": 7357682
+  },
+  {
+    "name": "TG005.csv",
+    "bytes": 7747454
+  },
+  {
+    "name": "TG006.csv",
+    "bytes": 7235103
+  },
+  {
+    "name": "TG007.csv",
+    "bytes": 952716
+  },
+  {
+    "name": "TG008.csv",
+    "bytes": 987052
+  },
+  {
+    "name": "TG009.csv",
+    "bytes": 952050
+  },
+  {
+    "name": "TG010.csv",
+    "bytes": 1048555
+  },
+  {
+    "name": "TG011.csv",
+    "bytes": 1037085
+  },
+  {
+    "name": "TG012.csv",
+    "bytes": 1031449
+  },
+  {
+    "name": "TG013.csv",
+    "bytes": 980990
+  },
+  {
+    "name": "TG014.csv",
+    "bytes": 955689
+  },
+  {
+    "name": "TN001.csv",
+    "bytes": 13470040
+  },
+  {
+    "name": "TN002.csv",
+    "bytes": 13722496
+  },
+  {
+    "name": "TN003.csv",
+    "bytes": 13307691
+  },
+  {
+    "name": "TN004.csv",
+    "bytes": 4051684
+  },
+  {
+    "name": "TN005.csv",
+    "bytes": 3790183
+  },
+  {
+    "name": "TN006.csv",
+    "bytes": 2134671
+  },
+  {
+    "name": "TN007.csv",
+    "bytes": 2389930
+  },
+  {
+    "name": "TN008.csv",
+    "bytes": 2700424
+  },
+  {
+    "name": "TN009.csv",
+    "bytes": 2517111
+  },
+  {
+    "name": "TN010.csv",
+    "bytes": 2594511
+  },
+  {
+    "name": "TN011.csv",
+    "bytes": 1935822
+  },
+  {
+    "name": "TN012.csv",
+    "bytes": 638604
+  },
+  {
+    "name": "TN013.csv",
+    "bytes": 631258
+  },
+  {
+    "name": "TN014.csv",
+    "bytes": 497157
+  },
+  {
+    "name": "TN015.csv",
+    "bytes": 624323
+  },
+  {
+    "name": "TN016.csv",
+    "bytes": 566989
+  },
+  {
+    "name": "TN017.csv",
+    "bytes": 535484
+  },
+  {
+    "name": "TN018.csv",
+    "bytes": 723779
+  },
+  {
+    "name": "TN019.csv",
+    "bytes": 453056
+  },
+  {
+    "name": "TN020.csv",
+    "bytes": 506332
+  },
+  {
+    "name": "TN021.csv",
+    "bytes": 516239
+  },
+  {
+    "name": "TN022.csv",
+    "bytes": 396284
+  },
+  {
+    "name": "TN023.csv",
+    "bytes": 273889
+  },
+  {
+    "name": "TN024.csv",
+    "bytes": 51402
+  },
+  {
+    "name": "TN025.csv",
+    "bytes": 38975
+  },
+  {
+    "name": "TN026.csv",
+    "bytes": 47607
+  },
+  {
+    "name": "TR001.csv",
+    "bytes": 2710035
+  },
+  {
+    "name": "TR002.csv",
+    "bytes": 1135458
+  },
+  {
+    "name": "UK001.csv",
+    "bytes": 818848
+  },
+  {
+    "name": "UK002.csv",
+    "bytes": 168628
+  },
+  {
+    "name": "UK003.csv",
+    "bytes": 181495
+  },
+  {
+    "name": "UP001.csv",
+    "bytes": 13875147
+  },
+  {
+    "name": "UP002.csv",
+    "bytes": 14413963
+  },
+  {
+    "name": "UP003.csv",
+    "bytes": 12896179
+  },
+  {
+    "name": "UP004.csv",
+    "bytes": 13094033
+  },
+  {
+    "name": "UP005.csv",
+    "bytes": 13143967
+  },
+  {
+    "name": "UP006.csv",
+    "bytes": 13472227
+  },
+  {
+    "name": "UP007.csv",
+    "bytes": 7300550
+  },
+  {
+    "name": "UP008.csv",
+    "bytes": 5954934
+  },
+  {
+    "name": "UP009.csv",
+    "bytes": 6837469
+  },
+  {
+    "name": "UP010.csv",
+    "bytes": 5147333
+  },
+  {
+    "name": "UP011.csv",
+    "bytes": 3656483
+  },
+  {
+    "name": "UP012.csv",
+    "bytes": 5750655
+  },
+  {
+    "name": "UP013.csv",
+    "bytes": 5960073
+  },
+  {
+    "name": "UP014.csv",
+    "bytes": 5425345
+  },
+  {
+    "name": "UP015.csv",
+    "bytes": 4520317
+  },
+  {
+    "name": "UP016.csv",
+    "bytes": 5029035
+  },
+  {
+    "name": "UP017.csv",
+    "bytes": 4901614
+  },
+  {
+    "name": "UP018.csv",
+    "bytes": 4915668
+  },
+  {
+    "name": "UP019.csv",
+    "bytes": 4853537
+  },
+  {
+    "name": "UP020.csv",
+    "bytes": 4429291
+  },
+  {
+    "name": "UP021.csv",
+    "bytes": 4353625
+  },
+  {
+    "name": "UP022.csv",
+    "bytes": 4321971
+  },
+  {
+    "name": "UP023.csv",
+    "bytes": 3673974
+  },
+  {
+    "name": "UP024.csv",
+    "bytes": 3998093
+  },
+  {
+    "name": "UP025.csv",
+    "bytes": 4335087
+  },
+  {
+    "name": "UP026.csv",
+    "bytes": 3995235
+  },
+  {
+    "name": "UP027.csv",
+    "bytes": 1053300
+  },
+  {
+    "name": "UP028.csv",
+    "bytes": 2135782
+  },
+  {
+    "name": "UP029.csv",
+    "bytes": 2081651
+  },
+  {
+    "name": "UP030.csv",
+    "bytes": 2191621
+  },
+  {
+    "name": "UP031.csv",
+    "bytes": 2121058
+  },
+  {
+    "name": "UP032.csv",
+    "bytes": 1951014
+  },
+  {
+    "name": "UP033.csv",
+    "bytes": 2244512
+  },
+  {
+    "name": "UP034.csv",
+    "bytes": 2241467
+  },
+  {
+    "name": "UP035.csv",
+    "bytes": 2278625
+  },
+  {
+    "name": "UP036.csv",
+    "bytes": 2256462
+  },
+  {
+    "name": "UP037.csv",
+    "bytes": 2061762
+  },
+  {
+    "name": "UP038.csv",
+    "bytes": 2064380
+  },
+  {
+    "name": "UP039.csv",
+    "bytes": 2107137
+  },
+  {
+    "name": "UP040.csv",
+    "bytes": 2177302
+  },
+  {
+    "name": "UP041.csv",
+    "bytes": 2033106
+  },
+  {
+    "name": "UP042.csv",
+    "bytes": 1636576
+  },
+  {
+    "name": "UP043.csv",
+    "bytes": 1982246
+  },
+  {
+    "name": "UP044.csv",
+    "bytes": 1956634
+  },
+  {
+    "name": "UP045.csv",
+    "bytes": 1705408
+  },
+  {
+    "name": "UP046.csv",
+    "bytes": 1605938
+  },
+  {
+    "name": "UP047.csv",
+    "bytes": 1601704
+  },
+  {
+    "name": "UP048.csv",
+    "bytes": 1570292
+  },
+  {
+    "name": "UP049.csv",
+    "bytes": 1416981
+  },
+  {
+    "name": "UP050.csv",
+    "bytes": 1264239
+  },
+  {
+    "name": "UP051.csv",
+    "bytes": 1181362
+  },
+  {
+    "name": "UP052.csv",
+    "bytes": 1339536
+  },
+  {
+    "name": "UP053.csv",
+    "bytes": 975171
+  },
+  {
+    "name": "UP054.csv",
+    "bytes": 956123
+  },
+  {
+    "name": "UP055.csv",
+    "bytes": 978956
+  },
+  {
+    "name": "UP056.csv",
+    "bytes": 984599
+  },
+  {
+    "name": "UP057.csv",
+    "bytes": 768261
+  },
+  {
+    "name": "WB001.csv",
+    "bytes": 5816115
+  },
+  {
+    "name": "WB002.csv",
+    "bytes": 7607445
+  },
+  {
+    "name": "WB003.csv",
+    "bytes": 7654672
+  },
+  {
+    "name": "WB004.csv",
+    "bytes": 5467005
+  },
+  {
+    "name": "WB005.csv",
+    "bytes": 6813323
+  },
+  {
+    "name": "WB006.csv",
+    "bytes": 6817134
+  },
+  {
+    "name": "WB007.csv",
+    "bytes": 5801655
+  },
+  {
+    "name": "WB008.csv",
+    "bytes": 6810794
+  },
+  {
+    "name": "WB009.csv",
+    "bytes": 5006791
+  },
+  {
+    "name": "WB010.csv",
+    "bytes": 5250876
+  },
+  {
+    "name": "WB011.csv",
+    "bytes": 4749265
+  },
+  {
+    "name": "WB012.csv",
+    "bytes": 4720060
+  },
+  {
+    "name": "WB013.csv",
+    "bytes": 4542510
+  },
+  {
+    "name": "WB014.csv",
+    "bytes": 4608450
+  },
+  {
+    "name": "stations_info.csv",
+    "bytes": 32718
+  }
+]

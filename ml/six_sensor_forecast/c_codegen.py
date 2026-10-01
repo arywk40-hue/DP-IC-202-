@@ -22,7 +22,9 @@ def _tree_depth(node: dict[str, Any]) -> int:
     return 1 + max(_tree_depth(child) for child in node.get("children", []))
 
 
-def _parse_tree(tree: dict[str, Any], feature_names: list[str]) -> list[dict[str, Any]]:
+def _parse_tree(
+    tree: dict[str, Any], feature_names: list[str], max_depth: int = MAX_DEPTH
+) -> list[dict[str, Any]]:
     """Flatten an XGBoost JSON tree while preserving yes/no/missing branches."""
     nodes: list[dict[str, Any]] = []
 
@@ -40,9 +42,9 @@ def _parse_tree(tree: dict[str, Any], feature_names: list[str]) -> list[dict[str
         return index
 
     def visit(node: dict[str, Any]) -> int:
-        if len(nodes) >= MAX_NODES:
+        if len(nodes) >= 2 ** (max_depth + 1) - 1:
             raise ValueError(
-                f"Tree exceeds the depth-{MAX_DEPTH} node budget of {MAX_NODES}"
+                f"Tree exceeds the depth-{max_depth} node budget"
             )
         current = len(nodes)
         if "leaf" in node:

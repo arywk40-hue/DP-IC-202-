@@ -13,7 +13,7 @@ import sklearn
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS, sensor_profile
 from ml.six_sensor_forecast.data import SCHEMA, sha256
 from ml.six_sensor_forecast.features import build_features, future_targets, split_masks
 
@@ -53,9 +53,11 @@ def train(
     rounds: int = 250,
     threads: int = 4,
     seed: int = 42,
+    sensors: list[str] | None = None,
 ) -> dict:
     if rounds < 1 or threads < 1:
         raise ValueError("rounds and threads must be positive")
+    sensors = sensor_profile(sensors)
     holdout_locations = holdout_locations or ["Changping", "Dingling", "Huairou"]
     source = json.loads((data / "dataset_manifest.json").read_text())
     if source.get("schema_version") != SCHEMA:
@@ -63,18 +65,24 @@ def train(
     if sha256(data / "observations.csv") != source["observations_sha256"]:
         raise ValueError("Observation checksum does not match source manifest")
     frame, features = build_features(pd.read_csv(data / "observations.csv"))
+    teacher_features = [
+        name for name in features.columns
+        if any(name == sensor or name.startswith(sensor + "_") for sensor in sensors)
+    ]
+    features = features[teacher_features]
     labels = future_targets(frame, horizon_hours)
     partitions = split_masks(
         frame, horizon_hours, validation_start, test_start, holdout_locations
     )
     # All six current readings required for the compact student's contract.
     # Temporal teacher histories may contain NaN, handled by XGBoost branches.
-    current_ok = np.isfinite(frame[RAW_SENSOR_COLUMNS].to_numpy()).all(axis=1)
+    current_ok = np.isfinite(frame[sensors].to_numpy()).all(axis=1)
     output.mkdir(parents=True, exist_ok=True)
     (output / "teacher").mkdir(exist_ok=True)
     (output / "esp32_student").mkdir(exist_ok=True)
     report = {
         "schema_version": SCHEMA,
+        "sensor_profile": sensors,
         "task": "six-sensor exact-future measurement regression",
         "horizon_hours": horizon_hours,
         "deployment_status": "OFFLINE_RESEARCH_ONLY",
@@ -85,7 +93,7 @@ def train(
             "student": "per-target 16-tree depth-3 XGBoost; equal mix of observed and teacher residuals on training rows",
             "prediction": "physical_clip(current + validation_selected_weight * residual)",
             "teacher_features": features.columns.tolist(),
-            "student_features": RAW_SENSOR_COLUMNS,
+            "student_features": sensors,
             "station_time_gps_as_features": False,
             "missing_policy": "no imputation; require six finite current inputs and observed future target; teacher allows missing historical features",
         },
@@ -115,7 +123,7 @@ def train(
         },
         "models": {},
     }
-    for target in RAW_SENSOR_COLUMNS:
+    for target in sensors:
         print(f"Training {target}...", flush=True)
         current = frame[target].to_numpy(dtype=np.float32)
         truth = labels[target].to_numpy()
@@ -180,13 +188,13 @@ def train(
         student = xgb.train(
             dict(params, max_depth=3, eta=0.2),
             xgb.DMatrix(
-                frame.loc[train_mask, RAW_SENSOR_COLUMNS].astype(np.float32),
+                frame.loc[train_mask, sensors].astype(np.float32),
                 label=student_target,
             ),
             num_boost_round=16,
         )
         student_val = student.predict(
-            xgb.DMatrix(frame.loc[val_mask, RAW_SENSOR_COLUMNS].astype(np.float32))
+            xgb.DMatrix(frame.loc[val_mask, sensors].astype(np.float32))
         )
         student_weight = choose_weight(
             truth[val_mask], current[val_mask], student_val, target
@@ -221,7 +229,7 @@ def train(
                 baseline
                 + student_weight
                 * student.predict(
-                    xgb.DMatrix(frame.loc[mask, RAW_SENSOR_COLUMNS].astype(np.float32))
+                    xgb.DMatrix(frame.loc[mask, sensors].astype(np.float32))
                 ),
                 target,
             )
@@ -281,6 +289,7 @@ def main() -> None:
     )
     parser.add_argument("--rounds", type=int, default=250)
     parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--sensors", nargs="+", default=None)
     args = parser.parse_args()
     train(
         args.data,
@@ -291,6 +300,7 @@ def main() -> None:
         args.holdout_locations,
         args.rounds,
         args.threads,
+        sensors=args.sensors,
     )
 
 

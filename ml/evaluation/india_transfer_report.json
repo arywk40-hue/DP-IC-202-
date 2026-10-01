@@ -1,0 +1,2505 @@
+{
+  "task": "6-hour Indian station measurement forecasting",
+  "status": "RESEARCH_WITH_DOCUMENTED_SOURCE_ASSUMPTIONS",
+  "dataset_manifest": {
+    "schema_version": "indra_hourly_forecast_v1",
+    "source_name": "Indian CPCB secondary compilation, seven-station research subset",
+    "source_url": "https://www.kaggle.com/datasets/abhisheksjha/time-series-air-quality-data-of-india-2010-2023",
+    "source_version": 2,
+    "license": "CC BY-NC-SA 4.0",
+    "rows": 368462,
+    "observations_sha256": "fbdb8d04917ae363c21971a5618be488c768a721c189a112bd7f8dfbf5d6f779",
+    "stations": [
+      {
+        "station_id": "HP001",
+        "city": "Baddi",
+        "state": "Himachal Pradesh",
+        "source_sha256": "aa8391ce413c1ffc0bc4f932defb0c604a7432ba32bc4ddb6adffa7936155e0d",
+        "source_columns": {
+          "temperature_c": "AT (degree C)",
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 9247,
+        "retained_rows": 9247,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 8846,
+          "relative_humidity_pct": 8184,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 8742,
+          "pm10_ug_m3": 8724,
+          "wind_speed_mps": 8845
+        }
+      },
+      {
+        "station_id": "UK001",
+        "city": "Dehradun",
+        "state": "Uttarakhand",
+        "source_sha256": "6417c3ec9ad31fcdd7ddaebef7cdd995bd43c787a777af64d3b7661c18dd5716",
+        "source_columns": {
+          "temperature_c": null,
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 8240,
+        "retained_rows": 8240,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 0,
+          "relative_humidity_pct": 5691,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 5612,
+          "pm10_ug_m3": 5602,
+          "wind_speed_mps": 5763
+        }
+      },
+      {
+        "station_id": "JK001",
+        "city": "Srinagar",
+        "state": "Jammu and Kashmir",
+        "source_sha256": "3445c01e5141b0604ca442570e452c20c1b9f4baac712471b9f370cf9fb35371",
+        "source_columns": {
+          "temperature_c": "Temp (degree C)",
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 18733,
+        "retained_rows": 18733,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 13983,
+          "relative_humidity_pct": 15279,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 16052,
+          "pm10_ug_m3": 16049,
+          "wind_speed_mps": 16525
+        }
+      },
+      {
+        "station_id": "DL001",
+        "city": "Delhi",
+        "state": "Delhi",
+        "source_sha256": "13edc9df083638be3d504efce4f807a33d8828b58e6160bbdd8a07ba839257e0",
+        "source_columns": {
+          "temperature_c": null,
+          "relative_humidity_pct": null,
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": null
+        },
+        "raw_rows": 116112,
+        "retained_rows": 116112,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 0,
+          "relative_humidity_pct": 0,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 76836,
+          "pm10_ug_m3": 45000,
+          "wind_speed_mps": 0
+        }
+      },
+      {
+        "station_id": "RJ001",
+        "city": "Jodhpur",
+        "state": "Rajasthan",
+        "source_sha256": "367a8f3cc176a07450335a16f048084515d6501ad33dc78dc0766a9ceb81f8bf",
+        "source_columns": {
+          "temperature_c": "Temp (degree C)",
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 64272,
+        "retained_rows": 64272,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 50929,
+          "relative_humidity_pct": 51614,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 50431,
+          "pm10_ug_m3": 50102,
+          "wind_speed_mps": 51648
+        }
+      },
+      {
+        "station_id": "KA001",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "source_sha256": "bf9375300ac5e65060a2786715299418213154165d12624b22167fe65b2046ef",
+        "source_columns": {
+          "temperature_c": "Temp (degree C)",
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 116050,
+        "retained_rows": 116050,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 44306,
+          "relative_humidity_pct": 93259,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 54114,
+          "pm10_ug_m3": 17345,
+          "wind_speed_mps": 83610
+        }
+      },
+      {
+        "station_id": "AS001",
+        "city": "Guwahati",
+        "state": "Assam",
+        "source_sha256": "ff8f93cfe861640aa92885c636baa7144871310a2ad57bc6f80d50f5c2435544",
+        "source_columns": {
+          "temperature_c": "AT (degree C)",
+          "relative_humidity_pct": "RH (%)",
+          "pressure_hpa": null,
+          "pm25_ug_m3": "PM2.5 (ug/m3)",
+          "pm10_ug_m3": "PM10 (ug/m3)",
+          "wind_speed_mps": "WS (m/s)"
+        },
+        "raw_rows": 35808,
+        "retained_rows": 35808,
+        "invalid_intervals": 0,
+        "duplicate_end_rows_excluded": 0,
+        "finite_rows_by_sensor": {
+          "temperature_c": 34124,
+          "relative_humidity_pct": 34190,
+          "pressure_hpa": 0,
+          "pm25_ug_m3": 33733,
+          "pm10_ug_m3": 34290,
+          "wind_speed_mps": 34144
+        }
+      }
+    ],
+    "pressure_policy": "All pressure excluded, including columns labelled mmHg; no pressure target trained",
+    "temperature_policy": "Only explicit degree C headers accepted; Dehradun AT (degree) excluded",
+    "timestamp_policy": "Assume source local intervals are Asia/Kolkata; UTC timestamp is interval END, when hourly mean becomes available",
+    "timestamp_verification": "Timezone is a documented research assumption, not confirmed in provider metadata; no time/calendar predictors",
+    "forecast_target": "Observed hourly mean whose interval END is six hours after current interval END",
+    "source_alignment_limit": "Indian inputs are hourly interval means; Beijing source describes hourly measurements; aggregation equivalence is not independently verified",
+    "missing_policy": "No imputation. Unavailable or physically invalid sensors remain NaN; model profiles select required sensors",
+    "geographic_limit": "Seven sampled stations, Baddi held out; no Mandi station or national representativeness claim",
+    "status": "RESEARCH_WITH_DOCUMENTED_SOURCE_ASSUMPTIONS"
+  },
+  "original_six_input_model_complete_input_rows": 0,
+  "original_model_test_interpretation": "The unchanged six-input model has no fully observed input rows here. Its NaN stress test is diagnostic and outside the deployed complete-input contract; matched-profile Beijing models are the fair transfer baselines.",
+  "holdout_policy": "Dates and Baddi station reserved before fitting; no model selection on these evaluation scores",
+  "profiles": {
+    "five_sensor": {
+      "sensors": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "india_model": "india_cpcb_5sensor_6h",
+      "beijing_model": "uci_beijing_5sensor_6h",
+      "india_report_sha256": "70e5bca77b1ef078de00527cb3f4804d5ed6db6c90b7c4f34134d4e2d152cf20",
+      "beijing_report_sha256": "42b4b33e93a3ebeb2384d88e680f22b4436c70e80b9734861cec4ca1c3990e65",
+      "original_report_sha256": "334ea55b254051c33f013a12e35e411c3fc1c4ad791d6002d3aee695d9ee5da9",
+      "split": {
+        "strategy": "fixed future blocks and complete held-out stations; label horizon purged at boundaries",
+        "validation_start": "2022-07-01T00:00:00Z",
+        "test_start": "2023-01-01T00:00:00Z",
+        "holdout_locations": [
+          "HP001"
+        ],
+        "raw_rows": {
+          "train": 319753,
+          "validation": 26460,
+          "future_test": 12930,
+          "geographic_test": 2155
+        },
+        "unused_rows": 7164
+      },
+      "targets": {
+        "temperature_c": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 3592,
+                "mae": 5.147608280181885,
+                "rmse": 6.077233727230723,
+                "r2": -0.15958917140960693
+              },
+              "india_teacher": {
+                "rows": 3592,
+                "mae": 1.9816583395004272,
+                "rmse": 2.737575380167123,
+                "r2": 0.7646986246109009,
+                "mae_skill_vs_persistence": 0.6150331898544527
+              },
+              "india_student": {
+                "rows": 3592,
+                "mae": 4.335956573486328,
+                "rmse": 5.1010089474636775,
+                "r2": 0.18303316831588745,
+                "mae_skill_vs_persistence": 0.1576754994781534,
+                "mae_skill_vs_beijing_matched_student": 0.017205252417521244
+              },
+              "beijing_matched_teacher": {
+                "rows": 3592,
+                "mae": 2.608532667160034,
+                "rmse": 3.496119391491164,
+                "r2": 0.6162354946136475,
+                "mae_skill_vs_persistence": 0.49325346351570776
+              },
+              "beijing_matched_student": {
+                "rows": 3592,
+                "mae": 4.411863803863525,
+                "rmse": 5.267780349578119,
+                "r2": 0.12874042987823486,
+                "mae_skill_vs_persistence": 0.14292938317605686
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 3592,
+                "mae": 2.9880733489990234,
+                "rmse": 4.125913807769802,
+                "r2": 0.46551865339279175,
+                "mae_skill_vs_persistence": 0.4195220019940128
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 3592,
+                "mae": 4.409299850463867,
+                "rmse": 5.319342839947559,
+                "r2": 0.11160069704055786,
+                "mae_skill_vs_persistence": 0.1434274695222012
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1646,
+                "mae": 4.438839435577393,
+                "rmse": 5.205806739869067,
+                "r2": -0.36671578884124756
+              },
+              "india_teacher": {
+                "rows": 1646,
+                "mae": 1.3008954524993896,
+                "rmse": 1.7894124850638184,
+                "r2": 0.8385183811187744,
+                "mae_skill_vs_persistence": 0.706928923341384
+              },
+              "india_student": {
+                "rows": 1646,
+                "mae": 3.7066426277160645,
+                "rmse": 4.295381931647139,
+                "r2": 0.06952279806137085,
+                "mae_skill_vs_persistence": 0.1649523075767858,
+                "mae_skill_vs_beijing_matched_student": 0.08709397230627658
+              },
+              "beijing_matched_teacher": {
+                "rows": 1646,
+                "mae": 2.0444774627685547,
+                "rmse": 2.6152357424788715,
+                "r2": 0.6550756692886353,
+                "mae_skill_vs_persistence": 0.5394117105516311
+              },
+              "beijing_matched_student": {
+                "rows": 1646,
+                "mae": 4.060267448425293,
+                "rmse": 4.568708402389504,
+                "r2": -0.05266213417053223,
+                "mae_skill_vs_persistence": 0.08528625390633349
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1646,
+                "mae": 2.339078664779663,
+                "rmse": 3.094224373255097,
+                "r2": 0.5171571969985962,
+                "mae_skill_vs_persistence": 0.47304274039923644
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1646,
+                "mae": 4.082622528076172,
+                "rmse": 4.594849954340758,
+                "r2": -0.06474292278289795,
+                "mae_skill_vs_persistence": 0.08025000964128925
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1946,
+                "mae": 5.747111797332764,
+                "rmse": 6.726762686662566,
+                "r2": -0.10130751132965088
+              },
+              "india_teacher": {
+                "rows": 1946,
+                "mae": 2.5574731826782227,
+                "rmse": 3.335404864990654,
+                "r2": 0.7292343974113464,
+                "mae_skill_vs_persistence": 0.5549985326777275
+              },
+              "india_student": {
+                "rows": 1946,
+                "mae": 4.868253231048584,
+                "rmse": 5.69414325113989,
+                "r2": 0.2108616828918457,
+                "mae_skill_vs_persistence": 0.15292178006560764,
+                "mae_skill_vs_beijing_matched_student": -0.033762564642644266
+              },
+              "beijing_matched_teacher": {
+                "rows": 1946,
+                "mae": 3.08563232421875,
+                "rmse": 4.095891494312162,
+                "r2": 0.5916869640350342,
+                "mae_skill_vs_persistence": 0.46309860795629676
+              },
+              "beijing_matched_student": {
+                "rows": 1946,
+                "mae": 4.709256649017334,
+                "rmse": 5.793603184556863,
+                "r2": 0.18305307626724243,
+                "mae_skill_vs_persistence": 0.1805872558103182
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1946,
+                "mae": 3.537017583847046,
+                "rmse": 4.829467981706487,
+                "r2": 0.4323313236236572,
+                "mae_skill_vs_persistence": 0.38455737271570445
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1946,
+                "mae": 4.685615539550781,
+                "rmse": 5.862666718607395,
+                "r2": 0.1634598970413208,
+                "mae_skill_vs_persistence": 0.18470081933583116
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1705,
+                "mae": 1.7272257804870605,
+                "rmse": 2.066113052768427,
+                "r2": 0.30406928062438965
+              },
+              "india_teacher": {
+                "rows": 1705,
+                "mae": 1.3091363906860352,
+                "rmse": 1.6499607226002857,
+                "r2": 0.556181788444519,
+                "mae_skill_vs_persistence": 0.2420583310672495
+              },
+              "india_student": {
+                "rows": 1705,
+                "mae": 1.6721768379211426,
+                "rmse": 2.0865365643308413,
+                "r2": 0.29024267196655273,
+                "mae_skill_vs_persistence": 0.031871306686028444,
+                "mae_skill_vs_beijing_matched_student": 0.0213257669629362
+              },
+              "beijing_matched_teacher": {
+                "rows": 1705,
+                "mae": 1.589691400527954,
+                "rmse": 1.951364074344116,
+                "r2": 0.37922465801239014,
+                "mae_skill_vs_persistence": 0.07962733159316504
+              },
+              "beijing_matched_student": {
+                "rows": 1705,
+                "mae": 1.7086143493652344,
+                "rmse": 2.0966845771295453,
+                "r2": 0.28332197666168213,
+                "mae_skill_vs_persistence": 0.010775331941014654
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1705,
+                "mae": 2.0765135288238525,
+                "rmse": 2.4907339036362646,
+                "r2": -0.011375784873962402,
+                "mae_skill_vs_persistence": -0.2022247191321429
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1705,
+                "mae": 1.650532841682434,
+                "rmse": 2.048916097521472,
+                "r2": 0.3156059980392456,
+                "mae_skill_vs_persistence": 0.044402381941635816
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1705,
+                "mae": 1.7272257804870605,
+                "rmse": 2.066113052768427,
+                "r2": 0.30406928062438965
+              },
+              "india_teacher": {
+                "rows": 1705,
+                "mae": 1.3091363906860352,
+                "rmse": 1.6499607226002857,
+                "r2": 0.556181788444519,
+                "mae_skill_vs_persistence": 0.2420583310672495
+              },
+              "india_student": {
+                "rows": 1705,
+                "mae": 1.6721768379211426,
+                "rmse": 2.0865365643308413,
+                "r2": 0.29024267196655273,
+                "mae_skill_vs_persistence": 0.031871306686028444,
+                "mae_skill_vs_beijing_matched_student": 0.0213257669629362
+              },
+              "beijing_matched_teacher": {
+                "rows": 1705,
+                "mae": 1.589691400527954,
+                "rmse": 1.951364074344116,
+                "r2": 0.37922465801239014,
+                "mae_skill_vs_persistence": 0.07962733159316504
+              },
+              "beijing_matched_student": {
+                "rows": 1705,
+                "mae": 1.7086143493652344,
+                "rmse": 2.0966845771295453,
+                "r2": 0.28332197666168213,
+                "mae_skill_vs_persistence": 0.010775331941014654
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1705,
+                "mae": 2.0765135288238525,
+                "rmse": 2.4907339036362646,
+                "r2": -0.011375784873962402,
+                "mae_skill_vs_persistence": -0.2022247191321429
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1705,
+                "mae": 1.650532841682434,
+                "rmse": 2.048916097521472,
+                "r2": 0.3156059980392456,
+                "mae_skill_vs_persistence": 0.044402381941635816
+              }
+            }
+          }
+        },
+        "relative_humidity_pct": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 3592,
+                "mae": 16.520305633544922,
+                "rmse": 19.940496811412135,
+                "r2": 0.304288387298584
+              },
+              "india_teacher": {
+                "rows": 3592,
+                "mae": 7.9380316734313965,
+                "rmse": 10.990524025139473,
+                "r2": 0.7886539697647095,
+                "mae_skill_vs_persistence": 0.5194984978175579
+              },
+              "india_student": {
+                "rows": 3592,
+                "mae": 14.433320045471191,
+                "rmse": 17.4415781591472,
+                "r2": 0.46773380041122437,
+                "mae_skill_vs_persistence": 0.1263285095546931,
+                "mae_skill_vs_beijing_matched_student": 0.017902296987738042
+              },
+              "beijing_matched_teacher": {
+                "rows": 3592,
+                "mae": 9.710970878601074,
+                "rmse": 12.402857395859684,
+                "r2": 0.7308460474014282,
+                "mae_skill_vs_persistence": 0.4121797081718217
+              },
+              "beijing_matched_student": {
+                "rows": 3592,
+                "mae": 14.696419715881348,
+                "rmse": 17.4865182444219,
+                "r2": 0.4649873971939087,
+                "mae_skill_vs_persistence": 0.11040267402560189
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 3592,
+                "mae": 11.929035186767578,
+                "rmse": 14.961234290463493,
+                "r2": 0.6083554029464722,
+                "mae_skill_vs_persistence": 0.2779167981889298
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 3592,
+                "mae": 14.660562515258789,
+                "rmse": 17.66533487926239,
+                "r2": 0.4539893865585327,
+                "mae_skill_vs_persistence": 0.11257316659504624
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1646,
+                "mae": 16.455297470092773,
+                "rmse": 19.536989781605623,
+                "r2": -0.6868506669998169
+              },
+              "india_teacher": {
+                "rows": 1646,
+                "mae": 4.899573802947998,
+                "rmse": 6.941049578449089,
+                "r2": 0.7870823740959167,
+                "mae_skill_vs_persistence": 0.7022494542044657
+              },
+              "india_student": {
+                "rows": 1646,
+                "mae": 13.583961486816406,
+                "rmse": 15.816695188303008,
+                "r2": -0.10558676719665527,
+                "mae_skill_vs_persistence": 0.17449310706749432,
+                "mae_skill_vs_beijing_matched_student": 0.08275724261828665
+              },
+              "beijing_matched_teacher": {
+                "rows": 1646,
+                "mae": 7.504123210906982,
+                "rmse": 9.772379695203547,
+                "r2": 0.5779518485069275,
+                "mae_skill_vs_persistence": 0.543969154945658
+              },
+              "beijing_matched_student": {
+                "rows": 1646,
+                "mae": 14.80955982208252,
+                "rmse": 16.514997659856878,
+                "r2": -0.20536446571350098,
+                "mae_skill_vs_persistence": 0.1000126342900427
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1646,
+                "mae": 8.274063110351562,
+                "rmse": 10.466293001085452,
+                "r2": 0.5158866047859192,
+                "mae_skill_vs_persistence": 0.4971793657702309
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1646,
+                "mae": 14.438302040100098,
+                "rmse": 16.25375369806445,
+                "r2": -0.16753172874450684,
+                "mae_skill_vs_persistence": 0.12257423080066043
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1946,
+                "mae": 16.575292587280273,
+                "rmse": 20.27553126230605,
+                "r2": -0.24521172046661377
+              },
+              "india_teacher": {
+                "rows": 1946,
+                "mae": 10.508073806762695,
+                "rmse": 13.498548076400605,
+                "r2": 0.44808417558670044,
+                "mae_skill_vs_persistence": 0.3660399204761855
+              },
+              "india_student": {
+                "rows": 1946,
+                "mae": 15.151739120483398,
+                "rmse": 18.706106663698673,
+                "r2": -0.05990159511566162,
+                "mae_skill_vs_persistence": 0.08588406263725912,
+                "mae_skill_vs_beijing_matched_student": -0.037739213495211255
+              },
+              "beijing_matched_teacher": {
+                "rows": 1946,
+                "mae": 11.577606201171875,
+                "rmse": 14.25376547871704,
+                "r2": 0.38459932804107666,
+                "mae_skill_vs_persistence": 0.30151421821317215
+              },
+              "beijing_matched_student": {
+                "rows": 1946,
+                "mae": 14.600719451904297,
+                "rmse": 18.267978121790136,
+                "r2": -0.010833740234375,
+                "mae_skill_vs_persistence": 0.11912749805039613
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1946,
+                "mae": 15.020546913146973,
+                "rmse": 17.90289733283851,
+                "r2": 0.02916508913040161,
+                "mae_skill_vs_persistence": 0.09379898821975541
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1946,
+                "mae": 14.848559379577637,
+                "rmse": 18.776644480036563,
+                "r2": -0.0679100751876831,
+                "mae_skill_vs_persistence": 0.10417512684076036
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1597,
+                "mae": 14.048428535461426,
+                "rmse": 17.22859433879111,
+                "r2": -0.18156802654266357
+              },
+              "india_teacher": {
+                "rows": 1597,
+                "mae": 10.01767349243164,
+                "rmse": 12.74002283211044,
+                "r2": 0.3539004921913147,
+                "mae_skill_vs_persistence": 0.28691857120212727
+              },
+              "india_student": {
+                "rows": 1597,
+                "mae": 13.185810089111328,
+                "rmse": 15.97669716477476,
+                "r2": -0.01609194278717041,
+                "mae_skill_vs_persistence": 0.06140319852662901,
+                "mae_skill_vs_beijing_matched_student": -0.05851175937971709
+              },
+              "beijing_matched_teacher": {
+                "rows": 1597,
+                "mae": 11.853979110717773,
+                "rmse": 14.633477256490028,
+                "r2": 0.14757907390594482,
+                "mae_skill_vs_persistence": 0.15620604249111303
+              },
+              "beijing_matched_student": {
+                "rows": 1597,
+                "mae": 12.45693302154541,
+                "rmse": 14.967957413939546,
+                "r2": 0.1081659197807312,
+                "mae_skill_vs_persistence": 0.11328637291343435
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1597,
+                "mae": 13.086607933044434,
+                "rmse": 16.06220645858966,
+                "r2": -0.02699756622314453,
+                "mae_skill_vs_persistence": 0.0684646400121649
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1597,
+                "mae": 12.777892112731934,
+                "rmse": 15.586763762559684,
+                "r2": 0.03290104866027832,
+                "mae_skill_vs_persistence": 0.0904397541349461
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1597,
+                "mae": 14.048428535461426,
+                "rmse": 17.22859433879111,
+                "r2": -0.18156802654266357
+              },
+              "india_teacher": {
+                "rows": 1597,
+                "mae": 10.01767349243164,
+                "rmse": 12.74002283211044,
+                "r2": 0.3539004921913147,
+                "mae_skill_vs_persistence": 0.28691857120212727
+              },
+              "india_student": {
+                "rows": 1597,
+                "mae": 13.185810089111328,
+                "rmse": 15.97669716477476,
+                "r2": -0.01609194278717041,
+                "mae_skill_vs_persistence": 0.06140319852662901,
+                "mae_skill_vs_beijing_matched_student": -0.05851175937971709
+              },
+              "beijing_matched_teacher": {
+                "rows": 1597,
+                "mae": 11.853979110717773,
+                "rmse": 14.633477256490028,
+                "r2": 0.14757907390594482,
+                "mae_skill_vs_persistence": 0.15620604249111303
+              },
+              "beijing_matched_student": {
+                "rows": 1597,
+                "mae": 12.45693302154541,
+                "rmse": 14.967957413939546,
+                "r2": 0.1081659197807312,
+                "mae_skill_vs_persistence": 0.11328637291343435
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1597,
+                "mae": 13.086607933044434,
+                "rmse": 16.06220645858966,
+                "r2": -0.02699756622314453,
+                "mae_skill_vs_persistence": 0.0684646400121649
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1597,
+                "mae": 12.777892112731934,
+                "rmse": 15.586763762559684,
+                "r2": 0.03290104866027832,
+                "mae_skill_vs_persistence": 0.0904397541349461
+              }
+            }
+          }
+        },
+        "pm25_ug_m3": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 3468,
+                "mae": 56.435699462890625,
+                "rmse": 82.2003079373794,
+                "r2": -0.39079976081848145
+              },
+              "india_teacher": {
+                "rows": 3468,
+                "mae": 31.14748191833496,
+                "rmse": 44.536020851893724,
+                "r2": 0.5917364954948425,
+                "mae_skill_vs_persistence": 0.4480890249474797
+              },
+              "india_student": {
+                "rows": 3468,
+                "mae": 45.60979080200195,
+                "rmse": 67.9265098631418,
+                "r2": 0.050278306007385254,
+                "mae_skill_vs_persistence": 0.19182731434040723,
+                "mae_skill_vs_beijing_matched_student": 0.12508172859892508
+              },
+              "beijing_matched_teacher": {
+                "rows": 3468,
+                "mae": 48.63229751586914,
+                "rmse": 70.34673819175094,
+                "r2": -0.018604755401611328,
+                "mae_skill_vs_persistence": 0.13827066947495925
+              },
+              "beijing_matched_student": {
+                "rows": 3468,
+                "mae": 52.13034439086914,
+                "rmse": 76.09456493403455,
+                "r2": -0.19185936450958252,
+                "mae_skill_vs_persistence": 0.07628779501266703
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 3468,
+                "mae": 46.25823974609375,
+                "rmse": 68.35976607030996,
+                "r2": 0.03812450170516968,
+                "mae_skill_vs_persistence": 0.1803372654836869
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 3468,
+                "mae": 52.147796630859375,
+                "rmse": 75.46342178395935,
+                "r2": -0.17217028141021729,
+                "mae_skill_vs_persistence": 0.07597855387352415
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1624,
+                "mae": 72.82839965820312,
+                "rmse": 103.06471722903042,
+                "r2": -0.6608054637908936
+              },
+              "india_teacher": {
+                "rows": 1624,
+                "mae": 33.750083923339844,
+                "rmse": 49.44715850658155,
+                "r2": 0.6177201271057129,
+                "mae_skill_vs_persistence": 0.5365807283733393
+              },
+              "india_student": {
+                "rows": 1624,
+                "mae": 56.05318069458008,
+                "rmse": 84.74336545288516,
+                "r2": -0.12282001972198486,
+                "mae_skill_vs_persistence": 0.23033897548692805,
+                "mae_skill_vs_beijing_matched_student": 0.15609643447131816
+              },
+              "beijing_matched_teacher": {
+                "rows": 1624,
+                "mae": 60.27082824707031,
+                "rmse": 87.00190259234277,
+                "r2": -0.18346726894378662,
+                "mae_skill_vs_persistence": 0.17242684818103615
+              },
+              "beijing_matched_student": {
+                "rows": 1624,
+                "mae": 66.42131042480469,
+                "rmse": 95.14332835090173,
+                "r2": -0.4153224229812622,
+                "mae_skill_vs_persistence": 0.08797514792949002
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1624,
+                "mae": 57.00210189819336,
+                "rmse": 84.73689461264054,
+                "r2": -0.12264847755432129,
+                "mae_skill_vs_persistence": 0.2173094264639268
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1624,
+                "mae": 65.89405822753906,
+                "rmse": 94.08847751750743,
+                "r2": -0.3841131925582886,
+                "mae_skill_vs_persistence": 0.09521479894118479
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1844,
+                "mae": 41.998741149902344,
+                "rmse": 57.90176596575552,
+                "r2": -0.6631497144699097
+              },
+              "india_teacher": {
+                "rows": 1844,
+                "mae": 28.855384826660156,
+                "rmse": 39.71095671232075,
+                "r2": 0.2177087664604187,
+                "mae_skill_vs_persistence": 0.3129464351403006
+              },
+              "india_student": {
+                "rows": 1844,
+                "mae": 36.4123420715332,
+                "rmse": 48.50663916381705,
+                "r2": -0.16721296310424805,
+                "mae_skill_vs_persistence": 0.13301348862886408,
+                "mae_skill_vs_beijing_matched_student": 0.07920302680189051
+              },
+              "beijing_matched_teacher": {
+                "rows": 1844,
+                "mae": 38.38231658935547,
+                "rmse": 51.38732079298599,
+                "r2": -0.30996501445770264,
+                "mae_skill_vs_persistence": 0.08610792755999741
+              },
+              "beijing_matched_student": {
+                "rows": 1844,
+                "mae": 39.544376373291016,
+                "rmse": 54.01549844503543,
+                "r2": -0.4473865032196045,
+                "mae_skill_vs_persistence": 0.05843900815624892
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1844,
+                "mae": 36.796180725097656,
+                "rmse": 49.647832042925096,
+                "r2": -0.2227799892425537,
+                "mae_skill_vs_persistence": 0.12387419913934217
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1844,
+                "mae": 40.04154968261719,
+                "rmse": 53.977529866313354,
+                "r2": -0.4453524351119995,
+                "mae_skill_vs_persistence": 0.0466011936000541
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1689,
+                "mae": 46.65961837768555,
+                "rmse": 69.99068367133765,
+                "r2": -0.023894786834716797
+              },
+              "india_teacher": {
+                "rows": 1689,
+                "mae": 35.35236740112305,
+                "rmse": 53.35303082710016,
+                "r2": 0.405032753944397,
+                "mae_skill_vs_persistence": 0.24233483619681873
+              },
+              "india_student": {
+                "rows": 1689,
+                "mae": 40.50301742553711,
+                "rmse": 60.1082011842758,
+                "r2": 0.24483418464660645,
+                "mae_skill_vs_persistence": 0.13194709185818732,
+                "mae_skill_vs_beijing_matched_student": 0.06733675925172766
+              },
+              "beijing_matched_teacher": {
+                "rows": 1689,
+                "mae": 40.92625045776367,
+                "rmse": 60.75622275549744,
+                "r2": 0.22846364974975586,
+                "mae_skill_vs_persistence": 0.12287644261282249
+              },
+              "beijing_matched_student": {
+                "rows": 1689,
+                "mae": 43.427268981933594,
+                "rmse": 64.48596701148436,
+                "r2": 0.130828857421875,
+                "mae_skill_vs_persistence": 0.06927509285626277
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1689,
+                "mae": 41.41316604614258,
+                "rmse": 61.80481736255476,
+                "r2": 0.20160186290740967,
+                "mae_skill_vs_persistence": 0.11244096102706291
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1689,
+                "mae": 43.37238311767578,
+                "rmse": 64.25335898320803,
+                "r2": 0.13708794116973877,
+                "mae_skill_vs_persistence": 0.07045139618162521
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1689,
+                "mae": 46.65961837768555,
+                "rmse": 69.99068367133765,
+                "r2": -0.023894786834716797
+              },
+              "india_teacher": {
+                "rows": 1689,
+                "mae": 35.35236740112305,
+                "rmse": 53.35303082710016,
+                "r2": 0.405032753944397,
+                "mae_skill_vs_persistence": 0.24233483619681873
+              },
+              "india_student": {
+                "rows": 1689,
+                "mae": 40.50301742553711,
+                "rmse": 60.1082011842758,
+                "r2": 0.24483418464660645,
+                "mae_skill_vs_persistence": 0.13194709185818732,
+                "mae_skill_vs_beijing_matched_student": 0.06733675925172766
+              },
+              "beijing_matched_teacher": {
+                "rows": 1689,
+                "mae": 40.92625045776367,
+                "rmse": 60.75622275549744,
+                "r2": 0.22846364974975586,
+                "mae_skill_vs_persistence": 0.12287644261282249
+              },
+              "beijing_matched_student": {
+                "rows": 1689,
+                "mae": 43.427268981933594,
+                "rmse": 64.48596701148436,
+                "r2": 0.130828857421875,
+                "mae_skill_vs_persistence": 0.06927509285626277
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1689,
+                "mae": 41.41316604614258,
+                "rmse": 61.80481736255476,
+                "r2": 0.20160186290740967,
+                "mae_skill_vs_persistence": 0.11244096102706291
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1689,
+                "mae": 43.37238311767578,
+                "rmse": 64.25335898320803,
+                "r2": 0.13708794116973877,
+                "mae_skill_vs_persistence": 0.07045139618162521
+              }
+            }
+          }
+        },
+        "pm10_ug_m3": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 3459,
+                "mae": 109.1258773803711,
+                "rmse": 155.15174024160993,
+                "r2": -0.6607012748718262
+              },
+              "india_teacher": {
+                "rows": 3459,
+                "mae": 61.61459732055664,
+                "rmse": 89.75088679053539,
+                "r2": 0.44428038597106934,
+                "mae_skill_vs_persistence": 0.4353805091913102
+              },
+              "india_student": {
+                "rows": 3459,
+                "mae": 87.19317626953125,
+                "rmse": 126.16409902508914,
+                "r2": -0.09811997413635254,
+                "mae_skill_vs_persistence": 0.20098533580986322,
+                "mae_skill_vs_beijing_matched_student": 0.06499927391429738
+              },
+              "beijing_matched_teacher": {
+                "rows": 3459,
+                "mae": 87.2769775390625,
+                "rmse": 127.82042686299205,
+                "r2": -0.1271423101425171,
+                "mae_skill_vs_persistence": 0.2002174036608355
+              },
+              "beijing_matched_student": {
+                "rows": 3459,
+                "mae": 93.2546615600586,
+                "rmse": 136.83696674784193,
+                "r2": -0.2917696237564087,
+                "mae_skill_vs_persistence": 0.14543952544813465
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 3459,
+                "mae": 87.0055923461914,
+                "rmse": 128.65043935748918,
+                "r2": -0.14182829856872559,
+                "mae_skill_vs_persistence": 0.20270430410448692
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 3459,
+                "mae": 96.2093276977539,
+                "rmse": 140.07543308205405,
+                "r2": -0.35363686084747314,
+                "mae_skill_vs_persistence": 0.11836376478875887
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1623,
+                "mae": 121.89620208740234,
+                "rmse": 165.7743018100966,
+                "r2": -0.6162515878677368
+              },
+              "india_teacher": {
+                "rows": 1623,
+                "mae": 58.32044219970703,
+                "rmse": 85.03095426721818,
+                "r2": 0.5747653245925903,
+                "mae_skill_vs_persistence": 0.521556527594765
+              },
+              "india_student": {
+                "rows": 1623,
+                "mae": 93.7359848022461,
+                "rmse": 135.95892072607813,
+                "r2": -0.08715128898620605,
+                "mae_skill_vs_persistence": 0.23101800386664006,
+                "mae_skill_vs_beijing_matched_student": 0.10129176439848864
+              },
+              "beijing_matched_teacher": {
+                "rows": 1623,
+                "mae": 96.71923065185547,
+                "rmse": 139.10883357330331,
+                "r2": -0.1381092071533203,
+                "mae_skill_vs_persistence": 0.20654434678362177
+              },
+              "beijing_matched_student": {
+                "rows": 1623,
+                "mae": 104.30079650878906,
+                "rmse": 148.68999577560692,
+                "r2": -0.3002835512161255,
+                "mae_skill_vs_persistence": 0.14434744706809632
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1623,
+                "mae": 96.39460754394531,
+                "rmse": 140.22723606480662,
+                "r2": -0.15648305416107178,
+                "mae_skill_vs_persistence": 0.20920745771202787
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1623,
+                "mae": 107.52044677734375,
+                "rmse": 151.48528961173093,
+                "r2": -0.3496323823928833,
+                "mae_skill_vs_persistence": 0.11793439880719869
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1836,
+                "mae": 97.83707427978516,
+                "rmse": 145.11548472251334,
+                "r2": -0.8339300155639648
+              },
+              "india_teacher": {
+                "rows": 1836,
+                "mae": 64.5265884399414,
+                "rmse": 93.72552284630105,
+                "r2": 0.2349831461906433,
+                "mae_skill_vs_persistence": 0.3404689488627347
+              },
+              "india_student": {
+                "rows": 1836,
+                "mae": 81.4094009399414,
+                "rmse": 116.82374377400768,
+                "r2": -0.18855011463165283,
+                "mae_skill_vs_persistence": 0.16790846885778143,
+                "mae_skill_vs_beijing_matched_student": 0.024920759053608244
+              },
+              "beijing_matched_teacher": {
+                "rows": 1836,
+                "mae": 78.93016052246094,
+                "rmse": 116.93770877854158,
+                "r2": -0.19087016582489014,
+                "mae_skill_vs_persistence": 0.19324896923282908
+              },
+              "beijing_matched_student": {
+                "rows": 1836,
+                "mae": 83.49003601074219,
+                "rmse": 125.4297728997685,
+                "r2": -0.3701133728027344,
+                "mae_skill_vs_persistence": 0.14664214332508219
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1836,
+                "mae": 78.70582580566406,
+                "rmse": 117.47047085730738,
+                "r2": -0.20174598693847656,
+                "mae_skill_vs_persistence": 0.19554191102864926
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1836,
+                "mae": 86.21043395996094,
+                "rmse": 129.1526168434074,
+                "r2": -0.45265233516693115,
+                "mae_skill_vs_persistence": 0.11883675391371029
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1684,
+                "mae": 80.76851654052734,
+                "rmse": 114.47816812197206,
+                "r2": -0.2235698699951172
+              },
+              "india_teacher": {
+                "rows": 1684,
+                "mae": 58.74510192871094,
+                "rmse": 87.47323530389882,
+                "r2": 0.28561246395111084,
+                "mae_skill_vs_persistence": 0.27267325877856974
+              },
+              "india_student": {
+                "rows": 1684,
+                "mae": 69.07218933105469,
+                "rmse": 99.31169858864816,
+                "r2": 0.07915973663330078,
+                "mae_skill_vs_persistence": 0.14481295076905087,
+                "mae_skill_vs_beijing_matched_student": 0.020624010177324292
+              },
+              "beijing_matched_teacher": {
+                "rows": 1684,
+                "mae": 67.96685028076172,
+                "rmse": 98.62902993984581,
+                "r2": 0.09177601337432861,
+                "mae_skill_vs_persistence": 0.15849822193208307
+              },
+              "beijing_matched_student": {
+                "rows": 1684,
+                "mae": 70.5267333984375,
+                "rmse": 101.02400511450236,
+                "r2": 0.04713231325149536,
+                "mae_skill_vs_persistence": 0.1268041506860016
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1684,
+                "mae": 71.3118896484375,
+                "rmse": 101.84428697311647,
+                "r2": 0.031595468521118164,
+                "mae_skill_vs_persistence": 0.11708308258137656
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1684,
+                "mae": 72.79301452636719,
+                "rmse": 104.122599011934,
+                "r2": -0.012216567993164062,
+                "mae_skill_vs_persistence": 0.09874518383853537
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1684,
+                "mae": 80.76851654052734,
+                "rmse": 114.47816812197206,
+                "r2": -0.2235698699951172
+              },
+              "india_teacher": {
+                "rows": 1684,
+                "mae": 58.74510192871094,
+                "rmse": 87.47323530389882,
+                "r2": 0.28561246395111084,
+                "mae_skill_vs_persistence": 0.27267325877856974
+              },
+              "india_student": {
+                "rows": 1684,
+                "mae": 69.07218933105469,
+                "rmse": 99.31169858864816,
+                "r2": 0.07915973663330078,
+                "mae_skill_vs_persistence": 0.14481295076905087,
+                "mae_skill_vs_beijing_matched_student": 0.020624010177324292
+              },
+              "beijing_matched_teacher": {
+                "rows": 1684,
+                "mae": 67.96685028076172,
+                "rmse": 98.62902993984581,
+                "r2": 0.09177601337432861,
+                "mae_skill_vs_persistence": 0.15849822193208307
+              },
+              "beijing_matched_student": {
+                "rows": 1684,
+                "mae": 70.5267333984375,
+                "rmse": 101.02400511450236,
+                "r2": 0.04713231325149536,
+                "mae_skill_vs_persistence": 0.1268041506860016
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1684,
+                "mae": 71.3118896484375,
+                "rmse": 101.84428697311647,
+                "r2": 0.031595468521118164,
+                "mae_skill_vs_persistence": 0.11708308258137656
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1684,
+                "mae": 72.79301452636719,
+                "rmse": 104.122599011934,
+                "r2": -0.012216567993164062,
+                "mae_skill_vs_persistence": 0.09874518383853537
+              }
+            }
+          }
+        },
+        "wind_speed_mps": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 3591,
+                "mae": 0.4185352027416229,
+                "rmse": 0.6679236190451512,
+                "r2": -0.8985068798065186
+              },
+              "india_teacher": {
+                "rows": 3591,
+                "mae": 0.29542315006256104,
+                "rmse": 0.43254195478394397,
+                "r2": 0.2038130760192871,
+                "mae_skill_vs_persistence": 0.2941498155295278
+              },
+              "india_student": {
+                "rows": 3591,
+                "mae": 0.3490380048751831,
+                "rmse": 0.5212616462687173,
+                "r2": -0.15629899501800537,
+                "mae_skill_vs_persistence": 0.16604863201756292,
+                "mae_skill_vs_beijing_matched_student": 0.4027089146817945
+              },
+              "beijing_matched_teacher": {
+                "rows": 3591,
+                "mae": 0.4909326136112213,
+                "rmse": 0.6353729394552473,
+                "r2": -0.717971682548523,
+                "mae_skill_vs_persistence": -0.17297806826130224
+              },
+              "beijing_matched_student": {
+                "rows": 3591,
+                "mae": 0.5843683481216431,
+                "rmse": 0.6754267870972174,
+                "r2": -0.9414005279541016,
+                "mae_skill_vs_persistence": -0.39622269356012807
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 3591,
+                "mae": 0.5334722995758057,
+                "rmse": 0.6699940945592793,
+                "r2": -0.9102953672409058,
+                "mae_skill_vs_persistence": -0.2746175138465894
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 3591,
+                "mae": 0.5611793994903564,
+                "rmse": 0.6546334610807967,
+                "r2": -0.8237067461013794,
+                "mae_skill_vs_persistence": -0.34081767988532374
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1646,
+                "mae": 0.686445951461792,
+                "rmse": 0.939068023360729,
+                "r2": -1.0958571434020996
+              },
+              "india_teacher": {
+                "rows": 1646,
+                "mae": 0.3841703236103058,
+                "rmse": 0.5539117411999029,
+                "r2": 0.27079659700393677,
+                "mae_skill_vs_persistence": 0.4403487662907588
+              },
+              "india_student": {
+                "rows": 1646,
+                "mae": 0.5416589975357056,
+                "rmse": 0.7177720673217152,
+                "r2": -0.22444891929626465,
+                "mae_skill_vs_persistence": 0.21092258409822573,
+                "mae_skill_vs_beijing_matched_student": 0.19236442742981752
+              },
+              "beijing_matched_teacher": {
+                "rows": 1646,
+                "mae": 0.5408808588981628,
+                "rmse": 0.6921317825109066,
+                "r2": -0.13853180408477783,
+                "mae_skill_vs_persistence": 0.21205616007152084
+              },
+              "beijing_matched_student": {
+                "rows": 1646,
+                "mae": 0.6706725358963013,
+                "rmse": 0.7932828459649434,
+                "r2": -0.49562835693359375,
+                "mae_skill_vs_persistence": 0.02297837948042536
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1646,
+                "mae": 0.6217243671417236,
+                "rmse": 0.7622513694012716,
+                "r2": -0.3809056282043457,
+                "mae_skill_vs_persistence": 0.09428504047877806
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1646,
+                "mae": 0.6558682322502136,
+                "rmse": 0.7787164041610968,
+                "r2": -0.44120657444000244,
+                "mae_skill_vs_persistence": 0.044544977133979535
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1945,
+                "mae": 0.1918097734451294,
+                "rmse": 0.27816965141194044,
+                "r2": -0.007338285446166992
+              },
+              "india_teacher": {
+                "rows": 1945,
+                "mae": 0.2203187793493271,
+                "rmse": 0.29286854619784514,
+                "r2": -0.11660945415496826,
+                "mae_skill_vs_persistence": -0.14863166455046772
+              },
+              "india_student": {
+                "rows": 1945,
+                "mae": 0.1860281229019165,
+                "rmse": 0.25624338118216017,
+                "r2": 0.14520657062530518,
+                "mae_skill_vs_persistence": 0.030142627455148063,
+                "mae_skill_vs_beijing_matched_student": 0.6361888062774874
+              },
+              "beijing_matched_teacher": {
+                "rows": 1945,
+                "mae": 0.44866275787353516,
+                "rmse": 0.5830386615303972,
+                "r2": -3.425380229949951,
+                "mae_skill_vs_persistence": -1.339102694377996
+              },
+              "beijing_matched_student": {
+                "rows": 1945,
+                "mae": 0.5113314986228943,
+                "rmse": 0.5565202013892135,
+                "r2": -3.0319738388061523,
+                "mae_skill_vs_persistence": -1.6658260913340257
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1945,
+                "mae": 0.4587869942188263,
+                "rmse": 0.5805770577880519,
+                "r2": -3.3880906105041504,
+                "mae_skill_vs_persistence": -1.3918853871649586
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1945,
+                "mae": 0.4810469150543213,
+                "rmse": 0.5272872046778346,
+                "r2": -2.6195144653320312,
+                "mae_skill_vs_persistence": -1.5079374549802766
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1705,
+                "mae": 0.8344809412956238,
+                "rmse": 1.0909678906611662,
+                "r2": -0.7691775560379028
+              },
+              "india_teacher": {
+                "rows": 1705,
+                "mae": 0.5801342129707336,
+                "rmse": 0.7867312221049882,
+                "r2": 0.07997357845306396,
+                "mae_skill_vs_persistence": 0.30479632995570727
+              },
+              "india_student": {
+                "rows": 1705,
+                "mae": 0.6645650863647461,
+                "rmse": 0.8831286581602146,
+                "r2": -0.15929901599884033,
+                "mae_skill_vs_persistence": 0.2036186167020958,
+                "mae_skill_vs_beijing_matched_student": 0.012113306562152593
+              },
+              "beijing_matched_teacher": {
+                "rows": 1705,
+                "mae": 0.622567355632782,
+                "rmse": 0.7898498610383687,
+                "r2": 0.07266515493392944,
+                "mae_skill_vs_persistence": 0.25394658544726323
+              },
+              "beijing_matched_student": {
+                "rows": 1705,
+                "mae": 0.6727138757705688,
+                "rmse": 0.8263555011540537,
+                "r2": -0.015035748481750488,
+                "mae_skill_vs_persistence": 0.19385351722220723
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1705,
+                "mae": 0.6540955305099487,
+                "rmse": 0.8207052108251547,
+                "r2": -0.0012024641036987305,
+                "mae_skill_vs_persistence": 0.21616480599977128
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1705,
+                "mae": 0.6687673926353455,
+                "rmse": 0.827086967697294,
+                "r2": -0.01683354377746582,
+                "mae_skill_vs_persistence": 0.19858278417118758
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1705,
+                "mae": 0.8344809412956238,
+                "rmse": 1.0909678906611662,
+                "r2": -0.7691775560379028
+              },
+              "india_teacher": {
+                "rows": 1705,
+                "mae": 0.5801342129707336,
+                "rmse": 0.7867312221049882,
+                "r2": 0.07997357845306396,
+                "mae_skill_vs_persistence": 0.30479632995570727
+              },
+              "india_student": {
+                "rows": 1705,
+                "mae": 0.6645650863647461,
+                "rmse": 0.8831286581602146,
+                "r2": -0.15929901599884033,
+                "mae_skill_vs_persistence": 0.2036186167020958,
+                "mae_skill_vs_beijing_matched_student": 0.012113306562152593
+              },
+              "beijing_matched_teacher": {
+                "rows": 1705,
+                "mae": 0.622567355632782,
+                "rmse": 0.7898498610383687,
+                "r2": 0.07266515493392944,
+                "mae_skill_vs_persistence": 0.25394658544726323
+              },
+              "beijing_matched_student": {
+                "rows": 1705,
+                "mae": 0.6727138757705688,
+                "rmse": 0.8263555011540537,
+                "r2": -0.015035748481750488,
+                "mae_skill_vs_persistence": 0.19385351722220723
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1705,
+                "mae": 0.6540955305099487,
+                "rmse": 0.8207052108251547,
+                "r2": -0.0012024641036987305,
+                "mae_skill_vs_persistence": 0.21616480599977128
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1705,
+                "mae": 0.6687673926353455,
+                "rmse": 0.827086967697294,
+                "r2": -0.01683354377746582,
+                "mae_skill_vs_persistence": 0.19858278417118758
+              }
+            }
+          }
+        }
+      }
+    },
+    "pm_only": {
+      "sensors": [
+        "pm25_ug_m3",
+        "pm10_ug_m3"
+      ],
+      "india_model": "india_cpcb_pm_6h",
+      "beijing_model": "uci_beijing_pm_6h",
+      "india_report_sha256": "22b64651ae1be17f9acc54ddf0a9b7ec473e1d5e0a4aae8051fb94d62b8e5d5f",
+      "beijing_report_sha256": "f1354bf3c086931936577277466819625a2befa5880c03b7c4e8d67ef6b00681",
+      "original_report_sha256": "334ea55b254051c33f013a12e35e411c3fc1c4ad791d6002d3aee695d9ee5da9",
+      "split": {
+        "strategy": "fixed future blocks and complete held-out stations; label horizon purged at boundaries",
+        "validation_start": "2022-07-01T00:00:00Z",
+        "test_start": "2023-01-01T00:00:00Z",
+        "holdout_locations": [
+          "HP001"
+        ],
+        "raw_rows": {
+          "train": 319753,
+          "validation": 26460,
+          "future_test": 12930,
+          "geographic_test": 2155
+        },
+        "unused_rows": 7164
+      },
+      "targets": {
+        "pm25_ug_m3": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 10157,
+                "mae": 36.850833892822266,
+                "rmse": 65.30014461483795,
+                "r2": 0.39507752656936646
+              },
+              "india_teacher": {
+                "rows": 10157,
+                "mae": 27.986093521118164,
+                "rmse": 48.00557167776856,
+                "r2": 0.6730700731277466,
+                "mae_skill_vs_persistence": 0.24055738867365928
+              },
+              "india_student": {
+                "rows": 10157,
+                "mae": 36.850833892822266,
+                "rmse": 65.30014461483795,
+                "r2": 0.39507752656936646,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.030694894103367565
+              },
+              "beijing_matched_teacher": {
+                "rows": 10157,
+                "mae": 35.193389892578125,
+                "rmse": 60.82857452312708,
+                "r2": 0.47508782148361206,
+                "mae_skill_vs_persistence": 0.04497710974640856
+              },
+              "beijing_matched_student": {
+                "rows": 10157,
+                "mae": 35.753387451171875,
+                "rmse": 61.64900529218314,
+                "r2": 0.46083271503448486,
+                "mae_skill_vs_persistence": 0.029780776327673508
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 10157,
+                "mae": 44.00340270996094,
+                "rmse": 71.67766729101366,
+                "r2": 0.2711483836174011,
+                "mae_skill_vs_persistence": -0.19409516859079368
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 10157,
+                "mae": 37.35555648803711,
+                "rmse": 64.43837141748308,
+                "r2": 0.41093868017196655,
+                "mae_skill_vs_persistence": -0.013696368355809563
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1713,
+                "mae": 77.15531921386719,
+                "rmse": 111.27028431650115,
+                "r2": -0.5299004316329956
+              },
+              "india_teacher": {
+                "rows": 1713,
+                "mae": 41.099510192871094,
+                "rmse": 62.29279912048924,
+                "r2": 0.5205090045928955,
+                "mae_skill_vs_persistence": 0.467314624427291
+              },
+              "india_student": {
+                "rows": 1713,
+                "mae": 77.15531921386719,
+                "rmse": 111.27028431650115,
+                "r2": -0.5299004316329956,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.08101213133339691
+              },
+              "beijing_matched_teacher": {
+                "rows": 1713,
+                "mae": 69.07870483398438,
+                "rmse": 101.51614326672384,
+                "r2": -0.27342963218688965,
+                "mae_skill_vs_persistence": 0.10467994251303925
+              },
+              "beijing_matched_student": {
+                "rows": 1713,
+                "mae": 71.37322235107422,
+                "rmse": 104.02557528079333,
+                "r2": -0.3371649980545044,
+                "mae_skill_vs_persistence": 0.07494100110927604
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1713,
+                "mae": 61.39411926269531,
+                "rmse": 94.35470083844524,
+                "r2": -0.10009920597076416,
+                "mae_skill_vs_persistence": 0.20427885091737263
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1713,
+                "mae": 69.20063781738281,
+                "rmse": 102.08867067254573,
+                "r2": -0.28783392906188965,
+                "mae_skill_vs_persistence": 0.10309958506470251
+              }
+            },
+            "DL001": {
+              "persistence": {
+                "rows": 2055,
+                "mae": 57.692684173583984,
+                "rmse": 80.7026485344115,
+                "r2": 0.4614250063896179
+              },
+              "india_teacher": {
+                "rows": 2055,
+                "mae": 53.55983352661133,
+                "rmse": 75.51964187278531,
+                "r2": 0.528381884098053,
+                "mae_skill_vs_persistence": 0.07163561041011479
+              },
+              "india_student": {
+                "rows": 2055,
+                "mae": 57.692684173583984,
+                "rmse": 80.7026485344115,
+                "r2": 0.4614250063896179,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.05210781346240778
+              },
+              "beijing_matched_teacher": {
+                "rows": 2055,
+                "mae": 54.7242317199707,
+                "rmse": 76.35091618535922,
+                "r2": 0.5179421901702881,
+                "mae_skill_vs_persistence": 0.05145284009809448
+              },
+              "beijing_matched_student": {
+                "rows": 2055,
+                "mae": 54.83533477783203,
+                "rmse": 76.51718046458586,
+                "r2": 0.5158404111862183,
+                "mae_skill_vs_persistence": 0.0495270663288061
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 2055,
+                "mae": 80.67312622070312,
+                "rmse": 115.51720904669355,
+                "r2": -0.10347878932952881,
+                "mae_skill_vs_persistence": -0.39832506280997926
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 2055,
+                "mae": 63.993263244628906,
+                "rmse": 89.78133157845232,
+                "r2": 0.33343470096588135,
+                "mae_skill_vs_persistence": -0.10920932456683641
+              }
+            },
+            "JK001": {
+              "persistence": {
+                "rows": 1123,
+                "mae": 7.443988800048828,
+                "rmse": 13.365899813781011,
+                "r2": 0.0466843843460083
+              },
+              "india_teacher": {
+                "rows": 1123,
+                "mae": 10.94207763671875,
+                "rmse": 15.13203707841671,
+                "r2": -0.22189843654632568,
+                "mae_skill_vs_persistence": -0.4699212922844507
+              },
+              "india_student": {
+                "rows": 1123,
+                "mae": 7.443988800048828,
+                "rmse": 13.365899813781011,
+                "r2": 0.0466843843460083,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": 0.2785375592966488
+              },
+              "beijing_matched_teacher": {
+                "rows": 1123,
+                "mae": 10.409590721130371,
+                "rmse": 14.27969745903198,
+                "r2": -0.08812379837036133,
+                "mae_skill_vs_persistence": -0.398388820931876
+              },
+              "beijing_matched_student": {
+                "rows": 1123,
+                "mae": 10.317915916442871,
+                "rmse": 14.449256766981618,
+                "r2": -0.11411833763122559,
+                "mae_skill_vs_persistence": -0.3860735411605123
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1123,
+                "mae": 29.205169677734375,
+                "rmse": 33.89093476114778,
+                "r2": -5.129251003265381,
+                "mae_skill_vs_persistence": -2.9233226247657447
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1123,
+                "mae": 11.104467391967773,
+                "rmse": 14.865875779627398,
+                "r2": -0.17929184436798096,
+                "mae_skill_vs_persistence": -0.49173617669802705
+              }
+            },
+            "KA001": {
+              "persistence": {
+                "rows": 1975,
+                "mae": 9.21550464630127,
+                "rmse": 28.55467360635777,
+                "r2": -0.6200820207595825
+              },
+              "india_teacher": {
+                "rows": 1975,
+                "mae": 8.497644424438477,
+                "rmse": 21.690794592830375,
+                "r2": 0.06516802310943604,
+                "mae_skill_vs_persistence": 0.07789700612336115
+              },
+              "india_student": {
+                "rows": 1975,
+                "mae": 9.21550464630127,
+                "rmse": 28.55467360635777,
+                "r2": -0.6200820207595825,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": 0.16843900819095348
+              },
+              "beijing_matched_teacher": {
+                "rows": 1975,
+                "mae": 11.165328025817871,
+                "rmse": 28.543380114132308,
+                "r2": -0.6188008785247803,
+                "mae_skill_vs_persistence": -0.21158074943830463
+              },
+              "beijing_matched_student": {
+                "rows": 1975,
+                "mae": 11.082175254821777,
+                "rmse": 27.907671611326247,
+                "r2": -0.5474971532821655,
+                "mae_skill_vs_persistence": -0.20255761134792705
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1975,
+                "mae": 21.858070373535156,
+                "rmse": 34.70931359441314,
+                "r2": -1.3937273025512695,
+                "mae_skill_vs_persistence": -1.3718799146076175
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1975,
+                "mae": 10.938352584838867,
+                "rmse": 26.83546215008405,
+                "r2": -0.43087196350097656,
+                "mae_skill_vs_persistence": -0.18695101404230519
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1845,
+                "mae": 42.01681137084961,
+                "rmse": 57.91264130945419,
+                "r2": -0.6646761894226074
+              },
+              "india_teacher": {
+                "rows": 1845,
+                "mae": 31.078397750854492,
+                "rmse": 42.76627722602749,
+                "r2": 0.09220892190933228,
+                "mae_skill_vs_persistence": 0.26033421535609347
+              },
+              "india_student": {
+                "rows": 1845,
+                "mae": 42.01681137084961,
+                "rmse": 57.91264130945419,
+                "r2": -0.6646761894226074,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.04909113162197132
+              },
+              "beijing_matched_teacher": {
+                "rows": 1845,
+                "mae": 39.29451370239258,
+                "rmse": 54.25616054450637,
+                "r2": -0.4611039161682129,
+                "mae_skill_vs_persistence": 0.06479067734172961
+              },
+              "beijing_matched_student": {
+                "rows": 1845,
+                "mae": 40.05067825317383,
+                "rmse": 54.871454007013064,
+                "r2": -0.4944312572479248,
+                "mae_skill_vs_persistence": 0.04679396302404426
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1845,
+                "mae": 36.79772186279297,
+                "rmse": 49.642958612916594,
+                "r2": -0.22320234775543213,
+                "mae_skill_vs_persistence": 0.12421431655038762
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1845,
+                "mae": 40.03273391723633,
+                "rmse": 53.965734842670074,
+                "r2": -0.44550371170043945,
+                "mae_skill_vs_persistence": 0.047221038172111096
+              }
+            },
+            "UK001": {
+              "persistence": {
+                "rows": 1446,
+                "mae": 13.476611137390137,
+                "rmse": 22.296435645198287,
+                "r2": 0.2708456516265869
+              },
+              "india_teacher": {
+                "rows": 1446,
+                "mae": 12.016181945800781,
+                "rmse": 18.20342844435922,
+                "r2": 0.5139790773391724,
+                "mae_skill_vs_persistence": 0.10836768804120744
+              },
+              "india_student": {
+                "rows": 1446,
+                "mae": 13.476611137390137,
+                "rmse": 22.296435645198287,
+                "r2": 0.2708456516265869,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": 0.06448361319656448
+              },
+              "beijing_matched_teacher": {
+                "rows": 1446,
+                "mae": 14.128133773803711,
+                "rmse": 21.68403180009248,
+                "r2": 0.31035012006759644,
+                "mae_skill_vs_persistence": -0.04834469361559002
+              },
+              "beijing_matched_student": {
+                "rows": 1446,
+                "mae": 14.405531883239746,
+                "rmse": 22.100260378309176,
+                "r2": 0.28362011909484863,
+                "mae_skill_vs_persistence": -0.06892836310104467
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1446,
+                "mae": 22.221450805664062,
+                "rmse": 29.920517470836902,
+                "r2": -0.3130667209625244,
+                "mae_skill_vs_persistence": -0.648890108879957
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1446,
+                "mae": 14.826823234558105,
+                "rmse": 22.213747129276445,
+                "r2": 0.2762439250946045,
+                "mae_skill_vs_persistence": -0.10018928968143026
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1897,
+                "mae": 48.820159912109375,
+                "rmse": 73.2489301063077,
+                "r2": 0.03563642501831055
+              },
+              "india_teacher": {
+                "rows": 1897,
+                "mae": 39.014366149902344,
+                "rmse": 57.38732591593069,
+                "r2": 0.4080702066421509,
+                "mae_skill_vs_persistence": 0.20085542079051644
+              },
+              "india_student": {
+                "rows": 1897,
+                "mae": 48.820159912109375,
+                "rmse": 73.2489301063077,
+                "r2": 0.03563642501831055,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.0583801825672885
+              },
+              "beijing_matched_teacher": {
+                "rows": 1897,
+                "mae": 45.05116653442383,
+                "rmse": 67.97452920832737,
+                "r2": 0.16951721906661987,
+                "mae_skill_vs_persistence": 0.07720157788239201
+              },
+              "beijing_matched_student": {
+                "rows": 1897,
+                "mae": 46.12724304199219,
+                "rmse": 68.82357923410952,
+                "r2": 0.1486409306526184,
+                "mae_skill_vs_persistence": 0.05515993546447262
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1897,
+                "mae": 44.064247131347656,
+                "rmse": 66.45913335464134,
+                "r2": 0.20613336563110352,
+                "mae_skill_vs_persistence": 0.09741698489566109
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1897,
+                "mae": 45.16453552246094,
+                "rmse": 66.911186909169,
+                "r2": 0.19529682397842407,
+                "mae_skill_vs_persistence": 0.07487940220248424
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1897,
+                "mae": 48.820159912109375,
+                "rmse": 73.2489301063077,
+                "r2": 0.03563642501831055
+              },
+              "india_teacher": {
+                "rows": 1897,
+                "mae": 39.014366149902344,
+                "rmse": 57.38732591593069,
+                "r2": 0.4080702066421509,
+                "mae_skill_vs_persistence": 0.20085542079051644
+              },
+              "india_student": {
+                "rows": 1897,
+                "mae": 48.820159912109375,
+                "rmse": 73.2489301063077,
+                "r2": 0.03563642501831055,
+                "mae_skill_vs_persistence": 0.0,
+                "mae_skill_vs_beijing_matched_student": -0.0583801825672885
+              },
+              "beijing_matched_teacher": {
+                "rows": 1897,
+                "mae": 45.05116653442383,
+                "rmse": 67.97452920832737,
+                "r2": 0.16951721906661987,
+                "mae_skill_vs_persistence": 0.07720157788239201
+              },
+              "beijing_matched_student": {
+                "rows": 1897,
+                "mae": 46.12724304199219,
+                "rmse": 68.82357923410952,
+                "r2": 0.1486409306526184,
+                "mae_skill_vs_persistence": 0.05515993546447262
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1897,
+                "mae": 44.064247131347656,
+                "rmse": 66.45913335464134,
+                "r2": 0.20613336563110352,
+                "mae_skill_vs_persistence": 0.09741698489566109
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1897,
+                "mae": 45.16453552246094,
+                "rmse": 66.911186909169,
+                "r2": 0.19529682397842407,
+                "mae_skill_vs_persistence": 0.07487940220248424
+              }
+            }
+          }
+        },
+        "pm10_ug_m3": {
+          "future_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 10159,
+                "mae": 66.73023223876953,
+                "rmse": 110.90111199002921,
+                "r2": 0.1708802580833435
+              },
+              "india_teacher": {
+                "rows": 10159,
+                "mae": 50.19987869262695,
+                "rmse": 80.04221603414194,
+                "r2": 0.5680994987487793,
+                "mae_skill_vs_persistence": 0.24771910709069322
+              },
+              "india_student": {
+                "rows": 10159,
+                "mae": 64.97174072265625,
+                "rmse": 107.20391638135241,
+                "r2": 0.2252407670021057,
+                "mae_skill_vs_persistence": 0.02635224630750821,
+                "mae_skill_vs_beijing_matched_student": -0.0033082403460173992
+              },
+              "beijing_matched_teacher": {
+                "rows": 10159,
+                "mae": 58.94439697265625,
+                "rmse": 97.44163918405211,
+                "r2": 0.3599194884300232,
+                "mae_skill_vs_persistence": 0.11667628007429287
+              },
+              "beijing_matched_student": {
+                "rows": 10159,
+                "mae": 64.75750732421875,
+                "rmse": 106.83492029908807,
+                "r2": 0.23056507110595703,
+                "mae_skill_vs_persistence": 0.029562686182360576
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 10159,
+                "mae": 61.815643310546875,
+                "rmse": 97.58218691505638,
+                "r2": 0.3580716848373413,
+                "mae_skill_vs_persistence": 0.07364861118177457
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 10159,
+                "mae": 63.29737091064453,
+                "rmse": 104.0548420605692,
+                "r2": 0.27008873224258423,
+                "mae_skill_vs_persistence": 0.051443869037376855
+              }
+            },
+            "AS001": {
+              "persistence": {
+                "rows": 1712,
+                "mae": 125.73369598388672,
+                "rmse": 171.5352038850189,
+                "r2": -0.5927212238311768
+              },
+              "india_teacher": {
+                "rows": 1712,
+                "mae": 72.83792877197266,
+                "rmse": 101.99311595948522,
+                "r2": 0.4369136691093445,
+                "mae_skill_vs_persistence": 0.4206968291037342
+              },
+              "india_student": {
+                "rows": 1712,
+                "mae": 118.50435638427734,
+                "rmse": 164.13346679417637,
+                "r2": -0.4582350254058838,
+                "mae_skill_vs_persistence": 0.05749723288605024,
+                "mae_skill_vs_beijing_matched_student": 0.0015267716329931957
+              },
+              "beijing_matched_teacher": {
+                "rows": 1712,
+                "mae": 103.91607666015625,
+                "rmse": 148.49322638171077,
+                "r2": -0.1935662031173706,
+                "mae_skill_vs_persistence": 0.17352245277611567
+              },
+              "beijing_matched_student": {
+                "rows": 1712,
+                "mae": 118.68556213378906,
+                "rmse": 164.2274765759372,
+                "r2": -0.45990586280822754,
+                "mae_skill_vs_persistence": 0.056056046033999496
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1712,
+                "mae": 98.93021392822266,
+                "rmse": 144.60659860246696,
+                "r2": -0.13190364837646484,
+                "mae_skill_vs_persistence": 0.21317660191186172
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1712,
+                "mae": 109.81207275390625,
+                "rmse": 156.4156496925739,
+                "r2": -0.3243221044540405,
+                "mae_skill_vs_persistence": 0.12662972407985917
+              }
+            },
+            "DL001": {
+              "persistence": {
+                "rows": 2071,
+                "mae": 84.51480102539062,
+                "rmse": 113.92870149105316,
+                "r2": 0.2850951552391052
+              },
+              "india_teacher": {
+                "rows": 2071,
+                "mae": 75.04737854003906,
+                "rmse": 101.33838734655293,
+                "r2": 0.43437325954437256,
+                "mae_skill_vs_persistence": 0.11202088120052822
+              },
+              "india_student": {
+                "rows": 2071,
+                "mae": 81.91677856445312,
+                "rmse": 110.14470240892206,
+                "r2": 0.331795871257782,
+                "mae_skill_vs_persistence": 0.0307404434420544,
+                "mae_skill_vs_beijing_matched_student": -0.008759496877138062
+              },
+              "beijing_matched_teacher": {
+                "rows": 2071,
+                "mae": 79.54439544677734,
+                "rmse": 108.13643815944975,
+                "r2": 0.35594040155410767,
+                "mae_skill_vs_persistence": 0.05881106644408984
+              },
+              "beijing_matched_student": {
+                "rows": 2071,
+                "mae": 81.20545959472656,
+                "rmse": 109.37117850466822,
+                "r2": 0.3411481976509094,
+                "mae_skill_vs_persistence": 0.039156945180168434
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 2071,
+                "mae": 83.1571273803711,
+                "rmse": 112.30515244468972,
+                "r2": 0.30532556772232056,
+                "mae_skill_vs_persistence": 0.01606432989899187
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 2071,
+                "mae": 88.18570709228516,
+                "rmse": 119.85684413473224,
+                "r2": 0.2087610960006714,
+                "mae_skill_vs_persistence": -0.04343506725871227
+              }
+            },
+            "JK001": {
+              "persistence": {
+                "rows": 1122,
+                "mae": 25.236175537109375,
+                "rmse": 50.80490314520588,
+                "r2": -0.5943987369537354
+              },
+              "india_teacher": {
+                "rows": 1122,
+                "mae": 29.1026668548584,
+                "rmse": 45.44806498992146,
+                "r2": -0.2758995294570923,
+                "mae_skill_vs_persistence": -0.15321225326172794
+              },
+              "india_student": {
+                "rows": 1122,
+                "mae": 26.552513122558594,
+                "rmse": 50.77409564987347,
+                "r2": -0.5924656391143799,
+                "mae_skill_vs_persistence": -0.05216073978854552,
+                "mae_skill_vs_beijing_matched_student": 0.03056858874496493
+              },
+              "beijing_matched_teacher": {
+                "rows": 1122,
+                "mae": 27.792083740234375,
+                "rmse": 43.38534132396419,
+                "r2": -0.16271090507507324,
+                "mae_skill_vs_persistence": -0.10127953815214896
+              },
+              "beijing_matched_student": {
+                "rows": 1122,
+                "mae": 27.389780044555664,
+                "rmse": 50.24386817376325,
+                "r2": -0.5593795776367188,
+                "mae_skill_vs_persistence": -0.08533799046846258
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1122,
+                "mae": 35.12158203125,
+                "rmse": 50.48365927224001,
+                "r2": -0.5742994546890259,
+                "mae_skill_vs_persistence": -0.39171571300906116
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1122,
+                "mae": 28.415353775024414,
+                "rmse": 46.328143444347084,
+                "r2": -0.32579219341278076,
+                "mae_skill_vs_persistence": -0.1259770218843228
+              }
+            },
+            "KA001": {
+              "persistence": {
+                "rows": 1975,
+                "mae": 14.1895751953125,
+                "rmse": 37.60737070116292,
+                "r2": -0.46679389476776123
+              },
+              "india_teacher": {
+                "rows": 1975,
+                "mae": 14.101131439208984,
+                "rmse": 29.92954576937207,
+                "r2": 0.07098352909088135,
+                "mae_skill_vs_persistence": 0.0062330094372897715
+              },
+              "india_student": {
+                "rows": 1975,
+                "mae": 15.182625770568848,
+                "rmse": 36.80300506263891,
+                "r2": -0.40471982955932617,
+                "mae_skill_vs_persistence": -0.06998451761856828,
+                "mae_skill_vs_beijing_matched_student": 0.00642330571355354
+              },
+              "beijing_matched_teacher": {
+                "rows": 1975,
+                "mae": 16.12619972229004,
+                "rmse": 36.1034466817877,
+                "r2": -0.3518249988555908,
+                "mae_skill_vs_persistence": -0.13648220614929318
+              },
+              "beijing_matched_student": {
+                "rows": 1975,
+                "mae": 15.280778884887695,
+                "rmse": 36.71488510244772,
+                "r2": -0.3980010747909546,
+                "mae_skill_vs_persistence": -0.07690178702007033
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1975,
+                "mae": 26.439382553100586,
+                "rmse": 42.63100787022575,
+                "r2": -0.8848392963409424,
+                "mae_skill_vs_persistence": -0.8632962713242316
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1975,
+                "mae": 17.998924255371094,
+                "rmse": 36.89025770147519,
+                "r2": -0.4113883972167969,
+                "mae_skill_vs_persistence": -0.2684611066663225
+              }
+            },
+            "RJ001": {
+              "persistence": {
+                "rows": 1837,
+                "mae": 97.85591125488281,
+                "rmse": 145.10886942008403,
+                "r2": -0.8346503973007202
+              },
+              "india_teacher": {
+                "rows": 1837,
+                "mae": 68.90277862548828,
+                "rmse": 103.55797836387354,
+                "r2": 0.06560063362121582,
+                "mae_skill_vs_persistence": 0.29587515213037097
+              },
+              "india_student": {
+                "rows": 1837,
+                "mae": 95.6250228881836,
+                "rmse": 141.19088918021586,
+                "r2": -0.7369158267974854,
+                "mae_skill_vs_persistence": 0.02279768629294643,
+                "mae_skill_vs_beijing_matched_student": -0.009469899082511946
+              },
+              "beijing_matched_teacher": {
+                "rows": 1837,
+                "mae": 79.91059112548828,
+                "rmse": 121.82492961854113,
+                "r2": -0.29311680793762207,
+                "mae_skill_vs_persistence": 0.18338514147247387
+              },
+              "beijing_matched_student": {
+                "rows": 1837,
+                "mae": 94.72795867919922,
+                "rmse": 140.53675008694344,
+                "r2": -0.7208588123321533,
+                "mae_skill_vs_persistence": 0.03196488117653207
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1837,
+                "mae": 78.69672393798828,
+                "rmse": 117.44740345416326,
+                "r2": -0.20185542106628418,
+                "mae_skill_vs_persistence": 0.1957897798017647
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1837,
+                "mae": 86.20684051513672,
+                "rmse": 129.13082331980232,
+                "r2": -0.45286500453948975,
+                "mae_skill_vs_persistence": 0.11904309704299876
+              }
+            },
+            "UK001": {
+              "persistence": {
+                "rows": 1442,
+                "mae": 35.73194122314453,
+                "rmse": 47.98541801210942,
+                "r2": -0.12396860122680664
+              },
+              "india_teacher": {
+                "rows": 1442,
+                "mae": 29.66823959350586,
+                "rmse": 39.25263725216434,
+                "r2": 0.2479040026664734,
+                "mae_skill_vs_persistence": 0.1696997538356816
+              },
+              "india_student": {
+                "rows": 1442,
+                "mae": 36.11518478393555,
+                "rmse": 47.98431394493022,
+                "r2": -0.12391674518585205,
+                "mae_skill_vs_persistence": -0.010725517497011339,
+                "mae_skill_vs_beijing_matched_student": -0.009673472704713859
+              },
+              "beijing_matched_teacher": {
+                "rows": 1442,
+                "mae": 32.14120101928711,
+                "rmse": 41.981403411771204,
+                "r2": 0.13970082998275757,
+                "mae_skill_vs_persistence": 0.10049104753176985
+              },
+              "beijing_matched_student": {
+                "rows": 1442,
+                "mae": 35.76917266845703,
+                "rmse": 47.31397578609834,
+                "r2": -0.09273409843444824,
+                "mae_skill_vs_persistence": -0.0010419653687436803
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1442,
+                "mae": 34.818397521972656,
+                "rmse": 45.827765405169494,
+                "r2": -0.02516305446624756,
+                "mae_skill_vs_persistence": 0.025566584683066385
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1442,
+                "mae": 32.32680130004883,
+                "rmse": 42.71779271513364,
+                "r2": 0.10925543308258057,
+                "mae_skill_vs_persistence": 0.09529680746508407
+              }
+            }
+          },
+          "geographic_test": {
+            "pooled": {
+              "persistence": {
+                "rows": 1891,
+                "mae": 82.5453109741211,
+                "rmse": 116.65478501624997,
+                "r2": -0.13232910633087158
+              },
+              "india_teacher": {
+                "rows": 1891,
+                "mae": 62.03169250488281,
+                "rmse": 88.46012022993045,
+                "r2": 0.34887760877609253,
+                "mae_skill_vs_persistence": 0.24851343131615966
+              },
+              "india_student": {
+                "rows": 1891,
+                "mae": 79.69564819335938,
+                "rmse": 112.11449139021904,
+                "r2": -0.045902252197265625,
+                "mae_skill_vs_persistence": 0.03452240650780414,
+                "mae_skill_vs_beijing_matched_student": -0.009202836585620489
+              },
+              "beijing_matched_teacher": {
+                "rows": 1891,
+                "mae": 70.34054565429688,
+                "rmse": 100.18698338918584,
+                "r2": 0.16480058431625366,
+                "mae_skill_vs_persistence": 0.1478553436384843
+              },
+              "beijing_matched_student": {
+                "rows": 1891,
+                "mae": 78.96891021728516,
+                "rmse": 111.49317261188014,
+                "r2": -0.03434193134307861,
+                "mae_skill_vs_persistence": 0.04332651624460149
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1891,
+                "mae": 72.79478454589844,
+                "rmse": 104.03228728080047,
+                "r2": 0.09945821762084961,
+                "mae_skill_vs_persistence": 0.11812332297445172
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1891,
+                "mae": 74.24903106689453,
+                "rmse": 106.1269047973934,
+                "r2": 0.06282955408096313,
+                "mae_skill_vs_persistence": 0.10050576839946179
+              }
+            },
+            "HP001": {
+              "persistence": {
+                "rows": 1891,
+                "mae": 82.5453109741211,
+                "rmse": 116.65478501624997,
+                "r2": -0.13232910633087158
+              },
+              "india_teacher": {
+                "rows": 1891,
+                "mae": 62.03169250488281,
+                "rmse": 88.46012022993045,
+                "r2": 0.34887760877609253,
+                "mae_skill_vs_persistence": 0.24851343131615966
+              },
+              "india_student": {
+                "rows": 1891,
+                "mae": 79.69564819335938,
+                "rmse": 112.11449139021904,
+                "r2": -0.045902252197265625,
+                "mae_skill_vs_persistence": 0.03452240650780414,
+                "mae_skill_vs_beijing_matched_student": -0.009202836585620489
+              },
+              "beijing_matched_teacher": {
+                "rows": 1891,
+                "mae": 70.34054565429688,
+                "rmse": 100.18698338918584,
+                "r2": 0.16480058431625366,
+                "mae_skill_vs_persistence": 0.1478553436384843
+              },
+              "beijing_matched_student": {
+                "rows": 1891,
+                "mae": 78.96891021728516,
+                "rmse": 111.49317261188014,
+                "r2": -0.03434193134307861,
+                "mae_skill_vs_persistence": 0.04332651624460149
+              },
+              "original_six_input_nan_stress_teacher": {
+                "rows": 1891,
+                "mae": 72.79478454589844,
+                "rmse": 104.03228728080047,
+                "r2": 0.09945821762084961,
+                "mae_skill_vs_persistence": 0.11812332297445172
+              },
+              "original_six_input_nan_stress_student": {
+                "rows": 1891,
+                "mae": 74.24903106689453,
+                "rmse": 106.1269047973934,
+                "r2": 0.06282955408096313,
+                "mae_skill_vs_persistence": 0.10050576839946179
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

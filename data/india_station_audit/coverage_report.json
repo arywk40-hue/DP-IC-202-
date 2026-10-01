@@ -1,0 +1,570 @@
+{
+  "source_url": "https://www.kaggle.com/datasets/abhisheksjha/time-series-air-quality-data-of-india-2010-2023",
+  "source_role": "Secondary compilation attributed by publisher to CPCB; not a direct CPCB export",
+  "source_version_downloaded": 2,
+  "publisher_license": "CC BY-NC-SA 4.0",
+  "audited_at_utc": "2026-09-10T04:07:36.679298+00:00",
+  "station_inventory": {
+    "stations": 453,
+    "cities": 241,
+    "states_and_uts": 31,
+    "mandi_himachal_stations": [],
+    "himachal_stations": [
+      {
+        "file_name": "HP001",
+        "state": "Himachal Pradesh",
+        "city": "Baddi",
+        "agency": "HPPCB",
+        "station_location": "HIMUDA Complex Phase 1, Baddi ",
+        "start_month": "March",
+        "start_month_num": 3,
+        "start_year": 2022
+      }
+    ]
+  },
+  "downloaded_samples": [
+    {
+      "station_id": "HP001",
+      "state": "Himachal Pradesh",
+      "city": "Baddi",
+      "station_location": "HIMUDA Complex Phase 1, Baddi",
+      "downloaded_file": "raw/HP001.csv",
+      "sha256": "aa8391ce413c1ffc0bc4f932defb0c604a7432ba32bc4ddb6adffa7936155e0d",
+      "transport": "ZIP containing CSV",
+      "rows": 9247,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)",
+        "Toluene (ug/m3)",
+        "Eth-Benzene (ug/m3)",
+        "MP-Xylene (ug/m3)",
+        "O Xylene (ug/m3)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (degree)",
+        "SR (W/mt2)",
+        "Xylene (ug/m3)",
+        "RF (mm)",
+        "AT (degree C)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "AT (degree C)",
+          "finite_rows": 8846,
+          "median_raw": 29.92
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 8184,
+          "median_raw": 66.5
+        },
+        "pressure_hpa": {
+          "source_column": null,
+          "finite_rows": 0
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 8742,
+          "median_raw": 52.0
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 8724,
+          "median_raw": 140.0
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 8845,
+          "median_raw": 1.2
+        }
+      },
+      "first_source_timestamp": "2022-03-11 17:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 9247,
+      "rows_with_all_six_finite_raw_values": 0,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Missing pressure_hpa"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "UK001",
+      "state": "Uttarakhand",
+      "city": "Dehradun",
+      "station_location": "Doon University, Dehradun",
+      "downloaded_file": "raw/UK001.csv",
+      "sha256": "6417c3ec9ad31fcdd7ddaebef7cdd995bd43c787a777af64d3b7661c18dd5716",
+      "transport": "CSV",
+      "rows": 8240,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (degree)",
+        "SR (W/mt2)",
+        "BP (mmHg)",
+        "AT (degree)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "AT (degree)",
+          "finite_rows": 5673,
+          "median_raw": 24.09
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 5691,
+          "median_raw": 75.83
+        },
+        "pressure_hpa": {
+          "source_column": "BP (mmHg)",
+          "finite_rows": 5763,
+          "median_raw": 800.24,
+          "outside_300_1100_hpa_if_declared_mmHg_used": 40
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 5612,
+          "median_raw": 27.115000000000002
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 5602,
+          "median_raw": 73.92500000000001
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 5763,
+          "median_raw": 0.97
+        }
+      },
+      "first_source_timestamp": "2022-04-22 16:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 8240,
+      "rows_with_all_six_finite_raw_values": 5456,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Temperature unit 'degree' is ambiguous; obtain Celsius confirmation",
+        "Confirm BP units and station-vs-sea-level pressure; mmHg header not sufficient evidence"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "JK001",
+      "state": "Jammu and Kashmir",
+      "city": "Srinagar",
+      "station_location": "Rajbagh, Srinagar",
+      "downloaded_file": "raw/JK001.csv",
+      "sha256": "3445c01e5141b0604ca442570e452c20c1b9f4baac712471b9f370cf9fb35371",
+      "transport": "ZIP containing CSV",
+      "rows": 18733,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)",
+        "Toluene (ug/m3)",
+        "Eth-Benzene (ug/m3)",
+        "MP-Xylene (ug/m3)",
+        "O Xylene (ug/m3)",
+        "Temp (degree C)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (degree)",
+        "SR (W/mt2)",
+        "Xylene (ug/m3)",
+        "RF (mm)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "Temp (degree C)",
+          "finite_rows": 13983,
+          "median_raw": 15.13
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 15279,
+          "median_raw": 74.58
+        },
+        "pressure_hpa": {
+          "source_column": null,
+          "finite_rows": 0
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 16052,
+          "median_raw": 22.67
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 16049,
+          "median_raw": 61.2
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 16525,
+          "median_raw": 0.3
+        }
+      },
+      "first_source_timestamp": "2021-02-09 11:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 18733,
+      "rows_with_all_six_finite_raw_values": 0,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Missing pressure_hpa"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "DL001",
+      "state": "Delhi",
+      "city": "Delhi",
+      "station_location": "ITO, Delhi",
+      "downloaded_file": "raw/DL001.csv",
+      "sha256": "13edc9df083638be3d504efce4f807a33d8828b58e6160bbdd8a07ba839257e0",
+      "transport": "ZIP containing CSV",
+      "rows": 116112,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": null,
+          "finite_rows": 0
+        },
+        "relative_humidity_pct": {
+          "source_column": null,
+          "finite_rows": 0
+        },
+        "pressure_hpa": {
+          "source_column": null,
+          "finite_rows": 0
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 76836,
+          "median_raw": 95.25
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 45000,
+          "median_raw": 162.75
+        },
+        "wind_speed_mps": {
+          "source_column": null,
+          "finite_rows": 0
+        }
+      },
+      "first_source_timestamp": "2010-01-01 00:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 116112,
+      "rows_with_all_six_finite_raw_values": 0,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Missing temperature_c",
+        "Missing relative_humidity_pct",
+        "Missing pressure_hpa",
+        "Missing wind_speed_mps"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "RJ001",
+      "state": "Rajasthan",
+      "city": "Jodhpur",
+      "station_location": "Collectorate, Jodhpur",
+      "downloaded_file": "raw/RJ001.csv",
+      "sha256": "367a8f3cc176a07450335a16f048084515d6501ad33dc78dc0766a9ceb81f8bf",
+      "transport": "ZIP containing CSV",
+      "rows": 64272,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)",
+        "Toluene (ug/m3)",
+        "Eth-Benzene (ug/m3)",
+        "MP-Xylene (ug/m3)",
+        "O Xylene (ug/m3)",
+        "Temp (degree C)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (deg)",
+        "SR (W/mt2)",
+        "BP (mmHg)",
+        "VWS (m/s)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "Temp (degree C)",
+          "finite_rows": 50929,
+          "median_raw": 30.31
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 51614,
+          "median_raw": 38.84
+        },
+        "pressure_hpa": {
+          "source_column": "BP (mmHg)",
+          "finite_rows": 51212,
+          "median_raw": 738.25,
+          "outside_300_1100_hpa_if_declared_mmHg_used": 4
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 50431,
+          "median_raw": 70.97
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 50102,
+          "median_raw": 154.975
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 51648,
+          "median_raw": 0.78
+        }
+      },
+      "first_source_timestamp": "2015-12-01 00:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 64272,
+      "rows_with_all_six_finite_raw_values": 48486,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Confirm BP units and station-vs-sea-level pressure; mmHg header not sufficient evidence"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "KA001",
+      "state": "Karnataka",
+      "city": "Bengaluru",
+      "station_location": "BTM Layout, Bengaluru",
+      "downloaded_file": "raw/KA001.csv",
+      "sha256": "bf9375300ac5e65060a2786715299418213154165d12624b22167fe65b2046ef",
+      "transport": "ZIP containing CSV",
+      "rows": 116050,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)",
+        "Toluene (ug/m3)",
+        "Eth-Benzene (ug/m3)",
+        "MP-Xylene (ug/m3)",
+        "O Xylene (ug/m3)",
+        "Temp (degree C)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (deg)",
+        "SR (W/mt2)",
+        "BP (mmHg)",
+        "VWS (m/s)",
+        "CH4 (ug/m3)",
+        "NMHC ()",
+        "THC (ug/m3)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "Temp (degree C)",
+          "finite_rows": 44306,
+          "median_raw": 25.2
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 93259,
+          "median_raw": 71.56
+        },
+        "pressure_hpa": {
+          "source_column": "BP (mmHg)",
+          "finite_rows": 82738,
+          "median_raw": 998.68,
+          "outside_300_1100_hpa_if_declared_mmHg_used": 71272
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 54114,
+          "median_raw": 26.21
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 17345,
+          "median_raw": 67.06
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 83610,
+          "median_raw": 1.17
+        }
+      },
+      "first_source_timestamp": "2010-01-03 14:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 116050,
+      "rows_with_all_six_finite_raw_values": 0,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Confirm BP units and station-vs-sea-level pressure; mmHg header not sufficient evidence"
+      ],
+      "approved_for_model_evaluation": false
+    },
+    {
+      "station_id": "AS001",
+      "state": "Assam",
+      "city": "Guwahati",
+      "station_location": "Railway Colony, Guwahati",
+      "downloaded_file": "raw/AS001.csv",
+      "sha256": "ff8f93cfe861640aa92885c636baa7144871310a2ad57bc6f80d50f5c2435544",
+      "transport": "ZIP containing CSV",
+      "rows": 35808,
+      "columns": [
+        "From Date",
+        "To Date",
+        "PM2.5 (ug/m3)",
+        "PM10 (ug/m3)",
+        "NO (ug/m3)",
+        "NO2 (ug/m3)",
+        "NOx (ppb)",
+        "NH3 (ug/m3)",
+        "SO2 (ug/m3)",
+        "CO (mg/m3)",
+        "Ozone (ug/m3)",
+        "Benzene (ug/m3)",
+        "Toluene (ug/m3)",
+        "Eth-Benzene (ug/m3)",
+        "MP-Xylene (ug/m3)",
+        "O Xylene (ug/m3)",
+        "RH (%)",
+        "WS (m/s)",
+        "WD (degree)",
+        "SR (W/mt2)",
+        "BP (mmHg)",
+        "AT (degree C)",
+        "RF (mm)"
+      ],
+      "sensor_audit": {
+        "temperature_c": {
+          "source_column": "AT (degree C)",
+          "finite_rows": 34124,
+          "median_raw": 25.29
+        },
+        "relative_humidity_pct": {
+          "source_column": "RH (%)",
+          "finite_rows": 34190,
+          "median_raw": 81.08
+        },
+        "pressure_hpa": {
+          "source_column": "BP (mmHg)",
+          "finite_rows": 24261,
+          "median_raw": 994.16,
+          "outside_300_1100_hpa_if_declared_mmHg_used": 24060
+        },
+        "pm25_ug_m3": {
+          "source_column": "PM2.5 (ug/m3)",
+          "finite_rows": 33733,
+          "median_raw": 38.64
+        },
+        "pm10_ug_m3": {
+          "source_column": "PM10 (ug/m3)",
+          "finite_rows": 34290,
+          "median_raw": 70.805
+        },
+        "wind_speed_mps": {
+          "source_column": "WS (m/s)",
+          "finite_rows": 34144,
+          "median_raw": 0.9
+        }
+      },
+      "first_source_timestamp": "2019-03-01 00:00:00",
+      "last_source_timestamp": "2023-03-31 23:00:00",
+      "invalid_timestamp_rows": 0,
+      "duplicate_interval_rows": 0,
+      "one_hour_interval_rows": 35808,
+      "rows_with_all_six_finite_raw_values": 22633,
+      "blockers": [
+        "Verify source timezone and interval-end availability before causal six-hour alignment",
+        "Verify station coordinates/elevation and measurement metadata with primary provider",
+        "Confirm BP units and station-vs-sea-level pressure; mmHg header not sufficient evidence"
+      ],
+      "approved_for_model_evaluation": false
+    }
+  ],
+  "current_model_retrained": false,
+  "evaluation_status": "NOT_RUN_PENDING_UNIT_TIME_AND_LOCATION_VERIFICATION",
+  "downloaded_station_rows": 368462
+}

@@ -1,0 +1,45 @@
+{
+  "scope": "ML integration traceability; not autonomous field firmware",
+  "checks": {
+    "recorder_unit_tests": 6,
+    "recorder_tests": "PASS",
+    "changed_python_lint": "PASS",
+    "physical_esp32": "NOT_RUN: no USB board detected"
+  },
+  "builds": {
+    "esp32-s3-ml": {
+      "status": "PASS",
+      "flash_bytes": 316829,
+      "static_ram_bytes": 18848,
+      "source_identity": {
+        "forecast": "7bf0227105ce9477c36e63be3dbaa78f2008a3d412b0dfd7222f97b4105835af",
+        "events": "71590148435803b332c37420c99a925c5cd7a3934fb789a4de7059c290708b55",
+        "runtime": "d5c5ed507adfe0ef6675529b658816b2d816b2b9ba2ae1d85a345a4a8efc966f",
+        "application": "ad7f6322d92f996b8e903ec5c73188506fde2a1b456c2a1dbdc10b4e39161a2a",
+        "fixture": "b98896d9c714d1cf83c0393e58e1ddad7e61dd335d224ec3a22c7568e91e3dc1",
+        "platform": "f635a6c8246a68aff5fa1caeb7594e19e277c9555c85c395fe1b658887a99f20",
+        "identity_script": "943d54af51452355c6e6cb3b4291d35c66c7866ccb054f2777203419104dcf95",
+        "environment": "1feb0739d874d4615edae24ca68be6b9d27f7010b290e9f36635f3cf67f503a7",
+        "build": "c1b226ebb0dafd97774bca33fe80258572ffbcc0f3343c8b662c07730e91fd6c"
+      },
+      "binary_sha256": "b00617ee74bc9ae80d61048e4c3c94b941e6bac877395685131f254560e5cef6"
+    },
+    "esp32-s3-ml-usb": {
+      "status": "PASS",
+      "flash_bytes": 314077,
+      "static_ram_bytes": 19080,
+      "source_identity": {
+        "forecast": "7bf0227105ce9477c36e63be3dbaa78f2008a3d412b0dfd7222f97b4105835af",
+        "events": "71590148435803b332c37420c99a925c5cd7a3934fb789a4de7059c290708b55",
+        "runtime": "d5c5ed507adfe0ef6675529b658816b2d816b2b9ba2ae1d85a345a4a8efc966f",
+        "application": "ad7f6322d92f996b8e903ec5c73188506fde2a1b456c2a1dbdc10b4e39161a2a",
+        "fixture": "b98896d9c714d1cf83c0393e58e1ddad7e61dd335d224ec3a22c7568e91e3dc1",
+        "platform": "f635a6c8246a68aff5fa1caeb7594e19e277c9555c85c395fe1b658887a99f20",
+        "identity_script": "943d54af51452355c6e6cb3b4291d35c66c7866ccb054f2777203419104dcf95",
+        "environment": "26736babc5a6372524d849ea8ac0e145a0948a9b74ca88d3bcc7f696ead03edb",
+        "build": "df0c012cd71fd3f067384142e25a157ff72ab88363b41454b2a4872aa9dcad12"
+      },
+      "binary_sha256": "ae6b6aacf8234e058bde95a4c2ffb1edeb052fa5f185293a4b0d6d9b86724eef"
+    }
+  }
+}

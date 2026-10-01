@@ -1,0 +1,108 @@
+{
+  "checked_at_utc": "2026-09-11T09:12:54.200679+00:00",
+  "requests": [
+    {
+      "name": "historical_portal",
+      "url": "https://dsp.imdpune.gov.in/",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 46150,
+      "sha256": "d6b1fcd73f481dcbb30fca5782826b1dfafc146ac9ab662ea631cea81b1fccd5",
+      "response_file": "historical_portal.response"
+    },
+    {
+      "name": "aws_hp",
+      "url": "https://api.imd.gov.in/api/v1/aws_data?sid=3",
+      "http_status": "401",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 27,
+      "sha256": "8822d082580a062c206859ed757108c68432cfccf11393297e57c9fb3ef0d013",
+      "response_file": "aws_hp.response"
+    },
+    {
+      "name": "current_weather",
+      "url": "https://api.imd.gov.in/api/v1/current_wx",
+      "http_status": "401",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 27,
+      "sha256": "8822d082580a062c206859ed757108c68432cfccf11393297e57c9fb3ef0d013",
+      "response_file": "current_weather.response"
+    },
+    {
+      "name": "api_reference",
+      "url": "https://api.imd.gov.in/public/api_reference.html",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 58564,
+      "sha256": "15290a325911f201397f84cd4dbf1aa1e4cd2f77ed4af471f21a65d6f98bdb11",
+      "response_file": "api_reference.response"
+    },
+    {
+      "name": "home_freedataaccess.php",
+      "url": "https://dsp.imdpune.gov.in/home_freedataaccess.php",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 41098,
+      "sha256": "047303a64e586d7e82ae678ad7147c1f4710d0c4fd4ef9321f8a8fd8f8cf330b",
+      "response_file": "home_freedataaccess.response"
+    },
+    {
+      "name": "home_station_list.php",
+      "url": "https://dsp.imdpune.gov.in/home_station_list.php",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 4284,
+      "sha256": "42c00d93f97d1bcecac1dd4b486b2cd4998ab9391b23cef491c79f27a9e41a71",
+      "response_file": "home_station_list.response"
+    },
+    {
+      "name": "home_sampledata_costestimate.php",
+      "url": "https://dsp.imdpune.gov.in/home_sampledata_costestimate.php",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 41441,
+      "sha256": "b97ef749acade185d00aadc532e190849b000d253480d263c08f9ba1ac5a24b7",
+      "response_file": "home_sampledata_costestimate.response"
+    },
+    {
+      "name": "surface_stations",
+      "url": "https://dsp.imdpune.gov.in/home_station_list.php",
+      "public_query": "a_type=SURFACE",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 909800,
+      "sha256": "4b8c1e3f56f79c424699d3438bad5030b4b2e49d7015e32ce447428e6477ee83",
+      "response_file": "surface_stations.response"
+    },
+    {
+      "name": "autographic_stations",
+      "url": "https://dsp.imdpune.gov.in/home_station_list.php",
+      "public_query": "a_type=AUTOGRAPHIC",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 512052,
+      "sha256": "3005da95b321fb5d602c0abe74d7a0dd04cd67269daa99b35cd17c5e8a2c4514",
+      "response_file": "autographic_stations.response"
+    },
+    {
+      "name": "surface_formats",
+      "url": "https://dsp.imdpune.gov.in/home_sampledata_costestimate.php",
+      "public_query": "datatype=SURFACE",
+      "http_status": "200",
+      "curl_returncode": 0,
+      "error": "",
+      "bytes": 45231,
+      "sha256": "8f3d1c388d0e4bacfbfd398697618145f5a8650fa8fff74cb20a7d6c6fc32906",
+      "response_file": "surface_formats.response"
+    }
+  ]
+}
