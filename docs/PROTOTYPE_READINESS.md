@@ -66,6 +66,13 @@ unverified source declarations. Each test forecast is paired only with an
 observation from the same station at exactly `t + 6 hours`; the saved student
 is compared with the unchanged-current-value (persistence) baseline.
 
+To create that CSV from recorder journals, run
+`python3 -m ml.deployment.convert_field --input results/field/session-001.jsonl --output results/field/observations.csv --report results/field/conversion_report.json`.
+See the [conversion guide](../esp32/ml_integration/README.md#convert-field-recordings-for-forecast-evaluation)
+for exclusions, duplicate handling and provenance requirements. The evaluator
+checks the selected model's six-hour horizon, six outputs and ordered six-input
+student contract before inference; reduced-input models are unsupported here.
+
 `observations.csv` must have exactly `timestamp_utc,location_id,temperature_c,relative_humidity_pct,pressure_hpa,pm25_ug_m3,pm10_ug_m3,wind_speed_mps`.
 Every timestamp needs an explicit UTC offset, and all six measurements must be
 observed at the same location and hour. The provenance JSON needs

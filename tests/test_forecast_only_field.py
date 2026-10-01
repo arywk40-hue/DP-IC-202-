@@ -1,11 +1,13 @@
 import unittest
+import json
+import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
 
-from ml.deployment.evaluate_forecast import evaluate
+from ml.deployment.evaluate_forecast import evaluate, validate_model
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 
 
@@ -22,7 +24,7 @@ class ForecastOnlyFieldTests(unittest.TestCase):
             return result
         self.predict_patch = patch("ml.deployment.evaluate_forecast.predict", side_effect=fake_predict)
         self.hash_patch = patch("ml.deployment.evaluate_forecast.sha256", return_value="test-hash")
-        self.predict_patch.start()
+        self.predict_mock = self.predict_patch.start()
         self.hash_patch.start()
         self.addCleanup(self.predict_patch.stop)
         self.addCleanup(self.hash_patch.stop)
@@ -48,6 +50,19 @@ class ForecastOnlyFieldTests(unittest.TestCase):
         self.assertEqual(report["six_hour_test_pairs"], 1)
         self.assertEqual(report["metrics"]["ALL"]["temperature_c"]["pairs"], 1)
         self.assertFalse(report["field_deployment_approved"])
+
+    def test_incompatible_model_rejected_before_inference(self):
+        reduced = self.model_dir.parent / 'india_cpcb_5sensor_6h'
+        with self.assertRaisesRegex(ValueError, 'Incompatible forecast model'):
+            evaluate(self.frame, self.provenance, '2026-01-01T00:00Z', reduced)
+        self.predict_mock.assert_not_called()
+        metadata = json.loads((self.model_dir / 'training_report.json').read_text())
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            metadata['horizon_hours'] = 12
+            (path / 'training_report.json').write_text(json.dumps(metadata))
+            with self.assertRaisesRegex(ValueError, 'six-hour student'):
+                validate_model(path)
 
     def test_missing_pm_and_unverified_provenance_are_rejected(self):
         frame = self.frame.drop(columns=["pm10_ug_m3"])

@@ -11,9 +11,25 @@ import pandas as pd
 
 from ml.deployment.field_validation import forecast_metrics, utc_times
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
-from ml.six_sensor_forecast.data import sha256
+from ml.six_sensor_forecast.data import SCHEMA, sha256
 from ml.six_sensor_forecast.features import validate_observations
 from ml.six_sensor_forecast.predict import predict
+
+
+def validate_model(model_dir: Path) -> None:
+    report = json.loads((model_dir / "training_report.json").read_text())
+    if (
+        report.get("schema_version") != SCHEMA
+        or report.get("horizon_hours") != 6
+        or report.get("sensor_profile", RAW_SENSOR_COLUMNS) != RAW_SENSOR_COLUMNS
+        or set(report.get("models", {})) != set(RAW_SENSOR_COLUMNS)
+        or report.get("architecture", {}).get("student_features") != RAW_SENSOR_COLUMNS
+    ):
+        raise ValueError(
+            "Incompatible forecast model: this evaluator requires a six-hour student "
+            "with all six canonical sensor inputs and outputs in the expected order. "
+            "Use ml/models/uci_beijing_6h; reduced-input models are unsupported."
+        )
 
 
 def evaluate(
@@ -23,6 +39,7 @@ def evaluate(
     model_dir: Path,
 ) -> dict:
     """Use only observed six-hour pairs at/after a preselected test cutoff."""
+    validate_model(model_dir)
     if (
         provenance.get("timezone_verified") is not True
         or provenance.get("units_verified") is not True
@@ -65,8 +82,11 @@ def main() -> None:
     parser.add_argument("--model", type=Path, default=Path("ml/models/uci_beijing_6h"))
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    provenance = json.loads(args.provenance.read_text())
-    report = evaluate(pd.read_csv(args.observations), provenance, args.test_start, args.model)
+    try:
+        provenance = json.loads(args.provenance.read_text())
+        report = evaluate(pd.read_csv(args.observations), provenance, args.test_start, args.model)
+    except (ValueError, OSError) as exc:
+        parser.error(str(exc))
     report["input_sha256"] = {
         str(args.observations): sha256(args.observations),
         str(args.provenance): sha256(args.provenance),

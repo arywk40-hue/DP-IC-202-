@@ -148,3 +148,28 @@ The recorder does not feed measurements into it. A sensor/controller integration
 must supply real six-channel hourly snapshots and verified time before field use.
 Record sensor IDs/calibration, placement, clock source and wiring separately.
 No recorded experimental score is an operational hazard warning.
+
+## Convert field recordings for forecast evaluation
+
+From the repository root, convert one or more completed recorder journals:
+
+```sh
+python3 -m ml.deployment.convert_field --input results/field/session-001.jsonl --output results/field/observations.csv --report results/field/conversion_report.json
+python3 -m ml.deployment.evaluate_forecast --observations results/field/observations.csv --provenance provenance.json --test-start 2026-10-01T00:00:00Z --output results/field/forecast_evaluation.json
+```
+
+Choose the test cutoff before examining errors; the date above is an example.
+Pass multiple journal paths after `--input` to combine sessions. Both converter
+outputs must be new files. It exports only recorded `OBSERVATION` measurements,
+rechecks firmware/session identity and sequence, and excludes stale, rejected,
+invalid and out-of-range records. Repeated identical station-hours are counted
+once; conflicting readings fail conversion. Gaps remain gaps. An interrupted
+final line without a newline is excluded and counted; malformed complete lines
+fail conversion. The report includes source/output hashes and exclusion counts.
+
+The CSV contains measured inputs, never predicted values or event labels.
+Conversion does not certify calibration, timezone or pressure reference;
+provide the separately verified provenance described in
+[Prototype readiness](../../docs/PROTOTYPE_READINESS.md).
+The forecast evaluator requires the complete six-input, six-output, six-hour
+student model; a reduced-input `--model` is rejected with a compatibility error.
