@@ -1,5 +1,6 @@
 """Host-test actual firmware serial receiver with an Arduino shim."""
 import shutil
+import runpy
 import subprocess
 import tempfile
 import unittest
@@ -15,6 +16,12 @@ class SerialReceiverTests(unittest.TestCase):
             self.skipTest('C++ compiler unavailable')
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            project = ROOT/'esp32/ml_integration'
+            identity = runpy.run_path(str(project/'tools/build_identity.py'))['identity']
+            hashes = identity(project)
+            (root/'build_identity.h').write_text('#pragma once\n' + ''.join(
+                f'#define INDRA_{key.upper()}_SHA256 "{value}"\n'
+                for key, value in hashes.items()))
             (root/'Arduino.h').write_text(r'''
 #pragma once
 #include <string>

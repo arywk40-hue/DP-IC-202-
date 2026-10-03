@@ -1,0 +1,87 @@
+{
+  "phase_commits": [
+    "042897a93aaf3a1228096425da8b2ca818ef1c28",
+    "0377613186c9b0f7eaa4c800e849dc26f09667dc",
+    "fc77b0774a78004ea65d6569d64b2c5dbbf95015",
+    "18257d8fc1bf8aeadbd3023049a1dad3661fa632",
+    "1106855db5282201163e87ab5ea58b82b39ef428"
+  ],
+  "intermediate_snapshot_checks": [
+    {
+      "phase": 1,
+      "commit": "042897a93aaf3a1228096425da8b2ca818ef1c28",
+      "returncode": 1,
+      "tail": [
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_review_serial.py::SerialReceiverTests::test_control_bytes_and_bounded_drain",
+        "1 failed, 11 passed, 1 warning in 6.14s"
+      ]
+    },
+    {
+      "phase": 2,
+      "commit": "0377613186c9b0f7eaa4c800e849dc26f09667dc",
+      "returncode": 0,
+      "tail": [
+        "    stations=stations.set_index('location_id',verify_integrity=True);sha=digest(path)",
+        "",
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+        "15 passed, 1 warning in 2.40s"
+      ]
+    },
+    {
+      "phase": 3,
+      "commit": "fc77b0774a78004ea65d6569d64b2c5dbbf95015",
+      "returncode": 0,
+      "tail": [
+        "    stations=stations.set_index('location_id',verify_integrity=True);sha=digest(path)",
+        "",
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+        "31 passed, 1 warning in 2.25s"
+      ]
+    },
+    {
+      "phase": 5,
+      "commit": "1106855db5282201163e87ab5ea58b82b39ef428",
+      "returncode": 1,
+      "tail": [
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_review_serial.py::SerialReceiverTests::test_control_bytes_and_bounded_drain",
+        "1 failed, 96 passed, 1 warning, 8 subtests passed in 7.58s"
+      ]
+    }
+  ],
+  "clean_checkout_fix": "Generate build_identity.h in the serial test temporary directory using the real identity function; no prior PlatformIO output required.",
+  "final_clean_checkout_tests": "97 passed, eight subtests passed, one existing pandas warning in 10.01 seconds",
+  "final_working_tree_tests": "97 passed, 1 warning, 8 subtests passed in 12.55s",
+  "lint": {
+    "version": "ruff 0.16.10",
+    "selectors": [
+      "E9",
+      "F63",
+      "F7",
+      "F82"
+    ],
+    "result": "All checks passed",
+    "scope": [
+      "ml/six_sensor_forecast",
+      "ml/event_classifier",
+      "ml/deployment",
+      "ml/datasets",
+      "ml/spatial_ensemble",
+      "ml/field",
+      "tests",
+      "esp32/ml_integration/tools"
+    ]
+  },
+  "credential_scan": "No high-confidence token/private-key patterns or non-placeholder credential JSON fields found; not a full security audit.",
+  "excluded": "Existing Git ignore rules retain raw downloads, rasters, local stores and generated model arrays outside publication.",
+  "not_verified": [
+    "GitHub-hosted workflow execution",
+    "fresh firmware build or physical board operation",
+    "actual A/B/C field data",
+    "ERA5 or PM training",
+    "live authentication and transport reliability"
+  ]
+}
