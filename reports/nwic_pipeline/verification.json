@@ -1,0 +1,69 @@
+{
+  "python": "3.11.8",
+  "numpy": "2.3.4",
+  "pandas": "3.0.3",
+  "sklearn": "1.7.2",
+  "pyarrow": "21.0.0",
+  "rasterio": "1.4.3",
+  "xarray": "2025.10.1",
+  "tests": {
+    "count": 67,
+    "result": "passed",
+    "command": "OMP_NUM_THREADS=1 /tmp/indra-data-venv/bin/python -m unittest discover -s tests -q"
+  },
+  "source_ast_files": 17,
+  "patches": [
+    {
+      "patch": "reports/nwic_pipeline/patches/01-registry-schema.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/02-nwic-quarantine.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/03-noaa-india.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/04-terrain-background.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/05-masked-ensemble-guards.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/06-national-evaluation.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/07-tests-collection.patch",
+      "syntax_parsed": true,
+      "error": null
+    },
+    {
+      "patch": "reports/nwic_pipeline/patches/08-local-artifact-ignores.patch",
+      "syntax_parsed": true,
+      "error": null
+    }
+  ],
+  "git_commits": "none; separate patch artifacts",
+  "hardware": "not tested",
+  "era5_download": "not obtained",
+  "historical_hourly_completeness": "not measured beyond 2024",
+  "final_test_log": "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/ml/datasets/adapters.py:31: Pandas4Warning: The 'verify_integrity' keyword in DataFrame.set_index is deprecated and will be removed in a future version. Directly check the result.index.is_unique instead.\n  stations=stations.set_index('location_id',verify_integrity=True);sha=digest(path)\n----------------------------------------------------------------------\nRan 67 tests in 5.142s\n\nOK\n",
+  "artifact_sha256": {
+    "data/registry/india_stations.csv": "4b5ec01040e08b53474c246df62c59ac7aa125138d28e9f45d626fbf78ff2c00",
+    "data/registry/nwic_stations.csv": "defb5a16fc47dc7de12296f31a629103b883699fd88e5a61c838ca0a393a7149",
+    "reports/nwic_pipeline/india_evaluation.json": "9863fadca0ee32830cddd09009412d749b4165c703a3e9002bca05c2649a3b1a"
+  },
+  "fair_mandi_comparison": "identical 7 context stations and identical baseline metrics on 8 Mandi reports",
+  "schema_recheck": "final gated 111323 NOAA observations; unresolved interval/reference and modeled sources excluded from target view"
+}

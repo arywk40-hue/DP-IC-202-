@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-station-list.txt",
+    "file": "data/noaa_ghcnh/raw/station-list.txt",
+    "status": 200,
+    "bytes": 3459429,
+    "sha256": "ff451fafc8f251560029e9ed31ebf0f4d12a2ddd492516c0b166c3744cad182a",
+    "elapsed_s": 28.2
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh_DOCUMENTATION.pdf",
+    "file": "data/noaa_ghcnh/raw/ghcnh_DOCUMENTATION.pdf",
+    "status": 200,
+    "bytes": 423879,
+    "sha256": "df5694efdc2d498f006a343165bae65701d14809174b9bed660149bd4fe591b7",
+    "elapsed_s": 2.1
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/data/global-hourly/",
+    "file": "data/noaa_ghcnh/raw/listing.html",
+    "status": 200,
+    "bytes": 1232,
+    "sha256": "1e3a6a049c549f413956b1558946ae4809ba8e919a1bbe02fc09155b810f7d79",
+    "elapsed_s": 1.4
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/",
+    "error": "TimeoutError: The read operation timed out"
+  }
+]

@@ -1,0 +1,95 @@
+{
+  "schema_version": "indra_observations_v1",
+  "registry_sha256": "b14b2b41b18015754f5906a8fd92b78c01736753166a84fb5054b12c8dd6140f",
+  "sources": {
+    "wind_speed_mps": {
+      "source_id": "nwic_hp_wind",
+      "raw_sha256": "832c59791d527d46cffd191ee0b745c52065f571d534625d2c93cb69ad52cf18",
+      "raw_rows": 237225,
+      "status_counts": {
+        "quarantined": 237225
+      },
+      "flag_counts": {
+        "INTERVAL_SEMANTICS_UNVERIFIED": 237225,
+        "LICENSE_UNRESOLVED": 237225,
+        "TIMEZONE_UNVERIFIED": 237225,
+        "DUPLICATE_STATION_TIME": 132882,
+        "WIND_2007_UNCORROBORATED": 11
+      },
+      "wind_rows_by_year": {
+        "2023": 18910,
+        "2024": 130827,
+        "2025": 84568,
+        "2007": 11,
+        "2022": 2909
+      },
+      "source_timezone": null,
+      "pressure_reference": "not_applicable"
+    },
+    "temperature_c": {
+      "source_id": "nwic_hp_temperature",
+      "raw_sha256": "715f8a65c184084c26b5ac071f1b54106df6717ace6c965237372ff5960a8f9a",
+      "raw_rows": 611048,
+      "status_counts": {
+        "quarantined": 611048
+      },
+      "flag_counts": {
+        "INTERVAL_SEMANTICS_UNVERIFIED": 611048,
+        "LICENSE_UNRESOLVED": 611048,
+        "TIMEZONE_UNVERIFIED": 611048,
+        "DUPLICATE_STATION_TIME": 290884,
+        "INVALID_PHYSICAL_VALUE": 19387
+      },
+      "wind_rows_by_year": {},
+      "source_timezone": null,
+      "pressure_reference": "not_applicable"
+    },
+    "relative_humidity_pct": {
+      "source_id": "nwic_hp_humidity",
+      "raw_sha256": "694502b45b465a903bb6c35ef87a9b9baef1b9d7d57befec2a16323bb3598c67",
+      "raw_rows": 609428,
+      "status_counts": {
+        "quarantined": 609428
+      },
+      "flag_counts": {
+        "INTERVAL_SEMANTICS_UNVERIFIED": 609428,
+        "INVALID_PHYSICAL_VALUE": 14146,
+        "LICENSE_UNRESOLVED": 609428,
+        "TIMEZONE_UNVERIFIED": 609428,
+        "DUPLICATE_STATION_TIME": 282692
+      },
+      "wind_rows_by_year": {},
+      "source_timezone": null,
+      "pressure_reference": "not_applicable"
+    },
+    "pressure_hpa": {
+      "source_id": "nwic_hp_pressure",
+      "raw_sha256": "1b861883c4243e073c47225637abc452ed3895fcfca7b337f9e0fb0392746d86",
+      "raw_rows": 113594,
+      "status_counts": {
+        "quarantined": 113594
+      },
+      "flag_counts": {
+        "INTERVAL_SEMANTICS_UNVERIFIED": 113594,
+        "LICENSE_UNRESOLVED": 113594,
+        "PRESSURE_REFERENCE_UNVERIFIED": 113594,
+        "TIMEZONE_UNVERIFIED": 113594,
+        "REPEATED_925_SUSPECT": 49130
+      },
+      "wind_rows_by_year": {},
+      "source_timezone": null,
+      "pressure_reference": "unknown"
+    }
+  },
+  "views": {
+    "training_open": 0,
+    "training_restricted": 0,
+    "quarantine": 1571295
+  },
+  "storage": "compressed long-form Parquet; SQL views require materialization into canonical store",
+  "stations": 30,
+  "database_sha256": "49f436b3c82c724ae7a9701ebc61806fb0ead7904401bc3f430081585bc413e7",
+  "terrain_registry_sha256": "defb5a16fc47dc7de12296f31a629103b883699fd88e5a61c838ca0a393a7149",
+  "terrain_enriched_artifact_sha256": "7b8dc3392c7699b1cfba94516c524ba7b6df557925a82818e6f5f6922c204840",
+  "terrain_enriched_artifact": "data/nwic_himachal/observations.parquet"
+}

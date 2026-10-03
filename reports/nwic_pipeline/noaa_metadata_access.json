@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-inventory.txt",
+    "path": "data/noaa_ghcnh/raw/inventory.txt",
+    "bytes": 90000000,
+    "sha256": "73ed6e6e0a564ed8c91a330fa9c19282e44179c8bb5c5e20775be36d47fd518c"
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-station-list.csv",
+    "path": "data/noaa_ghcnh/raw/station-list.csv",
+    "bytes": 2203945,
+    "sha256": "812ea50bd5efd1b9cc09d5800c55825b3d43b3c5aa75ab17b2848f43b1bfaaef"
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-columns.pdf",
+    "path": "data/noaa_ghcnh/raw/columns.pdf",
+    "bytes": 94658,
+    "sha256": "2eb051a2919be41a57c5c49ae6aa0f077194fe1983417a2e8ba4fbbaf16ea7b5"
+  },
+  {
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/2024/",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://noaa-ghcn-pds.s3.amazonaws.com/?list-type=2&prefix=hourly/&max-keys=10",
+    "path": "data/noaa_ghcnh/raw/aws_listing.xml",
+    "bytes": 249,
+    "sha256": "08bf238dee037d3066281e3aa16707e33e1fd6d858f184e6c77defe9553429be"
+  }
+]

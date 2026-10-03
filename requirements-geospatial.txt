@@ -1,0 +1,6 @@
+# Optional server-only ingestion dependencies; kept off ESP32 and base model path.
+xarray==2025.10.1
+rasterio==1.4.3
+h5netcdf==1.6.4
+cdsapi==0.7.7
+pyarrow==21.0.0

@@ -1,0 +1,118 @@
+[
+  {
+    "location_id": "INM00042618",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043005",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042639",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INU042921-1",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042188",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042178",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INI0000VISR",
+    "error": "TimeoutError: The read operation timed out"
+  },
+  {
+    "location_id": "INM00043324",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042165",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042177",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042375",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042557",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042715",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042768",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00042841",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INU55-00062",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INU55-00064",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043011",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043133",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043168",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INU00043279",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043316",
+    "error": "TimeoutError: The read operation timed out"
+  },
+  {
+    "location_id": "INM00043319",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043341",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043356",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INM00043354",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INMU0020569",
+    "error": "ValueError: SRTM pixel neighborhood missing"
+  },
+  {
+    "location_id": "INMU0022185",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "scope": "climate raster",
+    "error": "Read failed. See previous exception for details."
+  }
+]

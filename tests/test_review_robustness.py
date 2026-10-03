@@ -67,7 +67,8 @@ class ReviewRobustnessTests(unittest.TestCase):
         result = model.predict(nodes(), 0, 0, '2025-01-01T00:00:00Z')
         self.assertEqual(len(model.heads), 6)
         self.assertEqual(len(result['targets']['temperature_c']['models']), 3)
-        self.assertIsNotNone(result['targets']['temperature_c']['absolute_error_p90'])
+        self.assertFalse(result['geometry']['allowed'])
+        self.assertIsNone(result['targets']['temperature_c']['absolute_error_p90'])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,13 @@
+{
+  "source_uri": "https://data.naturalcapitalalliance.stanford.edu/download/global/koppen_geiger_climatezones/koppen_geiger_climatezones_1991_2020_1km.tif",
+  "derived_crop_sha256": "51076d5b4322f10c9c99c1ff756442285efbe1351cccad53e7b38d657d32ecb4",
+  "bounds_wgs84": [
+    67,
+    3,
+    100,
+    39
+  ],
+  "license": "CC-BY-4.0",
+  "primary": "https://www.gloh2o.org/koppen/",
+  "note": "hash is clipped derivative, not the full global asset"
+}

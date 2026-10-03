@@ -1,0 +1,452 @@
+[
+  {
+    "variable": "temperature",
+    "response_sha256": "d2d4de5dae9d1ef467a671673686d7bc9ac6d451b53186b82bbd629052072c2d",
+    "packages": [
+      {
+        "package_name": "temperature-telemetry-hourly-himachal-pradesh-water-department",
+        "title": "Temperature (Telemetry - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "This dataset contains hourly telemetry temperature measurements recorded from water monitoring stations across Himachal Pradesh. Collected telemetry, each record includes the date, time, station identifier with geographic hierarchy, and corresponding temperature values. This dataset is essential for hydrological studies, climate analysis, water resource management, and ecological assessments, helping to monitor temperature variations in surface water bodies and their impact on aquatic ecosystems and regional climate trends.",
+        "resources": [
+          {
+            "id": "6b64941e-8646-4020-b7e8-a8024d86fae2",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/6b64941e-8646-4020-b7e8-a8024d86fae2/download/temprature_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "c9c19391-51cc-48bd-94a0-154f493f24de",
+            "name": "Temperature Himachal Pradesh (1961 - 2020) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/c9c19391-51cc-48bd-94a0-154f493f24de/download/temprature_tele_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "b8b770d9-b2e1-4f6d-8137-1874fb4715ca",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/b8b770d9-b2e1-4f6d-8137-1874fb4715ca/download/temprature_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "variable": "humidity",
+    "response_sha256": "8df05274970b65e9bb5fa92e12496497913486dd7bcd9f7b49f9471bc3ebe0d7",
+    "packages": [
+      {
+        "package_name": "relative-humidity-manual-twice-daily-himachal-pradesh",
+        "title": "Relative Humidity (Manual - Twice Daily), Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains Twice daily Manual relative humidity collected from meteorological stations established by Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding relative humidity values in (%).",
+        "resources": [
+          {
+            "id": "b2a1b16e-bad2-4895-8be9-8ef7a86dce1b",
+            "name": "Relative Humidity Manual Twice Daily Himachal Pradesh (1961-2020)",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/b2a1b16e-bad2-4895-8be9-8ef7a86dce1b/download/humid_manual_twice_daily_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "906f1276-57f2-45b5-88a3-e7a7cc2e12d3",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2021 - 2025) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/906f1276-57f2-45b5-88a3-e7a7cc2e12d3/download/humid_manual_twice_daily_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "fc96eb93-dcba-4d88-b44b-089e379ed204",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/fc96eb93-dcba-4d88-b44b-089e379ed204/download/humid_manual_twice_daily_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "relative-humidity-telemetry-hourly-himachal-pradesh",
+        "title": "Relative Humidity (Telemetry - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric relative humidity collected from meteorological stations established by Himachal Pradesh Water Department. Each record includes the date, station identifier with geographic hierarchy, and the corresponding relative humidity values in (%).",
+        "resources": [
+          {
+            "id": "b9377211-44a9-4380-b99a-f40bd4bbdfde",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/b9377211-44a9-4380-b99a-f40bd4bbdfde/download/humid_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "462be65b-caaf-4218-956e-3e706cd8db59",
+            "name": "Relative Humidity Telemetry Hourly Himachal Pradesh (1961-2020)",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/462be65b-caaf-4218-956e-3e706cd8db59/download/humid_tele_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "68734a77-fdec-432f-b06d-359e821b8210",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/68734a77-fdec-432f-b06d-359e821b8210/download/humid_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "solar-radiation-telemetry-hourly-himachal-pradesh-department",
+        "title": "Solar Radiation (Telemetry - Hourly), Himachal Pradesh Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric solar radiation measurements collected from meteorological stations operated by the  Himachal Pradesh Department. Each record includes the date, station identifier with geographic hierarchy, and corresponding solar radiation values. The dataset is essential for solar energy assessments, hydrological studies, agricultural planning, and climate change research. It helps analyze solar energy availability, weather patterns, and their impact on water resources and ecosystems in  Himachal Pradesh Department.",
+        "resources": [
+          {
+            "id": "ac60222f-9113-4317-b871-bb2e99e264a1",
+            "name": "Solar Radiation Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/6c45f652-cbf5-460a-8a6c-25b6734373c2/resource/ac60222f-9113-4317-b871-bb2e99e264a1/download/solar_rediation_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "d5035a13-db80-4e1f-bc60-96c2cd3ec152",
+            "name": "Solar Rediation Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/6c45f652-cbf5-460a-8a6c-25b6734373c2/resource/d5035a13-db80-4e1f-bc60-96c2cd3ec152/download/solar_rediation_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "temperature-himachal-pradesh-manual-hourly",
+        "title": "Temperature (Manual - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "This dataset contains hourly manual temperature recordings collected from meteorological stations operated by the Himachal Pradesh Department. Each record includes the date, time, station identifier with geographic hierarchy, and corresponding temperature values. The dataset is essential for climate studies, weather monitoring, hydrological assessments, and environmental research in Himachal Pradesh, offering insights into temperature variations across different regions.",
+        "resources": [
+          {
+            "id": "2e0db726-ebb0-41dd-9c51-79e760367c7f",
+            "name": "Temperature Himachal Pradesh (1961 - 2020) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/2e0db726-ebb0-41dd-9c51-79e760367c7f/download/temprature_manual_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "3a117537-3412-4c67-a6b4-469f3c094688",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2021 - 2025) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/3a117537-3412-4c67-a6b4-469f3c094688/download/temprature_manual_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "6984ff0e-bc90-4196-b8f1-d84880b7aa7f",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/6984ff0e-bc90-4196-b8f1-d84880b7aa7f/download/temprature_manual_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "temperature-telemetry-hourly-himachal-pradesh-water-department",
+        "title": "Temperature (Telemetry - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "This dataset contains hourly telemetry temperature measurements recorded from water monitoring stations across Himachal Pradesh. Collected telemetry, each record includes the date, time, station identifier with geographic hierarchy, and corresponding temperature values. This dataset is essential for hydrological studies, climate analysis, water resource management, and ecological assessments, helping to monitor temperature variations in surface water bodies and their impact on aquatic ecosystems and regional climate trends.",
+        "resources": [
+          {
+            "id": "6b64941e-8646-4020-b7e8-a8024d86fae2",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/6b64941e-8646-4020-b7e8-a8024d86fae2/download/temprature_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "c9c19391-51cc-48bd-94a0-154f493f24de",
+            "name": "Temperature Himachal Pradesh (1961 - 2020) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/c9c19391-51cc-48bd-94a0-154f493f24de/download/temprature_tele_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "b8b770d9-b2e1-4f6d-8137-1874fb4715ca",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/b8b770d9-b2e1-4f6d-8137-1874fb4715ca/download/temprature_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "sunshine-duration-manual-hourly-himachal-pradesh-water-resource-department",
+        "title": "Sunshine Duration (Manual - Hourly), Himachal Pradesh Water Resource Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains daily manual sunshine duration collected from meteorological stations established by Himachal Pradesh Water Resource Department. Each record includes the date, station identifier with geographic hierarchy, and the corresponding sunshine duration values",
+        "resources": [
+          {
+            "id": "36dd526b-db23-4e10-9557-757524f0e3ae",
+            "name": "Sunshine Duration (Manual - Hourly), Himachal Pradesh (1991-2020)",
+            "url": "https://nwdp.nwic.gov.in/dataset/c477b750-8e54-4910-b152-1bd19037f0c2/resource/36dd526b-db23-4e10-9557-757524f0e3ae/download/sunshine_duration_manual_hr_himachal-pradesh_hp_1991_2020.csv",
+            "format": "CSV"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "variable": "pressure",
+    "response_sha256": "6a3566d4a987ebeaa747b7faa49860fcd0f30283246b52d912eb24f132a3d99a",
+    "packages": [
+      {
+        "package_name": "atmospheric-pressure-telemetry-hourly-himachal-pradesh",
+        "title": "Atmospheric Pressure (Telemetry - Hourly), Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric atmospheric pressure collected from meteorological stations established by Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding atmospheric pressure values in Millibar (Mb).",
+        "resources": [
+          {
+            "id": "bbb7d941-de74-438c-a19a-bfe9e42a5fad",
+            "name": "Pressure Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/ce3c12fd-a7d3-44fc-88db-3f09203ae9c2/resource/bbb7d941-de74-438c-a19a-bfe9e42a5fad/download/pressure_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "35d9f2b9-17a3-494d-88b2-3473642a2269",
+            "name": "Pressure Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/ce3c12fd-a7d3-44fc-88db-3f09203ae9c2/resource/35d9f2b9-17a3-494d-88b2-3473642a2269/download/pressure_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "variable": "wind",
+    "response_sha256": "865e9b7db833d0f09ebaa0e136b0c6a1c9a3669bad64e11e641527a7312f270a",
+    "packages": [
+      {
+        "package_name": "wind-speed-and-direction-telemetry-hourly-himachal-pradesh",
+        "title": "Wind Direction (Telemetry - Hourly) Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric wind direction measurements collected from meteorological stations established by State Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding wind direction values",
+        "resources": [
+          {
+            "id": "29394f2e-c765-436e-b531-a6201ad58d35",
+            "name": "Wind Direction Himachal_Pradesh Himachal Pradesh (1970 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/bb8c3429-9cd1-4048-8300-c97cd60020a9/resource/29394f2e-c765-436e-b531-a6201ad58d35/download/wind_direction_tel_hr_himachal_pradesh_hp_1970_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "03156f76-d678-49ac-a165-c8fc5bcf0533",
+            "name": "Wind Direction Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/bb8c3429-9cd1-4048-8300-c97cd60020a9/resource/03156f76-d678-49ac-a165-c8fc5bcf0533/download/wind_direction_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "wind-speed-telemetry-hourly-himachal-pradesh-department",
+        "title": "Wind Speed (Telemetry - Hourly), Himachal Pradesh Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetry wind speed measurements collected from meteorological stations established by Himachal Pradesh Department. Each record includes the date, station identifier with geographic hierarchy, and the corresponding wind speed values. It is typically recorded in units (km/h).",
+        "resources": [
+          {
+            "id": "22ef7020-904b-4ef8-a975-d6baa5701988",
+            "name": "Wind Speed Himachal_Pradesh Himachal Pradesh (1970 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/42df1a3b-9a2e-4fb8-a7fc-dd1b8ef977e9/resource/22ef7020-904b-4ef8-a975-d6baa5701988/download/wind_speed_tel_hr_himachal_pradesh_hp_1970_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "7fe388d1-2ce9-4575-8fd2-6896f5e440b2",
+            "name": "Wind Speed Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/42df1a3b-9a2e-4fb8-a7fc-dd1b8ef977e9/resource/7fe388d1-2ce9-4575-8fd2-6896f5e440b2/download/wind_speed_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "wind-speed-manual-twice-daily-himachal-pradesh",
+        "title": "Wind Speed (Manual - Twice Daily), Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains twice daily manual wind speed measurements collected from meteorological stations established by Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding wind speed values. It is typically recorded in units (km/h).",
+        "resources": [
+          {
+            "id": "4401e80b-54ec-43c3-a200-f8283f3e3fe2",
+            "name": "Wind Speed Himachal_Pradesh Himachal Pradesh (1970 - 2025) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/5efb0fb0-9b14-452a-a554-98703f0b5643/resource/4401e80b-54ec-43c3-a200-f8283f3e3fe2/download/wind_speed_manual_twicedaily_himachal_pradesh_hp_1970_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "761f588f-9fbb-495a-8ae0-b296b3f73627",
+            "name": "Wind Speed Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/5efb0fb0-9b14-452a-a554-98703f0b5643/resource/761f588f-9fbb-495a-8ae0-b296b3f73627/download/wind_speed_manual_twicedaily_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "wind-speed-and-direction-himachal-pradesh-manual-hourly",
+        "title": "Wind Direction and Speed (Manual - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly Manual Wind Direction and Speed measurements collected from meteorological stations established by Himachal Pradesh Water Department. Each record includes the date, station identifier with geographic hierarchy, and the corresponding wind direction and speed values.",
+        "resources": [
+          {
+            "id": "6fc660e0-9f7a-461b-9974-c98178dcb5d8",
+            "name": "Wind Direction Himachal_Pradesh Himachal Pradesh (1970 - 2025) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/100297ec-e8af-41da-a74c-6dea964eec42/resource/6fc660e0-9f7a-461b-9974-c98178dcb5d8/download/wind_direction_manual_hr_himachal_pradesh_hp_1970_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "36349d0c-c4d6-4f66-84ac-b3900d2df4db",
+            "name": "Wind Direction Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/100297ec-e8af-41da-a74c-6dea964eec42/resource/36349d0c-c4d6-4f66-84ac-b3900d2df4db/download/wind_direction_manual_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "atmospheric-pressure-telemetry-hourly-himachal-pradesh",
+        "title": "Atmospheric Pressure (Telemetry - Hourly), Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric atmospheric pressure collected from meteorological stations established by Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding atmospheric pressure values in Millibar (Mb).",
+        "resources": [
+          {
+            "id": "bbb7d941-de74-438c-a19a-bfe9e42a5fad",
+            "name": "Pressure Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/ce3c12fd-a7d3-44fc-88db-3f09203ae9c2/resource/bbb7d941-de74-438c-a19a-bfe9e42a5fad/download/pressure_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "35d9f2b9-17a3-494d-88b2-3473642a2269",
+            "name": "Pressure Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/ce3c12fd-a7d3-44fc-88db-3f09203ae9c2/resource/35d9f2b9-17a3-494d-88b2-3473642a2269/download/pressure_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "solar-radiation-telemetry-hourly-himachal-pradesh-department",
+        "title": "Solar Radiation (Telemetry - Hourly), Himachal Pradesh Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric solar radiation measurements collected from meteorological stations operated by the  Himachal Pradesh Department. Each record includes the date, station identifier with geographic hierarchy, and corresponding solar radiation values. The dataset is essential for solar energy assessments, hydrological studies, agricultural planning, and climate change research. It helps analyze solar energy availability, weather patterns, and their impact on water resources and ecosystems in  Himachal Pradesh Department.",
+        "resources": [
+          {
+            "id": "ac60222f-9113-4317-b871-bb2e99e264a1",
+            "name": "Solar Radiation Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/6c45f652-cbf5-460a-8a6c-25b6734373c2/resource/ac60222f-9113-4317-b871-bb2e99e264a1/download/solar_rediation_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "d5035a13-db80-4e1f-bc60-96c2cd3ec152",
+            "name": "Solar Rediation Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/6c45f652-cbf5-460a-8a6c-25b6734373c2/resource/d5035a13-db80-4e1f-bc60-96c2cd3ec152/download/solar_rediation_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "temperature-himachal-pradesh-manual-hourly",
+        "title": "Temperature (Manual - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "This dataset contains hourly manual temperature recordings collected from meteorological stations operated by the Himachal Pradesh Department. Each record includes the date, time, station identifier with geographic hierarchy, and corresponding temperature values. The dataset is essential for climate studies, weather monitoring, hydrological assessments, and environmental research in Himachal Pradesh, offering insights into temperature variations across different regions.",
+        "resources": [
+          {
+            "id": "2e0db726-ebb0-41dd-9c51-79e760367c7f",
+            "name": "Temperature Himachal Pradesh (1961 - 2020) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/2e0db726-ebb0-41dd-9c51-79e760367c7f/download/temprature_manual_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "3a117537-3412-4c67-a6b4-469f3c094688",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2021 - 2025) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/3a117537-3412-4c67-a6b4-469f3c094688/download/temprature_manual_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "6984ff0e-bc90-4196-b8f1-d84880b7aa7f",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/a1b419eb-f7d8-487c-9abc-270001408f12/resource/6984ff0e-bc90-4196-b8f1-d84880b7aa7f/download/temprature_manual_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "temperature-telemetry-hourly-himachal-pradesh-water-department",
+        "title": "Temperature (Telemetry - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "This dataset contains hourly telemetry temperature measurements recorded from water monitoring stations across Himachal Pradesh. Collected telemetry, each record includes the date, time, station identifier with geographic hierarchy, and corresponding temperature values. This dataset is essential for hydrological studies, climate analysis, water resource management, and ecological assessments, helping to monitor temperature variations in surface water bodies and their impact on aquatic ecosystems and regional climate trends.",
+        "resources": [
+          {
+            "id": "6b64941e-8646-4020-b7e8-a8024d86fae2",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/6b64941e-8646-4020-b7e8-a8024d86fae2/download/temprature_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "c9c19391-51cc-48bd-94a0-154f493f24de",
+            "name": "Temperature Himachal Pradesh (1961 - 2020) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/c9c19391-51cc-48bd-94a0-154f493f24de/download/temprature_tele_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "b8b770d9-b2e1-4f6d-8137-1874fb4715ca",
+            "name": "Temprature Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/e8f22b5c-5c18-4754-acb4-e12b224f49b0/resource/b8b770d9-b2e1-4f6d-8137-1874fb4715ca/download/temprature_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "relative-humidity-manual-twice-daily-himachal-pradesh",
+        "title": "Relative Humidity (Manual - Twice Daily), Himachal Pradesh",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains Twice daily Manual relative humidity collected from meteorological stations established by Himachal Pradesh. Each record includes the date, station identifier with geographic hierarchy, and the corresponding relative humidity values in (%).",
+        "resources": [
+          {
+            "id": "b2a1b16e-bad2-4895-8be9-8ef7a86dce1b",
+            "name": "Relative Humidity Manual Twice Daily Himachal Pradesh (1961-2020)",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/b2a1b16e-bad2-4895-8be9-8ef7a86dce1b/download/humid_manual_twice_daily_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "906f1276-57f2-45b5-88a3-e7a7cc2e12d3",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2021 - 2025) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/906f1276-57f2-45b5-88a3-e7a7cc2e12d3/download/humid_manual_twice_daily_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "fc96eb93-dcba-4d88-b44b-089e379ed204",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2026 - 2030) Manual Twice Daily",
+            "url": "https://nwdp.nwic.gov.in/dataset/850032ed-0cbc-4098-9f18-b86c4aa2f5bf/resource/fc96eb93-dcba-4d88-b44b-089e379ed204/download/humid_manual_twice_daily_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      },
+      {
+        "package_name": "relative-humidity-telemetry-hourly-himachal-pradesh",
+        "title": "Relative Humidity (Telemetry - Hourly), Himachal Pradesh Water Department",
+        "license_id": "other-open",
+        "license_title": "Other (Open)",
+        "notes": "Dataset contains hourly telemetric relative humidity collected from meteorological stations established by Himachal Pradesh Water Department. Each record includes the date, station identifier with geographic hierarchy, and the corresponding relative humidity values in (%).",
+        "resources": [
+          {
+            "id": "b9377211-44a9-4380-b99a-f40bd4bbdfde",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2021 - 2025) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/b9377211-44a9-4380-b99a-f40bd4bbdfde/download/humid_tel_hr_himachal_pradesh_hp_2021_2025.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "462be65b-caaf-4218-956e-3e706cd8db59",
+            "name": "Relative Humidity Telemetry Hourly Himachal Pradesh (1961-2020)",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/462be65b-caaf-4218-956e-3e706cd8db59/download/humid_tele_hr_himachal-pradesh_hp_1961_2020.csv",
+            "format": "CSV"
+          },
+          {
+            "id": "68734a77-fdec-432f-b06d-359e821b8210",
+            "name": "Relative Humidity Himachal_Pradesh Himachal Pradesh (2026 - 2030) Telemetry Hourly",
+            "url": "https://nwdp.nwic.gov.in/dataset/75c5a1b9-21ba-4ab6-bf87-30be2f531111/resource/68734a77-fdec-432f-b06d-359e821b8210/download/humid_tel_hr_himachal_pradesh_hp_2026_2030.csv",
+            "format": "CSV"
+          }
+        ]
+      }
+    ]
+  }
+]

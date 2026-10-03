@@ -74,7 +74,7 @@ def snapshot_features(nodes, latitude, longitude, timestamp):
         spread[i] = np.sqrt(weights @ (v-baseline[i])**2)
     phi, lam = np.radians([lat, lon])
     hour = stamp.tz_convert('UTC').hour + stamp.minute/60
-    day = stamp.dayofyear
+    day = stamp.tz_convert('UTC').dayofyear
     context = [np.cos(phi)*np.cos(lam), np.cos(phi)*np.sin(lam), np.sin(phi),
                np.sin(2*np.pi*hour/24), np.cos(2*np.pi*hour/24),
                np.sin(2*np.pi*day/365.25), np.cos(2*np.pi*day/365.25)]
@@ -82,15 +82,31 @@ def snapshot_features(nodes, latitude, longitude, timestamp):
 
 
 class SpatialEnsemble:
-    def __init__(self, seed=42):
+    def __init__(self, seed=42, extended_features=False, max_distance_km=None, refuse_outside=True):
         self.seed = seed
+        self.extended_features = extended_features
+        if max_distance_km is not None:
+            max_distance_km = float(max_distance_km)
+            if not math.isfinite(max_distance_km) or max_distance_km <= 0:
+                raise ValueError('Positive finite maximum distance required')
+        self.max_distance_km = max_distance_km
+        self.refuse_outside = refuse_outside
         self.heads = {}
 
     def fit(self, x, y, validation_x, validation_y):
         """Caller must isolate stations/time. Second validation half calibrates bands."""
         x, y, vx, vy = map(lambda a: np.asarray(a, dtype=float), (x, y, validation_x, validation_y))
-        if x.ndim != 2 or x.shape[1] != 25 or vx.ndim != 2 or vx.shape[1] != 25:
-            raise ValueError('Expected 25 neighbor/context features')
+        width = 33 if self.extended_features else 25
+        if x.ndim != 2 or x.shape[1] != width or vx.ndim != 2 or vx.shape[1] != width:
+            raise ValueError(f'Expected {width} neighbor/context features')
+        # Core-only labels use [T, RH, station pressure, wind]; PM heads are masked.
+        def masked_labels(labels):
+            if labels.ndim == 2 and labels.shape[1] == 4:
+                padded = np.full((len(labels), 6), np.nan)
+                padded[:, [0, 1, 2, 5]] = labels
+                return padded
+            return labels
+        y, vy = masked_labels(y), masked_labels(vy)
         if y.shape != (len(x), 6) or vy.shape != (len(vx), 6):
             raise ValueError('Expected six observed targets')
         self.heads = {}
@@ -103,6 +119,9 @@ class SpatialEnsemble:
             calibration = valid & (np.arange(len(vx)) >= midpoint)
             if train.sum() < 20 or selection.sum() < 10 or calibration.sum() < 10:
                 continue  # IDW remains available without a fitted head.
+            # Each target masks absent channels. PM never gates the four core heads.
+            candidates = [j for j in range(width) if j not in [3,4,9,10,15,16] or name in ['pm25_ug_m3','pm10_ug_m3']]
+            active = np.array([j for j in candidates if np.isfinite(x[train, j]).any()], dtype=int)
             scale = max(float(np.std(y[train, i])), 1e-3)
             target = (y[train, i]-x[train, i])/scale
             models = {
@@ -114,8 +133,8 @@ class SpatialEnsemble:
             failures = {}
             for kind, model in list(models.items()):
                 try:
-                    model.fit(x[train], target)
-                    pred = np.clip(vx[:, i] + scale*model.predict(vx), lo, hi)
+                    model.fit(x[train][:, active], target)
+                    pred = np.clip(vx[:, i] + scale*model.predict(vx[:, active]), lo, hi)
                     if not np.isfinite(pred[valid]).all():
                         raise ValueError('Nonfinite model prediction')
                     predictions[kind] = pred
@@ -128,15 +147,34 @@ class SpatialEnsemble:
             blended = sum(weights[kind]*pred for kind, pred in predictions.items())
             band = float(np.quantile(np.abs(blended[calibration]-vy[calibration, i]), .9))
             self.heads[name] = dict(models=models, scale=scale, weights=weights, p90=band,
-                lower=np.nanmin(x[train], axis=0), upper=np.nanmax(x[train], axis=0), failures=failures)
+                lower=np.nanmin(x[train], axis=0), upper=np.nanmax(x[train], axis=0), failures=failures, active=active)
         return self
 
-    def predict(self, nodes, latitude, longitude, timestamp):
-        x, baseline, counts = snapshot_features(nodes, latitude, longitude, timestamp)
-        result = {'status': 'EXPERIMENTAL_CURRENT_TIME_INTERPOLATION', 'targets': {}}
+    def predict(self, nodes, latitude, longitude, timestamp, query_elevation_m=None, query_slope_deg=None, background=None):
+        if self.extended_features:
+            from ml.spatial_ensemble.network import named_features
+            x, baseline, counts = named_features(nodes, latitude, longitude, timestamp, query_elevation_m, query_slope_deg, background)
+        else:
+            x, baseline, counts = snapshot_features(nodes, latitude, longitude, timestamp)
+        from ml.spatial_ensemble.network import guard
+        geometry = guard(nodes, latitude, longitude, timestamp, self.max_distance_km or 20)
+        if self.max_distance_km is not None and not geometry['allowed'] and self.refuse_outside:
+            return {'status':'REFUSED_NETWORK_GEOMETRY', 'geometry':geometry, 'targets':{name:dict(prediction=None, absolute_error_p90=None, status='REFUSED', models=[]) for name in RAW_SENSOR_COLUMNS}}
+        result = {'status': 'EXPERIMENTAL_CURRENT_TIME_INTERPOLATION', 'targets': {}, 'geometry': geometry}
         for i, name in enumerate(RAW_SENSOR_COLUMNS):
             if not np.isfinite(baseline[i]):
                 result['targets'][name] = dict(prediction=None, absolute_error_p90=None, status='UNAVAILABLE', models=[])
+                continue
+            valid_nodes = []
+            for node in nodes:
+                if not isinstance(node, dict):continue
+                try:
+                    value = float(node.get(name, np.nan))
+                    if np.isfinite(value) and PHYSICAL_RANGES[name][0] <= value <= PHYSICAL_RANGES[name][1]:valid_nodes.append(node)
+                except (ValueError, TypeError):pass
+            target_geometry = guard(valid_nodes, latitude, longitude, timestamp, self.max_distance_km or 20)
+            if self.max_distance_km is not None and self.refuse_outside and not target_geometry['allowed']:
+                result['targets'][name] = dict(prediction=None, absolute_error_p90=None, status='REFUSED_TARGET_NETWORK_GEOMETRY', models=[], geometry=target_geometry)
                 continue
             head = self.heads.get(name)
             predictions = {'idw': baseline[i]}
@@ -146,14 +184,23 @@ class SpatialEnsemble:
                 # Envelope check is deliberately conservative, not an OOD probability.
                 # Less disagreement / closer nodes is not an adverse shift.
                 # Cyclic time features have a known domain, not a fitted envelope.
-                ood = bool(not np.isfinite(x).all()
-                    or np.any((x[:6] < head['lower'][:6]) | (x[:6] > head['upper'][:6]))
-                    or np.any(x[6:18] > head['upper'][6:18])
-                    or np.any((x[18:21] < head['lower'][18:21]) | (x[18:21] > head['upper'][18:21])))
+                active = head.get('active', np.arange(len(x)))
+                finite = np.isfinite(x[active])
+                checked = active[active < 21]
+                values = x[checked]
+                upper = head['upper'][checked]
+                lower = head['lower'][checked]
+                # Spread/distance can improve below the fitted lower bound.
+                min_check = (checked < 6) | (checked >= 18)
+                ood = bool(not finite.all() or np.any(values > upper)
+                    or np.any(values[min_check] < lower[min_check]))
+                if len(x) > 25:
+                    terrain = active[active >= 25]
+                    ood = ood or bool(np.any(x[terrain] < head['lower'][terrain]) or np.any(x[terrain] > head['upper'][terrain]))
                 if not ood and counts[i] > 1:
                     for kind, model in head['models'].items():
                         try:
-                            pred = float(baseline[i] + head['scale']*model.predict(x.reshape(1, -1))[0])
+                            pred = float(baseline[i] + head['scale']*model.predict(x[active].reshape(1, -1))[0])
                             if not np.isfinite(pred):
                                 raise ValueError('Nonfinite prediction')
                             predictions[kind] = np.clip(pred, *PHYSICAL_RANGES[name])
@@ -162,10 +209,10 @@ class SpatialEnsemble:
             weights = head['weights'] if head else {'idw': 1.}
             total = sum(weights[kind] for kind in predictions)
             value = sum(weights[kind]*pred for kind, pred in predictions.items())/total
-            degraded = head is None or ood or counts[i] < 2 or len(predictions) != 3
+            degraded = not target_geometry['allowed'] or head is None or ood or counts[i] < 2 or len(predictions) != 3
             result['targets'][name] = dict(prediction=float(value),
                 absolute_error_p90=None if degraded else head['p90'],
                 status='DEGRADED_IDW_OR_PARTIAL' if degraded else 'ENSEMBLE',
                 models=list(predictions), failed_models=failed, out_of_distribution=ood,
-                contributing_nodes=int(counts[i]))
+                contributing_nodes=int(counts[i]), geometry=target_geometry)
         return result

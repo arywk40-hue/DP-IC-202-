@@ -1,0 +1,3393 @@
+{
+  "sampling": "exact minute zero, UTC hours 0/6/12/18, month days 1/8/15/22, 2024",
+  "registry_sha256": "4b5ec01040e08b53474c246df62c59ac7aa125138d28e9f45d626fbf78ff2c00",
+  "source_registry_sha256": "8dde3ecd2ba78615655b607dfd6fdcde90b7a8433ce93b897fe1ef2b0c1e41dc",
+  "source_reports": [
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VABB_2024.parquet",
+      "sha256": "fe40a32425f2560688a502f7c75b5f7823c364a295c334a436d11f189080cf50",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 577,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VABI_2024.parquet",
+      "sha256": "6578b05ae66b012194d473a8fb3144516a4af17665753d16ee26b71e343064ca",
+      "selected_reports": 104,
+      "status_counts": {
+        "approved": 310,
+        "quarantined": 106
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VABO_2024.parquet",
+      "sha256": "edc4ea298ffb68599c55bf54f396a9517132d53c0a07d0b598d337ae516d14ac",
+      "selected_reports": 169,
+      "status_counts": {
+        "approved": 506,
+        "quarantined": 170
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VABP_2024.parquet",
+      "sha256": "53fd9a2e314770a163a8f3a15609ae3e44baf70a7d542fb85edff8ec2fefc56d",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 761,
+        "quarantined": 7
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VABV_2024.parquet",
+      "sha256": "a40cd1a296943e8aec8b9fecf6d34d136e95febffedd0b9ec5f55dbd276fffdc",
+      "selected_reports": 90,
+      "status_counts": {
+        "approved": 269,
+        "quarantined": 91
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VADU_2024.parquet",
+      "sha256": "378a9f3ff73d77dbe9fb1e8a8b7fb1a5ae1e3caf64f5d34a4de46d9254fbd200",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 282,
+        "quarantined": 94
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAGD_2024.parquet",
+      "sha256": "f2ba36673ac28d697623fe1c7057e3c67f66bb46a502914f5e45230c635595de",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 384,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAJJ_2024.parquet",
+      "sha256": "235e97e17523a6ab84cad24c6e9ca3b0e461a7d3fcbfb3881aff1f5b352a7db2",
+      "selected_reports": 91,
+      "status_counts": {
+        "approved": 272,
+        "quarantined": 92
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAJM_2024.parquet",
+      "sha256": "dd58ea8c5e4680503e97115252675848a025eb5bdf0ca3a7b3ba603b46dd7214",
+      "selected_reports": 30,
+      "status_counts": {
+        "approved": 90,
+        "quarantined": 30
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAKD_2024.parquet",
+      "sha256": "2f7a67a0c0ab06a62d6c6fe3aceee85c206788c01ba668e86f6bbb5513c5f43d",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 96,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAKE_2024.parquet",
+      "sha256": "d6fd90ef6155ba79ce05503d7ebf81946f242b9e79bfc272de828d8103f91ccb",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAOZ_2024.parquet",
+      "sha256": "b953532d0f68921cdec9177a0c909e90b55f2c1b4599b844a791d0fc31726de3",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAPO_2024.parquet",
+      "sha256": "156a833301bbfa18820c546cfa64379a23155295da4a3530f63d423e797a6c7d",
+      "selected_reports": 31,
+      "status_counts": {
+        "approved": 93,
+        "quarantined": 31
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VAPR_2024.parquet",
+      "sha256": "38f8ccefb2c119e428143951732da7c433c0108cdab109133020c31c64f1fe86",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VARK_2024.parquet",
+      "sha256": "797e5865286f86a3c075e024a686e288c6ff3d37133d779bf07f20791d187503",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 566,
+        "quarantined": 202
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VASD_2024.parquet",
+      "sha256": "d91cbea11ed6bd8ea880be1ba61cbf0e773857919030f4c6b9beed0bea5ade42",
+      "selected_reports": 92,
+      "status_counts": {
+        "approved": 276,
+        "quarantined": 92
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VASU_2024.parquet",
+      "sha256": "eb7dce6170b7cb874a9c69a447a0339f0ce43b9d5bec4bd24a202faa1b71da0a",
+      "selected_reports": 124,
+      "status_counts": {
+        "approved": 370,
+        "quarantined": 126
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEBI_2024.parquet",
+      "sha256": "09d44f4b7b47952a69aade82c5fe4ca2279717ff48d35b22bc53a55d67ecbb73",
+      "selected_reports": 83,
+      "status_counts": {
+        "approved": 251,
+        "quarantined": 81
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEBN_2024.parquet",
+      "sha256": "5a2feb9e5dce1a59fac642191215b9199a5c9104e1950b65cce109ab1c477e54",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 580,
+        "quarantined": 188
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEBS_2024.parquet",
+      "sha256": "e603d5edee425971d8510c27b0933f14f1fc50040ed07dd5da67083f31249600",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VECO_2024.parquet",
+      "sha256": "a2f79246efe35a90b631170926bb1cbceceba9936b44e20273e061c4f3216468",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 282,
+        "quarantined": 94
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VECX_2024.parquet",
+      "sha256": "32ede1244917d62833d9c5baf58626d72c45b6ac43f393ad04923437939085a5",
+      "selected_reports": 23,
+      "status_counts": {
+        "approved": 69,
+        "quarantined": 23
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEDG_2024.parquet",
+      "sha256": "e4b3fa51ad745c5892d892b5b08759df788be639880c433d06f90d37ebfe0827",
+      "selected_reports": 103,
+      "status_counts": {
+        "approved": 309,
+        "quarantined": 103
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEJT_2024.parquet",
+      "sha256": "f01947d52fa0521a140c6e97cd21f50ccdd44475329b36569eaea83eb7db6f37",
+      "selected_reports": 28,
+      "status_counts": {
+        "approved": 84,
+        "quarantined": 28
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEKO_2024.parquet",
+      "sha256": "402783fb73c2c7d804b52ad8dd28915dbc0d16c03bdccfdb2a22ef580a6b3ad8",
+      "selected_reports": 78,
+      "status_counts": {
+        "approved": 230,
+        "quarantined": 82
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEKU_2024.parquet",
+      "sha256": "61311de61ee9a70370f8d8d09f89cac21c508c9f011fe13265233cfe25ce357c",
+      "selected_reports": 26,
+      "status_counts": {
+        "approved": 78,
+        "quarantined": 26
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VELP_2024.parquet",
+      "sha256": "09e6093d0e3bff8c6b9ea222e4c86dbecb3b3e02badc87997a02cd7c04a9a6b4",
+      "selected_reports": 115,
+      "status_counts": {
+        "approved": 364,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VELR_2024.parquet",
+      "sha256": "5662082a483915bcc1e9536095a494fa52fe7c61820edd1195cc190d48dfafd9",
+      "selected_reports": 144,
+      "status_counts": {
+        "approved": 432,
+        "quarantined": 144
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEMN_2024.parquet",
+      "sha256": "02f614f2b1fd4874923f14f154644280b77df2f40c0271274124670e1ee3e96c",
+      "selected_reports": 152,
+      "status_counts": {
+        "approved": 456,
+        "quarantined": 152
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEMR_2024.parquet",
+      "sha256": "374e4076c6996fc6d578f31b6f227c28119237efac9bffed0d9caa581db7539c",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 141,
+        "quarantined": 47
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEPT_2024.parquet",
+      "sha256": "9e396fc463edac19e2c6ead65be5123c315d000d61daaa5f8fed25eceeec1d3e",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 577,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VEPY_2024.parquet",
+      "sha256": "bd79834746a0b3a62b525cafbe938485493f1c5b4153f96b6b97bf8f289c932d",
+      "selected_reports": 54,
+      "status_counts": {
+        "approved": 162,
+        "quarantined": 54
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VERC_2024.parquet",
+      "sha256": "ba16d168047516ec1b09fd94e17f0aeefef1418e72d4d3b7f6843f5fd0e06ab8",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 767,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VERK_2024.parquet",
+      "sha256": "d54385d441ddff1ca24f124c105efba4884a1e439d84fd75bcf9da8eb97df897",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VERP_2024.parquet",
+      "sha256": "a0100f1ba8425533064ac418adb27c7ac9481d4ea655f4a38702b8dae558a2cc",
+      "selected_reports": 105,
+      "status_counts": {
+        "approved": 315,
+        "quarantined": 105
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VETZ_2024.parquet",
+      "sha256": "8c406ef09709d9d12fb626848a2ac5b8ad6f4b3fa17e169b635bdfa3938a05db",
+      "selected_reports": 21,
+      "status_counts": {
+        "approved": 63,
+        "quarantined": 21
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIAR_2024.parquet",
+      "sha256": "c002d7d7b2936149811f204dcea137241fcb449bfba02b799aad0e011feaceeb",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 582,
+        "quarantined": 186
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIBR_2024.parquet",
+      "sha256": "8a5d7328c3ec73c23a7b4985fbbdc4ae5351703658ec8c06604e24805e732c81",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIBY_2024.parquet",
+      "sha256": "e630657b2c55aee646729dffc79bd0283acaf98fc6ea2f20c02045b732e68fa5",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 579,
+        "quarantined": 185
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VICG_2024.parquet",
+      "sha256": "79800db03e7b21dce2d5544f9e587c1abb505c5c2a4e5f875cc8e4c6cca5539a",
+      "selected_reports": 26,
+      "status_counts": {
+        "approved": 78,
+        "quarantined": 26
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VICX_2024.parquet",
+      "sha256": "6b536f340de5a230b89246fcf99d62f9dc74af291186fef9a0693fcac6902ddb",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 135,
+        "quarantined": 45
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIDD_2024.parquet",
+      "sha256": "e9bea8f10065eedbf8ccabbfea18bb20b328e493919772d364a861b233cbcaa1",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 198
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIDN_2024.parquet",
+      "sha256": "c5b27ed62a73151b4f57ee2ffc37d4a3ba416c82b46af38900a52a44f4ffa6d8",
+      "selected_reports": 107,
+      "status_counts": {
+        "approved": 321,
+        "quarantined": 107
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIDP_2024.parquet",
+      "sha256": "f7ba0e0a1a3e072f3e8ec64c624766028656f3804bbc98e615e017ec451c4bc0",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 576,
+        "quarantined": 192
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIGG_2024.parquet",
+      "sha256": "d7716eb70334066853252d5ad5cb9810082bac0d5b62cd0a223b7bac01e099a9",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 137,
+        "quarantined": 47
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIGR_2024.parquet",
+      "sha256": "442118ee47762885483865f47741ed686cccc68d8e35496ed3d077570af0b6b2",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 560,
+        "quarantined": 204
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIHR_2024.parquet",
+      "sha256": "5fa129eb199a46c98f4dadf67f939a30de78a81d79d0723790702f55772f9e97",
+      "selected_reports": 186,
+      "status_counts": {
+        "approved": 544,
+        "quarantined": 200
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIJN_2024.parquet",
+      "sha256": "6ab7f1c85800909d3555be9cb69487b29f843039016854c251ef4485841ebd41",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 562,
+        "quarantined": 194
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIJO_2024.parquet",
+      "sha256": "d30b71a4c0207fe505f6b773b64794da4d0f1cf111e2817185d2bd17a3ccca7a",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 574,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIJP_2024.parquet",
+      "sha256": "9adab4e1998b189b086a3edd1f898decf2b7d77adaf95b7141f798394ae30451",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 583,
+        "quarantined": 185
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIJU_2024.parquet",
+      "sha256": "22d84eb54a985fcdb4bfeffbb1ddb4c445b9b4e1c6aa5e99fb40b5935e407836",
+      "selected_reports": 26,
+      "status_counts": {
+        "approved": 78,
+        "quarantined": 26
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIKG_2024.parquet",
+      "sha256": "180d1683f2c0f2f67c7b891c474f0ec41820e7f680e5258da3a63e5d23a79b04",
+      "selected_reports": 3,
+      "status_counts": {
+        "approved": 9,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VILD_2024.parquet",
+      "sha256": "70ce8ff234251b66c8edd8232433c96a5e989950feffe397dcb3ac2816c005e0",
+      "selected_reports": 6,
+      "status_counts": {
+        "approved": 18,
+        "quarantined": 6
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VILH_2024.parquet",
+      "sha256": "8e77d3eb738fb5f025c9c36c32197faddbae19d8eeb8da6cf7b4be27b58fc88d",
+      "selected_reports": 120,
+      "status_counts": {
+        "approved": 464,
+        "quarantined": 16
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VILK_2024.parquet",
+      "sha256": "8708a5129e483d30323be21d534f1d5517d244600bb8b879c31ee882fbe18f8c",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 581,
+        "quarantined": 187
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VIPT_2024.parquet",
+      "sha256": "2d11264076e947af0c4b7d841883a330bceff01fc9f409e012d3d9b85909d227",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VISM_2024.parquet",
+      "sha256": "2606d515b2ffb6d609eee4ffd60acde7d431c756c32e37be4605da8073cc4a4e",
+      "selected_reports": 76,
+      "status_counts": {
+        "approved": 228,
+        "quarantined": 76
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VISP_2024.parquet",
+      "sha256": "7400ea88cb13c2528b0be49a415b7346e598ba660d97d068f463fe7230c33d6d",
+      "selected_reports": 31,
+      "status_counts": {
+        "approved": 93,
+        "quarantined": 31
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VISR_2024.parquet",
+      "sha256": "c1103f92c304f2e92a950d25b8e83d22c4529d40afb5030ce8c754aeb60e62a5",
+      "selected_reports": 36,
+      "status_counts": {
+        "approved": 108,
+        "quarantined": 36
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VITE_2024.parquet",
+      "sha256": "e78aeacecd8c0dcfa8367e9f6b7b02fdac93cb4cfdbebb03057457190fa65dd7",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOAR_2024.parquet",
+      "sha256": "d4aa8dd7f295215f95d88de8d5243cd3330aedba66f6d17d760fb52121fb5d87",
+      "selected_reports": 106,
+      "status_counts": {
+        "approved": 315,
+        "quarantined": 109
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOAT_2024.parquet",
+      "sha256": "9dde38454512d403d0a2da5ce97238efcc8c892c4712753b36cf66c6ee2118b9",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 126,
+        "quarantined": 42
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOBL_2024.parquet",
+      "sha256": "d2197ab2dea4c2f54fd5b6be60576ed74de7bcde811e785fd268e660fb70edb0",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOBM_2024.parquet",
+      "sha256": "89b41b86404688789aa47390c5729675497169bc47c4ea8aa0dd38e7d0b4d1aa",
+      "selected_reports": 91,
+      "status_counts": {
+        "approved": 273,
+        "quarantined": 91
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOCI_2024.parquet",
+      "sha256": "f619c239bfc06fc1ed36bb6cfa60c08f497cf82dcc45acdd3cd6cdd0c2f37cc2",
+      "selected_reports": 180,
+      "status_counts": {
+        "approved": 555,
+        "quarantined": 165
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOCL_2024.parquet",
+      "sha256": "c29ffb822057201426831d1d1edd1147ec6ffafdf43dab67e6c12a8fd902de13",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 567,
+        "quarantined": 189
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOGB_2024.parquet",
+      "sha256": "9c07450769be55858e91be9bd6b139e3004c87a227894bb6fcb6efe382007e47",
+      "selected_reports": 21,
+      "status_counts": {
+        "approved": 63,
+        "quarantined": 21
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOGO_2024.parquet",
+      "sha256": "8f099c0bc9e5db730c24f52df13b6d1af34a7aabac863468067275045900541c",
+      "selected_reports": 139,
+      "status_counts": {
+        "approved": 417,
+        "quarantined": 139
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOHB_2024.parquet",
+      "sha256": "378fabab92577e9bfa3318d5b8c1778f434c55276150e375f71d550567f5d06a",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOHS_2024.parquet",
+      "sha256": "0ee39092dc6d71599b6a0bd665fd54d1e8768c984734fb5c498140b19208d878",
+      "selected_reports": 175,
+      "status_counts": {
+        "approved": 524,
+        "quarantined": 176
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOJV_2024.parquet",
+      "sha256": "bf6de0b45c72261bf25893631c72b6ac31cef0a3a60a1a426859e928326b8da6",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOKN_2024.parquet",
+      "sha256": "60f8f512cfb035931b396d7420b235f6705e5640a8452c81a600745ddd4cda91",
+      "selected_reports": 188,
+      "status_counts": {
+        "approved": 564,
+        "quarantined": 188
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOMM_2024.parquet",
+      "sha256": "37b6e9b93f72c518e34a3d01a201dbb9e565328c53b3a007c8f184e6d38408ba",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 767,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOMY_2024.parquet",
+      "sha256": "d3bb2cb924e602503664b8622164f7c9fd4adb994167de7c57be377a8ac864bd",
+      "selected_reports": 95,
+      "status_counts": {
+        "approved": 285,
+        "quarantined": 95
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOPB_2024.parquet",
+      "sha256": "7d8ec6ab61dd7a5c708c473a172e37a44aefef4afe68407f891ac89b69dc4425",
+      "selected_reports": 153,
+      "status_counts": {
+        "approved": 458,
+        "quarantined": 154
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOPC_2024.parquet",
+      "sha256": "68458a78b0ac85ece7dd4135c885922d4e35042a9e22d518006ab7fc32912ee5",
+      "selected_reports": 59,
+      "status_counts": {
+        "approved": 177,
+        "quarantined": 59
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VORY_2024.parquet",
+      "sha256": "049099a5f6bfbc259da45c27c04c96ccfc9352c369f5e920124a313f502d5092",
+      "selected_reports": 133,
+      "status_counts": {
+        "approved": 399,
+        "quarantined": 133
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOSM_2024.parquet",
+      "sha256": "3baf8f4e682092179bc0b2b62c5c8abfe4c134a450a687bbc800185db776a77c",
+      "selected_reports": 89,
+      "status_counts": {
+        "approved": 267,
+        "quarantined": 89
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOTK_2024.parquet",
+      "sha256": "c682df47c090e6e2d652025266121aa537ab4040cda03bc07861fa73bc424958",
+      "selected_reports": 86,
+      "status_counts": {
+        "approved": 258,
+        "quarantined": 86
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOTP_2024.parquet",
+      "sha256": "1d9311b5fad26e5628fd6207c77c016b28908e2ab0d9607321522e53933e95a2",
+      "selected_reports": 117,
+      "status_counts": {
+        "approved": 351,
+        "quarantined": 117
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOTV_2024.parquet",
+      "sha256": "e0414d7b71648b9d9ef70fcaaf241878d4bf050b879d0182c4be1e08ee53f6fb",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 577,
+        "quarantined": 183
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INI0000VOVR_2024.parquet",
+      "sha256": "113159627847366b85e9209fce8ee384bd100ef8a2c453013c369b0e3cf4274e",
+      "selected_reports": 89,
+      "status_counts": {
+        "approved": 356,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042026_2024.parquet",
+      "sha256": "f37ca6b22ebb13443b68617f2be2e32b533a1109d4efc7093852b4d6b4988578",
+      "selected_reports": 30,
+      "status_counts": {
+        "approved": 120,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042062_2024.parquet",
+      "sha256": "5c62b8b29112a7190746bbf48db933552e27263e3d99efd2a7b9cb42cc5314f9",
+      "selected_reports": 35,
+      "status_counts": {
+        "approved": 139,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042065_2024.parquet",
+      "sha256": "8665bbad2be3acd2ac5c2da5bd4a156d2d144df92776aa12e2aeaaa4d7fb803a",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 176,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042075_2024.parquet",
+      "sha256": "cdaa8274dae9b15fb9e29863e3bd518ccf2dbeaae30492cb98e38b6b5c18fe2a",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042077_2024.parquet",
+      "sha256": "1944431b57b6e417f1da8c99690df8faf1435a2dfd16789a3c08fb3ded08e297",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 184,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042078_2024.parquet",
+      "sha256": "104c62ff73e793e6fee04dfd05ac7e20caa3fc34ac965b7f0b887493c847a3dd",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 188,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042079_2024.parquet",
+      "sha256": "f858ccc24ca1c43b1a1d5dcdd85a22bceac14caeb5c1f3429a17f16d35d64269",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 750,
+        "quarantined": 6
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042081_2024.parquet",
+      "sha256": "12f4a16faf9743fb0dca70d08bd7e273d9cbd9153a695f1f267eb984a582e05f",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 356,
+        "quarantined": 20
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042083_2024.parquet",
+      "sha256": "f436f6fc66a573d1c55c0961c2a37abe3d3f649d6211005c4fd769ee31437d0c",
+      "selected_reports": 95,
+      "status_counts": {
+        "approved": 377,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042101_2024.parquet",
+      "sha256": "74f08214024836dbe529fee3ad1799be705bf2ae121fa38428bbcaa70d4625cb",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 568,
+        "quarantined": 192
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042104_2024.parquet",
+      "sha256": "0d5e5c75eeb555018a106bb28df66b1240858844776a6f43c27e6bb600cc6822",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 166,
+        "quarantined": 6
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042111_2024.parquet",
+      "sha256": "d2ccadd39702ddf4f0ad53febdf6dca69af9f26c051273d4f25d799a9175fd9c",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 750,
+        "quarantined": 6
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042114_2024.parquet",
+      "sha256": "eb5eef8d7ecd7d3d47b51fad80f928c900f550e714a5897a5e83b74a594a0269",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 384,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042137_2024.parquet",
+      "sha256": "b910545e68077c7fcc1b9f07c38dd36e20179d1ba27a585966aa1998ceb36522",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042139_2024.parquet",
+      "sha256": "9e63b4f32bbde6c773596d43aef09fe32efe0d199d92d058ff99f9af9f50f740",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 286,
+        "quarantined": 98
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042143_2024.parquet",
+      "sha256": "624064dc4ced7feb46c3fe292f11b36c2abf907fd81ac1ac92f39c652abb0df5",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042147_2024.parquet",
+      "sha256": "fda4a17abcc5a5b5b0667e26e03a022aa01dff396d4f4008a02d38da7ea50ff9",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 383,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042148_2024.parquet",
+      "sha256": "a87c202801392658418b8c0c3cc07ffd241c089a764c2764f63b1f3a4cbf32e7",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 375,
+        "quarantined": 9
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042165_2024.parquet",
+      "sha256": "d32d40caf265d07a79750947e2843619176b85b9dfd2b32dded3f12554519541",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042170_2024.parquet",
+      "sha256": "ec16dd999395535ca31504ae3d1e44885946be932fad5558620f0a2a6219276f",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 545,
+        "quarantined": 215
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042174_2024.parquet",
+      "sha256": "c16a0562b50f456c57dda5f8d38a2f257492319c933718c7ec411a0fab177c95",
+      "selected_reports": 35,
+      "status_counts": {
+        "approved": 100,
+        "quarantined": 40
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042177_2024.parquet",
+      "sha256": "b2739391e3dbf80b16582adfe0d7cb2c5f9269d5eef7b721347f0bc44f49c9a5",
+      "selected_reports": 37,
+      "status_counts": {
+        "approved": 111,
+        "quarantined": 37
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042187_2024.parquet",
+      "sha256": "16012b68bb961118ee618c94b5b74ad17a9e45a5216e99ecfb01c813d5ec36bf",
+      "selected_reports": 36,
+      "status_counts": {
+        "approved": 108,
+        "quarantined": 36
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042217_2024.parquet",
+      "sha256": "286423576274b0d6a5a6481ad4300548593f0498b62941167245ff5aabb2ee6c",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 384,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042220_2024.parquet",
+      "sha256": "5babc949c25e1984cdc4356a85bf42e95a0d93ea56aae8277043a8fc5350acdb",
+      "selected_reports": 137,
+      "status_counts": {
+        "approved": 411,
+        "quarantined": 137
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042237_2024.parquet",
+      "sha256": "0b77a7cae93520a941d90d8a457fdb93e23c9ccaed9b400f81d3f7dbf07c46fb",
+      "selected_reports": 25,
+      "status_counts": {
+        "approved": 75,
+        "quarantined": 25
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042249_2024.parquet",
+      "sha256": "323400f918c6d88783b3c6a547245766bb919cf0f6ebd9243dd03a3878cd1829",
+      "selected_reports": 33,
+      "status_counts": {
+        "approved": 99,
+        "quarantined": 33
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042257_2024.parquet",
+      "sha256": "0393c9970f9d61268ea2eb6d543bc494b3efd5d76e83747302548e4fbd8656cd",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042258_2024.parquet",
+      "sha256": "e79d31a2e93b4d89be85f0d20c6ff922e3aa6923bad03f207528d8ff4d851604",
+      "selected_reports": 1,
+      "status_counts": {
+        "approved": 3,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042261_2024.parquet",
+      "sha256": "7c2374ba6f5e7d337fb284bb0732bab2c1b0ace597296b6ef426a9d72bae284e",
+      "selected_reports": 66,
+      "status_counts": {
+        "approved": 197,
+        "quarantined": 67
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042262_2024.parquet",
+      "sha256": "3ad39d5ab803ea029b1808f09f9ff84beb71dc15759e74fe2a0d50c1ffb64675",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042266_2024.parquet",
+      "sha256": "be57172a6c7debc241fc611bf2e76e1396be6daa78033f349e89500a1a0fac5c",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042267_2024.parquet",
+      "sha256": "1d754cce5f1d4b1a72426efd161c40f042b047c31994bcc214b6c8a812f26ade",
+      "selected_reports": 26,
+      "status_counts": {
+        "approved": 56,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042270_2024.parquet",
+      "sha256": "02b6488f194ecf82bbdcd11143fdaa714bbb2ea1ccfa564ad2695b65227c0b83",
+      "selected_reports": 29,
+      "status_counts": {
+        "approved": 58,
+        "quarantined": 58
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042271_2024.parquet",
+      "sha256": "55f885e38ad11db8de421ffa36ffedc5a2fab60ef7e0a1a9ddd228b4abe50127",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042282_2024.parquet",
+      "sha256": "3352f3160c9ed3e0d3607567c5580e7931ab7411ff3a6de484cfc401c6c65d1f",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042296_2024.parquet",
+      "sha256": "84a53803f0a74dcaca68617718abb180ad8eacbba2f30f0c8608f8804e06a566",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 141,
+        "quarantined": 47
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042299_2024.parquet",
+      "sha256": "405d3d354f6956c1d4ba188092ac077842c7a2456db96b84c7e185fa9fc098be",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 384,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042308_2024.parquet",
+      "sha256": "5107977be4a5804d7a2004a1b8ccfa52f754d0a763b103405c4bd8454a0441ec",
+      "selected_reports": 135,
+      "status_counts": {
+        "approved": 540,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042328_2024.parquet",
+      "sha256": "73cc73df54c891a156f63c489b002f677698a652da8643344d52be9d9c027304",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 563,
+        "quarantined": 201
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042343_2024.parquet",
+      "sha256": "e347d2129c60851b4a8cbf041ca29066c1261bcfa17b30b3c9cea2142b5739c6",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 572,
+        "quarantined": 192
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042370_2024.parquet",
+      "sha256": "4a39abca8d9f8bc2c956b9f543858fdff62b83a7ccbb6557a92fcbdbcb7fe211",
+      "selected_reports": 26,
+      "status_counts": {
+        "approved": 78,
+        "quarantined": 26
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042383_2024.parquet",
+      "sha256": "f5481a9815851f1964f4fd32dd617c913936c3dbba527fed5c7ff3da91299cff",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 126,
+        "quarantined": 42
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042387_2024.parquet",
+      "sha256": "6b4ace17ab290dba56d8bf3337e741f740746d7b41b88bee1efdd2c6bf368c09",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 135,
+        "quarantined": 45
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042391_2024.parquet",
+      "sha256": "9ce712ad9b0f2f6013be45445f489f68a6a3f7403e92b399f19cb447539c7332",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 115,
+        "quarantined": 41
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042395_2024.parquet",
+      "sha256": "916f7e338db350f0ad0626fce4a5a45c9938bb7781419ebc03ccbba8906aa237",
+      "selected_reports": 41,
+      "status_counts": {
+        "approved": 121,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042399_2024.parquet",
+      "sha256": "2a6704fcf427d0c2b2413b19a496ff1913e1d6b50319fe58f234dda35bac15e6",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042407_2024.parquet",
+      "sha256": "36b034f9449771feb268d238d362dbd256bbb786eeeb76c185246721b7e218d5",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 141,
+        "quarantined": 47
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042408_2024.parquet",
+      "sha256": "6718d1a6857b52527c802144ccfd98bbbef4f67cf69a2eea86e7b56a4c3689b0",
+      "selected_reports": 41,
+      "status_counts": {
+        "approved": 122,
+        "quarantined": 42
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042413_2024.parquet",
+      "sha256": "f5fbebf32af6ac677bba041a917f0c11055a29421b11f75234abca45fbfdca9e",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 134,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042414_2024.parquet",
+      "sha256": "838cfa2b869db8e31bc61c94f863ee4de1ff7d7532e6680be12ad16b49b876f6",
+      "selected_reports": 41,
+      "status_counts": {
+        "approved": 123,
+        "quarantined": 41
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042420_2024.parquet",
+      "sha256": "b12ec231bd2039e69bf742c79bd7a50012cf3f1e72012075908810dfab613025",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 132,
+        "quarantined": 44
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042435_2024.parquet",
+      "sha256": "88fdf9ef5827edd2e8ae59d81492814eac6ec67968786f0b03822c467549dceb",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 572,
+        "quarantined": 196
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042447_2024.parquet",
+      "sha256": "eb3f4941998285bf28d1465ac75e16172443005a9ed87f003d550cd02d8d5a5d",
+      "selected_reports": 32,
+      "status_counts": {
+        "approved": 96,
+        "quarantined": 32
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042459_2024.parquet",
+      "sha256": "3de71f6bdbe9369ab2fa7e61979d2d30fc127e6e21f2e33c03626d07d14bea04",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042460_2024.parquet",
+      "sha256": "bec2821fdbbb701f89702fe75531db6a4e4c79531cf6b33e89cdb9f174853900",
+      "selected_reports": 1,
+      "status_counts": {
+        "approved": 3,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042467_2024.parquet",
+      "sha256": "7e186e1759f72cfd3c53aab89ba9b2145353e63d5d746ef36c166d06f25da403",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042468_2024.parquet",
+      "sha256": "6dc5295cd226b05f9c175c06a1525ece9388e372975582af765dbfd9d248e5e2",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042469_2024.parquet",
+      "sha256": "a94b05ca7bc22e094985c25838ef8c3289d4dbae601a154485351170cd574b21",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 121,
+        "quarantined": 55
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042471_2024.parquet",
+      "sha256": "9aaaa5615f7e0523b90270178b2ada1765b6c3eeede3bbf84af2acc258bcd227",
+      "selected_reports": 22,
+      "status_counts": {
+        "approved": 66,
+        "quarantined": 22
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042473_2024.parquet",
+      "sha256": "58fbf1ba23f63fe556521397339a06027abcb7458d9af429a25a7efeb6028f81",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042474_2024.parquet",
+      "sha256": "cf4f56a0c086d48c7daad445d3e10b13b7f24fc18b8e807249102c5c3fd758b0",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 557,
+        "quarantined": 211
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042483_2024.parquet",
+      "sha256": "047546512d91f6ef0f4a412bfdf4aff8ce732105475178c5b7290d61c1769978",
+      "selected_reports": 142,
+      "status_counts": {
+        "approved": 420,
+        "quarantined": 148
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042484_2024.parquet",
+      "sha256": "00f7ab658ba76b3a36569050925494a82eac37e63654ad16260176658d0a1fb4",
+      "selected_reports": 2,
+      "status_counts": {
+        "approved": 4,
+        "quarantined": 4
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042488_2024.parquet",
+      "sha256": "210358115be13934c8d36c297d01314d3d989d3454dadc7ed826d69c1d840ccd",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 135,
+        "quarantined": 45
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042498_2024.parquet",
+      "sha256": "09b2e5b305d3f43361957f8a9a748ccdd12969f75fb81020331288c052044eaa",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042499_2024.parquet",
+      "sha256": "74fdcd87e4b32e9379a7ca98e9f4d774ab9f0e1da13c57349d812324165d1566",
+      "selected_reports": 4,
+      "status_counts": {
+        "approved": 12,
+        "quarantined": 4
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042522_2024.parquet",
+      "sha256": "cdc5dd40abe9e3870fd30473fbafb8c11ee69d0438e8ba84eba42a4b611c4e45",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 120,
+        "quarantined": 40
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042523_2024.parquet",
+      "sha256": "9783531aafae487d6b8e9842bae420ca14fee659b3838d86d9cedf436557d042",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 132,
+        "quarantined": 44
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042527_2024.parquet",
+      "sha256": "d89daaa397de961c363920187815acf2ef047f9ee358bffebe72f8eea99e3456",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 180,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042540_2024.parquet",
+      "sha256": "6df834eb77f81fac22b96610c309bd7af9535aea6c4157533f722d75ca460aa7",
+      "selected_reports": 24,
+      "status_counts": {
+        "approved": 71,
+        "quarantined": 25
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042546_2024.parquet",
+      "sha256": "3e4997939202618092b6407b47fc790e36b8c5cb2c560fb3465fd98b12339b25",
+      "selected_reports": 33,
+      "status_counts": {
+        "approved": 99,
+        "quarantined": 33
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042557_2024.parquet",
+      "sha256": "9736a519f972efd676db3adf82a048d5283838b526c9ff29bc54601f65e90424",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042562_2024.parquet",
+      "sha256": "631e7d8f3944df979bf1de1d957e0d0d4d84a49f2e3e4e4c09f5601b28826677",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 167,
+        "quarantined": 21
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042567_2024.parquet",
+      "sha256": "40aee5d6be5ffb1a75aa8abd2d82bbdd9cf3b7b2508c4cfcb61a66c69b39b6e1",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 280,
+        "quarantined": 104
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042577_2024.parquet",
+      "sha256": "70bc59d9c9b24103865c987ca936bf70d27a8e88ab0172bdfaebf86402b0fc02",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 132,
+        "quarantined": 44
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042588_2024.parquet",
+      "sha256": "5b29a243e1a461b7f4142d7501bb30294a38ad5e85c532f88b490c7c6fb172cf",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 116,
+        "quarantined": 40
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042603_2024.parquet",
+      "sha256": "f384d931843544cbb37d4022f68f42f458d10abb882d269e22b9b6544cfbc169",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042618_2024.parquet",
+      "sha256": "5d27f9f02b600ab9e88971f3e9a3ed86fae0d9372a3fe0132b27f5e4da6b93d0",
+      "selected_reports": 136,
+      "status_counts": {
+        "approved": 408,
+        "quarantined": 136
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042619_2024.parquet",
+      "sha256": "bdcd244b6430e8d9b87d075910d78cf2112863fc120754bbab9217b37f411119",
+      "selected_reports": 145,
+      "status_counts": {
+        "approved": 435,
+        "quarantined": 145
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042631_2024.parquet",
+      "sha256": "c21d7c214fb41de22e593200a06bbfbe5009a424325eb30492775b33757a2051",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 545,
+        "quarantined": 215
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042638_2024.parquet",
+      "sha256": "af393fb929be0c090909c6c8560b9c59f2fcef8170a28c3a7ff78cf63bc63d3c",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042639_2024.parquet",
+      "sha256": "f125a4770e83f3448ddc326cd3cf527b4689cec58172bbb87e6d03f4bf902faa",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042654_2024.parquet",
+      "sha256": "1611f6f318b2759ec8168b9e4e2c40da8a0997665d8f38837b45e55d1836706e",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 132,
+        "quarantined": 60
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042661_2024.parquet",
+      "sha256": "5a7caf09ba6550e91f2c373e296b936967240fa1c04ece3f63f3021088b540c3",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 192,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042662_2024.parquet",
+      "sha256": "69b3551bd3b1f8636797c1b129350408e8ae2bb5cc461d14f0309aa292e3ef6a",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042671_2024.parquet",
+      "sha256": "39505961d96f91c23a9e707a52b331bb125bb777ad51eb57f1151c39ed0bb39f",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 763,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042672_2024.parquet",
+      "sha256": "ed7d8dbfcc9caf0bf8c74cb34a6a5393cbe15a9050f9162632d214dc1da6710f",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042674_2024.parquet",
+      "sha256": "47ffd23d6086c432bc740e3348397bbd768066ee5db18f501241132bbd20014a",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042679_2024.parquet",
+      "sha256": "63a93f915925bee5812e49cacf1de086444940295daec353aa22bbab2036e8fa",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 142,
+        "quarantined": 50
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042693_2024.parquet",
+      "sha256": "b3c28112aebde1c43e1ce4a1a1bd35d8a23a485ad4ed5915c22a9b37944be030",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 755,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042705_2024.parquet",
+      "sha256": "82dfe649dc880c866601204feb2d45231ff3b1ae9252fcb43dd956a78cfe5422",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042706_2024.parquet",
+      "sha256": "85a79ddfca479cf4006bc320b72c0c7f565265951829acd7ed0e101934b3a113",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 571,
+        "quarantined": 193
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042708_2024.parquet",
+      "sha256": "9e87ef17e52d33aec9becacd0288ae599898c130fab00555e3bc1243cce197b5",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 286,
+        "quarantined": 98
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042709_2024.parquet",
+      "sha256": "f9647ea7ad00ecd143b52e5064c884b69cb450a0c44b10576eea0ab19dc7c704",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 96,
+        "quarantined": 92
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042711_2024.parquet",
+      "sha256": "1d6ae4f0ef3ade1891f7100f781b10522d826138836817bf6c79611098a1a329",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 135,
+        "quarantined": 45
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042715_2024.parquet",
+      "sha256": "7999821036a1a2f1f9028cba2f914f21596ccaa9e304eaf1ada7e7f3d57221d9",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 188,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042727_2024.parquet",
+      "sha256": "12925fe7b2108df3f475b9faf8f4d309bfe9edabbab98a92317c29f01fde5a0d",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042730_2024.parquet",
+      "sha256": "26300b57a0490edc0f7efc971ba88d14cf8a13dc67aa22152e47a0278a15e72c",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042731_2024.parquet",
+      "sha256": "ce8bec59c3992fb459c7579dbdcf5a7cbd06f1c746ac6b5a5deb752e5bf30e8e",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 569,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042740_2024.parquet",
+      "sha256": "2804f0dc5703740a2503a6e03b48bca69ad8df27d838244e31b45b0a27fff6d0",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042744_2024.parquet",
+      "sha256": "a1a117feff0a78a7f2daca27f0732780057ee6388e2e7248408e618d7980ff02",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042751_2024.parquet",
+      "sha256": "fcb66ae1bce8406cea9a207859367d4e6ad288bcbbba897165711ec35202c46c",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042763_2024.parquet",
+      "sha256": "63ba7a6ed21826fdc478790ea07fc79fd457cdfecd0a90abb3c53e72dd8abd66",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 384,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042767_2024.parquet",
+      "sha256": "dd00660f66fd41376dfafc26a6627242a5b5125c5f934199aadf7c902012f6d0",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 192,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042768_2024.parquet",
+      "sha256": "12e430580706bfac4d7b61bab6eea31b03d5d7ea20881877f246b34cf0cd5588",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 282,
+        "quarantined": 102
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042771_2024.parquet",
+      "sha256": "c88fc9e2e69f5353f630318773c74962361be5accfe8a4438743f34522702caf",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042776_2024.parquet",
+      "sha256": "da414da98c8cbc49290f025c4f364019c64cb6d78a61b46dd69c08ebe3dc8472",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 272,
+        "quarantined": 104
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042790_2024.parquet",
+      "sha256": "9449157c21b66b5614e7f6bb4635bad9ba13aac749dacec164a1a6b1990843db",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042792_2024.parquet",
+      "sha256": "355ea2d38fd474f27ec3b68d377f5f2b7e912d2a27b8f4d5c541bac512c3bebf",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 78,
+        "quarantined": 78
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042793_2024.parquet",
+      "sha256": "de18ddf30dcdbb2266d3f56a2def7d73bd8f7bc7d9f6a17b5f59a311359c1d51",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042795_2024.parquet",
+      "sha256": "82fe1988c719fb1084fb813758bf1b0c0606bb2e73abce5efb8c5f9314178782",
+      "selected_reports": 23,
+      "status_counts": {
+        "approved": 67,
+        "quarantined": 25
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042799_2024.parquet",
+      "sha256": "09a182639d5774387a305528608a80c3de256738d8fcd4126d7f062b7942af33",
+      "selected_reports": 20,
+      "status_counts": {
+        "approved": 60,
+        "quarantined": 20
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042803_2024.parquet",
+      "sha256": "161bb38ec161525429d8dfb4d3b90940278dec7f7bd1937fdd68d961538de220",
+      "selected_reports": 38,
+      "status_counts": {
+        "approved": 114,
+        "quarantined": 38
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042805_2024.parquet",
+      "sha256": "cb7bacde1ecb7a8e929bf130c04cb443e2b95caf21ac814a52f45b27fe16f9b9",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042811_2024.parquet",
+      "sha256": "e80f1f91986c4d02da9bf592126481d68599dad70190f3ddcc4f86c3ac0bc174",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042812_2024.parquet",
+      "sha256": "cdee9de5b29d98723a13ce7fa6bb3fb50547ae61f96efc8830d5fda0c24b5c94",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042830_2024.parquet",
+      "sha256": "65a64958fc991113dd64076d6651708a5560a43c23a0fb6b4edd9b19e4912976",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 563,
+        "quarantined": 197
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042832_2024.parquet",
+      "sha256": "cd52a27df6519b06de53dd73d452b262560c960fd4509628ba7c95d9381fb0c2",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042834_2024.parquet",
+      "sha256": "aca71c41f9796f0500523e92897a11a9b8f3a748bb160bdb3a34bfba232b4b6b",
+      "selected_reports": 36,
+      "status_counts": {
+        "approved": 107,
+        "quarantined": 37
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042838_2024.parquet",
+      "sha256": "aa511d8e5cede35e157ad7857eb619ef9db811d3b7148cdfa7a779fe4f0f9132",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042841_2024.parquet",
+      "sha256": "e66d69db8bef307ff8d2467c8232e8e8cc4c41b9f77aa5330097bfe1a63f3fc7",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042849_2024.parquet",
+      "sha256": "d113d24804c110ef134b33083a6eee83b69db493cc848d03d40a7a168369df90",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042851_2024.parquet",
+      "sha256": "532a898992b4d53cae1a87c8d3c37bc37dc4225410597ebab9a7adf637315aa0",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 136,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042860_2024.parquet",
+      "sha256": "9ed9c1783a5f857dc7a5c4894061cda9349760156de18974f36e22b7270872ec",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 192,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042874_2024.parquet",
+      "sha256": "380828cb0d2aad855a78ee6687ef146390b562882737dae1ae5633bfa4a89432",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 591,
+        "quarantined": 173
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042876_2024.parquet",
+      "sha256": "37a00ca2e844041b13dba86d8780f321bafeaf0aba6daf88828246713b086b09",
+      "selected_reports": 41,
+      "status_counts": {
+        "approved": 123,
+        "quarantined": 41
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042883_2024.parquet",
+      "sha256": "9ca2b60789fc0023c9b846e4c553883fd2261bb167af794931feb3deac29ece7",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042891_2024.parquet",
+      "sha256": "c7ae67163cff742d900ff8208b7b581efad0fba62ccc94bf9c80ca1fb29a5e77",
+      "selected_reports": 100,
+      "status_counts": {
+        "approved": 300,
+        "quarantined": 100
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042894_2024.parquet",
+      "sha256": "345dfca92431b97e268942c28ce5373d1f998e9ef9b9163644e5f2a49055f973",
+      "selected_reports": 37,
+      "status_counts": {
+        "approved": 110,
+        "quarantined": 38
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042900_2024.parquet",
+      "sha256": "b27ba796419c9e4fdf96388c850437c208b77292eaea518c25390f20bccbf85c",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 135,
+        "quarantined": 45
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042901_2024.parquet",
+      "sha256": "0aa454368c5f01abc8b7c17309e815d076f5cd7615e7ef4ed34cc3b69d417158",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042903_2024.parquet",
+      "sha256": "db4b24fa5fc0a9d7519dc4268fd0ba6b501074644dcdf13db6368601bfc07b17",
+      "selected_reports": 38,
+      "status_counts": {
+        "approved": 114,
+        "quarantined": 38
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042915_2024.parquet",
+      "sha256": "cc331023823580688fcd851b2f6f29c23e1a4e311c84159e56631656f579873d",
+      "selected_reports": 31,
+      "status_counts": {
+        "approved": 93,
+        "quarantined": 31
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042916_2024.parquet",
+      "sha256": "872832027fb1b01145719a992b93cd678b907bae91c332a9ff1ac7c63a1c7096",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042921_2024.parquet",
+      "sha256": "d5223f6084837b736c60a2114cb95702ffef72352a1509706153630936847c70",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 568,
+        "quarantined": 192
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042925_2024.parquet",
+      "sha256": "f15d3b367bc3736f4007215c10e93a99109329018a486742ddab5d88b6aa96a0",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042931_2024.parquet",
+      "sha256": "9d75898b77632121b3a0996b871c71337f65b670b991ff97461f48e9af2e2042",
+      "selected_reports": 95,
+      "status_counts": {
+        "approved": 284,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042933_2024.parquet",
+      "sha256": "93226de7a71d3035c6b9bed2dd4a09b0f5f9f45929e8eb0349616a9da275e950",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 572,
+        "quarantined": 196
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042937_2024.parquet",
+      "sha256": "51693c90536566099014febc1098d64a65dd2d3d091123964de484aa65b4b75c",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 282,
+        "quarantined": 94
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042939_2024.parquet",
+      "sha256": "6cd292d13c99d72573792887f53b519614d110eeac9605b28bec9d7d6990bb6f",
+      "selected_reports": 95,
+      "status_counts": {
+        "approved": 285,
+        "quarantined": 95
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042943_2024.parquet",
+      "sha256": "f01a521081b90fcbb83664d461af1b955be28c8e632ec90f4338b13ec0588f72",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042946_2024.parquet",
+      "sha256": "c79af09502aa758628cb71f66d89c4021bef964f43b3e7bf3ac1553fb2420f44",
+      "selected_reports": 90,
+      "status_counts": {
+        "approved": 262,
+        "quarantined": 98
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042948_2024.parquet",
+      "sha256": "f0d0b37f2a229035ab52bfce61660e83079399b5e4ed5e59b763bb4214702b98",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 90,
+        "quarantined": 82
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042961_2024.parquet",
+      "sha256": "3e51d9546139bd4995452611f809325466a26436be4f62da42544ae3330c768b",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 80,
+        "quarantined": 80
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042969_2024.parquet",
+      "sha256": "2ca0ab57a0adb08f65e1a2c0bcd9d45c26e0e5118a6baa75ee841d922470ead5",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042970_2024.parquet",
+      "sha256": "fac04c4c784c7856a9fee74756358a17263340e8049cfafd95e983d66ca5ab9d",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 128,
+        "quarantined": 44
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042973_2024.parquet",
+      "sha256": "116a88e65d34ae2a79f51477c7a1b86b361904f3a0c9599c76f6a1f42cc86cd3",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00042976_2024.parquet",
+      "sha256": "b661251f41dd1a931fd7eeab5f8b34b07d07ca035105d9da13ec88fe4f05eebb",
+      "selected_reports": 144,
+      "status_counts": {
+        "approved": 432,
+        "quarantined": 144
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043001_2024.parquet",
+      "sha256": "b1029ed3658f637a7bf1edb09e01f49fa8643c13452a49b6dfee02b4eb8a8c3e",
+      "selected_reports": 77,
+      "status_counts": {
+        "approved": 229,
+        "quarantined": 79
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043005_2024.parquet",
+      "sha256": "87442cb836a63ebc4330fcc1535faa566c628f6b2192ad3e5e655b63b28d47f7",
+      "selected_reports": 72,
+      "status_counts": {
+        "approved": 216,
+        "quarantined": 72
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043011_2024.parquet",
+      "sha256": "385ac953bf8fbc5787d697677ea68eff58238c1e5e36362f9e3902b1626dd491",
+      "selected_reports": 25,
+      "status_counts": {
+        "approved": 74,
+        "quarantined": 26
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043017_2024.parquet",
+      "sha256": "4fd1a2e8f73f3c5d080d2bf04205b21716191c71b4ee1ff9bd6ff5c93169b915",
+      "selected_reports": 90,
+      "status_counts": {
+        "approved": 270,
+        "quarantined": 90
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043021_2024.parquet",
+      "sha256": "bcb831fc031366ddbb66e384755af89798712310ef528e03729164c224ae6fbd",
+      "selected_reports": 56,
+      "status_counts": {
+        "approved": 167,
+        "quarantined": 57
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043025_2024.parquet",
+      "sha256": "d019859e01bf2908054dc64fea7b479c074e6f6f5c2f29166799b40cb2587ff4",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 175,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043029_2024.parquet",
+      "sha256": "bc680eafbb4fcdfcf57f12b74528f2fd9234bddf3f674c27540c864999e3c5ef",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 288,
+        "quarantined": 96
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043042_2024.parquet",
+      "sha256": "35d685a0a8e94a70c15a514692198895da83ea4f0bfb90dd4efcb29b4f73a081",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043053_2024.parquet",
+      "sha256": "442f9d58fee0e718d41783521fe6b0d13bf8d6f914a07dc90de9989d95e7286f",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043057_2024.parquet",
+      "sha256": "6e292245768a829eed41379293e2ef08d0a9a944bdafe403310cfdaaf210c244",
+      "selected_reports": 94,
+      "status_counts": {
+        "approved": 282,
+        "quarantined": 94
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043058_2024.parquet",
+      "sha256": "c1318a03835c3f7df4435c27b1b3ae0fbfa18d29c7357cdccb81df0854051c39",
+      "selected_reports": 35,
+      "status_counts": {
+        "approved": 105,
+        "quarantined": 35
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043060_2024.parquet",
+      "sha256": "60929515a7ddb5e6d4d3c206e1fdc1a86c3dd353592f7a75b5ef313d5703f932",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043067_2024.parquet",
+      "sha256": "e307a35ded98ad7117149976570edec89507c138b76428dfd72d411f5920f204",
+      "selected_reports": 7,
+      "status_counts": {
+        "approved": 28,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043069_2024.parquet",
+      "sha256": "43eab42660eeea244a836b2a112c8f4dd9be357bb1f7719909ad6b95c6440026",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 117,
+        "quarantined": 39
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043071_2024.parquet",
+      "sha256": "fac8be07dc6bad5f31da1f199ce08516f3faacb94b46dd15d1ee546d5456a853",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 46,
+        "quarantined": 114
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043076_2024.parquet",
+      "sha256": "feb7ec4510a3b7076e01d9a2de2e3cc7a295cb0b0c1c8957a5769e7c17440f43",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 138,
+        "quarantined": 46
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043081_2024.parquet",
+      "sha256": "541b0b3a774f3caa6ea0911cb10e7d01d3991c43ee3a8dabdf5c625b4c386ce9",
+      "selected_reports": 177,
+      "status_counts": {
+        "approved": 706,
+        "quarantined": 2
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043083_2024.parquet",
+      "sha256": "fd4b33923957b32fc24414a14f61f4710ccdfb2ab2375107a95f897d0e1ef428",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 175,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043087_2024.parquet",
+      "sha256": "895a03590d8bb3acd075ffd8aa959d602f4f3b787e39452121580aea0922f2a8",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 183,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043097_2024.parquet",
+      "sha256": "b6c93e636a12d5e20b10b71bda925f17555520f636f0128d5b9f084550f4da1d",
+      "selected_reports": 41,
+      "status_counts": {
+        "approved": 110,
+        "quarantined": 54
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043105_2024.parquet",
+      "sha256": "f3017715e8a6cff203a45c6c9df04857b3344557a069828e8a57ac13c36085f8",
+      "selected_reports": 182,
+      "status_counts": {
+        "approved": 727,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043109_2024.parquet",
+      "sha256": "57dcc0be414d3ce2a0b8c1a0c9b8c54da86df05c99a81536f403e72a6a4e8eef",
+      "selected_reports": 93,
+      "status_counts": {
+        "approved": 279,
+        "quarantined": 93
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043111_2024.parquet",
+      "sha256": "a94958be19775ab066b7c9c6e21e7049f43c4c3eac77ea64df98b0ff60edc7b8",
+      "selected_reports": 96,
+      "status_counts": {
+        "approved": 383,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043113_2024.parquet",
+      "sha256": "755d2758528321fe2303012f197db5b908c17affdf6db2604d7e24c970eda8c6",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 180,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043121_2024.parquet",
+      "sha256": "8d42668f95d41249b16b01a278bb383dc0db046a626921df7e368623050db2d0",
+      "selected_reports": 161,
+      "status_counts": {
+        "approved": 641,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043125_2024.parquet",
+      "sha256": "6aab69087ddeb7975f8166e949700a2860668139ccd9f974d400422e73fdfba0",
+      "selected_reports": 17,
+      "status_counts": {
+        "approved": 68,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043133_2024.parquet",
+      "sha256": "4d8058cb14442d28d042bd3fef5ee7afae266e0219d01cbe4a883a5ccf9fcc28",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 179,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043136_2024.parquet",
+      "sha256": "5330a115f3b75444de420de10437cc11b6e38226aa4b6308d53b43cacee7bd06",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 155,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043137_2024.parquet",
+      "sha256": "3b38879ee19933f215b21a267d1ef6c7e50ee9071336d051f9f1593429270f30",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 179,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043147_2024.parquet",
+      "sha256": "162e2ca078371c18b99f50209c8724604ea93f51c0c1d3b88a91ca516b676d01",
+      "selected_reports": 182,
+      "status_counts": {
+        "approved": 623,
+        "quarantined": 105
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043150_2024.parquet",
+      "sha256": "8695c3247955e9ffb05888aaf01695ee1fe759cdfbfe67d2de4d1a1b2c1a591f",
+      "selected_reports": 188,
+      "status_counts": {
+        "approved": 751,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043161_2024.parquet",
+      "sha256": "00a003f3ba477d3cc27fd618678396a68df81c7a6bb73b8935436f30163007ea",
+      "selected_reports": 19,
+      "status_counts": {
+        "approved": 73,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043168_2024.parquet",
+      "sha256": "6208392daf277206ec0ad3cb86d27d8153617e4cb676cfa092dabc5aea89f5ad",
+      "selected_reports": 37,
+      "status_counts": {
+        "approved": 148,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043169_2024.parquet",
+      "sha256": "73d3c010b7b820325173cb93dbd63683f47b287dfd813fc6185047d052da5165",
+      "selected_reports": 15,
+      "status_counts": {
+        "approved": 59,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043177_2024.parquet",
+      "sha256": "1749f4935d62c42403328558dbc1a0519b5ba6ac51175199ffbdb386894b6ce5",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 172,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043182_2024.parquet",
+      "sha256": "d26a62629c2a9df29b44d6cd5989543017805fb24a7e401e9612a867349f8c3f",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 192,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043185_2024.parquet",
+      "sha256": "08cb36cc3cb15266b2c5bebdd72bc0e4f57cdc63e138504fc334324c11338685",
+      "selected_reports": 187,
+      "status_counts": {
+        "approved": 747,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043187_2024.parquet",
+      "sha256": "5b9d0bd874a670ae62c6ef1ec5f589369b80d3ac6e53fd4b6fd6e8e85981b4df",
+      "selected_reports": 178,
+      "status_counts": {
+        "approved": 711,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043193_2024.parquet",
+      "sha256": "a89973401492a5bf849b5e86d0b3dd5d7d9ee81ac4db66827734a105d35105ec",
+      "selected_reports": 11,
+      "status_counts": {
+        "approved": 33,
+        "quarantined": 11
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043196_2024.parquet",
+      "sha256": "52c4dcde733337082f09a567c77a8a532d19d3779d99db61a63ce2df995fb713",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043200_2024.parquet",
+      "sha256": "5af45d80ddf031fe039a2a777bacfc886662fdef416322e0bdb5f6c65cae2ee5",
+      "selected_reports": 19,
+      "status_counts": {
+        "approved": 68,
+        "quarantined": 8
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043207_2024.parquet",
+      "sha256": "5cade5a5518146a42b6a74b8fde86e1eabf749be125978870b68ed3e01b6b6ce",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 160,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043225_2024.parquet",
+      "sha256": "de78bf97523f7d0674d5ca2ab440d5059d1d422ae296f360c6cf46e746a5b26a",
+      "selected_reports": 87,
+      "status_counts": {
+        "approved": 348,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043227_2024.parquet",
+      "sha256": "ba757546b3ac071e337069f28aa31dd3af57b1c8e60487cf312114b2e4c8dbdd",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043229_2024.parquet",
+      "sha256": "dca13399ad41e11667ce604827a10b28931a2e1cf5936153e26c77ef1ddc2168",
+      "selected_reports": 15,
+      "status_counts": {
+        "approved": 58,
+        "quarantined": 2
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043230_2024.parquet",
+      "sha256": "f4154f184c08a401324401155011f932480301a840fcb91a43023ccd78704c3e",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043241_2024.parquet",
+      "sha256": "6ec1196b56c724e0eced271dd968a0a0c3bb54dca4f61ebd8ed41814e769d4c0",
+      "selected_reports": 85,
+      "status_counts": {
+        "approved": 255,
+        "quarantined": 85
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043243_2024.parquet",
+      "sha256": "a3d357c78f462eaa24aa2c7a98748274429f88eaf2ca051ecd0cefaa44653496",
+      "selected_reports": 175,
+      "status_counts": {
+        "approved": 700,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043260_2024.parquet",
+      "sha256": "cf844aec2feef170d5c0ff3ad2755c7af0f7cb744662450596e946c73a26b1c5",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043263_2024.parquet",
+      "sha256": "b4db3bac2a50785d5380f9c3e67aa4a746741e904e7c19603815a81f72b046ee",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043266_2024.parquet",
+      "sha256": "15f416fb839e20bcbb6d7d75679a729c3e597dcb24f67c0f5f440f8f1f6341cc",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 148,
+        "quarantined": 44
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043271_2024.parquet",
+      "sha256": "63c0cd9cd0c8fbae8a973e0fe6464cc66dec828e1bab49cacc1611f0de2322df",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 172,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043272_2024.parquet",
+      "sha256": "e8eed963adfa09e625bbf7a142dae2661783b09bd4b8e3ddebb0b3a57fce3f2a",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043275_2024.parquet",
+      "sha256": "13374ad017386b5944691f38aa7d6f313622f007547eeefb902d9b5c2b8bb992",
+      "selected_reports": 127,
+      "status_counts": {
+        "approved": 508,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043277_2024.parquet",
+      "sha256": "0f62ae570c428becc053fedb80c9592c910422968f9c7ea83aa4914f2d76fc96",
+      "selected_reports": 47,
+      "status_counts": {
+        "approved": 187,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043278_2024.parquet",
+      "sha256": "7bd6fe717503dfc391320c86b84de2d5aadc140336f8cf1d993950a20e715e84",
+      "selected_reports": 139,
+      "status_counts": {
+        "approved": 556,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043289_2024.parquet",
+      "sha256": "7edfaf3ef5bcbcd0f564228009977ec535364de3ae4db64ab83114dee6587dad",
+      "selected_reports": 11,
+      "status_counts": {
+        "approved": 44,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043291_2024.parquet",
+      "sha256": "48a48d00e53fd79f6a66e5a3fe72984dbbc6597742d85228d128f70b7283720e",
+      "selected_reports": 13,
+      "status_counts": {
+        "approved": 52,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043296_2024.parquet",
+      "sha256": "3dc092c3290514410650dfaf2d391df1db5a5de9b6b1018d56c144424f3383c2",
+      "selected_reports": 186,
+      "status_counts": {
+        "approved": 654,
+        "quarantined": 90
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043301_2024.parquet",
+      "sha256": "72ae0e52cc1a6a89dfa0a4a27a6b397100f9303f6f40d592e9722ee116d2de2e",
+      "selected_reports": 44,
+      "status_counts": {
+        "approved": 176,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043302_2024.parquet",
+      "sha256": "6670bb5f982a1800ef0e1cbda818fb29c6ac7e25467685a6254f1690204a61e7",
+      "selected_reports": 45,
+      "status_counts": {
+        "approved": 180,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043309_2024.parquet",
+      "sha256": "610b955f7016fe3d047df65c9df58083ce0ca7256e6384f8a7113ddfe5d67614",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 141,
+        "quarantined": 51
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043310_2024.parquet",
+      "sha256": "b4b2c025d7048f2c1feafd7f970c53f4ea8a6a399f5018e2681b2fe231483a55",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 144,
+        "quarantined": 48
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043311_2024.parquet",
+      "sha256": "7a081602dbc90e582375aeb8bf0bfd37331ef533249c8cce74710c83794390a2",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 574,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043314_2024.parquet",
+      "sha256": "d5d8270337c37a1139227d929fbda34253575647941435c86c32cbad4ff6f4ae",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 587,
+        "quarantined": 177
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043315_2024.parquet",
+      "sha256": "2f63737d67a210977af1d1443dc3e92a68b1f20ef98d1358d188520136fb8c7b",
+      "selected_reports": 138,
+      "status_counts": {
+        "approved": 414,
+        "quarantined": 138
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043316_2024.parquet",
+      "sha256": "cc202fbb17c51703403ce5c032e97736f7bb8d323eacb527e64b3ef7bc007af4",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043317_2024.parquet",
+      "sha256": "c6d2314ef8d7dc5f3248dd4dff648bc936b4a7ab80b5f8a05a539ec1a02490c8",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 159,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043318_2024.parquet",
+      "sha256": "3615194928c8442ff73293e619d0c34ec8102c9465e993124cdf2c0e9f26ad59",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 168,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043322_2024.parquet",
+      "sha256": "7c81026b10422416f3c8fb8ba1d4f4fb56bfdfbb9d4bb22d6771d6478c21e273",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043324_2024.parquet",
+      "sha256": "3ab6718c437328b21f3a9ef9392f6f9c159ad7ea6c539cba29f43d122972c379",
+      "selected_reports": 27,
+      "status_counts": {
+        "approved": 108,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043325_2024.parquet",
+      "sha256": "33234ff7c64a2c23ab7386b37a8de99f0f59972491a27c1afb0d2c335cfeb9d7",
+      "selected_reports": 82,
+      "status_counts": {
+        "approved": 327,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043326_2024.parquet",
+      "sha256": "7cc658fbaf90ca9539fb0b3b503fa61d2c4a006a70b78a5384ea6f4a7470757f",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043330_2024.parquet",
+      "sha256": "6c801a63e0c642e75697c3902edffcdfc8723214ffc62517fdeba47a56e38ffb",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 172,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043331_2024.parquet",
+      "sha256": "bbb187b8dd7a50e010d5e186d2d5a9fd2dcad3295c529ad6c89c1401c58da8d4",
+      "selected_reports": 164,
+      "status_counts": {
+        "approved": 656,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043335_2024.parquet",
+      "sha256": "8d1df309d012db14731b912d0b8f80ed53e8fcd0537eed3248c0c005d03e9703",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043338_2024.parquet",
+      "sha256": "95ce2ff07577f694261e032b1d734235511c0252d53d0ffa091d2f48e31238b7",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 158,
+        "quarantined": 2
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043339_2024.parquet",
+      "sha256": "b59b5831202713ace19900ed3e4e152256a2305439cede0dd350e565477d2093",
+      "selected_reports": 52,
+      "status_counts": {
+        "approved": 208,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043340_2024.parquet",
+      "sha256": "17ebcae180d83b7b82db87b7fe9f86df1b20618a68fd138f69a7eb9ffc3612d0",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 118,
+        "quarantined": 42
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043341_2024.parquet",
+      "sha256": "73719bd7986c6cb3bd9c63d7a28c554b27f8e1b632c784bd428593b5ad789ec3",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 168,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043342_2024.parquet",
+      "sha256": "a117ef83ad180832bae33df522b488e6ddf173ce388468ac6ae7168fd86b700a",
+      "selected_reports": 46,
+      "status_counts": {
+        "approved": 183,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043343_2024.parquet",
+      "sha256": "346e3c82a0cbc75fb279d01b553a4e137807cf27f842c74a8741b55cd4e00d84",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043345_2024.parquet",
+      "sha256": "9d2a974cb5b457fe62112fe5dcbf42c4a4fa34deafce4865aabef00459948f2c",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043347_2024.parquet",
+      "sha256": "dfa4663fb1675aefeaaa3462d0cc2ba3c9cccb8fd6a3ebc0d132cca2a678d8d8",
+      "selected_reports": 182,
+      "status_counts": {
+        "approved": 727,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043348_2024.parquet",
+      "sha256": "9472d80fa8cb724878358e3b45e3ed6529a4cb11f601c21961157f922aabf307",
+      "selected_reports": 174,
+      "status_counts": {
+        "approved": 695,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043349_2024.parquet",
+      "sha256": "ebb3c2c8db56875cfe29591bba0300a00c349525be0e24cba759706409cd1eef",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043352_2024.parquet",
+      "sha256": "ebf05a65a5c5960d9426834206fbc3cbcf86bea5ddf6b9f9a88623b6bd9812e0",
+      "selected_reports": 77,
+      "status_counts": {
+        "approved": 231,
+        "quarantined": 77
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043354_2024.parquet",
+      "sha256": "d4dcafd9f3451bc53072a3be3d3c3625e6ada5d9da8eb972dcab7f34d1cf9cf1",
+      "selected_reports": 43,
+      "status_counts": {
+        "approved": 129,
+        "quarantined": 43
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043356_2024.parquet",
+      "sha256": "2df289ffd602245bbf6085768d292988cafc93bc9e6db5414c9d2bef4768e47f",
+      "selected_reports": 31,
+      "status_counts": {
+        "approved": 121,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043357_2024.parquet",
+      "sha256": "3664c0bbfbef279d7a223cef8d7fe0c5c66900fc54a362276f2482615ff661ad",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 126,
+        "quarantined": 42
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043359_2024.parquet",
+      "sha256": "b4822d4be0c64e9986bf895426fed7220556f8c793382afb3e351cf85e1facea",
+      "selected_reports": 39,
+      "status_counts": {
+        "approved": 156,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043361_2024.parquet",
+      "sha256": "8a79d0ca3f59b526a02a81c249c0c2ef3e9803f8dacb141aba953f07d66f1940",
+      "selected_reports": 178,
+      "status_counts": {
+        "approved": 711,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043363_2024.parquet",
+      "sha256": "80ca9a833d1e1d369c8b7e1dbaa38aa84f25d51a55d254e6114106f56b325e58",
+      "selected_reports": 170,
+      "status_counts": {
+        "approved": 677,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043364_2024.parquet",
+      "sha256": "3e35374c8fec43cdb4f43f24150877590f55762388ac7d36362d492f8aad6b83",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 109,
+        "quarantined": 83
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043367_2024.parquet",
+      "sha256": "61acd5bf01d7c36136c936cfe1500c1d0818fe78638fbc53faf23e064be14855",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 142,
+        "quarantined": 50
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043376_2024.parquet",
+      "sha256": "3e2db14a5b4bffba3e60c90dc5db5313123a69dfbe701c88cfc294613af159e6",
+      "selected_reports": 42,
+      "status_counts": {
+        "approved": 164,
+        "quarantined": 4
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043377_2024.parquet",
+      "sha256": "e6824a71e41b563c23bf0d6f381302065796a4fb02444053c3af2d754cbfb209",
+      "selected_reports": 169,
+      "status_counts": {
+        "approved": 676,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043379_2024.parquet",
+      "sha256": "5c1ac0927f9d31c829b702abc2f4e56933cc61323166a5fee752b8ebc99c4952",
+      "selected_reports": 40,
+      "status_counts": {
+        "approved": 160,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INM00043382_2024.parquet",
+      "sha256": "5e25a96f51b3b7d8040f0722b507c6bf600e24c28be7e484f0feaba498b64dc1",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 106,
+        "quarantined": 86
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020359_2024.parquet",
+      "sha256": "38594e19e7e7306a5fbe946e3f741c6828ff52c5c5dc2b462bfd46839dc10b7c",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 761,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020368_2024.parquet",
+      "sha256": "976c123aedb426bfafc102ccc194ffad2f6367b5b616d5f24aff9b794340986a",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 575,
+        "quarantined": 189
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020408_2024.parquet",
+      "sha256": "07a1526a9a0f06545db3046a2540ac2372671a8b33d63edc757f38463935cf52",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 569,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020412_2024.parquet",
+      "sha256": "3a29d3f514a5cdf662e1cca785725c46e9b627570dfc7df50f87a4f65fc545dc",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 574,
+        "quarantined": 194
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020414_2024.parquet",
+      "sha256": "7442699441be8f011aabada7c9dcc13fa0184dac0cbbab7ba8750b2508085e33",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 564,
+        "quarantined": 200
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020429_2024.parquet",
+      "sha256": "a233ebd0bc33851636153c0ef1636c410042798168e64f62db006fcf8bb8e91b",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 762,
+        "quarantined": 2
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020433_2024.parquet",
+      "sha256": "fc951232e43339c8f2c51776b1bf65227f91d397ba8fb10bfbb736f3fa7d6f20",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 763,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020436_2024.parquet",
+      "sha256": "8e3bc8ca09376414aaf4ec6a823a044068df5baeaaf91a2e85063d1444d4f845",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020438_2024.parquet",
+      "sha256": "5147afeca94832dad94d9132f8d9bd04022efbd3a636a0e6bc697e9059a71011",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020446_2024.parquet",
+      "sha256": "52b06ccdc4278885ee9956d403e0cc701c43e80de93096a9ed803022be898fd8",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 573,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020447_2024.parquet",
+      "sha256": "10c399fd539baf1d0c3b6523b100e0c89b40786c295de55d81fd87ebc7945734",
+      "selected_reports": 0,
+      "status_counts": {
+        "approved": 0,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020448_2024.parquet",
+      "sha256": "5394b002f8e70398943be5387511a05b8c5d57f55a3b7834cf5d6b7ebda0bf9d",
+      "selected_reports": 143,
+      "status_counts": {
+        "approved": 429,
+        "quarantined": 143
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020452_2024.parquet",
+      "sha256": "45578efafd992b4512c0f863968ccb5eb0eee6bebd982f4fc25f58c9b44ae2be",
+      "selected_reports": 1,
+      "status_counts": {
+        "approved": 4,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020467_2024.parquet",
+      "sha256": "93a3a351c38282fa5ae16de9e6afbe39b69c2b0f37d03c830b92ffc5c010e036",
+      "selected_reports": 91,
+      "status_counts": {
+        "approved": 363,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020468_2024.parquet",
+      "sha256": "04ae06c4d42e4a8de8b12aa72948df7ebb0020a3bedd49fa9a9799c621ab9c68",
+      "selected_reports": 170,
+      "status_counts": {
+        "approved": 679,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020498_2024.parquet",
+      "sha256": "388f158b2b9531366a61a5cd5db0d70f6ac01a612553d95c67d7f1cd47761b95",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 572,
+        "quarantined": 192
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020504_2024.parquet",
+      "sha256": "8e26495d88795eeca7b839a3c77509f7b6fcb0ccd581c1fc5b1aa8bda112d7f7",
+      "selected_reports": 134,
+      "status_counts": {
+        "approved": 401,
+        "quarantined": 135
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020507_2024.parquet",
+      "sha256": "4041bd5926b9ebd77c42300dae0d310289abf1c47665ca8aa8e363fc8c1a2fa1",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 575,
+        "quarantined": 193
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020514_2024.parquet",
+      "sha256": "ba6d4ec8c5ff64b63d889c794efd53af4e9f8b9f6364b9aac3f59af34c0c10cb",
+      "selected_reports": 178,
+      "status_counts": {
+        "approved": 530,
+        "quarantined": 182
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020515_2024.parquet",
+      "sha256": "3da21282aa7f55ef2abdd4378c695cc07d63b8938ee6a20a332a86f2c9d6749c",
+      "selected_reports": 48,
+      "status_counts": {
+        "approved": 192,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020517_2024.parquet",
+      "sha256": "5351c96a4e74d692c01f8ba2f26cb47d3e923d41dfc7d16e2c6f04d9c53e2bd2",
+      "selected_reports": 17,
+      "status_counts": {
+        "approved": 68,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020518_2024.parquet",
+      "sha256": "1432c050744665056e95b4b66eba0d30bb24b6d06ddf27558007ec12021bb38f",
+      "selected_reports": 187,
+      "status_counts": {
+        "approved": 746,
+        "quarantined": 2
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020523_2024.parquet",
+      "sha256": "8cf1b84ecf850161cd9b797fe711e6bb9159add937051df90cebf136e549b02a",
+      "selected_reports": 150,
+      "status_counts": {
+        "approved": 592,
+        "quarantined": 8
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020524_2024.parquet",
+      "sha256": "144a0e0b6468274cacf05a1a0c340998452f2be5168e5598c836aec667fdd5e0",
+      "selected_reports": 175,
+      "status_counts": {
+        "approved": 697,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020525_2024.parquet",
+      "sha256": "42d9e8d3cc37f526b50bb215374a0de33c10f87f3717f14f079c0059efda6233",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 757,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020531_2024.parquet",
+      "sha256": "362fadc020689a1a42b3e4120b934344999b5212c9957e76c5bcee2d166224db",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 753,
+        "quarantined": 7
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020536_2024.parquet",
+      "sha256": "0b08498874eed6a726f7630c3f74e4635b204dac0dc013dd65188b9241204f5f",
+      "selected_reports": 188,
+      "status_counts": {
+        "approved": 751,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020546_2024.parquet",
+      "sha256": "04d3a4f5750efa379ec861ad113d5003ecd2c501d95fa9574caf06854e9a7226",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 761,
+        "quarantined": 3
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020548_2024.parquet",
+      "sha256": "aa49925ecebb5c03193cb3d8d7f1ca031e3a8a37bd14bd1c2838db17a487cd82",
+      "selected_reports": 187,
+      "status_counts": {
+        "approved": 747,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020550_2024.parquet",
+      "sha256": "8d0d6a7de35a64ef2f0fbdb970d6cad9637a3ff571680ba751ca1f3ae752dea7",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 756,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INMU0020560_2024.parquet",
+      "sha256": "7867010612a9fc7bd7a4ccb09c6485d0c36601d2d86701945f4314505f8469f4",
+      "selected_reports": 189,
+      "status_counts": {
+        "approved": 756,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042123-1_2024.parquet",
+      "sha256": "6f9b07babcd29bddf53ab74abb6cec22b972a4cc5266aa4c35c83535a2bd67f8",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 568,
+        "quarantined": 200
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042410-1_2024.parquet",
+      "sha256": "24722dc82d8d9e667975a8e45f1ed5ac61f7c9346b0c828e9c26f77daa01c3bf",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 577,
+        "quarantined": 191
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042452-1_2024.parquet",
+      "sha256": "38ccfff1baacdeeff2ea38c0a1547bcbf7483a7251ecc180b5262413c588d54f",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 592,
+        "quarantined": 176
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042475-1_2024.parquet",
+      "sha256": "2a67e987c5eac49165fa79d2f8d9beb935d007ed09f13b9e9b4b7dd50bd13977",
+      "selected_reports": 30,
+      "status_counts": {
+        "approved": 90,
+        "quarantined": 30
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042542-1_2024.parquet",
+      "sha256": "0550e5b7dbad1e83967d7631cb6d2e3e7fb407be66fe2cfce1469ebe30d4fea5",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 767,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042634-1_2024.parquet",
+      "sha256": "c226cda7ff710948ebe1de4add950a9dd4bfc160873dd2f6e2b2b459e9bc845b",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 569,
+        "quarantined": 199
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042754-1_2024.parquet",
+      "sha256": "d5bcb82c07235636e330d8bfef53ceb67dade9b51b908b769f538cca43f2dcc1",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 768,
+        "quarantined": 0
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042809-1_2024.parquet",
+      "sha256": "d67619751401d4f5e955c911c68778c2059a8b95d36dfd28778c71f0c49e0e34",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 581,
+        "quarantined": 187
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042840-1_2024.parquet",
+      "sha256": "89c9d6732c8f50870b826d92dca541388e74e61ca9bb8c730ed8bf2d24ee4035",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 575,
+        "quarantined": 193
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU042886-1_2024.parquet",
+      "sha256": "572b98171ebf337655e550a2384a751ebb74aad9ddc37543161bbe7698eab716",
+      "selected_reports": 190,
+      "status_counts": {
+        "approved": 570,
+        "quarantined": 190
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU043086-1_2024.parquet",
+      "sha256": "212c7af44ebca00e535064e882e8105e950e30793fc8f834ec5d41dca34a29fe",
+      "selected_reports": 188,
+      "status_counts": {
+        "approved": 751,
+        "quarantined": 1
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU043237-1_2024.parquet",
+      "sha256": "dc4eee2b26e5d8b929a4139e32c6fd617617807b453739526230fa612d35d1ba",
+      "selected_reports": 181,
+      "status_counts": {
+        "approved": 718,
+        "quarantined": 6
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU043284-1_2024.parquet",
+      "sha256": "172e6b5e91601570154e66374c3e9a00ce46e4532f05865237ad5bb18d811388",
+      "selected_reports": 192,
+      "status_counts": {
+        "approved": 761,
+        "quarantined": 7
+      }
+    },
+    {
+      "path": "data/noaa_ghcnh/raw/GHCNh_INU043346-1_2024.parquet",
+      "sha256": "c8b88b275e512656418885de533d4da9e641acf086ec3754e0c7e8ec08f446ca",
+      "selected_reports": 191,
+      "status_counts": {
+        "approved": 763,
+        "quarantined": 1
+      }
+    }
+  ],
+  "approved_long_rows": 111323,
+  "wide_rows": 33636,
+  "training_open_only": true,
+  "pm_heads": "masked; no PM observations in NOAA core sample",
+  "live_latency": "not verified; archive publication is retrospective",
+  "wide_sha256": "fbb7e4cea2db76515fba7dc05ca68bda45797f2861db7a10096d17cfc442dfdc",
+  "terrain_registry_sha256": "4b5ec01040e08b53474c246df62c59ac7aa125138d28e9f45d626fbf78ff2c00",
+  "terrain_enriched_artifact_sha256": "914e9189444b317d685bf03f165b34735d272de400460c23db555c0622569437",
+  "terrain_enriched_artifact": "data/india_training/sample.sqlite",
+  "final_store_sha256": "71c7f04b8ddcd9af640e0b28094738a4236ec666c0739db07523c58b254becd7",
+  "final_source_registry_sha256": "7b5f4b269ea15396bf4989df84eb30370c35f448cd6429cb3641b50e9b5f2847"
+}

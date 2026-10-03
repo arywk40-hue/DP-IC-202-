@@ -1,0 +1,477 @@
+diff --git a/ml/datasets/__init__.py b/ml/datasets/__init__.py
+--- /dev/null
++++ b/ml/datasets/__init__.py
+@@ -0,0 +1 @@
++"""Versioned source registry and fail-closed weather observation store."""
+diff --git a/ml/datasets/schema.sql b/ml/datasets/schema.sql
+--- /dev/null
++++ b/ml/datasets/schema.sql
+@@ -0,0 +1,59 @@
++PRAGMA foreign_keys = ON;
++CREATE TABLE IF NOT EXISTS sources (
++ source_id TEXT PRIMARY KEY, source_version TEXT NOT NULL, uri TEXT NOT NULL,
++ provider TEXT NOT NULL, license_id TEXT NOT NULL,
++ license_class TEXT NOT NULL CHECK (license_class IN ('open','restricted','unresolved')),
++ license_evidence_uri TEXT NOT NULL, metadata_sha256 TEXT,
++ timezone TEXT, timezone_verified INTEGER NOT NULL DEFAULT 0 CHECK(timezone_verified IN (0,1)),
++ pressure_reference TEXT NOT NULL DEFAULT 'unknown' CHECK(pressure_reference IN ('station','sea_level','grid_surface','unknown','not_applicable')),
++ pressure_verified INTEGER NOT NULL DEFAULT 0 CHECK(pressure_verified IN (0,1)),
++ interval_semantics TEXT NOT NULL DEFAULT 'unknown',
++ approval_evidence TEXT NOT NULL DEFAULT '{}'
++);
++CREATE TABLE IF NOT EXISTS raw_files (
++ raw_sha256 TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(source_id),
++ path TEXT NOT NULL, bytes INTEGER NOT NULL, retrieved_at_utc TEXT
++);
++CREATE TABLE IF NOT EXISTS observations (
++ record_id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(source_id),
++ raw_sha256 TEXT NOT NULL REFERENCES raw_files(raw_sha256), source_row_id TEXT NOT NULL,
++ station_id TEXT NOT NULL, physical_site_id TEXT NOT NULL, instrument_id TEXT,
++ latitude_deg REAL CHECK(latitude_deg BETWEEN -90 AND 90),
++ longitude_deg REAL CHECK(longitude_deg BETWEEN -180 AND 180),
++ elevation_m REAL, elevation_datum TEXT, elevation_source_id TEXT REFERENCES sources(source_id),
++ elevation_asset_sha256 TEXT, source_timestamp TEXT NOT NULL,
++ interval_start_utc TEXT, interval_end_utc TEXT, available_at_utc TEXT,
++ variable TEXT NOT NULL, value REAL, unit TEXT NOT NULL,
++ original_value TEXT, original_unit TEXT NOT NULL,
++ pressure_reference TEXT NOT NULL CHECK(pressure_reference IN ('station','sea_level','grid_surface','unknown','not_applicable')),
++ measurement_height_m REAL, qc_flags TEXT NOT NULL CHECK(json_valid(qc_flags)),
++ observed_or_modeled TEXT NOT NULL CHECK(observed_or_modeled IN ('observed','modeled','static')),
++ source_metadata_json TEXT NOT NULL DEFAULT '{}' CHECK(json_valid(source_metadata_json)),
++ uncertainty REAL, status TEXT NOT NULL CHECK(status IN ('approved','quarantined')),
++ CHECK(status != 'approved' OR (interval_end_utc IS NOT NULL AND available_at_utc IS NOT NULL
++   AND latitude_deg IS NOT NULL AND longitude_deg IS NOT NULL AND value IS NOT NULL
++   AND qc_flags = '[]')),
++ UNIQUE(source_id,raw_sha256,source_row_id,variable)
++);
++CREATE INDEX IF NOT EXISTS obs_station_time ON observations(station_id,interval_end_utc,variable);
++CREATE INDEX IF NOT EXISTS obs_source_status ON observations(source_id,status,variable);
++-- Sources stay separate. Unresolved rights/time/reference cannot enter either view.
++CREATE VIEW IF NOT EXISTS training_open AS
++ SELECT o.* FROM observations o JOIN sources s USING(source_id)
++ WHERE o.status='approved' AND o.observed_or_modeled='observed' AND s.license_class='open' AND s.timezone_verified=1 AND s.interval_semantics IN ('instant','hour_end','hour_start')
++ AND (o.variable != 'pressure_hpa' OR (s.pressure_verified=1 AND s.pressure_reference='station' AND o.pressure_reference='station'));
++CREATE VIEW IF NOT EXISTS training_restricted AS
++ SELECT o.* FROM observations o JOIN sources s USING(source_id)
++ WHERE o.status='approved' AND o.observed_or_modeled='observed' AND s.license_class='restricted' AND s.timezone_verified=1 AND s.interval_semantics IN ('instant','hour_end','hour_start')
++ AND (o.variable != 'pressure_hpa' OR (s.pressure_verified=1 AND s.pressure_reference='station' AND o.pressure_reference='station'));
++CREATE VIEW IF NOT EXISTS quarantine AS
++ SELECT o.* FROM observations o WHERE o.record_id NOT IN
++ (SELECT record_id FROM training_open UNION SELECT record_id FROM training_restricted UNION SELECT record_id FROM background_open);
++CREATE TRIGGER IF NOT EXISTS observation_source_matches_raw BEFORE INSERT ON observations
++ WHEN (SELECT source_id FROM raw_files WHERE raw_sha256=NEW.raw_sha256) != NEW.source_id
++ BEGIN SELECT RAISE(ABORT,'Source does not match raw file'); END;
++
++CREATE VIEW IF NOT EXISTS background_open AS
++ SELECT o.* FROM observations o JOIN sources s USING(source_id)
++ WHERE o.status='approved' AND o.observed_or_modeled='modeled'
++ AND s.license_class='open' AND s.timezone_verified=1 AND s.interval_semantics IN ('instant','hour_end','hour_start');
+diff --git a/ml/datasets/registry.py b/ml/datasets/registry.py
+--- /dev/null
++++ b/ml/datasets/registry.py
+@@ -0,0 +1,96 @@
++"""SQLite observation store. Unknown source rights/units/time fail closed."""
++from __future__ import annotations
++import hashlib
++import json
++import math
++import sqlite3
++from pathlib import Path
++import pandas as pd
++
++REGISTRY = Path('data/registry/sources.json')
++
++
++def connect(path, registry=REGISTRY):
++    db = sqlite3.connect(path)
++    db.executescript('DROP VIEW IF EXISTS training_open; DROP VIEW IF EXISTS training_restricted; DROP VIEW IF EXISTS quarantine; DROP VIEW IF EXISTS background_open;')
++    db.executescript(Path(__file__).with_name('schema.sql').read_text())
++    definitions = json.loads(Path(registry).read_text())
++    if definitions['schema_version'] != 'indra_observations_v1':
++        raise ValueError('Registry schema mismatch')
++    for source in definitions['sources']:
++        source = dict(source)
++        evidence = source.pop('approval_evidence', {})
++        if (source.get('timezone_verified') or source.get('pressure_verified')) and not evidence:
++            raise ValueError('Verified source metadata requires approval evidence')
++        source['approval_evidence'] = json.dumps(evidence, sort_keys=True)
++        allowed = {entry[1] for entry in db.execute('PRAGMA table_info(sources)')}
++        if not set(source) <= allowed:raise ValueError('Unexpected registry fields')
++        fields = list(source)
++        db.execute(f"INSERT INTO sources ({','.join(fields)}) VALUES ({','.join('?' for _ in fields)}) "
++                   f"ON CONFLICT(source_id) DO UPDATE SET " + ','.join(f'{k}=excluded.{k}' for k in fields if k != 'source_id'),
++                   [source[k] for k in fields])
++    db.commit()
++    return db
++
++
++def digest(path):
++    with Path(path).open('rb') as stream:
++        return hashlib.file_digest(stream, 'sha256').hexdigest()
++
++
++def validate_long_row(row):
++    """Validate canonical units, timezone-aware UTC fields and interval ordering."""
++    units = {'temperature_c':'degC', 'relative_humidity_pct':'%', 'pressure_hpa':'hPa',
++             'wind_speed_mps':'m/s', 'pm25_ug_m3':'ug/m3', 'pm10_ug_m3':'ug/m3'}
++    if row['variable'] not in units or row['unit'] != units[row['variable']]:
++        raise ValueError('Unknown variable or noncanonical unit')
++    stamps = []
++    for key in ['interval_start_utc', 'interval_end_utc', 'available_at_utc']:
++        value = row.get(key)
++        stamp = None if value is None else pd.Timestamp(value)
++        if stamp is not None and (pd.isna(stamp) or stamp.tzinfo is None or stamp.utcoffset().total_seconds() != 0):
++            raise ValueError('Use explicit UTC timestamps')
++        stamps.append(stamp)
++    start, end, available = stamps
++    if start is not None and end is not None and start > end:
++        raise ValueError('Reversed interval')
++    if end is not None and available is not None and available < end:
++        raise ValueError('Observation available before interval end')
++    if row['status'] == 'approved' and (start is None or end is None or available is None):
++        raise ValueError('Approved observations need complete time semantics')
++    for key in ['latitude_deg','longitude_deg','value','elevation_m','uncertainty']:
++        val=row.get(key)
++        if val is not None and not math.isfinite(float(val)):raise ValueError('Nonfinite observation field')
++    if row['status']=='approved':
++        from ml.six_sensor_forecast.contract import PHYSICAL_RANGES
++        lo,hi=PHYSICAL_RANGES[row['variable']]
++        if row.get('value') is None or not lo<=row['value']<=hi:raise ValueError('Invalid approved value')
++    flags = json.loads(row['qc_flags'])
++    if not isinstance(flags, list) or not all(isinstance(x, str) for x in flags):
++        raise ValueError('QC flags must be a string list')
++
++
++def insert_rows(db, rows):
++    if not rows:
++        return
++    for row in rows:
++        validate_long_row(row)
++    fields = list(rows[0])
++    if any(set(row) != set(fields) for row in rows):
++        raise ValueError('Inconsistent long-form rows')
++    # Fixed whitelist protects SQL identifiers supplied by callers.
++    allowed = {entry[1] for entry in db.execute('PRAGMA table_info(observations)')}
++    if not set(fields) <= allowed:
++        raise ValueError('Unexpected observation fields')
++    db.executemany(f"INSERT INTO observations ({','.join(fields)}) VALUES ({','.join('?' for _ in fields)})",
++                   [[row[k] for k in fields] for row in rows])
++
++
++def export_view(db, output, restricted=False):
++    view = 'training_restricted' if restricted else 'training_open'
++    output = Path(output)
++    output.parent.mkdir(parents=True, exist_ok=True)
++    first = True
++    for chunk in pd.read_sql_query(f'SELECT * FROM {view} ORDER BY station_id,interval_end_utc,variable', db, chunksize=10000):
++        chunk.to_csv(output, index=False, mode='w' if first else 'a', header=first)
++        first = False
+diff --git a/data/registry/sources.json b/data/registry/sources.json
+--- /dev/null
++++ b/data/registry/sources.json
+@@ -0,0 +1,305 @@
++{
++  "schema_version": "indra_observations_v1",
++  "sources": [
++    {
++      "source_id": "uci_beijing_501",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://doi.org/10.24432/C5RK5G",
++      "provider": "UCI / Beijing",
++      "license_id": "CC-BY-4.0",
++      "license_class": "open",
++      "license_evidence_uri": "https://doi.org/10.24432/C5RK5G",
++      "timezone": "Asia/Shanghai",
++      "timezone_verified": 1,
++      "pressure_reference": "station",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {
++        "evidence": "data/uci_beijing_air_quality/dataset_manifest.json"
++      }
++    },
++    {
++      "source_id": "india_cpcb_kaggle_v2",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.kaggle.com/datasets/abhisheksjha/time-series-air-quality-data-of-india-2010-2023",
++      "provider": "Secondary CPCB compilation",
++      "license_id": "CC-BY-NC-SA-4.0",
++      "license_class": "restricted",
++      "license_evidence_uri": "https://www.kaggle.com/datasets/abhisheksjha/time-series-air-quality-data-of-india-2010-2023",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "unknown",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "delhi_opencity",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://data.opencity.in/dataset/delhi-hourly-air-quality-reports",
++      "provider": "OpenCity / CPCB",
++      "license_id": "Other (Public Domain)",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://data.opencity.in/dataset/delhi-hourly-air-quality-reports",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "unknown",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "nwic_hp_temperature",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.nwdp.nwic.gov.in/dataset/temperature-telemetry-hourly-himachal-pradesh-water-department",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "other-open",
++      "license_class": "unresolved",
++      "license_evidence_uri": "reports/nwic_pipeline/source_evidence/nwic_temperature.response",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {},
++      "metadata_sha256": "d2d4de5dae9d1ef467a671673686d7bc9ac6d451b53186b82bbd629052072c2d"
++    },
++    {
++      "source_id": "nwic_hp_humidity",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.nwdp.nwic.gov.in/dataset/relative-humidity-telemetry-hourly-himachal-pradesh",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "other-open",
++      "license_class": "unresolved",
++      "license_evidence_uri": "reports/nwic_pipeline/source_evidence/nwic_humidity.response",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {},
++      "metadata_sha256": "8df05274970b65e9bb5fa92e12496497913486dd7bcd9f7b49f9471bc3ebe0d7"
++    },
++    {
++      "source_id": "nwic_hp_pressure",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.nwdp.nwic.gov.in/dataset/atmospheric-pressure-telemetry-hourly-himachal-pradesh",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "other-open",
++      "license_class": "unresolved",
++      "license_evidence_uri": "reports/nwic_pipeline/source_evidence/nwic_pressure.response",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "unknown",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {},
++      "metadata_sha256": "6a3566d4a987ebeaa747b7faa49860fcd0f30283246b52d912eb24f132a3d99a"
++    },
++    {
++      "source_id": "nwic_hp_wind",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.nwdp.nwic.gov.in/dataset/wind-speed-telemetry-hourly-himachal-pradesh-department",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "other-open",
++      "license_class": "unresolved",
++      "license_evidence_uri": "reports/nwic_pipeline/source_evidence/nwic_wind.response",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {},
++      "metadata_sha256": "865e9b7db833d0f09ebaa0e136b0c6a1c9a3669bad64e11e641527a7312f270a"
++    },
++    {
++      "source_id": "nwic_hp_rainfall",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://nwdp.nwic.gov.in/dataset/rainfall-telemetry-hourly-himachal-pradesh-department",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "Other (Open)",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://nwdp.nwic.gov.in/dataset/rainfall-telemetry-hourly-himachal-pradesh-department",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "nwic_hp_temperature_legacy",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://nwdp.nwic.gov.in/dataset/temperature-telemetry-hourly-himachal-pradesh-water-department",
++      "provider": "NWIC / Himachal Pradesh",
++      "license_id": "UNVERIFIED",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://nwdp.nwic.gov.in/dataset/temperature-telemetry-hourly-himachal-pradesh-water-department",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "imd_station_catalogue",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://dsp.imdpune.gov.in/",
++      "provider": "IMD",
++      "license_id": "UNVERIFIED",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://dsp.imdpune.gov.in/",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "srtm_gl1",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://portal.opentopography.org/raster?opentopoID=OTSRTM.082015.4326.1",
++      "provider": "NASA / NGA via OpenTopography",
++      "license_id": "USGS public-domain product; mirror attribution",
++      "license_class": "open",
++      "license_evidence_uri": "https://portal.opentopography.org/raster?opentopoID=OTSRTM.082015.4326.1",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "era5_land",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
++      "provider": "ECMWF / Copernicus",
++      "license_id": "CC-BY",
++      "license_class": "open",
++      "license_evidence_uri": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "station",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "era5",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels",
++      "provider": "ECMWF / Copernicus",
++      "license_id": "CC-BY",
++      "license_class": "open",
++      "license_evidence_uri": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "station",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "nasa_power",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://power.larc.nasa.gov/",
++      "provider": "NASA POWER",
++      "license_id": "Free NASA data; attribution",
++      "license_class": "open",
++      "license_evidence_uri": "https://power.larc.nasa.gov/",
++      "timezone": "UTC",
++      "timezone_verified": 1,
++      "pressure_reference": "grid_surface",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {
++        "utc_only": "Adapter rejects POWER LST; supplied response header explicitly UTC",
++        "file": "reports/nwic_pipeline/source_evidence/power_mandi_202401.json",
++        "pressure": "POWER PS is modeled grid surface pressure, never a station target"
++      }
++    },
++    {
++      "source_id": "noaa_ghcnh",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
++      "provider": "NOAA / contributing providers",
++      "license_id": "CC0-1.0",
++      "license_class": "open",
++      "license_evidence_uri": "https://registry.opendata.aws/noaa-ghcnh/",
++      "timezone": "UTC",
++      "timezone_verified": 1,
++      "pressure_reference": "station",
++      "pressure_verified": 1,
++      "interval_semantics": "instant",
++      "approval_evidence": {
++        "format_document": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh_DOCUMENTATION.pdf",
++        "format_version": "1.1.0 March 10 2026",
++        "rule": "DATE explicitly UTC; use station_level_pressure only, never sea_level_pressure",
++        "qc_document": "Table 3; source-specific legacy codes"
++      }
++    },
++    {
++      "source_id": "openaq",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://docs.openaq.org/resources/licenses",
++      "provider": "OpenAQ / contributing providers",
++      "license_id": "Provider-specific",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://docs.openaq.org/resources/licenses",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "sensor_community",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://sensor.community/en/",
++      "provider": "Sensor.Community",
++      "license_id": "Database Contents License 1.0; database terms unresolved",
++      "license_class": "unresolved",
++      "license_evidence_uri": "https://sensor.community/en/",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "cams_eac4",
++      "source_version": "pinned-on-ingestion",
++      "uri": "https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4",
++      "provider": "ECMWF / Copernicus",
++      "license_id": "CC-BY",
++      "license_class": "open",
++      "license_evidence_uri": "https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "unknown",
++      "approval_evidence": {}
++    },
++    {
++      "source_id": "koppen_geiger_1991_2020",
++      "source_version": "Beck 2023 1991\u20132020",
++      "uri": "https://www.gloh2o.org/koppen/",
++      "provider": "Beck et al.",
++      "license_id": "CC-BY-4.0",
++      "license_class": "open",
++      "license_evidence_uri": "https://www.gloh2o.org/koppen/",
++      "timezone": null,
++      "timezone_verified": 0,
++      "pressure_reference": "not_applicable",
++      "pressure_verified": 0,
++      "interval_semantics": "static",
++      "approval_evidence": {}
++    }
++  ]
++}

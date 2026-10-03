@@ -1,0 +1,1 @@
+Small separate patches against the state after the previous review. Apply in numerical order; 05 updates the previously added spatial ensemble. Reports, station registries and source receipts remain reviewable artifacts in reports/nwic_pipeline and data/registry; raw archives, generated stores and rasters are excluded. No commits were made and prior review changes are preserved.

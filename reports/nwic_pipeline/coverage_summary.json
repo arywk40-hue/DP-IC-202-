@@ -1,0 +1,47 @@
+{
+  "noaa_country_candidates": 586,
+  "files_2024": 375,
+  "terrain": {
+    "VERIFIED_ASSET_SAMPLED": 558,
+    "UNRESOLVED": 28
+  },
+  "climate_missing": 36,
+  "geography_conflicts": [
+    {
+      "location_id": "INA00433951",
+      "station_name": "MALE ISLAND",
+      "latitude": 4.167,
+      "longitude": 73.5
+    }
+  ],
+  "climate_2024": {
+    "Aw": 131,
+    "Cwa": 107,
+    "BSh": 67,
+    "Am": 26,
+    "Cwb": 8,
+    "BWh": 8,
+    "BWk": 2,
+    "Cfa": 2,
+    "Dfb": 2,
+    "Cfb": 2,
+    "Dwb": 1
+  },
+  "climate_catalogue": {
+    "Cwa": 187,
+    "Aw": 177,
+    "BSh": 102,
+    "Am": 40,
+    "Cwb": 14,
+    "BWh": 13,
+    "BWk": 4,
+    "ET": 4,
+    "Cfb": 3,
+    "Cfa": 2,
+    "Dfb": 2,
+    "Dsc": 1,
+    "Dwb": 1
+  },
+  "coverage_limit": "Coverage variables/hourly completeness measured only in 2024; complete historical inventory scanned but does not establish hourly completeness or historical variable availability",
+  "physical_site_limit": "Exact-coordinate aliases share physical_site_id; nearby/WMO/ICAO aliases and relocations remain unresolved. Short-distance pairs are candidate coverage, not verified independent mesh sites."
+}

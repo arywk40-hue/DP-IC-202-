@@ -53,3 +53,22 @@ data/india_delhi_station_samples/raw/
 
 # Generated firmware identity
 esp32/ml_integration/include/build_identity.h
+
+# Versioned registries/receipts are retained; downloaded rasters/stores are local.
+/data/nwic_himachal/*.sqlite
+/data/nwic_himachal/*.sqlite-*
+/data/nwic_himachal/*training*.csv
+/data/noaa_ghcnh/raw/
+/data/terrain/raw/
+/data/backgrounds/raw/
+/reports/nwic_pipeline/source_evidence/*.response
+
+# Reproducible local stores and bounded terrain caches
+/data/nwic_himachal/*.parquet
+/data/india_training/*.sqlite*
+/data/terrain/*.tif
+/data/terrain/*.part
+/data/terrain_nwic/*.tif
+/data/terrain_nwic/*.part
+/data/terrain_diagnostics/*.tif
+/data/terrain_diagnostics/*.part
