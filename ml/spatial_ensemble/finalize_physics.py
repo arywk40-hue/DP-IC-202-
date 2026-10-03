@@ -1,0 +1,92 @@
+"""Same-full-test capped comparison and revocation using untouched audit.
+Run after evaluate_physics; widths/models never tuned on December labels.
+"""
+import copy,json,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+from ml.spatial_ensemble.batched_physics import HourlyNetwork
+from ml.spatial_ensemble.physics_residual import PhysicsResidualEnsemble
+from ml.spatial_ensemble.episodes import EpisodeBands
+from ml.spatial_ensemble.evaluate_physics import subset,sample_metrics,coverage_report
+from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.spatial_ensemble.national import stats
+from ml.spatial_ensemble.network import guard
+from ml.spatial_ensemble.physics import pressure_log_reference,dewpoint
+
+
+def geometry_coverage(net,ids,context,distances,truth):
+    """Current nearest-32 contributor hull/distance, before OOD band checks."""
+    allowed=np.zeros_like(truth,dtype=bool);context=np.array([net.lookup[s] for s in sorted(context)])
+    candidates=np.isfinite(truth)&np.isfinite(distances)&(distances<=20)
+    for row in np.where(candidates.any(axis=1))[0]:
+        qi,ti,_=ids[row];a=net.readings[ti,context];td=net.dewpoints[ti,context];d=net.distance[qi,context].copy()
+        d[~(np.isfinite(a).any(axis=1)|np.isfinite(td))]=np.inf;d[qi==context]=np.inf
+        order=np.argsort(d)[:32];ni=context[order];a=a[order];td=td[order];d=d[order]
+        loc=net.stations.iloc[ni];stamp=net.times[ti];nodes=[{'latitude':n.latitude,'longitude':n.longitude,'timestamp_utc':stamp} for n in loc.itertuples()]
+        q=net.stations.iloc[qi]
+        lp=pressure_log_reference(a[:,2],net.elevation[ni],a[:,0],a[:,1]);pv=np.isfinite(lp)&(lp>=np.log(870))&(lp<=np.log(1085))&net.pressure_ok[ni]
+        moisture=np.isfinite(np.where(np.isfinite(td),td,dewpoint(a[:,0],a[:,1])))
+        for i in np.where(candidates[row])[0]:
+            valid=pv if i==2 else (moisture if i==1 else np.isfinite(a[:,i]));valid &= np.isfinite(d)
+            g=guard([n for n,v in zip(nodes,valid) if v],q.latitude,q.longitude,stamp,20)
+            if i==1:
+                tg=guard([n for n,v in zip(nodes,np.isfinite(a[:,0])&np.isfinite(d)) if v],q.latitude,q.longitude,stamp,20)
+                g['allowed'] &= tg['allowed']
+            allowed[row,i]=g['allowed']
+    return allowed
+
+
+def revoke(record):
+    for b in record['episode_bands']:
+        h=RAW_SENSOR_COLUMNS[b['head_index']]
+        c=next(v for v in record['untouched_test_coverage'] if v['head']==h and v['distance_bin_km']==b['distance_bin_km'] and v['nominal']==b['nominal'])
+        b['independent_check_passed']=b.get('independent_check_passed',b['checked'])
+        passed=c['episodes']>=5 and c['episode_coverage'] is not None and c['episode_coverage']>=b['nominal']
+        b['checked']=bool(b['independent_check_passed'] and passed)
+        b['later_audit']=c.copy();c['serving_authorized_after_test_audit']=b['checked']
+
+
+def main():
+    path=Path('reports/physics_phase/results.json');report=json.loads(path.read_text())
+    report['experiments']=[e for e in report['experiments'] if e['configuration']!='capped2024_full_test']
+    net=HourlyNetwork(pd.read_parquet('data/physics_training/hours.parquet'),pd.read_csv('data/registry/india_stations.csv'),pd.read_csv('data/physics_training/station_qc.csv'))
+    base=Path('data/physics_training/features/national20km')
+    def load(role):
+        root=base/role
+        return {p.stem:np.load(p,mmap_mode='r') for p in root.glob('*.npy') if p.stem!='ids'},np.load(root/'ids.npy',mmap_mode='r')
+    train,ti=load('train2024');selection,si=load('select');test,ids=load('test')
+    train,_=subset(train,ti,2500);selection,si=subset(selection,si,600)
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore');model=PhysicsResidualEnsemble().fit(train['x'],train['y'],train['physics'],selection['x'],selection['y'],selection['physics'])
+    cal,ci=load('calibrate');check,vi=load('check');cp,_=model.predict(cal['x'],cal['physics']);vp,_=model.predict(check['x'],check['physics'])
+    bands=EpisodeBands().fit(cal['y'],cp,ci[:,2],cal['distance']);bands.check(check['y'],vp,vi[:,2],check['distance'])
+    pred,fall=model.predict(test['x'],test['physics']);coverage=bands.coverage(test['y'],pred,ids[:,2],test['distance']);bands.audit(test['y'],pred,ids[:,2],test['distance'])
+    record=copy.deepcopy(report['experiments'][0]);record.update(configuration='capped2024_full_test',test_rows=len(ids),metrics=sample_metrics(test,pred,ids,net,fall),residual_heads=model.report(),episode_bands=bands.report(),untouched_test_coverage=coverage_report(coverage),row_caps={'fit':2500,'selection':600,'test':None,'calibration_and_check':'all observed rows'})
+    grouped={};zones=net.stations.climate_zone.fillna('UNCLASSIFIED').to_numpy()[ids[:,0]];elev=net.stations.elevation_m.to_numpy()[ids[:,0]];eb=np.where(~np.isfinite(elev),'UNKNOWN',np.where(elev<500,'0–500',np.where(elev<1500,'500–1500',np.where(elev<3000,'1500–3000','3000+'))))
+    for key,values in [('climate_zone',zones),('elevation_band',eb)]:
+        grouped[key]={str(v):sample_metrics({k:a[values==v] for k,a in test.items()},pred[values==v],ids[values==v],net,fall[values==v]) for v in np.unique(values)}
+    record['grouped_metrics']=grouped;report['experiments'].insert(1,record)
+    np.savez_compressed(base/'capped2024_full_test.test_predictions.npz',truth=test['y'],prediction=pred,physics=test['physics'],idw=test['idw'],distances=test['distance'],station_index=ids[:,0],episode_id=ids[:,2])
+    for e in report['experiments']:
+        revoke(e)
+        root=Path('data/physics_training/features')/e['scope']/'test'
+        ei=np.load(root/'ids.npy',mmap_mode='r');ey=np.load(root/'y.npy',mmap_mode='r')
+        if e['configuration']=='capped2024':
+            sample=np.sort(np.random.default_rng(42).choice(len(ei),1000,replace=False));ei,ey=ei[sample],ey[sample]
+        lag=net.lagged_physics(ei,e['split']['train_stations'],3)
+        distance=np.load(root/'distance.npy',mmap_mode='r')
+        if e['configuration']=='capped2024':distance=distance[sample]
+        eligible=geometry_coverage(net,ei,e['split']['train_stations'],distance,ey)
+        artifact=np.load(root.parent/(e['configuration']+'.test_predictions.npz'))
+        epred=artifact['prediction']
+        for i,t in enumerate(RAW_SENSOR_COLUMNS):
+            available=np.isfinite(ey[:,i])&np.isfinite(lag[:,i]);m=e['metrics'][t]
+            m['lagged_physics_persistence_3h_available']=stats(ey[available,i],lag[available,i],np.array(net.ids)[ei[available,0]])
+            m['lagged_physics_persistence_3h_warning']='Separate available subset, exact previous completed hour at −3h, context-only physics, no query history; not included in primary paired-method denominator'
+            good=eligible[:,i]&np.isfinite(epred[:,i]);m['current_20km_hull_eligible']=stats(ey[good,i],epred[good,i],np.array(net.ids)[ei[good,0]])
+            m['current_20km_hull_warning']='Geometry-eligible subset only; OOD residuals fall back to physics. Not proof of live availability or calibrated serving intervals.'
+    report['audit_policy']='December scores only revoke failed bands; never select models/shrinkage/widths. All nominal test coverages remain diagnostic.'
+    path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    for scope in sorted({e['scope'] for e in report['experiments']}):
+        Path('reports/physics_phase/'+scope+'.json').write_text(json.dumps([e for e in report['experiments'] if e['scope']==scope],indent=2,allow_nan=False)+'\n')
+if __name__=='__main__':main()

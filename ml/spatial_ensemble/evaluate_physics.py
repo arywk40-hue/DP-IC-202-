@@ -1,0 +1,106 @@
+"""All-hour physics/residual and episode-calibration experiments.
+
+Frozen chronology: train episodes in 2023 and Jan–Jun 2024; select Jul–Aug,
+calibrate Sep–Oct, independently check Nov, test Dec. All stations in an
+UTC 72h block share its role. No held-out station supplies training/context.
+"""
+from pathlib import Path
+import argparse,json,warnings
+import numpy as np,pandas as pd
+from ml.spatial_ensemble.batched_physics import HourlyNetwork
+from ml.spatial_ensemble.physics_residual import PhysicsResidualEnsemble
+from ml.spatial_ensemble.episodes import EpisodeBands,DISTANCE_NAMES
+from ml.spatial_ensemble.national import splits,region,stats
+from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.datasets.registry import digest
+
+
+def subset(arrays,ids,limit):
+    if limit is None or len(ids)<=limit:return arrays,ids
+    indices=np.sort(np.random.default_rng(42).choice(len(ids),limit,replace=False));return {k:v[indices] for k,v in arrays.items()},ids[indices]
+
+
+def sample_metrics(data,pred,ids,network,fall):
+    metrics={};station_ids=np.array(network.ids)[ids[:,0]]
+    methods={'physics_residual':pred,'physics_baseline':data['physics'],'idw':data['idw'],'nearest_node':data['nearest'],'node_mean':data['mean'],'neighbor_idw_persistence_1h':data['persistence']}
+    for i,name in enumerate(RAW_SENSOR_COLUMNS):
+        y=data['y'][:,i];paired=np.isfinite(y)
+        # Persistence availability is separate: don't discard all otherwise valid
+        # methods just because the previous hour was absent.
+        for key in ['physics_residual','physics_baseline','idw','nearest_node','node_mean']:paired &= np.isfinite(methods[key][:,i])
+        metrics[name]={'paired_methods':{key:stats(y[paired],value[paired,i],station_ids[paired]) for key,value in methods.items()},
+            'truth_rows':int(np.isfinite(y).sum()),'paired_rows':int(paired.sum()),'availability':{key:int((np.isfinite(y)&np.isfinite(value[:,i])).sum()) for key,value in methods.items()},'fallback_rows':int((paired&fall[:,i]).sum())}
+    return metrics
+
+
+def coverage_report(report):
+    return [{'head':RAW_SENSOR_COLUMNS[h],'distance_bin_km':DISTANCE_NAMES[b],'nominal':level,**value} for (h,b,level),value in report.items()]
+
+
+def scenario(network,scope,heldout,buffer=20):
+    station=network.stations;train,val,test=splits(station,heldout,buffer_km=buffer)
+    if len(train)<3 or len(val)<3 or len(test)<3:raise ValueError('Too few buffered sites')
+    base=Path('data/physics_training/features')/scope
+    data={};ids={};counts={}
+    roles={'train2024':(train,network.parts['train2024']),'train2023':(train,network.parts['train2023']),'select':(val,network.parts['select']),'calibrate':(val,network.parts['calibrate']),'check':(val,network.parts['check']),'test':(test,network.parts['test'])}
+    for role,(queries,part) in roles.items():
+        print(scope,'features',role,flush=True)
+        data[role],ids[role],counts[role]=network.examples(queries,train,part,base/role)
+    # All role episodes must be disjoint, including every source station.
+    sets={k:set(v[:,2].tolist()) for k,v in ids.items()}
+    for a in sets:
+        for b in sets:
+            if a<b and sets[a]&sets[b]:raise ValueError('Episode leakage across roles')
+    configurations=[('capped2024',True,False),('all_hours2024',False,False),('all_hours2023_2024',False,True)] if scope=='national20km' else [('all_hours2023_2024',False,True)]
+    output=[]
+    for label,capped,extra_year in configurations:
+        training=data['train2024'];selection=data['select'];selection_ids=ids['select'];test_data=data['test'];test_ids=ids['test']
+        if extra_year:training={k:np.concatenate([data['train2023'][k],training[k]],axis=0) for k in ['x','y','physics']}
+        if capped:
+            training,_=subset(training,ids['train2024'],2500);selection,selection_ids=subset(selection,selection_ids,600);test_data,test_ids=subset(test_data,test_ids,1000)
+        print(scope,'fit',label,'train rows',len(training['y']),flush=True)
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore');model=PhysicsResidualEnsemble().fit(training['x'],training['y'],training['physics'],selection['x'],selection['y'],selection['physics'])
+        # Verify the actual gated/guarded serving branch on selection labels.
+        selected,_=model.predict(selection['x'],selection['physics'])
+        for i,h in model.heads.items():
+            good=np.isfinite(selection['y'][:,i])&np.isfinite(selection['physics'][:,i])
+            mae=float(np.abs(selection['y'][good,i]-selected[good,i]).mean())
+            if mae>h['selection_physics_mae']+1e-5:raise ValueError('Residual gate violated selection non-inferiority')
+        predictions={};fallback={}
+        for role in ['calibrate','check']:
+            predictions[role],fallback[role]=model.predict(data[role]['x'],data[role]['physics'])
+        bands=EpisodeBands().fit(data['calibrate']['y'],predictions['calibrate'],ids['calibrate'][:,2],data['calibrate']['distance'])
+        bands.check(data['check']['y'],predictions['check'],ids['check'][:,2],data['check']['distance'])
+        pred,fall=model.predict(test_data['x'],test_data['physics'])
+        coverage=bands.coverage(test_data['y'],pred,test_ids[:,2],test_data['distance'])
+        bands.audit(test_data['y'],pred,test_ids[:,2],test_data['distance'])
+        metrics=sample_metrics(test_data,pred,test_ids,network,fall)
+        grouped={}
+        for key in ['climate_zone']:
+            values=network.stations[key].fillna('UNCLASSIFIED').to_numpy()[test_ids[:,0]]
+            grouped[key]={str(z):sample_metrics({k:v[values==z] for k,v in test_data.items()},pred[values==z],test_ids[values==z],network,fall[values==z]) for z in np.unique(values)}
+        elevation=network.stations.elevation_m.to_numpy()[test_ids[:,0]];eb=np.where(~np.isfinite(elevation),'UNKNOWN',np.where(elevation<500,'0–500',np.where(elevation<1500,'500–1500',np.where(elevation<3000,'1500–3000','3000+'))))
+        grouped['elevation_band']={str(z):sample_metrics({k:v[eb==z] for k,v in test_data.items()},pred[eb==z],test_ids[eb==z],network,fall[eb==z]) for z in np.unique(eb)}
+        record={'scope':scope,'configuration':label,'split':{'train_stations':sorted(train),'validation_stations':sorted(val),'test_stations':sorted(test),'buffer_km':buffer},'feature_rows':counts,'actual_fit_rows':len(training['y']),'selection_rows':len(selection_ids),'test_rows':len(test_ids),'metrics':metrics,'grouped_metrics':grouped,'residual_heads':model.report(),'episode_bands':bands.report(),'untouched_test_coverage':coverage_report(coverage),'episodes_by_role':{k:len(v) for k,v in sets.items()},'row_caps':{'fit':2500,'selection':600,'test':1000,'calibration_and_check':'all observed rows'} if capped else None,'inference_domain':'diagnostic archive interpolation; serving additionally checks per-channel 20km/hull/OOD; band checks are independent November archive evidence, not a future guarantee'}
+        output.append(record)
+        # Small error/coverage artefact for plots; no pickle/model deserialization.
+        np.savez_compressed(base/(label+'.test_predictions.npz'),truth=test_data['y'],prediction=pred,physics=test_data['physics'],idw=test_data['idw'],distances=test_data['distance'],station_index=test_ids[:,0],episode_id=test_ids[:,2])
+        Path('reports/physics_phase/'+scope+'.json').write_text(json.dumps(output,indent=2,allow_nan=False)+'\n')
+    return output
+
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--scopes',nargs='+',default=['national20km','national5km','himalaya20km']);args=parser.parse_args()
+    frame=pd.read_parquet('data/physics_training/hours.parquet');station=pd.read_csv('data/registry/india_stations.csv');qc=pd.read_csv('data/physics_training/station_qc.csv')
+    network=HourlyNetwork(frame,station,qc);rng=np.random.default_rng(42);held=rng.permutation(network.ids)[:len(network.ids)//5]
+    results=[]
+    for scope in args.scopes:
+        selected=network.stations.loc[region(network.stations),'location_id'].tolist() if scope=='himalaya20km' else held
+        results.extend(scenario(network,scope,selected,buffer=5 if scope=='national5km' else 20))
+    report={'schema_version':'physics_episode_experiment_v1','seed':42,'source_station_files_2024':375,'prepared_source_stations':network.raw_station_count,'unique_sites':len(network.ids),'removed_exact_coordinate_alias_ids':network.aliases,'source_station_qc':network.qc.to_dict('records'),'episodes':'Fixed72h UTC calendar blocks, same across sites; meteorological systems may cross blocks; not established exchangeability','era5_status':'No NetCDF/GRIB/Zarr files found in data folder; all era5_* features missing, no claimed contribution','observations':'UTC hour-end aggregated QC reports; no fill; calendar2023/24 plus final hour-end boundary','input_sha256':{p:digest(p) for p in ['data/physics_training/hours.parquet','data/physics_training/station_qc.csv','data/registry/india_stations.csv']},'experiments':results,'limitations':['375 source stations screened, not 375 independent QC-approved pressure sites','Physics reduction is modeled reference pressure, not WMO-certified MSL pressure','Selection-only non-inferiority is not a test/future pointwise guarantee','Whole calendar blocks are proxies for weather episodes','Full eastern Himalayan boundary still unverified','Model objects are in-memory, not a deployable ESP32 artifact']}
+    # NaN metadata fields are unknown; never output invalid JSON tokens.
+    report['source_station_qc']=json.loads(pd.DataFrame(report['source_station_qc']).to_json(orient='records'))
+    Path('reports/physics_phase/results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+
+if __name__=='__main__':main()

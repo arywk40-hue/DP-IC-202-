@@ -1,0 +1,92 @@
+"""All observed hourly NOAA data, no sampling caps and no filling missing hours.
+
+Read every acquired station-year file, preserve raw row IDs/hashes, source QC,
+reported coordinates and aggregation count. Bucket closes at UTC hour END,
+so reports later within an hour never enter an earlier prediction. These are
+retrospective report availability times, not verified archive publication latency.
+"""
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+import argparse,json
+import numpy as np,pandas as pd
+from ml.datasets.noaa import keys,download,VARIABLES,qc_good
+from ml.datasets.registry import digest
+from ml.spatial_ensemble.physics import pressure_log_reference
+
+
+def valid_dewpoint(raw,location_good,geography=True):
+    value=pd.to_numeric(raw.get('dew_point_temperature',pd.Series(np.nan,index=raw.index)),errors='coerce')
+    return value.where(qc_good(raw,'dew_point_temperature')&location_good&geography&value.between(-100,60))
+
+
+def acquire_year(year=2023):
+    coverage=json.loads(Path('data/noaa_ghcnh/coverage.json').read_text());stations={s['location_id'] for s in coverage['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
+    listing=list(keys(f'hourly/access/by-year/{year}/parquet/GHCNh_IN'));selected=[k for k in listing if k.rsplit('/',1)[1].removeprefix('GHCNh_').removesuffix(f'_{year}.parquet') in stations]
+    def get(key):
+        path=Path('data/noaa_ghcnh/raw')/key.rsplit('/',1)[1]
+        try:
+            if path.exists():return {'uri':key,'sha256':digest(path),'bytes':path.stat().st_size,'status':'CACHED'}
+            return dict(download(key,path,50_000_000),status='ACQUIRED')
+        except Exception as exc:return {'uri':key,'status':'FAILED','reason':str(exc)}
+    result=list(ThreadPoolExecutor(max_workers=4).map(get,selected));Path(f'reports/physics_phase/noaa_{year}_acquisition.json').write_text(json.dumps({'year':year,'candidate_station_files':len(selected),'year_not_available_for_stations':sorted(stations-{k.rsplit('/',1)[1].removeprefix('GHCNh_').removesuffix(f'_{year}.parquet') for k in selected}),'files':result},indent=2)+'\n')
+    print('year acquired',year,len(result),flush=True)
+
+
+def build(years=(2023,2024)):
+    out=Path('data/physics_training');out.mkdir(parents=True,exist_ok=True)
+    registry=pd.read_csv('data/registry/india_stations.csv').set_index('location_id');parts=[];receipts=[]
+    allowed={s['location_id'] for s in json.loads(Path('data/noaa_ghcnh/coverage.json').read_text())['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
+    for n,path in enumerate(sorted(Path('data/noaa_ghcnh/raw').glob('*.parquet'))):
+        if int(path.stem.rsplit('_',1)[1]) not in years:continue
+        sid=path.stem.removeprefix('GHCNh_').rsplit('_',1)[0]
+        if sid not in allowed or sid not in registry.index:continue
+        raw=pd.read_parquet(path);time=pd.to_datetime(raw.DATE,utc=True,errors='coerce');meta=registry.loc[sid]
+        # Provider coordinates in each report must agree with catalogue within
+        # ~1 km. Do not quietly move measurements to a different terrain point.
+        lat=pd.to_numeric(raw.LATITUDE,errors='coerce');lon=pd.to_numeric(raw.LONGITUDE,errors='coerce')
+        location_good=(lat-meta.latitude).abs().le(.01)&(lon-meta.longitude).abs().le(.01)
+        geography=meta.geography_status!='COUNTRY_LOCATION_CONFLICT'
+        frame=pd.DataFrame({'timestamp_utc':time.dt.floor('h')+pd.Timedelta(hours=1),'location_id':sid,'source_id':'noaa_ghcnh','raw_sha256':digest(path),'raw_row_id':np.arange(len(raw)),
+            'dewpoint_c':pd.to_numeric(raw.get('dew_point_temperature',np.nan),errors='coerce')})
+        frame['dewpoint_c']=valid_dewpoint(raw,location_good,geography)
+        for name,target in VARIABLES.items():
+            value=pd.to_numeric(raw[name],errors='coerce');bounds={'temperature':(-60,60),'relative_humidity':(0,100),'station_level_pressure':(300,1100),'wind_speed':(0,75)}[name]
+            good=qc_good(raw,name)&value.between(*bounds)&location_good&geography
+            frame[target]=value.where(good)
+        # Save contributing row lineage separately to avoid enormous strings
+        # duplicated on every model feature. Each raw record stays traceable.
+        frame=frame[time.notna()];frame.to_parquet(out/(path.stem+'.lineage.parquet'),index=False,compression='zstd')
+        channels=list(VARIABLES.values())+['dewpoint_c']
+        grouped=frame.groupby('timestamp_utc')[channels].mean();counts=frame.groupby('timestamp_utc')[channels].count().add_suffix('_reports')
+        grouped=grouped.join(counts).reset_index();grouped['location_id']=sid;grouped['source_id']='noaa_ghcnh';grouped['raw_sha256']=digest(path)
+        parts.append(grouped);receipts.append({'path':str(path),'sha256':digest(path),'raw_rows':len(raw),'hour_buckets':len(grouped),'coordinate_mismatch_reports':int((~location_good).sum()),'valid_core_counts':{c:int(frame[c].notna().sum()) for c in VARIABLES.values()}})
+        if len(parts)%50==0:print('hourly files',len(parts),flush=True)
+    frame=pd.concat(parts,ignore_index=True);frame=frame.groupby(['location_id','timestamp_utc'],as_index=False).agg({**{c:'mean' for c in VARIABLES.values()},'dewpoint_c':'mean'})
+    # Duplicate year-end bucket from two files becomes one hour. Raw lineage
+    # retains both; no nearest-time interpolation or backward fill.
+    frame['source_id']='noaa_ghcnh'
+    frame['pm25_ug_m3']=np.nan;frame['pm10_ug_m3']=np.nan
+    frame.to_parquet(out/'hours.parquet',index=False,compression='zstd')
+    qc=[]
+    for sid,group in frame.groupby('location_id'):
+        row=registry.loc[sid];z=row.elevation_m;flags=[]
+        if not np.isfinite(z):flags.append('MISSING_SRTM')
+        catalog=row.metadata_elevation_m
+        if np.isfinite(z) and np.isfinite(catalog) and abs(z-catalog)>250:flags.append('SRTM_CATALOGUE_HEIGHT_DISAGREEMENT_GT250M')
+        prior=group[group.timestamp_utc<pd.Timestamp('2024-07-01',tz='UTC')];lp=pressure_log_reference(prior.pressure_hpa,z,prior.temperature_c,prior.relative_humidity_pct);valid=np.isfinite(lp)
+        fraction=float(((lp[valid]<np.log(870))|(lp[valid]>np.log(1085))).mean()) if valid.any() else None
+        if fraction is not None and valid.sum()>=30 and fraction>.2:flags.append('IMPLAUSIBLE_REFERENCE_PRESSURE_PRIOR_GT20PCT')
+        # Plateau + incompatible elevation is more informative than 925 alone.
+        plateau=float(prior.pressure_hpa.eq(925).mean()) if len(prior) else 0.
+        if plateau>.5 and fraction is not None and fraction>.2:flags.append('PRESSURE_925_PLATEAU')
+        qc.append({'location_id':sid,'elevation_ok':not any('SRTM' in f or 'HEIGHT' in f for f in flags),'pressure_ok':not flags,
+            'flags':json.dumps(flags),'prior_pressure_rows':int(valid.sum()),'prior_implausible_fraction':fraction,'srtm_elevation_m':z,'catalogue_elevation_m':catalog,'prior_cutoff_utc':'2024-07-01T00:00:00Z'})
+    pd.DataFrame(qc).to_csv(out/'station_qc.csv',index=False)
+    manifest={'years':list(years),'source_files':receipts,'input_stations':int(frame.location_id.nunique()),'hourly_rows':len(frame),'calendar_2024_rows':int(frame.timestamp_utc.dt.year.eq(2024).sum()),'aggregation':'mean of QC-valid reports, UTC bucket END; no missing-hour imputation','lineage':'per raw file .lineage.parquet includes source_id,sha256,raw row id and bucket time','QC':'prior only before 2024-07-01; fixed broad p0 plausibility 870–1085 hPa; source quality flags and location agreement; SRTM/catalogue disagreement >250m; no target-test residual screening','hours_sha256':digest(out/'hours.parquet'),'qc_sha256':digest(out/'station_qc.csv'),'station_registry_sha256':digest('data/registry/india_stations.csv')}
+    Path('reports/physics_phase/hourly_manifest.json').write_text(json.dumps(manifest,indent=2,allow_nan=False)+'\n')
+    print('hourly complete',manifest['input_stations'],len(frame),flush=True)
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--acquire-year',type=int);p.add_argument('--years',nargs='+',type=int,default=[2023,2024]);a=p.parse_args()
+    if a.acquire_year:acquire_year(a.acquire_year)
+    else:build(tuple(a.years))

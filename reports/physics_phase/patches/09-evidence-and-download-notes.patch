@@ -1,0 +1,172 @@
+diff --git a/requirements-physics.txt b/requirements-physics.txt
+new file mode 100644
+--- /dev/null
++++ b/requirements-physics.txt
+@@ -0,0 +1,9 @@
++# Isolated server experiment tested with Python 3.11.8.
++# Separate from the older root training pins; ERA5/raster ingestion is optional.
++numpy==2.3.4
++pandas==3.0.3
++scikit-learn==1.7.2
++scipy==1.16.3
++pyarrow==21.0.0
++matplotlib==3.10.7
++pytest==9.0.1
+diff --git a/reports/physics_phase/generate_cds_requests.py b/reports/physics_phase/generate_cds_requests.py
+new file mode 100644
+--- /dev/null
++++ b/reports/physics_phase/generate_cds_requests.py
+@@ -0,0 +1,13 @@
++"""Produce exact monthly requests, without reading credentials or downloading."""
++import json
++from pathlib import Path
++from ml.datasets.era5_land import request
++
++def main():
++    jobs=[request(year,month,[38,68,6,98.5]) for year in [2023,2024] for month in range(1,13)]
++    for job in jobs:job['request']['product_type']=['reanalysis']
++    output={'authentication':'CDS account, accepted terms and API token OR manual download required. No credentials read or downloads attempted.',
++        'verification':'Request variables/area/calendar checked locally. Authenticated API submission not tested; confirm current CDS Show API request code before submitting.',
++        'requests':jobs}
++    Path('data/registry/cds_physics_requests.json').write_text(json.dumps(output,indent=2)+'\n')
++if __name__=='__main__':main()
+diff --git a/reports/physics_phase/ERA5_DOWNLOAD.md b/reports/physics_phase/ERA5_DOWNLOAD.md
+new file mode 100644
+--- /dev/null
++++ b/reports/physics_phase/ERA5_DOWNLOAD.md
+@@ -0,0 +1,20 @@
++# ERA5-Land prerequisite (not acquired or evaluated)
++
++No `.nc`, `.nc4`, `.grib`, `.grib2` or `.zarr` files were found under `data/` in this phase. The four named `era5_*` feature slots are missing and excluded from fitted active features. There is **no measured ERA5 contribution**.
++
++Download [ERA5-Land hourly data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download) through your own CDS account after accepting its terms. Use your CDS API token locally, or the website's manual download. This work neither reads credentials nor bypasses authentication.
++
++Exact 24 monthly requests: `data/registry/cds_physics_requests.json`.
++
++- Years: 2023 and 2024; all 12 months, every valid day, all 24 UTC hours.
++- Product type: `reanalysis`. These JSON requests are locally checked but **not submitted to the authenticated API**; confirm the current CDS form's “Show API request code” before submission.
++- Area `[north, west, south, east]`: `[38, 68, 6, 98.5]` (India and an interpolation margin).
++- Variables: `2m_temperature`, `2m_dewpoint_temperature`, `surface_pressure`, `10m_u_component_of_wind`, `10m_v_component_of_wind`.
++- Request NetCDF, unarchived; if CDS returns a ZIP, manually extract the NetCDF files. Retain the download receipt and original metadata. Place files under `data/backgrounds/raw/era5_land/`, named `era5_land_2023_01.nc`, etc. Multiple variable files per month are acceptable but require merging coordinates before the current adapter call.
++- Optionally download ERA5-Land static geopotential/orography through the dataset documentation's invariant-field route to establish **grid** surface elevation. Do not label surface pressure as station or sea-level pressure.
++
++The [CDS catalogue](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=overview) describes hourly 0.1° fields (native approximately 9 km). `ml/datasets/era5_land.py:background` checks K/Pa/m s**-1 units, converts to °C/hPa/m/s, derives RH from dewpoint, interpolates space at an **exact UTC timestamp**, and preserves grid-surface pressure reference. Station targets are completed-hour means; for an hour-end H, aggregate background samples from the completed window [H−1h,H), rather than casually mixing instantaneous H with the station mean. The current full-hour builder does **not** perform that join yet; it must be added and tested once real files are supplied.
++
++Use `era5_temperature_c`, `era5_relative_humidity_pct`, `era5_surface_pressure_hpa`, `era5_wind_speed_mps` as background covariates, never independent station labels. Keep archive publication availability separate from observation time. Reanalysis is hindcast-only unless availability at prediction time is verified; its atmospheric forcing can contain information from held-out station observations. Report that dependence and evaluate against a station-only model on identical rows.
++
++Not obtained: CDS ERA5-Land, IMD station downloads requiring permission, and OpenAQ API observations requiring a key. None are needed for the NOAA-only runs here; no PM heads were trained. NWIC remains quarantined for unresolved clock/reference/licensing issues, including suspect Kala Amb coordinates/elevation.
+diff --git a/INVENTION_NOTES.md b/INVENTION_NOTES.md
+new file mode 100644
+--- /dev/null
++++ b/INVENTION_NOTES.md
+@@ -0,0 +1,25 @@
++# Evidence and prior-art notes
++
++This is a research prototype, not a demonstrated new meteorological interpolation invention. Numerical evidence and losses are in `reports/physics_phase/REPORT.md` and `reports/practicum/RESULTS.md`. Claims below describe implemented behavior, not patent novelty.
++
++| Claim | Evidence / distinction from bare IDW | Relationship to kriging / prior art |
++|---|---|---|
++| Source-aware QC and quarantine | Source quality flags, coordinate agreement, prior-period SRTM/catalogue height comparison and pressure plausibility masks precede interpolation (`ml/datasets/hourly_noaa.py`). Suspect pressures do not become labels or predictors. | Operational preprocessing, usable with IDW **or** kriging; not established as novel. Thresholds are heuristics and can exclude valid mountain observations. |
++| Channel-specific fallback | A failed learned residual or fitted-envelope violation returns the same physics baseline; missing PM does not block T/RH/P/wind (`physics_residual.py`). | Control flow beyond bare interpolation, but fallbacks and hybrid models have broad prior art. Failure tests establish behavior, not operational reliability. |
++| Refusal outside the network | Snapshot serving checks current contributors, per-channel 20 km limit and convex hull, and withholds missing-elevation pressure (`physics_serving.py`). | An explicit abstention policy rather than unrestricted IDW prediction. Kriging has uncertainty/domain controls too; no unique algorithmic claim. No outage-field validation. |
++| Elevation-aware pressure reduction | Reversible hydrostatic ideal-gas reduction to 0 m EGM96 with fixed lapse and optional virtual-temperature correction, log-space IDW, then query-height restoration (`physics.py`). | Established barometric/hypsometric physics, not a novel pressure equation. Kriging could interpolate the same transformed field. This is modeled reference pressure, **not** certified sea-level pressure. |
++| Elevation-aware T and dewpoint RH | Fixed 6.5 K/km temperature adjustment, dewpoint interpolation and RH recovery at query T. | Terrain correction, moisture transforms and residual interpolation have established literature. This implementation's humidity baseline loses to raw RH IDW in the national evaluation. |
++| Physics-residual boosting + NN | Learned corrections, selection-only shrinkage gate, OOD fallback. | Different fit from ordinary IDW and ordinary kriging; regression/residual kriging also separates trend and residual. No guarantee of smaller future or pointwise error. Test losses remain visible. |
++| Checked block error bands | Global 72 h block-max scores; separate calibration, independent checking, and target/distance-specific withholding (`episodes.py`). | Split conformal/block methods have prior art. Calendar blocks are weather-episode proxies; exchangeability and nominal future coverage are unverified. |
++| ESP32/server split | Heavy model training/inference stays in Python; the existing firmware provides mesh/sensor work. | A deployment partition, not an ESP32 ensemble implementation. No distillation, quantization, artifact export, RAM/flash timing or watchdog evidence for the new model. Embedded/server division has extensive prior art. |
++
++Scientific references establish that constituent ideas predate this prototype:
++
++- [ICAMS Federal Meteorological Handbook 3](https://www.icams-portal.gov/resources/ofcm/fmh/FMH3/00-entire-FMH3.pdf): hypsometric/virtual-temperature pressure reduction.
++- [Pressure reduction uncertainty, Pauley (1998)](https://journals.ametsoc.org/view/journals/wefo/13/3/1520-0434_1998_013_0833_aeouis_2_0_co_2.xml): terrain and temperature assumptions matter.
++- [Stahl et al. (2006), air-temperature interpolation in complex topography](https://www.sciencedirect.com/science/article/abs/pii/S0168192306001638): lapse/elevation correction and interpolation comparisons. Publisher abstract/search evidence consulted; full paper not obtained.
++- [KrigR (2021)](https://arxiv.org/abs/2106.12046): terrain covariates with kriging of climate reanalysis.
++- [Chernozhukov, Wüthrich and Zhu (2018)](https://arxiv.org/abs/1802.06300): conformal inference for dependent data with block structures.
++- [CDS ERA5-Land documentation](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=overview): altitude correction of atmospheric forcing already exists in reanalysis.
++
++A systematic prior-art search remains necessary for **each** combination claim: authenticated/QC mesh interpolation; contributor-specific refusal with fallback; pressure-reference reduction plus learned residual stacking; distance/terrain-dependent conformal abstention; and distilled weather models with server/device failover. Search patent families as well as scientific and deployed systems, with dates and claim charts. This phase checked selected scientific sources, not patents, freedom to operate, or legal novelty. Do not claim “first”, “never worse”, “calibrated 90% everywhere”, “all-India mesh validated”, or “ESP32 deployed”.
+diff --git a/reports/physics_phase/REPORT.md b/reports/physics_phase/REPORT.md
+new file mode 100644
+--- /dev/null
++++ b/reports/physics_phase/REPORT.md
+@@ -0,0 +1,65 @@
++# Physics phase — measured results and remaining risks
++
++Implemented as separate review patches; original plans are in [PLAN.md](PLAN.md). Full scores, RMSE, station-bootstrap MAE intervals, coverage and losses: [practicum results](../practicum/RESULTS.md), [machine-readable experiments](results.json). No production or ESP32 deployment claim. Tested Python 3.11.8/package versions are pinned separately in `requirements-physics.txt`; the older root pins differ.
++
++## Findings ranked by severity
++
++**High — uncertainty still fails under regional/seasonal shift.** The legacy unchecked p90 serving output is disabled (`ml/spatial_ensemble/model.py:214`). New block calibration uses global 72-hour UTC blocks, not independently sampled rows (`episodes.py:15`, `:47`). Calibration Sep–Oct, independent check Nov, untouched audit Dec; all sites in a block share the fold. Failed check/audit or sparse target-distance bins withhold bands. Himalayan pressure trial bands fail: episode coverage is **20% at 50–100 km and 0% at 100–250/250+ km** at both trial 80/90 levels; corresponding trial-90 point coverage is 84.5%, 51.3%, 25.5%. All Himalayan pressure bands are revoked. Calendar blocks approximate episodes; dependence/exchangeability is unverified. No future nominal coverage guarantee.
++
++**High — residuals and humidity do not consistently win.** Selection-only shrinkage allows zero correction, but cannot ensure smaller error on unknown future truth (`physics_residual.py:36`). Himalayan residual pressure **18.915** loses to physics **18.738 hPa**; national RH **10.887 percentage points** loses to RH IDW **8.889**; Himalayan RH **21.572** loses to IDW **14.920**. National wind **0.940 m/s** loses to IDW **0.919** and mean **0.872**. These losses are retained in every output.
++
++**High — archive skill is mostly outside mesh serving range.** 20 km buffered national and Himalayan tests have **zero** rows eligible for the current 20 km + per-channel hull serving policy. With a 5 km buffer, eligibility is T 617 rows/9 stations (MAE 0.759°C), RH 616/9 (7.544 pp), pressure 131/**one** station (0.256 hPa), wind 626/9 (0.872 m/s). These small subsets do not establish general 1–20 km mesh performance. Nearby undocumented aliases may remain. The Himalayan hold-out is the existing latitude/longitude/elevation proxy (28–37°N, 72–90°E, SRTM ≥500 m), not a verified complete ecological Himalaya boundary.
++
++**Medium — suspect elevation/pressure is quarantined, not repaired.** All 375 NOAA source stations screened: 27 lose pressure eligibility (19 missing SRTM, eight >250 m catalogue/SRTM disagreements; two also fail prior pressure plausibility). Flags and evidence are in [station_qc.csv](../../data/physics_training/station_qc.csv). Exact-coordinate alias `INM00043291` is removed, leaving 374 sites. QC uses observations before July 2024 and fixed thresholds, not test residuals (`hourly_noaa.py:70`). Flags do not establish which height is correct and may exclude valid terrain differences. NWIC Kala Amb remains quarantined: supplied coordinate SRTM ≈5069 m and median pressure ≈964.6 hPa conflict; source location/clock/reference/licensing still unresolved. Its data never enter these NOAA fits. Pressure reduction also rejects implausible reference pressure at each snapshot.
++
++**Medium — ERA5 and embedded execution are unverified.** No ERA5 files found; background slots are missing, excluded from active fitted features, and have no measured contribution. [Exact authenticated/manual download requirements](ERA5_DOWNLOAD.md). New models stay in server memory; no exported/distilled/quantized ESP32 artifact or measured RAM/flash/watchdog timing. The existing firmware was not changed in this phase. Small NN iteration budget/convergence and model tuning remain limitations.
++
++## Pressure results (hPa MAE, same QC-valid paired rows)
++
++| Hold-out / training | Rows / stations | Residual | Physics | Raw IDW | Nearest | Node mean |
++|---|---:|---:|---:|---:|---:|---:|
++| National 20 km, 2023+2024 | 2688 / 31 | 5.829 | 5.829 | 49.156 | 52.970 | 52.733 |
++| National 5 km, 2023+2024 | 2688 / 31 | 3.586 | 3.586 | 37.950 | 34.982 | 49.472 |
++| Himalaya 20 km, 2023+2024 | 1238 / 8 | **18.915** | **18.738** | 114.793 | 119.306 | 112.864 |
++
++Residual pressure station-bootstrap 95% MAE intervals: national 20 km **[3.377, 9.558]**, national 5 km **[2.021, 5.639]**, Himalaya **[5.763, 43.898]**. They are descriptive, not a paired significance test. One-hour neighbor persistence has no valid pressure pairs in these tests. Exact 3-hour **physics** persistence is available on a separate subset: national 20 km 2679 rows/5.692 hPa; Himalaya 1235/18.584. Separate denominators prevent a claimed paired win. Earlier phase pressure scores used a different, unfiltered/sample-time protocol and are not directly comparable.
++
++## More rows / extra year (identical complete December test)
++
++All 735 acquired station-year files read: 375 in 2024, 360 in 2023; other 15 have no 2023 file. **1,516,003** hour buckets retained, including **775,778** calendar-2024 hour-end buckets; no manufactured missing hours. Every hourly row has `source_id` and `location_id`; raw-row/hash lineage is retained separately. Hour means close at UTC hour-end; archive publication latency is unknown. Whole station hold-outs/buffers and chronological blocks mean not all stations/hours can be training labels in a leakage-safe evaluation.
++
++| Fit / selection rows | T MAE °C | RH MAE pp | P MAE hPa | Wind MAE m/s |
++|---|---:|---:|---:|---:|
++| Capped 2500 / 600; complete test | 1.867 | 11.026 | **5.597** | **0.930** |
++| 2024: 230102 / 18618 | **1.824** | 10.909 | 5.829 | 0.957 |
++| 2023+2024: 655962 / 18618 | 1.867 | **10.887** | 5.829 | 0.940 |
++
++Test has 12,604 rows before per-target masks. More data is not a uniform improvement. Original 1000-test cap also retained as a sensitivity run. National 5 km fits 693,632 rows; Himalayan hold-out fits 770,877. Station splits and all counts are versioned in `results.json`.
++
++## Baselines / ensemble / checked bands
++
++[Physics](../../ml/spatial_ensemble/physics.py): fixed 6.5 K/km T lapse → interpolate common-height T → restore query height. RH: interpolate native QC dewpoint (otherwise derive from T/RH) → recover RH at adjusted query T. P: hydrostatic ideal-gas constant-lapse reference transform with optional virtual temperature; missing T uses an explicit ISA approximation → IDW **log reference pressure at 0 m EGM96** → restore at query elevation/T/RH. This is not official MSLP; high terrain/below-ground extrapolation is uncertain. Missing query height refuses pressure. Physics values/deltas/reference P/dewpoint are separate ensemble features.
++
++```mermaid
++flowchart LR
++  Q[Source QC + current neighbors + vetted terrain] --> B[T lapse / dewpoint RH / pressure reference IDW]
++  Q --> F[Neighbor, distance, terrain, physics features]
++  F --> G[Boosting residual]
++  F --> N[Small NN residual]
++  G --> W[Selection weights + shrinkage including zero]
++  N --> W
++  B --> O[Physics baseline + residual]
++  W --> O
++  O --> S[Per-channel geometry refusal; OOD/failure physics fallback]
++  S --> C[Checked block bands or no band]
++```
++
++Full 80/90 trial coverage vs distance, widths and episode counts are in [coverage_by_distance.csv](../practicum/coverage_by_distance.csv). At 5–20 km in the 5 km buffered run: T trial 80/90 episode coverage **100/100%** (754 rows, 10 blocks); RH **80/80%** (751; 90 revoked); P **90/100%** (131, one station); wind **80/90%** (763; 80 failed November check). T trial-90 width ±12.64°C illustrates how weak/usefully wide block-max bands can be. No 0–5 km evidence. Archive-approved bins beyond 20 km still cannot pass serving geometry; OOD/failure serving branches withhold bands.
++
++## Verified / unverified and next priorities
++
++**Verified:** full-hour ingestion/rerun with input hashes; station/episode separation assertions; baseline round trips and synthetic physics; selection aggregate non-inferiority check; masked PM, model failure/OOD fallback, pressure/elevation rejection, coordinate/dewpoint QC, query-truth feature independence, snapshot/batch feature parity, unchecked-band suppression and audit revocation. **87 tests passed plus eight subtests**, one existing pandas deprecation warning. Figures rendered and inspected; demo executed. Small patch syntax/round-trip checks recorded in `verification.json`.
++
++**Unverified:** source clocks/reference/rights for NWIC; true meteorological episode independence; live publication latency; national dense-mesh/general Himalayan uncertainty coverage; PM learning; ERA5 improvement; NN convergence/tuning; distilled model export, ESP32 runtime and live security/field reliability. No systematic patent prior-art search: [evidence-only invention notes](../../INVENTION_NOTES.md).
++
++Quick wins: prefer raw RH IDW until a disjoint validation regime supports a humidity correction; manually resolve flagged site heights; preserve band refusal and a no-learning physics mode. Larger work: local lapse/moisture models with inversion/season features, real dense node data and regional calibration, actual ERA5 join/ablation after authorized downloads, then model export/distillation and device measurements. Do not promote the residual model or nominal bands on December-driven retuning without another untouched evaluation.
+diff --git a/reports/physics_phase/PLAN.md b/reports/physics_phase/PLAN.md
+new file mode 100644
+--- /dev/null
++++ b/reports/physics_phase/PLAN.md
+@@ -0,0 +1,10 @@
++# Ordered, separate patches
++
++1. Shared pressure-height reduction, temperature lapse correction and dewpoint interpolation; documented assumptions and fail-closed station QC.
++2. All-hour NOAA preparation with source hashes, UTC hour-END availability and raw QC; download public 2023 station-year files where available. Screen every 2024 source station, preserve exclusions and alias rules.
++3. Vectorized neighbor-only physics features and gradient-boosting/MLP residual ensemble. Include zero residual in a validation-MAE shrinkage gate. Guarantee applies only to the selection set, never to future unknown labels.
++4. Whole 72-hour-block calibration, independent episode checking, 80/90% and distance-bin coverage. No unchecked nominal band in serving output; old row-wise bands disabled.
++5. Capped-versus-all-hour/all-year national and Himalaya-proxy experiments, same QC/baselines/chronological episodes, error bars and losses; ERA5 availability audit/ablation if files exist.
++6. Evidence-only invention notes (no novelty/patentability assertion), practicum tables/figures/limitations and executable demo. List unavailable evidence explicitly.
++
++This is server training/inference. ESP32 distillation, actual storm segmentation, independent 1–20 km mesh field validation and a patent prior-art search are separate unverified work.

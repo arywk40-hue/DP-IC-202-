@@ -72,3 +72,7 @@ esp32/ml_integration/include/build_identity.h
 /data/terrain_nwic/*.part
 /data/terrain_diagnostics/*.tif
 /data/terrain_diagnostics/*.part
+
+# Local full-hour observations, lineage and memory-mapped experiment arrays
+/data/physics_training/*.parquet
+/data/physics_training/features/

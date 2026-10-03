@@ -211,7 +211,10 @@ class SpatialEnsemble:
             value = sum(weights[kind]*pred for kind, pred in predictions.items())/total
             degraded = not target_geometry['allowed'] or head is None or ood or counts[i] < 2 or len(predictions) != 3
             result['targets'][name] = dict(prediction=float(value),
-                absolute_error_p90=None if degraded else head['p90'],
+                # Historical row quantiles were never independently checked.
+                # Only EpisodeBands may authorize a nominal serving interval.
+                absolute_error_p90=None,
+                calibration_status='UNCHECKED_LEGACY_ROW_QUANTILE',
                 status='DEGRADED_IDW_OR_PARTIAL' if degraded else 'ENSEMBLE',
                 models=list(predictions), failed_models=failed, out_of_distribution=ood,
                 contributing_nodes=int(counts[i]), geometry=target_geometry)

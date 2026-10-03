@@ -1,0 +1,2183 @@
+{
+  "year": 2023,
+  "candidate_station_files": 360,
+  "year_not_available_for_stations": [
+    "INM00042075",
+    "INM00042262",
+    "INM00042270",
+    "INM00042282",
+    "INM00042471",
+    "INM00042540",
+    "INM00042751",
+    "INM00042795",
+    "INM00042799",
+    "INM00042841",
+    "INM00043193",
+    "INM00043316",
+    "INM00043343",
+    "INM00043345",
+    "INMU0020447"
+  ],
+  "files": [
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VABB_2023.parquet",
+      "bytes": 678930,
+      "sha256": "ce2ceab0ca73a8dbb125b2d74cc1c833be77b1fbfe156e25c9e9577f6092a624",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VABI_2023.parquet",
+      "bytes": 166645,
+      "sha256": "08e9ec8467b21bfa8644e9ff44caeb5ebf2043ab49124ab52b7f95bc843cd491",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VABO_2023.parquet",
+      "bytes": 441697,
+      "sha256": "8ddaeca39b4bcf4b5d300cc27563c8fbd95b37a8521d1d1246d2b265c9d8e395",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VABP_2023.parquet",
+      "bytes": 583403,
+      "sha256": "ffd914778f3505222efe79a62f5fe27c2241b5ffc05d9323fbb79e6fa24adb2d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VABV_2023.parquet",
+      "bytes": 218438,
+      "sha256": "f8b58b2c62de28fd127e85f92da2b639cea27013705c268eea09b9fec7616802",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VADU_2023.parquet",
+      "bytes": 241356,
+      "sha256": "ecc2a20e6c3b796922643516af91985129320cc6df0b6e80a57c716ff7ba18fd",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAGD_2023.parquet",
+      "bytes": 193537,
+      "sha256": "3576729dc468c1d0e3539d6ad5e12440a13f2e3941e26b7130761ec27d0697ab",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAJJ_2023.parquet",
+      "bytes": 331000,
+      "sha256": "73bd25531e96dc48e7e3bf33b4cc165ea8a16f63e9b4527b7bd34ed83811ed8c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAJM_2023.parquet",
+      "bytes": 130541,
+      "sha256": "dcfe587cf2854073e5a3187c405e3804b41b3d780dcb3207da4e3a5262b551d1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAKD_2023.parquet",
+      "bytes": 113747,
+      "sha256": "328338b7f2cb72cb17fd166143257b437a389a9fbb48896615739b2232e94766",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAKE_2023.parquet",
+      "bytes": 90970,
+      "sha256": "784cac9ebf739fbf627a8a860c9ed8ca0b7f3e47dd4aad30ec3d5e34a7fdcb7f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAOZ_2023.parquet",
+      "bytes": 228680,
+      "sha256": "db1bed1ef3f060f1cff3b5ecaf217bea450894b446dd2c56c738729a37f1a937",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAPO_2023.parquet",
+      "bytes": 136799,
+      "sha256": "0a57ac3fc4779ba6b5dd167ec5b516dd72578875b8820a15ba77728b94d476c7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VAPR_2023.parquet",
+      "bytes": 151615,
+      "sha256": "629bc33c251f3a39d792428632a7992823473f4bc963a7c77dbae749565172bf",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VARK_2023.parquet",
+      "bytes": 310626,
+      "sha256": "1b18953f2007b6273d49b4a650860c1eb33db54af4fa2fccfffcc460b9b6a5bf",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VASD_2023.parquet",
+      "bytes": 271427,
+      "sha256": "98196bb7cf55dad81132e9a4660be3057075de5c499cbb0898129d93759c4556",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VASU_2023.parquet",
+      "bytes": 397311,
+      "sha256": "ae97573acc28335103ec4b247442fc86f644b9a3d321935092b530577546c531",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEBI_2023.parquet",
+      "bytes": 317655,
+      "sha256": "b5887e9d9d101630ba0a0ee8829e297a1729282e461857509a0265cecadeb600",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEBN_2023.parquet",
+      "bytes": 648905,
+      "sha256": "cafa27f375a03b813dbe45c6fb63f7582f56f4366b5a4bf5925128c95fd5a7f0",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEBS_2023.parquet",
+      "bytes": 687719,
+      "sha256": "55c4edc39cda28350173f157655c694c9f177243b78be8ae7d40b4e39766ac04",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VECO_2023.parquet",
+      "bytes": 228882,
+      "sha256": "9fb71b3c8576cfd983aafe6864a96ff67d46593cdf8d9161b73fe40417aeb007",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VECX_2023.parquet",
+      "bytes": 110595,
+      "sha256": "4e3ffc2fb05a4cec21ee269ecf64fa5c9fae8ee29f5c9fe89c260ab94098445a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEDG_2023.parquet",
+      "bytes": 418559,
+      "sha256": "12510a8e1cba660658c6c7bfa22a9b50eaf81faaf1d666bbd82fa58ad63f02c6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEJT_2023.parquet",
+      "bytes": 130320,
+      "sha256": "dea0b590faf32a434cee1032f0ff5de48281125b61a748f8825b15989ba9518c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEKO_2023.parquet",
+      "bytes": 145565,
+      "sha256": "59a90c400e9280e44d449922b407cd0f99e87f5d389c292ca0a04a104d8070d7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEKU_2023.parquet",
+      "bytes": 123991,
+      "sha256": "d1ef12763ab6b137497af27ae914e6609ed1cd4cee1975ddce588a8bebaa1626",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VELP_2023.parquet",
+      "bytes": 432752,
+      "sha256": "3e2bab0dad006c176bec69b9c6c8f955deab9d79ca6c161c01939f629c9d2d7b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VELR_2023.parquet",
+      "bytes": 417285,
+      "sha256": "c50cb6dc76f0b4e3952a2a75f13f65346dd1a522703a56783611fdd38617bcc4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEMN_2023.parquet",
+      "bytes": 459643,
+      "sha256": "1096d12419ba31f8f157d4af31dcdd97da635fd22ecfb8bf1aff795ac178bad8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEMR_2023.parquet",
+      "bytes": 227598,
+      "sha256": "69b3c824a9d7b79b47d86d6230a3277c5be59d92822b2c8643e16a6c9c0cba8a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEPT_2023.parquet",
+      "bytes": 678168,
+      "sha256": "3d43ba1aca2e4e6cf7ac349e4058567691371ffe3bbd273d70d2f0f278d03f11",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VEPY_2023.parquet",
+      "bytes": 205838,
+      "sha256": "696e92db2dc9131a249fff4023fe46c30fea083181130ae073c7b776ff90c8a3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VERC_2023.parquet",
+      "bytes": 654416,
+      "sha256": "2544692908498eb943acbf33a9383635268f47af5b55a59f2c6c6978bbf697cd",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VERK_2023.parquet",
+      "bytes": 198778,
+      "sha256": "a125c70f26ffb5204c72cac74933d5687aaf5fd75278441492b667f549793bda",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VERP_2023.parquet",
+      "bytes": 471519,
+      "sha256": "008f43682196ed445ce91a9825d15f87a3b28d50102bcceabcc1f718b5282e47",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VETZ_2023.parquet",
+      "bytes": 143898,
+      "sha256": "40b846a91f6f016073ae7c6a5312e15fc5595655f636f130256405ba54f8624e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIAR_2023.parquet",
+      "bytes": 705149,
+      "sha256": "40d1146d548a835d6abd98d1a27aa9ffb8f0be04244343f49fba11eb5a0b4572",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIBR_2023.parquet",
+      "bytes": 211632,
+      "sha256": "852a2b10e4a458215bacf7631958a866d6a9a39bcd73fdc7f974969996738080",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIBY_2023.parquet",
+      "bytes": 280059,
+      "sha256": "d1843f6b00822f305e5536c5adaf696c18ffb42c65c6cfbe712f08e332ae3596",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VICG_2023.parquet",
+      "bytes": 126561,
+      "sha256": "bbdc0120884fc74ae33a303aabc5743b19a98fa52e4e4b8b2d62d38969c611f3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VICX_2023.parquet",
+      "bytes": 110977,
+      "sha256": "bb1d0e980d0c7080def600385cea284cab3e874d336f718d8b8191e7f994303c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIDD_2023.parquet",
+      "bytes": 213503,
+      "sha256": "5c2c3d0b2e6efb54fb130a32f34683705db7a7e5763cbffcf52c3111e600a465",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIDN_2023.parquet",
+      "bytes": 332776,
+      "sha256": "2d32c26129f93bac0cb5734aca1e08b494d9bb06ad3c331aae1dbc93dc7a06d9",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIDP_2023.parquet",
+      "bytes": 752862,
+      "sha256": "dfe14faa76143a202449aed7f5950053322d7e2cb9ff9aef289277874f57f6ee",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIGG_2023.parquet",
+      "bytes": 264114,
+      "sha256": "98f7e89938a42081d1c7dcfdb1aebc3ce67929445f0804656a14103700ac7842",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIGR_2023.parquet",
+      "bytes": 271664,
+      "sha256": "d3d3cba027810b064497968d7b1168a241bca8cd10e55e1fd8487ab138b32322",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIHR_2023.parquet",
+      "bytes": 211718,
+      "sha256": "bc8370f164c1016ed484f89e66211b568755f953fdf5d6df62fcc447cb05a62a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIJN_2023.parquet",
+      "bytes": 241238,
+      "sha256": "18b2a14a965c2a16577e7451e5d061b596f05bc460e3da2a3c2926a9dab346b0",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIJO_2023.parquet",
+      "bytes": 234824,
+      "sha256": "44cceddd38f3479c251e8c1547097527b837548bfa525441d9228fcbaabeec63",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIJP_2023.parquet",
+      "bytes": 716199,
+      "sha256": "68bb5ff044e3f443b7033e28d6600b0b651ad012d2eb55ec1d5f68e76a81f99e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIJU_2023.parquet",
+      "bytes": 127417,
+      "sha256": "6aaeebc61dd1e2f391265acf024158be327e12de8505375783abc971fb5e260c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIKG_2023.parquet",
+      "bytes": 93183,
+      "sha256": "b6b8283c85f26bfa6c5b09428d6a2a7bd94e38eb3c04764f8be4e99b51ee2e1d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VILD_2023.parquet",
+      "bytes": 131761,
+      "sha256": "619d9ecad37ac310548221c477cdf555a1092fd51a0c35ceb2a2bb79077b2266",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VILH_2023.parquet",
+      "bytes": 213735,
+      "sha256": "10e2b39575a0fc6bf3717d1203081c7092fa1c30d4984b97b367ad7ff5e78ac8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VILK_2023.parquet",
+      "bytes": 698297,
+      "sha256": "d51b08b0e11327bb3d87a6d89f6763eab85319e806fd9528c1957f535260ee95",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VIPT_2023.parquet",
+      "bytes": 253366,
+      "sha256": "8e68e649ee2bb2e76c1a1b5aa2b7d057d653fd25faeb3d1cb1da5231ab786069",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VISM_2023.parquet",
+      "bytes": 261831,
+      "sha256": "141f575d03a44d165861e23e8dc8acb8dcfbee81571e18cdca4e5f3de9be46f4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VISP_2023.parquet",
+      "bytes": 139955,
+      "sha256": "97a9fc9a6c06afefd2b39ead1fa205f4c35b35327a11a74acdd84bd6a7fb2cb1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VISR_2023.parquet",
+      "bytes": 145896,
+      "sha256": "bf69714274b1268a9a469618e0d872240d5bcd5b57e9898d99c8772796b8322a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VITE_2023.parquet",
+      "bytes": 90318,
+      "sha256": "d3184f7f7ae38b1a2136d6cf7df73c8661678b7f24ef282d7fb1ae426dac22ee",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOAR_2023.parquet",
+      "bytes": 214957,
+      "sha256": "3372ec31528e352708317779f2c4d038d3f94fe770275dd7cb2597a03bcb9f32",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOAT_2023.parquet",
+      "bytes": 188505,
+      "sha256": "4b0204300e82c85a498e3c9db81871691ab490155fac55ebdfd5585b331ef33d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOBL_2023.parquet",
+      "bytes": 598379,
+      "sha256": "978bb64f62c7f36048b5b9861b1615c945ad23e4006834998548af2710d64030",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOBM_2023.parquet",
+      "bytes": 366698,
+      "sha256": "4a52d9fc1610e20318375c6b87e59efc659872da3122d053d2d5046d8433cf89",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOCI_2023.parquet",
+      "bytes": 688251,
+      "sha256": "3384ad72c6c61fe38c9d751412298a23fe28547aa3e1b356f359f9bf35eb506b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOCL_2023.parquet",
+      "bytes": 624328,
+      "sha256": "c33394e53f20fc4dc2b84264a6ac5a2637b004bc1d9bc817915b8f81ea7b9fd2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOGB_2023.parquet",
+      "bytes": 204297,
+      "sha256": "88a42bdd42bfe16a1598ce4cb034a2f94c7e771968fd6064780a603caa676b62",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOGO_2023.parquet",
+      "bytes": 352799,
+      "sha256": "676f1bcbcfc1aebde2e0e73a8c6bae309a4062d4554ae3c724ada7a35f3bf582",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOHB_2023.parquet",
+      "bytes": 390024,
+      "sha256": "aee80483ee206e1f084f3f11dcd162e1b3f65a8637fc60d0378b4542b4b11e11",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOHS_2023.parquet",
+      "bytes": 541566,
+      "sha256": "c948bd3644be9fcb47ac4695128e58640bf0d3247a25f498980924527c588bfc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOJV_2023.parquet",
+      "bytes": 99917,
+      "sha256": "ac5fa98389b2a54c429ad57a7a4364a94ea2fb38c6748cddce3281f8c53d2628",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOKN_2023.parquet",
+      "bytes": 605433,
+      "sha256": "a3c354a770d44dc8816488425768388f8fbb08d53aec4b52d36c139beeba4d66",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOMM_2023.parquet",
+      "bytes": 746512,
+      "sha256": "aea14a26bf5d853bbbf06cbacd6c6b49b17cb60b8745feaa2e0fc5dbaacd33a5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOMY_2023.parquet",
+      "bytes": 315425,
+      "sha256": "d2f12c114d8c2edbdaabdc0715c50681b21a854e74b23d46b48b8339cabd23ef",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOPB_2023.parquet",
+      "bytes": 395752,
+      "sha256": "9bde87254202db4c471b33fbc58744072fd78ac95cbaefd569bfbdb897e3e475",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOPC_2023.parquet",
+      "bytes": 207246,
+      "sha256": "e5659dba658c5aa543c11363975d41ec33aceb132717a3616035577477ac7bfc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VORY_2023.parquet",
+      "bytes": 457567,
+      "sha256": "53f580f78cfd48de4c22d93111e2a3cdebbfe78548ca41f3091311820845c2ea",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOSM_2023.parquet",
+      "bytes": 213856,
+      "sha256": "5cabe158d95bf2bf913997c27b96b823d1abee7d50699bf8779c868aa5b00b08",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOTK_2023.parquet",
+      "bytes": 302767,
+      "sha256": "55a3332645e501494df31f3095c781bc03af2e2ef68b144ae08c2153885c585a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOTP_2023.parquet",
+      "bytes": 396382,
+      "sha256": "2b20fe1c035a7f7fd41930f62072ecf870e75576b7dbe13941cde56a1c9c501a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOTV_2023.parquet",
+      "bytes": 672471,
+      "sha256": "0ebf5a25d67847359a587ebcb778405518b248aa51b7adf2fd4fefe071fe1095",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INI0000VOVR_2023.parquet",
+      "bytes": 158861,
+      "sha256": "d3ab0d4994dc1728e840e36e5e8fb3c80da5db0bb8af587f8531e0ac13707023",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042026_2023.parquet",
+      "bytes": 128524,
+      "sha256": "f4e9f69539ec45179805343a557d0ccd35d2f441b1ef2dac63a31d52d133e9df",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042062_2023.parquet",
+      "bytes": 116373,
+      "sha256": "b46f7d976387752ac17eaa539e731e5f7706bad121282d7be3f213ec2c955620",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042065_2023.parquet",
+      "bytes": 130363,
+      "sha256": "fa83a27870b5f0aaa1ac7a2b6234e51955397320e30df2564d798318206c7798",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042077_2023.parquet",
+      "bytes": 125237,
+      "sha256": "23d85ba45e62ac37a8813cd2bcdd59356f2dbb98782e7adc860c991a7006b2f3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042078_2023.parquet",
+      "bytes": 140767,
+      "sha256": "32b7ed19f13820aab984ceeae1b19239063df6db9278bafd29710e22168da382",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042079_2023.parquet",
+      "bytes": 269636,
+      "sha256": "1a72d443de8ee73e855762cb1783e00f51e95688e063aa612e263090ce3d1c43",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042081_2023.parquet",
+      "bytes": 180979,
+      "sha256": "2c84d23f8424ad06f2c11562d51b5cc4df5e08f2a0444ad37834e5a503912ced",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042083_2023.parquet",
+      "bytes": 162216,
+      "sha256": "f2c5b907333eb4a037c2a9525abeb0972f4b1d59a5aee56507a1d613dcef8f40",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042101_2023.parquet",
+      "bytes": 228390,
+      "sha256": "758ca0e4fa5162c44042790dc95620f9ede102f8fcb9c0b23b910b3059b26a84",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042104_2023.parquet",
+      "bytes": 128403,
+      "sha256": "d4c3b6813ef60b8d96dcda12eb41c46f18e86d154eefadc395807a8c1036c5b6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042111_2023.parquet",
+      "bytes": 233787,
+      "sha256": "ffbcc885c5b0ae7c958b72bd97c9c5a548edf266cba91dd501f8348d7b57fa3c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042114_2023.parquet",
+      "bytes": 179248,
+      "sha256": "a00edd6b65dd1e3bcd9d25fa939a81b39f74d21d168bcbf797c1c4dcf36cb496",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042137_2023.parquet",
+      "bytes": 110864,
+      "sha256": "9acd47e0a97e47acf8de217da8b4a733e4d1d8c8074cd1eb502eadbaa620540b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042139_2023.parquet",
+      "bytes": 162262,
+      "sha256": "bb1ed7bc5a5523edd7a4dbd0f9e1049617b256c6e0d834146d83d360e5ff6a9a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042143_2023.parquet",
+      "bytes": 121003,
+      "sha256": "d5d4e72d066222be66937350aca4e5a8f0ec193d6bf1cf1d1785df597787ff3f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042147_2023.parquet",
+      "bytes": 183299,
+      "sha256": "5c2192d26bd91a2c3d0dbdb190580403cf45661dbc7adad4196bd63eb390268e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042148_2023.parquet",
+      "bytes": 189732,
+      "sha256": "825dea14f07636b1f4e8be608201e70bd360bbf3fee6326f641e8e0d6271e204",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042165_2023.parquet",
+      "bytes": 237964,
+      "sha256": "37d183107ef16896b779dd265fa564d46b5852a0ef965a32c06dab268d12e525",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042170_2023.parquet",
+      "bytes": 239082,
+      "sha256": "d1a4e5bd4866a582b15195a27afcaaf78ef121168076f51ff3bd8c310bbb1341",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042174_2023.parquet",
+      "bytes": 120521,
+      "sha256": "5f7283841c75214d9fa372483c4010ec16bbe7dda3a4dbadbb4aab0d06f7f803",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042177_2023.parquet",
+      "bytes": 121100,
+      "sha256": "fe98d6afe965757ac24e2bbd8c6669200d60220470e30a31ae3a41b54b06d726",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042187_2023.parquet",
+      "bytes": 113422,
+      "sha256": "d6a4a428a37917dfe59841dca65dd8915a6f1e640674974b757f018ec4730e0c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042217_2023.parquet",
+      "bytes": 168823,
+      "sha256": "3b81755ee2154238792a8b8ec42f4ab90b356dc377a4d992d9d5095585712e9e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042220_2023.parquet",
+      "bytes": 187777,
+      "sha256": "8dee7b938f15265593d3666419f61d5d8e51869f6bb28f2b6a42d9865aa073cb",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042237_2023.parquet",
+      "bytes": 115791,
+      "sha256": "d5bca2dd84d925e82b6eb8deb6032f9b030fea2a446575c1eea58d96dbc1568b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042249_2023.parquet",
+      "bytes": 118933,
+      "sha256": "0a93cdfbeaa8487f4a32747d34817cfe077154a652672808304f8f94c0702599",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042257_2023.parquet",
+      "bytes": 87472,
+      "sha256": "f7c0db4a369f5afd20e0075ac50026a68f02c429a43bf585c075b16019dacf54",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042258_2023.parquet",
+      "bytes": 86437,
+      "sha256": "3875a37cc2bff0afe8a4439cc09c399cacae211f5b17b427691e037788416eb8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042261_2023.parquet",
+      "bytes": 126782,
+      "sha256": "6ec9a87fdaeb263a34374f1d68bbf5a3d2a2e217f443ab70eb9bb5156f84a9f4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042266_2023.parquet",
+      "bytes": 115401,
+      "sha256": "2ff20e73b3ba4fd2aa4c7cabc2f40a36eab9f6543bffde3bd1baa04e9cd3d6ad",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042267_2023.parquet",
+      "bytes": 97660,
+      "sha256": "1f884b989ac7da5b7b58fff2c03fe0457af30b5c28059a8c8f4a187a1a4bce91",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042271_2023.parquet",
+      "bytes": 114060,
+      "sha256": "5b5accd0035adb4be269005c50f39d6d5acf540e5121ca4d829f8276bce570ef",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042296_2023.parquet",
+      "bytes": 118835,
+      "sha256": "0aa11b8737420396cede4f8cfd023fe5b11ff26b262a8741b31c5d6a8e98f19f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042299_2023.parquet",
+      "bytes": 172208,
+      "sha256": "e3b768fff90169865633d30c7b5aa03ad74eaf5921ab27220500a1795d51cd79",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042308_2023.parquet",
+      "bytes": 201551,
+      "sha256": "4a03f999629114a8ae36b647b0272968ed4af4e3a0433922277928d0718294f6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042328_2023.parquet",
+      "bytes": 239434,
+      "sha256": "adc985bfc2910b7978eccedf7e137646b20f1425c74b58433dbba78f1e18b922",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042343_2023.parquet",
+      "bytes": 219776,
+      "sha256": "3fa67801d74fab0765aa5d4590cccebf82c83c6d30f47f15ee2202c91f33486b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042370_2023.parquet",
+      "bytes": 108870,
+      "sha256": "b227ddc6775de53d3fbf2f3ea7daaab6b3b65da93eb99adaf702a5260733a0a3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042383_2023.parquet",
+      "bytes": 112367,
+      "sha256": "29b20cd3f8da94c26b94acf9aa0c1e093ef4703dca3213415ba7c8f88827bac7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042387_2023.parquet",
+      "bytes": 118794,
+      "sha256": "d1c7551eee67bcdb8de69638379703f627c232380e207a4530e285898ba7e7cc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042391_2023.parquet",
+      "bytes": 117770,
+      "sha256": "711ae5af7c246dc06e4d8c6181def5f2f4325bfe32fec8444dbac0ef84035989",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042395_2023.parquet",
+      "bytes": 118492,
+      "sha256": "a22dac6c5b1a61015338f564aca698d3695b135f19e04ee99f44e802f8382bab",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042399_2023.parquet",
+      "bytes": 164040,
+      "sha256": "6e7dcab8e1b39a03054705d71cef25cb076a8c222caccff5c4bb8431c4334f1f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042407_2023.parquet",
+      "bytes": 121982,
+      "sha256": "4b67b2df6be3ecfb4d35a798b6772789117de49e0c951b8d881a808f054adee8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042408_2023.parquet",
+      "bytes": 112364,
+      "sha256": "cebe75933e3c6c6657b3f6a40e4381d35e7e2c25c3b0307aa0d65fe3a7cbb10a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042413_2023.parquet",
+      "bytes": 126819,
+      "sha256": "3700544ba68d387c6c027bc1db6dfb74bdc23281e7f7abeb3ce5b33f2145b5fe",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042414_2023.parquet",
+      "bytes": 116709,
+      "sha256": "b93e0f9df6560ac0deaa6daa07e0858ee6f3acbec5916fe7e5558b82df3c44e6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042420_2023.parquet",
+      "bytes": 108936,
+      "sha256": "cb5d0182071355f55b3b2601dd9b797197fc365554d5c401b08b9a68558d184f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042435_2023.parquet",
+      "bytes": 214305,
+      "sha256": "c43ff3a654213ebe10b595792c7cce740730594c2c7d65875d4f14c55b51c5c4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042447_2023.parquet",
+      "bytes": 119101,
+      "sha256": "158b22a9eed44628b6ebe291f4c72455f82debda9615b1a7b5440f6952da867d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042459_2023.parquet",
+      "bytes": 119222,
+      "sha256": "3c5c35b65a060cff76fa40e7d0fec82748af55534b116888e39edf814681fa43",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042460_2023.parquet",
+      "bytes": 111051,
+      "sha256": "8465477e788f2db38521743e69022dd1f446a5f2b7a01888659857c9bbe48e9a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042467_2023.parquet",
+      "bytes": 127710,
+      "sha256": "671fa567ce65c793312a8362c0b09161cfd442d7f140d71102465022b24ad544",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042468_2023.parquet",
+      "bytes": 117384,
+      "sha256": "306b0adac57e5ee2d7e79723b5995b3030f981aee8007e4306cbedacbf60b249",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042469_2023.parquet",
+      "bytes": 109826,
+      "sha256": "79f1a9943a3fd7a281dd0677077a5bfe006d73876e7a9d17adbe341fd374bfbf",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042473_2023.parquet",
+      "bytes": 107682,
+      "sha256": "2f5983e32d1089265fc6f77123d9d107a1d3ebf467c326705337a737c3c3443e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042474_2023.parquet",
+      "bytes": 232114,
+      "sha256": "d66fe2b4f31095885598316294e74e7a57d1d9b59f4f5127bb1240746b3c7fcc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042483_2023.parquet",
+      "bytes": 164554,
+      "sha256": "9393ed89bd08a47a5420b4917aa32b2a702934846eb73bb44c1b48d6b31febf2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042484_2023.parquet",
+      "bytes": 88951,
+      "sha256": "4978334b67b236b5c18a12c434e685e6b1daa6468c373ec83822eb616da8886b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042488_2023.parquet",
+      "bytes": 118869,
+      "sha256": "542606f731c08ac5c886602c8a97df55793dff512bc602f475f13440815d51d1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042498_2023.parquet",
+      "bytes": 200434,
+      "sha256": "a103a9e638af7b9cb2fd2d8e34bf85035ea6cc4ed1774da0c10d80ddad8deb81",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042499_2023.parquet",
+      "bytes": 118732,
+      "sha256": "2606887c2174b4b6e0f26533e9cc3af4d81dc3aaf0b8332161129eae3604ebb6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042522_2023.parquet",
+      "bytes": 114553,
+      "sha256": "58340bca4e35faa16662b70db8e3226ec3a9a3f8299db54ea663763552c9bb94",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042523_2023.parquet",
+      "bytes": 116800,
+      "sha256": "14bed251b42e157ce20c1d7eebd5276780f0a423037b2973fc377ef53a224bef",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042527_2023.parquet",
+      "bytes": 117761,
+      "sha256": "319c07400848d0a31f7fa1761e3af7de1ded4e2295e248be54ce6faa9a0f4141",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042546_2023.parquet",
+      "bytes": 117636,
+      "sha256": "7ad0a32817857c3b7277bc1feac96e97906ada3f1ded1f9cb04991c5848a04e3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042557_2023.parquet",
+      "bytes": 125727,
+      "sha256": "c0380a0250be15315a78a2dad469f655f3fb2a3eaec21ed6e5bc098591df5ccb",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042562_2023.parquet",
+      "bytes": 117227,
+      "sha256": "3818b775b821440e47ed8d89aefd887783077c9bcc53bfa927f8096e5e9e8e03",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042567_2023.parquet",
+      "bytes": 172297,
+      "sha256": "6e3ee71f08d0da8771be5e41a1e447571fd98a4c372bb054388b70df148d08ac",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042577_2023.parquet",
+      "bytes": 122096,
+      "sha256": "8aba947a9055eb0aaa19390bf2a64b7349c66a805cefea0663919b21a56c1eef",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042588_2023.parquet",
+      "bytes": 109264,
+      "sha256": "3cd6fde30489e3e14e36538f86dfc81314a761b6132ad003cc22a035042cd96a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042603_2023.parquet",
+      "bytes": 118334,
+      "sha256": "046c1b7271a4f8b2c467ace0ac0aee1ad2caa78ff9ad9786ddd8d02ec6e38e80",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042618_2023.parquet",
+      "bytes": 163451,
+      "sha256": "953d9ac174a6fa612f89ab1859920d43eaa3ad718f07eb528849a58f8e43e32d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042619_2023.parquet",
+      "bytes": 178171,
+      "sha256": "9f7f4cff35bbf453f863b70bb1cbf2b96253c1994a5c849a5bc5fb342456a1f1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042631_2023.parquet",
+      "bytes": 205550,
+      "sha256": "51d6d6a5adabeabaacd7758df21c28ef21214df63dd52c9b2425918728338f90",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042638_2023.parquet",
+      "bytes": 138167,
+      "sha256": "c01ef525a48582b71dd0758c6ca54161e488822949f7d0d5c5bae586ca58f626",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042639_2023.parquet",
+      "bytes": 133119,
+      "sha256": "2ecf8cc4810866c234ff7fbfa0cfc1da829f58b704786b703ee9496206eb232d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042654_2023.parquet",
+      "bytes": 120943,
+      "sha256": "6d870435ef31933f4804a5ec9bf9dd7b37c56224a36cf65d986e7d29e575e39e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042661_2023.parquet",
+      "bytes": 130391,
+      "sha256": "6e2c2fa825883882f8f142a5a47f494ba877aab7b8389debdf5b6537f027aca3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042662_2023.parquet",
+      "bytes": 128626,
+      "sha256": "8999236eea7bc0eba6e6187d643a63e1f82beb7787e6f2359f2b4d6f60dadb91",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042671_2023.parquet",
+      "bytes": 257994,
+      "sha256": "4e1b2e97127a9782f6c311ad65221e8c394b0b9b2999daaf66eba0cb87441f2d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042672_2023.parquet",
+      "bytes": 121040,
+      "sha256": "df64293f7944a948de91d9a86678ca596d8c9291bab69a00daaf2c9cf4aeff15",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042674_2023.parquet",
+      "bytes": 127289,
+      "sha256": "4c9af1c5277b2b614f30c325888467fda00c35f85de003117305f3bd9d2fa0b5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042679_2023.parquet",
+      "bytes": 128756,
+      "sha256": "dcb970c918e5033ab92673589e216bb1e3dfca1d0ebc7862d8ecbadd573a2101",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042693_2023.parquet",
+      "bytes": 250177,
+      "sha256": "37a9f33483ce346d6fb499c43ecdfbf9055ceac98fbd8731c28e6796ecfcb6bc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042705_2023.parquet",
+      "bytes": 118859,
+      "sha256": "757c4bebb3555a126c56c68114c4dafcc44d79a50ac58f0fdd508b83cbd4a05b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042706_2023.parquet",
+      "bytes": 210656,
+      "sha256": "0427e60957ba18fb56763d73125a44fdc2baa03d415be56fbb013a57b45d0eca",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042708_2023.parquet",
+      "bytes": 163386,
+      "sha256": "6a4a258813d4242514780201587fcb6c4757a8c7e98f9184a855d87f1ab0e290",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042709_2023.parquet",
+      "bytes": 117712,
+      "sha256": "a9f3a24676f79d3104f2aa38320b11db30648640b4aa7a695e0341b7e99df53b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042711_2023.parquet",
+      "bytes": 119603,
+      "sha256": "3121e8cb2deb8c4080c0aa34d60967c2fabd87aa6e264f041af6c57947bef284",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042715_2023.parquet",
+      "bytes": 135632,
+      "sha256": "0b08ec41a1785334ecce8095f848b2f81f399ed88ba8f007497fa4f80de11f4f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042727_2023.parquet",
+      "bytes": 105464,
+      "sha256": "ee5266ab9a3cef62e2cf3c0e6c47f46c05038ac67eddd95bde075ff1ddc04108",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042730_2023.parquet",
+      "bytes": 205737,
+      "sha256": "2b93b70a980650a39cc96447fd99f767429c20b15013b22b8795cc1e7798eb0a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042731_2023.parquet",
+      "bytes": 205380,
+      "sha256": "a8168d756868fc2cfd1ec866b3dac8edf6bbafa9cd579beeaa601db71ea8fe05",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042740_2023.parquet",
+      "bytes": 124550,
+      "sha256": "af5d5e9a0fd023964814e255ab0aa370818d27ecf1901e2890c78799978e95e1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042744_2023.parquet",
+      "bytes": 118318,
+      "sha256": "e3ab41cc1d1226228fe84c590b176bc3911cacb13133de6bf39f2541858abe30",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042763_2023.parquet",
+      "bytes": 180674,
+      "sha256": "b082018e1a80822c46c45b0077c2162ce95b907f1bc6bc9a245065f261b4d2f6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042767_2023.parquet",
+      "bytes": 129043,
+      "sha256": "e53dc9d8146ce15b4d913a0d1141f5410220785adecb9e95da891f632189dd35",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042768_2023.parquet",
+      "bytes": 167221,
+      "sha256": "52dc3b0c30d7b667f7ffad3bea70ffec1bdc70a57823253dd504f1630f7b50d3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042771_2023.parquet",
+      "bytes": 124187,
+      "sha256": "38c46b26cfe41c67fbbd9fb1ddb8dd256e10c7f23440b4bcc08c7957951194d5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042776_2023.parquet",
+      "bytes": 139338,
+      "sha256": "a6e97985f3b287dbce499c74bcf6e48209c72ade86a31b2b87c385f80c3ce9ed",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042790_2023.parquet",
+      "bytes": 91635,
+      "sha256": "94c4f866b9d0ed80c68a85462521aba3ccaab56baf080cdb3d4a176cedde72e9",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042792_2023.parquet",
+      "bytes": 95124,
+      "sha256": "74f261fea39251aae67759a72092a2d87a11102a3c0ccc2f5d9f997b2b421068",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042793_2023.parquet",
+      "bytes": 114448,
+      "sha256": "e7a793d8988932043f6e4586740e78bab5c8f17e90c77e696c2606ae7ccdc9a3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042803_2023.parquet",
+      "bytes": 123866,
+      "sha256": "cf456e3079f0b2f5f24801ae28e4502890732b467d7e906a2b49f815a8a99311",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042805_2023.parquet",
+      "bytes": 123506,
+      "sha256": "66dc2ca5cfd6bf9b22afde04f604e89e1fb6fc8db0af94d1ec020eec08ef556f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042811_2023.parquet",
+      "bytes": 211014,
+      "sha256": "0e2b4654ff39378795a4a3c40785e03ced7699d58d274d117ec0c928e85f09fd",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042812_2023.parquet",
+      "bytes": 149754,
+      "sha256": "cdd730381a249599e311a6b3620832f76ddcf505fdd7ca84c2b73b0e41658d1b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042830_2023.parquet",
+      "bytes": 222935,
+      "sha256": "a7b0c72d81fae0d184c98988539bd867e5b04e452fd08e5601b48001af5bff3e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042832_2023.parquet",
+      "bytes": 130218,
+      "sha256": "574c58c17681ab3403b7b7c8fcce8cb56b2965613aa46118702bc58a6057ac98",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042834_2023.parquet",
+      "bytes": 114234,
+      "sha256": "5d21cf426354574db08b302f7a6f26b2f538c740fe31961816552a6fe7abfe5d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042838_2023.parquet",
+      "bytes": 175277,
+      "sha256": "252de24c49d643d987365bf56a15d3ebb3381b84207377e5a01ea397414fec57",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042849_2023.parquet",
+      "bytes": 121371,
+      "sha256": "f0739cebf392647904525c4b6822d50fb8631cb9ebd38ec4b34b1b7f60c39982",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042851_2023.parquet",
+      "bytes": 124344,
+      "sha256": "2a954fd9e7f2cc92a68ff9f06780bce1b6b95fbd5b98e5ff62a9f810fb1a44b9",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042860_2023.parquet",
+      "bytes": 130140,
+      "sha256": "695a988f20f4ff42d1e83d08b17ee4b4809dd74495c4b64c5d76dbddbaa4f010",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042874_2023.parquet",
+      "bytes": 202070,
+      "sha256": "9df5897d0406cd60599f70e5f966b79635441d740d5fd13f98e6168817ea6493",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042876_2023.parquet",
+      "bytes": 124814,
+      "sha256": "d3da1bb321f9dd383380cfb0954f06ff641d2098f013392820c56477a62a5f4d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042883_2023.parquet",
+      "bytes": 163439,
+      "sha256": "b844ab0392bc88edbda4594b79ad128837d734510e608ea4ccd9672cbc392161",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042891_2023.parquet",
+      "bytes": 165746,
+      "sha256": "994a04f418cc4c96e3bbb6ae264a217473e2b1c6d9e2c3481974a26259f21d1e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042894_2023.parquet",
+      "bytes": 113849,
+      "sha256": "f7b8de30659a838b3258d4f74af37499af2403e93ffcd219fb3b64e569c613f5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042900_2023.parquet",
+      "bytes": 121899,
+      "sha256": "8a71627dd2545f0f78e3502edcc823d5c3f4213562f58c5b2ac86980c4ff30ce",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042901_2023.parquet",
+      "bytes": 218390,
+      "sha256": "0d90c83571eeaa109554a74efc7e9a3d4b0fe74a539fb57fdcc94ebd664675e2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042903_2023.parquet",
+      "bytes": 102572,
+      "sha256": "5c2df5bdb3a9f21d9e126a8664c716b37bc67eab86a25625ebeba8479563955b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042915_2023.parquet",
+      "bytes": 115825,
+      "sha256": "e03c2e2690ba495096938f1a497d4a5605068c30e464a4314942c205f99c5bea",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042916_2023.parquet",
+      "bytes": 135380,
+      "sha256": "742b6deaca1e4c71e5ab78bba19a57bef747c75086fad5421a57544b83d4f90a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042921_2023.parquet",
+      "bytes": 231918,
+      "sha256": "cdfb9be36386b3cd21a367e0ab37463abf974b34b3e0b3fcff8864aa9e4d3425",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042925_2023.parquet",
+      "bytes": 98818,
+      "sha256": "abdaa0f7157941f1576f9d12cc0f2a0eb262fe521836c3deb205d6023c9ea055",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042931_2023.parquet",
+      "bytes": 145428,
+      "sha256": "d9695ecd8c2f6acc862cad687d092484e7c46664a91e4645656080dc0558db96",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042933_2023.parquet",
+      "bytes": 221414,
+      "sha256": "eefc370843169fe56fdd3aaf0804b7822733b8151f4b400bb394610e18ddbf71",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042937_2023.parquet",
+      "bytes": 146685,
+      "sha256": "0e67153db69ae15d9e8fa6983e75b7100e4322ab24c8b1ee740207f10d5421d1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042939_2023.parquet",
+      "bytes": 157331,
+      "sha256": "7528defa18c8474c7f1f203487ff3aa6ee416a15fb5c68ecb8d5a6c118c03bf2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042943_2023.parquet",
+      "bytes": 120138,
+      "sha256": "cc8cfb22ec053544d6f46c21eba46f25579be507a6e9bf148328bbe4f8f7828d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042946_2023.parquet",
+      "bytes": 150091,
+      "sha256": "6255f139d117078de1670339ff11a6c05f8327e11680c9bdfeba4317b0f38024",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042948_2023.parquet",
+      "bytes": 124021,
+      "sha256": "a7d2094ba5db991986bf4ba66ef2fdeaee39d2a51f8ee0a7702315fdb2e17998",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042961_2023.parquet",
+      "bytes": 97108,
+      "sha256": "e2e7ec9077fd9434744c29d9b6b1ccee3303545ff496900f103024437f70792c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042969_2023.parquet",
+      "bytes": 118300,
+      "sha256": "768debecfaa1b3933f4c46309dfa9729f3d65248724e5b2fa065ad86be902266",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042970_2023.parquet",
+      "bytes": 110910,
+      "sha256": "1743ead1dda679093d251031dbf1b74eb4a78b85b9663b0172991c19bf97f275",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042973_2023.parquet",
+      "bytes": 213156,
+      "sha256": "2a63689423f72edc755f8542666b9e2229cc2536eb477795b82677e2b206c038",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00042976_2023.parquet",
+      "bytes": 182340,
+      "sha256": "cf745d4eadf06b10bf239db15378d7d20a65313419c1519a7c8c2f76784c3dac",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043001_2023.parquet",
+      "bytes": 165082,
+      "sha256": "37684d12d5064271d6d6f9b910a27ee386bf30b448746c7785b1f4c78f11cd5f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043005_2023.parquet",
+      "bytes": 122291,
+      "sha256": "16aee90d24601c3f547ed6e9c02cc2ffe846669971dda2e8be94f9a00fb4cded",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043011_2023.parquet",
+      "bytes": 115889,
+      "sha256": "544a04e22c6fe6b2be647e574ca35cb12868cdc0a315bb5c6a6efc2a0d25d73c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043017_2023.parquet",
+      "bytes": 139563,
+      "sha256": "c055dfe04ef1e6c55dda1ab7f39c55ace6bd23504c66a93e3d0925c0bb3db260",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043021_2023.parquet",
+      "bytes": 216783,
+      "sha256": "ba53475ebfde7fe8a489b17f4a851f6559a8e6c4f6ac6a992d157359c82d52a7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043025_2023.parquet",
+      "bytes": 131189,
+      "sha256": "8b453b56a3552037c9f86ddd03d0df2cf56e8ed55a1cbc5ede1cef8290816d69",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043029_2023.parquet",
+      "bytes": 151407,
+      "sha256": "11587bb11694276f56aa240f97d98e6982bd6cb74b04c55c531d463f7f6631a7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043042_2023.parquet",
+      "bytes": 120393,
+      "sha256": "7744c8fc121b34034b7c515566bea9b522680fa7c282e0eb0d4056b04441e3e7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043053_2023.parquet",
+      "bytes": 225959,
+      "sha256": "aec4208347090ce1b7607618cec6b2d3b67dd4895cd9bef3c0c1faa8b162d240",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043057_2023.parquet",
+      "bytes": 126949,
+      "sha256": "dfec830879cf55b4a85763f493ab340806b91808169992320cd029cf38d49526",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043058_2023.parquet",
+      "bytes": 116214,
+      "sha256": "4e97c359f8961c24e9406b3b22d99129781c4f9a803abf0a1e472fc5249385b6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043060_2023.parquet",
+      "bytes": 121043,
+      "sha256": "446bb0f1e36aa8e519850d48abf93cb3bd05f3f93b2ee2c1ffd95bd3442cc671",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043067_2023.parquet",
+      "bytes": 93589,
+      "sha256": "030b3d831ca4b030fc2f31f0f19506f217dc169ea5188c169ebf1f5bb212a7ea",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043069_2023.parquet",
+      "bytes": 122375,
+      "sha256": "9d1a96b425353f2437eac61610fe66971c48297b1f6388a8160f4725f5cef569",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043071_2023.parquet",
+      "bytes": 113033,
+      "sha256": "6f968f2795ffb1b98ff9eb129ff3ea212b19baf5fc4717d2af5d41aeeac16abc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043076_2023.parquet",
+      "bytes": 124813,
+      "sha256": "d12a7b47cf26743ced26a9e5a179dd738284d2bf61b46184054e03e24016fd21",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043081_2023.parquet",
+      "bytes": 211321,
+      "sha256": "b0535dbe9d03a86a44cdbdfbfc773c9d9ef64c795549f3c189a4a72b1bb36752",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043083_2023.parquet",
+      "bytes": 128661,
+      "sha256": "813e59ec8ac795d9e354416108fef4276e0a35d2dfbda39d02f75c6ea0b128aa",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043087_2023.parquet",
+      "bytes": 126526,
+      "sha256": "52978d30956700ca7b4cf5a28a954823f89ca6b0251557ab225a3cfd18a9fbfb",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043097_2023.parquet",
+      "bytes": 122377,
+      "sha256": "76a66bf75c9bb54aa5a2c530da5312accd0ee929587a8e4b19695623935d2661",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043105_2023.parquet",
+      "bytes": 207497,
+      "sha256": "36e4508f659227a4f400da8c5c984c3ef0f34cefc306b6cf72bc5472d779d4a9",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043109_2023.parquet",
+      "bytes": 154127,
+      "sha256": "812164a4c699307f9e0fbf130e8d8681513898cf7d8a5ed69d8407c661174a76",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043111_2023.parquet",
+      "bytes": 165123,
+      "sha256": "905866481ac618fd9e755458dfae3b8cf9ceea52f1ab328c7c3a566eec3ba758",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043113_2023.parquet",
+      "bytes": 131962,
+      "sha256": "0a638c6ea0c1521a863472a704b9eab3f817f124f88524318e5f1d7eb08e9c56",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043121_2023.parquet",
+      "bytes": 165718,
+      "sha256": "73cd7088d220cd8b9ec84643d599f36434e0d6c34b13358ad2779400911b18d2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043125_2023.parquet",
+      "bytes": 119908,
+      "sha256": "cdb1f7f42f0433db803f419701e8835cd87d3cc5cfa97ab0793d24df87afb928",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043133_2023.parquet",
+      "bytes": 119094,
+      "sha256": "dd0880dcec17ddf863bf8bc2178602b1c11009ef573a59f8d59dddb09f27d517",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043136_2023.parquet",
+      "bytes": 116030,
+      "sha256": "135681e271989d73b9c3156310b8b99bf25ec01ec9329ebec0045dda15acde59",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043137_2023.parquet",
+      "bytes": 128028,
+      "sha256": "ec75cf9149f642fdf2e341715a0a8cae5ae33c7d9203964fe0d577102ddf69b8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043147_2023.parquet",
+      "bytes": 168269,
+      "sha256": "6255423e4c4333f9ab77d0a6193a306041e69e9ad44c2c77b7a8cdde7f871c2e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043150_2023.parquet",
+      "bytes": 262207,
+      "sha256": "9eff0a247685580430c958f9daeed49a7ead2614204c56e2f8bb4020cb73293a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043161_2023.parquet",
+      "bytes": 118771,
+      "sha256": "62f6fc93d232e2cf5f3318a828ec90de5759e7933b50dd65f0b4e40e7bd085d2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043168_2023.parquet",
+      "bytes": 118701,
+      "sha256": "a609388bd5a5bc65c04a000dfdea7da5bec5a8aeee80cb6c4450f2c27aa63666",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043169_2023.parquet",
+      "bytes": 114591,
+      "sha256": "2378695953465a4b015a8c532fe47de90aa4a8d206a08ab54296bc87543e4820",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043177_2023.parquet",
+      "bytes": 126621,
+      "sha256": "39bed928910d0d6d79c935da0b07eace5638b0bf627a174d70f4b45f5233fa1b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043182_2023.parquet",
+      "bytes": 130634,
+      "sha256": "3401b5bdeb55a425296cd6e2c1a96c74a5dd70fc3a33bab7a2a975c07b780c5d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043185_2023.parquet",
+      "bytes": 253308,
+      "sha256": "66c245d94587117826101c34b9ad770ba90842c0651f749dc6a45f16b6917ac1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043187_2023.parquet",
+      "bytes": 214736,
+      "sha256": "dbc4fddf8927c1521d5a4787aa9c89d34e9048c24ca572baaec8a793086c3dad",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043196_2023.parquet",
+      "bytes": 121214,
+      "sha256": "bf7858122ba36cb33cec04e3588ecae3a76dc08112bb60ac5282d118cdbfa6d7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043200_2023.parquet",
+      "bytes": 119109,
+      "sha256": "16c0a669852b6f717330b8755a96344fe94d022247953798f85bfd5ce964dab0",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043207_2023.parquet",
+      "bytes": 129123,
+      "sha256": "0031220791ec4ff32c9d38efdbb95b579d8eb707a5590452de22d20dbb5c8d2b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043225_2023.parquet",
+      "bytes": 157225,
+      "sha256": "c8f345c9c2a3b389a138f35c540dfea01c230615fbdfffe537aed533b373ca7f",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043227_2023.parquet",
+      "bytes": 104784,
+      "sha256": "3dadde11d9c135c7ac3f8a9a0906b1d7502177b1d17b972f87fa1c7a6c1fc4da",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043229_2023.parquet",
+      "bytes": 115140,
+      "sha256": "64f24b90b1d5d41a6a48ec60bef1e782c4acd2e79aa38606d2855ed103fb6138",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043230_2023.parquet",
+      "bytes": 100011,
+      "sha256": "af62c28c8c137c9a947857cd5bbe76ecf09705e0d758241f48a3744defa86e65",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043241_2023.parquet",
+      "bytes": 271178,
+      "sha256": "67aeffa8de5276870e57c67a19af1bcb8c563b2091a244bd32e42766121d13a8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043243_2023.parquet",
+      "bytes": 226571,
+      "sha256": "eabf923314e0b9617f28db2018ea7aceb332f588c5c7cb6fff9a5d05f180223e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043260_2023.parquet",
+      "bytes": 101836,
+      "sha256": "ff495143b27bbab6d1485c214219df031a7d7d7f4dda5a26b29e09a176119dfd",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043263_2023.parquet",
+      "bytes": 98980,
+      "sha256": "034cb385b46fe21026d2dcc65e48dc561438216e92de66508d527e4d552f1d02",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043266_2023.parquet",
+      "bytes": 122783,
+      "sha256": "bc2bdbd252bd565f2d29145cb6b71e95567e8c766a45906d358d192c3e72455a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043271_2023.parquet",
+      "bytes": 122639,
+      "sha256": "657d2dc458b6040a5c1b0fcc3070959bff81424caaf4392c8b2df77511079e05",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043272_2023.parquet",
+      "bytes": 105467,
+      "sha256": "7430f064fa3837c7a16b0bb5699b015f0f08391b26d16c08d1af91f2dab4e8c4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043275_2023.parquet",
+      "bytes": 179316,
+      "sha256": "11042bcf3d52de32aee8c4d0d4cc958a6ae1ec6a69e99f6be749d11f087ba544",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043277_2023.parquet",
+      "bytes": 130872,
+      "sha256": "4e282d0979d983bbae5817eb34420777ac430e04cd4819772cc7b8f9c8a2c526",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043278_2023.parquet",
+      "bytes": 195490,
+      "sha256": "d7f1da78274b405575bdd72a5ba384646da9c5803c8354b5bcd34bfbd129a67c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043289_2023.parquet",
+      "bytes": 114090,
+      "sha256": "9d99deb639bb8df8063081edddd1c0409994cd47dd88b849659b4b3154f7b2c6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043291_2023.parquet",
+      "bytes": 109058,
+      "sha256": "5c561a860e974568fafb4b5257a71756b8cf58cbf8a786ab05913980b28bd007",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043296_2023.parquet",
+      "bytes": 463714,
+      "sha256": "8134e2d7b7186728f008f5979d771852cadf2ff7dae424e48776827237cf0a6d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043301_2023.parquet",
+      "bytes": 129861,
+      "sha256": "52f8072fc1079cb3c2958dfe4be7e270451d01801450dc2a1db6e5cae04b6c2c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043302_2023.parquet",
+      "bytes": 129142,
+      "sha256": "b2d0153bcd73476cd6388f2898ca56f4172a1fd635498bb92a8b7c2d43c51b33",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043309_2023.parquet",
+      "bytes": 125372,
+      "sha256": "b2fa963c222f74ed59f2a84639f70476057428614645332074d55374060b1db4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043310_2023.parquet",
+      "bytes": 121991,
+      "sha256": "17fd0be29a5618ae0221fa4e546719a1235155c4046a239d5be19d6ad0a34fd1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043311_2023.parquet",
+      "bytes": 220950,
+      "sha256": "fe199d0d85155db0a29f9213e862167752cbd2772290e2613da975b1dda969f3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043314_2023.parquet",
+      "bytes": 205013,
+      "sha256": "6ab1a65c4e343934a49475fbc00db7ea5cb9f307ea65cfc4cbe33b17b0f0cb13",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043315_2023.parquet",
+      "bytes": 171467,
+      "sha256": "b85fb336521fbf6acfba223ef69221e5741c673b8456501f8474ac2ca1b364b5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043317_2023.parquet",
+      "bytes": 124256,
+      "sha256": "66937af03b499b38ad1095f107049f754d3e54e1f856272483eeb0f929a842f0",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043318_2023.parquet",
+      "bytes": 130546,
+      "sha256": "4a872f6af9fdffa95fe9d391dcb955c6abc168237fe6607cdc3f687f48c640d3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043322_2023.parquet",
+      "bytes": 88060,
+      "sha256": "9cc7aee4b16848e8f441678cd81de4ee3240ede9e51dd65f747acafab8fd5cb1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043324_2023.parquet",
+      "bytes": 113520,
+      "sha256": "ddfa9885ea8ddbf009c75678e25f7621efdf7f756b9ec60c31d1c9a11dace9ec",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043325_2023.parquet",
+      "bytes": 155088,
+      "sha256": "4d3af74e1d999b119fc0c826bb01d1578ee3488d8505a68f5125c3f8c30954e7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043326_2023.parquet",
+      "bytes": 88110,
+      "sha256": "3845b836888ff972ad8f1090c0f9c642104380e4bcd4e6735ce362c6d3c8c176",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043330_2023.parquet",
+      "bytes": 122099,
+      "sha256": "7435c0bd5eb7e0b18bfe7056e3a72fe465bc2c4073cd5d3498f21527b0e247b8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043331_2023.parquet",
+      "bytes": 218141,
+      "sha256": "ab550f66a9db842184c3e96f366fcb00addc5fce1bd0e6e44214101ce37bb70c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043335_2023.parquet",
+      "bytes": 125087,
+      "sha256": "3d47ab26f4e6421398adbd3e56e6b8ed7789a83e32a95b2c01bf40bcebe3e6fa",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043338_2023.parquet",
+      "bytes": 127403,
+      "sha256": "0d4a30f0e430619f0805a1ad1a0bff3c1290a64a1175394e60dedfb8cc338e3c",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043339_2023.parquet",
+      "bytes": 134537,
+      "sha256": "5ab3fe73d5187ed2475aa4636a83f17485561f338d83c066ea8d5625b34200d3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043340_2023.parquet",
+      "bytes": 114526,
+      "sha256": "a1db136f2123f988fe386d4fef5ef8b22343f769f9823943abdc82c4bebc67fa",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043341_2023.parquet",
+      "bytes": 122703,
+      "sha256": "b3ee35736a38f2e9cf16e23f3ba2b8744c58e2833828e327c9e991d21eb9b5b6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043342_2023.parquet",
+      "bytes": 127197,
+      "sha256": "dbb8c17b9f7ec85fdb5171db842fe5a91ec7cbda3dd3d9e12046a01605c69d1e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043347_2023.parquet",
+      "bytes": 219603,
+      "sha256": "43ffe923ed17aedb7c680be137baba37621d2ed3c3c31bc8be5952c1106b7dfe",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043348_2023.parquet",
+      "bytes": 223437,
+      "sha256": "cbde296bf42c4036852beeb703f5ff4be60ccb628ddd33390370b0e60ac62439",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043349_2023.parquet",
+      "bytes": 88300,
+      "sha256": "4b41378fd58f3db8b11031dd1daed4f1ff095dc1b885bc4279f05fbe504d0bcb",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043352_2023.parquet",
+      "bytes": 145838,
+      "sha256": "0fd75385bfe9bca3d19b0aeb7c17a27887a7a2f9db1aea369341b827c1235915",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043354_2023.parquet",
+      "bytes": 119457,
+      "sha256": "3d42c5f7e489f24d7752b5ab39bd7aa89fedb6917a3eaed923d86e286aa18c0d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043356_2023.parquet",
+      "bytes": 119335,
+      "sha256": "00d92b0950af1aeda4d4ca41e0840daafdb4da598ce9a6cc08b5aa491920c911",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043357_2023.parquet",
+      "bytes": 121488,
+      "sha256": "bd6b99dfebd8609a84ca351e44916e14ec38111db57d60cf6d39a939a8c407c5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043359_2023.parquet",
+      "bytes": 124604,
+      "sha256": "669096805f0411fdd81685503d3ae79a4770276f55b104ce60b67c5fa47dafa1",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043361_2023.parquet",
+      "bytes": 217045,
+      "sha256": "d36b8d7fd01afda9d7cd6ea435ca32f90b635701e1f24c1afff101916efb289e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043363_2023.parquet",
+      "bytes": 206233,
+      "sha256": "633eee8e652ce1a2f27f358f948d54bc0e1731c66cf4c2965cf27ce796196c1a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043364_2023.parquet",
+      "bytes": 121649,
+      "sha256": "12f85fa9c1bdc42437e9449de405d9049dc5cd031eac1acdcf1992a6b2ad5aad",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043367_2023.parquet",
+      "bytes": 120972,
+      "sha256": "0ef4447ac1569550976b04eefb5e2ed6da9ae246bd1bf606ea7fae145f6452c3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043376_2023.parquet",
+      "bytes": 123437,
+      "sha256": "b011c9029728e17f6d0b8cdfad08cf8abd4e44056f5cc97c17fc273efb8d64a9",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043377_2023.parquet",
+      "bytes": 209682,
+      "sha256": "f7ceb6f09e3c3a23a1ef427e71641e56707f17b5aa5f206f67992c0b941d5ea4",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043379_2023.parquet",
+      "bytes": 117955,
+      "sha256": "c4edd7a1773709c86f69331d15e4f3a556fca9f9ae96a74328c7274d05c9c47b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INM00043382_2023.parquet",
+      "bytes": 123510,
+      "sha256": "5aba8bc19e57bb468f561a6053c13b28f89ad648722c8e111d2fdd5b232c8889",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020359_2023.parquet",
+      "bytes": 234611,
+      "sha256": "c177a1536c97df36039cd0867d1454425237aee5f7d5e62624245e1d9a09ac47",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020368_2023.parquet",
+      "bytes": 223936,
+      "sha256": "f3dd81364260a75e044d7326dff424401de230a67b722bb4320307ab1741051a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020408_2023.parquet",
+      "bytes": 284116,
+      "sha256": "b9dc2b514214155ae251354ed4356a71de44c6a42734ba4a0be310a790292013",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020412_2023.parquet",
+      "bytes": 209193,
+      "sha256": "68d7c69e227b0e7941bbfb87b145cda65392be09235c87aeb834b1b3503ee871",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020414_2023.parquet",
+      "bytes": 225685,
+      "sha256": "904aa3f03c681db73ca6d26d4aa499d8cb270588f91c0baecd217d3d5785ae11",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020429_2023.parquet",
+      "bytes": 231932,
+      "sha256": "e47ef1b6ddf5072304331c1d275f0facf3285edcfc9558231bebca0058213de7",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020433_2023.parquet",
+      "bytes": 423322,
+      "sha256": "739ce3bdb62893365b9253da3b2c3d638361d979c0da264b0d6b0422e3c3cab8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020436_2023.parquet",
+      "bytes": 203056,
+      "sha256": "1919265c63383933e0a247f9f5a62030b54fb13cd55dd40393244a8fb4f135b3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020438_2023.parquet",
+      "bytes": 230277,
+      "sha256": "106eb023dee44c4690d87e590a654294833baa74db872a22b8f1c0395b15001e",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020446_2023.parquet",
+      "bytes": 198410,
+      "sha256": "e4a1e6607b4761fe3e50d62a853c397d4d77d122ecb15cc674c792b7058128bc",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020448_2023.parquet",
+      "bytes": 588832,
+      "sha256": "2790b8b7125901268ab43d2e23f8d72dd9ffdbbc65f378d48b7ae27186e56469",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020452_2023.parquet",
+      "bytes": 91161,
+      "sha256": "bb891a5cba3f53ad368db260a5df25c2b10df30df5598f5f901c2e3354d707eb",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020467_2023.parquet",
+      "bytes": 134779,
+      "sha256": "5e690faf6c4ba90452015aaebab3c58131b2d2f4360ef9488c0246dc7e1cd57d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020468_2023.parquet",
+      "bytes": 170073,
+      "sha256": "600ed2c5a722539ce2281ddbe1ffbdbf40b2879286e84785fd4e78001f960451",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020498_2023.parquet",
+      "bytes": 209698,
+      "sha256": "402fe452a8f680249c68f238950164f3714f694ab270c468fb473e5efd591938",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020504_2023.parquet",
+      "bytes": 210334,
+      "sha256": "835352a876db63c999c5cf49daa518a7fafc8151f028a9819637a0b0cb03726b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020507_2023.parquet",
+      "bytes": 679667,
+      "sha256": "56241286e69ef69d0edc75c35d36148031f50bb28382f91cc1e14bc2863b85d8",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020514_2023.parquet",
+      "bytes": 200541,
+      "sha256": "a8d1257eb403bc9c8fa9cd862557ee826c5a1f79708732549f75fc6d88a00819",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020515_2023.parquet",
+      "bytes": 153400,
+      "sha256": "3bbc3f6a80c3f6450261227797bff89cc45465c99ce748f6beef9e76ac6be33a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020517_2023.parquet",
+      "bytes": 112607,
+      "sha256": "8830d8107e2e8ed46241fa76070df4a8ea40c9cb955d9a1b4f783df60c710ef3",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020518_2023.parquet",
+      "bytes": 202903,
+      "sha256": "79de9a640d9a0fcd6a106942f3e98e0a9ed59c47f7a8c68a2fd2464868f76536",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020523_2023.parquet",
+      "bytes": 173445,
+      "sha256": "5e6b8b36a8556c5ab6a7aa4398ab9c332a36254c28342da19aa13676e448079a",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020524_2023.parquet",
+      "bytes": 186477,
+      "sha256": "9a4f104083e935a0d6a85e0a9de957d7c9a42cc623281a19cad96a03be1a1b95",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020525_2023.parquet",
+      "bytes": 245372,
+      "sha256": "cfa8eb681b87ee2d911dd21485d33d8a8619d9d1c01ec39bc42f02303faa0fe6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020531_2023.parquet",
+      "bytes": 244835,
+      "sha256": "27c8613a1a1c74df797aae333d51d8b1821e3f155305902fd13cd67821b104a5",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020536_2023.parquet",
+      "bytes": 217063,
+      "sha256": "1b7c0a9f85d362b447d57a6255bdd854bb6a9a42b0d195ce3ff5d79c22ff0942",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020546_2023.parquet",
+      "bytes": 222631,
+      "sha256": "46e03427438551c80a9763e50a692d71d432d35798468ef2512a71e50c3cb056",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020548_2023.parquet",
+      "bytes": 221079,
+      "sha256": "0abad2aaaed9354a0da97becf1fa1451a16f658a7e271f2db79e894db4ba331d",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020550_2023.parquet",
+      "bytes": 216268,
+      "sha256": "e612337437b0b961b68fda89c51f1bfe54ad8958c55b095f206489018e1f8358",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INMU0020560_2023.parquet",
+      "bytes": 562825,
+      "sha256": "4f9c6853cdce7d3101dd7f86ab5e5759a536a688915e88d806227b24b7b95ada",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042123-1_2023.parquet",
+      "bytes": 220793,
+      "sha256": "91aa62b00d03b3504fe3f8b0bd35f0f43db7b4819929cdf56a9d20e9df9aed05",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042410-1_2023.parquet",
+      "bytes": 672897,
+      "sha256": "d37f4e485a051fef7dc360c4454efff03117dd3616323636112e4560385ae009",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042452-1_2023.parquet",
+      "bytes": 229447,
+      "sha256": "f50a5ea1a33650ade5ddad7dc83205176992f2628449b3161f5ac01ba9724cab",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042475-1_2023.parquet",
+      "bytes": 128249,
+      "sha256": "d32bfd938e2a10370772dd522b4bb572f5ce9734464733d2ad21497be29deb3b",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042542-1_2023.parquet",
+      "bytes": 555357,
+      "sha256": "88bcf2c574006be35c2d75ffc29ad533e90c4cce3d2dd5da2a0829e67eda5686",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042634-1_2023.parquet",
+      "bytes": 263254,
+      "sha256": "00ecc31700b952686f35c7f162609eec1ef555f85898d3478206ded4c4bf1661",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042754-1_2023.parquet",
+      "bytes": 664520,
+      "sha256": "8d2a77321af1cf1b110a2055ab779023386dc700947837d74eb7b7f9e06419f2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042809-1_2023.parquet",
+      "bytes": 771670,
+      "sha256": "b9aa489bf165eb1cd3e62d397188ed5c7852f6efa6164cc778ff0d35fe964863",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042840-1_2023.parquet",
+      "bytes": 214713,
+      "sha256": "8bf92b1e53fca76fb1042da0045b25eab2c19c1c939937eb32d7f4c23672dfff",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU042886-1_2023.parquet",
+      "bytes": 465871,
+      "sha256": "e2867539f0262e5d4584f5b8e11aa5352d7bb39d24b0dc5825efc901a868e1d2",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU043086-1_2023.parquet",
+      "bytes": 212165,
+      "sha256": "67f3ad32906008c99bb50ecfc318a2b33c5fdbd2d93e96c753d6ff7f2cc3a025",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU043237-1_2023.parquet",
+      "bytes": 238332,
+      "sha256": "47591e2d0646d80ae4abea8cb6f1a3ab6b58312c412542935d36b6b39af067ec",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU043284-1_2023.parquet",
+      "bytes": 743138,
+      "sha256": "549dc8c65c292293efaa18976762d0754731220cd9a61fb03d34751391c571a6",
+      "status": "ACQUIRED"
+    },
+    {
+      "uri": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2023/parquet/GHCNh_INU043346-1_2023.parquet",
+      "bytes": 230907,
+      "sha256": "879c3e8579974b646dadab219d3fb19fb4bc6d1c912fd67eaf2c02eee4d306cd",
+      "status": "ACQUIRED"
+    }
+  ]
+}

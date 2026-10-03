@@ -1,0 +1,102 @@
+diff --git a/ml/spatial_ensemble/physics.py b/ml/spatial_ensemble/physics.py
+new file mode 100644
+--- /dev/null
++++ b/ml/spatial_ensemble/physics.py
+@@ -0,0 +1,97 @@
++"""Fixed, auditable physics baselines; NOT official meteorological MSL pressure.
++
++Common height is 0 m EGM96. Constant 6.5 K/km environmental lapse is a
++predeclared baseline, not a locally measured lapse. Hydrostatic ideal gas with
++constant lapse and optional virtual-temperature correction defines a reversible
++reference transform. Below-ground extrapolation/high terrain adds uncertainty.
++"""
++import numpy as np
++
++G=9.80665
++RD=287.05
++LAPSE=0.0065
++
++
++def vapor_pressure(temperature_c):
++    t=np.asarray(temperature_c,dtype=float)
++    with np.errstate(over='ignore',invalid='ignore',divide='ignore'):
++        return 6.112*np.exp(17.67*t/(t+243.5))
++
++
++def dewpoint(temperature_c,rh_pct):
++    t,rh=np.broadcast_arrays(np.asarray(temperature_c,float),np.asarray(rh_pct,float))
++    with np.errstate(divide='ignore',invalid='ignore'):
++        a=np.log(rh/100)+17.67*t/(243.5+t)
++        td=243.5*a/(17.67-a)
++    return np.where(np.isfinite(t)&(rh>0)&(rh<=100),td,np.nan)
++
++
++def relative_humidity(temperature_c,dewpoint_c):
++    with np.errstate(invalid='ignore',divide='ignore'):
++        return np.clip(100*vapor_pressure(dewpoint_c)/vapor_pressure(temperature_c),0,100)
++
++
++def temperature_reference(temperature_c,elevation_m,reference_m=0.):
++    return np.asarray(temperature_c,float)+LAPSE*(np.asarray(elevation_m,float)-reference_m)
++
++
++def pressure_log_reference(pressure_hpa,elevation_m,temperature_c=np.nan,rh_pct=np.nan,reference_m=0.):
++    p,z,t,rh=np.broadcast_arrays(np.asarray(pressure_hpa,float),np.asarray(elevation_m,float),np.asarray(temperature_c,float),np.asarray(rh_pct,float))
++    # Missing T: explicit ISA baseline; never invented sensor/target data.
++    tk=np.where(np.isfinite(t),t+273.15,288.15-LAPSE*z)
++    e=vapor_pressure(t)*rh/100
++    with np.errstate(divide='ignore',invalid='ignore',over='ignore'):
++        mixing=.622*e/(p-e);specific=mixing/(1+mixing)
++        vf=np.where(np.isfinite(specific)&(specific>=0)&(specific<.1),1+.61*specific,1.)
++        ref_t=tk+LAPSE*(z-reference_m)
++        log_ref=np.log(p)+G/(RD*LAPSE*vf)*np.log(ref_t/tk)
++    valid=np.isfinite(p)&(p>=300)&(p<=1100)&np.isfinite(z)&(z>=-450)&(z<=9000)&(tk>180)&(ref_t>180)&(tk<360)&(ref_t<380)
++    return np.where(valid,log_ref,np.nan)
++
++
++def pressure_from_reference(log_reference,elevation_m,temperature_c=np.nan,rh_pct=np.nan,reference_m=0.):
++    # Reuse the transform at known unit pressure, but virtual factor depends on
++    # actual pressure. Iterate three times for the query moisture term.
++    lp,z,t,rh=np.broadcast_arrays(np.asarray(log_reference,float),np.asarray(elevation_m,float),np.asarray(temperature_c,float),np.asarray(rh_pct,float))
++    p=np.full(lp.shape,1013.25)
++    for _ in range(3):
++        offset=pressure_log_reference(p,z,t,rh,reference_m)-np.log(p)
++        with np.errstate(over='ignore',invalid='ignore'):p=np.exp(lp-offset)
++    return np.where(np.isfinite(p)&(p>=300)&(p<=1100),p,np.nan)
++
++
++def weighted(values,distances):
++    values,d=np.broadcast_arrays(np.asarray(values,float),np.asarray(distances,float))
++    valid=np.isfinite(values)&np.isfinite(d)&(d>=0)
++    exact=valid&(d<1e-6);has_exact=exact.any(axis=-1,keepdims=True)
++    with np.errstate(divide='ignore',invalid='ignore'):
++        weights=np.where(has_exact,exact.astype(float),np.where(valid,1/np.maximum(d,1e-6)**2,0))
++        total=weights.sum(axis=-1);pred=np.sum(weights*np.where(valid,values,0),axis=-1)/total
++    return np.where(total>0,pred,np.nan)
++
++
++def interpolate(readings,elevations,distances,query_elevation,pressure_ok=True,elevation_ok=True,dewpoints=None):
++    """readings [..., neighbors, 6], existing [T,RH,P,PM25,PM10,W] order.
++    Returns physics baseline, ordinary IDW, ancillary physics features and
++    count of valid pressure contributors. No query readings enter this function.
++    """
++    a=np.asarray(readings,float);z=np.asarray(elevations,float);d=np.asarray(distances,float);qz=np.asarray(query_elevation,float)
++    idw=np.stack([weighted(a[...,i],d) for i in range(6)],axis=-1);base=idw.copy()
++    good_z=np.isfinite(z)&np.asarray(elevation_ok)&(z>=-450)&(z<=9000)
++    tref=temperature_reference(a[...,0],z)
++    corrected_t=weighted(np.where(good_z,tref,np.nan),d)-LAPSE*qz
++    base[...,0]=np.clip(np.where(np.isfinite(corrected_t),corrected_t,idw[...,0]),-60,85)
++    td=dewpoint(a[...,0],a[...,1])
++    if dewpoints is not None:
++        native=np.asarray(dewpoints,float);td=np.where(np.isfinite(native)&(native>=-100)&(native<=60),native,td)
++    # Dewpoint is interpolated as an absolute moisture proxy, with query RH
++    # recovered at lapse-adjusted query T. No unsupported fixed dewpoint lapse.
++    tdq=weighted(td,d);rhq=relative_humidity(base[...,0],tdq)
++    base[...,1]=np.where(np.isfinite(rhq),rhq,idw[...,1])
++    lp=pressure_log_reference(a[...,2],z,a[...,0],a[...,1]);valid=good_z&np.asarray(pressure_ok)&np.isfinite(lp)
++    # Broad predeclared plausibility gate, not a climatological pressure correction.
++    valid &= (lp>=np.log(870))&(lp<=np.log(1085))&np.isfinite(d)&(d>=0)
++    lpq=weighted(np.where(valid,lp,np.nan),d)
++    base[...,2]=pressure_from_reference(lpq,qz,base[...,0],base[...,1])
++    features=np.stack([base[...,0],base[...,1],base[...,2],base[...,0]-idw[...,0],base[...,1]-idw[...,1],base[...,2]-idw[...,2],lpq,tdq],axis=-1)
++    return base,idw,features,valid.sum(axis=-1)

@@ -1,0 +1,105 @@
+diff --git a/ml/spatial_ensemble/episodes.py b/ml/spatial_ensemble/episodes.py
+new file mode 100644
+--- /dev/null
++++ b/ml/spatial_ensemble/episodes.py
+@@ -0,0 +1,85 @@
++"""Episode-max split conformal with independent checks, not iid-row bands.
++
++Episodes are fixed 72h UTC blocks shared by every station. Actual weather
++systems may cross blocks; exchangeability is not established. Scores target
++simultaneous coverage of the observed valid rows in a block, hence can be wide.
++"""
++import math
++import numpy as np,pandas as pd
++
++DISTANCE_EDGES=np.array([0,1,5,20,50,100,250,np.inf])
++DISTANCE_NAMES=['0–1','1–5','5–20','20–50','50–100','100–250','250+']
++
++
++def episode_ids(timestamps):
++    values=pd.DatetimeIndex(timestamps)
++    if values.tz is None:raise ValueError('Explicit UTC episode timestamps required')
++    return ((values.tz_convert('UTC')-pd.Timestamp('2024-01-01',tz='UTC'))//pd.Timedelta(hours=72)).to_numpy(dtype=np.int64)
++
++
++def quantile(scores,coverage):
++    scores=np.asarray(scores,float);scores=scores[np.isfinite(scores)]
++    if not 0<coverage<1:raise ValueError('Coverage must be between zero and one')
++    rank=math.ceil((len(scores)+1)*coverage)
++    if not len(scores) or rank>len(scores):return None
++    return float(np.sort(scores)[rank-1])
++
++
++def maxima(errors,episodes):
++    valid=np.isfinite(errors);e=np.asarray(episodes)[valid];errors=np.asarray(errors)[valid]
++    return np.array([errors[e==block].max() for block in np.unique(e)])
++
++
++class EpisodeBands:
++    def __init__(self,min_calibration_episodes=10,min_check_episodes=5):
++        self.min_calibration_episodes=min_calibration_episodes;self.min_check_episodes=min_check_episodes;self.bands={};self.checks={}
++
++    def fit(self,truth,pred,episodes,distances):
++        truth,pred=np.asarray(truth),np.asarray(pred);episodes=np.asarray(episodes);distances=np.asarray(distances)
++        if truth.shape!=pred.shape or truth.ndim!=2 or distances.shape!=truth.shape or len(episodes)!=len(truth):raise ValueError('Aligned episode calibration arrays required')
++        errors=np.abs(truth-pred)
++        self.calibration_episode_ids=set(episodes.tolist())
++        for head in range(truth.shape[1]):
++            for b in range(len(DISTANCE_NAMES)):
++                mask=(distances[:,head]>=DISTANCE_EDGES[b])&(distances[:,head]<DISTANCE_EDGES[b+1])
++                scores=maxima(np.where(mask,errors[:,head],np.nan),episodes)
++                for level in [.8,.9]:
++                    q=quantile(scores,level) if len(scores)>=self.min_calibration_episodes else None
++                    self.bands[head,b,level]={'half_width':q,'calibration_episodes':len(scores),'nominal':level,'unit':'target absolute error','checked':False}
++        return self
++
++    def check(self,truth,pred,episodes,distances):
++        if set(np.asarray(episodes).tolist())&self.calibration_episode_ids:raise ValueError('Check episodes overlap calibration')
++        result=self.coverage(truth,pred,episodes,distances)
++        for key,value in result.items():
++            band=self.bands[key]
++            band['checked']=bool(value['episodes']>=self.min_check_episodes and value['episode_coverage'] is not None and value['episode_coverage']>=key[2])
++            self.checks[key]=value
++        return result
++
++    def coverage(self,truth,pred,episodes,distances):
++        truth,pred,episodes,distances=map(np.asarray,(truth,pred,episodes,distances));errors=np.abs(truth-pred);output={}
++        for key,band in self.bands.items():
++            h,b,level=key;mask=(distances[:,h]>=DISTANCE_EDGES[b])&(distances[:,h]<DISTANCE_EDGES[b+1])&np.isfinite(errors[:,h]);scores=maxima(np.where(mask,errors[:,h],np.nan),episodes);q=band['half_width']
++            output[key]={'rows':int(mask.sum()),'episodes':len(scores),'point_coverage':float((errors[mask,h]<=q).mean()) if q is not None and mask.any() else None,'episode_coverage':float((scores<=q).mean()) if q is not None and len(scores) else None,'half_width':q,'check_passed':band['checked']}
++        return output
++
++    def interval(self,prediction,head,distance,level=.9):
++        if not np.isfinite(prediction) or not np.isfinite(distance):return None
++        b=int(np.searchsorted(DISTANCE_EDGES,distance,side='right')-1);band=self.bands.get((head,b,level))
++        if not band or not band['checked'] or band['half_width'] is None:return None
++        return [float(prediction-band['half_width']),float(prediction+band['half_width'])]
++
++    def audit(self,truth,pred,episodes,distances):
++        """Later independent evidence can revoke a band, never tune its width."""
++        if set(np.asarray(episodes).tolist())&self.calibration_episode_ids:raise ValueError('Audit overlaps calibration')
++        result=self.coverage(truth,pred,episodes,distances)
++        for key,value in result.items():
++            band=self.bands[key]
++            band['independent_check_passed']=band['checked']
++            band['checked'] &= bool(value['episodes']>=self.min_check_episodes and value['episode_coverage'] is not None and value['episode_coverage']>=key[2])
++            band['later_audit']=value
++        return result
++
++    def report(self):
++        return [{'head_index':h,'distance_bin_km':DISTANCE_NAMES[b],**band,'independent_check':self.checks.get((h,b,level))} for (h,b,level),band in self.bands.items()]
+diff --git a/ml/spatial_ensemble/model.py b/ml/spatial_ensemble/model.py
+--- a/ml/spatial_ensemble/model.py
++++ b/ml/spatial_ensemble/model.py
+@@ -211,7 +211,10 @@
+             value = sum(weights[kind]*pred for kind, pred in predictions.items())/total
+             degraded = not target_geometry['allowed'] or head is None or ood or counts[i] < 2 or len(predictions) != 3
+             result['targets'][name] = dict(prediction=float(value),
+-                absolute_error_p90=None if degraded else head['p90'],
++                # Historical row quantiles were never independently checked.
++                # Only EpisodeBands may authorize a nominal serving interval.
++                absolute_error_p90=None,
++                calibration_status='UNCHECKED_LEGACY_ROW_QUANTILE',
+                 status='DEGRADED_IDW_OR_PARTIAL' if degraded else 'ENSEMBLE',
+                 models=list(predictions), failed_models=failed, out_of_distribution=ood,
+                 contributing_nodes=int(counts[i]), geometry=target_geometry)

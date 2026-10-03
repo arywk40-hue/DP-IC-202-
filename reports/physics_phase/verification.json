@@ -1,0 +1,129 @@
+{
+  "tests": "87 passed, one existing pandas deprecation warning, eight subtests passed; latest full suite 8.71 seconds",
+  "python": "3.11.8",
+  "versions": {
+    "numpy": "2.3.4",
+    "pandas": "3.0.3",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.16.3",
+    "pyarrow": "21.0.0",
+    "matplotlib": "3.10.7",
+    "pytest": "9.0.1"
+  },
+  "input_hashes_match_measured_results": true,
+  "era5_feature_slots_absent_from_all_active_heads": true,
+  "approved_bands_pass_later_audit": true,
+  "new_source_files_AST_parsed": true,
+  "figures_rendered_and_visually_inspected": true,
+  "demo_executed": true,
+  "patches": [
+    {
+      "patch": "reports/physics_phase/patches/01-physics-baselines.patch",
+      "files": [
+        "ml/spatial_ensemble/physics.py"
+      ],
+      "sha256": "deff9f2351d55df8f869f255e62e9dd022dbeaf8b1d4577a0eada042b19e37a5",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/02-full-hour-ingestion-qc.patch",
+      "files": [
+        "ml/datasets/hourly_noaa.py",
+        ".gitignore"
+      ],
+      "sha256": "88e8c7389545a843234d1292038169dd28451912ac88097ab2991441806ebe86",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/03-batched-spatial-features.patch",
+      "files": [
+        "ml/spatial_ensemble/batched_physics.py"
+      ],
+      "sha256": "6af123967ab3857acd2d93a16eef867f7a975d5b7213e1eb81dec71fd2592b7b",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/04-residual-ensemble-serving.patch",
+      "files": [
+        "ml/spatial_ensemble/physics_residual.py",
+        "ml/spatial_ensemble/physics_serving.py"
+      ],
+      "sha256": "bd4d0ab2c1952972eaac670f676a2ad81621cb40519db614f545702222f3b250",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/05-episode-bands-legacy-suppression.patch",
+      "files": [
+        "ml/spatial_ensemble/episodes.py",
+        "ml/spatial_ensemble/model.py"
+      ],
+      "sha256": "8a4c8de981eedcf86d6951d4cc9dcb48e80b7ebb766b16717fa947884a758730",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/06-full-hour-evaluation.patch",
+      "files": [
+        "ml/spatial_ensemble/evaluate_physics.py"
+      ],
+      "sha256": "78cf669649111389f75f726c55e74be9a25ffbc0fa379735b30cc5d9f9e8e1f8",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/07-independent-audit-comparison.patch",
+      "files": [
+        "ml/spatial_ensemble/finalize_physics.py"
+      ],
+      "sha256": "bb34ec77c31c15201cccec4b9e217126fc88975ae4ace01d0b35a4101e63ccbe",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/08-regression-tests.patch",
+      "files": [
+        "tests/test_physics_phase.py"
+      ],
+      "sha256": "463e1c3f9d6815b967f125f8f8a184dcb6914715635071795fc37cff6224ccd8",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/09-evidence-and-download-notes.patch",
+      "files": [
+        "requirements-physics.txt",
+        "reports/physics_phase/generate_cds_requests.py",
+        "reports/physics_phase/ERA5_DOWNLOAD.md",
+        "INVENTION_NOTES.md",
+        "reports/physics_phase/REPORT.md",
+        "reports/physics_phase/PLAN.md"
+      ],
+      "sha256": "f0e1d2b9e90cc41a1db96fcda5dd34c4bfd0684cb37e22680b5681dde46a6a4d",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    },
+    {
+      "patch": "reports/physics_phase/patches/10-practicum-and-demo.patch",
+      "files": [
+        "reports/practicum/build_outputs.py",
+        "reports/practicum/demo.py",
+        "reports/practicum/RESULTS.md"
+      ],
+      "sha256": "873c4974b173c4a559eb70c77745d68d89f4a686b8cf55108ed180f80d187a9e",
+      "check_and_apply_in_temporary_prior_phase_tree": true,
+      "byte_for_byte_match": true
+    }
+  ],
+  "not_verified": [
+    "ESP32 runtime/export/distillation",
+    "ERA5 authenticated request or model contribution",
+    "future conformal coverage or true episode independence",
+    "dense 1\u201320km mesh generalization",
+    "NWIC metadata corrections",
+    "systematic patent prior art"
+  ]
+}

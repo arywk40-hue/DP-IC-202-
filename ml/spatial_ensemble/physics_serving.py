@@ -1,0 +1,74 @@
+"""Guarded snapshot physics/residual inference. Server-side, no pickle loading.
+Caller authenticates node identity and provides vetted orthometric elevations.
+"""
+import numpy as np,pandas as pd
+from ml.spatial_ensemble.model import coordinates,snapshot_features
+from ml.spatial_ensemble.network import guard,distances_km,ERA5_FEATURES
+from ml.spatial_ensemble.physics import interpolate,weighted,pressure_log_reference,dewpoint
+from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS,PHYSICAL_RANGES
+
+
+def number(value):
+    try:
+        x=float(value);return x if np.isfinite(x) else np.nan
+    except (ValueError,TypeError):return np.nan
+
+
+def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,query_slope_deg=None,model=None,bands=None,max_distance_km=20,background=None):
+    coordinates(latitude,longitude);stamp=pd.Timestamp(timestamp)
+    if pd.isna(stamp) or stamp.tzinfo is None:raise ValueError('Explicit UTC timestamp required')
+    if not isinstance(nodes,list) or len(nodes)>512:raise ValueError('Expected at most 512 node records')
+    clean=[]
+    for node in nodes:
+        if not isinstance(node,dict):continue
+        try:
+            coordinates(node['latitude'],node['longitude']);t=pd.Timestamp(node['timestamp_utc'])
+            if pd.isna(t) or t.tzinfo is None or t!=stamp:continue
+            item={k:node[k] for k in ['latitude','longitude','timestamp_utc']}
+            for name in RAW_SENSOR_COLUMNS:
+                v=number(node.get(name));lo,hi=PHYSICAL_RANGES[name];item[name]=v if lo<=v<=hi else np.nan
+            z=number(node.get('elevation_m'));item['elevation_m']=z if node.get('elevation_ok',True) and -450<=z<=9000 else np.nan
+            item['dewpoint_c']=number(node.get('dewpoint_c'))
+            if not -100<=item['dewpoint_c']<=60:item['dewpoint_c']=np.nan
+            item['pressure_ok']=node.get('pressure_ok',True) is True
+            if not item['pressure_ok']:item['pressure_hpa']=np.nan
+            if any(np.isfinite(item[n]) for n in RAW_SENSOR_COLUMNS) or np.isfinite(item['dewpoint_c']):clean.append(item)
+        except (KeyError,ValueError,TypeError):continue
+    d=distances_km(latitude,longitude,[[n['latitude'],n['longitude']] for n in clean]);order=np.argsort(d)[:32];d=d[order];clean=[clean[i] for i in order]
+    a=np.array([[n[k] for k in RAW_SENSOR_COLUMNS] for n in clean]).reshape(-1,6)
+    z=np.array([n['elevation_m'] for n in clean]);td=np.array([n['dewpoint_c'] for n in clean]);qz=number(query_elevation_m)
+    if np.isfinite(qz) and not -450<=qz<=9000:raise ValueError('Query elevation outside supported range')
+    physics,idw,extra,pc=interpolate(a,z,d,qz,dewpoints=td)
+    x,_,counts=snapshot_features(clean,latitude,longitude,stamp)
+    lp=pressure_log_reference(a[:,2],z,a[:,0],a[:,1]);pv=np.isfinite(lp)&(lp>=np.log(870))&(lp<=np.log(1085))
+    x[14]=float(d[pv].min()) if pv.any() else np.nan
+    nz=weighted(z,d);bg=background or {}
+    x=np.r_[x,qz,number(query_slope_deg),nz,qz-nz,[number(bg.get(k)) for k in ERA5_FEATURES],extra,counts]
+    pred=physics.copy();fallback=np.ones(6,dtype=bool)
+    if model is not None:
+        try:
+            value,flags=model.predict(x[None,:],physics[None,:]);value,flags=np.asarray(value),np.asarray(flags)
+            if value.shape!=(1,6) or flags.shape!=(1,6):raise ValueError('Invalid model output shape')
+            good=np.isfinite(value[0])&np.isfinite(physics)
+            good &= np.array([PHYSICAL_RANGES[n][0]<=v<=PHYSICAL_RANGES[n][1] for n,v in zip(RAW_SENSOR_COLUMNS,value[0])])
+            pred[good]=value[0,good];fallback[good]=flags[0,good]
+        except Exception:pass  # Entire model boundary failure still returns physics.
+    moisture=np.isfinite(np.where(np.isfinite(td),td,dewpoint(a[:,0],a[:,1])))
+    output={'status':'EXPERIMENTAL_SNAPSHOT','targets':{},'query_elevation_m':float(qz) if np.isfinite(qz) else None,'mode':'PHYSICS_ONLY' if model is None else 'PHYSICS_RESIDUAL_SERVER'}
+    for i,name in enumerate(RAW_SENSOR_COLUMNS):
+        valid=np.isfinite(a[:,i])
+        if i==2:valid=pv
+        if i==1:valid=moisture if np.isfinite(extra[-1]) else valid
+        current=[n for n,v in zip(clean,valid) if v];g=guard(current,latitude,longitude,stamp,max_distance_km)
+        if i==1 and np.isfinite(extra[-1]):
+            tg=guard([n for n,v in zip(clean,np.isfinite(a[:,0])) if v],latitude,longitude,stamp,max_distance_km)
+            if not tg['allowed']:g={**g,'allowed':False,'reason':'QUERY_TEMPERATURE_NETWORK_REFUSED'}
+        allowed=g['allowed'] and np.isfinite(pred[i]);status=('PHYSICS_FALLBACK' if fallback[i] else 'RESIDUAL_ENSEMBLE') if allowed else ('UNAVAILABLE' if not np.isfinite(pred[i]) else 'REFUSED_NETWORK_GEOMETRY')
+        # OOD/failure branch has no checked nominal serving interval.
+        interval={str(level):None for level in [.8,.9]}
+        if allowed and bands is not None and model is not None and not fallback[i]:
+            for level in [.8,.9]:
+                try:interval[str(level)]=bands.interval(pred[i],i,g['nearest_distance_km'],level)
+                except Exception:pass  # Calibration failure must not invent a band.
+        output['targets'][name]={'prediction':float(pred[i]) if allowed else None,'status':status,'geometry':g,'bands':interval,'calibration_status':'INDEPENDENT_ARCHIVE_CHECK_ONLY' if any(v is not None for v in interval.values()) else 'NO_CHECKED_BAND','contributing_nodes':int(valid.sum()),'residual_fallback':bool(fallback[i]),'elevation_adjustment_available':bool(np.isfinite(qz) and np.isfinite(z).any())}
+    return output

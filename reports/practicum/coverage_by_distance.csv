@@ -1,0 +1,505 @@
+scope,training,head,distance_bin_km,nominal,rows,episodes,point_coverage,episode_coverage,half_width,check_passed,serving_authorized_after_test_audit,episode_coverage_95ci
+national20km,capped2024,temperature_c,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,temperature_c,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,temperature_c,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,temperature_c,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,temperature_c,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,temperature_c,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,temperature_c,20–50,0.8,124,10,1.0,1.0,9.686237335205078,False,False,"[0.7224598312333834, 1]"
+national20km,capped2024,temperature_c,20–50,0.9,124,10,1.0,1.0,10.127374649047852,False,False,"[0.7224598312333834, 1]"
+national20km,capped2024,temperature_c,50–100,0.8,234,10,0.9572649572649573,0.2,6.983997344970703,True,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024,temperature_c,50–100,0.9,234,10,0.9871794871794872,0.7,9.156898498535156,True,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,capped2024,temperature_c,100–250,0.8,465,10,0.9913978494623656,0.7,8.577884674072266,False,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,capped2024,temperature_c,100–250,0.9,465,10,0.9913978494623656,0.7,9.466144561767578,False,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,capped2024,temperature_c,250+,0.8,170,10,0.9352941176470588,0.6,6.685598373413086,True,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,capped2024,temperature_c,250+,0.9,170,10,0.9352941176470588,0.6,6.727949142456055,False,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,capped2024,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,relative_humidity_pct,20–50,0.8,124,10,0.9758064516129032,0.8,27.387680053710938,False,False,"[0.49015684672072335, 0.9433190520193067]"
+national20km,capped2024,relative_humidity_pct,20–50,0.9,124,10,0.9758064516129032,0.8,32.533233642578125,False,False,"[0.49015684672072335, 0.9433190520193067]"
+national20km,capped2024,relative_humidity_pct,50–100,0.8,233,10,0.9742489270386266,0.4,39.5,False,False,"[0.16817758120350967, 0.6873304525498135]"
+national20km,capped2024,relative_humidity_pct,50–100,0.9,233,10,0.9828326180257511,0.6,45.582763671875,False,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,capped2024,relative_humidity_pct,100–250,0.8,463,10,0.9762419006479481,0.2,49.26876449584961,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024,relative_humidity_pct,100–250,0.9,463,10,0.9762419006479481,0.2,50.55660629272461,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024,relative_humidity_pct,250+,0.8,170,10,0.9705882352941176,0.5,35.88957214355469,False,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024,relative_humidity_pct,250+,0.9,170,10,0.9705882352941176,0.5,37.719970703125,False,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,pressure_hpa,20–50,0.8,0,0,,,118.26629638671875,False,False,
+national20km,capped2024,pressure_hpa,20–50,0.9,0,0,,,118.54180908203125,False,False,
+national20km,capped2024,pressure_hpa,50–100,0.8,21,9,1.0,1.0,13.98565673828125,False,False,"[0.7008472464490407, 1]"
+national20km,capped2024,pressure_hpa,50–100,0.9,21,9,1.0,1.0,14.31829833984375,False,False,"[0.7008472464490407, 1]"
+national20km,capped2024,pressure_hpa,100–250,0.8,128,10,1.0,1.0,22.2188720703125,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024,pressure_hpa,100–250,0.9,128,10,1.0,1.0,112.42156982421875,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024,pressure_hpa,250+,0.8,52,10,0.40384615384615385,0.0,7.05810546875,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024,pressure_hpa,250+,0.9,52,10,0.40384615384615385,0.0,8.56634521484375,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,capped2024,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,capped2024,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024,wind_speed_mps,20–50,0.8,124,10,1.0,1.0,5.048574447631836,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024,wind_speed_mps,20–50,0.9,124,10,1.0,1.0,6.210842609405518,False,False,"[0.7224598312333834, 1]"
+national20km,capped2024,wind_speed_mps,50–100,0.8,218,10,0.9954128440366973,0.9,5.802027702331543,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national20km,capped2024,wind_speed_mps,50–100,0.9,218,10,0.9954128440366973,0.9,6.0308685302734375,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national20km,capped2024,wind_speed_mps,100–250,0.8,470,10,1.0,1.0,5.853449821472168,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024,wind_speed_mps,100–250,0.9,470,10,1.0,1.0,10.501778602600098,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024,wind_speed_mps,250+,0.8,167,10,0.9820359281437125,0.8,4.3495869636535645,True,True,"[0.49015684672072335, 0.9433190520193067]"
+national20km,capped2024,wind_speed_mps,250+,0.9,167,10,1.0,1.0,4.961342811584473,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024_full_test,temperature_c,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,temperature_c,20–50,0.8,1526,10,0.9993446920052425,0.9,9.686237335205078,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national20km,capped2024_full_test,temperature_c,20–50,0.9,1526,10,0.9993446920052425,0.9,10.127374649047852,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national20km,capped2024_full_test,temperature_c,50–100,0.8,2966,10,0.9710047201618341,0.1,6.983997344970703,True,False,"[0.01787574951572113, 0.4041563854975721]"
+national20km,capped2024_full_test,temperature_c,50–100,0.9,2966,10,0.987862440997977,0.2,9.156898498535156,True,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024_full_test,temperature_c,100–250,0.8,6012,10,0.9953426480372588,0.2,8.577884674072266,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024_full_test,temperature_c,100–250,0.9,6012,10,0.9958416500332667,0.2,9.466144561767578,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,capped2024_full_test,temperature_c,250+,0.8,2021,10,0.9247897080653142,0.0,6.685598373413086,True,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,temperature_c,250+,0.9,2021,10,0.925779317169718,0.0,6.727949142456055,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,relative_humidity_pct,20–50,0.8,1526,10,0.9875491480996068,0.1,27.387680053710938,False,False,"[0.01787574951572113, 0.4041563854975721]"
+national20km,capped2024_full_test,relative_humidity_pct,20–50,0.9,1526,10,0.991480996068152,0.3,32.533233642578125,False,False,"[0.10778928748621183, 0.6032267800204347]"
+national20km,capped2024_full_test,relative_humidity_pct,50–100,0.8,2962,10,0.9797434166103984,0.0,39.5,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,relative_humidity_pct,50–100,0.9,2962,10,0.986833220796759,0.1,45.582763671875,False,False,"[0.01787574951572113, 0.4041563854975721]"
+national20km,capped2024_full_test,relative_humidity_pct,100–250,0.8,6005,10,0.9828476269775187,0.0,49.26876449584961,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,relative_humidity_pct,100–250,0.9,6005,10,0.9830141548709409,0.0,50.55660629272461,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,relative_humidity_pct,250+,0.8,2020,10,0.9618811881188118,0.0,35.88957214355469,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,relative_humidity_pct,250+,0.9,2020,10,0.9693069306930693,0.0,37.719970703125,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pressure_hpa,20–50,0.8,3,2,1.0,1.0,118.26629638671875,False,False,"[0.34237195288961925, 1]"
+national20km,capped2024_full_test,pressure_hpa,20–50,0.9,3,2,1.0,1.0,118.54180908203125,False,False,"[0.34237195288961925, 1]"
+national20km,capped2024_full_test,pressure_hpa,50–100,0.8,384,10,1.0,1.0,13.98565673828125,False,False,"[0.7224598312333834, 1]"
+national20km,capped2024_full_test,pressure_hpa,50–100,0.9,384,10,1.0,1.0,14.31829833984375,False,False,"[0.7224598312333834, 1]"
+national20km,capped2024_full_test,pressure_hpa,100–250,0.8,1689,10,0.9982238010657194,0.7,22.2188720703125,True,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,capped2024_full_test,pressure_hpa,100–250,0.9,1689,10,1.0,1.0,112.42156982421875,True,True,"[0.7224598312333834, 1]"
+national20km,capped2024_full_test,pressure_hpa,250+,0.8,612,10,0.4150326797385621,0.0,7.05810546875,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,pressure_hpa,250+,0.9,612,10,0.4297385620915033,0.0,8.56634521484375,False,False,"[0, 0.2775401687666166]"
+national20km,capped2024_full_test,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,5–20,0.8,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,5–20,0.9,0,0,,,,False,False,
+national20km,capped2024_full_test,wind_speed_mps,20–50,0.8,1538,10,0.9967490247074122,0.6,5.048574447631836,True,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,capped2024_full_test,wind_speed_mps,20–50,0.9,1538,10,0.9980494148244473,0.7,6.210842609405518,False,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,capped2024_full_test,wind_speed_mps,50–100,0.8,2836,10,0.997179125528914,0.4,5.802027702331543,True,False,"[0.16817758120350967, 0.6873304525498135]"
+national20km,capped2024_full_test,wind_speed_mps,50–100,0.9,2836,10,0.9975317348377997,0.5,6.0308685302734375,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024_full_test,wind_speed_mps,100–250,0.8,6090,10,0.9990147783251232,0.5,5.853449821472168,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024_full_test,wind_speed_mps,100–250,0.9,6090,10,0.9990147783251232,0.5,10.501778602600098,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024_full_test,wind_speed_mps,250+,0.8,1956,10,0.9938650306748467,0.5,4.3495869636535645,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,capped2024_full_test,wind_speed_mps,250+,0.9,1956,10,0.9974437627811861,0.7,4.961342811584473,True,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,all_hours2024,temperature_c,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,temperature_c,20–50,0.8,1526,10,0.9993446920052425,0.9,9.686237335205078,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national20km,all_hours2024,temperature_c,20–50,0.9,1526,10,1.0,1.0,10.22696304321289,False,False,"[0.7224598312333834, 1]"
+national20km,all_hours2024,temperature_c,50–100,0.8,2966,10,0.9730276466621712,0.1,6.945285797119141,True,False,"[0.01787574951572113, 0.4041563854975721]"
+national20km,all_hours2024,temperature_c,50–100,0.9,2966,10,0.9898853674983142,0.3,9.147768020629883,True,False,"[0.10778928748621183, 0.6032267800204347]"
+national20km,all_hours2024,temperature_c,100–250,0.8,6012,10,0.9953426480372588,0.2,8.577884674072266,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2024,temperature_c,100–250,0.9,6012,10,0.9958416500332667,0.2,9.466144561767578,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2024,temperature_c,250+,0.8,2021,10,0.9247897080653142,0.0,6.685598373413086,True,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,temperature_c,250+,0.9,2021,10,0.925779317169718,0.0,6.727949142456055,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,relative_humidity_pct,20–50,0.8,1526,10,0.9842726081258192,0.0,28.81426239013672,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,20–50,0.9,1526,10,0.991480996068152,0.3,33.931758880615234,False,False,"[0.10778928748621183, 0.6032267800204347]"
+national20km,all_hours2024,relative_humidity_pct,50–100,0.8,2962,10,0.974679270762998,0.0,39.5,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,50–100,0.9,2962,10,0.9800810263335584,0.0,43.19511413574219,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,100–250,0.8,6005,10,0.9828476269775187,0.0,49.26876449584961,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,100–250,0.9,6005,10,0.9830141548709409,0.0,50.55660629272461,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,250+,0.8,2020,10,0.9618811881188118,0.0,35.88957214355469,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,relative_humidity_pct,250+,0.9,2020,10,0.9693069306930693,0.0,37.719970703125,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pressure_hpa,20–50,0.8,3,2,1.0,1.0,118.34527587890625,False,False,"[0.34237195288961925, 1]"
+national20km,all_hours2024,pressure_hpa,20–50,0.9,3,2,1.0,1.0,118.59759521484375,False,False,"[0.34237195288961925, 1]"
+national20km,all_hours2024,pressure_hpa,50–100,0.8,384,10,1.0,1.0,15.1104736328125,False,False,"[0.7224598312333834, 1]"
+national20km,all_hours2024,pressure_hpa,50–100,0.9,384,10,1.0,1.0,15.223876953125,False,False,"[0.7224598312333834, 1]"
+national20km,all_hours2024,pressure_hpa,100–250,0.8,1689,10,0.9988158673771462,0.8,24.13134765625,True,True,"[0.49015684672072335, 0.9433190520193067]"
+national20km,all_hours2024,pressure_hpa,100–250,0.9,1689,10,1.0,1.0,112.799560546875,True,True,"[0.7224598312333834, 1]"
+national20km,all_hours2024,pressure_hpa,250+,0.8,612,10,0.4117647058823529,0.0,7.05810546875,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,pressure_hpa,250+,0.9,612,10,0.42320261437908496,0.0,8.56634521484375,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2024,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,all_hours2024,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2024,wind_speed_mps,20–50,0.8,1538,10,0.9967490247074122,0.6,4.837701797485352,False,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,all_hours2024,wind_speed_mps,20–50,0.9,1538,10,0.9980494148244473,0.7,5.500271797180176,False,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,all_hours2024,wind_speed_mps,50–100,0.8,2836,10,0.9968265162200282,0.4,4.835513591766357,True,False,"[0.16817758120350967, 0.6873304525498135]"
+national20km,all_hours2024,wind_speed_mps,50–100,0.9,2836,10,0.9982369534555712,0.7,5.285225868225098,True,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,all_hours2024,wind_speed_mps,100–250,0.8,6090,10,0.9990147783251232,0.5,5.567873477935791,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2024,wind_speed_mps,100–250,0.9,6090,10,0.9990147783251232,0.5,10.715438842773438,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2024,wind_speed_mps,250+,0.8,1956,10,0.9948875255623721,0.6,4.3495869636535645,True,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,all_hours2024,wind_speed_mps,250+,0.9,1956,10,0.9979550102249489,0.8,4.961342811584473,True,False,"[0.49015684672072335, 0.9433190520193067]"
+national20km,all_hours2023_2024,temperature_c,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,temperature_c,20–50,0.8,1526,10,0.9993446920052425,0.9,9.686237335205078,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national20km,all_hours2023_2024,temperature_c,20–50,0.9,1526,10,0.9993446920052425,0.9,10.127374649047852,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national20km,all_hours2023_2024,temperature_c,50–100,0.8,2966,10,0.9710047201618341,0.1,6.983997344970703,True,False,"[0.01787574951572113, 0.4041563854975721]"
+national20km,all_hours2023_2024,temperature_c,50–100,0.9,2966,10,0.987862440997977,0.2,9.156898498535156,True,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2023_2024,temperature_c,100–250,0.8,6012,10,0.9953426480372588,0.2,8.577884674072266,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2023_2024,temperature_c,100–250,0.9,6012,10,0.9958416500332667,0.2,9.466144561767578,False,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2023_2024,temperature_c,250+,0.8,2021,10,0.9247897080653142,0.0,6.685598373413086,True,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,temperature_c,250+,0.9,2021,10,0.925779317169718,0.0,6.727949142456055,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,relative_humidity_pct,20–50,0.8,1526,10,0.9868938401048493,0.0,28.8336181640625,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,20–50,0.9,1526,10,0.990170380078637,0.2,32.52992248535156,True,False,"[0.056680947980693314, 0.5098431532792765]"
+national20km,all_hours2023_2024,relative_humidity_pct,50–100,0.8,2962,10,0.9763673193787981,0.0,39.5,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,50–100,0.9,2962,10,0.9810938555030385,0.0,43.19511413574219,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,100–250,0.8,6005,10,0.9828476269775187,0.0,49.26876449584961,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,100–250,0.9,6005,10,0.9830141548709409,0.0,50.55660629272461,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,250+,0.8,2020,10,0.9618811881188118,0.0,35.88957214355469,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,relative_humidity_pct,250+,0.9,2020,10,0.9693069306930693,0.0,37.719970703125,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pressure_hpa,20–50,0.8,3,2,1.0,1.0,118.34527587890625,False,False,"[0.34237195288961925, 1]"
+national20km,all_hours2023_2024,pressure_hpa,20–50,0.9,3,2,1.0,1.0,118.59759521484375,False,False,"[0.34237195288961925, 1]"
+national20km,all_hours2023_2024,pressure_hpa,50–100,0.8,384,10,1.0,1.0,15.1104736328125,False,False,"[0.7224598312333834, 1]"
+national20km,all_hours2023_2024,pressure_hpa,50–100,0.9,384,10,1.0,1.0,15.223876953125,False,False,"[0.7224598312333834, 1]"
+national20km,all_hours2023_2024,pressure_hpa,100–250,0.8,1689,10,0.9988158673771462,0.8,24.13134765625,True,True,"[0.49015684672072335, 0.9433190520193067]"
+national20km,all_hours2023_2024,pressure_hpa,100–250,0.9,1689,10,1.0,1.0,112.799560546875,True,True,"[0.7224598312333834, 1]"
+national20km,all_hours2023_2024,pressure_hpa,250+,0.8,612,10,0.4117647058823529,0.0,7.05810546875,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,pressure_hpa,250+,0.9,612,10,0.42320261437908496,0.0,8.56634521484375,False,False,"[0, 0.2775401687666166]"
+national20km,all_hours2023_2024,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,5–20,0.8,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,5–20,0.9,0,0,,,,False,False,
+national20km,all_hours2023_2024,wind_speed_mps,20–50,0.8,1538,10,0.9967490247074122,0.6,5.011819839477539,False,False,"[0.3126695474501864, 0.8318224187964902]"
+national20km,all_hours2023_2024,wind_speed_mps,20–50,0.9,1538,10,0.9980494148244473,0.7,6.100086212158203,False,False,"[0.39677321997956516, 0.892210712513788]"
+national20km,all_hours2023_2024,wind_speed_mps,50–100,0.8,2836,10,0.997179125528914,0.5,4.937652587890625,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2023_2024,wind_speed_mps,50–100,0.9,2836,10,0.9975317348377997,0.5,5.132735729217529,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2023_2024,wind_speed_mps,100–250,0.8,6090,10,0.9990147783251232,0.5,5.567873477935791,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2023_2024,wind_speed_mps,100–250,0.9,6090,10,0.9990147783251232,0.5,10.876678466796875,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2023_2024,wind_speed_mps,250+,0.8,1956,10,0.9943762781186094,0.5,4.3495869636535645,True,False,"[0.23658959361548731, 0.7634104063845126]"
+national20km,all_hours2023_2024,wind_speed_mps,250+,0.9,1956,10,0.9969325153374233,0.7,4.961342811584473,True,False,"[0.39677321997956516, 0.892210712513788]"
+national5km,all_hours2023_2024,temperature_c,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,temperature_c,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,temperature_c,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,temperature_c,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,temperature_c,5–20,0.8,754,10,1.0,1.0,12.52353286743164,True,True,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,temperature_c,5–20,0.9,754,10,1.0,1.0,12.643325805664062,True,True,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,temperature_c,20–50,0.8,1004,10,0.999003984063745,0.9,8.506855010986328,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,temperature_c,20–50,0.9,1004,10,0.999003984063745,0.9,9.30463981628418,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,temperature_c,50–100,0.8,2348,10,0.9910562180579217,0.3,10.402099609375,False,False,"[0.10778928748621183, 0.6032267800204347]"
+national5km,all_hours2023_2024,temperature_c,50–100,0.9,2348,10,0.995741056218058,0.6,11.58723258972168,False,False,"[0.3126695474501864, 0.8318224187964902]"
+national5km,all_hours2023_2024,temperature_c,100–250,0.8,7039,10,0.9958800966046314,0.0,7.3299407958984375,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,temperature_c,100–250,0.9,7039,10,0.9973007529478619,0.2,8.619014739990234,True,False,"[0.056680947980693314, 0.5098431532792765]"
+national5km,all_hours2023_2024,temperature_c,250+,0.8,1380,10,0.9797101449275363,0.3,7.689031600952148,True,False,"[0.10778928748621183, 0.6032267800204347]"
+national5km,all_hours2023_2024,temperature_c,250+,0.9,1380,10,0.9884057971014493,0.4,9.08273696899414,True,False,"[0.16817758120350967, 0.6873304525498135]"
+national5km,all_hours2023_2024,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,relative_humidity_pct,5–20,0.8,751,10,0.9973368841544608,0.8,41.439674377441406,True,True,"[0.49015684672072335, 0.9433190520193067]"
+national5km,all_hours2023_2024,relative_humidity_pct,5–20,0.9,751,10,0.9973368841544608,0.8,47.84223937988281,True,False,"[0.49015684672072335, 0.9433190520193067]"
+national5km,all_hours2023_2024,relative_humidity_pct,20–50,0.8,1004,10,0.9770916334661355,0.0,28.19286346435547,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,relative_humidity_pct,20–50,0.9,1004,10,0.9800796812749004,0.1,29.34894561767578,False,False,"[0.01787574951572113, 0.4041563854975721]"
+national5km,all_hours2023_2024,relative_humidity_pct,50–100,0.8,2348,10,0.9808347529812607,0.0,48.337738037109375,False,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,relative_humidity_pct,50–100,0.9,2348,10,0.9846678023850085,0.1,50.94972229003906,False,False,"[0.01787574951572113, 0.4041563854975721]"
+national5km,all_hours2023_2024,relative_humidity_pct,100–250,0.8,7032,10,0.9842150170648464,0.0,43.08928680419922,False,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,relative_humidity_pct,100–250,0.9,7032,10,0.9853526734926052,0.0,46.3225212097168,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,relative_humidity_pct,250+,0.8,1378,10,0.9666182873730044,0.0,39.99864959716797,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,relative_humidity_pct,250+,0.9,1378,10,0.967343976777939,0.0,40.7974853515625,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pressure_hpa,5–20,0.8,131,10,0.9923664122137404,0.9,1.87945556640625,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,pressure_hpa,5–20,0.9,131,10,1.0,1.0,5.48822021484375,True,True,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,pressure_hpa,20–50,0.8,305,10,1.0,1.0,22.68597412109375,False,False,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,pressure_hpa,20–50,0.9,305,10,1.0,1.0,22.91510009765625,False,False,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,pressure_hpa,50–100,0.8,332,10,0.9969879518072289,0.9,23.43133544921875,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,pressure_hpa,50–100,0.9,332,10,0.9969879518072289,0.9,23.927001953125,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,pressure_hpa,100–250,0.8,1399,10,0.9992852037169406,0.9,23.492919921875,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,pressure_hpa,100–250,0.9,1399,10,0.9992852037169406,0.9,23.54193115234375,False,False,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,pressure_hpa,250+,0.8,521,10,0.5489443378119002,0.0,5.32940673828125,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,pressure_hpa,250+,0.9,521,10,0.727447216890595,0.0,11.76129150390625,True,False,"[0, 0.2775401687666166]"
+national5km,all_hours2023_2024,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+national5km,all_hours2023_2024,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+national5km,all_hours2023_2024,wind_speed_mps,5–20,0.8,763,10,0.9973787680209698,0.8,4.8634161949157715,False,False,"[0.49015684672072335, 0.9433190520193067]"
+national5km,all_hours2023_2024,wind_speed_mps,5–20,0.9,763,10,0.9986893840104849,0.9,5.254072189331055,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,wind_speed_mps,20–50,0.8,961,10,0.9979188345473465,0.8,8.087371826171875,True,True,"[0.49015684672072335, 0.9433190520193067]"
+national5km,all_hours2023_2024,wind_speed_mps,20–50,0.9,961,10,0.9989594172736732,0.9,8.881670951843262,True,True,"[0.5958436145024278, 0.9821242504842788]"
+national5km,all_hours2023_2024,wind_speed_mps,50–100,0.8,2205,10,0.9981859410430839,0.7,6.602612495422363,True,False,"[0.39677321997956516, 0.892210712513788]"
+national5km,all_hours2023_2024,wind_speed_mps,50–100,0.9,2205,10,0.998639455782313,0.8,7.7122273445129395,True,False,"[0.49015684672072335, 0.9433190520193067]"
+national5km,all_hours2023_2024,wind_speed_mps,100–250,0.8,7180,10,0.9994428969359331,0.6,7.215180397033691,True,False,"[0.3126695474501864, 0.8318224187964902]"
+national5km,all_hours2023_2024,wind_speed_mps,100–250,0.9,7180,10,0.9994428969359331,0.6,7.899322509765625,True,False,"[0.3126695474501864, 0.8318224187964902]"
+national5km,all_hours2023_2024,wind_speed_mps,250+,0.8,1311,10,1.0,1.0,4.8792266845703125,True,True,"[0.7224598312333834, 1]"
+national5km,all_hours2023_2024,wind_speed_mps,250+,0.9,1311,10,1.0,1.0,5.096559524536133,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,temperature_c,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,20–50,0.8,0,0,,,8.841205596923828,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,20–50,0.9,0,0,,,9.78726577758789,False,False,
+himalaya20km,all_hours2023_2024,temperature_c,50–100,0.8,685,10,0.9138686131386862,0.0,8.589763641357422,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,temperature_c,50–100,0.9,685,10,0.9416058394160584,0.0,9.318120956420898,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,temperature_c,100–250,0.8,1426,10,0.8934081346423562,0.0,6.621173858642578,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,temperature_c,100–250,0.9,1426,10,0.9081346423562412,0.0,7.198030471801758,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,temperature_c,250+,0.8,481,10,0.8731808731808732,0.1,6.447296142578125,True,False,"[0.01787574951572113, 0.4041563854975721]"
+himalaya20km,all_hours2023_2024,temperature_c,250+,0.9,481,10,0.9230769230769231,0.2,7.108753204345703,False,False,"[0.056680947980693314, 0.5098431532792765]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,20–50,0.8,0,0,,,33.65296936035156,False,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,20–50,0.9,0,0,,,37.81353759765625,True,False,
+himalaya20km,all_hours2023_2024,relative_humidity_pct,50–100,0.8,681,10,0.8223201174743024,0.0,34.835289001464844,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,50–100,0.9,681,10,0.8898678414096917,0.0,42.98845672607422,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,100–250,0.8,1424,10,0.8848314606741573,0.0,42.005619049072266,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,100–250,0.9,1424,10,0.9157303370786517,0.0,47.792137145996094,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,250+,0.8,476,10,0.6449579831932774,0.0,33.80282211303711,False,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,relative_humidity_pct,250+,0.9,476,10,0.6764705882352942,0.0,38.523963928222656,True,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,pressure_hpa,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,20–50,0.8,0,0,,,11.32965087890625,True,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,20–50,0.9,0,0,,,19.4661865234375,True,False,
+himalaya20km,all_hours2023_2024,pressure_hpa,50–100,0.8,103,10,0.8446601941747572,0.2,8.3167724609375,True,False,"[0.056680947980693314, 0.5098431532792765]"
+himalaya20km,all_hours2023_2024,pressure_hpa,50–100,0.9,103,10,0.8446601941747572,0.2,8.36846923828125,True,False,"[0.056680947980693314, 0.5098431532792765]"
+himalaya20km,all_hours2023_2024,pressure_hpa,100–250,0.8,119,10,0.5126050420168067,0.0,19.21148681640625,True,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,pressure_hpa,100–250,0.9,119,10,0.5126050420168067,0.0,19.95159912109375,True,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,pressure_hpa,250+,0.8,1016,10,0.24311023622047245,0.0,4.62982177734375,True,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,pressure_hpa,250+,0.9,1016,10,0.2549212598425197,0.0,4.7921142578125,True,False,"[0, 0.2775401687666166]"
+himalaya20km,all_hours2023_2024,pm25_ug_m3,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,20–50,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,20–50,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,50–100,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,50–100,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,100–250,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,100–250,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,250+,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm25_ug_m3,250+,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,20–50,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,20–50,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,50–100,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,50–100,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,100–250,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,100–250,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,250+,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,pm10_ug_m3,250+,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,0–1,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,0–1,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,1–5,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,1–5,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,5–20,0.8,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,5–20,0.9,0,0,,,,False,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,20–50,0.8,0,0,,,5.475924968719482,True,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,20–50,0.9,0,0,,,5.723756313323975,True,False,
+himalaya20km,all_hours2023_2024,wind_speed_mps,50–100,0.8,686,10,1.0,1.0,34.42582702636719,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,wind_speed_mps,50–100,0.9,686,10,1.0,1.0,35.49380111694336,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,wind_speed_mps,100–250,0.8,1455,10,1.0,1.0,9.335938453674316,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,wind_speed_mps,100–250,0.9,1455,10,1.0,1.0,14.468870162963867,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,wind_speed_mps,250+,0.8,477,10,1.0,1.0,4.460918426513672,True,True,"[0.7224598312333834, 1]"
+himalaya20km,all_hours2023_2024,wind_speed_mps,250+,0.9,477,10,1.0,1.0,4.683069229125977,True,True,"[0.7224598312333834, 1]"
