@@ -1,0 +1,4484 @@
+{
+  "scope": "himalaya20km",
+  "neighbor_count": 5,
+  "feature_rows": {
+    "train2023": {
+      "rows": 356427,
+      "candidate_rows": 356427,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 269,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    },
+    "train2024": {
+      "rows": 184668,
+      "candidate_rows": 184668,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 269,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    },
+    "select": {
+      "rows": 17432,
+      "candidate_rows": 17432,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 71,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    },
+    "calibrate": {
+      "rows": 16505,
+      "candidate_rows": 16505,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 71,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    },
+    "check": {
+      "rows": 8238,
+      "candidate_rows": 8238,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 71,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    },
+    "test": {
+      "rows": 1904,
+      "candidate_rows": 1904,
+      "caps": null,
+      "context_sites": 269,
+      "query_sites": 17,
+      "neighbor_count": 5,
+      "strict_complete_core_neighbors": true
+    }
+  },
+  "fit_rows": 541095,
+  "selection_rows": 17432,
+  "test_rows": 1904,
+  "split": {
+    "train_stations": [
+      "INI0000VABI",
+      "INI0000VABV",
+      "INI0000VADU",
+      "INI0000VAGD",
+      "INI0000VAKD",
+      "INI0000VAOZ",
+      "INI0000VAPR",
+      "INI0000VARK",
+      "INI0000VASD",
+      "INI0000VASU",
+      "INI0000VEBN",
+      "INI0000VECO",
+      "INI0000VECX",
+      "INI0000VEDG",
+      "INI0000VEJT",
+      "INI0000VEKU",
+      "INI0000VELR",
+      "INI0000VEMN",
+      "INI0000VEMR",
+      "INI0000VEPT",
+      "INI0000VEPY",
+      "INI0000VERC",
+      "INI0000VERP",
+      "INI0000VETZ",
+      "INI0000VIAR",
+      "INI0000VIBY",
+      "INI0000VICG",
+      "INI0000VICX",
+      "INI0000VIDD",
+      "INI0000VIDP",
+      "INI0000VIGR",
+      "INI0000VIHR",
+      "INI0000VIJN",
+      "INI0000VIKG",
+      "INI0000VILD",
+      "INI0000VISP",
+      "INI0000VOAT",
+      "INI0000VOBL",
+      "INI0000VOCI",
+      "INI0000VOGB",
+      "INI0000VOHS",
+      "INI0000VOJV",
+      "INI0000VOMM",
+      "INI0000VOMY",
+      "INI0000VOPB",
+      "INI0000VOPC",
+      "INI0000VORY",
+      "INI0000VOSM",
+      "INI0000VOTP",
+      "INI0000VOTV",
+      "INI0000VOVR",
+      "INM00042075",
+      "INM00042077",
+      "INM00042104",
+      "INM00042137",
+      "INM00042143",
+      "INM00042165",
+      "INM00042170",
+      "INM00042174",
+      "INM00042177",
+      "INM00042187",
+      "INM00042217",
+      "INM00042220",
+      "INM00042237",
+      "INM00042249",
+      "INM00042257",
+      "INM00042258",
+      "INM00042261",
+      "INM00042262",
+      "INM00042266",
+      "INM00042267",
+      "INM00042271",
+      "INM00042296",
+      "INM00042299",
+      "INM00042308",
+      "INM00042328",
+      "INM00042343",
+      "INM00042370",
+      "INM00042383",
+      "INM00042387",
+      "INM00042391",
+      "INM00042395",
+      "INM00042399",
+      "INM00042407",
+      "INM00042408",
+      "INM00042413",
+      "INM00042420",
+      "INM00042435",
+      "INM00042459",
+      "INM00042460",
+      "INM00042467",
+      "INM00042468",
+      "INM00042469",
+      "INM00042471",
+      "INM00042473",
+      "INM00042474",
+      "INM00042483",
+      "INM00042484",
+      "INM00042488",
+      "INM00042498",
+      "INM00042499",
+      "INM00042523",
+      "INM00042546",
+      "INM00042557",
+      "INM00042577",
+      "INM00042588",
+      "INM00042603",
+      "INM00042618",
+      "INM00042619",
+      "INM00042654",
+      "INM00042671",
+      "INM00042672",
+      "INM00042674",
+      "INM00042679",
+      "INM00042693",
+      "INM00042705",
+      "INM00042706",
+      "INM00042709",
+      "INM00042711",
+      "INM00042715",
+      "INM00042730",
+      "INM00042731",
+      "INM00042740",
+      "INM00042744",
+      "INM00042751",
+      "INM00042768",
+      "INM00042771",
+      "INM00042776",
+      "INM00042790",
+      "INM00042792",
+      "INM00042795",
+      "INM00042799",
+      "INM00042805",
+      "INM00042811",
+      "INM00042830",
+      "INM00042834",
+      "INM00042838",
+      "INM00042841",
+      "INM00042849",
+      "INM00042851",
+      "INM00042860",
+      "INM00042874",
+      "INM00042876",
+      "INM00042883",
+      "INM00042891",
+      "INM00042894",
+      "INM00042900",
+      "INM00042901",
+      "INM00042903",
+      "INM00042915",
+      "INM00042916",
+      "INM00042921",
+      "INM00042933",
+      "INM00042937",
+      "INM00042939",
+      "INM00042943",
+      "INM00042946",
+      "INM00042948",
+      "INM00042961",
+      "INM00042969",
+      "INM00042970",
+      "INM00042973",
+      "INM00042976",
+      "INM00043001",
+      "INM00043011",
+      "INM00043017",
+      "INM00043021",
+      "INM00043025",
+      "INM00043029",
+      "INM00043042",
+      "INM00043057",
+      "INM00043058",
+      "INM00043069",
+      "INM00043076",
+      "INM00043081",
+      "INM00043087",
+      "INM00043097",
+      "INM00043109",
+      "INM00043111",
+      "INM00043113",
+      "INM00043121",
+      "INM00043125",
+      "INM00043133",
+      "INM00043136",
+      "INM00043137",
+      "INM00043147",
+      "INM00043150",
+      "INM00043161",
+      "INM00043168",
+      "INM00043177",
+      "INM00043182",
+      "INM00043187",
+      "INM00043193",
+      "INM00043207",
+      "INM00043225",
+      "INM00043227",
+      "INM00043230",
+      "INM00043243",
+      "INM00043260",
+      "INM00043263",
+      "INM00043266",
+      "INM00043271",
+      "INM00043275",
+      "INM00043278",
+      "INM00043289",
+      "INM00043301",
+      "INM00043302",
+      "INM00043310",
+      "INM00043311",
+      "INM00043314",
+      "INM00043316",
+      "INM00043322",
+      "INM00043325",
+      "INM00043326",
+      "INM00043330",
+      "INM00043331",
+      "INM00043335",
+      "INM00043339",
+      "INM00043340",
+      "INM00043342",
+      "INM00043343",
+      "INM00043345",
+      "INM00043347",
+      "INM00043348",
+      "INM00043349",
+      "INM00043354",
+      "INM00043356",
+      "INM00043357",
+      "INM00043359",
+      "INM00043363",
+      "INM00043367",
+      "INM00043376",
+      "INM00043377",
+      "INMU0020368",
+      "INMU0020412",
+      "INMU0020429",
+      "INMU0020433",
+      "INMU0020436",
+      "INMU0020438",
+      "INMU0020446",
+      "INMU0020447",
+      "INMU0020452",
+      "INMU0020467",
+      "INMU0020498",
+      "INMU0020504",
+      "INMU0020514",
+      "INMU0020515",
+      "INMU0020518",
+      "INMU0020523",
+      "INMU0020524",
+      "INMU0020531",
+      "INMU0020536",
+      "INMU0020546",
+      "INMU0020548",
+      "INMU0020560",
+      "INU042123-1",
+      "INU042410-1",
+      "INU042452-1",
+      "INU042475-1",
+      "INU042542-1",
+      "INU042634-1",
+      "INU042754-1",
+      "INU042809-1",
+      "INU042840-1",
+      "INU042886-1",
+      "INU043086-1",
+      "INU043237-1",
+      "INU043284-1",
+      "INU043346-1"
+    ],
+    "validation_stations": [
+      "INI0000VABB",
+      "INI0000VABO",
+      "INI0000VABP",
+      "INI0000VAJM",
+      "INI0000VEBS",
+      "INI0000VEKO",
+      "INI0000VELP",
+      "INI0000VERK",
+      "INI0000VIJO",
+      "INI0000VIJP",
+      "INI0000VIJU",
+      "INI0000VILK",
+      "INI0000VIPT",
+      "INI0000VOBM",
+      "INI0000VOCL",
+      "INI0000VOHB",
+      "INI0000VOKN",
+      "INM00042101",
+      "INM00042139",
+      "INM00042270",
+      "INM00042282",
+      "INM00042414",
+      "INM00042447",
+      "INM00042522",
+      "INM00042527",
+      "INM00042540",
+      "INM00042562",
+      "INM00042631",
+      "INM00042638",
+      "INM00042661",
+      "INM00042662",
+      "INM00042708",
+      "INM00042763",
+      "INM00042767",
+      "INM00042803",
+      "INM00042812",
+      "INM00042832",
+      "INM00042925",
+      "INM00042931",
+      "INM00043005",
+      "INM00043053",
+      "INM00043060",
+      "INM00043067",
+      "INM00043071",
+      "INM00043083",
+      "INM00043105",
+      "INM00043169",
+      "INM00043185",
+      "INM00043196",
+      "INM00043229",
+      "INM00043241",
+      "INM00043272",
+      "INM00043277",
+      "INM00043296",
+      "INM00043309",
+      "INM00043315",
+      "INM00043318",
+      "INM00043324",
+      "INM00043338",
+      "INM00043341",
+      "INM00043352",
+      "INM00043361",
+      "INM00043364",
+      "INM00043379",
+      "INM00043382",
+      "INMU0020408",
+      "INMU0020414",
+      "INMU0020448",
+      "INMU0020468",
+      "INMU0020507",
+      "INMU0020550"
+    ],
+    "test_stations": [
+      "INI0000VIBR",
+      "INI0000VIDN",
+      "INI0000VIGG",
+      "INI0000VILH",
+      "INI0000VISM",
+      "INI0000VITE",
+      "INM00042026",
+      "INM00042062",
+      "INM00042065",
+      "INM00042078",
+      "INM00042079",
+      "INM00042081",
+      "INM00042083",
+      "INM00042111",
+      "INM00042114",
+      "INM00042147",
+      "INMU0020359"
+    ],
+    "buffer_km": 20
+  },
+  "episodes": {
+    "train2023": 121,
+    "train2024": 61,
+    "select": 21,
+    "calibrate": 20,
+    "check": 10,
+    "test": 10
+  },
+  "archive_metrics": {
+    "temperature_c": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 4.765617847442627,
+          "rmse": 6.113569736480713,
+          "mae_station_bootstrap_95ci": [
+            3.714583468437195,
+            5.969341552257538
+          ]
+        },
+        "physics_baseline": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 5.298396587371826,
+          "rmse": 6.555376052856445,
+          "mae_station_bootstrap_95ci": [
+            4.331817138195038,
+            6.2619640827178955
+          ]
+        },
+        "idw": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 8.936152458190918,
+          "rmse": 10.940603256225586,
+          "mae_station_bootstrap_95ci": [
+            6.598016536235809,
+            12.110806918144226
+          ]
+        },
+        "nearest_node": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 8.325416564941406,
+          "rmse": 10.353055000305176,
+          "mae_station_bootstrap_95ci": [
+            6.167373144626618,
+            11.25544490814209
+          ]
+        },
+        "node_mean": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 10.173086166381836,
+          "rmse": 11.881993293762207,
+          "mae_station_bootstrap_95ci": [
+            7.760696661472321,
+            13.349320602416993
+          ]
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 1878,
+          "stations": 16,
+          "mae": 7.1264967918396,
+          "rmse": 9.146260261535645,
+          "mae_station_bootstrap_95ci": [
+            4.975799536705017,
+            10.179612922668458
+          ]
+        }
+      },
+      "truth_rows": 1878,
+      "paired_rows": 1878,
+      "availability": {
+        "physics_residual": 1878,
+        "physics_baseline": 1878,
+        "idw": 1878,
+        "nearest_node": 1878,
+        "node_mean": 1878,
+        "neighbor_idw_persistence_1h": 1878
+      },
+      "fallback_rows": 1037
+    },
+    "relative_humidity_pct": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 21.35032081604004,
+          "rmse": 29.797332763671875,
+          "mae_station_bootstrap_95ci": [
+            14.789348602294922,
+            29.912564229965216
+          ]
+        },
+        "physics_baseline": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 22.294811248779297,
+          "rmse": 31.078105926513672,
+          "mae_station_bootstrap_95ci": [
+            15.340166187286377,
+            31.721091651916506
+          ]
+        },
+        "idw": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 16.19599723815918,
+          "rmse": 21.722957611083984,
+          "mae_station_bootstrap_95ci": [
+            12.716952085494995,
+            20.236161184310916
+          ]
+        },
+        "nearest_node": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 16.953006744384766,
+          "rmse": 23.36091423034668,
+          "mae_station_bootstrap_95ci": [
+            13.50569314956665,
+            21.104351568222047
+          ]
+        },
+        "node_mean": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 16.00308609008789,
+          "rmse": 20.61482048034668,
+          "mae_station_bootstrap_95ci": [
+            12.98041636943817,
+            19.185345363616946
+          ]
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 1869,
+          "stations": 16,
+          "mae": 17.86334991455078,
+          "rmse": 24.053560256958008,
+          "mae_station_bootstrap_95ci": [
+            14.195831823349,
+            21.822800540924074
+          ]
+        }
+      },
+      "truth_rows": 1869,
+      "paired_rows": 1869,
+      "availability": {
+        "physics_residual": 1869,
+        "physics_baseline": 1869,
+        "idw": 1869,
+        "nearest_node": 1869,
+        "node_mean": 1869,
+        "neighbor_idw_persistence_1h": 1869
+      },
+      "fallback_rows": 1031
+    },
+    "pressure_hpa": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 1240,
+          "stations": 8,
+          "mae": 19.047420501708984,
+          "rmse": 37.44234085083008,
+          "mae_station_bootstrap_95ci": [
+            5.711724066734314,
+            43.88899621963502
+          ]
+        },
+        "physics_baseline": {
+          "rows": 1240,
+          "stations": 8,
+          "mae": 18.36094093322754,
+          "rmse": 38.01203918457031,
+          "mae_station_bootstrap_95ci": [
+            4.752238523960114,
+            44.03229475021364
+          ]
+        },
+        "idw": {
+          "rows": 1240,
+          "stations": 8,
+          "mae": 112.81710815429688,
+          "rmse": 143.99925231933594,
+          "mae_station_bootstrap_95ci": [
+            62.69798908233643,
+            203.8235866546631
+          ]
+        },
+        "nearest_node": {
+          "rows": 1240,
+          "stations": 8,
+          "mae": 119.23152923583984,
+          "rmse": 151.53021240234375,
+          "mae_station_bootstrap_95ci": [
+            67.29865264892578,
+            211.99224052429201
+          ]
+        },
+        "node_mean": {
+          "rows": 1240,
+          "stations": 8,
+          "mae": 107.0954360961914,
+          "rmse": 138.067138671875,
+          "mae_station_bootstrap_95ci": [
+            57.9714653968811,
+            196.51005172729492
+          ]
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 1240,
+      "paired_rows": 1240,
+      "availability": {
+        "physics_residual": 1240,
+        "physics_baseline": 1240,
+        "idw": 1240,
+        "nearest_node": 1240,
+        "node_mean": 1240,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 602
+    },
+    "pm25_ug_m3": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "pm10_ug_m3": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "wind_speed_mps": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 0.6119388341903687,
+          "rmse": 0.9505672454833984,
+          "mae_station_bootstrap_95ci": [
+            0.4710601195693016,
+            0.8050735801458359
+          ]
+        },
+        "physics_baseline": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 0.6475719809532166,
+          "rmse": 0.9368607997894287,
+          "mae_station_bootstrap_95ci": [
+            0.5360526666045189,
+            0.7790795654058457
+          ]
+        },
+        "idw": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 0.6475719809532166,
+          "rmse": 0.9368607997894287,
+          "mae_station_bootstrap_95ci": [
+            0.5360526666045189,
+            0.7790795654058457
+          ]
+        },
+        "nearest_node": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 0.788672924041748,
+          "rmse": 1.2096269130706787,
+          "mae_station_bootstrap_95ci": [
+            0.57572201192379,
+            0.9541571363806726
+          ]
+        },
+        "node_mean": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 0.7515685558319092,
+          "rmse": 0.9638984799385071,
+          "mae_station_bootstrap_95ci": [
+            0.6622175127267838,
+            0.8627522394061089
+          ]
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 1904,
+          "stations": 16,
+          "mae": 1.4243550300598145,
+          "rmse": 1.681965947151184,
+          "mae_station_bootstrap_95ci": [
+            1.2874829173088074,
+            1.5893912702798845
+          ]
+        }
+      },
+      "truth_rows": 1904,
+      "paired_rows": 1904,
+      "availability": {
+        "physics_residual": 1904,
+        "physics_baseline": 1904,
+        "idw": 1904,
+        "nearest_node": 1904,
+        "node_mean": 1904,
+        "neighbor_idw_persistence_1h": 1904
+      },
+      "fallback_rows": 1048
+    }
+  },
+  "geometry_eligible_rows": 0,
+  "geometry_metrics": {
+    "temperature_c": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "relative_humidity_pct": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "pressure_hpa": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "pm25_ug_m3": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "pm10_ug_m3": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    },
+    "wind_speed_mps": {
+      "paired_methods": {
+        "physics_residual": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "physics_baseline": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "idw": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "nearest_node": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "node_mean": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        },
+        "neighbor_idw_persistence_1h": {
+          "rows": 0,
+          "mae": null,
+          "rmse": null,
+          "mae_station_bootstrap_95ci": null
+        }
+      },
+      "truth_rows": 0,
+      "paired_rows": 0,
+      "availability": {
+        "physics_residual": 0,
+        "physics_baseline": 0,
+        "idw": 0,
+        "nearest_node": 0,
+        "node_mean": 0,
+        "neighbor_idw_persistence_1h": 0
+      },
+      "fallback_rows": 0
+    }
+  },
+  "distance_distribution": {
+    "nearest_km_bins": [
+      "0\u20131",
+      "1\u20135",
+      "5\u201320",
+      "20\u201350",
+      "50\u2013100",
+      "100\u2013250",
+      "250+"
+    ],
+    "counts": [
+      0,
+      0,
+      0,
+      0,
+      349,
+      218,
+      1337
+    ]
+  },
+  "residual_heads": {
+    "temperature_c": {
+      "scale": 2.6878151893615723,
+      "weights": {
+        "boosting": 0.5073471698321926,
+        "small_nn": 0.4926528301678075
+      },
+      "alpha": 0.5,
+      "active": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "selection_physics_mae": 1.433179497718811,
+      "selection_gated_mae": 1.3936930582893718,
+      "failures": {}
+    },
+    "relative_humidity_pct": {
+      "scale": 16.191789627075195,
+      "weights": {
+        "boosting": 0.5081058586965261,
+        "small_nn": 0.4918941413034738
+      },
+      "alpha": 1.0,
+      "active": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "selection_physics_mae": 10.653985023498535,
+      "selection_gated_mae": 7.00601685667156,
+      "failures": {}
+    },
+    "pressure_hpa": {
+      "scale": 5.944276332855225,
+      "weights": {
+        "boosting": 0.49931754119099564,
+        "small_nn": 0.5006824588090043
+      },
+      "alpha": 0.75,
+      "active": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "selection_physics_mae": 2.8393447399139404,
+      "selection_gated_mae": 2.448711789488897,
+      "failures": {}
+    },
+    "wind_speed_mps": {
+      "scale": 1.492878794670105,
+      "weights": {
+        "boosting": 0.4973043886696823,
+        "small_nn": 0.5026956113303177
+      },
+      "alpha": 0.75,
+      "active": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "selection_physics_mae": 1.4213448762893677,
+      "selection_gated_mae": 1.3414236213901694,
+      "failures": {}
+    }
+  },
+  "bands": [
+    {
+      "head_index": 0,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 0,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 1,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 2,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 3,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 4,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "0\u20131",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "1\u20135",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "5\u201320",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "20\u201350",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "50\u2013100",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "100\u2013250",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.8,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    },
+    {
+      "head_index": 5,
+      "distance_bin_km": "250+",
+      "half_width": null,
+      "calibration_episodes": 0,
+      "nominal": 0.9,
+      "unit": "target absolute error",
+      "checked": false,
+      "independent_check_passed": false,
+      "later_audit": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      },
+      "independent_check": {
+        "rows": 0,
+        "episodes": 0,
+        "point_coverage": null,
+        "episode_coverage": null,
+        "half_width": null,
+        "check_passed": false
+      }
+    }
+  ],
+  "test_coverage": [
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "temperature_c",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "relative_humidity_pct",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pressure_hpa",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm25_ug_m3",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "pm10_ug_m3",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "0\u20131",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "1\u20135",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "5\u201320",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "20\u201350",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "50\u2013100",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "100\u2013250",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "250+",
+      "nominal": 0.8,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    },
+    {
+      "head": "wind_speed_mps",
+      "distance_bin_km": "250+",
+      "nominal": 0.9,
+      "rows": 0,
+      "episodes": 0,
+      "point_coverage": null,
+      "episode_coverage": null,
+      "half_width": null,
+      "check_passed": false
+    }
+  ],
+  "geometry_limits": {
+    "convex_hull": true,
+    "max_distance_km": 20
+  },
+  "artifact": "data/two_node_training/himalaya20km/k5/model.json",
+  "artifact_sha256": "5148dbd916bfdd65dfbaf45c8cade0aa8acd838b1641d47c71d9c4e935092fb6",
+  "artifact_roundtrip_max_abs_error": 6.103515625e-05,
+  "warning": "Archive complete-core neighbor cohort; geometry calibration is separate, no live A/B/C validation"
+}

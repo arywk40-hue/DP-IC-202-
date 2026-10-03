@@ -42,22 +42,34 @@ class HourlyNetwork:
         self.parts['select']=(y==2024)&(m>=7)&(m<=8);self.parts['calibrate']=(y==2024)&(m>=9)&(m<=10)
         self.parts['check']=(y==2024)&(m==11);self.parts['test']=(y==2024)&(m==12)
 
-    def examples(self,queries,context,part,cache,limit=None):
+    def examples(self,queries,context,part,cache,limit=None,neighbor_count=None):
+        if neighbor_count is not None and (not isinstance(neighbor_count,int) or not 2<=neighbor_count<=32):raise ValueError('Neighbor count must be 2–32')
         queries=np.array([self.lookup[s] for s in sorted(queries) if s in self.lookup]);context=np.array([self.lookup[s] for s in sorted(context) if s in self.lookup])
         if not len(context) or not len(queries):raise ValueError('No query/context sites')
         tm=np.where(part)[0];valid_query=np.isfinite(self.readings[tm][:,queries]).any(axis=2)
+        complete=None
+        if neighbor_count is not None:
+            from ml.spatial_ensemble.physics import pressure_log_reference,dewpoint
+            r=self.readings[:,context];z=self.elevation[context]
+            lp=pressure_log_reference(r[...,2],z,r[...,0],r[...,1])
+            moisture=np.where(np.isfinite(self.dewpoints[:,context]),self.dewpoints[:,context],dewpoint(r[...,0],r[...,1]))
+            complete=np.isfinite(r[..., [0,1,2,5]]).all(axis=2)&np.isfinite(z)&np.isfinite(moisture)&(lp>=np.log(870))&(lp<=np.log(1085))
+            available_count=complete[tm].sum(axis=1)[:,None]-np.array([complete[tm,np.where(context==q)[0][0]] if q in context else np.zeros(len(tm),int) for q in queries]).T
+            valid_query &= available_count>=neighbor_count
         total=int(valid_query.sum());n=min(total,limit) if limit is not None else total
         selected=None
         if limit is not None and total>limit:selected=set(np.random.default_rng(42).choice(total,n,replace=False).tolist())
         path=Path(cache);path.mkdir(parents=True,exist_ok=True)
         arrays={name:np.lib.format.open_memmap(path/(name+'.npy'),mode='w+',dtype=dtype,shape=(n,width)) for name,width,dtype in [('x',WIDTH,np.float32),('y',6,np.float32),('physics',6,np.float32),('idw',6,np.float32),('nearest',6,np.float32),('mean',6,np.float32),('persistence',6,np.float32),('distance',6,np.float32)]}
         ids=np.lib.format.open_memmap(path/'ids.npy',mode='w+',dtype=np.int32,shape=(n,3)) # station,time,episode
-        offset=0;candidate_index=0;k=min(32,len(context));dist=self.distance[np.ix_(queries,context)].copy()
+        offset=0;candidate_index=0;k=min(neighbor_count or 32,len(context));dist=self.distance[np.ix_(queries,context)].copy()
+        if neighbor_count is not None and k<neighbor_count:raise ValueError('Insufficient context stations for requested count')
+        if neighbor_count is not None:arrays['neighbor_ids']=np.lib.format.open_memmap(path/'neighbor_ids.npy',mode='w+',dtype=np.int32,shape=(n,k))
         # Physical aliases were removed; also exclude query site in training.
         dist[queries[:,None]==context[None,:]]=np.inf
         for start in range(0,len(tm),96):
             chunk=tm[start:start+96];a=self.readings[chunk][:,context];dp=self.dewpoints[chunk][:,context]
-            available=np.isfinite(a).any(axis=2)|np.isfinite(dp)
+            available=complete[chunk] if complete is not None else np.isfinite(a).any(axis=2)|np.isfinite(dp)
             scores=np.where(available[:,None,:],dist[None,:,:],np.inf)
             order=np.argsort(scores,axis=2)[:,:,:k];d=np.take_along_axis(scores,order,axis=2)
             values=np.take_along_axis(np.broadcast_to(a[:,None,:,:],(len(chunk),len(queries),len(context),6)),order[:,:,:,None],axis=2)
@@ -90,15 +102,16 @@ class HourlyNetwork:
                 od=np.where(old_available[:,None,:],dist[None,:,:],np.inf);oi=np.argsort(od,axis=2)[:,:,:k];od=np.take_along_axis(od,oi,axis=2)
                 ov=np.take_along_axis(np.broadcast_to(old[:,None,:,:],(len(old),len(queries),len(context),6)),oi[:,:,:,None],axis=2)
                 previous[good]=np.stack([weighted(ov[...,i],od) for i in range(6)],axis=2)
-            keep=np.isfinite(truth).any(axis=2);h,q=np.where(keep)
+            keep=valid_query[start:start+len(chunk)];h,q=np.where(keep)
             if selected is not None:
                 chosen=np.array([candidate_index+j in selected for j in range(len(h))]);h,q=h[chosen],q[chosen]
             candidate_index+=int(keep.sum());end=offset+len(h)
             for name,data in [('x',x),('y',truth),('physics',physics),('idw',idw),('nearest',nearest_values),('mean',means),('persistence',previous),('distance',nearest)]:arrays[name][offset:end]=data[h,q]
             ids[offset:end]=np.stack([queries[q],chunk[h],self.episodes[chunk[h]]],axis=1);offset=end
+            if neighbor_count is not None:arrays['neighbor_ids'][end-len(h):end]=neighbor_ids[h,q]
         if offset!=n:raise ValueError('Feature row accounting mismatch')
         for a in arrays.values():a.flush()
-        ids.flush();return arrays,ids,{'rows':n,'candidate_rows':total,'caps':limit,'context_sites':len(context),'query_sites':len(queries)}
+        ids.flush();return arrays,ids,{'rows':n,'candidate_rows':total,'caps':limit,'context_sites':len(context),'query_sites':len(queries),'neighbor_count':neighbor_count or 32,'strict_complete_core_neighbors':neighbor_count is not None}
 
     def lagged_physics(self,ids,context,lag_hours=3):
         """Exact earlier completed hour, no held-out query history or fill."""

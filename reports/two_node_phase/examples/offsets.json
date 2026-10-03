@@ -1,0 +1,124 @@
+{
+  "format": "indra_offsets_v1",
+  "reference_instrument": "C",
+  "calibration_start_utc": "2024-01-01T00:00:00+00:00",
+  "calibration_end_utc": "2024-01-01T00:59:00+00:00",
+  "raw_file_sha256": "4105c99cb5d819901460ee417bfcc9b492bd6de6cdf27c93ebdd466e4fdfaaa9",
+  "offsets": {
+    "A": {
+      "temperature_c": {
+        "additive_offset": -1.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          16.0,
+          16.0
+        ]
+      },
+      "relative_humidity_pct": {
+        "additive_offset": -1.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          61.0,
+          61.0
+        ]
+      },
+      "pressure_hpa": {
+        "additive_offset": -1.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          941.0,
+          941.0
+        ]
+      },
+      "wind_speed_mps": {
+        "additive_offset": -1.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          4.0,
+          4.0
+        ]
+      }
+    },
+    "B": {
+      "temperature_c": {
+        "additive_offset": 2.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          13.0,
+          13.0
+        ]
+      },
+      "relative_humidity_pct": {
+        "additive_offset": 2.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          58.0,
+          58.0
+        ]
+      },
+      "pressure_hpa": {
+        "additive_offset": 2.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          938.0,
+          938.0
+        ]
+      },
+      "wind_speed_mps": {
+        "additive_offset": 2.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "C": {
+      "temperature_c": {
+        "additive_offset": 0.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          15.0,
+          15.0
+        ]
+      },
+      "relative_humidity_pct": {
+        "additive_offset": 0.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          60.0,
+          60.0
+        ]
+      },
+      "pressure_hpa": {
+        "additive_offset": 0.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          940.0,
+          940.0
+        ]
+      },
+      "wind_speed_mps": {
+        "additive_offset": 0.0,
+        "pairs": 60,
+        "median_absolute_deviation": 0.0,
+        "raw_range": [
+          3.0,
+          3.0
+        ]
+      }
+    }
+  },
+  "warning": "Relative side-by-side offsets, not traceable absolute calibration; validity beyond observed range and drift unverified"
+}

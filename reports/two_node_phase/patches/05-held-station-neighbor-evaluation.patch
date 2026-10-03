@@ -1,0 +1,87 @@
+diff --git a/ml/spatial_ensemble/evaluate_two_nodes.py b/ml/spatial_ensemble/evaluate_two_nodes.py
+new file mode 100644
+--- /dev/null
++++ b/ml/spatial_ensemble/evaluate_two_nodes.py
+@@ -0,0 +1,82 @@
++"""Exactly K complete-core neighbors, disjoint stations/time blocks, no row caps.
++Archive pairs are nearest-current stations, not fixed deployed A/B instruments.
++"""
++import argparse,json,warnings
++from pathlib import Path
++import numpy as np,pandas as pd
++from ml.datasets.registry import digest
++from ml.spatial_ensemble.batched_physics import HourlyNetwork
++from ml.spatial_ensemble.national import splits,region
++from ml.spatial_ensemble.evaluate_physics import sample_metrics,coverage_report
++from ml.spatial_ensemble.physics_residual import PhysicsResidualEnsemble
++from ml.spatial_ensemble.episodes import EpisodeBands
++from ml.spatial_ensemble.corridor import metrics,DEFAULT_LIMITS
++from ml.spatial_ensemble.network import guard
++from ml.spatial_ensemble.residual_artifact import export,load
++
++ROOT=Path('reports/two_node_phase')
++
++def geometry(net,data,ids,k):
++    positions=net.stations[['latitude','longitude']].to_numpy();neighbors=data['neighbor_ids'];q=positions[ids[:,0]]
++    if k==2:
++        g=metrics(positions[neighbors[:,0]],positions[neighbors[:,1]],q,DEFAULT_LIMITS)
++        return g['allowed'],{key:value for key,value in g.items() if key!='allowed'}
++    allowed=np.zeros(len(ids),bool)
++    for j in np.where(data['distance'][:,0]<=20)[0]:
++        nodes=[dict(latitude=a,longitude=b,timestamp_utc=net.times[ids[j,1]]) for a,b in positions[neighbors[j]]]
++        allowed[j]=guard(nodes,*q[j],net.times[ids[j,1]],20)['allowed']
++    return allowed,{}
++
++def experiment(net,scope,held,k):
++    train,val,test=splits(net.stations,held,buffer_km=5 if scope=='national5km' else 20)
++    root=Path('data/two_node_training')/scope/f'k{k}';data={};ids={};counts={}
++    for role,queries in [('train2023',train),('train2024',train),('select',val),('calibrate',val),('check',val),('test',test)]:
++        print(scope,k,'features',role,flush=True)
++        data[role],ids[role],counts[role]=net.examples(queries,train,net.parts[role],root/role,neighbor_count=k)
++        if not np.all(data[role]['x'][:,[41,42,43,46]]==k):raise ValueError('Core neighbor count contract violated')
++        if np.any(data[role]['neighbor_ids']==ids[role][:,0,None]):raise ValueError('Query station entered features')
++    ep={role:set(i[:,2].tolist()) for role,i in ids.items()}
++    if any(ep[a]&ep[b] for a in ep for b in ep if a<b):raise ValueError('Episode role leakage')
++    tr={key:np.concatenate([data['train2023'][key],data['train2024'][key]]) for key in ['x','y','physics']};s=data['select']
++    print(scope,k,'fit',len(tr['y']),flush=True)
++    with warnings.catch_warnings():
++        warnings.simplefilter('ignore');model=PhysicsResidualEnsemble(neighbor_count=k).fit(tr['x'],tr['y'],tr['physics'],s['x'],s['y'],s['physics'])
++    selected,_=model.predict(s['x'],s['physics'])
++    for i,h in model.heads.items():
++        good=np.isfinite(s['y'][:,i])&np.isfinite(s['physics'][:,i])
++        assert np.mean(np.abs(selected[good,i]-s['y'][good,i]))<=h['selection_physics_mae']+1e-5
++    pred={};fall={};geom={};gmetrics={}
++    for role in ['calibrate','check','test']:
++        pred[role],fall[role]=model.predict(data[role]['x'],data[role]['physics']);geom[role],gmetrics[role]=geometry(net,data[role],ids[role],k)
++    def masked(role):return np.where(geom[role][:,None],data[role]['y'],np.nan)
++    bands=EpisodeBands().fit(masked('calibrate'),pred['calibrate'],ids['calibrate'][:,2],data['calibrate']['distance'])
++    bands.check(masked('check'),pred['check'],ids['check'][:,2],data['check']['distance']);coverage=bands.coverage(masked('test'),pred['test'],ids['test'][:,2],data['test']['distance']);bands.audit(masked('test'),pred['test'],ids['test'][:,2],data['test']['distance'])
++    artifact=root/'model.json';export(model,artifact,bands,DEFAULT_LIMITS if k==2 else None);restored,_=load(artifact)
++    rp,rf=restored.predict(data['test']['x'],data['test']['physics'])
++    np.testing.assert_allclose(rp,pred['test'],equal_nan=True,rtol=1e-5,atol=2e-4);np.testing.assert_array_equal(rf,fall['test'])
++    m=geom['test'];scores=sample_metrics(data['test'],pred['test'],ids['test'],net,fall['test']);allowed_scores=sample_metrics({key:v[m] for key,v in data['test'].items()},pred['test'][m],ids['test'][m],net,fall['test'][m])
++    names=['0–1','1–5','5–20','20–50','50–100','100–250','250+'];d=data['test']['distance'][:,0];hist=np.histogram(d,[0,1,5,20,50,100,250,np.inf])[0]
++    record=dict(scope=scope,neighbor_count=k,feature_rows=counts,fit_rows=len(tr['y']),selection_rows=len(s['y']),test_rows=len(ids['test']),split={'train_stations':sorted(train),'validation_stations':sorted(val),'test_stations':sorted(test),'buffer_km':5 if scope=='national5km' else 20},episodes={a:len(b) for a,b in ep.items()},archive_metrics=scores,geometry_eligible_rows=int(m.sum()),geometry_metrics=allowed_scores,distance_distribution={'nearest_km_bins':names,'counts':hist.tolist()},residual_heads=model.report(),bands=bands.report(),test_coverage=coverage_report(coverage),geometry_limits=DEFAULT_LIMITS if k==2 else {'convex_hull':True,'max_distance_km':20},artifact=str(artifact),artifact_sha256=digest(artifact),artifact_roundtrip_max_abs_error=float(np.nanmax(np.abs(rp-pred['test']))),warning='Archive complete-core neighbor cohort; geometry calibration is separate, no live A/B/C validation')
++    np.savez_compressed(root/'test_predictions.npz',ids=ids['test'],prediction=pred['test'],fallback=fall['test'],geometry=m,**{key:data['test'][key] for key in ['y','physics','idw','nearest','mean','persistence','distance','neighbor_ids']},**gmetrics['test'])
++    (ROOT/f'{scope}_k{k}.json').write_text(json.dumps(record,indent=2,allow_nan=False)+'\n');return record
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--scopes',nargs='+',default=['national5km','himalaya20km']);p.add_argument('--neighbors',nargs='+',type=int,default=[2,3,4,5]);args=p.parse_args()
++    if any(k not in [2,3,4,5] for k in args.neighbors):raise ValueError('Use counts 2,3,4,5')
++    ROOT.mkdir(exist_ok=True);net=HourlyNetwork(pd.read_parquet('data/physics_training/hours.parquet'),pd.read_csv('data/registry/india_stations.csv'),pd.read_csv('data/physics_training/station_qc.csv'))
++    held=np.random.default_rng(42).permutation(net.ids)[:len(net.ids)//5];records=[]
++    for scope in args.scopes:
++        if scope not in ['national5km','himalaya20km']:raise ValueError('Unknown scope')
++        query=net.stations.loc[region(net.stations),'location_id'].tolist() if scope=='himalaya20km' else held
++        for k in args.neighbors:records.append(experiment(net,scope,query,k))
++    comparisons=[]
++    for scope in args.scopes:
++        cohort=[r for r in records if r['scope']==scope];files=[np.load(Path(r['artifact']).parent/'test_predictions.npz') for r in cohort]
++        keys=[f['ids'][:,1]*len(net.ids)+f['ids'][:,0] for f in files];common=keys[0]
++        for key in keys[1:]:common=np.intersect1d(common,key)
++        for r,f,key in zip(cohort,files,keys):
++            take=np.where(np.isin(key,common))[0];data={k:f[k][take] for k in ['y','physics','idw','nearest','mean','persistence','distance']};pred=f['prediction'][take];iid=f['ids'][take]
++            comparisons.append({'scope':scope,'neighbor_count':r['neighbor_count'],'common_test_rows':len(take),'metrics':sample_metrics(data,pred,iid,net,f['fallback'][take])})
++    report={'experiments':records,'common_row_comparisons':comparisons,'input_sha256':{path:digest(path) for path in ['data/physics_training/hours.parquet','data/physics_training/station_qc.csv','data/registry/india_stations.csv']},'core_neighbor_rule':'exactly K distinct sites with valid T,RH,station P,wind, vetted height and plausible reference pressure; exclude query truth','seed':42,'limits':DEFAULT_LIMITS,'band_policy':'calibration/check/audit restricted to serving geometry; sparse or failed intervals withheld; no transfer to changed geometry limits','not_verified':['fixed A/B/C field performance','ESP32 JSON runtime','true weather episode independence','nearby physical aliases beyond exact-coordinate deduplication']}
++    (ROOT/'results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
++if __name__=='__main__':main()

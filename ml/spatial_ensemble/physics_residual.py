@@ -11,7 +11,7 @@ from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS,PHYSICAL_RANGES
 
 
 class PhysicsResidualEnsemble:
-    def __init__(self,seed=42):self.seed=seed;self.heads={}
+    def __init__(self,seed=42,neighbor_count=None):self.seed=seed;self.neighbor_count=neighbor_count;self.heads={}
 
     def fit(self,x,y,base,sx,sy,sbase):
         self.heads={}
@@ -19,6 +19,8 @@ class PhysicsResidualEnsemble:
             valid=np.isfinite(y[:,i])&np.isfinite(base[:,i]);sv=np.isfinite(sy[:,i])&np.isfinite(sbase[:,i])
             if valid.sum()<30 or sv.sum()<30:continue
             candidates=[j for j in range(x.shape[1]) if j not in [3,4,9,10,15,16] or i in [3,4]]
+            # A/B deployment contract supplies coordinates and elevation, not slope.
+            if self.neighbor_count is not None:candidates=[j for j in candidates if j!=26]
             active=np.array([j for j in candidates if np.isfinite(x[valid,j]).mean()>.5])
             scale=max(float(np.std((y-base)[valid,i])),.01);r=(y-base)[valid,i]/scale
             models={'boosting':HistGradientBoostingRegressor(max_iter=70,max_leaf_nodes=15,l2_regularization=1,random_state=self.seed,early_stopping=False),

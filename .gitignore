@@ -76,3 +76,6 @@ esp32/ml_integration/include/build_identity.h
 # Local full-hour observations, lineage and memory-mapped experiment arrays
 /data/physics_training/*.parquet
 /data/physics_training/features/
+
+# Two-node archive features and JSON models (generated locally)
+/data/two_node_training/

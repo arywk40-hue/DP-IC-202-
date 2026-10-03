@@ -1,0 +1,53 @@
+diff --git a/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md b/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
+--- a/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
++++ b/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
+@@ -21,3 +21,49 @@
+ Validate finite values, physical ranges and coordinates at both node and server; flag flatlines using duration/neighbor evidence instead of automatically calling legitimate calm wind invalid. Retain the invalid raw sample with a reason. Never forward-fill a failed sensor into labels. Reject replayed boot/sequence IDs, duplicate site/channel/time records and stale arrivals; preserve late records for audit, exclude them from earlier prediction features. Authenticate node payloads and the receiver; use replay protection and rate limits. Do not put shared deployment keys in the repository.
+ 
+ For a mesh experiment collect colocated reference instruments plus independent query-site truth **between nodes**, spanning 1, 5, 10 and 20 km, monsoon/winter, mountain/valley and elevation differences. Use whole physical sites and whole weather episodes for held-out tests. The current national archive cannot replace this field validation.
++
++## Exactly two transmitting nodes and one hidden sensor
++
++Deployment roles: **A and B transmit; C is the hidden test instrument**. Three physical instruments are needed for validation, but each prediction receives exactly two nodes. Instrument identity, site/position identity and inference role are separate: `node_id` in the scripts is the stable physical instrument label A/B/C; after relocation assign a new `physical_site_id` and record the position/role interval. Hidden readings are stored for later scoring and must never be transmitted to the predictor. Coordinates, elevation and time of the hidden point remain legitimate query metadata.
++
++The two-node guard uses the shorter spherical A–B segment. It reports distance from the **clamped segment**, cross-track distance, along-track distance, and kilometers beyond A/B. Defaults: ≤1 km from segment, ≤0.25 km beyond either endpoint, A–B separation ≤20 km. All limits are configurable and do not establish meteorological reliability. Segment distance already includes displacement beyond an end, so both limits apply. Degenerate/co-located A/B (<1 m) and antipodal pairs are refused. `--outside-policy flag` permits an explicitly flagged extrapolation but emits no nominal band; default is refusal. A missing/stale node or channel cannot masquerade as a two-contributor prediction.
++
++### Before separation: side-by-side calibration
++
++1. Label physical instruments A/B/C and record exact sensor models/serials, firmware, shields, wind exposure/mast height and maintenance. Place them within 20 m horizontally and **0.5 m in actual pressure-sensor elevation**, preferably much closer. Use matched shields/exposure and synchronized one-minute windows. Do not compare ground elevation while pressure sensors sit at different mast heights.
++2. Allow thermal stabilization. Collect at least 24–48 hours spanning day/night and a range of T/RH; pressure changes and representative wind are desirable. This duration is a collection recommendation, not a validated calibration standard. A traceable reference is preferred. Without one, C defines a **relative** reference only; all sensors may share an absolute bias. Calm-only wind does not validate anemometer response across speed/direction; no universal wind gain correction is claimed.
++3. Retain raw one-second data and raw one-minute means. Pair exactly matching UTC intervals; no nearest/future matching or forward fill. Flag bad samples, clock drift and stuck sensors. Keep a separate held-back colocated period to check corrections; don't fit offsets on deployment/hidden-test readings.
++4. Fit per-instrument, per-core-channel additive offsets as median(reference − instrument), saving paired counts, observed range, residual MAD, calibration cutoff/version and file hash. Corrections have units °C, RH percentage points, hPa, m/s. Preserve raw and corrected values separately. Out-of-range corrected values are missing/flagged, never silently converted into labels. Inspect residuals versus T/RH/wind and drift; a constant offset may be inadequate. Missing/insufficient channels stop calibration, rather than invent offsets. The script requires at least 60 valid paired intervals per channel by default, which is a minimum computational threshold, not proof of calibration quality.
++5. Freeze offsets before field testing. Recheck colocated agreement after the deployment session. Recalibration establishes a new version and requires a new untouched test period; do not retroactively improve test scores by refitting offsets.
++
++### Field positions, role rotation and evaluation
++
++Initially place A and B at the endpoints, C between them; survey WGS84 coordinates and orthometric **sensor** elevations. Record ground SRTM/EGM96 elevation and sensor height separately. Query pressure adjustment uses the actual measurement-height elevation in a common datum. Collect matched UTC windows at the declared sampling rate, alongside actual receive times, sequence/replay and per-channel QC. Start at a short distance, then collect 1/5/10/20 km sessions and different elevation differences/seasons where practical. No current archive score establishes these deployment ranges.
++
++The scorer hides C, A and B in turn using the other two records at the same timestamp. If instruments remain fixed on a line, hiding an endpoint is generally extrapolation and should be refused—report those refusal counts. For a fair **between-node** test of each instrument, physically rotate instruments through left/middle/right positions in separate whole-episode sessions: A/B endpoints–C middle; B/C endpoints–A middle; A/C endpoints–B middle. Freeze the instrument offsets, update position/site metadata, keep the active pair's channel data isolated from the hidden labels, and never treat the three rotations of one episode as independent tests. Vary exposure/altitude as well as instrument identity; guard policy must be frozen before scoring.
++
++Keep calibration, model fitting, interval calibration and final field test episodes disjoint. Report MAE/RMSE per target and hidden instrument, valid truth counts, emitted prediction counts/refusals and checked-band coverage. The scorer does **not** fit a model or new uncertainty bands on hidden readings. Archive bands are withheld for a changed corridor configuration, model mismatch, OOD/failure fallback, sparse/failed checks, or extrapolation. They are not evidence of field coverage.
++
++### Script input and commands
++
++Use a wide CSV with one row per instrument/completed UTC interval. Required script columns: `timestamp_utc` (or `interval_end_utc`), `node_id` A/B/C, `latitude`, `longitude` (or `_deg` aliases), `elevation_m`, `pressure_reference=station`, `temperature_c`, `relative_humidity_pct`, `pressure_hpa`, `wind_speed_mps`. These channel columns contain **raw** readings; the scorer applies the frozen offsets once. Optional `<channel>_valid` booleans mask invalid values. Missing/invalid channels stay missing. Duplicates, out-of-order records, unknown identities, naive timestamps and wrong pressure reference are rejected. Retain the broader collection/provenance columns above even when the scorer only uses this subset. UTC strings must end in `Z`. All three calibration rows must have the same completed intervals.
++
++```sh
++python -m ml.field.two_node calibrate colocated.csv --output offsets.json
++python -m ml.field.two_node score field.csv --offsets offsets.json --output scores.csv
++# Add the measured two-neighbor JSON model after archive training:
++python -m ml.field.two_node score field.csv --offsets offsets.json --output scores.csv --model data/two_node_training/national5km/k2/model.json
++```
++
++Use `--hide-c-only` for the actual A/B→C deployment trial. Default scores all three hidden roles. `scores.csv` retains raw/corrected truth, predictions, methods, status and checked 90% bounds; `scores.csv.summary.json` reports counts/MAE/RMSE and available-band point coverage. IDW/nearest/mean columns are explicitly **unguarded diagnostics**, and their availability must not be compared blindly with refused production predictions.
++
++Demo input is JSON with `nodes: {A: {...}, B: {...}}` and `query: {latitude, longitude, elevation_m, timestamp_utc, slope_deg?}`. Nodes use the core channel column names plus coordinates/elevation/time. Supply already corrected node readings to the demo; it does not automatically apply field offset files. No C values or third node are accepted.
++
++```sh
++python -m reports.practicum.demo --input readings.json
++python -m reports.practicum.demo --input readings.json --model data/two_node_training/national5km/k2/model.json
++```
++
++Output includes per-target prediction, 80/90% band (null if unverified), corridor distances, contributor count and status. No-input mode is explicitly synthetic. The JSON model is a tested **Python/server** representation; ESP32 memory, precision, latency and firmware integration remain unverified.
++
++The NOAA JSON models were trained on **completed one-hour means**, not one-minute/live samples. For a like-for-like model trial, produce completed-hour rows and set `interval_seconds=3600` on both A/B records. Archive bands additionally require exact hour-end timestamps and the unchanged corridor limits; minute/unknown-duration inputs produce no archive band. Minute-level physics scoring is allowed, but learned-model minute-level skill is unverified. Even a checked hourly archive band needs independent field validation before a deployment coverage claim.

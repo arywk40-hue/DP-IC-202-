@@ -1,0 +1,169 @@
+{
+  "status": "EXPERIMENTAL_SNAPSHOT",
+  "targets": {
+    "temperature_c": {
+      "prediction": 10.155846229485574,
+      "status": "RESIDUAL_ENSEMBLE",
+      "geometry": {
+        "allowed": true,
+        "segment_distance_km": 0.0006941213445321249,
+        "cross_track_km": 0.0006941213445321249,
+        "along_track_km": 3.7842402981591463,
+        "beyond_a_km": 0.0,
+        "beyond_b_km": 0.0,
+        "node_separation_km": 7.568480596320298,
+        "nearest_distance_km": 3.784240361818412,
+        "nondegenerate": true,
+        "reason": "OK",
+        "limits": {
+          "max_segment_distance_km": 1.0,
+          "max_beyond_a_km": 0.25,
+          "max_beyond_b_km": 0.25,
+          "max_node_separation_km": 20.0
+        },
+        "method": "short_great_circle_segment"
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 2,
+      "residual_fallback": false,
+      "elevation_adjustment_available": true
+    },
+    "relative_humidity_pct": {
+      "prediction": 64.05089220428758,
+      "status": "RESIDUAL_ENSEMBLE",
+      "geometry": {
+        "allowed": true,
+        "segment_distance_km": 0.0006941213445321249,
+        "cross_track_km": 0.0006941213445321249,
+        "along_track_km": 3.7842402981591463,
+        "beyond_a_km": 0.0,
+        "beyond_b_km": 0.0,
+        "node_separation_km": 7.568480596320298,
+        "nearest_distance_km": 3.784240361818412,
+        "nondegenerate": true,
+        "reason": "OK",
+        "limits": {
+          "max_segment_distance_km": 1.0,
+          "max_beyond_a_km": 0.25,
+          "max_beyond_b_km": 0.25,
+          "max_node_separation_km": 20.0
+        },
+        "method": "short_great_circle_segment"
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 2,
+      "residual_fallback": false,
+      "elevation_adjustment_available": true
+    },
+    "pressure_hpa": {
+      "prediction": 924.8739618144374,
+      "status": "PHYSICS_FALLBACK",
+      "geometry": {
+        "allowed": true,
+        "segment_distance_km": 0.0006941213445321249,
+        "cross_track_km": 0.0006941213445321249,
+        "along_track_km": 3.7842402981591463,
+        "beyond_a_km": 0.0,
+        "beyond_b_km": 0.0,
+        "node_separation_km": 7.568480596320298,
+        "nearest_distance_km": 3.784240361818412,
+        "nondegenerate": true,
+        "reason": "OK",
+        "limits": {
+          "max_segment_distance_km": 1.0,
+          "max_beyond_a_km": 0.25,
+          "max_beyond_b_km": 0.25,
+          "max_node_separation_km": 20.0
+        },
+        "method": "short_great_circle_segment"
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 2,
+      "residual_fallback": true,
+      "elevation_adjustment_available": true
+    },
+    "pm25_ug_m3": {
+      "prediction": null,
+      "status": "UNAVAILABLE",
+      "geometry": {
+        "allowed": false,
+        "reason": "NEED_TWO_CURRENT_CONTRIBUTORS",
+        "nearest_distance_km": null
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 0,
+      "residual_fallback": true,
+      "elevation_adjustment_available": true
+    },
+    "pm10_ug_m3": {
+      "prediction": null,
+      "status": "UNAVAILABLE",
+      "geometry": {
+        "allowed": false,
+        "reason": "NEED_TWO_CURRENT_CONTRIBUTORS",
+        "nearest_distance_km": null
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 0,
+      "residual_fallback": true,
+      "elevation_adjustment_available": true
+    },
+    "wind_speed_mps": {
+      "prediction": 1.4878613388928703,
+      "status": "RESIDUAL_ENSEMBLE",
+      "geometry": {
+        "allowed": true,
+        "segment_distance_km": 0.0006941213445321249,
+        "cross_track_km": 0.0006941213445321249,
+        "along_track_km": 3.7842402981591463,
+        "beyond_a_km": 0.0,
+        "beyond_b_km": 0.0,
+        "node_separation_km": 7.568480596320298,
+        "nearest_distance_km": 3.784240361818412,
+        "nondegenerate": true,
+        "reason": "OK",
+        "limits": {
+          "max_segment_distance_km": 1.0,
+          "max_beyond_a_km": 0.25,
+          "max_beyond_b_km": 0.25,
+          "max_node_separation_km": 20.0
+        },
+        "method": "short_great_circle_segment"
+      },
+      "bands": {
+        "0.8": null,
+        "0.9": null
+      },
+      "calibration_status": "NO_CHECKED_BAND",
+      "contributing_nodes": 2,
+      "residual_fallback": false,
+      "elevation_adjustment_available": true
+    }
+  },
+  "query_elevation_m": 763.0,
+  "mode": "PHYSICS_RESIDUAL_SERVER",
+  "model_neighbor_count_compatible": true,
+  "complete_core_pair": true,
+  "input_aggregation_verified_for_archive_bands": false,
+  "warning": "Synthetic input; no field performance evidence"
+}

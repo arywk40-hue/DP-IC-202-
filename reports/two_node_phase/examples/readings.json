@@ -1,0 +1,33 @@
+{
+  "nodes": {
+    "A": {
+      "node_id": "A",
+      "latitude": 31.7,
+      "longitude": 76.9,
+      "elevation_m": 600,
+      "timestamp_utc": "2024-12-01T12:00:00Z",
+      "temperature_c": 11.1,
+      "relative_humidity_pct": 60,
+      "pressure_hpa": 943.216117673029,
+      "wind_speed_mps": 2
+    },
+    "B": {
+      "node_id": "B",
+      "latitude": 31.7,
+      "longitude": 76.98,
+      "elevation_m": 1000,
+      "timestamp_utc": "2024-12-01T12:00:00Z",
+      "temperature_c": 8.5,
+      "relative_humidity_pct": 60,
+      "pressure_hpa": 898.7445515908134,
+      "wind_speed_mps": 2
+    }
+  },
+  "query": {
+    "latitude": 31.7,
+    "longitude": 76.94,
+    "elevation_m": 763,
+    "timestamp_utc": "2024-12-01T12:00:00Z"
+  },
+  "synthetic": true
+}

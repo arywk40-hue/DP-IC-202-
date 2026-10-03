@@ -1,0 +1,123 @@
+{
+  "tests": "97 passed, eight subtests passed, one pre-existing pandas deprecation warning",
+  "experiments": 8,
+  "counts": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "row_caps": null,
+  "input_and_model_hashes_match": true,
+  "exact_core_counts_and_query_exclusion_asserted_during_evaluation": true,
+  "query_slope_excluded_from_deployment_heads": true,
+  "no_two_node_band_authorized": true,
+  "json_sklearn_max_prediction_difference": 6.103515625e-05,
+  "synthetic_calibration_scoring_and_model_demo_executed": true,
+  "figures_inspected": true,
+  "patches": [
+    {
+      "patch": "reports/two_node_phase/patches/01-segment-corridor.patch",
+      "files": [
+        "ml/spatial_ensemble/corridor.py"
+      ],
+      "sha256": "8a0ca6026be99f94336da4d1090490ab3cd0b64bd56477efc18ab6f54407947d",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/02-exact-neighbor-training-view.patch",
+      "files": [
+        "ml/spatial_ensemble/batched_physics.py",
+        "ml/spatial_ensemble/physics_residual.py",
+        ".gitignore"
+      ],
+      "sha256": "4940b0bcbd8e4db566cbd9f9ee271a6ee2fe68c429b9bb9606b352157b2fee5c",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/03-two-node-serving-and-refusal.patch",
+      "files": [
+        "ml/spatial_ensemble/physics_serving.py"
+      ],
+      "sha256": "5a0636ec4a928f6096344bcbaf08bf1304ab993f7e1ac393a76eee57289f9319",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/04-bounded-json-model.patch",
+      "files": [
+        "ml/spatial_ensemble/residual_artifact.py"
+      ],
+      "sha256": "8a30e7a989bc0ed01ead0e1f968b4ee6ff408d110f1be4a5e30e0883e3db67f8",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/05-held-station-neighbor-evaluation.patch",
+      "files": [
+        "ml/spatial_ensemble/evaluate_two_nodes.py"
+      ],
+      "sha256": "001ae69f7b3168d45faee8dff0a57da78f1bda173961f79e56a39d4af4ec5384",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/06-offsets-and-hidden-sensor-scoring.patch",
+      "files": [
+        "ml/field/two_node.py"
+      ],
+      "sha256": "92945effe585a57070fc575f50b38e49a73bad15d6508f988cffbfe1aa8368eb",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/07-node-calibration-rotation-spec.patch",
+      "files": [
+        "reports/nwic_pipeline/NODE_COLLECTION_SPEC.md"
+      ],
+      "sha256": "f3af184821c0b4f60a09b9dde462189254e8fdf9c3cff63193221d6379641334",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/08-input-demo-and-fixtures.patch",
+      "files": [
+        "reports/practicum/demo.py",
+        "reports/two_node_phase/generate_examples.py",
+        "reports/two_node_phase/examples/README.md"
+      ],
+      "sha256": "10218d2d1126c4346d0fc7f4e58839bad17e66fc7c36d66aecf48f3445985ec4",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/09-regression-tests.patch",
+      "files": [
+        "tests/test_two_node_phase.py"
+      ],
+      "sha256": "a397aa8ab0d340d33177eea07f038c69685612fb927c98ae4eefc6884b46b043",
+      "check_apply_byte_match": true
+    },
+    {
+      "patch": "reports/two_node_phase/patches/10-report-and-practicum-links.patch",
+      "files": [
+        "reports/two_node_phase/PLAN.md",
+        "reports/two_node_phase/build_report.py",
+        "reports/two_node_phase/REPORT.md",
+        "reports/practicum/build_outputs.py",
+        "reports/practicum/RESULTS.md"
+      ],
+      "sha256": "1afc6a9bebd1976811b0a80708dcd8fead47ac57df1c1fb41738e830ea4b49aa",
+      "check_apply_byte_match": true
+    }
+  ],
+  "versions": {
+    "numpy": "2.3.4",
+    "pandas": "3.0.3",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.16.3",
+    "pyarrow": "21.0.0",
+    "pytest": "9.0.1"
+  },
+  "not_verified": [
+    "real fixed A/B/C sensor campaign",
+    "close-corridor generalization and interval coverage",
+    "absolute sensor accuracy and drift",
+    "ESP32 export/runtime/mesh integration",
+    "real transport authentication/availability"
+  ]
+}

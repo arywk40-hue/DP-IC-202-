@@ -14,9 +14,15 @@ def number(value):
     except (ValueError,TypeError):return np.nan
 
 
-def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,query_slope_deg=None,model=None,bands=None,max_distance_km=20,background=None):
+def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,query_slope_deg=None,model=None,bands=None,max_distance_km=20,background=None,geometry_mode='auto',corridor_limits=None,outside_policy='refuse'):
+    if geometry_mode=='auto':geometry_mode='corridor' if isinstance(nodes,list) and len(nodes)==2 else 'hull'
+    if geometry_mode not in ['hull','corridor'] or outside_policy not in ['refuse','flag']:raise ValueError('Invalid geometry/policy')
+    if geometry_mode=='corridor' and (not isinstance(nodes,list) or len(nodes)!=2):raise ValueError('Two-node mode requires exactly A and B')
+    from ml.spatial_ensemble.corridor import guard_two,limits
+    if geometry_mode=='corridor':limits(corridor_limits)
     coordinates(latitude,longitude);stamp=pd.Timestamp(timestamp)
     if pd.isna(stamp) or stamp.tzinfo is None:raise ValueError('Explicit UTC timestamp required')
+    stamp=stamp.tz_convert('UTC')
     if not isinstance(nodes,list) or len(nodes)>512:raise ValueError('Expected at most 512 node records')
     clean=[]
     for node in nodes:
@@ -31,10 +37,11 @@ def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,q
             item['dewpoint_c']=number(node.get('dewpoint_c'))
             if not -100<=item['dewpoint_c']<=60:item['dewpoint_c']=np.nan
             item['pressure_ok']=node.get('pressure_ok',True) is True
+            item['interval_seconds']=number(node.get('interval_seconds'))
             if not item['pressure_ok']:item['pressure_hpa']=np.nan
             if any(np.isfinite(item[n]) for n in RAW_SENSOR_COLUMNS) or np.isfinite(item['dewpoint_c']):clean.append(item)
         except (KeyError,ValueError,TypeError):continue
-    d=distances_km(latitude,longitude,[[n['latitude'],n['longitude']] for n in clean]);order=np.argsort(d)[:32];d=d[order];clean=[clean[i] for i in order]
+    d=distances_km(latitude,longitude,[[n['latitude'],n['longitude']] for n in clean]);order=np.arange(len(clean)) if geometry_mode=='corridor' else np.argsort(d)[:32];d=d[order];clean=[clean[i] for i in order]
     a=np.array([[n[k] for k in RAW_SENSOR_COLUMNS] for n in clean]).reshape(-1,6)
     z=np.array([n['elevation_m'] for n in clean]);td=np.array([n['dewpoint_c'] for n in clean]);qz=number(query_elevation_m)
     if np.isfinite(qz) and not -450<=qz<=9000:raise ValueError('Query elevation outside supported range')
@@ -44,8 +51,15 @@ def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,q
     x[14]=float(d[pv].min()) if pv.any() else np.nan
     nz=weighted(z,d);bg=background or {}
     x=np.r_[x,qz,number(query_slope_deg),nz,qz-nz,[number(bg.get(k)) for k in ERA5_FEATURES],extra,counts]
+    # Current NOAA-only artifacts have no PM heads and were fitted with absent
+    # PM count slots. Optional particle readings must not shift that core view.
+    if geometry_mode=='corridor' and model is not None and not ({3,4}&set(getattr(model,'heads',{}))):x[44:46]=0
     pred=physics.copy();fallback=np.ones(6,dtype=bool)
-    if model is not None:
+    model_compatible=geometry_mode!='corridor' or getattr(model,'neighbor_count',None)==2
+    moisture=np.isfinite(np.where(np.isfinite(td),td,dewpoint(a[:,0],a[:,1])))
+    complete_pair=len(clean)==2 and np.isfinite(a[:,[0,1,2,5]]).all() and np.isfinite(z).all() and pv.all() and moisture.all()
+    use_model=model is not None and model_compatible and (geometry_mode!='corridor' or complete_pair)
+    if use_model:
         try:
             value,flags=model.predict(x[None,:],physics[None,:]);value,flags=np.asarray(value),np.asarray(flags)
             if value.shape!=(1,6) or flags.shape!=(1,6):raise ValueError('Invalid model output shape')
@@ -53,22 +67,37 @@ def predict_snapshot(nodes,latitude,longitude,timestamp,query_elevation_m=None,q
             good &= np.array([PHYSICAL_RANGES[n][0]<=v<=PHYSICAL_RANGES[n][1] for n,v in zip(RAW_SENSOR_COLUMNS,value[0])])
             pred[good]=value[0,good];fallback[good]=flags[0,good]
         except Exception:pass  # Entire model boundary failure still returns physics.
-    moisture=np.isfinite(np.where(np.isfinite(td),td,dewpoint(a[:,0],a[:,1])))
     output={'status':'EXPERIMENTAL_SNAPSHOT','targets':{},'query_elevation_m':float(qz) if np.isfinite(qz) else None,'mode':'PHYSICS_ONLY' if model is None else 'PHYSICS_RESIDUAL_SERVER'}
+    output['model_neighbor_count_compatible']=model_compatible if model is not None else None
+    output['complete_core_pair']=bool(complete_pair) if geometry_mode=='corridor' else None
+    archive_interval_verified=geometry_mode!='corridor' or (len(clean)==2 and all(n['interval_seconds']==3600 for n in clean) and stamp.minute==0 and stamp.second==0 and stamp.microsecond==0 and stamp.nanosecond==0)
+    output['input_aggregation_verified_for_archive_bands']=archive_interval_verified
+    def geometry(current):
+        return guard_two(current,latitude,longitude,stamp,corridor_limits) if geometry_mode=='corridor' else guard(current,latitude,longitude,stamp,max_distance_km)
     for i,name in enumerate(RAW_SENSOR_COLUMNS):
         valid=np.isfinite(a[:,i])
+        if i==0 and geometry_mode=='corridor' and np.isfinite(qz):valid &= np.isfinite(z)
         if i==2:valid=pv
         if i==1:valid=moisture if np.isfinite(extra[-1]) else valid
-        current=[n for n,v in zip(clean,valid) if v];g=guard(current,latitude,longitude,stamp,max_distance_km)
+        current=[n for n,v in zip(clean,valid) if v];g=geometry(current)
         if i==1 and np.isfinite(extra[-1]):
-            tg=guard([n for n,v in zip(clean,np.isfinite(a[:,0])) if v],latitude,longitude,stamp,max_distance_km)
-            if not tg['allowed']:g={**g,'allowed':False,'reason':'QUERY_TEMPERATURE_NETWORK_REFUSED'}
-        allowed=g['allowed'] and np.isfinite(pred[i]);status=('PHYSICS_FALLBACK' if fallback[i] else 'RESIDUAL_ENSEMBLE') if allowed else ('UNAVAILABLE' if not np.isfinite(pred[i]) else 'REFUSED_NETWORK_GEOMETRY')
+            temp_valid=np.isfinite(a[:,0])
+            if geometry_mode=='corridor' and np.isfinite(qz):temp_valid &= np.isfinite(z)
+            tg=geometry([n for n,v in zip(clean,temp_valid) if v])
+            if not tg['allowed'] and (geometry_mode!='corridor' or not tg.get('nondegenerate',False)):g={**g,'allowed':False,'nondegenerate':False,'reason':'QUERY_TEMPERATURE_NETWORK_REFUSED'}
+        flagged=geometry_mode=='corridor' and outside_policy=='flag' and not g['allowed'] and g.get('nondegenerate',False) and len(current)==2
+        allowed=(g['allowed'] or flagged) and np.isfinite(pred[i]);status=('FLAGGED_OUTSIDE_CORRIDOR' if flagged else ('PHYSICS_FALLBACK' if fallback[i] else 'RESIDUAL_ENSEMBLE')) if allowed else ('UNAVAILABLE' if not np.isfinite(pred[i]) else 'REFUSED_NETWORK_GEOMETRY')
         # OOD/failure branch has no checked nominal serving interval.
         interval={str(level):None for level in [.8,.9]}
-        if allowed and bands is not None and model is not None and not fallback[i]:
+        band_geometry_compatible=geometry_mode!='corridor' or getattr(bands,'corridor_limits',None)==limits(corridor_limits)
+        if allowed and not flagged and band_geometry_compatible and archive_interval_verified and bands is not None and model is not None and not fallback[i]:
             for level in [.8,.9]:
                 try:interval[str(level)]=bands.interval(pred[i],i,g['nearest_distance_km'],level)
                 except Exception:pass  # Calibration failure must not invent a band.
         output['targets'][name]={'prediction':float(pred[i]) if allowed else None,'status':status,'geometry':g,'bands':interval,'calibration_status':'INDEPENDENT_ARCHIVE_CHECK_ONLY' if any(v is not None for v in interval.values()) else 'NO_CHECKED_BAND','contributing_nodes':int(valid.sum()),'residual_fallback':bool(fallback[i]),'elevation_adjustment_available':bool(np.isfinite(qz) and np.isfinite(z).any())}
     return output
+
+
+def predict_two_nodes(a,b,latitude,longitude,timestamp,query_elevation_m,**kwargs):
+    if isinstance(a,dict) and isinstance(b,dict) and a.get('node_id') is not None and a.get('node_id')==b.get('node_id'):raise ValueError('A and B must be distinct node identities')
+    return predict_snapshot([a,b],latitude,longitude,timestamp,query_elevation_m,geometry_mode='corridor',**kwargs)
