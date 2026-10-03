@@ -6,7 +6,8 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.features import validate_observations
 
 EVENT_NAMES: list[str] = [
     "light_moderate_rain",
@@ -56,32 +57,6 @@ DERIVED_FEATURE_COLS = [
 ]
 
 ALL_EVENT_FEATURE_COLS = RAW_FEATURE_COLS + DERIVED_FEATURE_COLS
-
-
-def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
-    columns = ["timestamp_utc", "location_id", *RAW_SENSOR_COLUMNS]
-    if set(frame.columns) != set(columns):
-        raise ValueError(f"Forecast observations must contain exactly {columns}")
-    frame = frame.copy()
-    frame["timestamp_utc"] = pd.to_datetime(
-        frame.timestamp_utc, utc=True, errors="raise"
-    )
-    if frame.timestamp_utc.isna().any() or frame.location_id.isna().any():
-        raise ValueError("Missing timestamp or location")
-    frame["location_id"] = frame.location_id.astype(str)
-    if frame.location_id.str.strip().eq("").any():
-        raise ValueError("Empty location")
-    if frame.duplicated(["location_id", "timestamp_utc"]).any():
-        raise ValueError("Duplicate station-hour")
-    offsets = frame.timestamp_utc - frame.timestamp_utc.dt.floor("h")
-    if offsets.groupby(frame.location_id).nunique().gt(1).any():
-        raise ValueError(
-            "Forecast pipeline requires a consistent hourly grid per station"
-        )
-    for column, (low, high) in PHYSICAL_RANGES.items():
-        frame[column] = pd.to_numeric(frame[column], errors="raise")
-        frame[column] = frame[column].where(frame[column].between(low, high))
-    return frame.sort_values(["location_id", "timestamp_utc"]).reset_index(drop=True)
 
 
 def _magnus_dew_point(T: np.ndarray, RH: np.ndarray) -> np.ndarray:

@@ -9,6 +9,8 @@ from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
 
 LAGS = (1, 3, 6, 12, 24)
 WINDOWS = (6, 24)
+MAX_HOURLY_ROWS = 2_000_000
+MAX_STATION_HOURS = 200_000
 
 
 def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
@@ -16,6 +18,12 @@ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
     if set(frame.columns) != set(columns):
         raise ValueError(f"Forecast observations must contain exactly {columns}")
     frame = frame.copy()
+    if len(frame) > MAX_HOURLY_ROWS:
+        raise ValueError("Observation resource budget exceeded")
+    for value in frame.timestamp_utc:
+        stamp = pd.Timestamp(value)
+        if pd.isna(stamp) or stamp.tzinfo is None:
+            raise ValueError("Every timestamp must include a timezone")
     frame["timestamp_utc"] = pd.to_datetime(
         frame.timestamp_utc, utc=True, errors="raise"
     )
@@ -26,6 +34,10 @@ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("Empty location")
     if frame.duplicated(["location_id", "timestamp_utc"]).any():
         raise ValueError("Duplicate station-hour")
+    spans = frame.groupby("location_id").timestamp_utc.agg(["min", "max"])
+    hours = (spans["max"] - spans["min"]).dt.total_seconds() / 3600 + 1
+    if hours.gt(MAX_STATION_HOURS).any() or hours.sum() > MAX_HOURLY_ROWS:
+        raise ValueError("Hourly reindex resource budget exceeded")
     offsets = frame.timestamp_utc - frame.timestamp_utc.dt.floor("h")
     if offsets.groupby(frame.location_id).nunique().gt(1).any():
         raise ValueError("Forecast pipeline requires a consistent hourly grid per station")

@@ -133,8 +133,8 @@ def train(
             raise ValueError(f"Insufficient observed labels for {target}")
         train_mask, val_mask = masks["train"], masks["validation"]
         residual = truth - current
-        dtrain = xgb.DMatrix(features.loc[train_mask], label=residual[train_mask])
-        dval = xgb.DMatrix(features.loc[val_mask], label=residual[val_mask])
+        dtrain = xgb.DMatrix(features.loc[train_mask], label=residual[train_mask], feature_names=teacher_features)
+        dval = xgb.DMatrix(features.loc[val_mask], label=residual[val_mask], feature_names=teacher_features)
         params = {
             "objective": "reg:squarederror",
             "eval_metric": "mae",
@@ -190,11 +190,12 @@ def train(
             xgb.DMatrix(
                 frame.loc[train_mask, sensors].astype(np.float32),
                 label=student_target,
+                feature_names=sensors,
             ),
             num_boost_round=16,
         )
         student_val = student.predict(
-            xgb.DMatrix(frame.loc[val_mask, sensors].astype(np.float32))
+            xgb.DMatrix(frame.loc[val_mask, sensors].astype(np.float32), feature_names=sensors)
         )
         student_weight = choose_weight(
             truth[val_mask], current[val_mask], student_val, target
@@ -222,14 +223,14 @@ def train(
             baseline = current[mask]
             teacher_pred = bounded(
                 baseline
-                + teacher_weight * teacher.predict(xgb.DMatrix(features.loc[mask])),
+                + teacher_weight * teacher.predict(xgb.DMatrix(features.loc[mask], feature_names=teacher_features)),
                 target,
             )
             student_pred = bounded(
                 baseline
                 + student_weight
                 * student.predict(
-                    xgb.DMatrix(frame.loc[mask, sensors].astype(np.float32))
+                    xgb.DMatrix(frame.loc[mask, sensors].astype(np.float32), feature_names=sensors)
                 ),
                 target,
             )

@@ -1,0 +1,40 @@
+{
+  "review_date_local": "2026-10-03",
+  "timezone": "Asia/Kolkata",
+  "tests": {
+    "command": "/Users/ariyanbhakat/.pyenv/versions/3.11.8/bin/python -m unittest discover -s tests",
+    "before": {
+      "tests": 50,
+      "errors": 3
+    },
+    "after": {
+      "tests": 56,
+      "errors": 0,
+      "failures": 0
+    }
+  },
+  "builds": {
+    "esp32-s3-ml": {
+      "passed": true,
+      "flash_bytes": 316853,
+      "static_ram_bytes": 18848
+    },
+    "esp32-s3-ml-usb": {
+      "passed": true,
+      "flash_bytes": 314101,
+      "static_ram_bytes": 19080
+    }
+  },
+  "physical_board_test": "NOT_RUN",
+  "real_between_node_accuracy": "NOT_VERIFIED",
+  "synthetic_benchmark": "synthetic_metrics.json",
+  "dependency_audit": "dependency_audit.json",
+  "source_sha256": {
+    "ml/six_sensor_forecast/features.py": "9378c36da45523d2c34ee1e9c267fb22ced4720028f03db512ebf46a90f30c7b",
+    "ml/six_sensor_forecast/train.py": "ba1669651d83d85b437ee66c8810a99d3b2a817aec23682612589ac42a0cbf2a",
+    "ml/event_classifier/features.py": "094c779f0974a5fb4471e83c1619c95c9c101c0dccb4ddd1c1f45ad2832c00b7",
+    "esp32/ml_integration/src/main.cpp": "05965a8fa8fa346a0ef69e31a6fcb681555ff297b9478a30efcfd4059497c5b9",
+    "ml/spatial_ensemble/model.py": "53fdba1dca01d210747f29060220b772a71b631ca22ffdfabc19c94328023fa8",
+    "ml/spatial_ensemble/evaluate.py": "b74e28b83380efbb20f17a8e15dd1e093e7c64d91af0cf39a51a3b15fc789ae0"
+  }
+}

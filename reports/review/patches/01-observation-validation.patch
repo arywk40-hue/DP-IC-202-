@@ -1,0 +1,109 @@
+diff --git a/ml/event_classifier/features.py b/ml/event_classifier/features.py
+index c891218..41231c6 100644
+--- a/ml/event_classifier/features.py
++++ b/ml/event_classifier/features.py
+@@ -6,7 +6,8 @@ import warnings
+ import numpy as np
+ import pandas as pd
+ 
+-from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
++from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
++from ml.six_sensor_forecast.features import validate_observations
+ 
+ EVENT_NAMES: list[str] = [
+     "light_moderate_rain",
+@@ -58,32 +59,6 @@ DERIVED_FEATURE_COLS = [
+ ALL_EVENT_FEATURE_COLS = RAW_FEATURE_COLS + DERIVED_FEATURE_COLS
+ 
+ 
+-def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
+-    columns = ["timestamp_utc", "location_id", *RAW_SENSOR_COLUMNS]
+-    if set(frame.columns) != set(columns):
+-        raise ValueError(f"Forecast observations must contain exactly {columns}")
+-    frame = frame.copy()
+-    frame["timestamp_utc"] = pd.to_datetime(
+-        frame.timestamp_utc, utc=True, errors="raise"
+-    )
+-    if frame.timestamp_utc.isna().any() or frame.location_id.isna().any():
+-        raise ValueError("Missing timestamp or location")
+-    frame["location_id"] = frame.location_id.astype(str)
+-    if frame.location_id.str.strip().eq("").any():
+-        raise ValueError("Empty location")
+-    if frame.duplicated(["location_id", "timestamp_utc"]).any():
+-        raise ValueError("Duplicate station-hour")
+-    offsets = frame.timestamp_utc - frame.timestamp_utc.dt.floor("h")
+-    if offsets.groupby(frame.location_id).nunique().gt(1).any():
+-        raise ValueError(
+-            "Forecast pipeline requires a consistent hourly grid per station"
+-        )
+-    for column, (low, high) in PHYSICAL_RANGES.items():
+-        frame[column] = pd.to_numeric(frame[column], errors="raise")
+-        frame[column] = frame[column].where(frame[column].between(low, high))
+-    return frame.sort_values(["location_id", "timestamp_utc"]).reset_index(drop=True)
+-
+-
+ def _magnus_dew_point(T: np.ndarray, RH: np.ndarray) -> np.ndarray:
+     rh_frac = np.clip(RH / 100.0, 1e-6, 1.0)
+     gamma = np.log(rh_frac) + (17.625 * T) / (243.04 + T)
+diff --git a/ml/six_sensor_forecast/features.py b/ml/six_sensor_forecast/features.py
+index 08be770..c6dd580 100644
+--- a/ml/six_sensor_forecast/features.py
++++ b/ml/six_sensor_forecast/features.py
+@@ -9,6 +9,8 @@ from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
+ 
+ LAGS = (1, 3, 6, 12, 24)
+ WINDOWS = (6, 24)
++MAX_HOURLY_ROWS = 2_000_000
++MAX_STATION_HOURS = 200_000
+ 
+ 
+ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
+@@ -16,6 +18,12 @@ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
+     if set(frame.columns) != set(columns):
+         raise ValueError(f"Forecast observations must contain exactly {columns}")
+     frame = frame.copy()
++    if len(frame) > MAX_HOURLY_ROWS:
++        raise ValueError("Observation resource budget exceeded")
++    for value in frame.timestamp_utc:
++        stamp = pd.Timestamp(value)
++        if pd.isna(stamp) or stamp.tzinfo is None:
++            raise ValueError("Every timestamp must include a timezone")
+     frame["timestamp_utc"] = pd.to_datetime(
+         frame.timestamp_utc, utc=True, errors="raise"
+     )
+@@ -26,6 +34,10 @@ def validate_observations(frame: pd.DataFrame) -> pd.DataFrame:
+         raise ValueError("Empty location")
+     if frame.duplicated(["location_id", "timestamp_utc"]).any():
+         raise ValueError("Duplicate station-hour")
++    spans = frame.groupby("location_id").timestamp_utc.agg(["min", "max"])
++    hours = (spans["max"] - spans["min"]).dt.total_seconds() / 3600 + 1
++    if hours.gt(MAX_STATION_HOURS).any() or hours.sum() > MAX_HOURLY_ROWS:
++        raise ValueError("Hourly reindex resource budget exceeded")
+     offsets = frame.timestamp_utc - frame.timestamp_utc.dt.floor("h")
+     if offsets.groupby(frame.location_id).nunique().gt(1).any():
+         raise ValueError("Forecast pipeline requires a consistent hourly grid per station")
+diff --git a/tests/test_review_contract.py b/tests/test_review_contract.py
+new file mode 100644
+index 0000000..8ce1faf
+--- /dev/null
++++ b/tests/test_review_contract.py
+@@ -0,0 +1,19 @@
++import unittest
++import pandas as pd
++from ml.six_sensor_forecast.features import build_features
++from ml.event_classifier.features import build_features as event_features
++from tests.test_six_sensor_forecast import fixture
++
++
++class ReviewContractTests(unittest.TestCase):
++    def test_naive_and_unbounded_time_rejected_before_reindex(self):
++        for builder in [build_features, event_features]:
++            frame = fixture().iloc[:2].copy()
++            frame['timestamp_utc'] = frame.timestamp_utc.dt.tz_localize(None)
++            with self.assertRaisesRegex(ValueError, 'timezone'):
++                builder(frame)
++            frame = fixture().iloc[:2].copy()
++            frame.loc[0, 'timestamp_utc'] = pd.Timestamp('1900-01-01', tz='UTC')
++            with self.assertRaisesRegex(ValueError, 'resource budget'):
++                builder(frame)
++

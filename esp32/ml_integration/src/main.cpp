@@ -111,7 +111,9 @@ void setup() {
   Serial.println("Send INFO, SELFTEST, RESET or unix_seconds,T,RH,P,PM2.5,PM10,W (hourly)");
 }
 void loop() {
-  while (Serial.available()) {
+  // Bound each drain so continuous input cannot starve scheduler/watchdog.
+  unsigned budget = 256;
+  while (budget-- && Serial.available()) {
     const char c = static_cast<char>(Serial.read());
     if (c == '\r') continue;
     if (c == '\n') {
@@ -119,7 +121,8 @@ void loop() {
       if (overflow) Serial.println("{\"error\":\"LINE_TOO_LONG\"}");
       else if (used) handle();
       used = 0; overflow = false;
-    } else if (used + 1 < sizeof(line) && !overflow) line[used++] = c;
+    } else if (static_cast<unsigned char>(c) < 32 || static_cast<unsigned char>(c) > 126) overflow = true;
+    else if (used + 1 < sizeof(line) && !overflow) line[used++] = c;
     else overflow = true;
   }
   delay(1);

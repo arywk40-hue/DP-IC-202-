@@ -1,0 +1,240 @@
+{
+  "schema_version": "indra_spatial_experiment_v1",
+  "task": "current-time withheld-node interpolation",
+  "seed": 42,
+  "python": "3.11.8",
+  "numpy": "2.3.4",
+  "pandas": "3.0.3",
+  "sklearn": "1.7.2",
+  "split": {
+    "training_stations": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "validation_stations": [
+      "validation"
+    ],
+    "test_stations": [
+      "test"
+    ],
+    "validation_start": "2025-01-04 08:00:00+00:00",
+    "test_start": "2025-01-06 10:00:00+00:00",
+    "context": "training stations only; query always excluded"
+  },
+  "examples": {
+    "train": 320,
+    "validation": 50,
+    "test": 50
+  },
+  "metrics": {
+    "temperature_c": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.06729395867508735,
+        "rmse": 0.08687261580117647
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.07086579852846157,
+        "rmse": 0.09160486201348338
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.09351943819950456,
+        "rmse": 0.1117020986006121
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.07651608420460228,
+        "rmse": 0.09203267216858715
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.86
+    },
+    "relative_humidity_pct": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.3392019927411515,
+        "rmse": 0.38836014072422553
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.3132851831743713,
+        "rmse": 0.3570157246013503
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.36749356254953836,
+        "rmse": 0.43095654285968815
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.3090959013565039,
+        "rmse": 0.3535433378073127
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.92
+    },
+    "pressure_hpa": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.08965462209460612,
+        "rmse": 0.10614113937839263
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.09128289151205536,
+        "rmse": 0.1082083300831165
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.10476987895343655,
+        "rmse": 0.12677845853343928
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.09542765670079006,
+        "rmse": 0.11101564392730956
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.96
+    },
+    "pm25_ug_m3": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.4589914112952674,
+        "rmse": 0.5877586532417497
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.4613970455766182,
+        "rmse": 0.6049261152286841
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.6139586168792732,
+        "rmse": 0.7750842153894328
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.44575100054854955,
+        "rmse": 0.5871256513554836
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.9
+    },
+    "pm10_ug_m3": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.6045992803518115,
+        "rmse": 0.7546046200846753
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.5613745950577014,
+        "rmse": 0.7193284791625679
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.7813256860487979,
+        "rmse": 0.958976204131462
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.5722285639762227,
+        "rmse": 0.7121666300908439
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.92
+    },
+    "wind_speed_mps": {
+      "ensemble": {
+        "rows": 50,
+        "mae": 0.045527559114816596,
+        "rmse": 0.05360617263222887
+      },
+      "idw": {
+        "rows": 50,
+        "mae": 0.04000527320773083,
+        "rmse": 0.05012479475653826
+      },
+      "nearest_node": {
+        "rows": 50,
+        "mae": 0.04771399922057539,
+        "rmse": 0.05941216834485988
+      },
+      "node_mean": {
+        "rows": 50,
+        "mae": 0.041463613093724684,
+        "rmse": 0.05178943572309773
+      },
+      "unavailable_predictions": 0,
+      "band_rows": 50,
+      "empirical_band_coverage": 0.92
+    }
+  },
+  "heads": {
+    "temperature_c": {
+      "weights": {
+        "idw": 0.6214730990995074,
+        "boosting": 0.37738256508472157,
+        "neural_net": 0.0011443358157709695
+      },
+      "absolute_error_p90": 0.13699741053022976,
+      "training_failures": {}
+    },
+    "relative_humidity_pct": {
+      "weights": {
+        "idw": 0.5209052960209541,
+        "boosting": 0.4758505163417162,
+        "neural_net": 0.003244187637329777
+      },
+      "absolute_error_p90": 0.6082245957611889,
+      "training_failures": {}
+    },
+    "pressure_hpa": {
+      "weights": {
+        "idw": 0.5781397886230369,
+        "boosting": 0.4213381012239704,
+        "neural_net": 0.0005221101529927136
+      },
+      "absolute_error_p90": 0.21720635868414329,
+      "training_failures": {}
+    },
+    "pm25_ug_m3": {
+      "weights": {
+        "idw": 0.5613761199078862,
+        "boosting": 0.4382804131081915,
+        "neural_net": 0.00034346698392228106
+      },
+      "absolute_error_p90": 0.9788347894749783,
+      "training_failures": {}
+    },
+    "pm10_ug_m3": {
+      "weights": {
+        "idw": 0.483058047576705,
+        "boosting": 0.5164786657193031,
+        "neural_net": 0.00046328670399198855
+      },
+      "absolute_error_p90": 1.2669103765546725,
+      "training_failures": {}
+    },
+    "wind_speed_mps": {
+      "weights": {
+        "idw": 0.5575657483407995,
+        "boosting": 0.4419589281104443,
+        "neural_net": 0.0004753235487561023
+      },
+      "absolute_error_p90": 0.08922737960486479,
+      "training_failures": {}
+    }
+  },
+  "evidence": "SYNTHETIC_SMOKE_TEST_ONLY_NOT_WEATHER_ACCURACY"
+}

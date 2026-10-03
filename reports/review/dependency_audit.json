@@ -1,0 +1,109 @@
+{
+  "scope": "Installed ML runtime dependencies plus requirements pins; OSV registry audit, not source/firmware security certification",
+  "queries": [
+    {
+      "package": {
+        "name": "numpy",
+        "ecosystem": "PyPI"
+      },
+      "version": "2.3.4",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "pandas",
+        "ecosystem": "PyPI"
+      },
+      "version": "3.0.3",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "scikit-learn",
+        "ecosystem": "PyPI"
+      },
+      "version": "1.7.2",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "xgboost",
+        "ecosystem": "PyPI"
+      },
+      "version": "3.1.1",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "scipy",
+        "ecosystem": "PyPI"
+      },
+      "version": "1.16.3",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "joblib",
+        "ecosystem": "PyPI"
+      },
+      "version": "1.5.2",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "threadpoolctl",
+        "ecosystem": "PyPI"
+      },
+      "version": "3.6.0",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "python-dateutil",
+        "ecosystem": "PyPI"
+      },
+      "version": "2.9.0.post0",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "six",
+        "ecosystem": "PyPI"
+      },
+      "version": "1.17.0",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "numpy",
+        "ecosystem": "PyPI"
+      },
+      "version": "2.5.2",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "pandas",
+        "ecosystem": "PyPI"
+      },
+      "version": "3.0.5",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "scikit-learn",
+        "ecosystem": "PyPI"
+      },
+      "version": "1.9.0",
+      "advisories": []
+    },
+    {
+      "package": {
+        "name": "xgboost",
+        "ecosystem": "PyPI"
+      },
+      "version": "3.4.1",
+      "advisories": []
+    }
+  ]
+}
