@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `ml/evaluation/INDIA_RESULTS.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # Indian climate evaluation and training results
 
 ## What was trained
@@ -129,7 +131,7 @@ execution, or storm/flood classification is established. Original Beijing
 artifacts remain unchanged. Only a broader frozen multi-station, multi-season
 evaluation plus local sensor validation can support stronger deployment claims.
 
-Full paired MAE/RMSE/R² and per-station results: [india_transfer_report.json](india_transfer_report.json).
+Full paired MAE/RMSE/R² and per-station results: [india_transfer_report.json](../../../../ml/evaluation/india_transfer_report.json).
 
 ## Completed verification
 

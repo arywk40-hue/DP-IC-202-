@@ -1,0 +1,11 @@
+flowchart LR
+ A[Source rows + registry] --> B[Rights / UTC / units / QC gates]
+ B --> C[Neighbor-only features + terrain + era5_*]
+ C --> D[IDW]
+ C --> E[Boosting residual]
+ C --> F[Small MLP residual]
+ D --> G[Per-target weighted blend]
+ E --> G
+ F --> G
+ G --> H[Prediction + calibrated error band or unknown]
+ H --> I[Distance / hull / OOD flag or refusal]

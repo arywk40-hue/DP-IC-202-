@@ -1,0 +1,11 @@
+flowchart LR
+  Q[Source QC + current neighbors + vetted terrain] --> B[T lapse / dewpoint RH / pressure reference IDW]
+  Q --> F[Neighbor, distance, terrain, physics features]
+  F --> G[Boosting residual]
+  F --> N[Small NN residual]
+  G --> W[Selection weights + shrinkage including zero]
+  N --> W
+  B --> O[Physics baseline + residual]
+  W --> O
+  O --> S[Per-channel geometry refusal; OOD/failure physics fallback]
+  S --> C[Checked block bands or no band]

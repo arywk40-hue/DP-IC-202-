@@ -18,5 +18,6 @@ skipped; their C outputs are constant zero and must not be used as detectors.
 
 `esp32_student/` holds the trained XGBoost heads.
 `esp32_student/export/indra_event_classifier.h` is a separate C99 export,
-checked on 2,048 complete rows against the Python model. It is not part of
-the default six-hour forecast firmware.
+checked on 2,048 complete rows against the Python model. It is included in the separate serial ML integration application, while the
+isolated six-hour forecast build remains separate. Untrained heads are masked
+as unavailable by the deployment wrapper; zero is not an observed negative.

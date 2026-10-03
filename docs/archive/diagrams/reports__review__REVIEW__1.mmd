@@ -1,0 +1,10 @@
+flowchart LR
+    N[QC-approved simultaneous neighbor readings] --> F[Geodesic IDW + dispersion + nearest distance]
+    Q[Query lat/lon and UTC time] --> F
+    F --> G[Gradient boosting residual heads]
+    F --> M[Small neural residual heads 16 / 8]
+    F --> I[IDW baseline]
+    G --> W[Per-target validation MAE weights]
+    M --> W
+    I --> W
+    W --> O[One six-target result + empirical error bands + status]

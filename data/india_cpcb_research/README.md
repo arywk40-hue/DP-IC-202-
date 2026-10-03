@@ -21,4 +21,4 @@ published under CC BY-NC-SA 4.0, distinct from the Beijing dataset license.
 per-station finite counts, exclusions and assumptions. `observations.csv` is
 local and Git-ignored. Regenerate with `python3 -m ml.six_sensor_forecast.prepare_india`.
 
-[Training and paired test results](../../ml/evaluation/INDIA_RESULTS.md)
+[Training and paired test results](../../docs/archive/ml/evaluation/INDIA_RESULTS.md)

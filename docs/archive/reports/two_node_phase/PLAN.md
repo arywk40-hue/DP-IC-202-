@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `reports/two_node_phase/PLAN.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # Two-node phase plan
 
 1. Add configurable geodesic A–B corridor distances/end limits; keep hull mode for 3–5-node comparison.

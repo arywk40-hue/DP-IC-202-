@@ -36,5 +36,5 @@ Use an explicit environment to select a research build:
 
 Each build includes exactly one model header; input and output array lengths
 follow its profile. Both Indian exports pass host Python/C parity. Read
-[Indian test results](../../ml/evaluation/INDIA_RESULTS.md) before choosing a
+[Indian test results](../../docs/archive/ml/evaluation/INDIA_RESULTS.md) before choosing a
 candidate; neither is an India-wide or Mandi-validated deployment release.

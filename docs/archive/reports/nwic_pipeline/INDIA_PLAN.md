@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `reports/nwic_pipeline/INDIA_PLAN.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # India extension: ordered patch plan and acceptance gates
 
 1. **Registry and canonical store** — immutable raw SHA256, source/row lineage, UTC interval and availability, physical-site aliases, canonical units, pressure reference, QC and rights gates. `training_open` and `training_restricted` remain separate; unresolved sources enter neither.

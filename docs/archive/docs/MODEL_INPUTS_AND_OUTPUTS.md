@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `docs/MODEL_INPUTS_AND_OUTPUTS.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../PROJECT_OVERVIEW.md) for current scope.
+
 # INDRA: Model Inputs, Features, Predictions and Outputs
 
 This document describes the currently implemented models and interfaces.
@@ -304,5 +306,5 @@ Paths below are relative to the repository root:
 - Midpoint estimator: `ml/six_sensor_forecast/midpoint.py`
 - ESP32 runtime: `esp32/ml_integration/include/indra_ml_runtime.h`
 - ESP32 serial interface: `esp32/ml_integration/src/main.cpp`
-- Build/upload guide: [ESP32 ML integration](../esp32/ml_integration/README.md)
+- Build/upload guide: [ESP32 ML integration](../../../esp32/ml_integration/README.md)
 - Validation requirements: [Prototype readiness](PROTOTYPE_READINESS.md)

@@ -1,0 +1,439 @@
+{
+  "original_count": 43,
+  "original_standalone_mmd_count": 0,
+  "files": [
+    {
+      "original_path": ".pytest_cache/README.md",
+      "current_path": ".pytest_cache/README.md",
+      "original_modified_at": "2026-10-03T13:57:48+05:30",
+      "classification": "current (generated cache; excluded from project guidance)",
+      "purpose": "Generated pytest cache instructions; not project documentation",
+      "action": "unchanged",
+      "original_sha256": "73fd6fccdd802c419a6b2d983d6c3173b7da97558ac4b589edec2dfe443db9ad"
+    },
+    {
+      "original_path": "ARCHITECTURE.md",
+      "current_path": "docs/archive/ARCHITECTURE.md",
+      "original_modified_at": "2026-09-10T11:08:35+05:30",
+      "classification": "superseded",
+      "purpose": "Original six-hour Beijing forecast architecture, export and compile evidence",
+      "action": "moved",
+      "original_sha256": "7488905b38f4a51d97b3b585d905673def1c78cf24fc1c59cad88ae829e8304e"
+    },
+    {
+      "original_path": "INVENTION_NOTES.md",
+      "current_path": "INVENTION_NOTES.md",
+      "original_modified_at": "2026-10-03T13:58:58+05:30",
+      "classification": "current",
+      "purpose": "Evidence-only technical distinctions and prior-art/IP research needs",
+      "action": "updated",
+      "original_sha256": "e0c785dcaa43447042c4b04203c982cb5074ca6bf1831b1810dcf5556ef0d70e"
+    },
+    {
+      "original_path": "README.md",
+      "current_path": "docs/archive/ROOT_README.md",
+      "original_modified_at": "2026-10-01T23:48:45+05:30",
+      "classification": "superseded",
+      "purpose": "Former project entry point for the six-hour forecast release contract",
+      "action": "moved",
+      "original_sha256": "3027ea14210fcc457f2a4b35f9672dd7d627e3210f1d036bf6eba4f1c57fddde"
+    },
+    {
+      "original_path": "data/field_sources/README.md",
+      "current_path": "data/field_sources/README.md",
+      "original_modified_at": "2026-09-29T17:10:06+05:30",
+      "classification": "current",
+      "purpose": "NWIC rainfall acquisition, wet-only coverage and matching limitations",
+      "action": "unchanged",
+      "original_sha256": "7c07a29d05d7ab8dd1042a71c736b3e1e9e6a65db7fc221142cdc7f7f1ddd96c"
+    },
+    {
+      "original_path": "data/himachal_weather_audit/MODEL_DIAGNOSTIC.md",
+      "current_path": "data/himachal_weather_audit/MODEL_DIAGNOSTIC.md",
+      "original_modified_at": "2026-09-11T17:23:50+05:30",
+      "classification": "current reference; historical protocol",
+      "purpose": "Unsupported missing-PM forecast stress test on supplied Himachal data",
+      "action": "updated",
+      "original_sha256": "f57f15f31ec9303aec4b67489b450c47c265de8f40c981741e6a1212019e22e4"
+    },
+    {
+      "original_path": "data/himachal_weather_audit/README.md",
+      "current_path": "data/himachal_weather_audit/README.md",
+      "original_modified_at": "2026-09-11T17:16:07+05:30",
+      "classification": "current",
+      "purpose": "Four supplied NWIC weather-file counts, overlap and unresolved QC",
+      "action": "unchanged",
+      "original_sha256": "19faa8e408399e11d7360d24f27ca8fb5e6bdc64626b888c846f7fc21d1b6692"
+    },
+    {
+      "original_path": "data/imd_north_access/IMD_DATA_REQUEST.md",
+      "current_path": "data/imd_north_access/IMD_DATA_REQUEST.md",
+      "original_modified_at": "2026-09-11T14:47:09+05:30",
+      "classification": "current",
+      "purpose": "Unsent IMD historical-data request with variables and access questions",
+      "action": "unchanged",
+      "original_sha256": "30ce31e6d3ae74f88702f9b0acd9b0a782706f57cbbc7ed8554a3e4fa68717f1"
+    },
+    {
+      "original_path": "data/imd_north_access/README.md",
+      "current_path": "data/imd_north_access/README.md",
+      "original_modified_at": "2026-09-11T14:47:09+05:30",
+      "classification": "current reference; historical protocol",
+      "purpose": "IMD catalogue/API access receipts; no acquired observations",
+      "action": "updated",
+      "original_sha256": "4210471d72fd77f782824df27c2ad3d2e3372a84196bdf75b2e96b76ccf2b467"
+    },
+    {
+      "original_path": "data/india_cpcb_research/README.md",
+      "current_path": "data/india_cpcb_research/README.md",
+      "original_modified_at": "2026-09-10T11:07:49+05:30",
+      "classification": "current",
+      "purpose": "Restricted CPCB-derived temporal research data and explicit assumptions",
+      "action": "updated",
+      "original_sha256": "dd1c6186f1bc52c53e358574ed4164efc21ab67afec7fa3599c2d3b4239aa5b3"
+    },
+    {
+      "original_path": "data/india_delhi_station_samples/README.md",
+      "current_path": "data/india_delhi_station_samples/README.md",
+      "original_modified_at": "2026-10-01T23:30:51+05:30",
+      "classification": "current",
+      "purpose": "Delhi 15-minute source audit; unresolved units and timestamps",
+      "action": "unchanged",
+      "original_sha256": "20886ebdb994bcef9c446566df48306eab5a6ad8a3a65bec3d8c11047bf286c7"
+    },
+    {
+      "original_path": "data/india_delhi_station_samples/SOURCE_VERIFICATION.md",
+      "current_path": "data/india_delhi_station_samples/SOURCE_VERIFICATION.md",
+      "original_modified_at": "2026-10-01T23:30:51+05:30",
+      "classification": "current",
+      "purpose": "Evidence for unresolved Delhi pressure units and clock conventions",
+      "action": "unchanged",
+      "original_sha256": "f5b709b08180bae8082777aab753e0a8e5bf1306a63e36db8f87aa403dfbe1dd"
+    },
+    {
+      "original_path": "data/india_station_audit/README.md",
+      "current_path": "data/india_station_audit/README.md",
+      "original_modified_at": "2026-09-10T11:08:35+05:30",
+      "classification": "current reference; historical protocol",
+      "purpose": "Seven CPCB station samples, source rights and channel availability",
+      "action": "updated",
+      "original_sha256": "e4ab00d0294c5e80585ff768b3ec84c1bb8219d3d26f85726f97a79f42006846"
+    },
+    {
+      "original_path": "data/uci_beijing_air_quality/README.md",
+      "current_path": "data/uci_beijing_air_quality/README.md",
+      "original_modified_at": "2026-09-10T09:25:02+05:30",
+      "classification": "current",
+      "purpose": "Pinned Beijing forecast/event source, units, license and provenance",
+      "action": "unchanged",
+      "original_sha256": "a1b3abb96b53206154572a0c244fd4b7506c66379bee52f2bd6446b2bf31349c"
+    },
+    {
+      "original_path": "docs/MODEL_INPUTS_AND_OUTPUTS.md",
+      "current_path": "docs/archive/docs/MODEL_INPUTS_AND_OUTPUTS.md",
+      "original_modified_at": "2026-09-29T17:39:32+05:30",
+      "classification": "superseded",
+      "purpose": "Earlier forecast/event/heatmap interfaces and sensor-rule definitions",
+      "action": "moved",
+      "original_sha256": "92f5654bd009be5b1c2c72051324c89d521e528bdd98b4455b6caa6427bd222f"
+    },
+    {
+      "original_path": "docs/PROTOTYPE_READINESS.md",
+      "current_path": "docs/archive/docs/PROTOTYPE_READINESS.md",
+      "original_modified_at": "2026-10-01T23:48:45+05:30",
+      "classification": "superseded",
+      "purpose": "Earlier forecast/event bench and field gates; not current spatial protocol",
+      "action": "moved",
+      "original_sha256": "ebb0638b45b48ef8a4fa88a554c569e409e488a98e33116ee97825fd818a22f5"
+    },
+    {
+      "original_path": "docs/reference/ML_INFERENCE.md",
+      "current_path": "docs/archive/docs/reference/ML_INFERENCE.md",
+      "original_modified_at": "2026-09-28T12:13:17+05:30",
+      "classification": "superseded",
+      "purpose": "Earlier forecast/event inference and planar heatmap reference",
+      "action": "moved",
+      "original_sha256": "80c6111f9093111c58b6aa1a10d6d338120971d2232bd874f388d992dbf03455"
+    },
+    {
+      "original_path": "esp32/ml_integration/README.md",
+      "current_path": "esp32/ml_integration/README.md",
+      "original_modified_at": "2026-10-01T15:54:49+05:30",
+      "classification": "current",
+      "purpose": "Serial ESP32 forecast/event build, replay, telemetry and field capture",
+      "action": "updated",
+      "original_sha256": "18965fad1563d53e78cedf2b1c311472021a1452929eb4444803c07f98fdd3f6"
+    },
+    {
+      "original_path": "esp32/model_test/README.md",
+      "current_path": "esp32/model_test/README.md",
+      "original_modified_at": "2026-09-11T16:50:05+05:30",
+      "classification": "current",
+      "purpose": "Isolated forecast model ESP32 compile/upload instructions",
+      "action": "updated",
+      "original_sha256": "94fab7ec5e7d2bad6b52dde08e7f900be5dc69df18d0dca09945082151f92477"
+    },
+    {
+      "original_path": "ml/evaluation/INDIA_RESULTS.md",
+      "current_path": "docs/archive/ml/evaluation/INDIA_RESULTS.md",
+      "original_modified_at": "2026-09-11T16:50:05+05:30",
+      "classification": "superseded",
+      "purpose": "Historical restricted Indian temporal transfer/Baddi measurements",
+      "action": "moved",
+      "original_sha256": "a7e704848abeacbf6087493cf43d0af3499bb3776b483a03cccce4c09bf720f6"
+    },
+    {
+      "original_path": "ml/event_classifier/EVENT_RELIABILITY.md",
+      "current_path": "ml/event_classifier/EVENT_RELIABILITY.md",
+      "original_modified_at": "2026-09-28T12:13:17+05:30",
+      "classification": "current",
+      "purpose": "Why learned sensor-rule matches are not real hazard probabilities",
+      "action": "unchanged",
+      "original_sha256": "9e0700883a82b4287a3ce134c70873aea2041c56f9df659b6850166a348e29bf"
+    },
+    {
+      "original_path": "ml/event_classifier/README.md",
+      "current_path": "ml/event_classifier/README.md",
+      "original_modified_at": "2026-09-25T23:29:39+05:30",
+      "classification": "current",
+      "purpose": "Event-rule training/export interface and limitations",
+      "action": "updated",
+      "original_sha256": "6ac040c515ec875f56c2124b3e09aedeca104be42f8a4b74ce0e998ac167029e"
+    },
+    {
+      "original_path": "ml/models/india_cpcb_5sensor_6h/README.md",
+      "current_path": "ml/models/india_cpcb_5sensor_6h/README.md",
+      "original_modified_at": "2026-09-10T11:07:49+05:30",
+      "classification": "current",
+      "purpose": "Retained india_cpcb_5sensor_6h model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "0ce50170f63d8a376d5c51c60c24ac14e72142f9b41779c0f4f1102939bf5fe3"
+    },
+    {
+      "original_path": "ml/models/india_cpcb_pm_6h/README.md",
+      "current_path": "ml/models/india_cpcb_pm_6h/README.md",
+      "original_modified_at": "2026-09-10T11:07:49+05:30",
+      "classification": "current",
+      "purpose": "Retained india_cpcb_pm_6h model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "f44928510e569575fd8b65394a5206ed17f9faa0553d4aae3879a83fa1461085"
+    },
+    {
+      "original_path": "ml/models/uci_beijing_5sensor_6h/README.md",
+      "current_path": "ml/models/uci_beijing_5sensor_6h/README.md",
+      "original_modified_at": "2026-09-10T11:07:49+05:30",
+      "classification": "current",
+      "purpose": "Retained uci_beijing_5sensor_6h model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "f6d2ae773bb68b9de56958532956dfb2bd61eaf587f6079e21d938b6bd5a5a19"
+    },
+    {
+      "original_path": "ml/models/uci_beijing_6h/README.md",
+      "current_path": "ml/models/uci_beijing_6h/README.md",
+      "original_modified_at": "2026-09-10T09:25:03+05:30",
+      "classification": "current",
+      "purpose": "Retained uci_beijing_6h model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "a4cb53da63c344dedda5187a237032719c19e5cd314a10c42dc5c11f227f5459"
+    },
+    {
+      "original_path": "ml/models/uci_beijing_event_rules_6sensor/README.md",
+      "current_path": "ml/models/uci_beijing_event_rules_6sensor/README.md",
+      "original_modified_at": "2026-09-25T23:36:59+05:30",
+      "classification": "current",
+      "purpose": "Retained uci_beijing_event_rules_6sensor model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "2b6cdca17f68eaeb301be0fc62d64b4fe2b01b04eec7b8bb6283d3fd862e0e05"
+    },
+    {
+      "original_path": "ml/models/uci_beijing_pm_6h/README.md",
+      "current_path": "ml/models/uci_beijing_pm_6h/README.md",
+      "original_modified_at": "2026-09-10T11:07:49+05:30",
+      "classification": "current",
+      "purpose": "Retained uci_beijing_pm_6h model profile, artifact contract and research limitations",
+      "action": "updated",
+      "original_sha256": "59c57e30bfc8040a60284ef1a9073917b494560a1b05f6d939cbd71aeb4009d2"
+    },
+    {
+      "original_path": "reports/nwic_pipeline/INDIA_PLAN.md",
+      "current_path": "docs/archive/reports/nwic_pipeline/INDIA_PLAN.md",
+      "original_modified_at": "2026-10-03T12:45:37+05:30",
+      "classification": "superseded",
+      "purpose": "Earlier sampled India extension plan and acceptance gates",
+      "action": "moved",
+      "original_sha256": "6a9527d136c964231d188fe13e752a89915df10fc3fb1e5575937c7ca865f11e"
+    },
+    {
+      "original_path": "reports/nwic_pipeline/INDIA_REPORT.md",
+      "current_path": "docs/archive/reports/nwic_pipeline/INDIA_REPORT.md",
+      "original_modified_at": "2026-10-03T13:28:08+05:30",
+      "classification": "superseded",
+      "purpose": "Sampled India spatial results, NWIC quarantine and source coverage",
+      "action": "moved",
+      "original_sha256": "a1a3c6295bc80770a4b5d04f3fcadc4108d74261bd740bc91e0291c86d17e41e"
+    },
+    {
+      "original_path": "reports/nwic_pipeline/NODE_COLLECTION_SPEC.md",
+      "current_path": "reports/nwic_pipeline/NODE_COLLECTION_SPEC.md",
+      "original_modified_at": "2026-10-03T14:55:12+05:30",
+      "classification": "current",
+      "purpose": "Current A/B/C collection, calibration, rotation and scoring protocol",
+      "action": "unchanged",
+      "original_sha256": "d0737508b51cf5ef32453df08fc6c301d4e59fcecc14a9d2f84fbb7c6b000ef9"
+    },
+    {
+      "original_path": "reports/nwic_pipeline/patches/README.md",
+      "current_path": "reports/nwic_pipeline/patches/README.md",
+      "original_modified_at": "2026-10-03T13:29:32+05:30",
+      "classification": "current",
+      "purpose": "Historical patch ordering and already-applied warning",
+      "action": "unchanged",
+      "original_sha256": "97db87588a105878c42bec945c377f87f4d14059884e6851aea72a2bdf5aad6e"
+    },
+    {
+      "original_path": "reports/physics_phase/ERA5_DOWNLOAD.md",
+      "current_path": "reports/physics_phase/ERA5_DOWNLOAD.md",
+      "original_modified_at": "2026-10-03T14:15:38+05:30",
+      "classification": "current",
+      "purpose": "Current exact authorized ERA5-Land prerequisites and join caveats",
+      "action": "unchanged",
+      "original_sha256": "1f995344d50a986b83ff98944c9d9d93462eab86df3bf1210e4f05863107ff0f"
+    },
+    {
+      "original_path": "reports/physics_phase/PLAN.md",
+      "current_path": "docs/archive/reports/physics_phase/PLAN.md",
+      "original_modified_at": "2026-10-03T13:40:14+05:30",
+      "classification": "superseded",
+      "purpose": "Prior physics implementation plan",
+      "action": "moved",
+      "original_sha256": "38398b25321e856898fc96dea5c57d6072c33ef678f57d6c6c48e477b6459758"
+    },
+    {
+      "original_path": "reports/physics_phase/REPORT.md",
+      "current_path": "docs/archive/reports/physics_phase/REPORT.md",
+      "original_modified_at": "2026-10-03T14:17:01+05:30",
+      "classification": "superseded",
+      "purpose": "Earlier 32-neighbor full-hour physics results and band failures",
+      "action": "moved",
+      "original_sha256": "b66e82a59ed13b5bceb5aefe225af516051529c9bc38c5c8ddd1233d8909492b"
+    },
+    {
+      "original_path": "reports/physics_phase/patches/README.md",
+      "current_path": "reports/physics_phase/patches/README.md",
+      "original_modified_at": "2026-10-03T14:18:42+05:30",
+      "classification": "current",
+      "purpose": "Physics patch scopes, application warning and verification receipt",
+      "action": "updated",
+      "original_sha256": "e8c0c5b2df0dfb231226a85fb10523ada14ec887aba0fe639d0ef73b89e7d315"
+    },
+    {
+      "original_path": "reports/practicum/RESULTS.md",
+      "current_path": "reports/practicum/RESULTS.md",
+      "original_modified_at": "2026-10-03T15:02:54+05:30",
+      "classification": "current reference; historical protocol",
+      "purpose": "Measured 32-neighbor practicum tables/figures with current demo routing",
+      "action": "updated",
+      "original_sha256": "99ffd8009f1be9cfd50021321fde24ac8af81303f071479d6a6ccb62d6ae7b9b"
+    },
+    {
+      "original_path": "reports/review/DATASETS_AND_PIPELINE.md",
+      "current_path": "docs/archive/reports/review/DATASETS_AND_PIPELINE.md",
+      "original_modified_at": "2026-10-03T11:26:15+05:30",
+      "classification": "superseded",
+      "purpose": "Original dataset inventory and unified long-form design",
+      "action": "moved",
+      "original_sha256": "47c97e6838fc893b33b3b5d2385b44b0660d769539d8fea896b8958e3403c58b"
+    },
+    {
+      "original_path": "reports/review/REVIEW.md",
+      "current_path": "docs/archive/reports/review/REVIEW.md",
+      "original_modified_at": "2026-10-03T11:37:21+05:30",
+      "classification": "superseded",
+      "purpose": "Original focused code/security review and synthetic ensemble evidence",
+      "action": "moved",
+      "original_sha256": "4cf8a91356da5a80c2e6c935749986ad3e8d16af7946228021b76becfb38f4bc"
+    },
+    {
+      "original_path": "reports/two_node_phase/PLAN.md",
+      "current_path": "docs/archive/reports/two_node_phase/PLAN.md",
+      "original_modified_at": "2026-10-03T14:41:10+05:30",
+      "classification": "superseded",
+      "purpose": "Completed exactly-two-node implementation plan",
+      "action": "moved",
+      "original_sha256": "7f76118a60413fd62e60510cb1fb8bc91b5836a6a4e83ce4bbfeae1a0fb9be9f"
+    },
+    {
+      "original_path": "reports/two_node_phase/REPORT.md",
+      "current_path": "reports/two_node_phase/REPORT.md",
+      "original_modified_at": "2026-10-03T15:09:53+05:30",
+      "classification": "current",
+      "purpose": "Latest uncapped K=2\u20135 archive scores, losses and corridor eligibility",
+      "action": "unchanged",
+      "original_sha256": "2866db26c9278934a5219bc500a4704a7be18601ebc798bd4b626b68072e5d06"
+    },
+    {
+      "original_path": "reports/two_node_phase/examples/README.md",
+      "current_path": "reports/two_node_phase/examples/README.md",
+      "original_modified_at": "2026-10-03T15:06:12+05:30",
+      "classification": "current",
+      "purpose": "Synthetic CLI fixtures; no physical weather validation",
+      "action": "unchanged",
+      "original_sha256": "95e9813a4a8e55dcbc2d9fd3200f12bdcfa144bfb6b63812190daede66a4040e"
+    },
+    {
+      "original_path": "reports/two_node_phase/patches/README.md",
+      "current_path": "reports/two_node_phase/patches/README.md",
+      "original_modified_at": "2026-10-03T15:25:20+05:30",
+      "classification": "current",
+      "purpose": "Two-node patch scopes, already-applied warning and verification receipt",
+      "action": "unchanged",
+      "original_sha256": "b5813434566a7d5b4380e38a13b9c7b5b11f93a1fdd23489bf830106cbd7ae34"
+    }
+  ],
+  "extracted_diagrams": [
+    {
+      "path": "docs/archive/diagrams/ARCHITECTURE__1.mmd",
+      "original_file": "ARCHITECTURE.md",
+      "sha256": "0122b54db4423211f4c6ccf60ce4472f93d846d524eba1d0c471b95bc9e6c145"
+    },
+    {
+      "path": "docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd",
+      "original_file": "reports/nwic_pipeline/INDIA_REPORT.md",
+      "sha256": "6cd0614950d39c4041ce9a447bf3193b3147d2de88181180a7cdb2291b2d8c7d"
+    },
+    {
+      "path": "docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd",
+      "original_file": "reports/physics_phase/REPORT.md",
+      "sha256": "3be466c347556fd8dda71da046691c73cc2c754230a09b08d5bb1396cb5ff36d"
+    },
+    {
+      "path": "docs/archive/diagrams/reports__review__REVIEW__1.mmd",
+      "original_file": "reports/review/REVIEW.md",
+      "sha256": "b1438560b30bd0d3691ce1b727e4065e06427001432a98f0a5d5e918c1536b05"
+    }
+  ],
+  "created_documentation": [
+    "DOC_INVENTORY.md",
+    "README.md",
+    "docs/DATA_LICENSES.md",
+    "docs/DOCUMENTATION_VERIFICATION.md",
+    "docs/PROJECT_OVERVIEW.md",
+    "docs/README.md",
+    "docs/archive/README.md",
+    "docs/archive/diagrams/ARCHITECTURE__1.mmd",
+    "docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd",
+    "docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd",
+    "docs/archive/diagrams/reports__review__REVIEW__1.mmd"
+  ],
+  "verification": {
+    "original_files_preserved": 43,
+    "local_links_checked": 207,
+    "missing_targets_or_anchors": 0,
+    "core_metric_cells_checked": 48,
+    "original_diagrams_byte_exact": 4,
+    "overview_mermaid_diagrams": 2,
+    "tests": "97 passed, eight subtests, one warning",
+    "synthetic_demos": "physics and learned model; unchecked bands null",
+    "moved_bodies_preserved_except_notices_and_links": 13
+  }
+}

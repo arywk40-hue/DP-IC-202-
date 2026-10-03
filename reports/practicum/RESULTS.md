@@ -1,3 +1,5 @@
+> Scope: historical source/experiment reference. Statements about mandatory six inputs apply to the older forecast, not the current four-core-channel spatial task. See [current overview](../../docs/PROJECT_OVERVIEW.md). This file does not establish two-node deployment skill.
+
 # Practicum measured results
 
 NOAA-only completed-hour interpolation. All results below use whole held-out stations and a spatial buffer. December 2024 is untouched for fitting, shrinkage and interval widths. **Archive diagnostic distances often exceed the 20 km serving limit**; these tables do not demonstrate deployable 1–20 km mesh skill. CIs resample whole stations (200 bootstrap repetitions), not individual hours; they do not quantify all spatial/temporal dependence.

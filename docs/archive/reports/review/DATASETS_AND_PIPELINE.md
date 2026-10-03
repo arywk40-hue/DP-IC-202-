@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `reports/review/DATASETS_AND_PIPELINE.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # Datasets and unified pipeline — 3 October 2026
 
 Sources below were inspected online or recorded in repository manifests. New datasets are recommendations, **not downloaded or used in fitted models during this review**. Open access does not establish identical redistribution rights. Freeze product version, exact license text, retrieval time and SHA-256 before ingestion.

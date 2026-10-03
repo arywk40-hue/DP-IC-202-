@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `docs/reference/ML_INFERENCE.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # INDRA model inference reference
 
 ## Six-hour measurement forecast
@@ -63,8 +65,8 @@ the supplied nodes, then interpolate their rule scores. The implementation
 expects planar `x, y` coordinates; latitude and longitude require a suitable
 local projection before use. It has no independent spatial validation.
 
-See [event experiment details](../../ml/event_classifier/README.md) and
-[rule limitations](../../ml/event_classifier/EVENT_RELIABILITY.md).
+See [event experiment details](../../../../ml/event_classifier/README.md) and
+[rule limitations](../../../../ml/event_classifier/EVENT_RELIABILITY.md).
 
 ## Deployment preparation update
 

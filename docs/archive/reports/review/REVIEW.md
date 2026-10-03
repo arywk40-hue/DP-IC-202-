@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `reports/review/REVIEW.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # Focused review — 3 October 2026
 
 **Verdict: a tested node-forecast research prototype, not yet a validated, deployable weather mesh interpolator.** Small fixes and an isolated experimental ensemble are in the working tree; saved models and deployment selection are unchanged. No commits were created. Dataset access, the full ingestion pipeline and field validation remain larger work.

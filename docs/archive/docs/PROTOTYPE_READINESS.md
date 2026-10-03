@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `docs/PROTOTYPE_READINESS.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../PROJECT_OVERVIEW.md) for current scope.
+
 # Prototype readiness and field deployment gates
 
 The retained models are ready for a supervised software/ESP32 bench prototype.
@@ -57,7 +59,7 @@ Real node JSON uses the same structure: x, y, timestamp_utc, the six canonical
 channels and seven `history` dictionaries. Default CLI strategy is A.
 
 ESP32 builds, upload commands and automated physical replay are in
-[the ML integration guide](../esp32/ml_integration/README.md). No new hardware
+[the ML integration guide](../../../esp32/ml_integration/README.md). No new hardware
 execution is claimed by this update. LoRa integration remains deferred per the
 ML-first scope; it is not tested by these host checks.
 
@@ -85,7 +87,7 @@ is compared with the unchanged-current-value (persistence) baseline.
 
 To create that CSV from recorder journals, run
 `python3 -m ml.deployment.convert_field --input results/field/session-001.jsonl --output results/field/observations.csv --report results/field/conversion_report.json`.
-See the [conversion guide](../esp32/ml_integration/README.md#convert-field-recordings-for-forecast-evaluation)
+See the [conversion guide](../../../esp32/ml_integration/README.md#convert-field-recordings-for-forecast-evaluation)
 for exclusions, duplicate handling and provenance requirements. The evaluator
 checks the selected model's six-hour horizon, six outputs and ordered six-input
 student contract before inference; reduced-input models are unsupported here.
@@ -114,7 +116,7 @@ which is a possible inquiry route, not evidence of hourly PM10 coverage.
 
 For board testing, no ESP32 serial port was visible during the latest local
 check. Once a board is connected, follow the upload and replay commands in
-[the ML integration guide](../esp32/ml_integration/README.md); the generated
+[the ML integration guide](../../../esp32/ml_integration/README.md); the generated
 `results/esp32_board_test.json` will contain measured inference latency.
 
 For event validation, collect independently recorded positive and negative
@@ -173,7 +175,7 @@ with the screened weather data gives 1,431 candidate rows, including 45 at
 IIT Mandi. However, the entire rainfall file contains no zero-rainfall rows;
 all matched examples are wet. It cannot support binary detection validation
 or calibrated rain probabilities without independently observed dry periods.
-See [source details](../data/field_sources/README.md) and the reproducible
+See [source details](../../../data/field_sources/README.md) and the reproducible
 `ml.deployment.audit_rainfall` command. This is progress in acquiring independent
 measurements, not evidence that the model now detects real rain reliably.
 

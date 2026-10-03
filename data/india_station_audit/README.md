@@ -1,3 +1,5 @@
+> Scope: historical source/experiment reference. Statements about mandatory six inputs apply to the older forecast, not the current four-core-channel spatial task. See [current overview](../../docs/PROJECT_OVERVIEW.md). This file does not establish two-node deployment skill.
+
 # Indian six-sensor source audit — downloaded samples, not training data
 
 **Outcome:** retrieved the complete file inventory and seven station samples
@@ -77,7 +79,7 @@ and region holdouts must remain untouched by fitting and model selection.
 retraining, Mandi validation or nationwide applicability is claimed by this audit.**
 
 
-Subsequent work: [Indian profile training](../../ml/evaluation/INDIA_RESULTS.md)
+Subsequent work: [Indian profile training](../../docs/archive/ml/evaluation/INDIA_RESULTS.md)
 uses only explicit-unit channels, excluding pressure and ambiguous temperature,
 under documented interval/timezone assumptions. This original audit remains
 the record of why complete six-input evaluation is unavailable.

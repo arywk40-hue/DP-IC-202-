@@ -38,5 +38,5 @@ the output measurement and unit. Both roles use the same dataset and splits.
 - `esp32_build_report.json`: isolated ESP32 build evidence and hardware-test status.
 
 The C export is a forecast model, not verified storm/flood detection. Beijing
-scores do not establish India field accuracy. See [ARCHITECTURE.md](../../../ARCHITECTURE.md)
+scores do not establish India field accuracy. See [ARCHITECTURE.md](../../../docs/archive/ARCHITECTURE.md)
 for measured accuracy, limitations, reproduction and board-test instructions.

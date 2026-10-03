@@ -1,3 +1,5 @@
+> Scope: historical source/experiment reference. Statements about mandatory six inputs apply to the older forecast, not the current four-core-channel spatial task. See [current overview](../../docs/PROJECT_OVERVIEW.md). This file does not establish two-node deployment skill.
+
 # Official IMD northern India access check
 
 **Six required inputs remain mandatory. No new IMD-trained model is claimed.**

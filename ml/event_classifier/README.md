@@ -29,5 +29,6 @@ python3 -m ml.event_classifier.export
 ```
 
 The export command compiles a C runner and compares it with XGBoost before
-writing the header. For now, the header is an offline experiment and is not
-part of the default ESP32 forecast build.
+writing the header. The header is integrated into the separate serial-replay ESP32 ML application
+(`esp32/ml_integration/`); the isolated forecast-only build remains separate.
+Physical operation and real hazard accuracy remain unverified.

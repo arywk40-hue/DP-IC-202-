@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `ARCHITECTURE.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../PROJECT_OVERVIEW.md) for current scope.
+
 # Original Six-Input Baseline: Implementation, Training and ESP32 Testing
 
 The current Indian five-input and two-input candidates, matched Beijing
@@ -185,7 +187,7 @@ edge capacity or a history-aware student and a new measured comparison.
 Beijing performance does not establish performance in Indian mountain terrain.
 
 Full metrics, selected architectures, data hashes, software versions and
-provenance: [`ml/models/uci_beijing_6h/training_report.json`](ml/models/uci_beijing_6h/training_report.json).
+provenance: [`ml/models/uci_beijing_6h/training_report.json`](../../ml/models/uci_beijing_6h/training_report.json).
 
 ## Implementation files and reproduction
 
@@ -215,7 +217,7 @@ regenerate and re-run parity after changing model artifacts.
 
 ## ESP32 export and test status
 
-- Export: [`indra_six_sensor_forecast.h`](ml/models/uci_beijing_6h/esp32_student/export/indra_six_sensor_forecast.h).
+- Export: [`indra_six_sensor_forecast.h`](../../ml/models/uci_beijing_6h/esp32_student/export/indra_six_sensor_forecast.h).
 - Model structure: six heads, 96 trees total, maximum depth 3, 1,438 total nodes.
 - Header source size: see `c_export_report.json`. This is source text size, not flash/RAM use.
 - Python/C parity: **4,063 valid rows**, including tree-threshold neighbors and

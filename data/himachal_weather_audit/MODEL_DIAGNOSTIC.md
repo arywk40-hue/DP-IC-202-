@@ -1,3 +1,5 @@
+> Scope: historical source/experiment reference. Statements about mandatory six inputs apply to the older forecast, not the current four-core-channel spatial task. See [current overview](../../docs/PROJECT_OVERVIEW.md). This file does not establish two-node deployment skill.
+
 # Himachal missing-PM model diagnostic
 
 Tested the unchanged `uci_beijing_6h` ESP32 student against observations exactly six hours later. No retraining or tuning was performed. All four weather inputs were present; both particulate inputs were NaN. Direct XGBoost missing-value routing was exercised for this offline diagnostic. Normal production inference rejects these incomplete inputs; this is not a validated six-input deployment test.

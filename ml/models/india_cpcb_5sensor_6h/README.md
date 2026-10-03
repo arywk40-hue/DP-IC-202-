@@ -20,5 +20,5 @@ sensors, validation selection and metrics are in `training_report.json`.
 | wind_speed_mps | 76,861 | 0.75 |
 
 A zero residual weight means persistence; it must not be described as learned
-forecast improvement. Read [paired Indian results](../../evaluation/INDIA_RESULTS.md)
+forecast improvement. Read [paired Indian results](../../../docs/archive/ml/evaluation/INDIA_RESULTS.md)
 before choosing a candidate. Research only; no automatic deployment promotion.

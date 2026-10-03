@@ -1,3 +1,5 @@
+> Archived evidence / superseded guide. Original path: `reports/physics_phase/PLAN.md`. Protocol-specific results are preserved; use [PROJECT_OVERVIEW.md](../../../PROJECT_OVERVIEW.md) for current scope.
+
 # Ordered, separate patches
 
 1. Shared pressure-height reduction, temperature lapse correction and dewpoint interpolation; documented assumptions and fail-closed station QC.

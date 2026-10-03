@@ -98,7 +98,7 @@ Event score order:
 The outputs reproduce the existing learned sensor rules. They are not
 calibrated real-world hazard probabilities. This integration preserves the
 saved model definitions; the implemented rules and their limitations are
-documented in [model inputs and outputs](../../docs/MODEL_INPUTS_AND_OUTPUTS.md).
+documented in [model inputs and outputs](../../docs/archive/docs/MODEL_INPUTS_AND_OUTPUTS.md).
 
 ## Verification boundary
 
@@ -170,6 +170,6 @@ fail conversion. The report includes source/output hashes and exclusion counts.
 The CSV contains measured inputs, never predicted values or event labels.
 Conversion does not certify calibration, timezone or pressure reference;
 provide the separately verified provenance described in
-[Prototype readiness](../../docs/PROTOTYPE_READINESS.md).
+[Prototype readiness](../../docs/archive/docs/PROTOTYPE_READINESS.md).
 The forecast evaluator requires the complete six-input, six-output, six-hour
 student model; a reduced-input `--model` is rejected with a compatibility error.

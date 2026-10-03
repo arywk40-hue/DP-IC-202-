@@ -1,0 +1,12 @@
+flowchart TD
+    A[Six measured input channels] --> B[Causal hourly history: 66 features]
+    B --> C[Offline residual XGBoost teachers: six heads]
+    D[Exact observed measurements at t + 6 hours] --> C
+    C --> E[Training-only teacher residual predictions]
+    D --> F[Student targets: 50% observed residual + 50% teacher residual]
+    E --> F
+    A --> G[Compact students: six inputs, six heads]
+    F --> G
+    G --> H[Validation-selected persistence blending]
+    H --> I[Standalone C header]
+    I --> J[Host parity and isolated ESP32-S3 model test]
