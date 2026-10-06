@@ -86,3 +86,6 @@ esp32/ml_integration/include/build_identity.h
 /data/india_sensor/models/
 /data/india_sensor/offline/
 /data/india_sensor/offline_before_repro_policy/
+
+# Independent-event research raw exports, normalized rows and working fits.
+/data/hazard_context/

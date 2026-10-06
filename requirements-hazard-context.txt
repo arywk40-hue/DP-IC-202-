@@ -1,0 +1,5 @@
+# Optional isolated Python 3.13 context research dependencies; preserve original environments.
+xarray==2026.9.0
+netCDF4==1.7.4
+geographiclib==2.1
+shapely==2.1.2
