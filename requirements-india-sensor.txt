@@ -1,0 +1,9 @@
+# Isolated benchmark runtime actually used: Python 3.13.11.
+# Does not replace the old root or physics/CI environments.
+numpy==2.5.2
+pandas==2.3.3
+scipy==1.18.0
+scikit-learn==1.9.0
+xgboost==3.3.0
+pyarrow==23.0.0
+pytest==9.0.2

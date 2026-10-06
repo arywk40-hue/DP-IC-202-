@@ -1,0 +1,75 @@
+{
+  "schema_version": "indra_india_sensor_v1",
+  "seed": 42,
+  "country_code": "IN",
+  "allowed_sources": [
+    "noaa_ghcnh"
+  ],
+  "hours": "data/physics_training/hours.parquet",
+  "stations": "data/registry/india_stations.csv",
+  "station_qc": "data/physics_training/station_qc.csv",
+  "source_registry": "data/registry/sources.json",
+  "processed": "data/india_sensor/processed",
+  "features": "data/india_sensor/features",
+  "models": "data/india_sensor/models",
+  "reports": "reports/india_sensor_phase",
+  "cadence_seconds": 3600,
+  "windows_minutes": [
+    10,
+    30,
+    60,
+    360,
+    1440
+  ],
+  "history_minutes": 1440,
+  "forecast_hours": 6,
+  "threshold_targets": {
+    "high_wind_measurement_at_6h": {
+      "variable": "wind_speed_mps",
+      "threshold": 10.0,
+      "unit": "m/s"
+    },
+    "hot_measurement_at_6h": {
+      "variable": "temperature_c",
+      "threshold": 35.0,
+      "unit": "degC"
+    },
+    "near_saturation_measurement_at_6h": {
+      "variable": "relative_humidity_pct",
+      "threshold": 95.0,
+      "unit": "%"
+    }
+  },
+  "hazard_targets": [
+    "extreme_rainfall_risk",
+    "cloudburst_risk",
+    "storm_risk",
+    "flash_flood_weather_risk",
+    "landslide_weather_risk",
+    "wildfire_risk",
+    "smoke_source",
+    "dust_source",
+    "air_quality_event"
+  ],
+  "strategies": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "scopes": [
+    "national",
+    "himalaya_holdout"
+  ],
+  "buffer_km": 20.0,
+  "validation_start": "2024-07-01T00:00:00Z",
+  "calibration_start": "2024-09-01T00:00:00Z",
+  "test_start": "2024-11-01T00:00:00Z",
+  "test_end": "2025-01-01T00:00:00Z",
+  "minimum_per_class": 20,
+  "minimum_expert_sites": 3,
+  "rounds": 40,
+  "threads": 4,
+  "max_expanded_station_rows": 30000,
+  "deployment_approved": false
+}

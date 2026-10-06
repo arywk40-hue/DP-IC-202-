@@ -79,3 +79,10 @@ esp32/ml_integration/include/build_identity.h
 
 # Two-node archive features and JSON models (generated locally)
 /data/two_node_training/
+
+# India sensor-only research: retain reports/manifests, not generated matrices.
+/data/india_sensor/processed/
+/data/india_sensor/features/
+/data/india_sensor/models/
+/data/india_sensor/offline/
+/data/india_sensor/offline_before_repro_policy/
