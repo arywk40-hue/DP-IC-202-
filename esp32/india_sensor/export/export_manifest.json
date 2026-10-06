@@ -1,0 +1,266 @@
+{
+  "status": "HOST_VERIFIED_NOT_HARDWARE_VALIDATED",
+  "scope": "national",
+  "strategy": "B",
+  "feature_order": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "wind_speed_mps",
+    "temperature_c_lag_1h",
+    "temperature_c_lag_3h",
+    "temperature_c_lag_6h",
+    "temperature_c_lag_12h",
+    "temperature_c_lag_24h",
+    "temperature_c_delta_1h",
+    "temperature_c_mean_6h",
+    "temperature_c_std_6h",
+    "temperature_c_mean_24h",
+    "temperature_c_std_24h",
+    "relative_humidity_pct_lag_1h",
+    "relative_humidity_pct_lag_3h",
+    "relative_humidity_pct_lag_6h",
+    "relative_humidity_pct_lag_12h",
+    "relative_humidity_pct_lag_24h",
+    "relative_humidity_pct_delta_1h",
+    "relative_humidity_pct_mean_6h",
+    "relative_humidity_pct_std_6h",
+    "relative_humidity_pct_mean_24h",
+    "relative_humidity_pct_std_24h",
+    "pressure_hpa_lag_1h",
+    "pressure_hpa_lag_3h",
+    "pressure_hpa_lag_6h",
+    "pressure_hpa_lag_12h",
+    "pressure_hpa_lag_24h",
+    "pressure_hpa_delta_1h",
+    "wind_speed_mps_lag_1h",
+    "wind_speed_mps_lag_3h",
+    "wind_speed_mps_lag_6h",
+    "wind_speed_mps_lag_12h",
+    "wind_speed_mps_lag_24h",
+    "wind_speed_mps_delta_1h",
+    "wind_speed_mps_mean_6h",
+    "wind_speed_mps_std_6h",
+    "wind_speed_mps_mean_24h",
+    "wind_speed_mps_std_24h",
+    "temperature_c_delta_360min",
+    "temperature_c_min_360min",
+    "temperature_c_max_360min",
+    "relative_humidity_pct_delta_360min",
+    "relative_humidity_pct_min_360min",
+    "relative_humidity_pct_max_360min",
+    "wind_speed_mps_delta_360min",
+    "wind_speed_mps_min_360min",
+    "wind_speed_mps_max_360min",
+    "temperature_c_delta_1440min",
+    "temperature_c_min_1440min",
+    "temperature_c_max_1440min",
+    "relative_humidity_pct_delta_1440min",
+    "relative_humidity_pct_min_1440min",
+    "relative_humidity_pct_max_1440min",
+    "wind_speed_mps_delta_1440min",
+    "wind_speed_mps_min_1440min",
+    "wind_speed_mps_max_1440min",
+    "pressure_tendency_hpa_per_min_60min",
+    "dewpoint_c",
+    "dewpoint_depression_c",
+    "vapor_pressure_deficit_kpa",
+    "heat_index_c",
+    "absolute_humidity_estimate_g_m3",
+    "hour_sin",
+    "hour_cos",
+    "month_sin",
+    "month_cos",
+    "calendar_jjas_proxy",
+    "latitude",
+    "longitude",
+    "elevation_m"
+  ],
+  "targets": [
+    "high_wind_measurement_at_6h",
+    "hot_measurement_at_6h",
+    "near_saturation_measurement_at_6h"
+  ],
+  "thresholds": {
+    "high_wind_measurement_at_6h": {
+      "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+      "raw_threshold": 0.02174493484199047,
+      "support": {
+        "positive_hours": 16,
+        "negative_hours": 12464,
+        "positive_episodes": 7,
+        "positive_sites": 4
+      },
+      "policy": {
+        "beta": 2.0,
+        "max_false_positive_hours_per_station_day": 0.25,
+        "minimum_positive_hours": 10,
+        "minimum_positive_episodes": 3,
+        "minimum_positive_sites": 2
+      },
+      "selection_data": "validation_only",
+      "validation_decisions": {
+        "rows": 12480,
+        "positives": 16,
+        "threshold": 0.02174493484199047,
+        "precision": 0.018018018018018018,
+        "recall": 0.125,
+        "f1": 0.031496062992125984,
+        "f2": 0.05714285714285714,
+        "false_positive_hours_per_station_day": 0.20961538461538462,
+        "confusion_matrix": [
+          [
+            12355,
+            109
+          ],
+          [
+            14,
+            2
+          ]
+        ],
+        "missed_positive_hours": 14
+      }
+    },
+    "hot_measurement_at_6h": {
+      "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+      "raw_threshold": 0.34642186760902405,
+      "support": {
+        "positive_hours": 580,
+        "negative_hours": 11898,
+        "positive_episodes": 20,
+        "positive_sites": 18
+      },
+      "policy": {
+        "beta": 2.0,
+        "max_false_positive_hours_per_station_day": 0.25,
+        "minimum_positive_hours": 10,
+        "minimum_positive_episodes": 3,
+        "minimum_positive_sites": 2
+      },
+      "selection_data": "validation_only",
+      "validation_decisions": {
+        "rows": 12478,
+        "positives": 580,
+        "threshold": 0.34642186760902405,
+        "precision": 0.6783042394014963,
+        "recall": 0.4689655172413793,
+        "f1": 0.5545361875637105,
+        "f2": 0.4998162440279309,
+        "false_positive_hours_per_station_day": 0.24811668536624462,
+        "confusion_matrix": [
+          [
+            11769,
+            129
+          ],
+          [
+            308,
+            272
+          ]
+        ],
+        "missed_positive_hours": 308
+      }
+    },
+    "near_saturation_measurement_at_6h": {
+      "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+      "raw_threshold": 0.8031024932861328,
+      "support": {
+        "positive_hours": 1909,
+        "negative_hours": 10568,
+        "positive_episodes": 20,
+        "positive_sites": 28
+      },
+      "policy": {
+        "beta": 2.0,
+        "max_false_positive_hours_per_station_day": 0.25,
+        "minimum_positive_hours": 10,
+        "minimum_positive_episodes": 3,
+        "minimum_positive_sites": 2
+      },
+      "selection_data": "validation_only",
+      "validation_decisions": {
+        "rows": 12477,
+        "positives": 1909,
+        "threshold": 0.8031024932861328,
+        "precision": 0.8100147275405007,
+        "recall": 0.2881089575694081,
+        "f1": 0.4250386398763524,
+        "f2": 0.33072760072158747,
+        "false_positive_hours_per_station_day": 0.24813657129117575,
+        "confusion_matrix": [
+          [
+            10439,
+            129
+          ],
+          [
+            1359,
+            550
+          ]
+        ],
+        "missed_positive_hours": 1359
+      }
+    }
+  },
+  "calibration": {
+    "high_wind_measurement_at_6h": null,
+    "hot_measurement_at_6h": {
+      "coefficient": 1.8650504350662231,
+      "intercept": 1.1992692947387695,
+      "rows": 12069,
+      "positives": 327,
+      "method": "chronological_Platt_logit"
+    },
+    "near_saturation_measurement_at_6h": {
+      "coefficient": 1.0578330755233765,
+      "intercept": -1.3090866804122925,
+      "rows": 12066,
+      "positives": 1054,
+      "method": "chronological_Platt_logit"
+    }
+  },
+  "teacher_model_sha256": {
+    "high_wind_measurement_at_6h": "4d19f2f453053b5cbaa3c554125bd604242657d194256e138f31533000432952",
+    "hot_measurement_at_6h": "960f5154711c44e62fa786b02e01807fcb386a336feeccf5f6f73e1cc69b16fe",
+    "near_saturation_measurement_at_6h": "97856ffd10cf4c48c1f8a40928929bdf231707e1ecb2737294dfedfe575f809b"
+  },
+  "metadata_sha256": "70049f7496f0d4555915e47a70a2c371dbff4f0d710d4c0bdccb7e170ea908f0",
+  "header_sha256": "1e93fec94c8254c7bf4fa61849bb970cdc1a34b7c687016855a57a95ab35f68a",
+  "preprocessing_header_sha256": "ea70e9c310d0eaf5680cfa50774cbc4b7a93c47594c139a10101a3a9ebb08e76",
+  "header_bytes": 109707,
+  "total_tree_nodes": 1788,
+  "host_parity_rows": 5384,
+  "host_max_raw_error": [
+    4.761252403312488e-07,
+    4.995880127089958e-07,
+    5.590915679865027e-07
+  ],
+  "heap_allocation": false,
+  "disaster_outputs": "DISABLED",
+  "sampling_seconds": 3600,
+  "preprocessing": {
+    "header": "esp32/india_sensor/export/indra_india_preprocess.h",
+    "history_bytes_upper_bound": 848,
+    "native_cadence_seconds": 3600,
+    "raw_order": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pressure_hpa",
+      "pm25_ug_m3",
+      "pm10_ug_m3",
+      "wind_speed_mps"
+    ],
+    "float_precision": "float32 telemetry, double derived intermediates",
+    "units": [
+      "degC",
+      "percent",
+      "station_hPa",
+      "ug/m3",
+      "ug/m3",
+      "m/s"
+    ],
+    "latitude_longitude": "Fixed surveyed WGS84 degrees",
+    "height": "Verified EGM96 sensor elevation or NAN; never raw GNSS ellipsoid altitude",
+    "time": "Explicit UTC completed hour 2020\u20132037; DS3231/GNSS synchronization not hardware verified",
+    "hardware_validated": false
+  },
+  "board_ram_flash_cpu": "Cross-compile/static size separately; actual board runtime/power/soak unverified"
+}

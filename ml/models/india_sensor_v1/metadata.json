@@ -1,0 +1,2558 @@
+{
+  "model_version": "india_sensor_research_v1",
+  "seed": 42,
+  "trained_at_utc": "2026-10-06T04:38:42.531968+00:00",
+  "config_sha256": "9c5d914a43b3a462c8d2b10117fcba2b4e40ed60c43cf6b19df81ec66ee6ed37",
+  "preparation_sha256": "718d7aa5ac59051b200a335de3f4fd18429fb3e4f369fb87c2bf10da16b705ae",
+  "data_rows_after_current_core_mask": 1497056,
+  "prepared_rows": 1515461,
+  "station_count": 373,
+  "years": [
+    2023,
+    2024,
+    2025
+  ],
+  "runtime": {
+    "python": "3.13.11",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.3.0",
+    "pyarrow": "23.0.0"
+  },
+  "evidence_categories": [
+    "geographical_holdout",
+    "temporal_holdout",
+    "future_measured_threshold_validation"
+  ],
+  "not_evidence": [
+    "historical_disaster_validation",
+    "real_INDRA_sensor_validation",
+    "between_node_risk_validation"
+  ],
+  "spatial_buffer_km": 20.0,
+  "threshold": 0.5,
+  "no_row_caps": true,
+  "decision_policy": {
+    "beta": 2.0,
+    "max_false_positive_hours_per_station_day": 0.25,
+    "minimum_positive_hours": 10,
+    "minimum_positive_episodes": 3,
+    "minimum_positive_sites": 2
+  },
+  "split_scope_semantics": "temporal intentionally shares stations across disjoint times; other scopes are buffered whole-site splits; Himalaya-only uses only QC-valid mountain proxy sites",
+  "episode_partition": "Global 72h blocks wholly assigned to one chronological role; boundary blocks and history/target overlaps dropped. Blocks are storm proxies, not event truth.",
+  "untrained_hazards": {
+    "extreme_rainfall_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "cloudburst_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "storm_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "flash_flood_weather_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "landslide_weather_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "wildfire_risk": "INDEPENDENT_LABELS_REQUIRED",
+    "smoke_source": "INDEPENDENT_LABELS_REQUIRED",
+    "dust_source": "INDEPENDENT_LABELS_REQUIRED",
+    "air_quality_event": "INDEPENDENT_LABELS_REQUIRED"
+  },
+  "deployment_approved": false,
+  "esp32": "No new export or hardware verification",
+  "geography_warning": "GPS/elevation region and Himachal bbox proxies, not official boundaries; missing/QC-invalid altitude not assumed mountain",
+  "intervals": "95% station-cluster bootstrap Brier intervals; not prediction bands; shared storms not independent across stations",
+  "calibration": "Separate Sep/Oct validation stations; Platt fit excludes held-out sites and test hours; field reliability not established",
+  "labels": {
+    "high_wind_measurement_at_6h": {
+      "variable": "wind_speed_mps",
+      "threshold": 10.0,
+      "unit": "m/s"
+    },
+    "hot_measurement_at_6h": {
+      "variable": "temperature_c",
+      "threshold": 35.0,
+      "unit": "degC"
+    },
+    "near_saturation_measurement_at_6h": {
+      "variable": "relative_humidity_pct",
+      "threshold": 95.0,
+      "unit": "%"
+    }
+  },
+  "allowed_sources": [
+    "noaa_ghcnh"
+  ],
+  "raw_lineage_manifest": {
+    "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/data/physics_training/hours.parquet": "a9f9c80aba17b57ef30dcde35a1b480e91f75b98901380d80308c113d070b7fd",
+    "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/data/registry/india_stations.csv": "4b5ec01040e08b53474c246df62c59ac7aa125138d28e9f45d626fbf78ff2c00",
+    "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/data/physics_training/station_qc.csv": "522144c4bf98476d861e171be18bcb610376db359620eb897ae54dbda2d8d6a1",
+    "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/data/registry/sources.json": "7b5f4b269ea15396bf4989df84eb30370c35f448cd6429cb3641b50e9b5f2847",
+    "configs/india_sensor_offline.json": "9c5d914a43b3a462c8d2b10117fcba2b4e40ed60c43cf6b19df81ec66ee6ed37",
+    "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/reports/physics_phase/hourly_manifest.json": "0e8f5784ff6fb8db99b53c6649010a07daacfdf19b8adb1c8de3fe062df169b5"
+  },
+  "implementation_sha256": {
+    "metrics.py": "f249c34a25500b87a28793f9a6087c153d8ff36e357e80f7e3d68d4417ffeac7",
+    "labels.py": "688d8dc26633f03524162c4e8ae3b1fa5ae8c767ff5f41b364b1ad59900106b2",
+    "config.py": "57de3079ccb4c61dca51fe57fea9a791fcb67aa9733d057343434cb4cc6164f5",
+    "thresholds.py": "18976ac2b1da34bc1080c4b589f7c308208b217266584c67f5a544f1bc16436b",
+    "predict.py": "125f49792266025be19dc773d61c3391884659c61f5436457869cffe32cdc7e7",
+    "pm.py": "cd0b7fbcd1d03ed1ff352a02a5497bc6e4b91ce31959e1ca624d4137c4589f48",
+    "__init__.py": "60fb5e2de8eacbbca43baef46d9be138eafdf8347ef201eb785be80f037166e8",
+    "features.py": "05060da2089c9cbb7f721a5121880460e0011dec8371f032cc6af6d39f8c676d",
+    "replay.py": "9eb60ab533a82e0dab56aef1143ba2bb3365373b94b3eb25ac171224b840c73c",
+    "train.py": "b1604968a24db9c14e8a22fbd4dc9e6e19cc76844201aab6fa698d7a4370638f",
+    "splits.py": "7a0eeb345740f082c3aaca19fe642610421eca89bbde18956415ee03dae384aa",
+    "evaluate.py": "2509b7fc0ea3d14cb997397dbf5896b752458612d49bcaa2d1999395709f9964",
+    "prepare.py": "32c457e641b14a09ca8168569f77bc4873b55acba315800d8efad2f2f59057fe"
+  },
+  "bundle": "national B only; C/D can only fall back to B; no A or regional artifacts",
+  "artifacts": {
+    "national/high_wind_measurement_at_6h": {
+      "B": {
+        "status": "RESEARCH_FITTED",
+        "features": [
+          "temperature_c",
+          "relative_humidity_pct",
+          "pressure_hpa",
+          "wind_speed_mps",
+          "temperature_c_lag_1h",
+          "temperature_c_lag_3h",
+          "temperature_c_lag_6h",
+          "temperature_c_lag_12h",
+          "temperature_c_lag_24h",
+          "temperature_c_delta_1h",
+          "temperature_c_mean_6h",
+          "temperature_c_std_6h",
+          "temperature_c_mean_24h",
+          "temperature_c_std_24h",
+          "relative_humidity_pct_lag_1h",
+          "relative_humidity_pct_lag_3h",
+          "relative_humidity_pct_lag_6h",
+          "relative_humidity_pct_lag_12h",
+          "relative_humidity_pct_lag_24h",
+          "relative_humidity_pct_delta_1h",
+          "relative_humidity_pct_mean_6h",
+          "relative_humidity_pct_std_6h",
+          "relative_humidity_pct_mean_24h",
+          "relative_humidity_pct_std_24h",
+          "pressure_hpa_lag_1h",
+          "pressure_hpa_lag_3h",
+          "pressure_hpa_lag_6h",
+          "pressure_hpa_lag_12h",
+          "pressure_hpa_lag_24h",
+          "pressure_hpa_delta_1h",
+          "wind_speed_mps_lag_1h",
+          "wind_speed_mps_lag_3h",
+          "wind_speed_mps_lag_6h",
+          "wind_speed_mps_lag_12h",
+          "wind_speed_mps_lag_24h",
+          "wind_speed_mps_delta_1h",
+          "wind_speed_mps_mean_6h",
+          "wind_speed_mps_std_6h",
+          "wind_speed_mps_mean_24h",
+          "wind_speed_mps_std_24h",
+          "temperature_c_delta_360min",
+          "temperature_c_min_360min",
+          "temperature_c_max_360min",
+          "relative_humidity_pct_delta_360min",
+          "relative_humidity_pct_min_360min",
+          "relative_humidity_pct_max_360min",
+          "wind_speed_mps_delta_360min",
+          "wind_speed_mps_min_360min",
+          "wind_speed_mps_max_360min",
+          "temperature_c_delta_1440min",
+          "temperature_c_min_1440min",
+          "temperature_c_max_1440min",
+          "relative_humidity_pct_delta_1440min",
+          "relative_humidity_pct_min_1440min",
+          "relative_humidity_pct_max_1440min",
+          "wind_speed_mps_delta_1440min",
+          "wind_speed_mps_min_1440min",
+          "wind_speed_mps_max_1440min",
+          "pressure_tendency_hpa_per_min_60min",
+          "dewpoint_c",
+          "dewpoint_depression_c",
+          "vapor_pressure_deficit_kpa",
+          "heat_index_c",
+          "absolute_humidity_estimate_g_m3",
+          "hour_sin",
+          "hour_cos",
+          "month_sin",
+          "month_cos",
+          "calendar_jjas_proxy",
+          "latitude",
+          "longitude",
+          "elevation_m"
+        ],
+        "inactive_features": [
+          "pm10_ug_m3",
+          "pm10_ug_m3_delta_10min",
+          "pm10_ug_m3_delta_1440min",
+          "pm10_ug_m3_delta_1h",
+          "pm10_ug_m3_delta_30min",
+          "pm10_ug_m3_delta_360min",
+          "pm10_ug_m3_lag_12h",
+          "pm10_ug_m3_lag_1h",
+          "pm10_ug_m3_lag_24h",
+          "pm10_ug_m3_lag_3h",
+          "pm10_ug_m3_lag_6h",
+          "pm10_ug_m3_max_1440min",
+          "pm10_ug_m3_max_360min",
+          "pm10_ug_m3_mean_24h",
+          "pm10_ug_m3_mean_6h",
+          "pm10_ug_m3_min_1440min",
+          "pm10_ug_m3_min_360min",
+          "pm10_ug_m3_std_24h",
+          "pm10_ug_m3_std_6h",
+          "pm25_pm10_ratio",
+          "pm25_ug_m3",
+          "pm25_ug_m3_delta_10min",
+          "pm25_ug_m3_delta_1440min",
+          "pm25_ug_m3_delta_1h",
+          "pm25_ug_m3_delta_30min",
+          "pm25_ug_m3_delta_360min",
+          "pm25_ug_m3_lag_12h",
+          "pm25_ug_m3_lag_1h",
+          "pm25_ug_m3_lag_24h",
+          "pm25_ug_m3_lag_3h",
+          "pm25_ug_m3_lag_6h",
+          "pm25_ug_m3_max_1440min",
+          "pm25_ug_m3_max_360min",
+          "pm25_ug_m3_mean_24h",
+          "pm25_ug_m3_mean_6h",
+          "pm25_ug_m3_min_1440min",
+          "pm25_ug_m3_min_360min",
+          "pm25_ug_m3_std_24h",
+          "pm25_ug_m3_std_6h",
+          "pressure_anomaly_prior24h_hpa",
+          "pressure_hpa_delta_10min",
+          "pressure_hpa_delta_1440min",
+          "pressure_hpa_delta_30min",
+          "pressure_hpa_delta_360min",
+          "pressure_hpa_max_1440min",
+          "pressure_hpa_max_360min",
+          "pressure_hpa_mean_24h",
+          "pressure_hpa_mean_6h",
+          "pressure_hpa_min_1440min",
+          "pressure_hpa_min_360min",
+          "pressure_hpa_std_24h",
+          "pressure_hpa_std_6h",
+          "pressure_tendency_hpa_per_min_10min",
+          "pressure_tendency_hpa_per_min_30min",
+          "relative_humidity_pct_delta_10min",
+          "relative_humidity_pct_delta_30min",
+          "temperature_c_delta_10min",
+          "temperature_c_delta_30min",
+          "wind_speed_mps_delta_10min",
+          "wind_speed_mps_delta_30min",
+          "wind_variability_60min_mps"
+        ],
+        "rows_by_role": {
+          "train": 451013,
+          "validation": 12480,
+          "calibration": 12075,
+          "test": 17858
+        },
+        "train_positive": 320,
+        "calibration": null,
+        "artifact": "national_high_wind_measurement_at_6h_B.ubj",
+        "sha256": "4d19f2f453053b5cbaa3c554125bd604242657d194256e138f31533000432952",
+        "training_bounds": {
+          "temperature_c": [
+            -16.0,
+            48.5
+          ],
+          "relative_humidity_pct": [
+            3.0,
+            100.0
+          ],
+          "pressure_hpa": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "wind_speed_mps": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_lag_1h": [
+            -20.0,
+            46.599998474121094
+          ],
+          "temperature_c_lag_3h": [
+            -16.0,
+            48.400001525878906
+          ],
+          "temperature_c_lag_6h": [
+            -16.0,
+            48.5
+          ],
+          "temperature_c_lag_12h": [
+            -14.0,
+            48.5
+          ],
+          "temperature_c_lag_24h": [
+            -15.600000381469727,
+            48.5
+          ],
+          "temperature_c_delta_1h": [
+            -13.75,
+            15.399999618530273
+          ],
+          "temperature_c_mean_6h": [
+            -12.850000381469727,
+            45.55833435058594
+          ],
+          "temperature_c_std_6h": [
+            0.0,
+            8.671873092651367
+          ],
+          "temperature_c_mean_24h": [
+            6.352083206176758,
+            40.07083511352539
+          ],
+          "temperature_c_std_24h": [
+            0.12247448414564133,
+            7.167490005493164
+          ],
+          "relative_humidity_pct_lag_1h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_3h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_6h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_12h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_24h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_delta_1h": [
+            -60.0,
+            56.5
+          ],
+          "relative_humidity_pct_mean_6h": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_std_6h": [
+            0.0,
+            31.72275733947754
+          ],
+          "relative_humidity_pct_mean_24h": [
+            14.791666984558105,
+            100.0
+          ],
+          "relative_humidity_pct_std_24h": [
+            0.0,
+            35.290897369384766
+          ],
+          "pressure_hpa_lag_1h": [
+            647.7000122070312,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_3h": [
+            499.70001220703125,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_6h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_12h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_24h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_delta_1h": [
+            -1.7999999523162842,
+            -1.5
+          ],
+          "wind_speed_mps_lag_1h": [
+            0.0,
+            32.400001525878906
+          ],
+          "wind_speed_mps_lag_3h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_6h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_12h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_24h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_delta_1h": [
+            -28.799999237060547,
+            12.600000381469727
+          ],
+          "wind_speed_mps_mean_6h": [
+            0.0,
+            13.133333206176758
+          ],
+          "wind_speed_mps_std_6h": [
+            0.0,
+            11.33754825592041
+          ],
+          "wind_speed_mps_mean_24h": [
+            0.0,
+            7.760416507720947
+          ],
+          "wind_speed_mps_std_24h": [
+            0.0,
+            3.966524362564087
+          ],
+          "temperature_c_delta_360min": [
+            -17.350000381469727,
+            24.0
+          ],
+          "temperature_c_min_360min": [
+            -17.5,
+            45.0
+          ],
+          "temperature_c_max_360min": [
+            -7.0,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_360min": [
+            -81.5,
+            82.5
+          ],
+          "relative_humidity_pct_min_360min": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_360min": [
+            7.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_360min": [
+            -29.799999237060547,
+            14.899999618530273
+          ],
+          "wind_speed_mps_min_360min": [
+            0.0,
+            11.850000381469727
+          ],
+          "wind_speed_mps_max_360min": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_delta_1440min": [
+            -19.5,
+            13.350000381469727
+          ],
+          "temperature_c_min_1440min": [
+            1.7000000476837158,
+            35.75
+          ],
+          "temperature_c_max_1440min": [
+            8.800000190734863,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_1440min": [
+            -64.0,
+            69.5
+          ],
+          "relative_humidity_pct_min_1440min": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_1440min": [
+            22.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_1440min": [
+            -15.199999809265137,
+            13.600000381469727
+          ],
+          "wind_speed_mps_min_1440min": [
+            0.0,
+            6.199999809265137
+          ],
+          "wind_speed_mps_max_1440min": [
+            0.0,
+            17.5
+          ],
+          "pressure_tendency_hpa_per_min_60min": [
+            -0.029999999329447746,
+            -0.02500000037252903
+          ],
+          "dewpoint_c": [
+            -33.848934173583984,
+            33.72454833984375
+          ],
+          "dewpoint_depression_c": [
+            -7.105427357601002e-15,
+            53.995338439941406
+          ],
+          "vapor_pressure_deficit_kpa": [
+            0.0,
+            10.760071754455566
+          ],
+          "heat_index_c": [
+            -16.0,
+            78.93682098388672
+          ],
+          "absolute_humidity_estimate_g_m3": [
+            0.2779186964035034,
+            35.63302993774414
+          ],
+          "hour_sin": [
+            -1.0,
+            1.0
+          ],
+          "hour_cos": [
+            -1.0,
+            1.0
+          ],
+          "month_sin": [
+            -1.0,
+            1.0
+          ],
+          "month_cos": [
+            -1.0,
+            1.0
+          ],
+          "calendar_jjas_proxy": [
+            0.0,
+            1.0
+          ],
+          "latitude": [
+            7.9833,
+            34.1359
+          ],
+          "longitude": [
+            68.85,
+            95.3833
+          ],
+          "elevation_m": [
+            0.0,
+            3258.0
+          ]
+        },
+        "validation_uncalibrated": {
+          "rows": 12480,
+          "positives": 16,
+          "brier": 0.0013917047763243318,
+          "precision_at_0_5": 0.0,
+          "recall_at_0_5": 0.0,
+          "false_positives": 0,
+          "false_negatives": 16,
+          "auc": 0.9356321205070603,
+          "pr_auc_average_precision": 0.015257346911815125,
+          "f1_at_0_5": 0.0,
+          "monitored_station_days": 520.0,
+          "false_alarm_hours_per_monitored_station_day": 0.0,
+          "missed_positive_hour_fraction": 1.0,
+          "confusion_matrix_actual_rows_predicted_columns": [
+            [
+              12464,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ],
+          "reliability_bins": [
+            {
+              "bin": 0,
+              "rows": 12441,
+              "mean_probability": 0.0009939426090568304,
+              "observed_fraction": 0.0012860702515874929
+            },
+            {
+              "bin": 1,
+              "rows": 24,
+              "mean_probability": 0.14870969951152802,
+              "observed_fraction": 0.0
+            },
+            {
+              "bin": 2,
+              "rows": 13,
+              "mean_probability": 0.23963943123817444,
+              "observed_fraction": 0.0
+            },
+            {
+              "bin": 3,
+              "rows": 2,
+              "mean_probability": 0.30456385016441345,
+              "observed_fraction": 0.0
+            }
+          ],
+          "ece_10bins": 0.0008756276518770624
+        },
+        "prevalence_train": 0.0007095139164503019,
+        "candidate_selection": {
+          "method": "validation_F2_then_AP; unweighted fallback if unsupported",
+          "candidates": [
+            {
+              "weight_policy": "unweighted",
+              "scale_pos_weight": 1.0,
+              "validation_uncalibrated": {
+                "rows": 12480,
+                "positives": 16,
+                "brier": 0.0013917047763243318,
+                "precision_at_0_5": 0.0,
+                "recall_at_0_5": 0.0,
+                "false_positives": 0,
+                "false_negatives": 16,
+                "auc": 0.9356321205070603,
+                "pr_auc_average_precision": 0.015257346911815125,
+                "f1_at_0_5": 0.0,
+                "monitored_station_days": 520.0,
+                "false_alarm_hours_per_monitored_station_day": 0.0,
+                "missed_positive_hour_fraction": 1.0,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    12464,
+                    0
+                  ],
+                  [
+                    16,
+                    0
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 12441,
+                    "mean_probability": 0.0009939426090568304,
+                    "observed_fraction": 0.0012860702515874929
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 24,
+                    "mean_probability": 0.14870969951152802,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 13,
+                    "mean_probability": 0.23963943123817444,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 2,
+                    "mean_probability": 0.30456385016441345,
+                    "observed_fraction": 0.0
+                  }
+                ],
+                "ece_10bins": 0.0008756276518770624
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.02174493484199047,
+                "support": {
+                  "positive_hours": 16,
+                  "negative_hours": 12464,
+                  "positive_episodes": 7,
+                  "positive_sites": 4
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12480,
+                  "positives": 16,
+                  "threshold": 0.02174493484199047,
+                  "precision": 0.018018018018018018,
+                  "recall": 0.125,
+                  "f1": 0.031496062992125984,
+                  "f2": 0.05714285714285714,
+                  "false_positive_hours_per_station_day": 0.20961538461538462,
+                  "confusion_matrix": [
+                    [
+                      12355,
+                      109
+                    ],
+                    [
+                      14,
+                      2
+                    ]
+                  ],
+                  "missed_positive_hours": 14
+                }
+              }
+            },
+            {
+              "weight_policy": "sqrt_ratio_capped",
+              "scale_pos_weight": 25.0,
+              "validation_uncalibrated": {
+                "rows": 12480,
+                "positives": 16,
+                "brier": 0.005964586045593023,
+                "precision_at_0_5": 0.011764705882352941,
+                "recall_at_0_5": 0.0625,
+                "false_positives": 84,
+                "false_negatives": 15,
+                "auc": 0.9214562941270861,
+                "pr_auc_average_precision": 0.011894370661939631,
+                "f1_at_0_5": 0.019801980198019802,
+                "monitored_station_days": 520.0,
+                "false_alarm_hours_per_monitored_station_day": 0.16153846153846155,
+                "missed_positive_hour_fraction": 0.9375,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    12380,
+                    84
+                  ],
+                  [
+                    15,
+                    1
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 12154,
+                    "mean_probability": 0.014854486100375652,
+                    "observed_fraction": 0.0009050518347869014
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 116,
+                    "mean_probability": 0.13334885239601135,
+                    "observed_fraction": 0.034482758620689655
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 72,
+                    "mean_probability": 0.2557551860809326,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 30,
+                    "mean_probability": 0.3538662791252136,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 23,
+                    "mean_probability": 0.4433130919933319,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 16,
+                    "mean_probability": 0.5641088485717773,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 39,
+                    "mean_probability": 0.6660310626029968,
+                    "observed_fraction": 0.02564102564102564
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 12,
+                    "mean_probability": 0.7833106517791748,
+                    "observed_fraction": 0.0
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 18,
+                    "mean_probability": 0.810494601726532,
+                    "observed_fraction": 0.0
+                  }
+                ],
+                "ece_10bins": 0.02229375300484184
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.6786049604415894,
+                "support": {
+                  "positive_hours": 16,
+                  "negative_hours": 12464,
+                  "positive_episodes": 7,
+                  "positive_sites": 4
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12480,
+                  "positives": 16,
+                  "threshold": 0.6786049604415894,
+                  "precision": 0.02,
+                  "recall": 0.0625,
+                  "f1": 0.030303030303030304,
+                  "f2": 0.043859649122807015,
+                  "false_positive_hours_per_station_day": 0.09423076923076923,
+                  "confusion_matrix": [
+                    [
+                      12415,
+                      49
+                    ],
+                    [
+                      15,
+                      1
+                    ]
+                  ],
+                  "missed_positive_hours": 15
+                }
+              }
+            }
+          ],
+          "chosen": "unweighted",
+          "scale_pos_weight": 1.0
+        },
+        "threshold_selection": {
+          "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+          "raw_threshold": 0.02174493484199047,
+          "support": {
+            "positive_hours": 16,
+            "negative_hours": 12464,
+            "positive_episodes": 7,
+            "positive_sites": 4
+          },
+          "policy": {
+            "beta": 2.0,
+            "max_false_positive_hours_per_station_day": 0.25,
+            "minimum_positive_hours": 10,
+            "minimum_positive_episodes": 3,
+            "minimum_positive_sites": 2
+          },
+          "selection_data": "validation_only",
+          "validation_decisions": {
+            "rows": 12480,
+            "positives": 16,
+            "threshold": 0.02174493484199047,
+            "precision": 0.018018018018018018,
+            "recall": 0.125,
+            "f1": 0.031496062992125984,
+            "f2": 0.05714285714285714,
+            "false_positive_hours_per_station_day": 0.20961538461538462,
+            "confusion_matrix": [
+              [
+                12355,
+                109
+              ],
+              [
+                14,
+                2
+              ]
+            ],
+            "missed_positive_hours": 14
+          }
+        },
+        "reproducibility": {
+          "checked": true,
+          "identical_model_bytes": true,
+          "seed": 42
+        },
+        "probability_status": "UNCALIBRATED_SCORE"
+      },
+      "C": {
+        "status": "B_FALLBACK_NO_PACKAGED_REGIONAL_CALIBRATION"
+      },
+      "D": {
+        "experts": {}
+      }
+    },
+    "national/hot_measurement_at_6h": {
+      "B": {
+        "status": "RESEARCH_FITTED",
+        "features": [
+          "temperature_c",
+          "relative_humidity_pct",
+          "pressure_hpa",
+          "wind_speed_mps",
+          "temperature_c_lag_1h",
+          "temperature_c_lag_3h",
+          "temperature_c_lag_6h",
+          "temperature_c_lag_12h",
+          "temperature_c_lag_24h",
+          "temperature_c_delta_1h",
+          "temperature_c_mean_6h",
+          "temperature_c_std_6h",
+          "temperature_c_mean_24h",
+          "temperature_c_std_24h",
+          "relative_humidity_pct_lag_1h",
+          "relative_humidity_pct_lag_3h",
+          "relative_humidity_pct_lag_6h",
+          "relative_humidity_pct_lag_12h",
+          "relative_humidity_pct_lag_24h",
+          "relative_humidity_pct_delta_1h",
+          "relative_humidity_pct_mean_6h",
+          "relative_humidity_pct_std_6h",
+          "relative_humidity_pct_mean_24h",
+          "relative_humidity_pct_std_24h",
+          "pressure_hpa_lag_1h",
+          "pressure_hpa_lag_3h",
+          "pressure_hpa_lag_6h",
+          "pressure_hpa_lag_12h",
+          "pressure_hpa_lag_24h",
+          "pressure_hpa_delta_1h",
+          "wind_speed_mps_lag_1h",
+          "wind_speed_mps_lag_3h",
+          "wind_speed_mps_lag_6h",
+          "wind_speed_mps_lag_12h",
+          "wind_speed_mps_lag_24h",
+          "wind_speed_mps_delta_1h",
+          "wind_speed_mps_mean_6h",
+          "wind_speed_mps_std_6h",
+          "wind_speed_mps_mean_24h",
+          "wind_speed_mps_std_24h",
+          "temperature_c_delta_360min",
+          "temperature_c_min_360min",
+          "temperature_c_max_360min",
+          "relative_humidity_pct_delta_360min",
+          "relative_humidity_pct_min_360min",
+          "relative_humidity_pct_max_360min",
+          "wind_speed_mps_delta_360min",
+          "wind_speed_mps_min_360min",
+          "wind_speed_mps_max_360min",
+          "temperature_c_delta_1440min",
+          "temperature_c_min_1440min",
+          "temperature_c_max_1440min",
+          "relative_humidity_pct_delta_1440min",
+          "relative_humidity_pct_min_1440min",
+          "relative_humidity_pct_max_1440min",
+          "wind_speed_mps_delta_1440min",
+          "wind_speed_mps_min_1440min",
+          "wind_speed_mps_max_1440min",
+          "pressure_tendency_hpa_per_min_60min",
+          "dewpoint_c",
+          "dewpoint_depression_c",
+          "vapor_pressure_deficit_kpa",
+          "heat_index_c",
+          "absolute_humidity_estimate_g_m3",
+          "hour_sin",
+          "hour_cos",
+          "month_sin",
+          "month_cos",
+          "calendar_jjas_proxy",
+          "latitude",
+          "longitude",
+          "elevation_m"
+        ],
+        "inactive_features": [
+          "pm10_ug_m3",
+          "pm10_ug_m3_delta_10min",
+          "pm10_ug_m3_delta_1440min",
+          "pm10_ug_m3_delta_1h",
+          "pm10_ug_m3_delta_30min",
+          "pm10_ug_m3_delta_360min",
+          "pm10_ug_m3_lag_12h",
+          "pm10_ug_m3_lag_1h",
+          "pm10_ug_m3_lag_24h",
+          "pm10_ug_m3_lag_3h",
+          "pm10_ug_m3_lag_6h",
+          "pm10_ug_m3_max_1440min",
+          "pm10_ug_m3_max_360min",
+          "pm10_ug_m3_mean_24h",
+          "pm10_ug_m3_mean_6h",
+          "pm10_ug_m3_min_1440min",
+          "pm10_ug_m3_min_360min",
+          "pm10_ug_m3_std_24h",
+          "pm10_ug_m3_std_6h",
+          "pm25_pm10_ratio",
+          "pm25_ug_m3",
+          "pm25_ug_m3_delta_10min",
+          "pm25_ug_m3_delta_1440min",
+          "pm25_ug_m3_delta_1h",
+          "pm25_ug_m3_delta_30min",
+          "pm25_ug_m3_delta_360min",
+          "pm25_ug_m3_lag_12h",
+          "pm25_ug_m3_lag_1h",
+          "pm25_ug_m3_lag_24h",
+          "pm25_ug_m3_lag_3h",
+          "pm25_ug_m3_lag_6h",
+          "pm25_ug_m3_max_1440min",
+          "pm25_ug_m3_max_360min",
+          "pm25_ug_m3_mean_24h",
+          "pm25_ug_m3_mean_6h",
+          "pm25_ug_m3_min_1440min",
+          "pm25_ug_m3_min_360min",
+          "pm25_ug_m3_std_24h",
+          "pm25_ug_m3_std_6h",
+          "pressure_anomaly_prior24h_hpa",
+          "pressure_hpa_delta_10min",
+          "pressure_hpa_delta_1440min",
+          "pressure_hpa_delta_30min",
+          "pressure_hpa_delta_360min",
+          "pressure_hpa_max_1440min",
+          "pressure_hpa_max_360min",
+          "pressure_hpa_mean_24h",
+          "pressure_hpa_mean_6h",
+          "pressure_hpa_min_1440min",
+          "pressure_hpa_min_360min",
+          "pressure_hpa_std_24h",
+          "pressure_hpa_std_6h",
+          "pressure_tendency_hpa_per_min_10min",
+          "pressure_tendency_hpa_per_min_30min",
+          "relative_humidity_pct_delta_10min",
+          "relative_humidity_pct_delta_30min",
+          "temperature_c_delta_10min",
+          "temperature_c_delta_30min",
+          "wind_speed_mps_delta_10min",
+          "wind_speed_mps_delta_30min",
+          "wind_variability_60min_mps"
+        ],
+        "rows_by_role": {
+          "train": 450573,
+          "validation": 12478,
+          "calibration": 12069,
+          "test": 17785
+        },
+        "train_positive": 39101,
+        "calibration": {
+          "coefficient": 1.8650504350662231,
+          "intercept": 1.1992692947387695,
+          "rows": 12069,
+          "positives": 327,
+          "method": "chronological_Platt_logit"
+        },
+        "artifact": "national_hot_measurement_at_6h_B.ubj",
+        "sha256": "960f5154711c44e62fa786b02e01807fcb386a336feeccf5f6f73e1cc69b16fe",
+        "training_bounds": {
+          "temperature_c": [
+            -16.0,
+            48.5
+          ],
+          "relative_humidity_pct": [
+            3.0,
+            100.0
+          ],
+          "pressure_hpa": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "wind_speed_mps": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_lag_1h": [
+            -20.0,
+            46.599998474121094
+          ],
+          "temperature_c_lag_3h": [
+            -16.0,
+            48.400001525878906
+          ],
+          "temperature_c_lag_6h": [
+            -16.0,
+            48.5
+          ],
+          "temperature_c_lag_12h": [
+            -14.0,
+            48.5
+          ],
+          "temperature_c_lag_24h": [
+            -15.600000381469727,
+            48.5
+          ],
+          "temperature_c_delta_1h": [
+            -13.75,
+            15.399999618530273
+          ],
+          "temperature_c_mean_6h": [
+            -12.850000381469727,
+            45.55833435058594
+          ],
+          "temperature_c_std_6h": [
+            0.0,
+            8.671873092651367
+          ],
+          "temperature_c_mean_24h": [
+            6.352083206176758,
+            40.07083511352539
+          ],
+          "temperature_c_std_24h": [
+            0.12247448414564133,
+            7.167490005493164
+          ],
+          "relative_humidity_pct_lag_1h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_3h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_6h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_12h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_24h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_delta_1h": [
+            -60.0,
+            56.5
+          ],
+          "relative_humidity_pct_mean_6h": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_std_6h": [
+            0.0,
+            31.72275733947754
+          ],
+          "relative_humidity_pct_mean_24h": [
+            14.791666984558105,
+            100.0
+          ],
+          "relative_humidity_pct_std_24h": [
+            0.0,
+            35.290897369384766
+          ],
+          "pressure_hpa_lag_1h": [
+            647.7000122070312,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_3h": [
+            499.70001220703125,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_6h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_12h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_24h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_delta_1h": [
+            -1.7999999523162842,
+            -1.5
+          ],
+          "wind_speed_mps_lag_1h": [
+            0.0,
+            32.400001525878906
+          ],
+          "wind_speed_mps_lag_3h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_6h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_12h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_24h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_delta_1h": [
+            -28.799999237060547,
+            12.600000381469727
+          ],
+          "wind_speed_mps_mean_6h": [
+            0.0,
+            13.133333206176758
+          ],
+          "wind_speed_mps_std_6h": [
+            0.0,
+            11.33754825592041
+          ],
+          "wind_speed_mps_mean_24h": [
+            0.0,
+            7.760416507720947
+          ],
+          "wind_speed_mps_std_24h": [
+            0.0,
+            3.966524362564087
+          ],
+          "temperature_c_delta_360min": [
+            -17.350000381469727,
+            24.0
+          ],
+          "temperature_c_min_360min": [
+            -17.5,
+            45.0
+          ],
+          "temperature_c_max_360min": [
+            -7.0,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_360min": [
+            -81.5,
+            82.5
+          ],
+          "relative_humidity_pct_min_360min": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_360min": [
+            7.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_360min": [
+            -29.799999237060547,
+            14.899999618530273
+          ],
+          "wind_speed_mps_min_360min": [
+            0.0,
+            11.850000381469727
+          ],
+          "wind_speed_mps_max_360min": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_delta_1440min": [
+            -19.5,
+            13.350000381469727
+          ],
+          "temperature_c_min_1440min": [
+            1.7000000476837158,
+            35.75
+          ],
+          "temperature_c_max_1440min": [
+            8.800000190734863,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_1440min": [
+            -64.0,
+            69.5
+          ],
+          "relative_humidity_pct_min_1440min": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_1440min": [
+            22.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_1440min": [
+            -15.199999809265137,
+            13.600000381469727
+          ],
+          "wind_speed_mps_min_1440min": [
+            0.0,
+            6.199999809265137
+          ],
+          "wind_speed_mps_max_1440min": [
+            0.0,
+            17.5
+          ],
+          "pressure_tendency_hpa_per_min_60min": [
+            -0.029999999329447746,
+            -0.02500000037252903
+          ],
+          "dewpoint_c": [
+            -33.848934173583984,
+            33.72454833984375
+          ],
+          "dewpoint_depression_c": [
+            -7.105427357601002e-15,
+            53.995338439941406
+          ],
+          "vapor_pressure_deficit_kpa": [
+            0.0,
+            10.760071754455566
+          ],
+          "heat_index_c": [
+            -16.0,
+            78.93682098388672
+          ],
+          "absolute_humidity_estimate_g_m3": [
+            0.2779186964035034,
+            35.63302993774414
+          ],
+          "hour_sin": [
+            -1.0,
+            1.0
+          ],
+          "hour_cos": [
+            -1.0,
+            1.0
+          ],
+          "month_sin": [
+            -1.0,
+            1.0
+          ],
+          "month_cos": [
+            -1.0,
+            1.0
+          ],
+          "calendar_jjas_proxy": [
+            0.0,
+            1.0
+          ],
+          "latitude": [
+            7.9833,
+            34.1359
+          ],
+          "longitude": [
+            68.85,
+            95.3833
+          ],
+          "elevation_m": [
+            0.0,
+            3258.0
+          ]
+        },
+        "validation_uncalibrated": {
+          "rows": 12478,
+          "positives": 580,
+          "brier": 0.0277937650680542,
+          "precision_at_0_5": 0.8283582089552238,
+          "recall_at_0_5": 0.19137931034482758,
+          "false_positives": 23,
+          "false_negatives": 469,
+          "auc": 0.9680291094997131,
+          "pr_auc_average_precision": 0.6116119720331624,
+          "f1_at_0_5": 0.31092436974789917,
+          "monitored_station_days": 519.9166666666666,
+          "false_alarm_hours_per_monitored_station_day": 0.044237858631190896,
+          "missed_positive_hour_fraction": 0.8086206896551724,
+          "confusion_matrix_actual_rows_predicted_columns": [
+            [
+              11875,
+              23
+            ],
+            [
+              469,
+              111
+            ]
+          ],
+          "reliability_bins": [
+            {
+              "bin": 0,
+              "rows": 10673,
+              "mean_probability": 0.019850218668580055,
+              "observed_fraction": 0.003747774758737
+            },
+            {
+              "bin": 1,
+              "rows": 916,
+              "mean_probability": 0.1426536738872528,
+              "observed_fraction": 0.12117903930131005
+            },
+            {
+              "bin": 2,
+              "rows": 358,
+              "mean_probability": 0.24709998071193695,
+              "observed_fraction": 0.28212290502793297
+            },
+            {
+              "bin": 3,
+              "rows": 231,
+              "mean_probability": 0.3436868488788605,
+              "observed_fraction": 0.49783549783549785
+            },
+            {
+              "bin": 4,
+              "rows": 166,
+              "mean_probability": 0.44462162256240845,
+              "observed_fraction": 0.6144578313253012
+            },
+            {
+              "bin": 5,
+              "rows": 75,
+              "mean_probability": 0.5447500348091125,
+              "observed_fraction": 0.8133333333333334
+            },
+            {
+              "bin": 6,
+              "rows": 40,
+              "mean_probability": 0.6420334577560425,
+              "observed_fraction": 0.875
+            },
+            {
+              "bin": 7,
+              "rows": 19,
+              "mean_probability": 0.7331820726394653,
+              "observed_fraction": 0.7894736842105263
+            }
+          ],
+          "ece_10bins": 0.02391436562735643
+        },
+        "prevalence_train": 0.08678061046711631,
+        "candidate_selection": {
+          "method": "validation_F2_then_AP; unweighted fallback if unsupported",
+          "candidates": [
+            {
+              "weight_policy": "unweighted",
+              "scale_pos_weight": 1.0,
+              "validation_uncalibrated": {
+                "rows": 12478,
+                "positives": 580,
+                "brier": 0.0277937650680542,
+                "precision_at_0_5": 0.8283582089552238,
+                "recall_at_0_5": 0.19137931034482758,
+                "false_positives": 23,
+                "false_negatives": 469,
+                "auc": 0.9680291094997131,
+                "pr_auc_average_precision": 0.6116119720331624,
+                "f1_at_0_5": 0.31092436974789917,
+                "monitored_station_days": 519.9166666666666,
+                "false_alarm_hours_per_monitored_station_day": 0.044237858631190896,
+                "missed_positive_hour_fraction": 0.8086206896551724,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    11875,
+                    23
+                  ],
+                  [
+                    469,
+                    111
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 10673,
+                    "mean_probability": 0.019850218668580055,
+                    "observed_fraction": 0.003747774758737
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 916,
+                    "mean_probability": 0.1426536738872528,
+                    "observed_fraction": 0.12117903930131005
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 358,
+                    "mean_probability": 0.24709998071193695,
+                    "observed_fraction": 0.28212290502793297
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 231,
+                    "mean_probability": 0.3436868488788605,
+                    "observed_fraction": 0.49783549783549785
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 166,
+                    "mean_probability": 0.44462162256240845,
+                    "observed_fraction": 0.6144578313253012
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 75,
+                    "mean_probability": 0.5447500348091125,
+                    "observed_fraction": 0.8133333333333334
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 40,
+                    "mean_probability": 0.6420334577560425,
+                    "observed_fraction": 0.875
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 19,
+                    "mean_probability": 0.7331820726394653,
+                    "observed_fraction": 0.7894736842105263
+                  }
+                ],
+                "ece_10bins": 0.02391436562735643
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.34642186760902405,
+                "support": {
+                  "positive_hours": 580,
+                  "negative_hours": 11898,
+                  "positive_episodes": 20,
+                  "positive_sites": 18
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12478,
+                  "positives": 580,
+                  "threshold": 0.34642186760902405,
+                  "precision": 0.6783042394014963,
+                  "recall": 0.4689655172413793,
+                  "f1": 0.5545361875637105,
+                  "f2": 0.4998162440279309,
+                  "false_positive_hours_per_station_day": 0.24811668536624462,
+                  "confusion_matrix": [
+                    [
+                      11769,
+                      129
+                    ],
+                    [
+                      308,
+                      272
+                    ]
+                  ],
+                  "missed_positive_hours": 308
+                }
+              }
+            },
+            {
+              "weight_policy": "sqrt_ratio_capped",
+              "scale_pos_weight": 3.2439653857987216,
+              "validation_uncalibrated": {
+                "rows": 12478,
+                "positives": 580,
+                "brier": 0.03421827778220177,
+                "precision_at_0_5": 0.5972696245733788,
+                "recall_at_0_5": 0.603448275862069,
+                "false_positives": 236,
+                "false_negatives": 230,
+                "auc": 0.9673231084911402,
+                "pr_auc_average_precision": 0.6054577814837713,
+                "f1_at_0_5": 0.6003430531732419,
+                "monitored_station_days": 519.9166666666666,
+                "false_alarm_hours_per_monitored_station_day": 0.45391889725917617,
+                "missed_positive_hour_fraction": 0.39655172413793105,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    11662,
+                    236
+                  ],
+                  [
+                    230,
+                    350
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 8845,
+                    "mean_probability": 0.029976584017276764,
+                    "observed_fraction": 0.0004522328999434709
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 1421,
+                    "mean_probability": 0.14348800480365753,
+                    "observed_fraction": 0.017593244194229415
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 742,
+                    "mean_probability": 0.24136404693126678,
+                    "observed_fraction": 0.05660377358490566
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 507,
+                    "mean_probability": 0.34657222032546997,
+                    "observed_fraction": 0.13609467455621302
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 377,
+                    "mean_probability": 0.44937431812286377,
+                    "observed_fraction": 0.23872679045092837
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 284,
+                    "mean_probability": 0.5519978404045105,
+                    "observed_fraction": 0.46830985915492956
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 201,
+                    "mean_probability": 0.6378348469734192,
+                    "observed_fraction": 0.6666666666666666
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 80,
+                    "mean_probability": 0.742028534412384,
+                    "observed_fraction": 0.825
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 21,
+                    "mean_probability": 0.8241506218910217,
+                    "observed_fraction": 0.8095238095238095
+                  }
+                ],
+                "ece_10bins": 0.06409401824483793
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.5749989748001099,
+                "support": {
+                  "positive_hours": 580,
+                  "negative_hours": 11898,
+                  "positive_episodes": 20,
+                  "positive_sites": 18
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12478,
+                  "positives": 580,
+                  "threshold": 0.5749989748001099,
+                  "precision": 0.6763157894736842,
+                  "recall": 0.44310344827586207,
+                  "f1": 0.5354166666666667,
+                  "f2": 0.4759259259259259,
+                  "false_positive_hours_per_station_day": 0.23657637441897741,
+                  "confusion_matrix": [
+                    [
+                      11775,
+                      123
+                    ],
+                    [
+                      323,
+                      257
+                    ]
+                  ],
+                  "missed_positive_hours": 323
+                }
+              }
+            }
+          ],
+          "chosen": "unweighted",
+          "scale_pos_weight": 1.0
+        },
+        "threshold_selection": {
+          "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+          "raw_threshold": 0.34642186760902405,
+          "support": {
+            "positive_hours": 580,
+            "negative_hours": 11898,
+            "positive_episodes": 20,
+            "positive_sites": 18
+          },
+          "policy": {
+            "beta": 2.0,
+            "max_false_positive_hours_per_station_day": 0.25,
+            "minimum_positive_hours": 10,
+            "minimum_positive_episodes": 3,
+            "minimum_positive_sites": 2
+          },
+          "selection_data": "validation_only",
+          "validation_decisions": {
+            "rows": 12478,
+            "positives": 580,
+            "threshold": 0.34642186760902405,
+            "precision": 0.6783042394014963,
+            "recall": 0.4689655172413793,
+            "f1": 0.5545361875637105,
+            "f2": 0.4998162440279309,
+            "false_positive_hours_per_station_day": 0.24811668536624462,
+            "confusion_matrix": [
+              [
+                11769,
+                129
+              ],
+              [
+                308,
+                272
+              ]
+            ],
+            "missed_positive_hours": 308
+          }
+        },
+        "reproducibility": {
+          "checked": true,
+          "identical_model_bytes": true,
+          "seed": 42
+        },
+        "probability_status": "CALIBRATED_ARCHIVE_ONLY"
+      },
+      "C": {
+        "status": "B_FALLBACK_NO_PACKAGED_REGIONAL_CALIBRATION"
+      },
+      "D": {
+        "experts": {}
+      }
+    },
+    "national/near_saturation_measurement_at_6h": {
+      "B": {
+        "status": "RESEARCH_FITTED",
+        "features": [
+          "temperature_c",
+          "relative_humidity_pct",
+          "pressure_hpa",
+          "wind_speed_mps",
+          "temperature_c_lag_1h",
+          "temperature_c_lag_3h",
+          "temperature_c_lag_6h",
+          "temperature_c_lag_12h",
+          "temperature_c_lag_24h",
+          "temperature_c_delta_1h",
+          "temperature_c_mean_6h",
+          "temperature_c_std_6h",
+          "temperature_c_mean_24h",
+          "temperature_c_std_24h",
+          "relative_humidity_pct_lag_1h",
+          "relative_humidity_pct_lag_3h",
+          "relative_humidity_pct_lag_6h",
+          "relative_humidity_pct_lag_12h",
+          "relative_humidity_pct_lag_24h",
+          "relative_humidity_pct_delta_1h",
+          "relative_humidity_pct_mean_6h",
+          "relative_humidity_pct_std_6h",
+          "relative_humidity_pct_mean_24h",
+          "relative_humidity_pct_std_24h",
+          "pressure_hpa_lag_1h",
+          "pressure_hpa_lag_3h",
+          "pressure_hpa_lag_6h",
+          "pressure_hpa_lag_12h",
+          "pressure_hpa_lag_24h",
+          "pressure_hpa_delta_1h",
+          "wind_speed_mps_lag_1h",
+          "wind_speed_mps_lag_3h",
+          "wind_speed_mps_lag_6h",
+          "wind_speed_mps_lag_12h",
+          "wind_speed_mps_lag_24h",
+          "wind_speed_mps_delta_1h",
+          "wind_speed_mps_mean_6h",
+          "wind_speed_mps_std_6h",
+          "wind_speed_mps_mean_24h",
+          "wind_speed_mps_std_24h",
+          "temperature_c_delta_360min",
+          "temperature_c_min_360min",
+          "temperature_c_max_360min",
+          "relative_humidity_pct_delta_360min",
+          "relative_humidity_pct_min_360min",
+          "relative_humidity_pct_max_360min",
+          "wind_speed_mps_delta_360min",
+          "wind_speed_mps_min_360min",
+          "wind_speed_mps_max_360min",
+          "temperature_c_delta_1440min",
+          "temperature_c_min_1440min",
+          "temperature_c_max_1440min",
+          "relative_humidity_pct_delta_1440min",
+          "relative_humidity_pct_min_1440min",
+          "relative_humidity_pct_max_1440min",
+          "wind_speed_mps_delta_1440min",
+          "wind_speed_mps_min_1440min",
+          "wind_speed_mps_max_1440min",
+          "pressure_tendency_hpa_per_min_60min",
+          "dewpoint_c",
+          "dewpoint_depression_c",
+          "vapor_pressure_deficit_kpa",
+          "heat_index_c",
+          "absolute_humidity_estimate_g_m3",
+          "hour_sin",
+          "hour_cos",
+          "month_sin",
+          "month_cos",
+          "calendar_jjas_proxy",
+          "latitude",
+          "longitude",
+          "elevation_m"
+        ],
+        "inactive_features": [
+          "pm10_ug_m3",
+          "pm10_ug_m3_delta_10min",
+          "pm10_ug_m3_delta_1440min",
+          "pm10_ug_m3_delta_1h",
+          "pm10_ug_m3_delta_30min",
+          "pm10_ug_m3_delta_360min",
+          "pm10_ug_m3_lag_12h",
+          "pm10_ug_m3_lag_1h",
+          "pm10_ug_m3_lag_24h",
+          "pm10_ug_m3_lag_3h",
+          "pm10_ug_m3_lag_6h",
+          "pm10_ug_m3_max_1440min",
+          "pm10_ug_m3_max_360min",
+          "pm10_ug_m3_mean_24h",
+          "pm10_ug_m3_mean_6h",
+          "pm10_ug_m3_min_1440min",
+          "pm10_ug_m3_min_360min",
+          "pm10_ug_m3_std_24h",
+          "pm10_ug_m3_std_6h",
+          "pm25_pm10_ratio",
+          "pm25_ug_m3",
+          "pm25_ug_m3_delta_10min",
+          "pm25_ug_m3_delta_1440min",
+          "pm25_ug_m3_delta_1h",
+          "pm25_ug_m3_delta_30min",
+          "pm25_ug_m3_delta_360min",
+          "pm25_ug_m3_lag_12h",
+          "pm25_ug_m3_lag_1h",
+          "pm25_ug_m3_lag_24h",
+          "pm25_ug_m3_lag_3h",
+          "pm25_ug_m3_lag_6h",
+          "pm25_ug_m3_max_1440min",
+          "pm25_ug_m3_max_360min",
+          "pm25_ug_m3_mean_24h",
+          "pm25_ug_m3_mean_6h",
+          "pm25_ug_m3_min_1440min",
+          "pm25_ug_m3_min_360min",
+          "pm25_ug_m3_std_24h",
+          "pm25_ug_m3_std_6h",
+          "pressure_anomaly_prior24h_hpa",
+          "pressure_hpa_delta_10min",
+          "pressure_hpa_delta_1440min",
+          "pressure_hpa_delta_30min",
+          "pressure_hpa_delta_360min",
+          "pressure_hpa_max_1440min",
+          "pressure_hpa_max_360min",
+          "pressure_hpa_mean_24h",
+          "pressure_hpa_mean_6h",
+          "pressure_hpa_min_1440min",
+          "pressure_hpa_min_360min",
+          "pressure_hpa_std_24h",
+          "pressure_hpa_std_6h",
+          "pressure_tendency_hpa_per_min_10min",
+          "pressure_tendency_hpa_per_min_30min",
+          "relative_humidity_pct_delta_10min",
+          "relative_humidity_pct_delta_30min",
+          "temperature_c_delta_10min",
+          "temperature_c_delta_30min",
+          "wind_speed_mps_delta_10min",
+          "wind_speed_mps_delta_30min",
+          "wind_variability_60min_mps"
+        ],
+        "rows_by_role": {
+          "train": 450179,
+          "validation": 12477,
+          "calibration": 12066,
+          "test": 17777
+        },
+        "train_positive": 18963,
+        "calibration": {
+          "coefficient": 1.0578330755233765,
+          "intercept": -1.3090866804122925,
+          "rows": 12066,
+          "positives": 1054,
+          "method": "chronological_Platt_logit"
+        },
+        "artifact": "national_near_saturation_measurement_at_6h_B.ubj",
+        "sha256": "97856ffd10cf4c48c1f8a40928929bdf231707e1ecb2737294dfedfe575f809b",
+        "training_bounds": {
+          "temperature_c": [
+            -16.0,
+            48.5
+          ],
+          "relative_humidity_pct": [
+            3.0,
+            100.0
+          ],
+          "pressure_hpa": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "wind_speed_mps": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_lag_1h": [
+            -20.0,
+            46.599998474121094
+          ],
+          "temperature_c_lag_3h": [
+            -16.0,
+            48.400001525878906
+          ],
+          "temperature_c_lag_6h": [
+            -16.0,
+            48.5
+          ],
+          "temperature_c_lag_12h": [
+            -14.0,
+            48.5
+          ],
+          "temperature_c_lag_24h": [
+            -15.600000381469727,
+            48.5
+          ],
+          "temperature_c_delta_1h": [
+            -13.75,
+            15.399999618530273
+          ],
+          "temperature_c_mean_6h": [
+            -12.850000381469727,
+            45.55833435058594
+          ],
+          "temperature_c_std_6h": [
+            0.0,
+            8.671873092651367
+          ],
+          "temperature_c_mean_24h": [
+            6.352083206176758,
+            40.07083511352539
+          ],
+          "temperature_c_std_24h": [
+            0.12247448414564133,
+            7.167490005493164
+          ],
+          "relative_humidity_pct_lag_1h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_3h": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_6h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_12h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_lag_24h": [
+            3.0,
+            100.0
+          ],
+          "relative_humidity_pct_delta_1h": [
+            -60.0,
+            56.5
+          ],
+          "relative_humidity_pct_mean_6h": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_std_6h": [
+            0.0,
+            31.72275733947754
+          ],
+          "relative_humidity_pct_mean_24h": [
+            14.791666984558105,
+            100.0
+          ],
+          "relative_humidity_pct_std_24h": [
+            0.0,
+            35.290897369384766
+          ],
+          "pressure_hpa_lag_1h": [
+            647.7000122070312,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_3h": [
+            499.70001220703125,
+            1050.199951171875
+          ],
+          "pressure_hpa_lag_6h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_12h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_lag_24h": [
+            499.70001220703125,
+            1090.199951171875
+          ],
+          "pressure_hpa_delta_1h": [
+            -1.7999999523162842,
+            -1.5
+          ],
+          "wind_speed_mps_lag_1h": [
+            0.0,
+            32.400001525878906
+          ],
+          "wind_speed_mps_lag_3h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_6h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_12h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_lag_24h": [
+            0.0,
+            38.099998474121094
+          ],
+          "wind_speed_mps_delta_1h": [
+            -28.799999237060547,
+            12.600000381469727
+          ],
+          "wind_speed_mps_mean_6h": [
+            0.0,
+            13.133333206176758
+          ],
+          "wind_speed_mps_std_6h": [
+            0.0,
+            11.33754825592041
+          ],
+          "wind_speed_mps_mean_24h": [
+            0.0,
+            7.760416507720947
+          ],
+          "wind_speed_mps_std_24h": [
+            0.0,
+            3.966524362564087
+          ],
+          "temperature_c_delta_360min": [
+            -17.350000381469727,
+            24.0
+          ],
+          "temperature_c_min_360min": [
+            -17.5,
+            45.0
+          ],
+          "temperature_c_max_360min": [
+            -7.0,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_360min": [
+            -81.5,
+            82.5
+          ],
+          "relative_humidity_pct_min_360min": [
+            4.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_360min": [
+            7.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_360min": [
+            -29.799999237060547,
+            14.899999618530273
+          ],
+          "wind_speed_mps_min_360min": [
+            0.0,
+            11.850000381469727
+          ],
+          "wind_speed_mps_max_360min": [
+            0.0,
+            32.400001525878906
+          ],
+          "temperature_c_delta_1440min": [
+            -19.5,
+            13.350000381469727
+          ],
+          "temperature_c_min_1440min": [
+            1.7000000476837158,
+            35.75
+          ],
+          "temperature_c_max_1440min": [
+            8.800000190734863,
+            46.599998474121094
+          ],
+          "relative_humidity_pct_delta_1440min": [
+            -64.0,
+            69.5
+          ],
+          "relative_humidity_pct_min_1440min": [
+            6.0,
+            100.0
+          ],
+          "relative_humidity_pct_max_1440min": [
+            22.5,
+            100.0
+          ],
+          "wind_speed_mps_delta_1440min": [
+            -15.199999809265137,
+            13.600000381469727
+          ],
+          "wind_speed_mps_min_1440min": [
+            0.0,
+            6.199999809265137
+          ],
+          "wind_speed_mps_max_1440min": [
+            0.0,
+            17.5
+          ],
+          "pressure_tendency_hpa_per_min_60min": [
+            -0.029999999329447746,
+            -0.02500000037252903
+          ],
+          "dewpoint_c": [
+            -33.848934173583984,
+            33.72454833984375
+          ],
+          "dewpoint_depression_c": [
+            -7.105427357601002e-15,
+            53.995338439941406
+          ],
+          "vapor_pressure_deficit_kpa": [
+            0.0,
+            10.760071754455566
+          ],
+          "heat_index_c": [
+            -16.0,
+            78.93682098388672
+          ],
+          "absolute_humidity_estimate_g_m3": [
+            0.2779186964035034,
+            35.63302993774414
+          ],
+          "hour_sin": [
+            -1.0,
+            1.0
+          ],
+          "hour_cos": [
+            -1.0,
+            1.0
+          ],
+          "month_sin": [
+            -1.0,
+            1.0
+          ],
+          "month_cos": [
+            -1.0,
+            1.0
+          ],
+          "calendar_jjas_proxy": [
+            0.0,
+            1.0
+          ],
+          "latitude": [
+            7.9833,
+            34.1359
+          ],
+          "longitude": [
+            68.85,
+            95.3833
+          ],
+          "elevation_m": [
+            0.0,
+            3258.0
+          ]
+        },
+        "validation_uncalibrated": {
+          "rows": 12477,
+          "positives": 1909,
+          "brier": 0.11411092430353165,
+          "precision_at_0_5": 0.4681647940074906,
+          "recall_at_0_5": 0.6547930853850183,
+          "false_positives": 1420,
+          "false_negatives": 659,
+          "auc": 0.8567568747821488,
+          "pr_auc_average_precision": 0.6130358677483061,
+          "f1_at_0_5": 0.5459707359685521,
+          "monitored_station_days": 519.875,
+          "false_alarm_hours_per_monitored_station_day": 2.731425823515268,
+          "missed_positive_hour_fraction": 0.34520691461498165,
+          "confusion_matrix_actual_rows_predicted_columns": [
+            [
+              9148,
+              1420
+            ],
+            [
+              659,
+              1250
+            ]
+          ],
+          "reliability_bins": [
+            {
+              "bin": 0,
+              "rows": 4667,
+              "mean_probability": 0.05842134356498718,
+              "observed_fraction": 0.023141204199700022
+            },
+            {
+              "bin": 1,
+              "rows": 2279,
+              "mean_probability": 0.14126387238502502,
+              "observed_fraction": 0.06143045195261079
+            },
+            {
+              "bin": 2,
+              "rows": 1175,
+              "mean_probability": 0.24515557289123535,
+              "observed_fraction": 0.1046808510638298
+            },
+            {
+              "bin": 3,
+              "rows": 966,
+              "mean_probability": 0.34601840376853943,
+              "observed_fraction": 0.14285714285714285
+            },
+            {
+              "bin": 4,
+              "rows": 720,
+              "mean_probability": 0.4477941691875458,
+              "observed_fraction": 0.20833333333333334
+            },
+            {
+              "bin": 5,
+              "rows": 574,
+              "mean_probability": 0.5527324676513672,
+              "observed_fraction": 0.1951219512195122
+            },
+            {
+              "bin": 6,
+              "rows": 679,
+              "mean_probability": 0.6498844027519226,
+              "observed_fraction": 0.30338733431516934
+            },
+            {
+              "bin": 7,
+              "rows": 716,
+              "mean_probability": 0.7520238757133484,
+              "observed_fraction": 0.5139664804469274
+            },
+            {
+              "bin": 8,
+              "rows": 574,
+              "mean_probability": 0.8553674221038818,
+              "observed_fraction": 0.7787456445993032
+            },
+            {
+              "bin": 9,
+              "rows": 127,
+              "mean_probability": 0.909998893737793,
+              "observed_fraction": 0.9212598425196851
+            }
+          ],
+          "ece_10bins": 0.1231639204360052
+        },
+        "prevalence_train": 0.04212324430948578,
+        "candidate_selection": {
+          "method": "validation_F2_then_AP; unweighted fallback if unsupported",
+          "candidates": [
+            {
+              "weight_policy": "unweighted",
+              "scale_pos_weight": 1.0,
+              "validation_uncalibrated": {
+                "rows": 12477,
+                "positives": 1909,
+                "brier": 0.08929026871919632,
+                "precision_at_0_5": 0.7903822441430333,
+                "recall_at_0_5": 0.3357778941854374,
+                "false_positives": 170,
+                "false_negatives": 1268,
+                "auc": 0.8583703374866019,
+                "pr_auc_average_precision": 0.6127831877396464,
+                "f1_at_0_5": 0.4713235294117647,
+                "monitored_station_days": 519.875,
+                "false_alarm_hours_per_monitored_station_day": 0.3270016830968983,
+                "missed_positive_hour_fraction": 0.6642221058145626,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    10398,
+                    170
+                  ],
+                  [
+                    1268,
+                    641
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 8734,
+                    "mean_probability": 0.03069254942238331,
+                    "observed_fraction": 0.050950309136707124
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 1268,
+                    "mean_probability": 0.14059318602085114,
+                    "observed_fraction": 0.1892744479495268
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 726,
+                    "mean_probability": 0.2474619597196579,
+                    "observed_fraction": 0.256198347107438
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 539,
+                    "mean_probability": 0.3480367362499237,
+                    "observed_fraction": 0.34879406307977734
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 399,
+                    "mean_probability": 0.44747352600097656,
+                    "observed_fraction": 0.5238095238095238
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 201,
+                    "mean_probability": 0.5424308180809021,
+                    "observed_fraction": 0.7213930348258707
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 188,
+                    "mean_probability": 0.6567989587783813,
+                    "observed_fraction": 0.6861702127659575
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 337,
+                    "mean_probability": 0.7486814260482788,
+                    "observed_fraction": 0.857566765578635
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 85,
+                    "mean_probability": 0.824239194393158,
+                    "observed_fraction": 0.9176470588235294
+                  }
+                ],
+                "ece_10bins": 0.029013001700297296
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.5598544478416443,
+                "support": {
+                  "positive_hours": 1909,
+                  "negative_hours": 10568,
+                  "positive_episodes": 20,
+                  "positive_sites": 28
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12477,
+                  "positives": 1909,
+                  "threshold": 0.5598544478416443,
+                  "precision": 0.8086053412462908,
+                  "recall": 0.285489785227868,
+                  "f1": 0.42198993418505615,
+                  "f2": 0.3279181708784597,
+                  "false_positive_hours_per_station_day": 0.24813657129117575,
+                  "confusion_matrix": [
+                    [
+                      10439,
+                      129
+                    ],
+                    [
+                      1364,
+                      545
+                    ]
+                  ],
+                  "missed_positive_hours": 1364
+                }
+              }
+            },
+            {
+              "weight_policy": "sqrt_ratio_capped",
+              "scale_pos_weight": 4.768633120319422,
+              "validation_uncalibrated": {
+                "rows": 12477,
+                "positives": 1909,
+                "brier": 0.11411092430353165,
+                "precision_at_0_5": 0.4681647940074906,
+                "recall_at_0_5": 0.6547930853850183,
+                "false_positives": 1420,
+                "false_negatives": 659,
+                "auc": 0.8567568747821488,
+                "pr_auc_average_precision": 0.6130358677483061,
+                "f1_at_0_5": 0.5459707359685521,
+                "monitored_station_days": 519.875,
+                "false_alarm_hours_per_monitored_station_day": 2.731425823515268,
+                "missed_positive_hour_fraction": 0.34520691461498165,
+                "confusion_matrix_actual_rows_predicted_columns": [
+                  [
+                    9148,
+                    1420
+                  ],
+                  [
+                    659,
+                    1250
+                  ]
+                ],
+                "reliability_bins": [
+                  {
+                    "bin": 0,
+                    "rows": 4667,
+                    "mean_probability": 0.05842134356498718,
+                    "observed_fraction": 0.023141204199700022
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 2279,
+                    "mean_probability": 0.14126387238502502,
+                    "observed_fraction": 0.06143045195261079
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 1175,
+                    "mean_probability": 0.24515557289123535,
+                    "observed_fraction": 0.1046808510638298
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 966,
+                    "mean_probability": 0.34601840376853943,
+                    "observed_fraction": 0.14285714285714285
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 720,
+                    "mean_probability": 0.4477941691875458,
+                    "observed_fraction": 0.20833333333333334
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 574,
+                    "mean_probability": 0.5527324676513672,
+                    "observed_fraction": 0.1951219512195122
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 679,
+                    "mean_probability": 0.6498844027519226,
+                    "observed_fraction": 0.30338733431516934
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 716,
+                    "mean_probability": 0.7520238757133484,
+                    "observed_fraction": 0.5139664804469274
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 574,
+                    "mean_probability": 0.8553674221038818,
+                    "observed_fraction": 0.7787456445993032
+                  },
+                  {
+                    "bin": 9,
+                    "rows": 127,
+                    "mean_probability": 0.909998893737793,
+                    "observed_fraction": 0.9212598425196851
+                  }
+                ],
+                "ece_10bins": 0.1231639204360052
+              },
+              "threshold_selection": {
+                "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+                "raw_threshold": 0.8031024932861328,
+                "support": {
+                  "positive_hours": 1909,
+                  "negative_hours": 10568,
+                  "positive_episodes": 20,
+                  "positive_sites": 28
+                },
+                "policy": {
+                  "beta": 2.0,
+                  "max_false_positive_hours_per_station_day": 0.25,
+                  "minimum_positive_hours": 10,
+                  "minimum_positive_episodes": 3,
+                  "minimum_positive_sites": 2
+                },
+                "selection_data": "validation_only",
+                "validation_decisions": {
+                  "rows": 12477,
+                  "positives": 1909,
+                  "threshold": 0.8031024932861328,
+                  "precision": 0.8100147275405007,
+                  "recall": 0.2881089575694081,
+                  "f1": 0.4250386398763524,
+                  "f2": 0.33072760072158747,
+                  "false_positive_hours_per_station_day": 0.24813657129117575,
+                  "confusion_matrix": [
+                    [
+                      10439,
+                      129
+                    ],
+                    [
+                      1359,
+                      550
+                    ]
+                  ],
+                  "missed_positive_hours": 1359
+                }
+              }
+            }
+          ],
+          "chosen": "sqrt_ratio_capped",
+          "scale_pos_weight": 4.768633120319422
+        },
+        "threshold_selection": {
+          "status": "VALIDATION_SELECTED_RESEARCH_ONLY",
+          "raw_threshold": 0.8031024932861328,
+          "support": {
+            "positive_hours": 1909,
+            "negative_hours": 10568,
+            "positive_episodes": 20,
+            "positive_sites": 28
+          },
+          "policy": {
+            "beta": 2.0,
+            "max_false_positive_hours_per_station_day": 0.25,
+            "minimum_positive_hours": 10,
+            "minimum_positive_episodes": 3,
+            "minimum_positive_sites": 2
+          },
+          "selection_data": "validation_only",
+          "validation_decisions": {
+            "rows": 12477,
+            "positives": 1909,
+            "threshold": 0.8031024932861328,
+            "precision": 0.8100147275405007,
+            "recall": 0.2881089575694081,
+            "f1": 0.4250386398763524,
+            "f2": 0.33072760072158747,
+            "false_positive_hours_per_station_day": 0.24813657129117575,
+            "confusion_matrix": [
+              [
+                10439,
+                129
+              ],
+              [
+                1359,
+                550
+              ]
+            ],
+            "missed_positive_hours": 1359
+          }
+        },
+        "reproducibility": {
+          "checked": true,
+          "identical_model_bytes": true,
+          "seed": 42
+        },
+        "probability_status": "CALIBRATED_ARCHIVE_ONLY"
+      },
+      "C": {
+        "status": "B_FALLBACK_NO_PACKAGED_REGIONAL_CALIBRATION"
+      },
+      "D": {
+        "experts": {}
+      }
+    }
+  }
+}
