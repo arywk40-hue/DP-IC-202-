@@ -22,7 +22,8 @@ class IndiaExportTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'test.c'; path.write_text(source)
             exe=Path(tmp)/'test'
-            subprocess.run(['cc','-std=c99','-D_POSIX_C_SOURCE=200809L','-O2','-Wall','-Wextra','-Werror',str(path),'-I'+str(EXPORT),'-lm','-o',str(exe)],check=True,capture_output=True)
+            compiled = subprocess.run(['cc','-std=c99','-D_POSIX_C_SOURCE=200809L','-O2','-Wall','-Wextra','-Werror',str(path),'-I'+str(EXPORT),'-lm','-o',str(exe)],capture_output=True,text=True)
+            self.assertEqual(compiled.returncode, 0, compiled.stderr)
             return subprocess.run([str(exe)],input=data,text=True,capture_output=True,check=True).stdout
 
     def test_raw_hourly_features_missing_gap_and_calendar_parity(self):
@@ -45,7 +46,8 @@ class IndiaExportTests(unittest.TestCase):
 int main(void){indra_hour_history s={0};uint64_t t;int station;float raw[6],x[INDRA_INDIA_FEATURES];
 while(scanf("%" SCNu64 " %d",&t,&station)==2){for(int i=0;i<6;++i)if(scanf("%f",&raw[i])!=1)return 2;
 if(!indra_hour_push(&s,t,t,raw,station,31,77,1200,x))return 3;
-for(int i=0;i<INDRA_INDIA_FEATURES;++i)printf("%.9g ",(double)x[i]);puts("");}return 0;}'''
+for(int i=0;i<INDRA_INDIA_FEATURES;++i){printf("%.9g ",(double)x[i]);}
+puts("");}return 0;}'''
         actual=np.array([[float(v) for v in line.split()] for line in self.compile_run(source,'\n'.join(rows)+'\n').splitlines()])
         np.testing.assert_array_equal(np.isnan(actual),np.isnan(expected))
         np.testing.assert_allclose(actual,expected,rtol=1e-5,atol=2e-3,equal_nan=True)
