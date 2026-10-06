@@ -169,3 +169,15 @@ October 5 reports/patches remain historical evidence; newer offline reports supe
 | [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
 | [docs/README.md](docs/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
 | [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Updated commands, interface or main reference as named | 2026-10-06T10:54:21+05:30 | current |
+
+## Independent-label/context phase — 6 October 2026
+
+Additive references; frozen earlier evidence was neither overwritten nor moved.
+
+| Path | Purpose | Last modified (Asia/Calcutta) | Status |
+|---|---|---|---|
+| [docs/hazard_label_audit.md](docs/hazard_label_audit.md) | hazard label audit phase reference | 2026-10-06T14:04:14+05:30 | current |
+| [ml/hazard_context/README.md](ml/hazard_context/README.md) | README phase reference | 2026-10-06T14:04:14+05:30 | current |
+| [reports/hazard_context_phase/PLAN.md](reports/hazard_context_phase/PLAN.md) | PLAN phase reference | 2026-10-06T13:43:49+05:30 | current |
+| [reports/hazard_context_phase/REPORT.md](reports/hazard_context_phase/REPORT.md) | REPORT phase reference | 2026-10-06T14:06:07+05:30 | current |
+| [reports/hazard_context_phase/ERA5_ACCESS.md](reports/hazard_context_phase/ERA5_ACCESS.md) | ERA5 ACCESS phase reference | 2026-10-06T14:04:14+05:30 | current |

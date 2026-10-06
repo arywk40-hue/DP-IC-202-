@@ -1,0 +1,107 @@
+{
+  "baseline_preserved": true,
+  "verified_baseline_commit": "1e67bd9fc561f59e07ee9277da690730ec611a6a",
+  "baseline_ci": {
+    "run_id": 37425991889,
+    "conclusion": "success",
+    "url": "https://github.com/arywk40-hue/DP-IC-202-/actions/runs/37425991889"
+  },
+  "independent_label_sources_reviewed": [
+    "imd_station_rain",
+    "mausam_5084",
+    "gpm_imerg_v07",
+    "cwc_hydrology",
+    "gsi_landslide_inventory",
+    "firms_thermal",
+    "imd_storm_events",
+    "beijing_weak_rules"
+  ],
+  "admitted_label_sources": [],
+  "real_independent_event_records": 0,
+  "monitored_real_negative_windows": 0,
+  "ERA5_DOWNLOAD_STATUS": "BLOCKED_BY_ACCESS",
+  "real_era5_rows": 0,
+  "era5_variables_prepared": [
+    "era5_temperature_c",
+    "era5_dewpoint_c",
+    "era5_surface_pressure_hpa",
+    "era5_u10_mps",
+    "era5_v10_mps",
+    "era5_wind_speed_mps",
+    "era5_relative_humidity_pct",
+    "era5_dewpoint_depression_c"
+  ],
+  "sensor_only_results": "FROZEN_UNCHANGED: reports/offline_phase/results.json",
+  "sensor_plus_era5_results": "NOT_RUN_NO_REAL_BACKGROUND",
+  "does_era5_help": "INCONCLUSIVE",
+  "event_level_results": "NOT_AVAILABLE_NO_ADMITTED_REAL_EVENT_CORPUS",
+  "pm_training_status": "NO_NEW_ADMITTED_SOURCE_OR_HEAD",
+  "disaster_outputs": "DISABLED",
+  "hardware_validation": "UNCHANGED_NOT_HARDWARE_VALIDATED",
+  "protected_hashes_checked": 63,
+  "synthetic_demo": {
+    "evidence": "SYNTHETIC_CONTRACT_ONLY",
+    "sensor_rows": 300,
+    "normalized_fixture_era5_rows": 300,
+    "joined_nonmissing_rows": 299,
+    "synthetic_positive_hours": 1,
+    "synthetic_monitored_negative_hours": 177,
+    "unknown_hours": 122,
+    "real_events": 0,
+    "real_era5_rows": 0,
+    "hazard_models_fitted": 0,
+    "disaster_outputs": "DISABLED",
+    "normal_admission_status": "research_only"
+  },
+  "tests": {
+    "passed": 140,
+    "subtests_passed": 8,
+    "environment": "Python 3.13 isolated context dependencies plus original India sensor runtime",
+    "summary": "140 passed, 907 warnings, 8 subtests passed in 18.93s"
+  },
+  "scientific_blockers": [
+    "imd_station_rain: Authorized hourly exports, dry-period coverage, thresholds and rights needed",
+    "mausam_5084: 2017 outside benchmark; PDF fetch timed out; conflicting CC-BY-NC/generic CC-BY notices and absent monitored negatives",
+    "gpm_imerg_v07: Satellite/gauge-adjusted estimate, not direct local gauge truth; authorization/product coverage needed",
+    "cwc_hydrology: Policy PDF returned 401; need authorized dated occurrence/coverage exports, not forecasts or rainfall proxy",
+    "gsi_landslide_inventory: Public export advertised; dated rows, rights and surveyed negative coverage unverified",
+    "firms_thermal: MAP_KEY unavailable; no confirmed vegetation-fire attribution or valid non-detection coverage",
+    "imd_storm_events: No licensed time/location-resolved independent event export",
+    "beijing_weak_rules: China isolated; weak labels rejected as independent Indian truth"
+  ],
+  "phase_code_sha256": {
+    "ml/hazard_context/era5.py": "e4762d599fee621072101e288569860ff8517dd4a20dac3d0c32937e0aeaa50b",
+    "ml/hazard_context/acquire.py": "ecf3cf6e2fd1abe9c0d82057cc8f6aaabb85a94c29dac06714f2af884da7781f",
+    "ml/hazard_context/events.py": "998229fd17370ea31b6cf31500c71b6d57fc00ca1a72522c235f717bd8c9f600",
+    "ml/hazard_context/diagnostics.py": "6ccb70435151b70fadbc6ed2c557d59187b0d90be2d85eb6ce7fdbb7b4acb8c9",
+    "ml/hazard_context/policy.py": "6f2749fed5444a988ec55b597f9ed6e3b1904c76a093c5292e3292c9b1d7d9ee",
+    "ml/hazard_context/__init__.py": "2213100aedc8fd6f7fb382dd539f7ff587ef0c4c613edf62dd570911bf25bb65",
+    "ml/hazard_context/matching.py": "fb3d2f00df724d671c599da731a82fbb02ef93ccafc9dc209984e35e79b200fc",
+    "ml/hazard_context/cli.py": "d19e40d3bd424e40c14063852a188dd314f1db78d9209d61c99c7ee7c1f09112",
+    "ml/hazard_context/train.py": "c56c130357d02f1ae45f1b7572081e1c4540e45da23160c484be98229ffbca66",
+    "ml/hazard_context/episodes.py": "144a94a8e809252c9ee42970427fea7bd6f3fe528c4435a92e04f92a1d795f4b",
+    "ml/hazard_context/demo.py": "744a772c65dc4fa9a1b43af6fd4e42b783ea89dd4450db4695630b0a3a6abba6",
+    "ml/hazard_context/compare.py": "b880421b11567db15c3669a4a2d084cac0de0fb7724bda8840a6d95b52f868be",
+    "ml/hazard_context/output.py": "be3bbb53f12feda449aaea5902b766b1615597b8f730a6d5a155a68c6836a336"
+  },
+  "cli_checks": {
+    "audit-era5": "PASS_HELP",
+    "download-era5": "PASS_HELP",
+    "schema": "PASS_HELP",
+    "normalize-events": "PASS_HELP",
+    "match": "PASS_HELP",
+    "train-hazards": "PASS_HELP",
+    "prepare-era5": "PASS_HELP",
+    "compare": "PASS_HELP",
+    "episodes": "PASS_HELP"
+  },
+  "protected_baseline_sha256_match": true,
+  "documentation_links": "PASS",
+  "lint": "PASS configured Ruff plus F401; compileall PASS",
+  "new_phase_remote_ci": "PENDING_PUBLICATION; final response gives actual run status",
+  "phase_commits": {
+    "event_schema_matching_gates": "f2ad137",
+    "era5_context_tests": "7c2022e",
+    "baseline_ci_repair": "1e67bd9"
+  }
+}

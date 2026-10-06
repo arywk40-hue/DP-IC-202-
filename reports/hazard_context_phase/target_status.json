@@ -1,0 +1,230 @@
+{
+  "extreme_rainfall": {
+    "target": "extreme_rainfall",
+    "status": "NOT_ENOUGH_DATA",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  },
+  "cloudburst": {
+    "target": "cloudburst",
+    "status": "DISABLED",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  },
+  "flash_flood": {
+    "target": "flash_flood",
+    "status": "NOT_ENOUGH_DATA",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  },
+  "landslide": {
+    "target": "landslide",
+    "status": "NOT_ENOUGH_DATA",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  },
+  "wildfire": {
+    "target": "wildfire",
+    "status": "NOT_ENOUGH_DATA",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  },
+  "storm": {
+    "target": "storm",
+    "status": "NOT_ENOUGH_DATA",
+    "can_fit_research": false,
+    "minimum_support": {
+      "positive_events": 50,
+      "positive_sites": 10,
+      "positive_years": 2,
+      "positive_districts": 5,
+      "monitored_negative_days": 30
+    },
+    "support": {
+      "positive_events": 0,
+      "positive_reports": 0,
+      "positive_hours": 0,
+      "positive_sites": 0,
+      "positive_years": 0,
+      "positive_districts": 0,
+      "positive_states": 0,
+      "median_event_duration_hours": null,
+      "monitored_negative_days": 0,
+      "definition": "Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records"
+    },
+    "blocked_reasons": [
+      "positive_events",
+      "positive_sites",
+      "positive_years",
+      "positive_districts",
+      "monitored_negative_days",
+      "NO_ADMITTED_INDEPENDENT_SOURCE",
+      "NEGATIVES_UNAVAILABLE"
+    ],
+    "deployment_approved": false,
+    "cloudburst_detected": "unavailable",
+    "cloudburst_prediction": "unavailable",
+    "disaster_outputs": "DISABLED",
+    "screen_is_not_scientific_sufficiency": true
+  }
+}

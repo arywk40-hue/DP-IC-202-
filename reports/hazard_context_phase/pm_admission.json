@@ -1,0 +1,36 @@
+{
+  "heads": {
+    "pm25_ug_m3": "UNTRAINED_NO_APPROVED_INDIAN_PM_LABELS",
+    "pm10_ug_m3": "UNTRAINED_NO_APPROVED_INDIAN_PM_LABELS"
+  },
+  "sources": {
+    "india_cpcb_kaggle_v2": {
+      "status": "BLOCKED_CLOCK_OR_INTERVAL_UNVERIFIED",
+      "license_class": "restricted",
+      "timezone_verified": 0,
+      "interval_semantics": "unknown"
+    },
+    "delhi_opencity": {
+      "status": "BLOCKED_CLOCK_OR_INTERVAL_UNVERIFIED",
+      "license_class": "unresolved",
+      "timezone_verified": 0,
+      "interval_semantics": "unknown"
+    },
+    "openaq": {
+      "status": "BLOCKED_CLOCK_OR_INTERVAL_UNVERIFIED",
+      "license_class": "unresolved",
+      "timezone_verified": 0,
+      "interval_semantics": "unknown"
+    },
+    "sensor_community": {
+      "status": "BLOCKED_CLOCK_OR_INTERVAL_UNVERIFIED",
+      "license_class": "unresolved",
+      "timezone_verified": 0,
+      "interval_semantics": "unknown"
+    }
+  },
+  "legacy": "Existing NC CPCB PM weights retained as assumption-limited legacy research, never admitted into new clean India fit",
+  "synthetic": "Contract tests only; not real PM accuracy",
+  "china": "Excluded",
+  "registry_sha256": "7b5f4b269ea15396bf4989df84eb30370c35f448cd6429cb3641b50e9b5f2847"
+}

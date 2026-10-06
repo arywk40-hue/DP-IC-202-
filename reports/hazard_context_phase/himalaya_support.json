@@ -1,0 +1,29 @@
+{
+  "geography": "28\u201337N,72\u201390E, QC-valid EGM96 height\u2265500m proxy; not official boundary",
+  "eligible_proxy_sites": 13,
+  "physical_site_ids": [
+    "geo_a16440fa03b00733",
+    "geo_9c5fe43cd719ce92",
+    "geo_10b9f29cf6350e51",
+    "geo_f6bbd72d5eb9af0d",
+    "geo_730368e8a90b483f",
+    "geo_ef18ee49527bac22",
+    "geo_32cefb883d6ec3f4",
+    "geo_1408b22483d9ceb4",
+    "geo_baaa40aa4f0812a8",
+    "geo_01952dc8960f3a6a",
+    "geo_80cda164bd446c02",
+    "geo_130f6ff5a489073e",
+    "geo_7ba7f34fe5726e37"
+  ],
+  "elevation_m": [
+    550.0,
+    3258.0
+  ],
+  "independent_admitted_events": 0,
+  "matched_positive_hours": 0,
+  "event_types": [],
+  "event_distances_km": [],
+  "event_label_quality": "NO_ADMITTED_EVENT_CORPUS",
+  "official_boundaries_obtained": false
+}

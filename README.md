@@ -21,3 +21,5 @@ pio run -d esp32/india_sensor
 ```
 
 Python dependencies: `requirements-india-sensor.txt` for the measured India run; older spatial/CI environments retain their own pins.
+
+Current additive phase: [independent Indian hazard-label audit](docs/hazard_label_audit.md), [ERA5 context report](reports/hazard_context_phase/REPORT.md), [commands](ml/hazard_context/README.md). Sensor-only results stay frozen; real ERA5 access and admissible event/negative data remain missing. Disaster outputs stay disabled.

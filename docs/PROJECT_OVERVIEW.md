@@ -8,6 +8,8 @@ Evidence cutoff: 3 October 2026. This is the main project guide. Original report
 
 6 October software update: [offline completion report](../reports/offline_phase/REPORT.md) and [A–D tables/losses](../reports/offline_phase/RESULTS.md). Four protocols now include whole-site, whole-Himalaya-proxy, temporal-only and Himalayan-only tests. All 374 archive feature matrices were exactly rechecked; 61 selected fits reproduce identical model bytes. Cutoffs/weights use validation only. Wind recall remains zero; geography does not consistently help. PM/hazard truth is still insufficient. A national same-node forecast C export is host-tested and ESP32-S3 cross-compiled; **not hardware validated**. The existing spatial results below are unchanged.
 
+Independent-label/background update: [hazard audit](hazard_label_audit.md) and [ERA5 context phase](../reports/hazard_context_phase/REPORT.md) prepare event admission, monitored negatives, event-disjoint matching and a separate retrospective S/SB comparison. Real event/ERA5 data is missing; no disaster output or previous score changed. The test-only GCC repair is verified by remote CI.
+
 ## 1. What this project is
 
 INDRA is an AI weather mesh network project for a course at IIT Mandi. A mesh is a group of communicating sensor nodes. The intended deployment has exactly two transmitting nodes, A and B. Given their readings and a query latitude, longitude and elevation, a server estimates weather between them. A third instrument, C, measures the hidden test point; its readings are withheld from prediction and used only for scoring.
