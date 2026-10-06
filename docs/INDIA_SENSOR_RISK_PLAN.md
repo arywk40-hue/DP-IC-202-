@@ -1,0 +1,106 @@
+# India sensor models: audit and incremental plan — 5 October 2026
+
+**Confidential: do not publish before IP review.** This is a reference supplement to [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md), not a replacement for measured spatial results.
+
+## 1. Repository audit before changes
+
+| Existing feature/model | Sensor/data source | Purpose | Implemented? | Reusable? | Required change |
+|---|---|---|---|---|---|
+| Six channels and bounds | BME280 T/RH/station P, PMS7003 PM2.5/10, calibrated wind | Measurement contract | Yes: `ml/six_sensor_forecast/contract.py` | Yes | PM stays optional in new India work; keep old six-input forecast intact |
+| 1/3/6/12/24 h lags, 1 h changes, 6/24 h mean/std | Same six channels | Six-hour measurement forecasting, 66 teacher features | Yes: `six_sensor_forecast/features.py` | Yes | Minute tendencies need genuinely minute observations; no hourly upsampling |
+| Dewpoint, VPD, heat index, PM ratio | T/RH/PM | Moisture/heat/particulate patterns | Yes: `event_classifier/features.py` | Yes | Reuse equations; distinguish sensor patterns from observed events |
+| Pressure 1/6 h, T/RH/PM 1 h changes; PM monotonicity | Hourly history | Twelve generated event rules | Yes: same file | Yes | No inferred 10/30 min changes from hourly archives |
+| Twelve event heads | Beijing with input-generated labels | Rule imitation | Ten trained; severe rainstorm and snowstorm skipped | Feature code yes; weights external reference only | No independent disaster validation, no India event release |
+| Rain/fog/frost/heat/fire/dust/smoke/inversion/front rules | Input thresholds | Weak labels, not observed hazards | Yes: `apply_event_labels` | Benchmark only | Never reuse these as independent disaster truth |
+| Node forecast teachers/students | Beijing; separate restricted CPCB Indian profiles | Six-hour numerical forecasts; compact C export | Yes | Keep legacy interface | Indian principal data must be source-isolated; no Beijing mixing |
+| Elevation-aware spatial physics + boosting/NN residuals | NOAA India 2023/2024, SRTM | Current weather between nodes | Yes: `ml/spatial_ensemble/` | Yes | Do not retrain it as a disaster detector; serving skill still unverified |
+| Distance, spherical lat/lon, elevation differences, time cycles, slope | GPS/site registry, terrain, clock | Interpolation features/domain guards | Yes | Yes | Latest K=2 omits query slope; GPS ellipsoid height needs datum conversion |
+| ERA5 named feature slots | External modeled grid | Background only | Adapter/slots, no acquired files/join/ablation | Research only | New sensor-only models must exclude them at inference |
+| Long schema/rights/source/QC views | `ml/datasets/schema.sql`, `registry.py` | Open/restricted/quarantine provenance | Yes | Yes | Add separate label evidence; keep rain/satellite labels out of sensor features |
+| Physical-site/time blocks, buffers, metrics, band suppression | `episodes.py`, national/two-node evaluators | Spatial evaluation | Yes | Yes | Risk forecasts additionally purge target horizon and feature history |
+| Relative offsets and hidden A/B/C scoring | `ml/field/two_node.py` | Field interpolation validation | Synthetic-tested only | Yes | Real calibrated sensor campaign still required |
+| Firmware/serial history and logging | `esp32/ml_integration/` | Forecast/rule replay | Host parity/compile only | Yes | Live drivers, radio, authentication and spatial runtime remain missing |
+| Cloudburst, flood and landslide trained heads | None with independent labels | Proposed new applications | No | No weights to reuse | Remain unavailable until evidence exists |
+
+The prior principal spatial dataset already is Indian NOAA, not China. All 375 acquired 2024 station files and 360 2023 files have been processed; actual hourly core coverage differs by station. NWIC's 1,571,295 supplied weather rows remain quarantined. Delhi and restricted CPCB metadata do not establish approved new event labels. Existing rainfall has no explicit dry-hour records. No real disaster classifier can be validated from these alone. See [sources/rights](DATA_LICENSES.md), [latest spatial results](../reports/two_node_phase/REPORT.md), and [event limitations](../ml/event_classifier/EVENT_RELIABILITY.md).
+
+## 2. Hardware and capability matrix
+
+The user now specifies BME280, PMS7003, 600 PPR encoder, Neo-M8N GPS, INA219 and DS3231. Parts are specified; installed wiring, calibration and field operation are not verified. Encoder PPR alone does not determine m/s: rotor geometry, gearing and measured transfer function are needed. Rotation direction is not wind azimuth. INA219 provides health/power diagnostics, not rainfall evidence. RTC time must be set/verified as UTC; GPS altitude and SRTM height must not be silently mixed.
+
+Classes: **A** measured quantity; **B** plausible pattern inference requiring independent validation; **C** conditions/risk indicator only; **D** event cannot reliably be detected with these sensors. Confidence below describes measurement/physics, not a trained event probability.
+
+| Hazard/condition | Class | Available evidence / confidence | Recommended output |
+|---|---|---|---|
+| Ambient temperature, RH, station pressure | A | Shielded/calibrated BME280; device accuracy not yet measured | Measurements + QC |
+| Elevated optical PM | A for sensor estimate | PMS7003 optical equivalent; humidity/calibration affect interpretation | `elevated_pm_measurement`, not certified AQI |
+| High wind | A after mechanical calibration | Encoder-derived m/s; hourly means cannot establish gusts | `high_wind_measurement`; future-measurement forecast |
+| Rapid pressure change | A | Time-aligned pressure tendency; drift/height changes must be excluded | `pressure_fall_pattern` |
+| Heavy-rain precursor | C; B only after validation | Surface moisture/pressure/wind are nonspecific | Experimental `extreme_rainfall_risk`, unavailable until validated |
+| Cloudburst occurrence | D | No measured rain rate or storm spatial extent | No `cloudburst_detected` head |
+| Cloudburst precursor | C, feasibility unproven | Surface proxies do not observe vertical instability | Research hypothesis; risk probability unavailable |
+| Thunderstorm occurrence | D; atmospheric patterns B | No lightning, radar or verified thunder observations | `storm_weather_pattern`, not thunder detection |
+| Flash flood | D occurrence; C weather contribution | No upstream rain, river level, catchment/runoff state | `flash_flood_weather_risk` requires external truth |
+| Landslide | D occurrence; C weather contribution | No slope moisture/geotechnical state or movement | `landslide_weather_risk` requires external truth |
+| Wildfire-conducive conditions | C | VPD/RH/heat/wind; fuel/ignition absent | Weather contribution to fire risk, not active fire |
+| Smoke/fire signature | B smoke-like pattern; D fire confirmation | PM spikes/ratio are not source-specific | `smoke_like_pm_pattern` |
+| Dust event | B | PM coarse fraction/wind; other aerosols can match | `dust_like_pattern`, independently validate |
+| Heat/cold anomaly | A temperature; C event criteria | Needs local normals, duration and official definitions | Measured threshold/anomaly, not automatic heat/cold wave |
+| Fog/high humidity | A RH; B fog | No visibility measurement | `near_saturation_conditions`, not confirmed fog |
+
+The old fixed 35°C/heat-index rule is not an official Indian heatwave declaration. Use [IMD guidance](https://mausam.imd.gov.in/responsive/heatwave_guidance.php) for independent regional/duration labels. Surface T/RH cannot yield true CAPE or convective instability profiles; no physically unsupported `CAPE` feature is added.
+
+## 3. Cloudburst feasibility
+
+IMD-published research describes localized rainfall of **100 mm or more in one hour**. INDRA has no rain-rate sensor, so it cannot confirm that quantity. [IMD MAUSAM study](https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/5084).
+
+A calibrated tipping-bucket or weighing rain gauge with timestamped increments is the most useful single added sensor for local confirmation. One gauge still cannot establish spatial extent or an entire catchment's flood risk. A gauge network/radar and independent reports would be needed for stronger storm labels.
+
+Proposed hierarchy is **not operational**: ordinary background → moisture/pressure-change pattern → independently validated extreme-rainfall risk → independently validated localized-extreme-rainfall risk. “Normal” must not mean proven disaster-free when labels are absent. No numeric high-cloudburst risk is emitted without local gauge/event validation. Flood/landslide weather contribution must remain distinct from total physical risk. GSI describes terrain factors and rainfall-triggered landslides, reinforcing that weather alone is insufficient. [GSI explanation](https://gsi.gov.in/landslide-hazard/).
+
+## 4. India dataset strategy
+
+| Dataset / provider | Geography/resolution | Variables or label purpose | Recorded rights / commercial status | New fit / access |
+|---|---|---|---|---|
+| [NOAA GHCNh](https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly) | Indian point stations; actual hourly/synoptic coverage | Core weather, later observed sensor thresholds | CC0; recorded open/commercial use | Yes, principal clean archive |
+| NWIC HP weather/rain | Himachal points; hourly export claims | Weather/rain candidates | Exact rights unresolved; no commercial clearance | No; clocks/P/rights quarantined; wet-only rain has no negatives |
+| CPCB compilation / [OpenAQ](https://docs.openaq.org/resources/licenses) | Indian PM points; provider cadence | PM labels/measurements | Compilation CC-BY-NC-SA; OpenAQ provider-specific | No; restricted data stays separate; OpenAQ key/rights needed |
+| [IMD AWS/ARG/events](https://dsp.imdpune.gov.in/) | Indian stations, instrument-dependent | Rain-rate, wind, official heat/cold/storm verification | Export/product permission unresolved | No; authorized exports needed |
+| [IMD gridded rain](https://imdpune.gov.in/lrfindex.php) | India daily 0.25° | Broad rain/climatology, not hourly cloudbursts | Verify actual product terms | No; candidate |
+| [GPM IMERG V07](https://gpm.nasa.gov/resources/documents/imerg-v07-technical-documentation) | 0.1°, half-hourly | Modeled rain research labels with grid/time uncertainty | Product/export rights not frozen here | No; authorized NASA/PPS/Earthdata acquisition pending |
+| [MOSDAC INSAT](https://www.mosdac.gov.in/faq-page) | India; product-specific grid/cadence | Cloud/rain research labels only | Verify product terms | No; registered product access needed |
+| [ERA5/ERA5-Land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land) | India hourly grids | Research context/labels, never new sensor-only inputs | Recorded CC-BY; service terms still need acceptance | No; CDS token/manual download pending |
+| [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) | India; sensor-specific pixel/revisit | Active-fire corroboration; no hotspot is not a verified negative | Product/API terms unresolved here | No; candidate authorized API/export route |
+| [GSI Bhusanket/Bhukosh](https://bhusanket.gsi.gov.in/index.html) | Indian inventory/maps; event-dependent dates | Landslide occurrence/susceptibility context | Dataset rights/ascertainment unresolved | No; preserve location/time uncertainty |
+| [CWC](https://cwc.gov.in/iso/home)/NDMA records | River/basin or report polygons; cadence varies | Flood occurrence/river levels; warnings ≠ observations | Historical export permissions unresolved | No; explicit monitored negatives needed |
+| SRTM/Köppen | Static 30m elevation/slope; 1km climate map | Registry/QC/evaluation grouping | Recorded SRTM public domain; Köppen CC-BY-4.0 | Yes: altitude/QC; climate groups are evaluation metadata |
+| [UCI Beijing](https://doi.org/10.24432/C5RK5G) | China hourly point stations | Legacy/external research only | CC-BY-4.0 | No new India training or validation |
+
+Primary routes: [IMD rainfall archive](https://imdpune.gov.in/lrfindex.php), [NASA IMERG documentation](https://gpm.nasa.gov/resources/documents/imerg-v07-technical-documentation), [MOSDAC access FAQ](https://www.mosdac.gov.in/faq-page), [GSI inventory](https://bhusanket.gsi.gov.in/index.html), [CWC](https://cwc.gov.in/iso/home), [FIRMS](https://firms.modaps.eosdis.nasa.gov/), and existing registry/provider links. NASA documents half-hour 0.1° fields; this grid can miss localized peaks, so satellite estimates are not certified cloudburst truth. MOSDAC FAQ describes registered ordering. These are investigated candidates, not fabricated acquired datasets or approved licenses.
+
+## 5. Himalayan/Himachal strategy
+
+Use the existing elevation/pressure QC and distinguish surveyed sensor height from SRTM ground height. Evaluate inversions, valleys, monsoon and winter/western-disturbance periods, exposure and altitude bands. Calendar monsoon flags are seasonal proxies, not observed monsoon onset. No surface sensor feature is called true convective instability.
+
+The current Himalayan rectangle/elevation selection is a geographic proxy, not an official belt polygon. A Himachal rectangle is also only a proxy until verified administrative boundaries are obtained. Per-state/eastern-Himalaya/coastal claims require those boundaries; missing region metadata remains unknown. Do not treat sparse proxy results as all-Himalaya validation.
+
+## 6. Incremental implementation plan
+
+1. Preserve old forecasting, event artifacts and two-node interpolation. Reuse meteorological equations, physical ranges, hashes and global episode IDs.
+2. Add sensor-only minute/hour feature configuration, strict UTC/units/country/provenance checks and causal windows. Add 10/30/60-minute tendencies only at a supporting cadence; gusts require native gust metadata.
+3. Add separate long-form label evidence: target interval, source/version/hash, observed versus modeled versus weak, verified negatives, location/time uncertainty and event grouping. Missing labels never become zero. No inference join to satellite/rain/reanalysis variables.
+4. Compare A sensor-only national, B national plus GPS/height, C B plus Himalayan calibration and D GPS/height regional experts with base fallback. Start with independently observed **future sensor-threshold forecasts**, named as measurements, not disasters. Risk heads remain unavailable without independent labels.
+5. Use whole physical sites with buffers, chronological selection/calibration/test and target/history purge. Publish per-region/elevation metrics and losses, calibration, false alarms and missing coverage. Real disaster, weak-label, historical, geographic/time and physical-sensor evidence remain separate categories.
+6. Write versioned metadata/configuration and meaningful regression tests; run actual Indian preparation/evaluation that available data supports. No trained disaster or ESP32 claim without its required evidence.
+
+## 7. Dataset/model contract
+
+Reuse the existing weather long schema. New wide sensor view adds verified UTC availability/cadence, country, physical site, coordinates and height datum. Derived feature categories: raw six channels; causal tendency/mean/std/min/max; dewpoint/depression/VPD/absolute-humidity estimate; PM ratio/spikes; GPS height/time cycles; static region/climate grouping. INA219 health and measurement counts stay diagnostics until independently justified as predictors. No invented wind direction or gust channel.
+
+Labels are a separate table keyed by physical site and issue time. Records must identify forecast horizon, target window, label source/hash/version, definition and evidence category, whether zero means a verified non-event, and group ID spanning the whole event. Labels spanning splits are purged. Same-event records cannot appear across roles. Satellite/rain/water-level columns are not permitted in deployed feature lists. China's existing paths stay intact to avoid breaking legacy tests; an explicit country/source allowlist enforces logical isolation rather than moving artifacts.
+
+## 8. Evidence and remaining limits
+
+Prior measured spatial scores are unchanged. The existing clean-checkout suite recorded 97 tests plus eight subtests; new checks/runs will be recorded separately. There are **no approved independent Indian disaster labels**, real-minute wind/gust streams, official region polygons, field risk calibration or a deployed hazard model. No downloaded product or benchmark win is claimed merely from this plan. Missing or uncalibrated experts fall back to the national score when trained; a model failure produces unavailable output and a corrupt artifact is rejected. A national uncalibrated score is not emitted as a probability.
+
+Implementation and actual runs: [phase report](../reports/india_sensor_phase/REPORT.md), [measured-threshold tables](../reports/india_sensor_phase/RESULTS.md), and [commands/feature contract](../ml/india_sensor/README.md). Independent disaster-label ingestion/training and physical sensor validation are still pending.

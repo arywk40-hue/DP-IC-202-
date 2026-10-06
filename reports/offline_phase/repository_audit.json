@@ -1,0 +1,7 @@
+{
+  "scan": "Git tracked + untracked nonignored candidates; heuristic patterns, not a comprehensive security audit",
+  "credential_pattern_paths": [],
+  "generated_or_secret_candidates": [],
+  "files_over_5MB": [],
+  "raw_training_outputs_ignored": true
+}

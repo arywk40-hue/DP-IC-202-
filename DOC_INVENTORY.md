@@ -137,3 +137,35 @@ Dates are current filesystem timestamps. Original inventory dates above remain f
 | [docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd](docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
 | [docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd](docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
 | [docs/archive/diagrams/reports__review__REVIEW__1.mmd](docs/archive/diagrams/reports__review__REVIEW__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
+
+## India sensor research update — 5 October 2026
+
+The original inventory snapshot above remains historical evidence. No documentation was moved or deleted in this phase. Current additions/updates are listed below; the new audit/commands/reports are references linked from the single main overview. Existing invention/license/archive documents remain unchanged.
+
+| Path | Current purpose | Last modified (Asia/Kolkata) | Status |
+|---|---|---|---|
+| [docs/INDIA_SENSOR_RISK_PLAN.md](docs/INDIA_SENSOR_RISK_PLAN.md) | India sensor audit, capability matrix, source rights and incremental plan | 2026-10-05T19:57:23+05:30 | current; reference or main guide as stated |
+| [ml/india_sensor/README.md](ml/india_sensor/README.md) | Sensor-only feature/label contract and exact prepare/train/calibrate/demo commands | 2026-10-05T19:48:49+05:30 | current; reference or main guide as stated |
+| [reports/india_sensor_phase/REPORT.md](reports/india_sensor_phase/REPORT.md) | Executed India research phase, measured results, losses and pending evidence | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
+| [reports/india_sensor_phase/RESULTS.md](reports/india_sensor_phase/RESULTS.md) | Frozen A-D/baseline tables and station-bootstrap Brier intervals | 2026-10-05T19:49:49+05:30 | current; reference or main guide as stated |
+| [reports/india_sensor_phase/patches/README.md](reports/india_sensor_phase/patches/README.md) | Ordered already-applied review patches and evidence exclusions | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
+| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Main guide: India research supplement and user-specified hardware, spatial results unchanged | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+| [docs/README.md](docs/README.md) | Main guide and updated reference index | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+| [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Retained A/B/hidden-C protocol, specified parts and encoder/RTC/health requirements | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+
+## Offline update — 6 October 2026
+
+October 5 reports/patches remain historical evidence; newer offline reports supersede their model-selection, calibration and export status. No files were moved or deleted.
+
+| Path | Purpose | Last modified (Asia/Kolkata) | Status |
+|---|---|---|---|
+| [reports/offline_phase/PLAN.md](reports/offline_phase/PLAN.md) | Predeclared software/physical/data-access separation | 2026-10-05T23:17:59+05:30 | current |
+| [reports/offline_phase/REPORT.md](reports/offline_phase/REPORT.md) | Executed offline results, losses and blockers | 2026-10-06T10:58:53+05:30 | current |
+| [reports/offline_phase/RESULTS.md](reports/offline_phase/RESULTS.md) | Frozen four-protocol A–D metrics and support | 2026-10-06T10:42:25+05:30 | current |
+| [esp32/india_sensor/README.md](esp32/india_sensor/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [ml/models/india_sensor_v1/README.md](ml/models/india_sensor_v1/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [ml/india_sensor/README.md](ml/india_sensor/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [README.md](README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [docs/README.md](docs/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Updated commands, interface or main reference as named | 2026-10-06T10:54:21+05:30 | current |

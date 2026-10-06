@@ -1,0 +1,111 @@
+{
+  "checked_at_utc": "2026-10-06T05:28:54.952062+00:00",
+  "tests": {
+    "passed": 123,
+    "subtests_passed": 8,
+    "command": "python3 -m pytest -q",
+    "log_summary": "123 passed, 399 warnings, 8 subtests passed in 18.84s"
+  },
+  "lint": "CI-equivalent Ruff E9,F63,F7,F82 and new-code F401 passed; compileall passed",
+  "cli": {
+    "prepare": true,
+    "train": true,
+    "predict": true,
+    "evaluate": true,
+    "verify": true,
+    "pm": true,
+    "export": true,
+    "replay": true
+  },
+  "board_runtime_validated": false,
+  "disaster_outputs": "DISABLED",
+  "builds": {
+    "legacy_model": [
+      "RAM:   [=         ]   5.6% (used 18448 bytes from 327680 bytes)",
+      "Flash: [=         ]   8.5% (used 282445 bytes from 3342336 bytes)",
+      "========================= [SUCCESS] Took 8.48 seconds =========================",
+      "esp32-s3-model-test  SUCCESS   00:00:08.482"
+    ],
+    "new_india_research": [
+      "RAM:   [=         ]   6.0% (used 19612 bytes from 327680 bytes)",
+      "Flash: [=         ]   9.6% (used 319309 bytes from 3342336 bytes)",
+      "========================= [SUCCESS] Took 9.11 seconds ========================="
+    ],
+    "existing_integration_uart_usb": {
+      "result": "SUCCESS for both environments",
+      "uart_static_ram": 18848,
+      "uart_flash": 316853,
+      "usb_static_ram": 19080,
+      "usb_flash": 314101,
+      "source": "PlatformIO session 58308"
+    }
+  },
+  "historical_replay": {
+    "evidence": "HISTORICAL_REPLAY_NOT_FIELD_VALIDATION",
+    "packet_counts": {
+      "ACCEPTED": 180
+    },
+    "accepted_predictions": 180,
+    "max_history_rows": 23,
+    "feature_prefix_parity_max_absolute_error": 0.0,
+    "no_future_data_in_stream": true,
+    "disaster_outputs": "DISABLED",
+    "inference_status_counts": {
+      "REFUSED_INSUFFICIENT_HISTORY": 23,
+      "RESEARCH_ONLY_NOT_FIELD_VALIDATED": 157
+    }
+  },
+  "synthetic_replay": {
+    "evidence": "SYNTHETIC_CONTRACT_ONLY",
+    "packet_counts": {
+      "ACCEPTED": 118,
+      "REJECTED_DUPLICATE_OR_OUT_OF_ORDER": 1,
+      "LATE_PACKET_OMITTED": 1
+    },
+    "accepted_predictions": 118,
+    "max_history_rows": 26,
+    "feature_prefix_parity_max_absolute_error": 0.0,
+    "no_future_data_in_stream": true,
+    "disaster_outputs": "DISABLED",
+    "inference_status_counts": {
+      "REFUSED_INSUFFICIENT_HISTORY": 24,
+      "RESEARCH_ONLY_NOT_FIELD_VALIDATED": 93,
+      "REFUSED_INVALID_CURRENT_CORE": 1
+    }
+  },
+  "source_hashes_current": {
+    "ml/india_sensor/metrics.py": "f249c34a25500b87a28793f9a6087c153d8ff36e357e80f7e3d68d4417ffeac7",
+    "ml/india_sensor/labels.py": "688d8dc26633f03524162c4e8ae3b1fa5ae8c767ff5f41b364b1ad59900106b2",
+    "ml/india_sensor/config.py": "67ab86080af9280621362eac9c600c02ed3e2c158dfb9fcee20cb19123695a8d",
+    "ml/india_sensor/thresholds.py": "18976ac2b1da34bc1080c4b589f7c308208b217266584c67f5a544f1bc16436b",
+    "ml/india_sensor/predict.py": "9f3eb0b4a24d7414a55bee0d6be91681db4cfe1aa59608279c79b68ba291d076",
+    "ml/india_sensor/pm.py": "eade2ff1b9e22f4f3b6f2dfe5d4edd248e0d684ea5bf98c7a4e272fd59564d4d",
+    "ml/india_sensor/__init__.py": "60fb5e2de8eacbbca43baef46d9be138eafdf8347ef201eb785be80f037166e8",
+    "ml/india_sensor/features.py": "3c447404193c7b7a3c2f6e5ae7275bc4a793afb246bd69c1807f94b8b36af16e",
+    "ml/india_sensor/export.py": "6f83c9f5f989d10e23ee5424bfc11681313c70f778cbfd63c1e59df9538cf1f4",
+    "ml/india_sensor/replay.py": "d540abf3b4383b0b88481324a46c3341e4f238fce89cb1a53d8bf9d5ce5d3bd1",
+    "ml/india_sensor/train.py": "b1604968a24db9c14e8a22fbd4dc9e6e19cc76844201aab6fa698d7a4370638f",
+    "ml/india_sensor/preprocess_c.py": "2d7a64e7fef5fcd3c4d829642575497fbf75a92585652d5fd7899823d2c86bf1",
+    "ml/india_sensor/splits.py": "7a0eeb345740f082c3aaca19fe642610421eca89bbde18956415ee03dae384aa",
+    "ml/india_sensor/evaluate.py": "1cc87aa1a25942e7e2c9ca56570c4487a6e66d5f066ff3556539f079a4b4f36a",
+    "ml/india_sensor/verify.py": "de6b0cd2bec17707d2f34d51193c2b67d627f3dfe5e8e113769a58f116eb1867",
+    "ml/india_sensor/prepare.py": "32c457e641b14a09ca8168569f77bc4873b55acba315800d8efad2f2f59057fe"
+  },
+  "bundle_artifact_sha256": {
+    "ml/models/india_sensor_v1/national_hot_measurement_at_6h_B.ubj": "960f5154711c44e62fa786b02e01807fcb386a336feeccf5f6f73e1cc69b16fe",
+    "ml/models/india_sensor_v1/national_near_saturation_measurement_at_6h_B.ubj": "97856ffd10cf4c48c1f8a40928929bdf231707e1ecb2737294dfedfe575f809b",
+    "ml/models/india_sensor_v1/national_high_wind_measurement_at_6h_B.ubj": "4d19f2f453053b5cbaa3c554125bd604242657d194256e138f31533000432952"
+  },
+  "export_manifest_sha256": "58cc9b84ee915168e28b4d38a884a0e7abb6ce723c8c6441f7407041d324b094",
+  "frozen_archive_recheck": "0e6c85de6a9ab32848ee3ea12d0575305f2dd190f00bcce3ea07a18b45a0db80",
+  "repository_audit": {
+    "scan": "Git tracked + untracked nonignored candidates; heuristic patterns, not a comprehensive security audit",
+    "credential_pattern_paths": [],
+    "generated_or_secret_candidates": [],
+    "files_over_5MB": [],
+    "raw_training_outputs_ignored": true
+  },
+  "branch": "main",
+  "push_at_receipt_time": "PENDING; final response reports actual push result",
+  "documentation_local_links": "All new/current command, export, bundle and offline report links checked; none broken"
+}

@@ -1,0 +1,532 @@
+diff --git a/ml/india_sensor/splits.py b/ml/india_sensor/splits.py
+new file mode 100644
+index 0000000..7281aa5
+--- /dev/null
++++ b/ml/india_sensor/splits.py
+@@ -0,0 +1,43 @@
++"""Whole-site buffered holdouts plus chronological history/target purging."""
++import numpy as np
++import pandas as pd
++
++from ml.spatial_ensemble.national import region, splits
++from ml.spatial_ensemble.episodes import episode_ids
++
++
++def station_roles(stations, scope, cfg):
++    if stations.physical_site_id.duplicated().any():
++        raise ValueError('Resolve site aliases before splitting')
++    if scope == 'himalaya_holdout':
++        held = stations.loc[region(stations), 'location_id']
++    elif scope == 'national':
++        ids = np.random.default_rng(cfg['seed']).permutation(stations.location_id.to_numpy())
++        held = ids[:max(3, len(ids)//5)]
++    else:
++        raise ValueError('Unknown geographic scope')
++    train, validation, test = splits(stations, held, cfg['seed'], cfg['buffer_km'])
++    return {'train': sorted(train), 'validation': sorted(validation), 'test': sorted(test)}
++
++
++def row_roles(frame, roles, cfg):
++    """Validation stations serve July/August selection and Sep/Oct calibration.
++
++    Their history/targets do not overlap across those chronological roles.
++    Training/test stations are wholly different; no random row split.
++    """
++    t = frame.timestamp_utc
++    history = pd.Timedelta(minutes=cfg['history_minutes'])
++    lead = pd.Timedelta(hours=cfg['forecast_hours'])
++    v, c, test, end = [pd.Timestamp(cfg[k]) for k in ['validation_start', 'calibration_start', 'test_start', 'test_end']]
++    # Predeclared global blocks reuse the existing episode utility. A boundary
++    # block is dropped, not split between selection/calibration/test roles.
++    # These are time proxies, not adjudicated storm identities.
++    episode_start = pd.Timestamp('2024-01-01T00:00:00Z') + pd.to_timedelta(episode_ids(t)*72, unit='h')
++    episode_end = episode_start + pd.Timedelta(hours=72)
++    return {
++        'train': frame.location_id.isin(roles['train']) & (t + lead < v) & (episode_end <= v),
++        'validation': frame.location_id.isin(roles['validation']) & (t - history >= v) & (t + lead < c) & (episode_start >= v) & (episode_end <= c),
++        'calibration': frame.location_id.isin(roles['validation']) & (t - history >= c) & (t + lead < test) & (episode_start >= c) & (episode_end <= test),
++        'test': frame.location_id.isin(roles['test']) & (t - history >= test) & (t + lead < end) & (episode_start >= test) & (episode_end <= end),
++    }
+diff --git a/ml/india_sensor/metrics.py b/ml/india_sensor/metrics.py
+new file mode 100644
+index 0000000..07eb110
+--- /dev/null
++++ b/ml/india_sensor/metrics.py
+@@ -0,0 +1,45 @@
++"""Rare-target metrics and station-cluster error bands, never accuracy alone."""
++import numpy as np
++from sklearn.metrics import average_precision_score, f1_score
++
++from ml.deployment.field_validation import binary_metrics
++
++
++def metrics(y, p, cadence_seconds=3600):
++    y, p = np.asarray(y), np.asarray(p)
++    good = np.isfinite(y) & np.isfinite(p)
++    y, p = y[good], p[good]
++    if not len(y):
++        return {'rows': 0}
++    report = binary_metrics(y, p)
++    report['pr_auc_average_precision'] = float(average_precision_score(y, p)) if y.sum() else None
++    report['f1_at_0_5'] = float(f1_score(y, p >= .5, zero_division=0))
++    report['monitored_station_days'] = len(y)*cadence_seconds/86400
++    report['false_alarm_hours_per_monitored_station_day'] = report['false_positives']/report['monitored_station_days']
++    report['missed_positive_hour_fraction'] = report['false_negatives']/int(y.sum()) if y.sum() else None
++    report['confusion_matrix_actual_rows_predicted_columns'] = [[int(((y == 0) & (p < .5)).sum()), report['false_positives']],
++                                                               [report['false_negatives'], int(((y == 1) & (p >= .5)).sum())]]
++    bins = np.minimum((p*10).astype(int), 9)
++    calibration = []
++    for b in range(10):
++        m = bins == b
++        if m.any():
++            calibration.append({'bin': b, 'rows': int(m.sum()), 'mean_probability': float(p[m].mean()),
++                                'observed_fraction': float(y[m].mean())})
++    report['reliability_bins'] = calibration
++    report['ece_10bins'] = float(sum(v['rows']/len(y)*abs(v['mean_probability']-v['observed_fraction']) for v in calibration))
++    return report
++
++
++def cluster_brier_interval(y, p, sites, seed=42, repeats=200):
++    good = np.isfinite(y) & np.isfinite(p)
++    y, p, sites = np.asarray(y)[good], np.asarray(p)[good], np.asarray(sites)[good]
++    unique = np.unique(sites)
++    if len(unique) < 2:
++        return None
++    # Aggregate within station first; resample whole stations, retaining hours.
++    totals = np.array([(((p[sites == s]-y[sites == s])**2).sum(), (sites == s).sum()) for s in unique])
++    rng = np.random.default_rng(seed)
++    indices = rng.integers(0, len(unique), size=(repeats, len(unique)))
++    sums = totals[indices].sum(axis=1)
++    return np.quantile(sums[:, 0]/sums[:, 1], [.025, .975]).tolist()
+diff --git a/ml/india_sensor/train.py b/ml/india_sensor/train.py
+new file mode 100644
+index 0000000..443bdaa
+--- /dev/null
++++ b/ml/india_sensor/train.py
+@@ -0,0 +1,232 @@
++"""India-only measured-threshold forecast benchmark, NOT a disaster detector.
++
++A: sensor/time. B: +GPS/EGM96 altitude. C: B + mountain calibration.
++D: sensor/geo regional experts, falling back to B. XGBoost is reused from
++the existing node forecasts; the between-node ensemble remains unchanged.
++"""
++from __future__ import annotations
++import argparse
++import importlib.metadata
++import json
++import platform
++from datetime import datetime, timezone
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++from sklearn.linear_model import LogisticRegression
++from xgboost import XGBClassifier
++
++from ml.datasets.registry import digest
++from ml.india_sensor.config import DEFAULT, load
++from ml.india_sensor.features import feature_columns
++from ml.india_sensor.metrics import metrics, cluster_brier_interval
++from ml.india_sensor.splits import station_roles, row_roles
++from ml.spatial_ensemble.national import region
++
++
++def logit(p):
++    p = np.clip(p, 1e-6, 1-1e-6)
++    return np.log(p/(1-p)).reshape(-1, 1)
++
++
++def calibration(y, p, minimum=20):
++    if min(int((y == 0).sum()), int((y == 1).sum())) < minimum:
++        return None
++    m = LogisticRegression(C=1., random_state=42).fit(logit(p), y)
++    return {'coefficient': float(m.coef_[0, 0]), 'intercept': float(m.intercept_[0]),
++            'rows': len(y), 'positives': int(y.sum()), 'method': 'chronological_Platt_logit'}
++
++
++def apply_calibration(p, fit):
++    if fit is None:
++        return p
++    z = logit(p).ravel()*fit['coefficient'] + fit['intercept']
++    return 1/(1+np.exp(-np.clip(z, -60, 60)))
++
++
++def experts(frame):
++    """Declared GPS/elevation proxies, not official regions or external inputs."""
++    return np.select([region(frame), (frame.longitude >= 88) & (frame.latitude >= 22),
++                      (frame.longitude <= 76) & (frame.latitude >= 22), frame.latitude < 22],
++                     ['mountain_proxy', 'northeast_proxy', 'western_arid_proxy', 'peninsula_proxy'],
++                     default='northern_plains_proxy')
++
++
++def fit_head(frame, target, masks, columns, cfg, path):
++    good = frame[target].notna().to_numpy()
++    train = np.asarray(masks['train']) & good
++    cal = np.asarray(masks['calibration']) & good
++    val = np.asarray(masks['validation']) & good
++    test = np.asarray(masks['test']) & good
++    y = frame[target].to_numpy(dtype=float)
++    counts = {role: int((np.asarray(m) & good).sum()) for role, m in masks.items()}
++    if min(int((y[train] == 0).sum()), int((y[train] == 1).sum())) < cfg['minimum_per_class']:
++        return None, {'status': 'INSUFFICIENT_TRAINING_CLASSES', 'rows_by_role': counts}
++    active = [c for c in columns if frame.loc[train, c].notna().any()]
++    model = XGBClassifier(n_estimators=cfg['rounds'], max_depth=3, learning_rate=.1, max_bin=64,
++                          tree_method='hist', n_jobs=cfg['threads'], random_state=cfg['seed'],
++                          objective='binary:logistic', eval_metric='logloss')
++    model.fit(frame.loc[train, active].to_numpy(dtype='float32'), y[train])
++    raw_cal = model.predict_proba(frame.loc[cal, active].to_numpy(dtype='float32'))[:, 1] if cal.any() else np.array([])
++    fit = calibration(y[cal], raw_cal, cfg['minimum_per_class'])
++    raw = model.predict_proba(frame.loc[test, active].to_numpy(dtype='float32'))[:, 1] if test.any() else np.array([])
++    # Validation is independent reporting, not an optimization loop over test.
++    vp = model.predict_proba(frame.loc[val, active].to_numpy(dtype='float32'))[:, 1] if val.any() else np.array([])
++    model.save_model(path)
++    bounds = {c: [float(frame.loc[train, c].min()), float(frame.loc[train, c].max())] for c in active}
++    artifact = {'status': 'RESEARCH_FITTED', 'features': active, 'inactive_features': sorted(set(columns)-set(active)),
++                'rows_by_role': counts, 'train_positive': int(y[train].sum()), 'calibration': fit,
++                'artifact': str(path), 'sha256': digest(path), 'training_bounds': bounds,
++                'validation_uncalibrated': metrics(y[val], vp),
++                'prevalence_train': float(y[train].mean()),
++                'probability_status': 'CALIBRATED_ARCHIVE_ONLY' if fit else 'UNCALIBRATED_SCORE'}
++    return {'probabilities': apply_calibration(raw, fit), 'raw_calibration': raw_cal,
++            'calibration_truth': y[cal], 'calibration_mask': cal, 'test_mask': test}, artifact
++
++
++def breakdown(frame, target, test, probabilities, cfg):
++    truth = frame.loc[test, target].to_numpy(dtype=float)
++    meta = frame.loc[test]
++    def score(mask):
++        m = np.asarray(mask)
++        r = metrics(truth[m], probabilities[m], cfg['cadence_seconds'])
++        r['physical_sites'] = int(meta.loc[m, 'physical_site_id'].nunique())
++        r['brier_station_bootstrap_95ci'] = cluster_brier_interval(truth[m], probabilities[m], meta.loc[m, 'physical_site_id'], cfg['seed'])
++        return r
++    heights = pd.cut(meta.elevation_m, [-np.inf, 500, 1500, 3000, np.inf], labels=['below500', '500to1500', '1500to3000', 'above3000']).astype(object).fillna('unknown')
++    hp = meta.latitude.between(30.3, 33.3) & meta.longitude.between(75.5, 79.1)
++    return {'overall': score(np.ones(len(meta), dtype=bool)),
++            'per_climate_zone': {str(z): score(meta.climate_zone.eq(z)) for z in sorted(meta.climate_zone.dropna().unique())},
++            'per_elevation_band': {str(z): score(heights.eq(z)) for z in sorted(heights.unique())},
++            'per_geographic_proxy': {str(z): score(experts(meta) == z) for z in sorted(set(experts(meta)))},
++            'himalaya_proxy': score(region(meta)), 'himachal_bbox_proxy': score(hp),
++            'himachal_warning': 'Rectangle only; no official Himachal boundary verification'}
++
++
++def run(cfg, config_path):
++    report_path = Path(cfg['reports']) / 'preparation.json'
++    prepared = json.loads(report_path.read_text())
++    if prepared['config_sha256'] != digest(config_path):
++        raise ValueError('Configuration changed since preparation')
++    for path, expected in prepared['input_sha256'].items():
++        if digest(path) != expected:
++            raise ValueError('Source/registry/QC changed since preparation')
++    frames = []
++    for item in prepared['files']:
++        if digest(item['features']) != item['feature_sha256'] or digest(item['labels']) != item['label_sha256']:
++            raise ValueError('Modified feature/label artifact')
++        f = pd.read_parquet(item['features'])
++        labels = pd.read_parquet(item['labels'])
++        f = f.merge(labels.drop(columns=['source_id']), on=['physical_site_id', 'timestamp_utc'], validate='one_to_one')
++        frames.append(f)
++    frame = pd.concat(frames, ignore_index=True)
++    del frames
++    # Current T/RH/wind required, PM and QC-masked pressure remain optional.
++    valid = frame[['temperature_c', 'relative_humidity_pct', 'wind_speed_mps']].notna().all(axis=1)
++    frame = frame[valid].reset_index(drop=True)
++    columns_a = [c for c in feature_columns(frame) if c not in cfg['threshold_targets'] and c != 'target_timestamp_utc']
++    columns_b = columns_a + ['latitude', 'longitude', 'elevation_m']
++    stations = pd.read_csv(Path(cfg['processed']) / 'stations.csv')
++    stations = stations[stations.location_id.isin(frame.location_id)]
++    output = Path(cfg['models'])
++    output.mkdir(parents=True, exist_ok=True)
++    experiments, artifacts = {}, {}
++    for scope in cfg['scopes']:
++        roles = station_roles(stations, scope, cfg)
++        masks = row_roles(frame, roles, cfg)
++        print(f'{scope}: ' + str({k: int(m.sum()) for k, m in masks.items()}), flush=True)
++        experiment = {'station_roles': roles, 'row_roles': {k: int(m.sum()) for k, m in masks.items()}, 'targets': {}}
++        for target, definition in cfg['threshold_targets'].items():
++            predictions, heads = {}, {}
++            for strategy, cols in [('A', columns_a), ('B', columns_b)]:
++                print(f'Fit {scope}/{target}/{strategy}', flush=True)
++                values, artifact = fit_head(frame, target, masks, cols, cfg, output/f'{scope}_{target}_{strategy}.ubj')
++                heads[strategy] = artifact
++                if values is not None:
++                    predictions[strategy] = values
++            if 'B' in predictions:
++                base = predictions['B']
++                # C uses the same India-wide model, with separately fitted
++                # mountain calibration. Never calibrate on held-out Himalaya.
++                mountain = region(frame).to_numpy()
++                local = mountain[base['calibration_mask']]
++                fit = calibration(base['calibration_truth'][local], base['raw_calibration'][local], cfg['minimum_per_class'])
++                p = base['probabilities'].copy()
++                test_mountain = mountain[base['test_mask']]
++                # Invert global calibration is unnecessary: get raw B scores.
++                if fit is not None:
++                    b = XGBClassifier()
++                    b.load_model(heads['B']['artifact'])
++                    raw = b.predict_proba(frame.loc[base['test_mask'], heads['B']['features']].to_numpy(dtype='float32'))[:, 1]
++                    p[test_mountain] = apply_calibration(raw[test_mountain], fit)
++                predictions['C'] = {**base, 'probabilities': p}
++                heads['C'] = {'status': 'REGIONAL_CALIBRATION' if fit else 'NATIONAL_FALLBACK_NO_MOUNTAIN_CALIBRATION',
++                              'base': 'B', 'mountain_calibration': fit}
++                # D's routing uses only runtime GPS/elevation, not reanalysis.
++                p = base['probabilities'].copy()
++                routes = experts(frame)
++                heads['D'] = {'status': 'REGIONAL_EXPERTS_WITH_NATIONAL_FALLBACK', 'experts': {}}
++                for name in sorted(set(routes)):
++                    local_masks = {r: np.asarray(m) & (routes == name) for r, m in masks.items()}
++                    sites = frame.loc[local_masks['train'], 'physical_site_id'].nunique()
++                    if sites < cfg['minimum_expert_sites']:
++                        heads['D']['experts'][name] = {'status': 'NATIONAL_FALLBACK_INSUFFICIENT_SITES', 'sites': int(sites)}
++                        continue
++                    values, artifact = fit_head(frame, target, local_masks, columns_b, cfg, output/f'{scope}_{target}_D_{name}.ubj')
++                    heads['D']['experts'][name] = artifact
++                    if values is not None and artifact['calibration'] is not None:
++                        p[(routes == name)[base['test_mask']]] = values['probabilities']
++                    else:
++                        artifact['serving_status'] = 'NATIONAL_FALLBACK_NO_CALIBRATED_EXPERT'
++                predictions['D'] = {**base, 'probabilities': p}
++            target_report = {'definition': {**definition, 'horizon_hours': cfg['forecast_hours'],
++                             'meaning': 'Exact t+6h completed hourly measurement, not next-6h occurrence or official hazard'}, 'strategies': {}}
++            for name in cfg['strategies']:
++                if name in predictions:
++                    result = predictions[name]
++                    target_report['strategies'][name] = breakdown(frame, target, result['test_mask'], result['probabilities'], cfg)
++                else:
++                    target_report['strategies'][name] = {'status': 'UNAVAILABLE'}
++            if 'B' in predictions:
++                test = predictions['B']['test_mask']
++                current = frame.loc[test, definition['variable']].to_numpy()
++                target_report['baselines'] = {
++                    'current_measurement_persistence': breakdown(frame, target, test, (current >= definition['threshold']).astype(float), cfg),
++                    'training_prevalence': breakdown(frame, target, test, np.full(test.sum(), heads['B']['prevalence_train']), cfg)}
++            experiment['targets'][target] = target_report
++            artifacts[f'{scope}/{target}'] = heads
++        experiments[scope] = experiment
++    result = {'model_version': 'india_sensor_research_v1', 'seed': cfg['seed'],
++              'trained_at_utc': datetime.now(timezone.utc).isoformat(),
++              'config_sha256': digest(config_path), 'preparation_sha256': digest(report_path),
++              'data_rows_after_current_core_mask': len(frame), 'prepared_rows': prepared['rows'],
++              'station_count': len(stations), 'years': prepared['years'],
++              'runtime': {'python': platform.python_version(), **{p: importlib.metadata.version(p) for p in ['numpy', 'pandas', 'scikit-learn', 'xgboost', 'pyarrow']}},
++              'evidence_categories': ['geographical_holdout', 'temporal_holdout', 'future_measured_threshold_validation'],
++              'not_evidence': ['historical_disaster_validation', 'real_INDRA_sensor_validation', 'between_node_risk_validation'],
++              'spatial_buffer_km': cfg['buffer_km'], 'threshold': .5, 'no_row_caps': True,
++              'episode_partition': 'Global 72h blocks wholly assigned to one chronological role; boundary blocks and history/target overlaps dropped. Blocks are storm proxies, not event truth.',
++              'untrained_hazards': {h: 'INDEPENDENT_LABELS_REQUIRED' for h in cfg['hazard_targets']},
++              'deployment_approved': False, 'esp32': 'No new export or hardware verification',
++              'geography_warning': 'GPS/elevation region and Himachal bbox proxies, not official boundaries; missing/QC-invalid altitude not assumed mountain',
++              'intervals': '95% station-cluster bootstrap Brier intervals; not prediction bands; shared storms not independent across stations',
++              'calibration': 'Separate Sep/Oct validation stations; Platt fit excludes held-out sites and test hours; field reliability not established',
++              'experiment': experiments}
++    Path(cfg['reports'], 'results.json').write_text(json.dumps(result, indent=2, allow_nan=False)+'\n')
++    metadata = {k: v for k, v in result.items() if k != 'experiment'}
++    metadata.update(artifacts=artifacts, labels=cfg['threshold_targets'], feature_views={'A': columns_a, 'B': columns_b},
++                    station_roles={s: e['station_roles'] for s, e in experiments.items()},
++                    allowed_sources=cfg['allowed_sources'], raw_lineage_manifest=prepared['input_sha256'])
++    metadata['implementation_sha256'] = {str(p.name): digest(p) for p in Path(__file__).parent.glob('*.py')}
++    (output / 'metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False)+'\n')
++    Path(cfg['reports'], 'model_manifest.json').write_text(json.dumps(metadata, indent=2, allow_nan=False)+'\n')
++    print('Wrote measured-threshold evaluation; all disaster heads remain unavailable', flush=True)
++    return result
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser()
++    p.add_argument('--config', default=str(DEFAULT))
++    a = p.parse_args()
++    run(load(a.config), a.config)
+diff --git a/ml/india_sensor/predict.py b/ml/india_sensor/predict.py
+new file mode 100644
+index 0000000..6bb3c25
+--- /dev/null
++++ b/ml/india_sensor/predict.py
+@@ -0,0 +1,100 @@
++"""Bounded research-only node forecast. Never emits an untrained hazard score."""
++from __future__ import annotations
++import argparse
++import json
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++from xgboost import XGBClassifier
++
++from ml.datasets.registry import digest
++from ml.india_sensor.config import DEFAULT, load
++from ml.india_sensor.features import build
++from ml.india_sensor.train import apply_calibration, experts
++from ml.spatial_ensemble.national import region
++
++
++def predict(history, cfg, strategy='B', scope='national'):
++    if strategy not in 'ABCD' or scope not in cfg['scopes']:
++        raise ValueError('Unknown strategy/scope')
++    path = Path(cfg['models']) / 'metadata.json'
++    meta = json.loads(path.read_text())
++    if meta['model_version'] != 'india_sensor_research_v1':
++        raise ValueError('Unknown model version')
++    if meta['config_sha256'] != digest(DEFAULT if cfg.get('_config_path') is None else cfg['_config_path']):
++        raise ValueError('Inference configuration differs from training')
++    if history.physical_site_id.nunique() != 1:
++        raise ValueError('One node history required; this is not spatial inference')
++    runtime_cfg = {**cfg, 'allowed_sources': meta['allowed_sources'] + ['indra_owner_nodes']}
++    f = build(history, runtime_cfg).sort_values('timestamp_utc')
++    row = f.iloc[[-1]]
++    issue = row.timestamp_utc.iloc[0]
++    result = {'issue_time_utc': issue.isoformat(), 'target_time_utc': (issue + pd.Timedelta(hours=cfg['forecast_hours'])).isoformat(),
++              'strategy': strategy, 'scope': scope, 'status': 'RESEARCH_ONLY_NOT_FIELD_VALIDATED',
++              'deployment_approved': False, 'targets': {},
++              'hazards': {h: {'probability': None, 'status': 'INDEPENDENT_LABELS_REQUIRED'} for h in meta['untrained_hazards']}}
++    if issue - f.timestamp_utc.min() < pd.Timedelta(minutes=cfg['history_minutes']):
++        result['status'] = 'REFUSED_INSUFFICIENT_HISTORY'
++        return result
++    if row[['temperature_c', 'relative_humidity_pct', 'wind_speed_mps']].isna().any(axis=None):
++        result['status'] = 'REFUSED_INVALID_CURRENT_CORE'
++        return result
++    for target in meta['labels']:
++        heads = meta['artifacts'][f'{scope}/{target}']
++        head, calibration, fallback = heads.get(strategy, {}), None, None
++        if strategy == 'C':
++            calibration = head.get('mountain_calibration') if region(row).iloc[0] else None
++            fallback = head.get('status')
++            head = heads['B']
++        elif strategy == 'D':
++            expert = head.get('experts', {}).get(experts(row)[0], {})
++            if expert.get('calibration') is not None and expert.get('artifact'):
++                head = expert
++            else:
++                head, fallback = heads['B'], 'NATIONAL_FALLBACK_UNAVAILABLE_EXPERT'
++        if head.get('status') != 'RESEARCH_FITTED':
++            result['targets'][target] = {'probability': None, 'status': 'UNTRAINED_HEAD'}
++            continue
++        # Current fitted bounds are a simple OOD check, not a multivariate proof.
++        violations = [name for name, bounds in head['training_bounds'].items()
++                      if pd.notna(row[name].iloc[0]) and not bounds[0] <= float(row[name].iloc[0]) <= bounds[1]]
++        if violations:
++            result['targets'][target] = {'probability': None, 'status': 'REFUSED_OUTSIDE_TRAINED_RANGE', 'features': violations}
++            continue
++        model_path = Path(head['artifact']).resolve()
++        try:
++            trusted = model_path.is_relative_to(Path(cfg['models']).resolve()) and digest(model_path) == head['sha256']
++        except OSError:
++            trusted = False
++        if not trusted:
++            result['targets'][target] = {'probability': None, 'status': 'REFUSED_MISSING_OR_UNTRUSTED_ARTIFACT'}
++            continue
++        try:
++            model = XGBClassifier()
++            model.load_model(model_path)
++            raw = model.predict_proba(row[head['features']].to_numpy(dtype='float32'))[:, 1]
++            fit = calibration or head.get('calibration')
++            p = apply_calibration(raw, fit)[0]
++            if not np.isfinite(p):
++                raise ValueError('Nonfinite prediction')
++            result['targets'][target] = {'probability': float(p) if fit is not None else None,
++                                        'research_score': float(raw[0]), 'probability_status': 'ARCHIVE_CALIBRATED_NOT_FIELD_VALIDATED' if fit else 'UNCALIBRATED',
++                                        'status': fallback or 'RESEARCH_ONLY', 'definition': meta['labels'][target]}
++        except (ValueError, RuntimeError, OSError) as exc:
++            result['targets'][target] = {'probability': None, 'status': 'MODEL_FAILURE', 'reason': type(exc).__name__}
++    return result
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser()
++    p.add_argument('--config', default=str(DEFAULT))
++    p.add_argument('--input', required=True, help='One node UTC history in the exact sensor view schema')
++    p.add_argument('--strategy', choices=list('ABCD'), default='B')
++    p.add_argument('--scope', choices=['national', 'himalaya_holdout'], default='national')
++    a = p.parse_args()
++    cfg = load(a.config)
++    history = pd.read_csv(a.input, nrows=cfg['max_expanded_station_rows']+1)
++    if len(history) > cfg['max_expanded_station_rows']:
++        raise ValueError('Node history resource budget exceeded')
++    print(json.dumps(predict(history, cfg, a.strategy, a.scope), indent=2, allow_nan=False))
+diff --git a/ml/india_sensor/evaluate.py b/ml/india_sensor/evaluate.py
+new file mode 100644
+index 0000000..ce0acf9
+--- /dev/null
++++ b/ml/india_sensor/evaluate.py
+@@ -0,0 +1,54 @@
++"""Summarize a completed frozen benchmark; no retraining/test-set tuning."""
++import argparse
++import json
++from pathlib import Path
++
++from ml.india_sensor.config import DEFAULT, load
++
++
++def number(value):
++    return '—' if value is None else f'{value:.8g}'
++
++
++def run(cfg):
++    path = Path(cfg['reports']) / 'results.json'
++    result = json.loads(path.read_text())
++    lines = ['# India sensor-only forecast results', '',
++             '**Real NOAA observations; not disaster or physical INDRA sensor validation.**', '',
++             'Exact completed-hour measurements at issue time +6h. Brier is squared probability error (lower is better); AP is average precision (higher is better).', '',
++             'A: sensor/time; B: +GPS/height; C: B with independently fitted mountain calibration if available; D: regional experts with B fallback.', '',
++             'Wind scores are uncalibrated: insufficient calibration positives. Persistence repeats the current threshold; prevalence uses training labels only.', '',
++             'Table values use eight significant digits; full precision and per-region metrics are in [results.json](results.json).', '']
++    losses = []
++    for scope, experiment in result['experiment'].items():
++        lines += [f'## {scope}', '', '| Target | Method | Hours / positives | Brier | 95% station-bootstrap CI | AP | Recall at 0.5 | False-positive hours/station-day |',
++                  '|---|---|---:|---:|---|---:|---:|---:|']
++        for name, target in experiment['targets'].items():
++            methods = {**target['strategies'], **target.get('baselines', {})}
++            for method, report in methods.items():
++                r = report.get('overall', {'rows': 0})
++                ci = r.get('brier_station_bootstrap_95ci')
++                interval = '—' if ci is None else f'[{number(ci[0])}, {number(ci[1])}]'
++                lines.append(f"| {name} | {method} | {r['rows']} / {r.get('positives', 0)} | {number(r.get('brier'))} | {interval} | {number(r.get('pr_auc_average_precision'))} | {number(r.get('recall_at_0_5'))} | {number(r.get('false_alarm_hours_per_monitored_station_day'))} |")
++            available = {k: v['overall']['brier'] for k, v in methods.items() if v.get('overall', {}).get('rows', 0)}
++            if available:
++                best = min(available, key=available.get)
++                for method in ['A', 'B', 'C', 'D']:
++                    if method in available and available[method] > available[best]:
++                        losses.append(f'{scope}, {name}: {method} loses on Brier to {best} ({number(available[method])} vs {number(available[best])}).')
++        lines.append('')
++    lines += ['## Losses and interpretation', '', *['- '+s for s in losses], '',
++              'B/C/D do not universally improve A. C is a national fallback in every current head because no eligible mountain calibration has enough positive and negative hours. D also falls back in the whole-Himalaya test; these are not independently successful mountain experts.', '',
++              'Check positive counts before interpreting small Brier scores: zero positives cannot establish detection skill. RH is near saturation, not verified fog or rainfall. Recall counts positive hours, not distinct storms.', '',
++              'Bootstrap resamples whole stations; shared storms and long-term temporal dependence remain. These are metric confidence intervals, not 80/90% prediction bands. The diagnostic benchmark includes all eligible test forecasts; serving also checks fitted ranges and may refuse them.', '',
++              'All disaster heads remain unavailable. No release, threshold optimization, ensemble replacement or field-calibration claim follows from this benchmark.']
++    output = Path(cfg['reports']) / 'RESULTS.md'
++    output.write_text('\n'.join(lines)+'\n')
++    print(output)
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser()
++    p.add_argument('--config', default=str(DEFAULT))
++    a = p.parse_args()
++    run(load(a.config))
+diff --git a/requirements-india-sensor.txt b/requirements-india-sensor.txt
+new file mode 100644
+index 0000000..d9b1fd0
+--- /dev/null
++++ b/requirements-india-sensor.txt
+@@ -0,0 +1,9 @@
++# Isolated benchmark runtime actually used: Python 3.13.11.
++# Does not replace the old root or physics/CI environments.
++numpy==2.5.2
++pandas==2.3.3
++scipy==1.18.0
++scikit-learn==1.9.0
++xgboost==3.3.0
++pyarrow==23.0.0
++pytest==9.0.2
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 735a341..7b37316 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -19,7 +19,7 @@ jobs:
+       - name: Install model dependencies and lint tools
+         run: python -m pip install -r requirements-physics.txt xgboost==3.1.1 ruff==0.16.10
+       - name: Lint model code
+-        run: ruff check ml/six_sensor_forecast ml/event_classifier ml/deployment ml/datasets ml/spatial_ensemble ml/field tests esp32/ml_integration/tools --select E9,F63,F7,F82
++        run: ruff check ml/six_sensor_forecast ml/event_classifier ml/deployment ml/datasets ml/spatial_ensemble ml/field ml/india_sensor tests esp32/ml_integration/tools --select E9,F63,F7,F82
+       - name: Run model, data contract and compiled C parity tests
+         run: python -m pytest -q
+ 

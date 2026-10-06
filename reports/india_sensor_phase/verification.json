@@ -1,0 +1,82 @@
+{
+  "verified_at_utc": "2026-10-05T14:28:28.172363+00:00",
+  "base_commit": "ccbf56f712e446c518569858707edceb0d85d28e",
+  "tests": {
+    "command": "python3 -m pytest -q --disable-warnings",
+    "passed": 112,
+    "subtests_passed": 8,
+    "warnings": 251,
+    "new_contract_tests": 15,
+    "exit_code": 0
+  },
+  "lint": {
+    "checker": "Ruff 0.16.10",
+    "new_code_select": "E9,F",
+    "ci_equivalent_select": "E9,F63,F7,F82",
+    "passed": true
+  },
+  "compileall": {
+    "command": "python3 -m compileall -q ml/india_sensor tests/test_india_sensor.py",
+    "exit_code": 0
+  },
+  "runs": [
+    "prepare: 1515461 rows / 374 sites; real archive",
+    "train: final 72h-block-partition national and whole-Himalaya A-D, no sampling caps",
+    "evaluate: frozen metric tables",
+    "predict: real archive replay; no field scoring"
+  ],
+  "models": {
+    "fitted_artifacts_checked": 36,
+    "all_match_manifest_sha256": true,
+    "generated_files_ignored": true
+  },
+  "runtime": {
+    "python": "3.13.11",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.3.0",
+    "pyarrow": "23.0.0"
+  },
+  "current_implementation_sha256": {
+    "metrics.py": "8d57cac07664c47a2163eaafe1866a2b90799919fe4fe9d261f38f0fe3df0c6d",
+    "labels.py": "688d8dc26633f03524162c4e8ae3b1fa5ae8c767ff5f41b364b1ad59900106b2",
+    "config.py": "f73d1662d1562202da60ed95c1b02f3bc801614f0ae6e4f37ec63d789bbc3e22",
+    "predict.py": "08e89b5454646780f1764e14a552f5b34493be220935615fc3d7f56f7df18a90",
+    "__init__.py": "60fb5e2de8eacbbca43baef46d9be138eafdf8347ef201eb785be80f037166e8",
+    "features.py": "05060da2089c9cbb7f721a5121880460e0011dec8371f032cc6af6d39f8c676d",
+    "train.py": "b9df88709340cd016e00a1763a612337849e39feed60a97144753a0bcd6351ff",
+    "splits.py": "8c2d43699dde1ae389580b611041c4ef7819c099148a4a66af558c84311e7975",
+    "evaluate.py": "2509b7fc0ea3d14cb997397dbf5896b752458612d49bcaa2d1999395709f9964",
+    "prepare.py": "a2c58a2223c1bf7ce1e5579ac569583a6feaa7d3559f055057c7315b6dc1e8ca"
+  },
+  "post_fit_code_updates": {
+    "predict.py": {
+      "at_fit": "f7b70e2c9998ae265c4444bcd70dc8b081e2c5ffa0a8341076d2d9456aad7bc7",
+      "current": "08e89b5454646780f1764e14a552f5b34493be220935615fc3d7f56f7df18a90",
+      "scope": "report renderer or fail-closed research serving, not feature fitting/split/model numerics"
+    },
+    "evaluate.py": {
+      "at_fit": "6acd3041d8ae7bfd788f38f1a1262d40576c1b6a85f68b8a479074d9377aa2d3",
+      "current": "2509b7fc0ea3d14cb997397dbf5896b752458612d49bcaa2d1999395709f9964",
+      "scope": "report renderer or fail-closed research serving, not feature fitting/split/model numerics"
+    }
+  },
+  "evidence_sha256": {
+    "results.json": "a50791c6aa9dfa07aaa0bd60d6d7085572e9771f3003752efd813d7f4633f825",
+    "preparation.json": "ff456b35ab26c232301a0257029e2a92ba18dd817911f97d83ca46b2bca9179e",
+    "model_manifest.json": "38adccd36933c7ddbc0b8dea18f4e5382002679c84eae3ae3382ac66067a9a14",
+    "demo_replay.json": "55263d207ef3efcb52743caec0476ab00a05928baa58b6ff6222a9a392b5f6a7"
+  },
+  "not_verified": [
+    "independent Indian disaster labels or event-model training",
+    "real INDRA sensor/hazard reliability",
+    "Mandi location/elevation field truth",
+    "official state/coastal/belt boundaries",
+    "new ESP32 export/hardware soak",
+    "GitHub CI and PlatformIO builds this phase",
+    "node authentication or network deployment"
+  ],
+  "auth": "No protected data access attempted; no auth bypass",
+  "committed_or_pushed": false
+}

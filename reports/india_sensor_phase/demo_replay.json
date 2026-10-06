@@ -1,0 +1,81 @@
+{
+  "issue_time_utc": "2023-01-09T22:00:00+00:00",
+  "target_time_utc": "2023-01-10T04:00:00+00:00",
+  "strategy": "B",
+  "scope": "national",
+  "status": "RESEARCH_ONLY_NOT_FIELD_VALIDATED",
+  "deployment_approved": false,
+  "targets": {
+    "high_wind_measurement_at_6h": {
+      "probability": null,
+      "research_score": 0.00021748448489233851,
+      "probability_status": "UNCALIBRATED",
+      "status": "RESEARCH_ONLY",
+      "definition": {
+        "variable": "wind_speed_mps",
+        "threshold": 10.0,
+        "unit": "m/s"
+      }
+    },
+    "hot_measurement_at_6h": {
+      "probability": 0.00015629681001883,
+      "research_score": 0.004764081444591284,
+      "probability_status": "ARCHIVE_CALIBRATED_NOT_FIELD_VALIDATED",
+      "status": "RESEARCH_ONLY",
+      "definition": {
+        "variable": "temperature_c",
+        "threshold": 35.0,
+        "unit": "degC"
+      }
+    },
+    "near_saturation_measurement_at_6h": {
+      "probability": 0.0066043902188539505,
+      "research_score": 0.005441161338239908,
+      "probability_status": "ARCHIVE_CALIBRATED_NOT_FIELD_VALIDATED",
+      "status": "RESEARCH_ONLY",
+      "definition": {
+        "variable": "relative_humidity_pct",
+        "threshold": 95.0,
+        "unit": "%"
+      }
+    }
+  },
+  "hazards": {
+    "extreme_rainfall_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "cloudburst_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "storm_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "flash_flood_weather_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "landslide_weather_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "wildfire_risk": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "smoke_source": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "dust_source": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    },
+    "air_quality_event": {
+      "probability": null,
+      "status": "INDEPENDENT_LABELS_REQUIRED"
+    }
+  }
+}

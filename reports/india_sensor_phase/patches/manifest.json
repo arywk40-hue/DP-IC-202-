@@ -1,0 +1,77 @@
+{
+  "base_commit": "ccbf56f712e446c518569858707edceb0d85d28e",
+  "already_applied": true,
+  "patches": [
+    {
+      "patch": "01-audit-plan.patch",
+      "files": [
+        "docs/INDIA_SENSOR_RISK_PLAN.md",
+        "configs/india_sensor_risk.json"
+      ],
+      "sha256": "9149ad93083985d9dc7d12e6de26c800d1879189c7955ef2501371541237fa6c",
+      "bytes": 19421,
+      "reverse_apply_check": "passed"
+    },
+    {
+      "patch": "02-sensor-data-features.patch",
+      "files": [
+        "ml/india_sensor/__init__.py",
+        "ml/india_sensor/config.py",
+        "ml/india_sensor/features.py",
+        "ml/india_sensor/labels.py",
+        "ml/india_sensor/prepare.py",
+        ".gitignore"
+      ],
+      "sha256": "3bb5eaaae0f75c74071970684462254d67536bb7eac546058941dfa2a4b1b81a",
+      "bytes": 23432,
+      "reverse_apply_check": "passed"
+    },
+    {
+      "patch": "03-regional-models.patch",
+      "files": [
+        "ml/india_sensor/splits.py",
+        "ml/india_sensor/metrics.py",
+        "ml/india_sensor/train.py",
+        "ml/india_sensor/predict.py",
+        "ml/india_sensor/evaluate.py",
+        "requirements-india-sensor.txt",
+        ".github/workflows/ci.yml"
+      ],
+      "sha256": "cf2443d40f0db9573852c3cee7e01bf072066c5e728992f77b5e02dfc6d4a6a7",
+      "bytes": 31677,
+      "reverse_apply_check": "passed"
+    },
+    {
+      "patch": "04-regression-tests.patch",
+      "files": [
+        "tests/test_india_sensor.py"
+      ],
+      "sha256": "3effab903874478f54bd9866b4de9290c1412784b87041220766aa70f280a492",
+      "bytes": 14750,
+      "reverse_apply_check": "passed"
+    },
+    {
+      "patch": "05-documentation.patch",
+      "files": [
+        "ml/india_sensor/README.md",
+        "reports/india_sensor_phase/REPORT.md",
+        "reports/india_sensor_phase/RESULTS.md",
+        "docs/PROJECT_OVERVIEW.md",
+        "docs/README.md",
+        "reports/nwic_pipeline/NODE_COLLECTION_SPEC.md",
+        "DOC_INVENTORY.md",
+        "reports/india_sensor_phase/patches/README.md"
+      ],
+      "sha256": "c8aa9d13f7b96eb95a1d9e184c51a7300b22fc113795fb2d077c5cfa54378868",
+      "bytes": 42928,
+      "reverse_apply_check": "passed"
+    }
+  ],
+  "separate_evidence": [
+    "reports/india_sensor_phase/preparation.json",
+    "reports/india_sensor_phase/results.json",
+    "reports/india_sensor_phase/model_manifest.json",
+    "reports/india_sensor_phase/verification.json",
+    "reports/india_sensor_phase/demo_replay.json"
+  ]
+}

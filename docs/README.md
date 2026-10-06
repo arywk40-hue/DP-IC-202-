@@ -3,6 +3,8 @@
 **Confidential: do not publish before IP review.**
 
 - [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md): the single main guide.
+- [India sensor-risk audit and plan](INDIA_SENSOR_RISK_PLAN.md), [executed phase report](../reports/india_sensor_phase/REPORT.md), [commands/feature contract](../ml/india_sensor/README.md): India-only future-measurement research; independent disaster heads remain unavailable.
+- [Offline completion report](../reports/offline_phase/REPORT.md), [current metrics/losses](../reports/offline_phase/RESULTS.md), [ESP32 preparation](../esp32/india_sensor/README.md): October 6 software evidence, hardware unvalidated.
 - [DATA_LICENSES.md](DATA_LICENSES.md): source rights, commercial-use status and admission gates.
 - [NODE_COLLECTION_SPEC.md](../reports/nwic_pipeline/NODE_COLLECTION_SPEC.md): retained current A/B/C field protocol at its existing path.
 - [INVENTION_NOTES.md](../INVENTION_NOTES.md): confidential evidence and prior-art notes; kept separate.

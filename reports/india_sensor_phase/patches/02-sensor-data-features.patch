@@ -1,0 +1,402 @@
+diff --git a/ml/india_sensor/__init__.py b/ml/india_sensor/__init__.py
+new file mode 100644
+index 0000000..43b839d
+--- /dev/null
++++ b/ml/india_sensor/__init__.py
+@@ -0,0 +1 @@
++"""India-only, sensor-compatible research; no unvalidated disaster detectors."""
+diff --git a/ml/india_sensor/config.py b/ml/india_sensor/config.py
+new file mode 100644
+index 0000000..1357084
+--- /dev/null
++++ b/ml/india_sensor/config.py
+@@ -0,0 +1,33 @@
++"""Validated research configuration; paths are relative to the repository root."""
++import json
++import re
++from pathlib import Path
++
++import pandas as pd
++
++from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
++
++ROOT = Path(__file__).resolve().parents[2]
++DEFAULT = ROOT / 'configs/india_sensor_risk.json'
++
++
++def load(path=DEFAULT):
++    cfg = json.loads(Path(path).read_text())
++    if cfg['schema_version'] != 'indra_india_sensor_v1' or cfg['country_code'] != 'IN':
++        raise ValueError('India sensor configuration required')
++    if cfg['cadence_seconds'] != 3600:
++        raise ValueError('Archive training currently requires native hourly data')
++    cutoffs = [pd.Timestamp(cfg[k]) for k in ['validation_start', 'calibration_start', 'test_start', 'test_end']]
++    if any(t.tzinfo is None or t.utcoffset().total_seconds() != 0 for t in cutoffs) or cutoffs != sorted(set(cutoffs)):
++        raise ValueError('Ordered distinct UTC cutoffs required')
++    if cfg['forecast_hours'] < 1 or cfg['history_minutes'] < 1440 or cfg['minimum_per_class'] < 1:
++        raise ValueError('Invalid horizon/history/class minimum')
++    for name, target in cfg['threshold_targets'].items():
++        if not re.fullmatch(r'[a-z][a-z0-9_]+', name) or target['variable'] not in RAW_SENSOR_COLUMNS:
++            raise ValueError('Invalid target name or variable')
++    if set(cfg['strategies']) - set('ABCD') or set(cfg['scopes']) - {'national', 'himalaya_holdout'}:
++        raise ValueError('Unknown strategy/scope')
++    for key in ['hours', 'stations', 'station_qc', 'source_registry', 'processed', 'features', 'models', 'reports']:
++        cfg[key] = str((ROOT / cfg[key]).resolve())
++    cfg['_config_path'] = str(Path(path).resolve())
++    return cfg
+diff --git a/ml/india_sensor/features.py b/ml/india_sensor/features.py
+new file mode 100644
+index 0000000..7d5e4e7
+--- /dev/null
++++ b/ml/india_sensor/features.py
+@@ -0,0 +1,136 @@
++"""Causal native-cadence features; no satellite/reanalysis or hidden labels.
++
++Hourly lags/statistics and meteorological equations reuse the existing packages.
++Unsupported sub-hour tendencies remain missing, never interpolated from hours.
++"""
++from __future__ import annotations
++
++import numpy as np
++import pandas as pd
++
++from ml.event_classifier.features import _magnus_dew_point, _noaa_heat_index, _vpd_kpa, _safe_ratio
++from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
++from ml.six_sensor_forecast.features import MAX_HOURLY_ROWS, build_features as hourly_features
++
++METADATA = ['timestamp_utc', 'available_at_utc', 'location_id', 'physical_site_id',
++            'source_id', 'country_code', 'latitude', 'longitude', 'elevation_m',
++            'elevation_datum', 'pressure_reference', 'climate_zone', 'interval_seconds']
++GEO_FEATURES = ['latitude', 'longitude', 'elevation_m']
++
++
++def utc(values):
++    stamps = [pd.Timestamp(v) for v in values]
++    if any(pd.isna(v) or v.tzinfo is None or v.utcoffset().total_seconds() != 0 for v in stamps):
++        raise ValueError('Explicit UTC timestamps required')
++    return pd.to_datetime(stamps, utc=True)
++
++
++def build(frame, config):
++    required = set(METADATA) | set(RAW_SENSOR_COLUMNS)
++    if set(frame.columns) != required:
++        raise ValueError(f'Sensor view has unexpected/missing columns: {set(frame.columns)^required}')
++    if not len(frame):
++        raise ValueError('Empty sensor observations')
++    if len(frame) > MAX_HOURLY_ROWS:
++        raise ValueError('Sensor observation resource budget exceeded')
++    out = frame.copy()
++    if not out.country_code.eq('IN').all() or not out.source_id.isin(config['allowed_sources']).all():
++        raise ValueError('Non-Indian or unapproved source; China/external references are isolated')
++    for name in ['location_id', 'physical_site_id', 'source_id']:
++        if out[name].isna().any() or out[name].astype(str).str.strip().eq('').any():
++            raise ValueError('Missing identity/provenance')
++    out.timestamp_utc = utc(out.timestamp_utc)
++    out.available_at_utc = utc(out.available_at_utc)
++    if (out.available_at_utc < out.timestamp_utc).any():
++        raise ValueError('Available before the completed observation window')
++    if out.duplicated(['physical_site_id', 'timestamp_utc']).any():
++        raise ValueError('Duplicate physical-site timestamp/alias')
++    cadence = config['cadence_seconds']
++    if not isinstance(cadence, int) or cadence < 1 or not out.interval_seconds.eq(cadence).all():
++        raise ValueError('Declared native cadence mismatch')
++    for name, bounds in [('latitude', (-90, 90)), ('longitude', (-180, 180))]:
++        out[name] = pd.to_numeric(out[name], errors='raise')
++        if not out[name].between(*bounds).all():
++            raise ValueError('Invalid coordinates')
++    out.elevation_m = pd.to_numeric(out.elevation_m, errors='raise')
++    out.elevation_m = out.elevation_m.where(out.elevation_datum.eq('EGM96') & out.elevation_m.between(-500, 9000))
++    for name, bounds in PHYSICAL_RANGES.items():
++        out[name] = pd.to_numeric(out[name], errors='raise').where(lambda v: v.between(*bounds))
++    out.pressure_hpa = out.pressure_hpa.where(out.pressure_reference.eq('station'))
++    results = []
++    for _, group in out.groupby('physical_site_id', sort=False):
++        if group.location_id.nunique() != 1 or group.source_id.nunique() != 1:
++            raise ValueError('Resolve physical-site aliases/providers before feature building')
++        if group[['latitude', 'longitude', 'elevation_m']].nunique(dropna=True).gt(1).any():
++            raise ValueError('Use fixed surveyed site coordinates/height; relocation needs a new physical site')
++        group = group.sort_values('timestamp_utc')
++        observed = pd.DatetimeIndex(group.timestamp_utc)
++        span = (observed[-1] - observed[0]).total_seconds()
++        if span / cadence + 1 > config['max_expanded_station_rows']:
++            raise ValueError('Native-cadence expansion budget exceeded')
++        ticks = (observed - observed[0]).total_seconds() / cadence
++        if not np.equal(ticks, np.floor(ticks)).all():
++            raise ValueError('Off-grid native-cadence timestamps')
++        grid = pd.date_range(observed[0], observed[-1], freq=pd.Timedelta(seconds=cadence))
++        native = group.set_index('timestamp_utc')[RAW_SENSOR_COLUMNS].reindex(grid)
++        # Causal history may use a previous row only once actually available.
++        availability = group.set_index('timestamp_utc').available_at_utc.reindex(grid)
++        if (group.available_at_utc != group.timestamp_utc).any():
++            # Exact aligned research windows only; don't backdate delayed packets.
++            native.loc[availability > native.index] = np.nan
++        values = {c: native[c] for c in RAW_SENSOR_COLUMNS}
++        if cadence == 3600:
++            legacy = group[['timestamp_utc', 'location_id', *RAW_SENSOR_COLUMNS]].copy()
++            legacy.loc[legacy.timestamp_utc.isin(native.index[native.isna().all(axis=1)]), RAW_SENSOR_COLUMNS] = np.nan
++            _, reused = hourly_features(legacy)
++            for c in reused:
++                values[c] = pd.Series(reused[c].to_numpy(), index=observed).reindex(grid)
++        for minutes in config['windows_minutes']:
++            seconds = minutes * 60
++            supported = seconds >= cadence and seconds % cadence == 0
++            steps = seconds // cadence if supported else 0
++            for name in RAW_SENSOR_COLUMNS:
++                v = native[name]
++                contiguous = v.rolling(steps + 1, min_periods=steps + 1).count().eq(steps + 1) if supported else False
++                values[f'{name}_delta_{minutes}min'] = (v - v.shift(steps)).where(contiguous) if supported else v * np.nan
++                if supported and steps > 1:
++                    roll = v.rolling(steps, min_periods=steps)
++                    for metric in ['mean', 'std', 'min', 'max']:
++                        values[f'{name}_{metric}_{minutes}min'] = (roll.std(ddof=0) if metric == 'std' else getattr(roll, metric)())
++        # No rate from a stale/gapped endpoint; rates are per minute.
++        for minutes in [10, 30, 60]:
++            values[f'pressure_tendency_hpa_per_min_{minutes}min'] = values[f'pressure_hpa_delta_{minutes}min'] / minutes
++        t, rh = native.temperature_c.to_numpy(), native.relative_humidity_pct.to_numpy()
++        dew = np.where(rh > 0, _magnus_dew_point(t, rh), np.nan)
++        values.update(dewpoint_c=dew, dewpoint_depression_c=t-dew,
++                      vapor_pressure_deficit_kpa=_vpd_kpa(t, rh), heat_index_c=_noaa_heat_index(t, rh),
++                      pm25_pm10_ratio=_safe_ratio(native.pm25_ug_m3.to_numpy(), native.pm10_ug_m3.to_numpy()))
++        vapor_hpa = 6.112 * np.exp(17.625*t/(243.04+t)) * rh / 100
++        values['absolute_humidity_estimate_g_m3'] = 216.7*vapor_hpa/(t+273.15)
++        baseline_steps = 24*3600 // cadence
++        values['pressure_anomaly_prior24h_hpa'] = native.pressure_hpa - native.pressure_hpa.shift(1).rolling(baseline_steps, min_periods=baseline_steps).mean()
++        # Atmospheric variability is not an observed instantaneous gust.
++        values['wind_variability_60min_mps'] = native.wind_speed_mps.rolling(max(2, 3600//cadence), min_periods=max(2, 3600//cadence)).std(ddof=0) if cadence < 3600 else native.wind_speed_mps*np.nan
++        hour = grid.hour + grid.minute/60
++        month = grid.month
++        values.update(hour_sin=np.sin(2*np.pi*hour/24), hour_cos=np.cos(2*np.pi*hour/24),
++                      month_sin=np.sin(2*np.pi*(month-1)/12), month_cos=np.cos(2*np.pi*(month-1)/12),
++                      calendar_jjas_proxy=np.isin(month, [6, 7, 8, 9]).astype(float))
++        f = pd.DataFrame(values, index=grid).loc[observed].replace([np.inf, -np.inf], np.nan).astype('float32')
++        f = f.reset_index(drop=True)
++        meta = group[METADATA].reset_index(drop=True)
++        # Geographic features belong to their own declared runtime view.
++        result = pd.concat([meta, f], axis=1)
++        if result.columns.duplicated().any():
++            raise ValueError('Duplicate feature names')
++        results.append(result)
++    return pd.concat(results, ignore_index=True)
++
++
++def feature_columns(frame, geographical=False):
++    # Reuse the old hourly names once: don't train on duplicate aliases.
++    aliases = {f'{name}_delta_60min' for name in RAW_SENSOR_COLUMNS}
++    aliases |= {f'{name}_{metric}_{minutes}min' for name in RAW_SENSOR_COLUMNS
++                for metric in ['mean', 'std'] for minutes in [360, 1440]}
++    hourly = 'temperature_c_lag_1h' in frame
++    return [c for c in frame if c not in METADATA and (not hourly or c not in aliases)] + (GEO_FEATURES if geographical else [])
+diff --git a/ml/india_sensor/labels.py b/ml/india_sensor/labels.py
+new file mode 100644
+index 0000000..951374f
+--- /dev/null
++++ b/ml/india_sensor/labels.py
+@@ -0,0 +1,70 @@
++"""Labels stay outside features. Missing evidence never means a negative event."""
++import pandas as pd
++
++from ml.india_sensor.features import utc
++from ml.six_sensor_forecast.features import future_targets
++from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
++
++
++def measured_future(frame, cfg):
++    """Exact t+6h completed hourly measurement, NOT occurrence during next 6h."""
++    ordered = frame.sort_values(['location_id', 'timestamp_utc']).reset_index(drop=True)
++    future = future_targets(ordered[['location_id', 'timestamp_utc', *RAW_SENSOR_COLUMNS]], cfg['forecast_hours'])
++    labels = ordered[['physical_site_id', 'timestamp_utc', 'source_id']].copy()
++    labels['target_timestamp_utc'] = labels.timestamp_utc + pd.Timedelta(hours=cfg['forecast_hours'])
++    for name, target in cfg['threshold_targets'].items():
++        v = future[target['variable']]
++        labels[name] = (v >= target['threshold']).astype(float).where(v.notna())
++    return labels
++
++
++EVENT_FIELDS = {'physical_site_id', 'interval_start_utc', 'interval_end_utc', 'target', 'label',
++                'source_id', 'source_version', 'raw_sha256', 'evidence_kind', 'negative_coverage_verified',
++                'event_group_id', 'available_at_utc', 'definition_version', 'country_code',
++                'location_uncertainty_m', 'time_uncertainty_seconds'}
++
++
++def validate_independent(frame, allowed_targets, allowed_sources):
++    """Admission contract for independently acquired, adjudicated event exports.
++
++    Weak rules, modeled rain and alert polygons cannot pass as observed events.
++    This validator does not establish a provider's rights or scientific truth.
++    """
++    if set(frame) != EVENT_FIELDS or frame.empty:
++        raise ValueError('Independent label schema/empty data')
++    out = frame.copy()
++    for c in ['interval_start_utc', 'interval_end_utc', 'available_at_utc']:
++        out[c] = utc(out[c])
++    if (out.interval_start_utc >= out.interval_end_utc).any() or (out.available_at_utc < out.interval_end_utc).any():
++        raise ValueError('Invalid event interval or availability')
++    if not out.target.isin(allowed_targets).all() or not out.source_id.isin(allowed_sources).all():
++        raise ValueError('Unapproved target/source')
++    if not out.country_code.eq('IN').all():
++        raise ValueError('Indian event labels only')
++    for name in ['location_uncertainty_m', 'time_uncertainty_seconds']:
++        values = pd.to_numeric(out[name], errors='raise')
++        if values.isna().any() or not values.between(0, 1e6).all():
++            raise ValueError('Explicit finite location/time uncertainty required')
++    if not out.evidence_kind.eq('independent_observed').all():
++        raise ValueError('Weak/modeled labels cannot become historical event truth')
++    if not out.label.isin([0, 1]).all():
++        raise ValueError('Unknown labels must be omitted, never filled with zero')
++    if ((out.label == 0) & ~out.negative_coverage_verified.eq(True)).any():
++        raise ValueError('Negative labels need explicit monitored non-event coverage')
++    for c in ['physical_site_id', 'source_id', 'source_version', 'event_group_id', 'definition_version']:
++        if out[c].isna().any() or out[c].astype(str).str.strip().eq('').any():
++            raise ValueError('Missing label provenance/group')
++    if out.raw_sha256.isna().any() or not out.raw_sha256.astype(str).str.fullmatch('[0-9a-f]{64}').all():
++        raise ValueError('Raw label SHA256 required')
++    if out.duplicated(['physical_site_id', 'target', 'interval_start_utc', 'interval_end_utc']).any():
++        raise ValueError('Duplicate label intervals')
++    return out
++
++
++def require_disjoint_events(groups_by_role):
++    seen = set()
++    for groups in groups_by_role.values():
++        present = set(groups) - {None, ''}
++        if present & seen:
++            raise ValueError('Shared event episode across folds')
++        seen |= present
+diff --git a/ml/india_sensor/prepare.py b/ml/india_sensor/prepare.py
+new file mode 100644
+index 0000000..2edbae6
+--- /dev/null
++++ b/ml/india_sensor/prepare.py
+@@ -0,0 +1,119 @@
++"""Adapt the existing QC'd Indian hourly archive, retaining raw-file lineage."""
++from __future__ import annotations
++import argparse
++import json
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++from ml.datasets.registry import digest
++from ml.india_sensor.config import DEFAULT, load
++from ml.india_sensor.features import METADATA, build
++from ml.india_sensor.labels import measured_future
++from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
++
++
++def admitted_sources(cfg):
++    registry = json.loads(Path(cfg['source_registry']).read_text())
++    sources = {s['source_id']: s for s in registry['sources']}
++    for name in cfg['allowed_sources']:
++        s = sources[name]
++        if s['license_class'] != 'open' or not s['timezone_verified'] or s['timezone'] != 'UTC':
++            raise ValueError('Clean sensor view requires approved open UTC sources')
++        if s['pressure_reference'] != 'station' or not s['pressure_verified']:
++            raise ValueError('Station-pressure reference must be verified')
++    return {name: sources[name] for name in cfg['allowed_sources']}
++
++
++def normalize(hours, stations, qc, cfg):
++    if hours.empty or not hours.source_id.isin(cfg['allowed_sources']).all():
++        raise ValueError('Unapproved/empty hourly source, external references cannot be mixed')
++    if hours.duplicated(['location_id', 'timestamp_utc']).any():
++        raise ValueError('Duplicate archive station-hour')
++    eligible = stations[stations.source.isin(cfg['allowed_sources']) &
++                        stations.geography_status.ne('COUNTRY_LOCATION_CONFLICT') &
++                        stations.location_id.isin(hours.location_id)].copy()
++    # Highest observed coverage wins exact aliases, independent of outcomes.
++    counts = hours.groupby('location_id').size()
++    eligible['rows'] = eligible.location_id.map(counts)
++    eligible = eligible.sort_values(['rows', 'location_id'], ascending=[False, True]).drop_duplicates('physical_site_id')
++    eligible = eligible.merge(qc[['location_id', 'elevation_ok', 'pressure_ok']], on='location_id', validate='one_to_one')
++    for key in ['elevation_ok', 'pressure_ok']:
++        if not eligible[key].isin([True, False]).all():
++            raise ValueError('QC booleans required; unresolved metadata is not approved')
++    eligible.elevation_m = eligible.elevation_m.where(eligible.elevation_ok)
++    metadata = ['location_id', 'physical_site_id', 'latitude', 'longitude', 'elevation_m',
++                'elevation_datum', 'climate_zone', 'pressure_ok']
++    frame = hours[['location_id', 'timestamp_utc', 'source_id', *RAW_SENSOR_COLUMNS]].merge(
++        eligible[metadata], on='location_id', validate='many_to_one')
++    frame['country_code'] = 'IN'  # NOAA ISO-IN candidates; not a verified border polygon.
++    frame['available_at_utc'] = frame.timestamp_utc
++    frame['pressure_reference'] = np.where(frame.pressure_ok, 'station', 'unresolved')
++    frame['interval_seconds'] = cfg['cadence_seconds']
++    frame.pressure_hpa = frame.pressure_hpa.where(frame.pressure_ok)
++    return frame[[*METADATA, *RAW_SENSOR_COLUMNS]], eligible.drop(columns=['rows'])
++
++
++def run(cfg, config_path):
++    sources = admitted_sources(cfg)
++    hours = pd.read_parquet(cfg['hours'])
++    stations = pd.read_csv(cfg['stations'])
++    qc = pd.read_csv(cfg['station_qc'])
++    frame, stations = normalize(hours, stations, qc, cfg)
++    for folder in ['processed', 'features', 'reports']:
++        Path(cfg[folder]).mkdir(parents=True, exist_ok=True)
++    # No stale extra stations after a changed whitelist/configuration.
++    if list(Path(cfg['features']).glob('*.parquet')):
++        raise ValueError('Feature directory already populated; use a fresh configured output directory')
++    stations.to_csv(Path(cfg['processed']) / 'stations.csv', index=False)
++    manifests = []
++    for i, (site, group) in enumerate(frame.groupby('physical_site_id', sort=True)):
++        group = group.sort_values('timestamp_utc').reset_index(drop=True)
++        features = build(group, cfg)
++        # Physical range cleaning is shared by labels and features. Future labels
++        # must not admit a value that features would reject.
++        clean = features[[*METADATA, *RAW_SENSOR_COLUMNS]]
++        labels = measured_future(clean, cfg)
++        path = Path(cfg['features']) / f'{i:04d}.parquet'
++        features.to_parquet(path, index=False)
++        clean.to_parquet(Path(cfg['processed']) / f'{i:04d}.parquet', index=False)
++        label_path = Path(cfg['processed']) / f'{i:04d}.labels.parquet'
++        labels.to_parquet(label_path, index=False)
++        manifests.append({'physical_site_id': site, 'location_id': str(group.location_id.iloc[0]),
++                          'rows': len(group), 'features': str(path), 'feature_sha256': digest(path),
++                          'labels': str(label_path), 'label_sha256': digest(label_path),
++                          'target_counts': {t: {'observed': int(labels[t].notna().sum()),
++                                                'positive': int(labels[t].eq(1).sum())}
++                                            for t in cfg['threshold_targets']}})
++        if i % 25 == 0:
++            print(f'Prepared {i+1}/{len(stations)} Indian stations', flush=True)
++    lineage = Path(cfg['hours']).parent / 'lineage.parquet'
++    input_paths = [cfg['hours'], cfg['stations'], cfg['station_qc'], cfg['source_registry'], str(config_path)]
++    hourly_manifest = Path(cfg['hours']).parents[2] / 'reports/physics_phase/hourly_manifest.json'
++    if hourly_manifest.exists():
++        input_paths.append(str(hourly_manifest))
++    if lineage.exists():
++        input_paths.append(str(lineage))
++    manifest = {'schema_version': cfg['schema_version'], 'config_sha256': digest(config_path),
++                'input_sha256': {p: digest(p) for p in input_paths}, 'sources': sources,
++                'rows': len(frame), 'stations': len(stations), 'files': manifests,
++                'years': sorted(frame.timestamp_utc.dt.year.unique().astype(int).tolist()),
++                'raw_lineage': 'Existing hourly_manifest.json raw file hashes; per-file .lineage.parquet observations',
++                'availability_assumption': 'Completed hour available at hour-end for retrospective forecast; archive publication/network latency unknown',
++                'geography': 'NOAA ISO-IN candidates with country-coordinate conflicts excluded; not an official India border',
++                'label_evidence': 'Independent later hourly sensor measurement at exact t+6h, not disaster occurrence',
++                'untrained_hazards': cfg['hazard_targets'], 'restricted_view': 'Not admitted; retained original separate restricted store',
++                'china': 'Excluded from both training and evaluation; legacy artifacts unchanged',
++                'subhour': '10/30-minute features unavailable in hourly archive; no interpolation',
++                'missing_pm': 'PM optional and missing here; no PM head fitted'}
++    Path(cfg['reports'], 'preparation.json').write_text(json.dumps(manifest, indent=2, allow_nan=False) + '\n')
++    print(f'Prepared {len(frame)} rows at {len(stations)} physical sites', flush=True)
++    return manifest
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser()
++    p.add_argument('--config', default=str(DEFAULT))
++    a = p.parse_args()
++    run(load(a.config), a.config)
+diff --git a/.gitignore b/.gitignore
+index 0279f30..02e4629 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -79,3 +79,8 @@ esp32/ml_integration/include/build_identity.h
+ 
+ # Two-node archive features and JSON models (generated locally)
+ /data/two_node_training/
++
++# India sensor-only research: retain reports/manifests, not generated matrices.
++/data/india_sensor/processed/
++/data/india_sensor/features/
++/data/india_sensor/models/

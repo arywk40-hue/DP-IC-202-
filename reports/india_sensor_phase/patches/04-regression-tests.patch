@@ -1,0 +1,240 @@
+diff --git a/tests/test_india_sensor.py b/tests/test_india_sensor.py
+new file mode 100644
+index 0000000..78505af
+--- /dev/null
++++ b/tests/test_india_sensor.py
+@@ -0,0 +1,234 @@
++"""Synthetic contract tests, not evidence of real weather/hazard accuracy."""
++import json
++import tempfile
++import unittest
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++from ml.india_sensor.config import load
++from ml.india_sensor.features import build, feature_columns
++from ml.india_sensor.labels import measured_future, validate_independent, require_disjoint_events
++from ml.india_sensor.metrics import metrics, cluster_brier_interval
++from ml.india_sensor.prepare import admitted_sources, normalize
++from ml.india_sensor.splits import station_roles, row_roles
++from ml.india_sensor.train import calibration, apply_calibration, fit_head, experts
++
++
++def observations(count=50, cadence=3600):
++    t = pd.date_range('2024-01-01', periods=count, freq=pd.Timedelta(seconds=cadence), tz='UTC')
++    return pd.DataFrame({'timestamp_utc': t, 'available_at_utc': t, 'location_id': 'a',
++                         'physical_site_id': 'site_a', 'source_id': 'noaa_ghcnh', 'country_code': 'IN',
++                         'latitude': 31., 'longitude': 77., 'elevation_m': 1200., 'elevation_datum': 'EGM96',
++                         'pressure_reference': 'station', 'climate_zone': 'Cwa', 'interval_seconds': cadence,
++                         'temperature_c': 20.+np.arange(count)/100, 'relative_humidity_pct': 60.,
++                         'pressure_hpa': 900.-np.arange(count)/100, 'pm25_ug_m3': np.nan,
++                         'pm10_ug_m3': np.nan, 'wind_speed_mps': 3.})
++
++
++class IndiaSensorTests(unittest.TestCase):
++    def setUp(self):
++        self.cfg = load()
++
++    def test_country_source_and_external_columns_fail_closed(self):
++        for key, value in [('country_code', 'CN'), ('source_id', 'uci_beijing_501')]:
++            f = observations()
++            f[key] = value
++            with self.assertRaises(ValueError):
++                build(f, self.cfg)
++        with self.assertRaises(ValueError):
++            build(observations().assign(era5_rainfall=1), self.cfg)
++        self.assertEqual(set(admitted_sources(self.cfg)), {'noaa_ghcnh'})
++
++    def test_causal_future_changes_cannot_affect_prefix(self):
++        f = observations()
++        before = build(f, self.cfg)
++        f.loc[31:, 'temperature_c'] = -20
++        f.loc[31:, 'pressure_hpa'] = 1000
++        after = build(f, self.cfg)
++        pd.testing.assert_frame_equal(before.iloc[:31], after.iloc[:31])
++
++    def test_native_windows_and_no_fake_gust(self):
++        hourly = build(observations(), self.cfg)
++        self.assertTrue(hourly.pressure_tendency_hpa_per_min_10min.isna().all())
++        self.assertTrue(hourly.pressure_tendency_hpa_per_min_30min.isna().all())
++        self.assertTrue(hourly.wind_variability_60min_mps.isna().all())
++        self.assertNotIn('temperature_c_mean_360min', feature_columns(hourly))
++        self.assertIn('temperature_c_mean_6h', feature_columns(hourly))
++        cfg = {**self.cfg, 'cadence_seconds': 60}
++        minute = build(observations(100, 60), cfg)
++        self.assertAlmostEqual(float(minute.pressure_tendency_hpa_per_min_10min.iloc[20]), -.01, places=4)
++        self.assertAlmostEqual(float(minute.wind_variability_60min_mps.iloc[60]), 0.)
++        self.assertIn('temperature_c_mean_360min', feature_columns(minute))
++
++    def test_gap_and_invalid_sensor_values_mask_tendencies(self):
++        f = observations(100, 60).drop(index=15)
++        result = build(f, {**self.cfg, 'cadence_seconds': 60})
++        self.assertTrue(np.isnan(result.loc[result.timestamp_utc == f.timestamp_utc.iloc[19], 'pressure_tendency_hpa_per_min_10min'].iloc[0]))
++        f = observations()
++        f.loc[10, 'temperature_c'] = np.inf
++        result = build(f, self.cfg)
++        self.assertTrue(np.isnan(result.temperature_c.iloc[10]))
++        self.assertTrue(np.isnan(result.temperature_c_mean_6h.iloc[12]))
++
++    def test_timezone_identity_coordinates_and_budget(self):
++        for alteration in [lambda f: f.assign(timestamp_utc=f.timestamp_utc.dt.tz_localize(None)),
++                           lambda f: f.assign(latitude=91), lambda f: f.assign(longitude=np.inf),
++                           lambda f: f.assign(physical_site_id=''),
++                           lambda f: pd.concat([f, f.iloc[[0]]], ignore_index=True)]:
++            with self.assertRaises(ValueError):
++                build(alteration(observations()), self.cfg)
++        with self.assertRaises(ValueError):
++            build(observations(), {**self.cfg, 'max_expanded_station_rows': 10})
++        f = observations()
++        f.loc[20:, 'elevation_m'] = 1300
++        with self.assertRaises(ValueError):
++            build(f, self.cfg)
++
++    def test_pressure_reference_height_datum_delayed_packet(self):
++        f = observations().assign(pressure_reference='sea_level', elevation_datum='WGS84_ellipsoid')
++        r = build(f, self.cfg)
++        self.assertTrue(r.pressure_hpa.isna().all())
++        self.assertTrue(r.elevation_m.isna().all())
++        f = observations()
++        f.loc[4, 'available_at_utc'] += pd.Timedelta(hours=2)
++        r = build(f, self.cfg)
++        self.assertTrue(np.isnan(r.temperature_c.iloc[4]))
++        self.assertTrue(np.isnan(r.temperature_c_lag_1h.iloc[5]))
++
++    def test_physics_and_optional_pm(self):
++        r = build(observations(), self.cfg)
++        self.assertAlmostEqual(float(r.dewpoint_c.iloc[0]), 12.0, delta=.1)
++        self.assertGreater(r.absolute_humidity_estimate_g_m3.iloc[0], 0)
++        self.assertTrue(r.pm25_pm10_ratio.isna().all())
++        self.assertTrue(r.temperature_c.notna().all())
++
++    def test_future_measurement_label_exact_time_and_mask(self):
++        f = observations(30)
++        f.loc[6, 'wind_speed_mps'] = 15
++        cfg = self.cfg
++        r = measured_future(f, cfg)
++        target = 'high_wind_measurement_at_6h'
++        self.assertEqual(r[target].iloc[0], 1)
++        self.assertEqual(r[target].iloc[1], 0)
++        self.assertTrue(r[target].iloc[-6:].isna().all())
++        r = measured_future(f.drop(index=6), cfg)
++        self.assertTrue(np.isnan(r[target].iloc[0]))
++
++    def test_independent_event_truth_requires_monitored_negatives(self):
++        f = pd.DataFrame([{'physical_site_id': 'a', 'interval_start_utc': '2024-01-01T00:00:00Z',
++                           'interval_end_utc': '2024-01-01T01:00:00Z', 'available_at_utc': '2024-01-02T00:00:00Z',
++                           'target': 'cloudburst_risk', 'label': 0, 'source_id': 'owner_rain_gauge',
++                           'source_version': 'v1', 'raw_sha256': 'a'*64, 'evidence_kind': 'independent_observed',
++                           'negative_coverage_verified': True, 'event_group_id': 'episode1', 'definition_version': 'gauge_rate_v1',
++                           'country_code': 'IN', 'location_uncertainty_m': 10., 'time_uncertainty_seconds': 60.}])
++        validate_independent(f, ['cloudburst_risk'], ['owner_rain_gauge'])
++        for column, value in [('negative_coverage_verified', False), ('evidence_kind', 'sensor_generated_rule'), ('raw_sha256', ''), ('raw_sha256', None), ('label', np.nan), ('location_uncertainty_m', np.inf), ('country_code', 'CN')]:
++            with self.assertRaises(ValueError):
++                validate_independent(f.assign(**{column: value}), ['cloudburst_risk'], ['owner_rain_gauge'])
++        with self.assertRaises(ValueError):
++            require_disjoint_events({'train': ['episode1'], 'test': ['episode1']})
++
++    def test_whole_station_split_buffers_and_purge(self):
++        stations = pd.DataFrame({'location_id': [str(i) for i in range(30)],
++                                 'physical_site_id': [str(i) for i in range(30)],
++                                 'latitude': 10.+np.arange(30)*.5, 'longitude': 77., 'elevation_m': 100.})
++        roles = station_roles(stations, 'national', self.cfg)
++        self.assertFalse(set(roles['train']) & set(roles['test']))
++        from ml.spatial_ensemble.network import distances_km
++        for sid in roles['train']:
++            row = stations[stations.location_id.eq(sid)].iloc[0]
++            other = stations[stations.location_id.isin(roles['validation']+roles['test'])]
++            self.assertTrue(np.all(distances_km(row.latitude, row.longitude, other[['latitude', 'longitude']]) >= 20))
++        f = pd.DataFrame({'location_id': ['v']*4, 'timestamp_utc': pd.to_datetime(['2024-07-01T00:00:00Z', '2024-07-02T00:00:00Z', '2024-08-31T20:00:00Z', '2024-09-02T00:00:00Z'])})
++        masks = row_roles(f, {'train': ['t'], 'validation': ['v'], 'test': ['x']}, self.cfg)
++        self.assertEqual(masks['validation'].tolist(), [False, True, False, False])
++        self.assertEqual(masks['calibration'].tolist(), [False, False, False, False])
++        f.loc[3, 'timestamp_utc'] = pd.Timestamp('2024-09-04T00:00:00Z')
++        self.assertTrue(row_roles(f, {'train': ['t'], 'validation': ['v'], 'test': ['x']}, self.cfg)['calibration'].iloc[3])
++
++    def test_calibration_fallback_and_metrics_with_one_class(self):
++        self.assertIsNone(calibration(np.zeros(30), np.zeros(30)))
++        np.testing.assert_array_equal(apply_calibration(np.array([.3]), None), [.3])
++        r = metrics([0, 0], [.8, .1])
++        self.assertIsNone(r['auc'])
++        self.assertIsNone(r['pr_auc_average_precision'])
++        self.assertEqual(r['false_positives'], 1)
++        self.assertIsNone(cluster_brier_interval(np.array([0]), np.array([.5]), ['a']))
++        self.assertEqual(experts(observations())[0], 'mountain_proxy')
++
++    def test_small_training_is_deterministic_and_model_not_pickle(self):
++        f = build(observations(120), self.cfg)
++        f['label'] = (np.arange(len(f)) % 2).astype(float)
++        masks = {role: np.zeros(len(f), bool) for role in ['train', 'validation', 'calibration', 'test']}
++        for role, bounds in zip(masks, [(0, 60), (60, 80), (80, 100), (100, 120)]):
++            masks[role][slice(*bounds)] = True
++        cfg = {**self.cfg, 'minimum_per_class': 3, 'rounds': 2}
++        with tempfile.TemporaryDirectory() as temp:
++            cols = ['temperature_c', 'pm25_ug_m3']
++            first, meta = fit_head(f, 'label', masks, cols, cfg, Path(temp)/'first.ubj')
++            second, _ = fit_head(f, 'label', masks, cols, cfg, Path(temp)/'second.ubj')
++            np.testing.assert_array_equal(first['probabilities'], second['probabilities'])
++            self.assertEqual(meta['features'], ['temperature_c'])
++            self.assertEqual(len(meta['sha256']), 64)
++            json.dumps(meta, allow_nan=False)
++
++    def test_normalization_masks_suspect_pressure_and_elevation(self):
++        f = observations()
++        raw = f[['location_id', 'timestamp_utc', 'source_id', 'temperature_c', 'relative_humidity_pct', 'pressure_hpa', 'pm25_ug_m3', 'pm10_ug_m3', 'wind_speed_mps']]
++        stations = f.iloc[[0]][['location_id', 'physical_site_id', 'latitude', 'longitude', 'elevation_m', 'elevation_datum', 'climate_zone']].assign(source='noaa_ghcnh', geography_status='candidate_india_bbox')
++        qc = pd.DataFrame({'location_id': ['a'], 'elevation_ok': [False], 'pressure_ok': [False]})
++        result, _ = normalize(raw, stations, qc, self.cfg)
++        self.assertTrue(result.pressure_hpa.isna().all())
++        self.assertTrue(result.elevation_m.isna().all())
++        self.assertTrue(result.country_code.eq('IN').all())
++        with self.assertRaises(ValueError):
++            normalize(raw.assign(source_id='uci_beijing_501'), stations, qc, self.cfg)
++
++    def test_inference_refuses_bad_core_and_never_scores_hazards(self):
++        from ml.india_sensor.predict import predict
++        from ml.india_sensor.config import DEFAULT
++        from ml.datasets.registry import digest
++        with tempfile.TemporaryDirectory() as temp:
++            meta = {'model_version': 'india_sensor_research_v1', 'config_sha256': digest(DEFAULT),
++                    'allowed_sources': ['noaa_ghcnh'], 'untrained_hazards': ['cloudburst_risk']}
++            Path(temp, 'metadata.json').write_text(json.dumps(meta))
++            cfg = {**self.cfg, 'models': temp}
++            r = predict(observations(3), cfg)
++            self.assertEqual(r['status'], 'REFUSED_INSUFFICIENT_HISTORY')
++            self.assertIsNone(r['hazards']['cloudburst_risk']['probability'])
++            r = predict(observations().assign(wind_speed_mps=np.nan), cfg)
++            self.assertEqual(r['status'], 'REFUSED_INVALID_CURRENT_CORE')
++            self.assertIsNone(r['hazards']['cloudburst_risk']['probability'])
++
++    def test_prediction_ood_uncalibrated_expert_fallback_and_tamper(self):
++        from ml.india_sensor.predict import predict
++        from ml.india_sensor.config import DEFAULT
++        from ml.datasets.registry import digest
++        f = build(observations(120), self.cfg)
++        f['label'] = (np.arange(len(f)) % 2).astype(float)
++        masks = {r: np.zeros(len(f), bool) for r in ['train', 'validation', 'calibration', 'test']}
++        masks['train'][:60] = True
++        with tempfile.TemporaryDirectory() as temp:
++            _, head = fit_head(f, 'label', masks, ['temperature_c'], {**self.cfg, 'rounds': 2}, Path(temp)/'model.ubj')
++            meta = {'model_version': 'india_sensor_research_v1', 'config_sha256': digest(DEFAULT),
++                    'allowed_sources': ['noaa_ghcnh'], 'untrained_hazards': ['cloudburst_risk'],
++                    'labels': {'label': {'variable': 'temperature_c', 'threshold': 35, 'unit': 'degC'}},
++                    'artifacts': {'national/label': {'B': head, 'D': {'experts': {}}}}}
++            Path(temp, 'metadata.json').write_text(json.dumps(meta))
++            cfg = {**self.cfg, 'models': temp}
++            r = predict(observations(40), cfg, strategy='D')
++            self.assertEqual(r['targets']['label']['status'], 'NATIONAL_FALLBACK_UNAVAILABLE_EXPERT')
++            self.assertIsNone(r['targets']['label']['probability'])
++            self.assertTrue(np.isfinite(r['targets']['label']['research_score']))
++            r = predict(observations(100), cfg)
++            self.assertEqual(r['targets']['label']['status'], 'REFUSED_OUTSIDE_TRAINED_RANGE')
++            Path(temp, 'model.ubj').write_bytes(b'corrupt')
++            self.assertEqual(predict(observations(40), cfg)['targets']['label']['status'], 'REFUSED_MISSING_OR_UNTRUSTED_ARTIFACT')
++            Path(temp, 'model.ubj').unlink()
++            self.assertEqual(predict(observations(40), cfg)['targets']['label']['status'], 'REFUSED_MISSING_OR_UNTRUSTED_ARTIFACT')
++
++
++if __name__ == '__main__':
++    unittest.main()

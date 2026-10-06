@@ -1,0 +1,368 @@
+diff --git a/ml/india_sensor/README.md b/ml/india_sensor/README.md
+new file mode 100644
+index 0000000..ed14b6b
+--- /dev/null
++++ b/ml/india_sensor/README.md
+@@ -0,0 +1,91 @@
++# India sensor-only research pipeline
++
++**Confidential: do not publish before IP review.** [Audit/capabilities](../../docs/INDIA_SENSOR_RISK_PLAN.md), [phase evidence](../../reports/india_sensor_phase/REPORT.md), [main guide](../../docs/PROJECT_OVERVIEW.md).
++
++This adds India-only **same-node six-hour forecasts of measured thresholds**. It does not replace the working current-weather two-node spatial ensemble, predict disasters, or interpolate risk between nodes. All cloudburst/flood/landslide/fire/storm heads remain unavailable. Their eventual probabilities require independent labeled data and validation.
++
++## Current data and commands
++
++Run from the repository root. The completed run used Python 3.13.11 and the versions pinned below; the legacy/physics environments stay separate.
++
++```sh
++python3 -m venv /tmp/indra-india-sensor-venv
++/tmp/indra-india-sensor-venv/bin/python -m pip install -r requirements-india-sensor.txt
++```
++
++Public NOAA acquisition already exists. These are optional **network/download** commands for a fresh checkout, not new downloads performed in this phase. They reuse unsigned public access; no authentication is bypassed. A valid enriched station registry and prior physics `station_qc.csv` must also be present. The original registry, SRTM and climate receipts are kept in `data/registry/`; these instructions do not claim every future NOAA station is surveyed or terrain-valid.
++
++```sh
++python3 -m ml.datasets.noaa --output data/noaa_ghcnh --year 2024
++python3 -m ml.datasets.hourly_noaa --acquire-year 2023
++python3 -m ml.datasets.hourly_noaa --years 2023 2024
++```
++
++`hourly_noaa` rebuilds the existing archive outputs; do not run it merely to execute this new model. For the already acquired archive, prepare/features and train/calibrate/evaluate are:
++
++```sh
++python3 -m ml.india_sensor.prepare --config configs/india_sensor_risk.json
++python3 -m ml.india_sensor.train --config configs/india_sensor_risk.json
++python3 -m ml.india_sensor.evaluate --config configs/india_sensor_risk.json
++python3 -m pytest tests/test_india_sensor.py -q
++python3 -m pytest -q
++```
++
++Replace `python3` with the isolated interpreter if needed. Preparation writes per-site normalized rows/labels to `data/india_sensor/processed/` and causal features to `features/`; raw source files remain untouched. It refuses an already populated feature directory. For another dataset version, copy the configuration to a new file, change `processed`, `features`, `models`, `reports` to fresh directories, then pass that file to every command. This avoids deleting or mixing previous artifacts. Paths resolve from the repository root, not the caller's current directory.
++
++Training includes both scopes, all A–D variants and calibration; there is no separate command that secretly fits the Himalayan test data. C uses eligible Himalayan **calibration** stations; a whole-Himalaya holdout leaves none and intentionally falls back. D's routing derives from GPS/height proxies; unavailable/uncalibrated experts use B. All fitted models are bounded depth-3, 40-tree XGBoost, reusing the node-forecast approach. PM never blocks this fit; all PM features are currently inactive because NOAA has no PM truth here.
++
++## Sensor view and features
++
++The sensor feature builder requires exactly these columns. Units are encoded in the column names and the original canonical long-form source schema; arbitrary wrong-unit numbers cannot always be detected from range checks.
++
++| Category | Fields / semantics |
++|---|---|
++| Identity | `location_id`, `physical_site_id`, `source_id`, `country_code=IN` |
++| Time | `timestamp_utc`, `available_at_utc`: explicit UTC completed-window end and receipt/availability; `interval_seconds`: native cadence |
++| Location | `latitude`, `longitude`: WGS84 degrees; fixed surveyed `elevation_m`, `elevation_datum=EGM96`; unknown/ellipsoid heights masked |
++| Source interpretation | `pressure_reference=station`; unresolved/sea-level pressure masked; `climate_zone` is registry grouping, not an A/B predictor |
++| Raw | T °C, RH %, P hPa, PM2.5/10 µg/m³, wind m/s in existing canonical column names; missing PM is null, never zero |
++| Temporal | Reused 1/3/6/12/24h lags, 1h differences, 6/24h mean/std; native 10/30/60/360/1440min endpoint changes and rolling min/max/mean/std, without duplicate hourly aliases |
++| Meteorological | Reused Magnus dewpoint, depression, vapor-pressure deficit, heat index; approximate absolute humidity; pressure minus prior-24h mean and pressure tendencies hPa/min |
++| Particulate | Reused PM2.5/PM10 ratio and channel tendencies/rolling windows; no identified smoke/dust source |
++| Geography/context | GPS lat/lon/height for B–D, UTC hour/month sine/cosine, JJAS calendar proxy; GPS-derived regional routing and Köppen grouping for evaluation |
++
++Unsupported 10/30min windows in hourly data stay NaN. Differences require contiguous valid history; gaps are not filled. Rolling features use the past/current window only. Delayed rows are conservatively omitted instead of backdated, even after arrival. Wind variability is not measured gusts; encoder pulse-to-m/s calibration is required before ingestion. No wind azimuth, rainfall, CAPE, soil state, `era5_*`, satellite or hidden-sensor value is a runtime input. INA219 health remains diagnostic.
++
++Three targets: wind ≥10 m/s, temperature ≥35°C and RH ≥95%, each at **exactly t+6h in that completed hourly average**. They are not “any time in the next six hours,” gust warnings, official heatwaves or confirmed fog. Labels are separately stored, exact-time joined and missing future readings stay unknown. Existing input-generated Beijing event labels are never used. Physical reference/threshold provenance and raw archive hashes are in the reports/model manifest.
++
++Independent event exports have a separate long schema (`labels.EVENT_FIELDS`): site, UTC interval/availability, target and definition version, source/version/raw SHA256, country, observed-evidence kind, monitored-negative verification, event group, and location/time uncertainty. Weak rules/modeled rain cannot pass as observed truth; absent events cannot become zeros. `validate_independent` and `require_disjoint_events` are tested admission utilities, **not a finished event association/training pipeline**. Rights and observation adjudication still require source-registry review. Never feed these label fields into `features.build`.
++
++## Split and metric contract
++
++No row sampling caps. Physical sites are deduplicated before whole-station roles; training is ≥20 km from held-out and validation sites. Fit: 2023–June 2024 training stations. Selection report: July/August validation stations. Calibration: September/October at those validation stations. Test: November/December at separate test stations. Entire global 72h blocks belong to one role; boundary blocks are dropped, with an additional 24h-history and 6h-target purge. Blocks are proxies, not true storm identities; future event labels must additionally keep entire recorded event groups disjoint.
++
++`national` holds out whole sites; `himalaya_holdout` holds out the predeclared 28–37°N, 72–90°E, QC-valid elevation ≥500m proxy. Himachal reporting uses a labeled rectangle proxy, not an official state boundary. Per-Köppen, elevation and GPS-region metrics retain coverage counts. Missing altitude remains unknown. No all-state/coastal/eastern-Himalaya validation is implied.
++
++Precision, recall/F1, AP, meaningful ROC-AUC, Brier, reliability bins/ECE, confusion matrices, false-positive **hours** per monitored station-day and missed-positive-hour fraction are reported. Threshold is fixed at 0.5. Bootstrapped Brier intervals resample stations; they are neither prediction bands nor independent storm confidence. Constant training prevalence and current-measurement persistence are compared. Validation numbers are diagnostics; no parameters are chosen on the test. Archive probability calibration does not establish field reliability.
++
++## Research demo
++
++Make a replay input from one generated **real archive** station. This example contains training-period data and demonstrates the interface, not held-out forecast accuracy or live hardware.
++
++```sh
++python3 - <<'PY'
++import json
++import pandas as pd
++from ml.india_sensor.features import METADATA
++from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
++m = json.load(open('reports/india_sensor_phase/preparation.json'))
++f = pd.read_parquet(m['files'][0]['features'])
++f.iloc[:72][[*METADATA, *RAW_SENSOR_COLUMNS]].to_csv('/tmp/indra-sensor-demo.csv', index=False)
++PY
++python3 -m ml.india_sensor.predict --config configs/india_sensor_risk.json --input /tmp/indra-sensor-demo.csv --strategy B
++```
++
++For owner sensor replay, preserve the exact schema, use `source_id=indra_owner_nodes`, calibrated completed-hour means and at least 24h history at one fixed surveyed site. This is an explicit runtime-only source, not secretly added to archive training. Unavailable/invalid T/RH/wind, insufficient history or fitted-range violations refuse output. Artifact hashes are checked, no pickle is loaded, and uncalibrated heads return `probability=null` plus a named research score. Missing/uncalibrated experts fall back; model failure yields null and corrupted artifacts are rejected. These local-file checks do not authenticate nodes. There is no new ESP32 export.
++
++The existing A/B query-point weather demo and hidden-C scorer remain unchanged: see [NODE_COLLECTION_SPEC](../../reports/nwic_pipeline/NODE_COLLECTION_SPEC.md).
++
++## Data that still requires authorized access
++
++IMD hourly AWS/ARG/event exports need approved terms/permission. MOSDAC requires registered product access. OpenAQ needs an API key and each provider's rights. CDS needs a personal token/accepted product terms or manual ERA5 download ([existing request spec](../../reports/physics_phase/ERA5_DOWNLOAD.md)); ERA5 may be research context/labels but is excluded from this sensor-only fit. NASA IMERG/FIRMS and GSI/CWC inventories need appropriate authorized export, verified rights, label definitions/uncertainty and monitored negatives. None was downloaded here. NWIC/Delhi remain unresolved/quarantined; restricted CPCB stays separate. Country/source allowlists isolate China without moving legacy artifacts or breaking their tests.
+diff --git a/reports/india_sensor_phase/REPORT.md b/reports/india_sensor_phase/REPORT.md
+new file mode 100644
+index 0000000..0f3e207
+--- /dev/null
++++ b/reports/india_sensor_phase/REPORT.md
+@@ -0,0 +1,75 @@
++# India sensor phase: what was built and what the evidence shows
++
++**Confidential: do not publish before IP review.** Executed 5 October 2026. [Main guide](../../docs/PROJECT_OVERVIEW.md); [audit, capability matrix and dataset strategy](../../docs/INDIA_SENSOR_RISK_PLAN.md); [exact commands and feature/schema contract](../../ml/india_sensor/README.md).
++
++The existing two-node weather interpolation ensemble and firmware were preserved. This phase adds an India-only, sensor-compatible **same-node forecast research benchmark**, not a disaster detector or between-node risk model. Independent cloudburst/flood/landslide/fire/storm labels are absent, so those heads deliberately remain unavailable.
++
++## Completed in separate patches
++
++1. Audit and configuration: inventory of reusable features, weak event rules, source rights and missing capabilities; cloudburst feasibility and Indian/Himalayan data plan.
++2. Data/features/labels: reuse the canonical weather contract and NOAA archive; clean-source gate, physical-site deduplication, suspect pressure/height masking, causal native windows and separate future-label/provenance files. Unknown PM stays missing.
++3. Split/models/inference: whole-site 20 km buffers, whole 72h time-block roles and 24h history/6h target purge; compare A sensor/time, B +GPS/height, C mountain calibration, D GPS/height experts with national fallback. Uncalibrated probabilities are withheld; range violations refuse.
++4. Tests and evidence: metrics, per-climate/elevation/geographic-proxy breakdowns, bootstrap intervals, replay demo and documentation. Hardware specification clarified without claiming installed sensor verification.
++
++## Actual data and protocol
++
++Prepared **1,515,461 rows at 374 physical sites**, from all previously acquired 375 NOAA 2024 files and 360 2023 files. One exact alias was resolved. **1,497,056 rows at 373 sites** retain current T/RH/wind. Missing future observations reduce each target further. No row sampling caps. Files acquired cover 2023/2024; the last completed bucket ends 2025-01-01 00:00 UTC, which is not an extra year of training.
++
++At 27 sites, suspect height/pressure is masked using the existing prior-cutoff QC. This includes Mandi: catalog/SRTM disagreement does not establish its actual sensor altitude. These sites may contribute T/RH/wind, but no untrusted altitude or pressure is restored. ISO-IN/bounding-box source screening is not a verified India border.
++
++Fit ends June 2024 (includes 2023); selection July/August; calibration September/October; test November/December. Whole sites remain disjoint from fitting, with 20 km buffers. Boundary 72h blocks and crossing history/targets are purged. These blocks are proxies; future real-event experiments must additionally hold out complete adjudicated event groups.
++
++| Scope | Fit sites | Selection/calibration sites | Nominated test sites | Eligible fit rows before target mask | Eligible test rows before target mask |
++|---|---:|---:|---:|---:|---:|
++| national | 216 | 55 | 74 | 625976 | 25011 |
++| himalaya_holdout | 276 | 71 | 13 | 816420 | 4727 |
++
++National target scoring covers **41 sites**, not all 74 nominated sites. Whole-Himalaya scoring covers **11 of 13** nominated sites: 2,680 wind, 2,651 temperature and 2,643 RH pairs. The national test has only two mountain-proxy sites/238 pairs. Himachal is a rectangle proxy: seven sites/~1,350 pairs in the mountain holdout; no official state-boundary or Mandi field claim. Köppen zones BWk/Cfa/Cwa/Cwb cover that holdout; national scores cover Am/Aw/BSh/BWh/Cfa/Cfb/Cwa/Cwb, with as few as eight Cfa pairs. Coastal/state and Eastern-Himalayan skill remain insufficiently established.
++
++Targets are thresholds at the **exact t+6h completed-hour average**: wind ≥10 m/s, T ≥35°C, RH ≥95%. They are not next-six-hour occurrence, gust, official heatwave, fog or rainfall labels. Hourly data cannot supply 10/30-minute trends or true gusts. PM targets are not trained here.
++
++## Results: losses as well as wins
++
++All numbers below are from real NOAA observations. Brier is squared score/probability error (lower is better); tables use eight significant digits. Wind lacks enough calibration positives, so its values are **uncalibrated-score diagnostics**, not released probabilities. Full-precision metrics, AP, recall/F1, confusion matrices, calibration bins and per-zone/elevation coverage are in [results.json](results.json); all methods and 95% station-bootstrap intervals are in [RESULTS.md](RESULTS.md).
++
++| Scope / future measurement | A | B | C | D | Persistence | Fit prevalence |
++|---|---:|---:|---:|---:|---:|---:|
++| national / high_wind_measurement_at_6h | 0.00011235216 | 0.00011236372 | 0.00011236372 | 0.00011236372 | 0.00027998656 | 0.00011233911 |
++| national / hot_measurement_at_6h | 0.0036471663 | 0.0035164754 | 0.0035164754 | 0.0032258171 | 0.0065223503 | 0.010365441 |
++| national / near_saturation_measurement_at_6h | 0.042115334 | 0.042836264 | 0.042836264 | 0.042084828 | 0.10333577 | 0.067556965 |
++| himalaya_holdout / high_wind_measurement_at_6h | 1.5050955e-07 | 8.0348713e-08 | 8.0348713e-08 | 8.0348713e-08 | 0 | 4.81961e-07 |
++| himalaya_holdout / hot_measurement_at_6h | 2.7516262e-06 | 2.7880826e-06 | 2.7880826e-06 | 2.7880826e-06 | 0 | 0.0084867889 |
++| himalaya_holdout / near_saturation_measurement_at_6h | 0.087715432 | 0.088100106 | 0.088100106 | 0.088100106 | 0.23117669 | 0.11044566 |
++
++Adding geography worsens national RH Brier (B versus A) and Himalayan RH/temperature Brier. D slightly improves national RH Brier and hot-temperature Brier, but detects **zero of 61 hot positive hours** at 0.5. National wind has two positives, both missed. Himalayan wind/hot tests have **zero positives**: persistence scores 0, and model detection skill cannot be assessed. Small Brier alone is not a useful warning system.
++
++C falls back to B in every head because mountain calibration lacks the required classes. D also uses B for the held-out mountain domain. Consequently, no measurable Himachal-specific improvement is established. National RH D recall is about 30.5%; persistence recalls about 33.2% with many more false-positive hours. Confidence intervals are wide/overlap; these descriptive wins do not justify choosing a deployable model.
++
++False alarms count positive **hours per monitored station-day**, not independent alerts/storms. Intervals bootstrap whole stations (200 replicates); shared storms and serial dependence remain. They are metric intervals, not 80/90% weather bands. Offline test diagnostics include eligible forecasts even where the research serving range guard would refuse.
++
++## Verified and not verified
++
++- Run: real Indian archive preparation; final stricter A–D national/whole-Himalaya training/calibration/evaluation; JSON model/hash metadata; archive replay with uncalibrated wind probability withheld and disaster probabilities null.
++- Run: 112 tests plus eight subtests passed; 15 new tests cover source/country isolation, causal prefixes, gaps, native cadence, pressure/datum, delayed data, geometry/resource validation, separate future labels, observed-negative admission, event-group disjointness, split purge, calibration fallback, deterministic fitting, OOD refusal, expert fallback, missing/corrupt artifact handling and fail-closed inference. Fixtures are synthetic contract evidence, not meteorological validation.
++- Run: Ruff new-code checks and CI-equivalent lint; compile checks. Existing host/C parity tests pass in the full suite. CI on GitHub and PlatformIO/device builds were not rerun in this phase.
++- Pending: independent historical disaster labels/monitored negatives; event association/training after admission; authorized IMD/MOSDAC/OpenAQ/CDS access; NWIC/Delhi metadata/rights; PM data approval; minute/gust streams; real INDRA field sessions; official state/coastal/belt boundaries; node authentication; new ESP32 export/soak/latency.
++
++Runtime: Python 3.13.11, NumPy 2.5.2, pandas 2.3.3, sklearn 1.9.0, XGBoost 3.3.0, Arrow 23.0.0. Deprecation warnings from the current NumPy/pandas combination and sandbox Arrow CPU-detection warnings were observed; no test failed. Original dependency environments were not replaced. Local model files/matrices are ignored by Git; versioned reports preserve hashes and feature/target/split metadata.
++
++## What is needed next
++
++1. Run the retained calibrated A/B/hidden-C collection protocol; survey sensor heights and calibrate encoder counts to wind m/s. Add a calibrated timestamped rain gauge if local rain-rate confirmation is required.
++2. Obtain authorized Indian hourly rain/event exports with complete monitored dry periods, event definitions, location/time uncertainty, source rights and whole-event IDs. Sparse wet-only NWIC rain cannot create negatives.
++3. Resolve NWIC clock/pressure/license and Mandi/Kala Amb elevation/pressure with independent station metadata; keep unresolved values quarantined.
++4. Acquire official region boundaries and enough Himalayan/monsoon extreme-event sites/years; add untouched season/year and field tests. Calibration must cover independent positives, not merely many correlated hours.
++5. Admit PM sources only after time/unit/rights checks, keeping non-commercial training separate. External rain/satellite/reanalysis may support labels/research, never silently enter this sensor-only runtime.
++6. Only then compare independently labeled event strategies, choose warning thresholds on validation and test false-alarm episodes/misses; consider distillation and authenticated ESP32 deployment after field performance is established.
++
++## Source map / changed files
++
++- Audit/science/dataset/capability evidence: [INDIA_SENSOR_RISK_PLAN.md](../../docs/INDIA_SENSOR_RISK_PLAN.md), original source registry/rights and the retained old reports. IMD-published cloudburst definition requires measured intense local rain; pressure/humidity alone cannot confirm it. [IMD MAUSAM](https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/5084).
++- Pipeline: [config](../../configs/india_sensor_risk.json), [prepare.py](../../ml/india_sensor/prepare.py), [features.py](../../ml/india_sensor/features.py), [labels.py](../../ml/india_sensor/labels.py). Existing `ml/datasets/`, forecast/event equations and spatial split utilities are reused.
++- Models/protocol: [splits.py](../../ml/india_sensor/splits.py), [train.py](../../ml/india_sensor/train.py), [metrics.py](../../ml/india_sensor/metrics.py), [predict.py](../../ml/india_sensor/predict.py), [evaluate.py](../../ml/india_sensor/evaluate.py).
++- Reproduction: [commands](../../ml/india_sensor/README.md), [pinned runtime](../../requirements-india-sensor.txt), [tests](../../tests/test_india_sensor.py), [verification receipt](verification.json), [preparation manifest](preparation.json), [model manifest](model_manifest.json).
++- Small existing-file edits: `.gitignore`, CI lint scope, docs index/overview/inventory, user-specified parts in `NODE_COLLECTION_SPEC.md`. No source/raw data, working weights, firmware or prior result tables were moved/deleted.
++- Reviewable ordered patches: [patch index](patches/README.md). They describe edits already present; do not reapply to this workspace. No commit/push was made for this new phase.
+diff --git a/reports/india_sensor_phase/RESULTS.md b/reports/india_sensor_phase/RESULTS.md
+new file mode 100644
+index 0000000..bcc0502
+--- /dev/null
++++ b/reports/india_sensor_phase/RESULTS.md
+@@ -0,0 +1,89 @@
++# India sensor-only forecast results
++
++**Real NOAA observations; not disaster or physical INDRA sensor validation.**
++
++Exact completed-hour measurements at issue time +6h. Brier is squared probability error (lower is better); AP is average precision (higher is better).
++
++A: sensor/time; B: +GPS/height; C: B with independently fitted mountain calibration if available; D: regional experts with B fallback.
++
++Wind scores are uncalibrated: insufficient calibration positives. Persistence repeats the current threshold; prevalence uses training labels only.
++
++Table values use eight significant digits; full precision and per-region metrics are in [results.json](results.json).
++
++## national
++
++| Target | Method | Hours / positives | Brier | 95% station-bootstrap CI | AP | Recall at 0.5 | False-positive hours/station-day |
++|---|---|---:|---:|---|---:|---:|---:|
++| high_wind_measurement_at_6h | A | 17858 / 2 | 0.00011235216 | [2.3083121e-07, 0.00029389846] | 0.00027590516 | 0 | 0 |
++| high_wind_measurement_at_6h | B | 17858 / 2 | 0.00011236372 | [1.7451709e-07, 0.00029377529] | 0.00034244517 | 0 | 0 |
++| high_wind_measurement_at_6h | C | 17858 / 2 | 0.00011236372 | [1.7451709e-07, 0.00029377529] | 0.00034244517 | 0 | 0 |
++| high_wind_measurement_at_6h | D | 17858 / 2 | 0.00011236372 | [1.7451709e-07, 0.00029377529] | 0.00034244517 | 0 | 0 |
++| high_wind_measurement_at_6h | current_measurement_persistence | 17858 / 2 | 0.00027998656 | [0, 0.00076843303] | 0.00011199462 | 0 | 0.0040318065 |
++| high_wind_measurement_at_6h | training_prevalence | 17858 / 2 | 0.00011233911 | [5.0341e-07, 0.00029338209] | 0.00011199462 | 0 | 0 |
++| hot_measurement_at_6h | A | 17785 / 61 | 0.0036471663 | [0.0014266507, 0.0066827854] | 0.042069527 | 0 | 0.0094461625 |
++| hot_measurement_at_6h | B | 17785 / 61 | 0.0035164754 | [0.0014223003, 0.0064666487] | 0.050302271 | 0 | 0.0053978071 |
++| hot_measurement_at_6h | C | 17785 / 61 | 0.0035164754 | [0.0014223003, 0.0064666487] | 0.050302271 | 0 | 0.0053978071 |
++| hot_measurement_at_6h | D | 17785 / 61 | 0.0032258171 | [0.0014433876, 0.005786038] | 0.12721934 | 0 | 0 |
++| hot_measurement_at_6h | current_measurement_persistence | 17785 / 61 | 0.0065223503 | [0.0022433961, 0.012375538] | 0.0034298566 | 0 | 0.074219848 |
++| hot_measurement_at_6h | training_prevalence | 17785 / 61 | 0.010365441 | [0.0087088024, 0.012930689] | 0.0034298566 | 0 | 0 |
++| near_saturation_measurement_at_6h | A | 17777 / 1277 | 0.042115334 | [0.020123876, 0.067772608] | 0.60222516 | 0.26389977 | 0.13500591 |
++| near_saturation_measurement_at_6h | B | 17777 / 1277 | 0.042836264 | [0.02032375, 0.069518735] | 0.59031176 | 0.26703211 | 0.1485065 |
++| near_saturation_measurement_at_6h | C | 17777 / 1277 | 0.042836264 | [0.02032375, 0.069518735] | 0.59031176 | 0.26703211 | 0.1485065 |
++| near_saturation_measurement_at_6h | D | 17777 / 1277 | 0.042084828 | [0.021344613, 0.066565726] | 0.60347179 | 0.30540329 | 0.13365585 |
++| near_saturation_measurement_at_6h | current_measurement_persistence | 17777 / 1277 | 0.10333577 | [0.047331792, 0.1700068] | 0.14796911 | 0.33202819 | 1.3284581 |
++| near_saturation_measurement_at_6h | training_prevalence | 17777 / 1277 | 0.067556965 | [0.032598048, 0.11087906] | 0.071834393 | 0 | 0 |
++
++## himalaya_holdout
++
++| Target | Method | Hours / positives | Brier | 95% station-bootstrap CI | AP | Recall at 0.5 | False-positive hours/station-day |
++|---|---|---:|---:|---|---:|---:|---:|
++| high_wind_measurement_at_6h | A | 2680 / 0 | 1.5050955e-07 | [4.7766218e-08, 2.9855753e-07] | — | 0 | 0 |
++| high_wind_measurement_at_6h | B | 2680 / 0 | 8.0348713e-08 | [2.2973469e-08, 1.4566947e-07] | — | 0 | 0 |
++| high_wind_measurement_at_6h | C | 2680 / 0 | 8.0348713e-08 | [2.2973469e-08, 1.4566947e-07] | — | 0 | 0 |
++| high_wind_measurement_at_6h | D | 2680 / 0 | 8.0348713e-08 | [2.2973469e-08, 1.4566947e-07] | — | 0 | 0 |
++| high_wind_measurement_at_6h | current_measurement_persistence | 2680 / 0 | 0 | [0, 0] | — | 0 | 0 |
++| high_wind_measurement_at_6h | training_prevalence | 2680 / 0 | 4.81961e-07 | [4.81961e-07, 4.81961e-07] | — | 0 | 0 |
++| hot_measurement_at_6h | A | 2651 / 0 | 2.7516262e-06 | [9.6638077e-07, 6.0725921e-06] | — | 0 | 0 |
++| hot_measurement_at_6h | B | 2651 / 0 | 2.7880826e-06 | [1.0199924e-06, 6.0495662e-06] | — | 0 | 0 |
++| hot_measurement_at_6h | C | 2651 / 0 | 2.7880826e-06 | [1.0199924e-06, 6.0495662e-06] | — | 0 | 0 |
++| hot_measurement_at_6h | D | 2651 / 0 | 2.7880826e-06 | [1.0199924e-06, 6.0495662e-06] | — | 0 | 0 |
++| hot_measurement_at_6h | current_measurement_persistence | 2651 / 0 | 0 | [0, 0] | — | 0 | 0 |
++| hot_measurement_at_6h | training_prevalence | 2651 / 0 | 0.0084867889 | [0.0084867889, 0.0084867889] | — | 0 | 0 |
++| near_saturation_measurement_at_6h | A | 2643 / 316 | 0.087715432 | [0.034230866, 0.11887395] | 0.43285677 | 0.27848101 | 0.56299659 |
++| near_saturation_measurement_at_6h | B | 2643 / 316 | 0.088100106 | [0.034710253, 0.1196359] | 0.43491958 | 0.34493671 | 0.68104427 |
++| near_saturation_measurement_at_6h | C | 2643 / 316 | 0.088100106 | [0.034710253, 0.1196359] | 0.43491958 | 0.34493671 | 0.68104427 |
++| near_saturation_measurement_at_6h | D | 2643 / 316 | 0.088100106 | [0.034710253, 0.1196359] | 0.43491958 | 0.34493671 | 0.68104427 |
++| near_saturation_measurement_at_6h | current_measurement_persistence | 2643 / 316 | 0.23117669 | [0.092823523, 0.32892595] | 0.13118568 | 0.23734177 | 3.3598184 |
++| near_saturation_measurement_at_6h | training_prevalence | 2643 / 316 | 0.11044566 | [0.041775679, 0.16182191] | 0.1195611 | 0 | 0 |
++
++## Losses and interpretation
++
++- national, high_wind_measurement_at_6h: A loses on Brier to training_prevalence (0.00011235216 vs 0.00011233911).
++- national, high_wind_measurement_at_6h: B loses on Brier to training_prevalence (0.00011236372 vs 0.00011233911).
++- national, high_wind_measurement_at_6h: C loses on Brier to training_prevalence (0.00011236372 vs 0.00011233911).
++- national, high_wind_measurement_at_6h: D loses on Brier to training_prevalence (0.00011236372 vs 0.00011233911).
++- national, hot_measurement_at_6h: A loses on Brier to D (0.0036471663 vs 0.0032258171).
++- national, hot_measurement_at_6h: B loses on Brier to D (0.0035164754 vs 0.0032258171).
++- national, hot_measurement_at_6h: C loses on Brier to D (0.0035164754 vs 0.0032258171).
++- national, near_saturation_measurement_at_6h: A loses on Brier to D (0.042115334 vs 0.042084828).
++- national, near_saturation_measurement_at_6h: B loses on Brier to D (0.042836264 vs 0.042084828).
++- national, near_saturation_measurement_at_6h: C loses on Brier to D (0.042836264 vs 0.042084828).
++- himalaya_holdout, high_wind_measurement_at_6h: A loses on Brier to current_measurement_persistence (1.5050955e-07 vs 0).
++- himalaya_holdout, high_wind_measurement_at_6h: B loses on Brier to current_measurement_persistence (8.0348713e-08 vs 0).
++- himalaya_holdout, high_wind_measurement_at_6h: C loses on Brier to current_measurement_persistence (8.0348713e-08 vs 0).
++- himalaya_holdout, high_wind_measurement_at_6h: D loses on Brier to current_measurement_persistence (8.0348713e-08 vs 0).
++- himalaya_holdout, hot_measurement_at_6h: A loses on Brier to current_measurement_persistence (2.7516262e-06 vs 0).
++- himalaya_holdout, hot_measurement_at_6h: B loses on Brier to current_measurement_persistence (2.7880826e-06 vs 0).
++- himalaya_holdout, hot_measurement_at_6h: C loses on Brier to current_measurement_persistence (2.7880826e-06 vs 0).
++- himalaya_holdout, hot_measurement_at_6h: D loses on Brier to current_measurement_persistence (2.7880826e-06 vs 0).
++- himalaya_holdout, near_saturation_measurement_at_6h: B loses on Brier to A (0.088100106 vs 0.087715432).
++- himalaya_holdout, near_saturation_measurement_at_6h: C loses on Brier to A (0.088100106 vs 0.087715432).
++- himalaya_holdout, near_saturation_measurement_at_6h: D loses on Brier to A (0.088100106 vs 0.087715432).
++
++B/C/D do not universally improve A. C is a national fallback in every current head because no eligible mountain calibration has enough positive and negative hours. D also falls back in the whole-Himalaya test; these are not independently successful mountain experts.
++
++Check positive counts before interpreting small Brier scores: zero positives cannot establish detection skill. RH is near saturation, not verified fog or rainfall. Recall counts positive hours, not distinct storms.
++
++Bootstrap resamples whole stations; shared storms and long-term temporal dependence remain. These are metric confidence intervals, not 80/90% prediction bands. The diagnostic benchmark includes all eligible test forecasts; serving also checks fitted ranges and may refuse them.
++
++All disaster heads remain unavailable. No release, threshold optimization, ensemble replacement or field-calibration claim follows from this benchmark.
+diff --git a/docs/PROJECT_OVERVIEW.md b/docs/PROJECT_OVERVIEW.md
+index 55a37c8..8709f27 100644
+--- a/docs/PROJECT_OVERVIEW.md
++++ b/docs/PROJECT_OVERVIEW.md
+@@ -4,6 +4,8 @@
+ 
+ Evidence cutoff: 3 October 2026. This is the main project guide. Original reports remain available through the source map and archive. **The software prototype works in offline tests; reliable field deployment between two ESP32 nodes has not been demonstrated.**
+ 
++5 October supplement: [India sensor-risk audit](INDIA_SENSOR_RISK_PLAN.md) and [executed sensor-only forecast phase](../reports/india_sensor_phase/REPORT.md). This adds same-node future measurement thresholds, separate from interpolation; cloudburst/flood/landslide heads remain unavailable. Older spatial scores below are unchanged.
++
+ ## 1. What this project is
+ 
+ INDRA is an AI weather mesh network project for a course at IIT Mandi. A mesh is a group of communicating sensor nodes. The intended deployment has exactly two transmitting nodes, A and B. Given their readings and a query latitude, longitude and elevation, a server estimates weather between them. A third instrument, C, measures the hidden test point; its readings are withheld from prediction and used only for scoring.
+@@ -30,6 +32,7 @@ Arrows describe the intended system; live sensor drivers, radio transport and au
+ | Item | Status | Evidence and boundary |
+ |---|---|---|
+ | Six-channel contract | Done and tested | T °C, RH %, station pressure hPa, PM2.5/PM10 µg/m³, wind m/s, in that order; fewer than six physical devices may supply them. |
++| India sensor-only threshold forecasts | Partly done | Indian NOAA A–D comparisons and causal features tested; independent field/hazard validation missing. PM optional; suspect pressure/height masked. |
+ | Four-channel spatial model; optional PM | Partly done | Weather works without PM. Separate target predictors (“heads”) mask missing labels; current spatial PM heads are untrained. |
+ | Registry and long-form store | Done and tested | One variable per row; source/site IDs, hashes, units, UTC intervals, quality/reference flags; clean/restricted separation. |
+ | All-source ingestion | Partly done | NOAA/NWIC/POWER have real execution evidence; other adapters limited/synthetic. Unresolved sources quarantined; ERA5 join pending. |
+@@ -50,7 +53,7 @@ Pressure uses temperature-aware barometric reduction to 0 m EGM96, log-pressure
+ 
+ ## 3. Requirements and running it
+ 
+-Validation needs three instruments: A/B transmit and C stays hidden. Existing firmware targets **ESP32-S3-DevKitC-1-N8, 8 MB flash**. Proposed sensors: BME280 (T/RH/pressure), optional PMS7003 (PM), anemometer/encoder (wind). **Installed models, wiring, shields and power hardware are unverified**; record actual parts.
++Validation needs three instruments: A/B transmit and C stays hidden. Existing firmware targets **ESP32-S3-DevKitC-1-N8, 8 MB flash**. User-specified parts: BME280 (T/RH/pressure), PMS7003 (PM), 600 PPR encoder (wind rotation), Neo-M8N GPS, INA219 power monitoring and DS3231 RTC. **Installed wiring, shielding, calibration and operation are unverified**; encoder PPR alone does not establish m/s or wind azimuth.
+ 
+ Use isolated Python 3.11.8; root dependency pins differ from the tested spatial phase. Full tests need a C/C++ compiler; firmware builds need PlatformIO.
+ 
+diff --git a/docs/README.md b/docs/README.md
+index 0be71bd..544efa9 100644
+--- a/docs/README.md
++++ b/docs/README.md
+@@ -3,6 +3,7 @@
+ **Confidential: do not publish before IP review.**
+ 
+ - [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md): the single main guide.
++- [India sensor-risk audit and plan](INDIA_SENSOR_RISK_PLAN.md), [executed phase report](../reports/india_sensor_phase/REPORT.md), [commands/feature contract](../ml/india_sensor/README.md): India-only future-measurement research; independent disaster heads remain unavailable.
+ - [DATA_LICENSES.md](DATA_LICENSES.md): source rights, commercial-use status and admission gates.
+ - [NODE_COLLECTION_SPEC.md](../reports/nwic_pipeline/NODE_COLLECTION_SPEC.md): retained current A/B/C field protocol at its existing path.
+ - [INVENTION_NOTES.md](../INVENTION_NOTES.md): confidential evidence and prior-art notes; kept separate.
+diff --git a/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md b/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
+index b5f84f3..39c0032 100644
+--- a/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
++++ b/reports/nwic_pipeline/NODE_COLLECTION_SPEC.md
+@@ -16,7 +16,7 @@ Collect native samples at **1 Hz**; upload **one-minute aggregates** and retain
+ | `sensor_model`, `serial_number`, `measurement_height_m`, `calibrated_at_utc` | Per channel, actual installed part and calibration reference; don't infer part from units |
+ | `sample_count`, `expected_sample_count`, `qc_flags`, `battery_v`, `rssi_dbm` | Per-channel completeness, timeout/stuck/range flags and maintenance diagnostics |
+ 
+-Record the exact manufacturer, model, part revision and serial number for the T/RH sensor, absolute-pressure sensor, anemometer and optional particulate sensor. Installed hardware models have **not been verified**; do not substitute a guessed part name or treat uncalibrated readings as reference truth. Measure T/RH around 2 m; wind ideally standardized at 10 m, or record actual mesh-node height and train with that feature. Record obstacles, enclosure/shield, terrain/slope and station photos in site metadata.
++Record the exact manufacturer, model, part revision and serial number for the T/RH sensor, absolute-pressure sensor, anemometer and optional particulate sensor. User-specified parts (5 October): BME280, PMS7003, 600 PPR encoder, Neo-M8N GPS, INA219 and DS3231. Installed wiring, calibration and operation remain **unverified**. Retain encoder counts/window, rotor geometry/gearing and a measured conversion to m/s; PPR alone is insufficient and rotation direction is not wind azimuth. Set/check DS3231 against UTC/GPS and log offset/drift. Store INA219 voltage/current/power as health diagnostics, not weather/event labels. Measure T/RH around 2 m; wind ideally standardized at 10 m, or record actual mesh-node height and train with that feature. Record obstacles, enclosure/shield, terrain/slope and station photos in site metadata.
+ 
+ Validate finite values, physical ranges and coordinates at both node and server; flag flatlines using duration/neighbor evidence instead of automatically calling legitimate calm wind invalid. Retain the invalid raw sample with a reason. Never forward-fill a failed sensor into labels. Reject replayed boot/sequence IDs, duplicate site/channel/time records and stale arrivals; preserve late records for audit, exclude them from earlier prediction features. Authenticate node payloads and the receiver; use replay protection and rate limits. Do not put shared deployment keys in the repository.
+ 
+diff --git a/DOC_INVENTORY.md b/DOC_INVENTORY.md
+index 3665aa0..85be824 100644
+--- a/DOC_INVENTORY.md
++++ b/DOC_INVENTORY.md
+@@ -137,3 +137,18 @@ Dates are current filesystem timestamps. Original inventory dates above remain f
+ | [docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd](docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
+ | [docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd](docs/archive/diagrams/reports__physics_phase__REPORT__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
+ | [docs/archive/diagrams/reports__review__REVIEW__1.mmd](docs/archive/diagrams/reports__review__REVIEW__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
++
++## India sensor research update — 5 October 2026
++
++The original inventory snapshot above remains historical evidence. No documentation was moved or deleted in this phase. Current additions/updates are listed below; the new audit/commands/reports are references linked from the single main overview. Existing invention/license/archive documents remain unchanged.
++
++| Path | Current purpose | Last modified (Asia/Kolkata) | Status |
++|---|---|---|---|
++| [docs/INDIA_SENSOR_RISK_PLAN.md](docs/INDIA_SENSOR_RISK_PLAN.md) | India sensor audit, capability matrix, source rights and incremental plan | 2026-10-05T19:57:23+05:30 | current; reference or main guide as stated |
++| [ml/india_sensor/README.md](ml/india_sensor/README.md) | Sensor-only feature/label contract and exact prepare/train/calibrate/demo commands | 2026-10-05T19:48:49+05:30 | current; reference or main guide as stated |
++| [reports/india_sensor_phase/REPORT.md](reports/india_sensor_phase/REPORT.md) | Executed India research phase, measured results, losses and pending evidence | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
++| [reports/india_sensor_phase/RESULTS.md](reports/india_sensor_phase/RESULTS.md) | Frozen A-D/baseline tables and station-bootstrap Brier intervals | 2026-10-05T19:49:49+05:30 | current; reference or main guide as stated |
++| [reports/india_sensor_phase/patches/README.md](reports/india_sensor_phase/patches/README.md) | Ordered already-applied review patches and evidence exclusions | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
++| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Main guide: India research supplement and user-specified hardware, spatial results unchanged | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
++| [docs/README.md](docs/README.md) | Main guide and updated reference index | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
++| [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Retained A/B/hidden-C protocol, specified parts and encoder/RTC/health requirements | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+diff --git a/reports/india_sensor_phase/patches/README.md b/reports/india_sensor_phase/patches/README.md
+new file mode 100644
+index 0000000..51d3ae9
+--- /dev/null
++++ b/reports/india_sensor_phase/patches/README.md
+@@ -0,0 +1,11 @@
++# Ordered review patches
++
++These patches describe changes **already present** in this workspace, based on `ccbf56f` (`main` at the start of this phase). Do not reapply them here. No commits/push were made for this phase. Model files and generated matrices remain local/ignored; the source, configs, tests and evidence are available for review.
++
++1. [01-audit-plan.patch](01-audit-plan.patch): audit/capabilities/India source plan and configuration.
++2. [02-sensor-data-features.patch](02-sensor-data-features.patch): source admission, normalized rows, causal features and separate labels.
++3. [03-regional-models.patch](03-regional-models.patch): buffered/site/time splits, A–D models/calibration, metrics, safe research inference and pinned runtime.
++4. [04-regression-tests.patch](04-regression-tests.patch): synthetic contract/causality/provenance/fallback/artifact tests.
++5. [05-documentation.patch](05-documentation.patch): executed report/tables, exact commands, documentation index/inventory and clarified hardware specification.
++
++Large JSON evidence files (`../preparation.json`, `../results.json`, `../model_manifest.json`, `../verification.json`) remain separate files rather than being duplicated into enormous patches. [manifest.json](manifest.json) records patch hashes and file membership. [REPORT.md](../REPORT.md) distinguishes measured results, synthetic contract tests and pending field/disaster evidence.
