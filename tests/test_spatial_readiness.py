@@ -85,6 +85,21 @@ class SpatialReadinessTests(unittest.TestCase):
         self.assertFalse(result['support_mask'][1:].any())
         self.assertTrue(np.isnan(result['feature_maps'][:, 1:]).all())
 
+    def test_nonunit_collinear_segments_keep_both_endpoints(self):
+        for length in [.5, 2., 1000.]:
+            for count in [2, 3]:
+                with self.subTest(length=length, nodes=count):
+                    points=nodes()[:count]
+                    for point,fraction in zip(points,np.linspace(0,1,count)):
+                        point['x']=point['y']=length*fraction
+                    builder=HeatmapBuilder((3,3),(0,length,0,length),prefer_kriging=False)
+                    maps,_=builder.feature_heatmaps(points)
+                    np.testing.assert_array_equal(builder._support(np.array([[p['x'],p['y']] for p in points])),np.eye(3,dtype=bool))
+                    self.assertTrue(np.isfinite(maps[:,0,0]).all())
+                    self.assertTrue(np.isfinite(maps[:,2,2]).all())
+                    np.testing.assert_allclose(maps[:,2,2],[points[-1][c] for c in RAW_SENSOR_COLUMNS])
+                    self.assertTrue(np.isnan(maps[:,0,2]).all())
+
     def test_tampered_model_is_rejected(self):
         report = json.loads((MODEL/'event_training_report.json').read_text())
         entry = report['models'][EVENT_NAMES[0]]

@@ -139,7 +139,8 @@ class HeatmapBuilder:
             from scipy.spatial import Delaunay
             supported = Delaunay(xy).find_simplex(query, tol=1e-10) >= 0
         else:
-            direction = centered[np.argmax(np.linalg.norm(centered, axis=1))]
+            # Normalize a copy: changing the centered row would shorten the segment.
+            direction = centered[np.argmax(np.linalg.norm(centered, axis=1))].copy()
             length = np.linalg.norm(direction)
             direction /= length
             positions = centered @ direction
