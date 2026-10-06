@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "INDRA independent Indian event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "reported_event_id",
+    "event_group_id",
+    "event_type",
+    "source_provider",
+    "source_dataset",
+    "source_record_id",
+    "source_version",
+    "source_uri",
+    "event_start_utc",
+    "event_end_utc",
+    "latitude",
+    "longitude",
+    "geometry_type",
+    "geometry",
+    "spatial_uncertainty_km",
+    "temporal_uncertainty_hours",
+    "severity",
+    "measurement_value",
+    "measurement_unit",
+    "threshold_definition",
+    "country",
+    "state",
+    "district",
+    "quality_flag",
+    "confidence",
+    "label_provenance",
+    "evidence_kind",
+    "provider_license",
+    "provider_rights_status",
+    "retrieved_at",
+    "source_hash",
+    "reported_date",
+    "reported_location",
+    "reported_time_text",
+    "cloudburst_evidence_verified",
+    "admission_status",
+    "admission_reasons"
+  ],
+  "properties": {
+    "event_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reported_event_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_group_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_provider": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_dataset": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_record_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_start_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_end_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latitude": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "longitude": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "geometry_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "geometry": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "spatial_uncertainty_km": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "temporal_uncertainty_hours": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "severity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "measurement_value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "measurement_unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "threshold_definition": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "country": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "state": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "district": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "quality_flag": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confidence": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "label_provenance": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence_kind": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provider_license": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provider_rights_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "retrieved_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reported_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reported_location": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reported_time_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cloudburst_evidence_verified": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "admission_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "admission_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "description": "Nullable factual fields. Runtime validator enforces UTC, geometry, finite values and recomputed admission."
+}

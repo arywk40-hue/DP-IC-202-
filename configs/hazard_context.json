@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "1e67bd9fc561f59e07ee9277da690730ec611a6a",
+  "mode": "retrospective_background_context",
+  "source_registry": "configs/hazard_sources.json",
+  "frozen_sensor_config": "configs/india_sensor_offline.json",
+  "requests": "data/registry/cds_physics_requests.json",
+  "reports": "reports/hazard_context_phase",
+  "disaster_outputs_enabled": false,
+  "seed": 42,
+  "minimum_support": {
+    "positive_events": 50,
+    "positive_sites": 10,
+    "positive_years": 2,
+    "positive_districts": 5,
+    "monitored_negative_days": 30
+  },
+  "policy_warning": "Conservative research floor, not statistical proof or deployment approval"
+}
