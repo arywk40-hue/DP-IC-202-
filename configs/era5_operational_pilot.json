@@ -1,0 +1,182 @@
+{
+  "purpose": "FUNCTIONAL_INGESTION_PILOT_NOT_MODEL_EFFICACY",
+  "selection": "Fixed geographic/type pilot; dates are not asserted independent hazard events",
+  "authentication": "Own CDS credentials and manually accepted terms required; no download attempted",
+  "status": "BLOCKED_BY_ACCESS",
+  "variables": "Existing justified five variables only; no soil/radiation/precipitation requests",
+  "requests": [
+    {
+      "dataset": "reanalysis-era5-land",
+      "request": {
+        "variable": [
+          "2m_temperature",
+          "2m_dewpoint_temperature",
+          "surface_pressure",
+          "10m_u_component_of_wind",
+          "10m_v_component_of_wind"
+        ],
+        "year": "2024",
+        "month": "08",
+        "day": [
+          "01",
+          "02",
+          "03"
+        ],
+        "time": [
+          "00:00",
+          "01:00",
+          "02:00",
+          "03:00",
+          "04:00",
+          "05:00",
+          "06:00",
+          "07:00",
+          "08:00",
+          "09:00",
+          "10:00",
+          "11:00",
+          "12:00",
+          "13:00",
+          "14:00",
+          "15:00",
+          "16:00",
+          "17:00",
+          "18:00",
+          "19:00",
+          "20:00",
+          "21:00",
+          "22:00",
+          "23:00"
+        ],
+        "area": [
+          32.0,
+          76.5,
+          31.5,
+          77.5
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "product_type": [
+          "reanalysis"
+        ]
+      },
+      "region": "himalaya_mandi"
+    },
+    {
+      "dataset": "reanalysis-era5-land",
+      "request": {
+        "variable": [
+          "2m_temperature",
+          "2m_dewpoint_temperature",
+          "surface_pressure",
+          "10m_u_component_of_wind",
+          "10m_v_component_of_wind"
+        ],
+        "year": "2024",
+        "month": "08",
+        "day": [
+          "01",
+          "02",
+          "03"
+        ],
+        "time": [
+          "00:00",
+          "01:00",
+          "02:00",
+          "03:00",
+          "04:00",
+          "05:00",
+          "06:00",
+          "07:00",
+          "08:00",
+          "09:00",
+          "10:00",
+          "11:00",
+          "12:00",
+          "13:00",
+          "14:00",
+          "15:00",
+          "16:00",
+          "17:00",
+          "18:00",
+          "19:00",
+          "20:00",
+          "21:00",
+          "22:00",
+          "23:00"
+        ],
+        "area": [
+          29.0,
+          76.8,
+          28.3,
+          77.8
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "product_type": [
+          "reanalysis"
+        ]
+      },
+      "region": "plains_delhi"
+    },
+    {
+      "dataset": "reanalysis-era5-land",
+      "request": {
+        "variable": [
+          "2m_temperature",
+          "2m_dewpoint_temperature",
+          "surface_pressure",
+          "10m_u_component_of_wind",
+          "10m_v_component_of_wind"
+        ],
+        "year": "2024",
+        "month": "08",
+        "day": [
+          "01",
+          "02",
+          "03"
+        ],
+        "time": [
+          "00:00",
+          "01:00",
+          "02:00",
+          "03:00",
+          "04:00",
+          "05:00",
+          "06:00",
+          "07:00",
+          "08:00",
+          "09:00",
+          "10:00",
+          "11:00",
+          "12:00",
+          "13:00",
+          "14:00",
+          "15:00",
+          "16:00",
+          "17:00",
+          "18:00",
+          "19:00",
+          "20:00",
+          "21:00",
+          "22:00",
+          "23:00"
+        ],
+        "area": [
+          19.4,
+          72.5,
+          18.7,
+          73.3
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "product_type": [
+          "reanalysis"
+        ]
+      },
+      "region": "coastal_mumbai"
+    }
+  ],
+  "period": "2024-08-01 through 2024-08-03, all UTC hours",
+  "background_mode": "retrospective_background_context"
+}

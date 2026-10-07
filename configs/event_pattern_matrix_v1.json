@@ -1,0 +1,174 @@
+{
+  "rule_version": "requested_matrix_v1",
+  "evidence_kind": "input_generated_pattern_not_independent_event",
+  "disaster_outputs": "DISABLED",
+  "resolution_gate": "source_resolution_seconds <= rule_resolution_seconds AND compatible exact aggregation; never interpolate coarse data",
+  "rules": [
+    {
+      "event_id": "light_moderate_rain",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 21600,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "severe_rainstorm_squall",
+      "input_channels": [
+        "temperature_c",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 900,
+      "history_seconds": 21600,
+      "undefined_parameter": "storm_drop_window_seconds",
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "snowstorm_blizzard",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 21600,
+      "undefined_parameter": "scavenging_proxy",
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "freezing_rain_sleet",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 3600,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "radiation_fog",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 0,
+      "undefined_parameter": "fog_aerosol_proxy",
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "ground_frost",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 3600,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "extreme_heatwave",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 21600,
+      "undefined_parameter": "terrain_class",
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "wildfire_evaporative_risk",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 0,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "dust_storm_haboob",
+      "input_channels": [
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 0,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "smoke_plume",
+      "input_channels": [
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 0,
+      "undefined_parameter": null,
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "smog_inversion_trap",
+      "input_channels": [
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 21600,
+      "undefined_parameter": "pressure_baseline_hpa",
+      "expected_outcome": "unknown"
+    },
+    {
+      "event_id": "cold_frontal_passage",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "wind_speed_mps"
+      ],
+      "rule_resolution_seconds": 3600,
+      "history_seconds": 3600,
+      "undefined_parameter": "cold_front_rh_delta_pct",
+      "expected_outcome": "unknown"
+    }
+  ],
+  "decisions": {
+    "storm": "Pre-drop \u0394P window unspecified; explicit parameter required; 15min jump/drop need genuine 15min-or-finer history",
+    "snow": "Scavenging is not directly measured; an explicitly chosen PM-decline proxy is required",
+    "fog": "Aerosol swelling undefined; optional PM threshold is only an explicit proxy, not observed swelling/fog",
+    "heat": "Plains/hills category must be supplied, not inferred from an arbitrary altitude cutoff; HI sustained over full 6h",
+    "inversion": "Local baseline unspecified; caller must provide documented baseline; six-hour strict monotonic PM rise",
+    "cold_front": "Sharp RH change unspecified; explicit percentage-point threshold required",
+    "active_lists": "Only formula-used channels required; extra T in smoke/inversion active lists is not a formula condition",
+    "pressure": "Station pressure at one fixed sensor elevation; relocation invalidates tendencies; sea-level/unknown reference rejected"
+  }
+}

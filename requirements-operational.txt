@@ -1,0 +1,4 @@
+# Optional map/contract runtime. Python 3.13 reader tested locally; CI covers 3.11 compatibility.
+rasterio==1.4.4; python_version < "3.12"
+rasterio==1.5.2; python_version >= "3.12"
+jsonschema==4.26.0

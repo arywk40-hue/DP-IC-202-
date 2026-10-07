@@ -1,0 +1,197 @@
+{
+  "observation": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "INDRA canonical observation v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "node_id",
+      "timestamp_utc",
+      "available_at_utc",
+      "latitude",
+      "longitude",
+      "elevation_m",
+      "elevation_datum",
+      "channel",
+      "raw_value",
+      "raw_unit",
+      "value",
+      "unit",
+      "quality_flag",
+      "quality_flags",
+      "source",
+      "authenticated",
+      "ingestion_version",
+      "model_version",
+      "sensor_model",
+      "pressure_reference",
+      "sample_interval_seconds"
+    ],
+    "properties": {
+      "schema_version": {
+        "type": "string"
+      },
+      "node_id": {
+        "type": "string"
+      },
+      "timestamp_utc": {
+        "type": "string"
+      },
+      "available_at_utc": {
+        "type": "string"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "elevation_m": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "elevation_datum": {
+        "type": "string"
+      },
+      "channel": {
+        "type": "string",
+        "enum": [
+          "temperature_c",
+          "relative_humidity_pct",
+          "pressure_hpa",
+          "pm25_ug_m3",
+          "pm10_ug_m3",
+          "wind_speed_mps"
+        ]
+      },
+      "raw_value": {
+        "type": [
+          "number",
+          "string",
+          "null"
+        ]
+      },
+      "raw_unit": {
+        "type": "string"
+      },
+      "value": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "unit": {
+        "type": "string"
+      },
+      "quality_flag": {
+        "type": "string"
+      },
+      "quality_flags": {
+        "type": "array"
+      },
+      "source": {
+        "type": "string"
+      },
+      "authenticated": {
+        "type": "boolean"
+      },
+      "ingestion_version": {
+        "type": "string"
+      },
+      "model_version": {
+        "type": "string"
+      },
+      "sensor_model": {
+        "type": "string"
+      },
+      "pressure_reference": {
+        "type": "string"
+      },
+      "sample_interval_seconds": {
+        "type": "integer"
+      }
+    }
+  },
+  "prediction": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "INDRA canonical prediction v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "grid_id",
+      "valid_time_utc",
+      "channel",
+      "unit",
+      "estimate",
+      "lower",
+      "upper",
+      "uncertainty_available",
+      "uncertainty_type",
+      "model_version",
+      "feature_sources",
+      "status_flag"
+    ],
+    "properties": {
+      "schema_version": {
+        "type": "string"
+      },
+      "grid_id": {
+        "type": "string"
+      },
+      "valid_time_utc": {
+        "type": "string"
+      },
+      "channel": {
+        "type": "string",
+        "enum": [
+          "temperature_c",
+          "relative_humidity_pct",
+          "pressure_hpa",
+          "pm25_ug_m3",
+          "pm10_ug_m3",
+          "wind_speed_mps"
+        ]
+      },
+      "unit": {
+        "type": "string"
+      },
+      "estimate": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "lower": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "upper": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "uncertainty_available": {
+        "type": "boolean"
+      },
+      "uncertainty_type": {
+        "type": "string"
+      },
+      "model_version": {
+        "type": "string"
+      },
+      "feature_sources": {
+        "type": "array"
+      },
+      "status_flag": {
+        "type": "string"
+      }
+    }
+  }
+}
