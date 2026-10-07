@@ -1,0 +1,11 @@
+# Operational demo and engineering backlog plan — 6 October 2026
+
+**Confidential: do not publish before IP review.** Start from checked main `e46331d`; preserve all existing training reports, sensor-only inference, China isolation and ESP32 export claims. New modules/fixtures/interfaces are additive. No real hazard fit or uncertainty claim without evidence.
+
+1. Add versioned long-form observation/prediction/map contracts with units, UTC, raw values, source/QC/authentication provenance, model identity and null uncertainty.
+2. Build an offline read-only GPS/channel map using the existing physics/residual spatial serving path. Two-node corridors and 3–5-node hulls remain authoritative; show observed versus estimated, terrain, support, age, QC/auth and checked-band availability. Use existing cached SRTM only, or explicitly synthetic/absent terrain. Verify the browser UI and numerical interface.
+3. Version the requested 12-condition experimental matrix alongside legacy rules. Evaluate a shared causal history, required channels only, inclusive boundaries and native resolution. Correct the pasted gate: source cadence must be no coarser than the requested window and compatible with aggregation. Undefined clauses stay unevaluable, not guessed. No disaster claims.
+4. Prepare a small three-region, short-window ERA5 pilot with only the justified five variables, preserve original grid provenance and add paired continuous-weather diagnostics. No authenticated download without credentials/accepted terms; no pilot used as a full train/test benchmark.
+5. Add explicit NWIC governance/PM/wind-support records and keep unresolved sources quarantined. Independent monitoring is required for hard negatives; outages alone are unknown, not negative labels. Encoder rotation cannot supply wind azimuth.
+6. Add per-node authenticated ingestion, replay/clock/schema/health checks, bounded raw retention and driver adapters/parsers/retry harnesses. Physical pin assignment, calibration, clock/power/runtime/field tests remain unvalidated.
+7. Run all tests, configured lint/static checks, numerical/browser/CLI checks and repository audit. Commit small separate phases and verify the actual remote CI before reporting completion. Real labels/background availability gates remain explicit.
