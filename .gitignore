@@ -89,3 +89,7 @@ esp32/ml_integration/include/build_identity.h
 
 # Independent-event research raw exports, normalized rows and working fits.
 /data/hazard_context/
+
+# Operational private stores, generated map bundles and owner device configuration.
+/data/operational/
+/esp32/operational_node/include/device_config.h
