@@ -9,7 +9,7 @@ import pandas as pd
 from ml.datasets.registry import digest
 from ml.hazard_context.acquire import audit,download
 from ml.hazard_context.era5 import normalize_files,verify_requests
-from ml.hazard_context.events import read_events,schema
+from ml.hazard_context.events import DEFAULT_TRAINING_TARGETS,TARGETS,read_events,schema
 from ml.hazard_context.matching import match
 from ml.hazard_context.output import new_file
 
@@ -27,6 +27,9 @@ def main():
     a=sub.add_parser('schema');a.add_argument('--output',default='configs/hazard_event_schema.json')
     for name in ['normalize-events','match','train-hazards']:
         a=sub.add_parser(name);a.add_argument('--events',required=True);a.add_argument('--sources',default='configs/hazard_sources.json');a.add_argument('--output',required=True);a.add_argument('--restricted',action='store_true')
+        if name=='train-hazards':
+            a.add_argument('--targets',nargs='+',choices=sorted(TARGETS),default=list(DEFAULT_TRAINING_TARGETS),
+                           help='Independent event heads to evaluate for research training; admission checks still apply')
         if name!='normalize-events':
             a.add_argument('--matching-config');a.add_argument('--stations',required=True);a.add_argument('--observations',required=True);a.add_argument('--monitoring',required=True);a.add_argument('--config',default='configs/india_sensor_offline.json')
     a=sub.add_parser('prepare-era5');a.add_argument('--input',nargs='+',required=True);a.add_argument('--stations',required=True);a.add_argument('--metadata',required=True);a.add_argument('--output',required=True)
@@ -67,7 +70,7 @@ def main():
             else:
                 from ml.india_sensor.config import load
                 from ml.hazard_context.train import run
-                result=run(events,sources,stations,observations,monitoring,load(a.config),a.output,['extreme_rainfall','cloudburst','flash_flood','landslide','wildfire','storm'],restricted=a.restricted,matching_cfg=json.loads(Path(a.matching_config).read_text()) if a.matching_config else None)
+                result=run(events,sources,stations,observations,monitoring,load(a.config),a.output,list(dict.fromkeys(a.targets)),restricted=a.restricted,matching_cfg=json.loads(Path(a.matching_config).read_text()) if a.matching_config else None)
     elif a.command=='prepare-era5':
         _,result=normalize_files(a.input,pd.read_csv(a.stations),json.loads(Path(a.metadata).read_text()),a.output)
     elif a.command=='compare':

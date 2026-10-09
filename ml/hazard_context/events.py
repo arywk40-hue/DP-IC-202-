@@ -7,7 +7,9 @@ from pathlib import Path
 import pandas as pd
 
 TARGETS = {'extreme_rainfall', 'heavy_rainfall', 'cloudburst', 'flood', 'flash_flood',
-           'landslide', 'wildfire', 'storm', 'thermal_anomaly', 'heatwave', 'cold_wave'}
+           'landslide', 'wildfire', 'storm', 'snowstorm', 'thermal_anomaly', 'heatwave', 'cold_wave'}
+DEFAULT_TRAINING_TARGETS = ('extreme_rainfall', 'cloudburst', 'flash_flood',
+                            'landslide', 'wildfire', 'storm', 'snowstorm')
 STATUSES = {'candidate', 'research_only', 'admitted_for_training', 'rejected'}
 FIELDS = ['event_id','reported_event_id','event_group_id','event_type','source_provider','source_dataset','source_record_id',
           'source_version','source_uri','event_start_utc','event_end_utc','latitude','longitude',
@@ -133,6 +135,8 @@ def admit(record, source, restricted=False, allow_fixture=False):
         r['evidence_kind']!='observed_gauge' or r['measurement_unit']!='mm/h' or
         r['measurement_value'] is None or r['measurement_value']<100):
         reasons.append('CLOUDBURST_LOCAL_GAUGE_EVIDENCE_REQUIRED')
+    if r['event_type']=='snowstorm' and r['evidence_kind']!='confirmed_occurrence':
+        reasons.append('SNOWSTORM_CONFIRMED_OCCURRENCE_REQUIRED')
     status='admitted_for_training' if not reasons and source.get('status')=='admitted_for_training' else 'research_only'
     if source.get('status')=='rejected':status='rejected'
     elif source.get('status')=='candidate':status='candidate'

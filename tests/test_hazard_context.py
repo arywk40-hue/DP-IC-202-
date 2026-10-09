@@ -42,6 +42,20 @@ def monitor():
 
 
 class EventContractTests(unittest.TestCase):
+    def test_snowstorm_requires_independent_confirmation(self):
+        r={**event(), 'event_type':'snowstorm', 'cloudburst_evidence_verified':None}
+        s={**source(), 'targets':['snowstorm']}
+        blocked=admit(r,s,allow_fixture=True)
+        self.assertIn('SNOWSTORM_CONFIRMED_OCCURRENCE_REQUIRED',blocked['admission_reasons'])
+        confirmed=admit({**r,'evidence_kind':'confirmed_occurrence',
+                        'measurement_value':None,'measurement_unit':None,
+                        'threshold_definition':'Synthetic independently confirmed snowstorm fixture'},
+                       s,allow_fixture=True)
+        self.assertEqual(confirmed['admission_status'],'admitted_for_training')
+        # The unit-only override must never admit synthetic evidence in normal use.
+        self.assertNotEqual(admit(confirmed,s)['admission_status'],'admitted_for_training')
+        self.assertFalse(training_gate([],pd.DataFrame(),'snowstorm')['can_fit_research'])
+
     def test_unknowns_are_null_and_identity_deterministic(self):
         record=dict(source_provider='IMD',source_dataset='paper',source_record_id='row1',country='IN',event_type='cloudburst')
         a,b=normalize(record),normalize(record)

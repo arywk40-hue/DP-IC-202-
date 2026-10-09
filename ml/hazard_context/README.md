@@ -30,6 +30,12 @@ Here `python` means the isolated environment interpreter. Hazard fitting must re
 
 ## Formal schema and admission
 
+`train-hazards --targets cloudburst flash_flood landslide snowstorm` selects
+the requested Himalayan research heads. The default target list also includes
+snowstorm. All targets still require independent admission and held-out support;
+snowstorm specifically requires confirmed occurrence, not a cold/humidity or
+rainfall proxy. See [integration scope](../../docs/HIMALAYAN_EVENT_SCOPE.md).
+
 `configs/hazard_event_schema.json` and `events.FIELDS` define nullable factual attributes: stable report/event/group IDs and original reported event IDs, provider/dataset/version/record/hash/retrieval provenance, UTC interval, coordinates or GeoJSON Point/Polygon/MultiPolygon, location/time uncertainty, original date/location/time text, definition/measurement/unit, country/state/district, quality/confidence and rights. Unknown location/time/severity stays null. Country/type and source identity must be explicitly known for an Indian record; unsupported or malformed raw rows quarantine. Dates without verified UTC interpretation remain original text, never guessed midnight. No centroid or severity is invented.
 
 Statuses: `candidate` means source discovery, `research_only` means incomplete or qualified evidence, `admitted_for_training` means independent definition/time/location/uncertainty/QC/provenance and reviewed rights pass; `rejected` means incompatible source/label. Source review must additionally confirm physical event identity (`event_identity_reviewed=true`) and supply a nonempty adjudicated group ID. Proximity clustering alone cannot admit an event. These are evidence reviews, not automatic proof of truth. Source-level review is in `configs/hazard_sources.json`. Cloudburst additionally requires specifically verified local gauge evidence and its intensity/definition; RH, pressure, ERA5 or satellite rain cannot satisfy that check. Satellite thermal detections can only be qualified thermal-anomaly targets, never automatically wildfire. Restricted records require `--restricted`, and fitted artifacts go to a separate `restricted/` view; clean fits use `clean/`.

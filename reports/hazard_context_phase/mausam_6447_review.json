@@ -1,0 +1,54 @@
+{
+  "source_dataset": "mausam_6447_manali2023",
+  "article_uri": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/6447",
+  "pdf_uri": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/download/6447/5765/29952",
+  "review_date": "2026-10-08",
+  "pdf_pages": 6,
+  "event_focus_date": "2023-07-09",
+  "reported_area": "Manali / Beas Valley, Himachal Pradesh",
+  "rainfall_site": "Bahang (Manali)",
+  "reported_rainfall_provider": "DGRE, DRDO",
+  "short_duration_rainfall": {
+    "total_mm": 100.6,
+    "duration_hours": 3,
+    "reported_period": "Night of 8\u20139 July 2023",
+    "exact_start_utc": null,
+    "exact_end_utc": null,
+    "source_pdf_page": 3,
+    "verifies_one_hour_cloudburst": false
+  },
+  "daily_rainfall": {
+    "published_daily_windows": 6,
+    "interval_hours": 24,
+    "window_boundary_local": "17:30 Asia/Kolkata",
+    "source_pdf_page": 4,
+    "examples_mm": {
+      "8\u20139 July 2023": 133.0,
+      "9\u201310 July 2023": 129.8
+    }
+  },
+  "historical_table": {
+    "reported_incident_rows": 12,
+    "cloudburst_named_rows": 6,
+    "flood_only_named_rows": 5,
+    "rockfall_named_rows": 1,
+    "source_pdf_page": 4,
+    "independently_admitted_events": 0
+  },
+  "six_channel_time_series_available": false,
+  "verified_monitoring_negatives_available": false,
+  "raw_dataset_downloaded": false,
+  "full_pdf_archived_locally": false,
+  "raw_source_sha256": null,
+  "training_labels_created": 0,
+  "models_trained": 0,
+  "status": "CANDIDATE_CASE_STUDY_NOT_TRAINING_DATA",
+  "next_request_provider": "DGRE / IMD Shimla",
+  "request_fields": [
+    "Station coordinates/elevation and instrument metadata",
+    "Native hourly/subhourly weather and rainfall records before/during/after July 2023 episode",
+    "Explicit timestamps, sampling/accumulation windows and quality flags",
+    "Colocated PM2.5/PM10 only if genuinely measured; do not synthesize missing inputs",
+    "Verified event and monitored non-event records with time/location uncertainty"
+  ]
+}

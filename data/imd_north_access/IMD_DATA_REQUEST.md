@@ -1,5 +1,11 @@
 # Draft IMD historical observation request — not sent
 
+For the current Himalayan event study, use the expanded
+[IMD/Himachal request package](../../docs/reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md),
+checked on 8 October 2026. It adds rainfall/event evidence, staged availability
+and cost enquiries, HPSDMA/NWIC requests and product-specific publication/IP
+questions. This older specification is retained as historical source context.
+
 Purpose: academic evaluation and training of an ESP32-S3 environmental forecasting
 model using six measured channels. Research location: Mandi, Himachal Pradesh;
 initial evaluation scope: northern India. Please confirm data-use, research
