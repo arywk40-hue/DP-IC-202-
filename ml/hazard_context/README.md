@@ -30,6 +30,13 @@ Here `python` means the isolated environment interpreter. Hazard fitting must re
 
 ## Formal schema and admission
 
+For the explicit next-six-hour onset experiment, use `warning-labels` or
+`train-hazards --label-mode next_h_hours` with
+`configs/himalayan_warning_v1.json`. The [warning protocol](../../docs/HIMALAYAN_WARNING_PROTOCOL.md)
+documents complete six-channel history, full monitoring windows, uncertainty,
+episode metrics and the validation alert budget. `exact_future_window` remains
+the historical default; neither mode currently has admitted real hazard data.
+
 ### Public landslide candidate acquisition
 
 ```sh

@@ -16,6 +16,7 @@ addresses; approval and the final enrolment/order route remain with the provider
 | IMD station weather/rainfall | `data.service@imd.gov.in` | `awslabpune@gmail.com`, `rameshchand66@imd.gov.in`, supervisor | IMD letter and Annexes A/B |
 | HPSDMA event logs | `sdma-hp@nic.in` | Supervisor | Section 2 request |
 | NWIC rainfall export/metadata | `helpdesk-nwic@gov.in` | Supervisor | Section 3 request and source dataset URLs |
+| HPSPCB Mandi PM archive availability | `pcbromandi@gmail.com` | Supervisor | Section 4 request |
 
 The [current IMD portal contact listing](https://dsp.imdpune.gov.in/data_request_form_auto.php)
 lists the observation-data and AWS/ARG addresses above.
@@ -26,6 +27,10 @@ centre mailbox is `metcentresml@gmail.com` if local routing is needed.
 lists the state authority address; [NWIC's portal](https://nwdp.nwic.gov.in/)
 lists its helpdesk address. Start with an inventory/availability and quotation
 enquiry. No email has been sent by the assistant.
+
+The [HPSPCB regional-office directory](https://hppcb.nic.in/regionaloffice.html),
+checked 9 October 2026, lists the Mandi office at Gutkar and its mailbox above.
+This contact listing does not prove the existence of an hourly particulate archive.
 
 The [IMD user-category page](https://dsp.imdpune.gov.in/home_categories.php),
 checked 9 October 2026, lists a 100% data-charge waiver for eligible students up
@@ -156,7 +161,10 @@ and the source of any rainfall intensity measurement.
 
 Please identify separately whether an incident's cloudburst classification was
 gauge-verified, inferred from damage or obtained from media. Please describe the
-reporting/monitoring coverage and provide the conditions for research use and
+reporting/monitoring coverage, outages, log-completeness conventions, related
+incident IDs, record-creation timestamps and revision history. In particular,
+please confirm whether the logs continuously cover specified dates/areas and
+whether absence of an entry has any verified non-event meaning. Provide the conditions for research use and
 publication. District incident counts alone do not provide hourly training labels.
 
 [Requester and supervisor details/signatures as above]
@@ -180,7 +188,33 @@ derivative/publication and redistribution permissions independently.
 
 [Requester and supervisor details/signatures as above]
 
-## 4. IIT Mandi internal enquiry
+## 4. HPSPCB Mandi particulate archive enquiry
+
+**Subject:** Hourly PM2.5/PM10 archive availability for IIT Mandi research
+
+Dear Sir/Madam,
+
+For the academic project described above, please advise whether PM2.5 and PM10
+were measured at any Mandi-district NAMP/CAAQMS or other station during
+July–August 2023 and July–August 2024, with 2018–2025 availability listed
+separately. We specifically need hourly or finer measurements if available;
+please state the actual cadence rather than converting daily/periodic samples
+to hourly values.
+
+Please provide the station inventory, coordinates, elevation, measurement
+units, averaging intervals, original timestamps/timezone, QC flags, outage
+periods and instrument/relocation history. Please identify any colocated
+temperature/humidity/station-pressure/wind or rain instrumentation. If no
+suitable historical particulate archive exists, a written availability
+statement would help define our prospective sensor-data collection.
+
+Please advise the access route, academic-use terms and requirements for
+publication, derived models and possible patent-related research. We will not
+assume readings from distant stations represent the same physical site.
+
+[Requester and supervisor details/signatures as above]
+
+## 5. IIT Mandi internal enquiry
 
 Ask the supervisor or relevant campus lab for weather-station inventory,
 calibrated T/RH/station pressure/wind records, rain-gauge records, colocated PM

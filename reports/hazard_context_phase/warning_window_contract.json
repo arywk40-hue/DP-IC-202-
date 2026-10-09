@@ -1,0 +1,43 @@
+{
+  "evidence": "SYNTHETIC_CONTRACT_ONLY",
+  "label_mode": "next_h_hours",
+  "protocol_sha256": "83273910e5a36ff80483bdd01a4aac233d09e061124b023c709f00d1ed0e5903",
+  "unit_override_pre_onset_examples": 6,
+  "normal_cli_positive_rows": 0,
+  "normal_cli_unknown_rows": 30,
+  "normal_training_status": "DISABLED",
+  "normal_training_can_fit": false,
+  "normal_training_blockers": [
+    "positive_events",
+    "positive_sites",
+    "positive_years",
+    "positive_districts",
+    "monitored_negative_days",
+    "SYNTHETIC_NOT_INDEPENDENT",
+    "NO_ADMITTED_INDEPENDENT_SOURCE",
+    "NEGATIVES_UNAVAILABLE"
+  ],
+  "real_admitted_event_labels": 0,
+  "hazard_models_fitted": 0,
+  "model_weights_created": 0,
+  "input_output_provenance": {
+    "protocol_sha256": "83273910e5a36ff80483bdd01a4aac233d09e061124b023c709f00d1ed0e5903",
+    "events_sha256": "0900eae837e483a7e0ac196a159aabe386c4e460957b59006d7d825769bd7760",
+    "sources_sha256": "aab68c364aab98f5cd621224d4d34f1bb20d8843f6077f853880ea8c24afd2d2",
+    "stations_sha256": "35b6731270b94ffd491d13b7d7a825c064715d2cd6bab8d6b2987fea9a436b3f",
+    "observations_sha256": "d7324e4d57e90ac0c4ee416eeec63c2584d0361491a72ccf4af9f020cf3378ab",
+    "monitoring_sha256": "1c81f84f9b5ecbd27cc74916a20d9f28ac828b6bc8426205082ef7e4cee610a1",
+    "config_sha256": "2fe87c829c5f66cffacb2eb3118920c7dcc264bbda46e0809428f096e8663a35",
+    "output_sha256": "aaeabb6ca45285d4c2bb2f48188e69d562a76cfb4777a3ef6a68f06da1141be7"
+  },
+  "example_issue_times_utc": [
+    "2024-07-10 12:00:00+00:00",
+    "2024-07-10 13:00:00+00:00",
+    "2024-07-10 14:00:00+00:00",
+    "2024-07-10 15:00:00+00:00",
+    "2024-07-10 16:00:00+00:00",
+    "2024-07-10 17:00:00+00:00"
+  ],
+  "local_fixture_root": "results/warning_contract_20261009",
+  "deployment_approved": false
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "indra_warning_window_v1",
+  "experiment_id": "himalayan_six_channel_next6h_v1",
+  "label_mode": "next_h_hours",
+  "horizon_hours": 6,
+  "history_minutes": 1440,
+  "cadence_seconds": 3600,
+  "sensor_columns": ["temperature_c", "relative_humidity_pct", "pressure_hpa", "pm25_ug_m3", "pm10_ug_m3", "wind_speed_mps"],
+  "targets": ["cloudburst", "flash_flood", "landslide", "snowstorm"],
+  "definitions": {
+    "cloudburst": "Reviewed local gauge evidence of at least 100 mm in a verified one-hour interval, with independent event identity",
+    "flash_flood": "Independently confirmed flash-flood episode onset under a reviewed authority definition and identified catchment/location",
+    "landslide": "Independently confirmed slope-failure episode onset, with reviewed time/location and physical identity",
+    "snowstorm": "Independently confirmed snowstorm occurrence under a reviewed definition; snowfall or cold/humid readings alone are insufficient"
+  },
+  "matching": {
+    "spatial_radius_km": 20.0,
+    "maximum_spatial_uncertainty_km": 5.0,
+    "maximum_temporal_uncertainty_hours": 1.0,
+    "post_event_hours": 12.0,
+    "event_separation_hours": 24.0,
+    "max_pairs": 1000000
+  },
+  "positive_rule": "Earliest reviewed target-episode onset and its full uncertainty interval lie in (issue_time, issue_time + H]",
+  "negative_rule": "Whole future window covered by compatible admitted monitoring, with no plausible event/candidate or ongoing/post-event context",
+  "history_rule": "Six measured channels at every exact hourly endpoint from t-24h through t; delayed/off-reference/missing measurements remain unavailable",
+  "monitoring_geometry_rule": "Monitoring must cover the declared association radius; a point rain gauge does not establish absence across a 20-km area",
+  "split_policy": "Whole event groups and physical sites; chronological history/target buffers; distinct train, validation, calibration and final-test roles",
+  "split_dates": "Must be frozen in the sensor configuration after coverage audit and before model selection; existing 2024 cutoffs are only a benchmark profile",
+  "model_comparison": ["no-alert/prevalence baseline", "six-channel causal-feature XGBoost", "four-weather-channel ablation on identical eligible rows", "small causal temporal model only after data admission"],
+  "alert_selection": {
+    "max_false_alert_episodes_per_100_monitored_site_days": 1.0,
+    "minimum_validation_positive_event_groups": 3,
+    "minimum_validation_negative_site_days": 10.0,
+    "rule": "Validation event recall within budget, then lower false-alert rate and higher cutoff; no test retuning"
+  },
+  "metrics": ["event recall", "missed-event fraction", "false alert episodes per 100 eligible monitored negative site-days", "first-alert lead-time interval", "average precision", "Brier score"],
+  "deployment_approved": false,
+  "policy_warning": "Experimental protocol, not proven sensor sufficiency or a guaranteed six-hour lead time; zero real models fitted by this configuration"
+}

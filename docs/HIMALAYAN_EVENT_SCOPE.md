@@ -26,6 +26,10 @@ exact future observed windows. A different warning window needs an explicit
 target-definition change and fresh evaluation; no six-hour cloudburst lead-time
 claim is currently established.
 
+The subsequent [warning protocol v1](HIMALAYAN_WARNING_PROTOCOL.md) now implements
+an explicit `next_h_hours` experiment alongside this preserved exact-window
+benchmark. It still needs admitted real data and fresh model/evaluation results.
+
 ## Sources found for the cloudburst work
 
 - [IMD Shimla July 2024 incident report](https://mausam.imd.gov.in/shimla/mcdata/disasterous_event.pdf)

@@ -18,6 +18,10 @@ trainer still associates exact future observed windows. A warning-window model
 requires an explicit target change and fresh evaluation. No six-hour achieved
 cloudburst lead time is claimed.
 
+A subsequent [warning protocol update](../HIMALAYAN_WARNING_PROTOCOL.md) adds
+explicit next-H-hour onset labels and keeps this exact-window benchmark. Real
+data admission, training and measured warning skill remain pending.
+
 ## Acquired evidence and remaining gaps
 
 | Target | Available now | Remaining before model fitting |
