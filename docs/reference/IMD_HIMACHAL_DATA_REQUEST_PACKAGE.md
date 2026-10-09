@@ -27,6 +27,14 @@ lists the state authority address; [NWIC's portal](https://nwdp.nwic.gov.in/)
 lists its helpdesk address. Start with an inventory/availability and quotation
 enquiry. No email has been sent by the assistant.
 
+The [IMD user-category page](https://dsp.imdpune.gov.in/home_categories.php),
+checked 9 October 2026, lists a 100% data-charge waiver for eligible students up
+to postgraduate level. It requires an identity card and an institutional
+undertaking signed and stamped by the authorized signatory. Ask IMD to confirm
+the appropriate category and availability for this request; the waiver does
+not guarantee that the requested observations exist or that later commercial
+use is authorized.
+
 ## 1. IMD letter
 
 **To:** National Data Centre / appropriate AWS–ARG data authority, IMD

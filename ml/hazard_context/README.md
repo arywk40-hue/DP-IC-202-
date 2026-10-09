@@ -30,6 +30,25 @@ Here `python` means the isolated environment interpreter. Hazard fitting must re
 
 ## Formal schema and admission
 
+### Public landslide candidate acquisition
+
+```sh
+python3 -m ml.hazard_context.coolr \
+  --output results/field_sources/coolr-north-new-snapshot \
+  --audit-output reports/hazard_context_phase/coolr-north-new-audit.json
+```
+
+Use fresh paths. This requests Indian reports within 29–36°N and 72–81°E,
+checks the complete returned object-ID inventory and preserves originals in
+the ignored local output. `candidates.jsonl` is compatible with event
+normalization but remains candidate-only. Serialized dates/approximate clocks
+are not assumed to be UTC occurrence times. No monitored negatives, fitted
+weights or validation labels are produced. The committed summary contains
+counts and provenance rather than raw report text.
+
+The [9 October acquisition review](../../docs/reference/HIMALAYAN_EVIDENCE_PROGRESS.md)
+records the current six-channel gaps and the response to the supplied scope audit.
+
 `train-hazards --targets cloudburst flash_flood landslide snowstorm` selects
 the requested Himalayan research heads. The default target list also includes
 snowstorm. All targets still require independent admission and held-out support;

@@ -1,0 +1,64 @@
+{
+  "source": {
+    "source_provider": "GSI",
+    "source_dataset": "gsi_kullu_2023_report",
+    "description": "Official preliminary landslide assessment; two manually reviewed occurrence leads",
+    "source_uri": "https://bhusanket.gsi.gov.in/Output/LS_Incidence_Report/2023/Landslides%20in%20Kullu%20District,%20Himachal%20Pradesh%20on%20July%20and%20August%202023.pdf",
+    "targets": [
+      "landslide"
+    ],
+    "country": "IN",
+    "status": "candidate",
+    "independent_observed": true,
+    "event_identity_reviewed": false,
+    "rights_status": "unresolved",
+    "provider_license": null,
+    "rights_evidence_uri": null,
+    "reviewed_by": null,
+    "version": "October 2023 report, field season 2023-24",
+    "retrieved_at": "2026-10-09T06:41:06.856367+00:00",
+    "source_hash": "21b4842a86494676226d95cf6ccd534e0c9ac22a02ca72b0f92d29ed554e43cf",
+    "used_for_training": false,
+    "used_for_validation": false,
+    "used_for_labels": false,
+    "reviewed_date": "2026-10-09",
+    "reason": "Official field assessment with occurrence leads; precise clocks, uncertainty, group identity, rights and monitoring negatives still require review"
+  },
+  "source_receipt": {
+    "source_uri": "https://bhusanket.gsi.gov.in/Output/LS_Incidence_Report/2023/Landslides%20in%20Kullu%20District,%20Himachal%20Pradesh%20on%20July%20and%20August%202023.pdf",
+    "sha256": "21b4842a86494676226d95cf6ccd534e0c9ac22a02ca72b0f92d29ed554e43cf",
+    "bytes": 4843678,
+    "raw_path": "results/field_sources/gsi_kullu_2023/report.pdf"
+  },
+  "pdf_pages": 111,
+  "reviewed_occurrence_leads": [
+    {
+      "record_id": "pdf_p40_nigloodhar",
+      "name": "Nigloodhar",
+      "lat": 31.471155555555555,
+      "lon": 77.36711944444444,
+      "date": "2023-08-14",
+      "time": "early morning",
+      "pdf_page_1based": 40
+    },
+    {
+      "record_id": "pdf_p42_gungi_reactivation",
+      "name": "Gungi reactivation",
+      "lat": 31.403555555555553,
+      "lon": 77.4475,
+      "date": "2023-07-18",
+      "time": "3.30pm; timezone not explicitly verified",
+      "pdf_page_1based": 42
+    }
+  ],
+  "candidate_records": 2,
+  "verified_utc_intervals": 0,
+  "monitored_negative_records": 0,
+  "admitted_training_labels": 0,
+  "synchronized_six_channel_matches": 0,
+  "model_weights_created": 0,
+  "coordinates_policy": "Published degree/minute/second coordinates converted arithmetically; positional uncertainty remains null",
+  "time_policy": "Reported date/time preserved; no midnight or timezone/onset invented",
+  "raw_output": "results/field_sources/gsi_kullu_2023",
+  "status": "CANDIDATE_CASE_REVIEW_ONLY"
+}

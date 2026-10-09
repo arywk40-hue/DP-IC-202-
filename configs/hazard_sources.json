@@ -339,6 +339,56 @@
       "reason": "128 historical event records, 1846\u20132020; no 2023/2024 overlap, UTC/event identity/uncertainty unverified, no monitored negatives or aligned six-channel weather; flood records are not cloudburst labels",
       "reviewed_date": "2026-10-08",
       "event_identity_reviewed": false
+    },
+    {
+      "source_provider": "NASA COOLR",
+      "source_dataset": "nasa_coolr_north_india_reports",
+      "source_uri": "https://gis.earthdata.nasa.gov/portal/rest/services/Landslides/COOLR_Reports_Points/FeatureServer/0",
+      "country": "IN",
+      "targets": [
+        "landslide"
+      ],
+      "status": "candidate",
+      "independent_observed": false,
+      "event_identity_reviewed": false,
+      "rights_status": "unresolved",
+      "provider_license": null,
+      "rights_evidence_uri": null,
+      "reviewed_by": null,
+      "version": "live FeatureServer snapshot",
+      "retrieved_at": "2026-10-09T06:37:18.187237+00:00",
+      "source_hash": "5f0607f9bef53e49752e8c624f450ae2a38bb54b16e8a9441e7e90f60ee03953",
+      "used_for_training": false,
+      "used_for_validation": false,
+      "used_for_labels": false,
+      "reason": "Reported events require original-source, clock, identity, uncertainty and rights review; no monitored negatives",
+      "description": "Public NASA reports in a northern Indian bounding box; acquired as candidates only",
+      "reviewed_date": "2026-10-09"
+    },
+    {
+      "source_provider": "GSI",
+      "source_dataset": "gsi_kullu_2023_report",
+      "description": "Official preliminary landslide assessment; two manually reviewed occurrence leads",
+      "source_uri": "https://bhusanket.gsi.gov.in/Output/LS_Incidence_Report/2023/Landslides%20in%20Kullu%20District,%20Himachal%20Pradesh%20on%20July%20and%20August%202023.pdf",
+      "targets": [
+        "landslide"
+      ],
+      "country": "IN",
+      "status": "candidate",
+      "independent_observed": true,
+      "event_identity_reviewed": false,
+      "rights_status": "unresolved",
+      "provider_license": null,
+      "rights_evidence_uri": null,
+      "reviewed_by": null,
+      "version": "October 2023 report, field season 2023-24",
+      "retrieved_at": "2026-10-09T06:41:06.856367+00:00",
+      "source_hash": "21b4842a86494676226d95cf6ccd534e0c9ac22a02ca72b0f92d29ed554e43cf",
+      "used_for_training": false,
+      "used_for_validation": false,
+      "used_for_labels": false,
+      "reviewed_date": "2026-10-09",
+      "reason": "Official field assessment with occurrence leads; precise clocks, uncertainty, group identity, rights and monitoring negatives still require review"
     }
   ]
 }
