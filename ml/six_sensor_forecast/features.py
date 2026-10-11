@@ -92,13 +92,16 @@ def split_masks(
     validation_start: str,
     test_start: str,
     holdout_locations: list[str],
+    temporal_only: bool = False,
 ) -> dict[str, np.ndarray]:
     validation = pd.Timestamp(validation_start)
     test = pd.Timestamp(test_start)
     if validation.tzinfo is None or test.tzinfo is None or validation >= test:
         raise ValueError("Use ordered timezone-aware validation/test cutoffs")
     locations = set(frame.location_id.unique())
-    if not holdout_locations or not set(holdout_locations) < locations:
+    if temporal_only and holdout_locations:
+        raise ValueError('Temporal-only experiments cannot declare geographic holdouts')
+    if not temporal_only and (not holdout_locations or not set(holdout_locations) < locations):
         raise ValueError(
             "Holdout stations must be a nonempty proper subset of locations"
         )
@@ -109,8 +112,9 @@ def split_masks(
         "train": ~geographic & (label_time < validation),
         "validation": ~geographic & (t >= validation) & (label_time < test),
         "future_test": ~geographic & (t >= test),
-        "geographic_test": geographic & (t >= test),
     }
+    if not temporal_only:
+        masks['geographic_test'] = geographic & (t >= test)
     if any(not mask.any() for mask in masks.values()):
         raise ValueError("Empty split; check dates and locations")
     return {name: mask.to_numpy() for name, mask in masks.items()}

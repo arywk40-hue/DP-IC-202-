@@ -13,7 +13,7 @@ import sklearn
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS, sensor_profile
+from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, sensor_profile
 from ml.six_sensor_forecast.data import SCHEMA, sha256
 from ml.six_sensor_forecast.features import build_features, future_targets, split_masks
 
@@ -54,11 +54,14 @@ def train(
     threads: int = 4,
     seed: int = 42,
     sensors: list[str] | None = None,
+    temporal_only: bool = False,
+    require_complete_history: bool = False,
 ) -> dict:
     if rounds < 1 or threads < 1:
         raise ValueError("rounds and threads must be positive")
     sensors = sensor_profile(sensors)
-    holdout_locations = holdout_locations or ["Changping", "Dingling", "Huairou"]
+    if holdout_locations is None:
+        holdout_locations = [] if temporal_only else ["Changping", "Dingling", "Huairou"]
     source = json.loads((data / "dataset_manifest.json").read_text())
     if source.get("schema_version") != SCHEMA:
         raise ValueError("Wrong source schema")
@@ -72,11 +75,13 @@ def train(
     features = features[teacher_features]
     labels = future_targets(frame, horizon_hours)
     partitions = split_masks(
-        frame, horizon_hours, validation_start, test_start, holdout_locations
+        frame, horizon_hours, validation_start, test_start, holdout_locations, temporal_only
     )
     # All six current readings required for the compact student's contract.
     # Temporal teacher histories may contain NaN, handled by XGBoost branches.
     current_ok = np.isfinite(frame[sensors].to_numpy()).all(axis=1)
+    if require_complete_history:
+        current_ok &= np.isfinite(features.to_numpy()).all(axis=1)
     output.mkdir(parents=True, exist_ok=True)
     (output / "teacher").mkdir(exist_ok=True)
     (output / "esp32_student").mkdir(exist_ok=True)
@@ -95,10 +100,13 @@ def train(
             "teacher_features": features.columns.tolist(),
             "student_features": sensors,
             "station_time_gps_as_features": False,
+            "require_complete_training_history": require_complete_history,
             "missing_policy": "no imputation; require six finite current inputs and observed future target; teacher allows missing historical features",
         },
         "split": {
-            "strategy": "fixed future blocks and complete held-out stations; label horizon purged at boundaries",
+            "strategy": "fixed future blocks; label horizon purged; no geographic validation" if temporal_only else "fixed future blocks and complete held-out stations; label horizon purged at boundaries",
+            "temporal_only": temporal_only,
+            "geographic_validation": "NOT_EVALUATED" if temporal_only else "HELD_OUT_STATIONS",
             "validation_start": validation_start,
             "test_start": test_start,
             "holdout_locations": holdout_locations,
@@ -291,6 +299,8 @@ def main() -> None:
     parser.add_argument("--rounds", type=int, default=250)
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--sensors", nargs="+", default=None)
+    parser.add_argument('--temporal-only',action='store_true',help='Chronological single-location experiment; no geographic-validation claim')
+    parser.add_argument('--require-complete-history',action='store_true')
     args = parser.parse_args()
     train(
         args.data,
@@ -298,10 +308,12 @@ def main() -> None:
         args.horizon_hours,
         args.validation_start,
         args.test_start,
-        args.holdout_locations,
+        [] if args.temporal_only else args.holdout_locations,
         args.rounds,
         args.threads,
         sensors=args.sensors,
+        temporal_only=args.temporal_only,
+        require_complete_history=args.require_complete_history,
     )
 
 

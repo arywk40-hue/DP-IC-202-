@@ -1,5 +1,11 @@
 # Himachal four-weather-input file audit
 
+This is the retained source audit. Its later [model diagnostic](MODEL_DIAGNOSTIC.md)
+uses a historical foreign comparison and is not the current India-only result.
+Use the [Mandi six-channel modeled benchmark](../../reports/india_mandi_phase/REPORT.md)
+for the current numerical experiment. Measured PM, verified pressure and clock
+semantics are still missing here.
+
 Audited the four user-provided CSV files in `himachal 4-sensor dataset/`.
 Run `python3 data/himachal_weather_audit/audit.py` from the repository root to reproduce
 `audit_report.json`. Original files are unchanged. No model was trained or tested.

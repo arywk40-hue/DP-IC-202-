@@ -1,25 +1,29 @@
-# INDRA weather mesh
+# INDRA — six-channel India/Mandi forecasting research
 
-**Confidential: do not publish before IP review.**
+[Project overview](docs/PROJECT_OVERVIEW.md) · [Architecture](docs/ARCHITECTURE.md) ·
+[Model catalog](configs/model_catalog.json) · [Documentation index](docs/README.md)
 
-Start with [the project overview](docs/PROJECT_OVERVIEW.md): what was built, measured results and losses, requirements, limitations and next steps.
+Six channels: **temperature, humidity, station pressure, PM2.5, PM10 and wind**,
+plus causal history/derived features. Himalayan targets: cloudburst, flash flood,
+landslide and snowstorm, pending independent event and monitoring evidence.
 
-[Documentation index](docs/README.md) · [Full inventory and move manifest](DOC_INVENTORY.md).
-
-This is a research prototype for IIT Mandi. Two-node field reliability and ESP32 spatial inference remain unverified.
-
-Latest software work: [offline completion report](reports/offline_phase/REPORT.md), [full metrics and losses](reports/offline_phase/RESULTS.md), [commands](ml/india_sensor/README.md). Disaster outputs are disabled; physical deployment is unvalidated.
+The latest numerical benchmark fits/test weights using **Mandi, India API model
+grids**, with no Chinese data or weights. It contains 24,336 hourly modeled
+positions and a 954-pair temporal holdout. This is not measured Mandi field
+accuracy. The API pressure is grid-surface pressure; independent hazard heads
+remain unfitted.
 
 ```sh
-python3 -m pytest -q
-# Synthetic same-node forecast from committed India weights; no raw data needed.
-python3 -m ml.india_sensor.predict --config configs/india_sensor_offline.json --model-dir ml/models/india_sensor_v1 --input esp32/india_sensor/example_hourly.csv
-# Existing synthetic two-node current-weather interpolation.
-python3 -m reports.practicum.demo --input reports/two_node_phase/examples/readings.json
-# New ESP32 research smoke firmware: compile only.
-pio run -d esp32/india_sensor
+python3 scripts/test_india_mandi.py --offline   # local cached data; no retraining
+python3 scripts/test_india_mandi.py --prepare   # download ignored source on a fresh checkout
 ```
 
-Python dependencies: `requirements-india-sensor.txt` for the measured India run; older spatial/CI environments retain their own pins.
+[Executed six-channel results](reports/india_mandi_phase/REPORT.md) ·
+[Source provenance](data/india_mandi_modeled/README.md) ·
+[Himalayan warning protocol](docs/HIMALAYAN_WARNING_PROTOCOL.md) ·
+[Data request package](docs/reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md)
 
-Current additive phase: [independent Indian hazard-label audit](docs/hazard_label_audit.md), [ERA5 context report](reports/hazard_context_phase/REPORT.md), [commands](ml/hazard_context/README.md). Sensor-only results stay frozen; real ERA5 access and admissible event/negative data remain missing. Disaster outputs stay disabled.
+Raw datasets stay local. Country/source/model roles are explicit in the catalog.
+Historical Beijing comparisons and spatial experiments are retained separately
+for reproducibility. No physical ESP32 field validation or operational disaster
+warning is claimed.

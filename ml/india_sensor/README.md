@@ -1,5 +1,13 @@
 # India sensor-only research pipeline
 
+Current role: earlier Indian **weather-measurement threshold** research. The
+primary complete six-channel numerical benchmark is now
+[`ml/india_mandi`](../india_mandi/README.md), using explicitly modeled Mandi data.
+This NOAA profile has PM inactive and must not be presented as a fully learned
+six-channel model. Independent Himalayan onset labels/training gates are now
+implemented in [`ml/hazard_context`](../hazard_context/README.md); real event
+training is still blocked. The spatial experiment remains a separate reference.
+
 **Confidential: do not publish before IP review.** [Audit/capabilities](../../docs/INDIA_SENSOR_RISK_PLAN.md), [phase evidence](../../reports/india_sensor_phase/REPORT.md), [main guide](../../docs/PROJECT_OVERVIEW.md).
 
 This adds India-only **same-node six-hour forecasts of measured thresholds**. It does not replace the working current-weather two-node spatial ensemble, predict disasters, or interpolate risk between nodes. All cloudburst/flood/landslide/fire/storm heads remain unavailable. Their eventual probabilities require independent labeled data and validation.

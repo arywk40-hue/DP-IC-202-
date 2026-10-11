@@ -1,0 +1,61 @@
+{
+  "scope": "Full tracked/unignored inventory; static Python/JSON parse and active documentation links; active forecast/hazard/firmware pathways reviewed",
+  "review_date": "2026-10-11",
+  "base_commit": "3af7371",
+  "file_count": 803,
+  "top_level_counts": {
+    ".github": 1,
+    ".gitignore": 1,
+    "DOC_INVENTORY.md": 1,
+    "INVENTION_NOTES.md": 1,
+    "README.md": 1,
+    "configs": 11,
+    "data": 322,
+    "docs": 34,
+    "esp32": 28,
+    "ml": 209,
+    "reports": 159,
+    "requirements-geospatial.txt": 1,
+    "requirements-hazard-context.txt": 1,
+    "requirements-india-sensor.txt": 1,
+    "requirements-operational.txt": 1,
+    "requirements-physics.txt": 1,
+    "requirements.txt": 1,
+    "scripts": 3,
+    "tests": 26
+  },
+  "python_modules": 145,
+  "json_documents": 407,
+  "markdown_documents": 83,
+  "parse_errors": [],
+  "active_link_errors": [],
+  "active_documentation": [
+    "README.md",
+    "docs/README.md",
+    "docs/PROJECT_OVERVIEW.md",
+    "docs/ARCHITECTURE.md",
+    "ml/india_mandi/README.md",
+    "ml/models/india_mandi_modeled_6h_v1/README.md",
+    "ml/generated/india_mandi_modeled_6h_v1/README.md",
+    "scripts/README.md"
+  ],
+  "preserved_model_paths": [
+    "mandi_modeled_6h_v1",
+    "india_cpcb_5sensor_6h",
+    "india_cpcb_pm_6h",
+    "india_sensor_v1",
+    "uci_beijing_6h",
+    "uci_beijing_event_rules_6sensor"
+  ],
+  "primary_test_entrypoint": "scripts/test_india_mandi.py",
+  "primary_source_country": "IN",
+  "primary_source_kind": "MODELED_GRID_RETROSPECTIVE",
+  "legacy_reference_policy": "Retained with country/source roles; no China weights in primary accuracy run",
+  "remaining": [
+    "No observed complete six-channel Mandi corpus",
+    "No admitted real Himalayan event/negative corpus",
+    "No physical execution of new Mandi model",
+    "Sensor wiring/wind calibration/UTC and runtime bridge pending"
+  ],
+  "raw_dataset_policy": "Ignored, local only"
+}

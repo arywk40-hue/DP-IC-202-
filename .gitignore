@@ -93,3 +93,8 @@ esp32/ml_integration/include/build_identity.h
 # Operational private stores, generated map bundles and owner device configuration.
 /data/operational/
 /esp32/operational_node/include/device_config.h
+
+# Mandi API model-grid source snapshots and working data; retain manifest/README only.
+/data/india_mandi_modeled/raw/
+/data/india_mandi_modeled/observations.csv
+/data/india_mandi_modeled/context.csv

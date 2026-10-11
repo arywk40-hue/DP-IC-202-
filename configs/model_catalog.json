@@ -1,0 +1,97 @@
+{
+  "primary_scope": "Six channels plus causal features; India/Mandi numeric research and separate Himalayan hazard labels",
+  "profiles": {
+    "mandi_modeled_6h_v1": {
+      "path": "ml/models/india_mandi_modeled_6h_v1",
+      "country": "IN",
+      "source": "Open-Meteo / ECMWF IFS / CAMS global, requested Mandi location",
+      "evidence": "MODELED_GRID_RETROSPECTIVE",
+      "role": "active numerical research benchmark",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "outputs": "six numerical +6h values",
+      "field_validated": false,
+      "hazard_model": false
+    },
+    "india_cpcb_5sensor_6h": {
+      "path": "ml/models/india_cpcb_5sensor_6h",
+      "country": "IN",
+      "source": "Indian CPCB secondary compilation, seven-station subset",
+      "evidence": "SECONDARY_OBSERVATIONS_WITH_TIME_ASSUMPTION",
+      "role": "reduced-input research comparison",
+      "input_channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "outputs": "five numerical +6h values; no pressure",
+      "field_validated": false,
+      "hazard_model": false
+    },
+    "india_cpcb_pm_6h": {
+      "path": "ml/models/india_cpcb_pm_6h",
+      "country": "IN",
+      "source": "Same Indian CPCB secondary subset",
+      "evidence": "SECONDARY_OBSERVATIONS_WITH_TIME_ASSUMPTION",
+      "role": "particulate-only comparison",
+      "input_channels": [
+        "pm25_ug_m3",
+        "pm10_ug_m3"
+      ],
+      "outputs": "PM2.5/PM10 +6h",
+      "field_validated": false,
+      "hazard_model": false
+    },
+    "india_sensor_v1": {
+      "path": "ml/models/india_sensor_v1",
+      "country": "IN",
+      "source": "Indian NOAA archive; source observations do not include PM",
+      "evidence": "OBSERVED_WEATHER_MEASUREMENT_THRESHOLDS",
+      "role": "future-measurement threshold research",
+      "available_learned_measurements": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "wind_speed_mps"
+      ],
+      "outputs": [
+        "wind>=10m/s at +6h",
+        "T>=35C at +6h",
+        "RH>=95% at +6h"
+      ],
+      "field_validated": false,
+      "hazard_model": false
+    },
+    "uci_beijing_6h": {
+      "path": "ml/models/uci_beijing_6h",
+      "country": "CN",
+      "source": "UCI Beijing multi-site 2013-2017",
+      "role": "historical foreign reference; excluded from current India/Mandi evaluation",
+      "field_validated": false,
+      "hazard_model": false
+    },
+    "uci_beijing_event_rules_6sensor": {
+      "path": "ml/models/uci_beijing_event_rules_6sensor",
+      "country": "CN",
+      "source": "Beijing observations with input-derived rule labels",
+      "role": "historical current-rule reference; not independent hazard truth",
+      "field_validated": false,
+      "hazard_model": false
+    }
+  },
+  "independent_himalayan_targets": {
+    "cloudburst": "NO_ADMITTED_TRAINING_CORPUS",
+    "flash_flood": "NO_ADMITTED_TRAINING_CORPUS",
+    "landslide": "NO_ADMITTED_TRAINING_CORPUS",
+    "snowstorm": "NO_ADMITTED_TRAINING_CORPUS"
+  },
+  "raw_data_policy": "Local and ignored; retain provenance and research model artifacts"
+}

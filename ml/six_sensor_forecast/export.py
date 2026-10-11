@@ -53,6 +53,8 @@ def export(
         f"#define INDRA_FORECAST_OUTPUTS {count}",
         f"#define INDRA_FORECAST_HORIZON_HOURS {int(report['horizon_hours'])}",
         '#define INDRA_FORECAST_STATUS "OFFLINE_RESEARCH_ONLY"',
+        '#define INDRA_FORECAST_COUNTRY '+json.dumps(report.get('model_country',report['source'].get('country_code','UNSPECIFIED'))),
+        '#define INDRA_FORECAST_EVIDENCE '+json.dumps(report.get('evidence_kind','RESEARCH_SOURCE_PROFILE')),
         "/* Input/output order: " + ", ".join(sensors) + " */",
     ]
     total_nodes = 0
@@ -233,6 +235,9 @@ int main(void) {
         shutil.copyfile(header, output / header.name)
     metadata = {
         "schema_version": SCHEMA,
+        'model_country':report.get('model_country',report['source'].get('country_code','UNSPECIFIED')),
+        'evidence_kind':report.get('evidence_kind','RESEARCH_SOURCE_PROFILE'),
+        'hardware_execution_verified':False,
         "status": "OFFLINE_RESEARCH_ONLY",
         "input_features": sensors,
         "horizon_hours": report["horizon_hours"],

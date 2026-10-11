@@ -181,3 +181,22 @@ Additive references; frozen earlier evidence was neither overwritten nor moved.
 | [reports/hazard_context_phase/PLAN.md](reports/hazard_context_phase/PLAN.md) | PLAN phase reference | 2026-10-06T13:43:49+05:30 | current |
 | [reports/hazard_context_phase/REPORT.md](reports/hazard_context_phase/REPORT.md) | REPORT phase reference | 2026-10-06T14:06:07+05:30 | current |
 | [reports/hazard_context_phase/ERA5_ACCESS.md](reports/hazard_context_phase/ERA5_ACCESS.md) | ERA5 ACCESS phase reference | 2026-10-06T14:04:14+05:30 | current |
+
+## Six-channel India/Mandi update — 11 October 2026
+
+The original October 3 inventory above remains historical. The active project
+overview now covers six channels, Mandi modeled-data numerical testing and
+independent Himalayan hazards. Its earlier spatial content is retained at
+`docs/SPATIAL_RESEARCH_OVERVIEW.md`; model/data paths were preserved.
+
+New active entry points are `scripts/test_india_mandi.py`, `ml/india_mandi/`,
+`configs/model_catalog.json`, `configs/mandi_modeled_forecast_v1.json`,
+`ml/models/india_mandi_modeled_6h_v1/`,
+`ml/generated/india_mandi_modeled_6h_v1/`, and
+`reports/india_mandi_phase/`. `docs/ARCHITECTURE.md` documents actual code.
+The comprehensive earlier `scripts/test_models.py` remains a historical audit.
+Raw Mandi API/CSV files are local and ignored; manifests/models/results are kept.
+
+Current static review and file counts: `reports/india_mandi_phase/repository_review.json`.
+The review distinguishes modeled, secondary observational, synthetic and
+independently observed event evidence rather than combining their scores.

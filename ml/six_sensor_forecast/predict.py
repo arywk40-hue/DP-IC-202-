@@ -33,14 +33,15 @@ def predict(
     )
     if features.columns.tolist() != report["architecture"][f"{kind}_features"]:
         raise ValueError("Model feature schema mismatch")
-    valid = np.isfinite(frame[sensors].to_numpy()).all(axis=1)
+    current_valid = np.isfinite(frame[sensors].to_numpy()).all(axis=1)
+    valid = current_valid.copy()
+    if kind=='teacher' and report['architecture'].get('require_complete_training_history'):
+        valid &= np.isfinite(features.to_numpy()).all(axis=1)
     result = frame[["location_id", "timestamp_utc"]].copy()
     result["forecast_timestamp_utc"] = frame.timestamp_utc + pd.Timedelta(
         hours=report["horizon_hours"]
     )
-    result["status"] = np.where(
-        valid, "OFFLINE_RESEARCH_ONLY", "MISSING_CURRENT_SENSOR"
-    )
+    result["status"] = np.where(valid,"OFFLINE_RESEARCH_ONLY",np.where(current_valid,"INCOMPLETE_HISTORY","MISSING_CURRENT_SENSOR"))
     matrix = (
         xgb.DMatrix(features.loc[valid], feature_names=features.columns.tolist())
         if valid.any()
