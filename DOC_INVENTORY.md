@@ -200,3 +200,11 @@ Raw Mandi API/CSV files are local and ignored; manifests/models/results are kept
 Current static review and file counts: `reports/india_mandi_phase/repository_review.json`.
 The review distinguishes modeled, secondary observational, synthetic and
 independently observed event evidence rather than combining their scores.
+
+## Low-cost source review — 12 October 2026
+
+`docs/reference/FREE_DATA_SOURCE_REVIEW.md` records checked public access
+documentation, a concrete OpenAQ Baddi station lead, the unverified Mandi PM
+coverage, and the difference between satellite/model context and independent
+local event evidence. Linked from `docs/README.md`. No new raw data or model
+weights were added in this documentation update.
