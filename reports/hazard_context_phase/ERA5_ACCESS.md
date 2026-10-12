@@ -1,5 +1,10 @@
 # ERA5-Land access — real download blocked
 
+Historical frozen ERA5-Land request status below. The newer, separately scoped
+[2016–2025 Mandi ERA5 single-level download](../../docs/reference/COPERNICUS_MANDI_DOWNLOAD.md)
+includes rainfall/snowfall context and monthly batching; it does not overwrite
+these Land requests or establish real hazard labels.
+
 **ERA5_DOWNLOAD_STATUS = BLOCKED_BY_ACCESS.** No personal credential file/environment key or real NetCDF files were found. Credentials were not read; no authenticated API request was made.
 
 1. Register/login to your own [CDS account and API setup](https://cds.climate.copernicus.eu/how-to-api). Manually accept the ERA5-Land product terms. Keep your personal token in your own `.cdsapirc` outside the repository; do not paste it into reports or Git.

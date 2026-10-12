@@ -208,3 +208,12 @@ documentation, a concrete OpenAQ Baddi station lead, the unverified Mandi PM
 coverage, and the difference between satellite/model context and independent
 local event evidence. Linked from `docs/README.md`. No new raw data or model
 weights were added in this documentation update.
+
+## Copernicus ten-year acquisition setup — 12 October 2026
+
+`docs/reference/COPERNICUS_MANDI_DOWNLOAD.md` records the 2016–2025 selections,
+portal size limit, setup and other access needs. Source-only monthly requests
+are in `data/registry/copernicus_mandi_context_requests_v1.json`; the downloader
+is `scripts/download_copernicus_mandi.py`. Existing ERA5-Land/physics requests
+and model weights are unchanged. Raw data stays ignored. Browser selection and
+licence acceptance do not mean a request or download completed.

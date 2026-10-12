@@ -11,6 +11,7 @@ independently labeled Himalayan hazards. Start with the current guides:
 - [Cloudburst/storm event prediction update](HIMALAYAN_EVENT_PREDICTIONS.md): expanded v2 protocol and observed storm-report evidence.
 - [Evidence acquisition review](reference/HIMALAYAN_EVIDENCE_PROGRESS.md) and [institutional request package](reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md).
 - [Low-cost source check](reference/FREE_DATA_SOURCE_REVIEW.md): verified access routes, Baddi PM lead and remaining Mandi coverage gap.
+- [Ten-year Copernicus download](reference/COPERNICUS_MANDI_DOWNLOAD.md): 2016–2025 selections, request-size batching and private API setup.
 - [Data rights](DATA_LICENSES.md): source-specific rules remain applicable.
 - [ESP32 integration](../esp32/ml_integration/README.md): existing legacy runtime; new Mandi model has host C parity only.
 
