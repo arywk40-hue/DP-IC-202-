@@ -4,7 +4,7 @@
 [Model catalog](configs/model_catalog.json) · [Documentation index](docs/README.md)
 
 Six channels: **temperature, humidity, station pressure, PM2.5, PM10 and wind**,
-plus causal history/derived features. Himalayan targets: cloudburst, flash flood,
+plus causal history/derived features. Himalayan targets: cloudburst, storm, flash flood,
 landslide and snowstorm, pending independent event and monitoring evidence.
 
 The latest numerical benchmark fits/test weights using **Mandi, India API model

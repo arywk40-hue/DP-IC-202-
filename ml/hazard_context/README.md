@@ -32,10 +32,14 @@ Here `python` means the isolated environment interpreter. Hazard fitting must re
 
 For the explicit next-six-hour onset experiment, use `warning-labels` or
 `train-hazards --label-mode next_h_hours` with
-`configs/himalayan_warning_v1.json`. The [warning protocol](../../docs/HIMALAYAN_WARNING_PROTOCOL.md)
+`configs/himalayan_warning_v2.json` (now including independent storm). The [warning protocol](../../docs/HIMALAYAN_WARNING_PROTOCOL.md)
 documents complete six-channel history, full monitoring windows, uncertainty,
 episode metrics and the validation alert budget. `exact_future_window` remains
 the historical default; neither mode currently has admitted real hazard data.
+
+The [event prediction update](../../docs/HIMALAYAN_EVENT_PREDICTIONS.md) defines
+the cloudburst/storm work and the observed Indian weather-report audit. V1 is
+retained unchanged; explicitly pass its path to reproduce earlier manifests.
 
 ### Public landslide candidate acquisition
 

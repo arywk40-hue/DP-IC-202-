@@ -129,6 +129,13 @@ heat/cold episodes. For each record, please include its definition, original
 date/time text and timezone, location/footprint, uncertainty, reporting and
 measurement source, revision/QC status and stable event identifier.
 
+For storms, please provide **realized thunderstorm/squall observations**,
+observation codes and definitions, onset/end/report times, measured gusts where
+available (units, sensor height and sampling interval), quality flags and
+related episode IDs. Please distinguish confirmed occurrence from forecast or
+nowcast warnings and identify observation/monitoring outages. Hourly mean wind
+alone does not provide the intended event label.
+
 For a cloudburst label, we need the underlying rain-rate or rolling one-hour
 measurement, instrument/site and exact accumulation window; a daily total or
 the event name alone cannot establish the intensity criterion. Please distinguish

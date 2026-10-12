@@ -91,7 +91,9 @@
     "cloudburst": "NO_ADMITTED_TRAINING_CORPUS",
     "flash_flood": "NO_ADMITTED_TRAINING_CORPUS",
     "landslide": "NO_ADMITTED_TRAINING_CORPUS",
-    "snowstorm": "NO_ADMITTED_TRAINING_CORPUS"
+    "snowstorm": "NO_ADMITTED_TRAINING_CORPUS",
+    "storm": "NO_ADMITTED_TRAINING_CORPUS"
   },
-  "raw_data_policy": "Local and ignored; retain provenance and research model artifacts"
+  "raw_data_policy": "Local and ignored; retain provenance and research model artifacts",
+  "active_himalayan_protocol": "configs/himalayan_warning_v2.json"
 }

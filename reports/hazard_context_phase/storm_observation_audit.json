@@ -1,0 +1,366 @@
+{
+  "source": {
+    "source_provider": "NOAA NCEI GHCNh",
+    "source_dataset": "ghcnh_himachal_weather_reports",
+    "source_uri": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+    "targets": [
+      "storm"
+    ],
+    "country": "IN",
+    "status": "candidate",
+    "independent_observed": true,
+    "event_identity_reviewed": false,
+    "rights_status": "unresolved",
+    "provider_license": null,
+    "rights_evidence_uri": null,
+    "reviewed_by": null,
+    "used_for_training": false,
+    "used_for_validation": false,
+    "used_for_labels": false,
+    "reason": "Observed present-weather report times are not adjudicated episode onsets; location/time uncertainty, monitored negatives, rights and matched PM require review"
+  },
+  "weather_code_specification": {
+    "source_uri": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-present-weather-elements.pdf",
+    "sha256": "55f9c98b473a0885a378259b563390e78308a671bbaff0ec8670f68cea1814dc",
+    "bytes": 102475
+  },
+  "code_interpretation": {
+    "MW_current": [
+      17,
+      95,
+      96,
+      97,
+      98,
+      99
+    ],
+    "MW_squall": [
+      18
+    ],
+    "MW_recent": [
+      29,
+      91,
+      92,
+      93,
+      94
+    ],
+    "AW_current": [
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96
+    ],
+    "AW_squall": [
+      18
+    ],
+    "AW_recent": [
+      26
+    ],
+    "AU": "Not decoded; code/measurement combinations require separate review"
+  },
+  "reviewed_pdf_tables": "5(a) manual MW and 5(b) automated AW; pages visually reviewed",
+  "station_years": [
+    {
+      "station": "INM00042078",
+      "station_name": "MANDI",
+      "year": 2023,
+      "raw_reports": 706,
+      "distinct_report_hours": 706,
+      "median_report_gap_hours": 15.0,
+      "reports_with_qc_accepted_storm_code": 15,
+      "distinct_storm_report_times": 15,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 14,
+        "thunderstorm_previous_hour": 1
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042078",
+      "station_name": "MANDI",
+      "year": 2024,
+      "raw_reports": 702,
+      "distinct_report_hours": 702,
+      "median_report_gap_hours": 15.0,
+      "reports_with_qc_accepted_storm_code": 11,
+      "distinct_storm_report_times": 11,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 9,
+        "thunderstorm_previous_hour": 2
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042079",
+      "station_name": "SUNDERNAGAR",
+      "year": 2023,
+      "raw_reports": 2819,
+      "distinct_report_hours": 2819,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 115,
+      "distinct_storm_report_times": 115,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 89,
+        "thunderstorm_previous_hour": 26
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042079",
+      "station_name": "SUNDERNAGAR",
+      "year": 2024,
+      "raw_reports": 2834,
+      "distinct_report_hours": 2834,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 108,
+      "distinct_storm_report_times": 108,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 95,
+        "thunderstorm_previous_hour": 13
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042081",
+      "station_name": "BHUNTAR",
+      "year": 2023,
+      "raw_reports": 1390,
+      "distinct_report_hours": 1390,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 51,
+      "distinct_storm_report_times": 51,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 42,
+        "thunderstorm_previous_hour": 9
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042081",
+      "station_name": "BHUNTAR",
+      "year": 2024,
+      "raw_reports": 1394,
+      "distinct_report_hours": 1394,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 35,
+      "distinct_storm_report_times": 35,
+      "storm_code_entry_counts": {
+        "thunderstorm_previous_hour": 4,
+        "thunderstorm_at_observation": 31
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042083",
+      "station_name": "SHIMLA",
+      "year": 2023,
+      "raw_reports": 1357,
+      "distinct_report_hours": 1357,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 59,
+      "distinct_storm_report_times": 59,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 45,
+        "thunderstorm_previous_hour": 14
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INM00042083",
+      "station_name": "SHIMLA",
+      "year": 2024,
+      "raw_reports": 1393,
+      "distinct_report_hours": 1393,
+      "median_report_gap_hours": 3.0,
+      "reports_with_qc_accepted_storm_code": 25,
+      "distinct_storm_report_times": 25,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 24,
+        "thunderstorm_previous_hour": 1
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INI0000VISM",
+      "station_name": "SHIMLA",
+      "year": 2023,
+      "raw_reports": 5404,
+      "distinct_report_hours": 3058,
+      "median_report_gap_hours": 0.5,
+      "reports_with_qc_accepted_storm_code": 114,
+      "distinct_storm_report_times": 114,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 114
+      },
+      "qc_accepted_gust_reports": 27,
+      "maximum_observed_gust_mps": 12.9,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INI0000VISM",
+      "station_name": "SHIMLA",
+      "year": 2024,
+      "raw_reports": 4670,
+      "distinct_report_hours": 2459,
+      "median_report_gap_hours": 0.5,
+      "reports_with_qc_accepted_storm_code": 51,
+      "distinct_storm_report_times": 51,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 51
+      },
+      "qc_accepted_gust_reports": 147,
+      "maximum_observed_gust_mps": 10.3,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INI0000VIGG",
+      "station_name": "KANGRA",
+      "year": 2023,
+      "raw_reports": 5404,
+      "distinct_report_hours": 2954,
+      "median_report_gap_hours": 0.5,
+      "reports_with_qc_accepted_storm_code": 196,
+      "distinct_storm_report_times": 196,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 196
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    },
+    {
+      "station": "INI0000VIGG",
+      "station_name": "KANGRA",
+      "year": 2024,
+      "raw_reports": 5708,
+      "distinct_report_hours": 3066,
+      "median_report_gap_hours": 0.5,
+      "reports_with_qc_accepted_storm_code": 89,
+      "distinct_storm_report_times": 89,
+      "storm_code_entry_counts": {
+        "thunderstorm_at_observation": 89
+      },
+      "qc_accepted_gust_reports": 0,
+      "maximum_observed_gust_mps": null,
+      "complete_six_channel_matches": 0,
+      "monitored_non_event_windows": 0,
+      "pm_columns_present": [],
+      "status": "OBSERVED_REPORT_CANDIDATES_ONLY"
+    }
+  ],
+  "source_files": [
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042078_2023.parquet",
+      "sha256": "32b7ed19f13820aab984ceeae1b19239063df6db9278bafd29710e22168da382"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042078_2024.parquet",
+      "sha256": "104c62ff73e793e6fee04dfd05ac7e20caa3fc34ac965b7f0b887493c847a3dd"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042079_2023.parquet",
+      "sha256": "1a72d443de8ee73e855762cb1783e00f51e95688e063aa612e263090ce3d1c43"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042079_2024.parquet",
+      "sha256": "f858ccc24ca1c43b1a1d5dcdd85a22bceac14caeb5c1f3429a17f16d35d64269"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042081_2023.parquet",
+      "sha256": "2c84d23f8424ad06f2c11562d51b5cc4df5e08f2a0444ad37834e5a503912ced"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042081_2024.parquet",
+      "sha256": "12f4a16faf9743fb0dca70d08bd7e273d9cbd9153a695f1f267eb984a582e05f"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042083_2023.parquet",
+      "sha256": "f2c5b907333eb4a037c2a9525abeb0972f4b1d59a5aee56507a1d613dcef8f40"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INM00042083_2024.parquet",
+      "sha256": "f436f6fc66a573d1c55c0961c2a37abe3d3f649d6211005c4fd769ee31437d0c"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INI0000VISM_2023.parquet",
+      "sha256": "141f575d03a44d165861e23e8dc8acb8dcfbee81571e18cdca4e5f3de9be46f4"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INI0000VISM_2024.parquet",
+      "sha256": "2606d515b2ffb6d609eee4ffd60acde7d431c756c32e37be4605da8073cc4a4e"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INI0000VIGG_2023.parquet",
+      "sha256": "98f7e89938a42081d1c7dcfdb1aebc3ce67929445f0804656a14103700ac7842"
+    },
+    {
+      "file": "data/noaa_ghcnh/raw/GHCNh_INI0000VIGG_2024.parquet",
+      "sha256": "d7716eb70334066853252d5ad5cb9810082bac0d5b62cd0a223b7bac01e099a9"
+    }
+  ],
+  "unique_candidate_report_times": 869,
+  "independent_admitted_episodes": 0,
+  "verified_event_onsets": 0,
+  "monitored_non_event_windows": 0,
+  "matched_complete_six_channel_windows": 0,
+  "models_trained": 0,
+  "china_data_used": false,
+  "raw_candidates_path": "/Users/ariyanbhakat/Desktop/Dp-indra-six-sensor/results/storm_evidence/ghcnh_hp_2023_24/candidates.jsonl",
+  "blockers": [
+    "Report time differs from onset; adjudicate independent episodes",
+    "No matched measured PM2.5/PM10 in this archive",
+    "Sparse weather reports do not prove continuous event-free coverage",
+    "Source rights, definitions and uncertainty review still needed"
+  ]
+}

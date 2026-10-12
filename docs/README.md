@@ -8,6 +8,7 @@ independently labeled Himalayan hazards. Start with the current guides:
 - [Model catalog](../configs/model_catalog.json): countries, datasets, channels and target roles.
 - [India/Mandi results](../reports/india_mandi_phase/REPORT.md) and [commands](../ml/india_mandi/README.md): new six-channel modeled-data numerical test.
 - [Himalayan warning protocol](HIMALAYAN_WARNING_PROTOCOL.md): next-six-hour onset labels, evidence gates and metrics.
+- [Cloudburst/storm event prediction update](HIMALAYAN_EVENT_PREDICTIONS.md): expanded v2 protocol and observed storm-report evidence.
 - [Evidence acquisition review](reference/HIMALAYAN_EVIDENCE_PROGRESS.md) and [institutional request package](reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md).
 - [Data rights](DATA_LICENSES.md): source-specific rules remain applicable.
 - [ESP32 integration](../esp32/ml_integration/README.md): existing legacy runtime; new Mandi model has host C parity only.

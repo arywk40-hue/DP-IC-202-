@@ -1,5 +1,10 @@
 # Himalayan six-channel warning experiment — protocol v1
 
+Historical v1 is preserved. The current CLI default is the expanded
+[v2 event protocol](HIMALAYAN_EVENT_PREDICTIONS.md), adding independent storm.
+Use `--warning-protocol configs/himalayan_warning_v1.json` for the exact v1
+commands/manifests below. No real fitted hazard head exists in either version.
+
 Implemented 9 October 2026. This is a tested labeling/training interface and a
 research protocol. It has fitted no real hazard model and enables no deployed
 warning. Institutional observations, admitted events and monitoring remain the

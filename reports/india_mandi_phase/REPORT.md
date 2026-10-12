@@ -1,6 +1,6 @@
 # India-only six-channel Mandi forecast test
 
-Executed 2026-10-11T19:11:17.019467+00:00. No Chinese data or weights were used.
+Executed 2026-10-12T04:41:19.247909+00:00. No Chinese data or weights were used.
 
 **Evidence:** retrospective Open-Meteo/ECMWF/CAMS modeled values at Mandi; not measured six-channel field accuracy.
 The weather and air variables use different grids. Global CAMS is approximately 45 km and 3-hourly underneath the hourly API output.
@@ -84,6 +84,7 @@ The original Indian secondary source assumes local timezone and excludes unverif
 | Target | Status |
 | --- | --- |
 | cloudburst | NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS |
+| storm | NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS |
 | flash_flood | NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS |
 | landslide | NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS |
 | snowstorm | NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS |
@@ -1121,6 +1122,12 @@ No independent-site test is available for the Mandi grid. Some September/October
   },
   "hazard_results": {
     "cloudburst": {
+      "status": "NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS",
+      "trained": false,
+      "accuracy": null,
+      "reason": "Modeled weather/rain cannot supply independent Himalayan occurrence labels or monitored negatives"
+    },
+    "storm": {
       "status": "NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS",
       "trained": false,
       "accuracy": null,

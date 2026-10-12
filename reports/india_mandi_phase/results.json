@@ -2304,6 +2304,12 @@
       "accuracy": null,
       "reason": "Modeled weather/rain cannot supply independent Himalayan occurrence labels or monitored negatives"
     },
+    "storm": {
+      "status": "NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS",
+      "trained": false,
+      "accuracy": null,
+      "reason": "Modeled weather/rain cannot supply independent Himalayan occurrence labels or monitored negatives"
+    },
     "flash_flood": {
       "status": "NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS",
       "trained": false,
@@ -3260,7 +3266,7 @@
     }
   ],
   "original_indian_holdout_replayed": true,
-  "executed_at_utc": "2026-10-11T19:11:17.019467+00:00",
+  "executed_at_utc": "2026-10-12T04:41:19.247909+00:00",
   "student_c_parity": {
     "schema_version": "indra_hourly_forecast_v1",
     "model_country": "IN",

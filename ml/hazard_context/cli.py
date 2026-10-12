@@ -30,7 +30,7 @@ def main():
         if name in ['train-hazards','warning-labels']:
             a.add_argument('--targets',nargs='+',choices=sorted(TARGETS),
                            help='Independent event heads to evaluate for research training; admission checks still apply')
-            a.add_argument('--warning-protocol',default='configs/himalayan_warning_v1.json')
+            a.add_argument('--warning-protocol',default='configs/himalayan_warning_v2.json')
         if name=='train-hazards':
             a.add_argument('--label-mode',choices=['exact_future_window','next_h_hours'],default='exact_future_window')
         if name!='normalize-events':

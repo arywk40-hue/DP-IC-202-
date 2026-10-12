@@ -389,6 +389,28 @@
       "used_for_labels": false,
       "reviewed_date": "2026-10-09",
       "reason": "Official field assessment with occurrence leads; precise clocks, uncertainty, group identity, rights and monitoring negatives still require review"
+    },
+    {
+      "source_provider": "NOAA NCEI GHCNh",
+      "source_dataset": "ghcnh_himachal_weather_reports",
+      "source_uri": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+      "targets": [
+        "storm"
+      ],
+      "country": "IN",
+      "status": "candidate",
+      "independent_observed": true,
+      "event_identity_reviewed": false,
+      "rights_status": "unresolved",
+      "provider_license": null,
+      "rights_evidence_uri": null,
+      "reviewed_by": null,
+      "used_for_training": false,
+      "used_for_validation": false,
+      "used_for_labels": false,
+      "reason": "Observed present-weather report times are not adjudicated episode onsets; location/time uncertainty, monitored negatives, rights and matched PM require review",
+      "reviewed_date": "2026-10-12",
+      "version": "2023/2024 station-year snapshots; manual/automated present-weather specification reviewed"
     }
   ]
 }

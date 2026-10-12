@@ -68,7 +68,7 @@ flowchart LR
 
 Actual modules are `ml/hazard_context/events.py`, `matching.py`, `warning.py`,
 `policy.py`, `train.py`, `episodes.py` and `diagnostics.py`. The explicit protocol
-is `configs/himalayan_warning_v1.json`. It supports cloudburst, flash flood,
+is `configs/himalayan_warning_v2.json`. It supports cloudburst, storm, flash flood,
 landslide and snowstorm. Rainfall/event records provide offline outcomes; they
 do not silently become a seventh runtime input.
 

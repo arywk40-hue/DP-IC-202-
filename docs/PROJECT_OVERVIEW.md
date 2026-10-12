@@ -11,7 +11,7 @@ and operational disaster warnings remain unverified.
 | Component | Inputs | Output | Evidence/status |
 | --- | --- | --- | --- |
 | Mandi numerical forecast | Six channels; compact snapshot or 24h causal history | T/RH/P/PM2.5/PM10/wind at exact +6h | Newly fitted India-location modeled-data benchmark; no China data/weights |
-| Independent Himalayan warning experiment | Same six channels/history; external records as offline labels | Cloudburst, flash-flood, landslide, snowstorm onset within next 6h | Label/training gates implemented; no admitted real training corpus or fitted head |
+| Independent Himalayan warning experiment | Same six channels/history; external records as offline labels | Cloudburst, storm, flash-flood, landslide, snowstorm onset within next 6h | Label/training gates implemented; no admitted real training corpus or fitted head |
 | Indian measurement-threshold research | Four available weather measurements plus history/site metadata; PM inactive | +6h high wind, hot temperature, near-saturated humidity | Existing NOAA India research weights; these are measurement thresholds |
 | Current-weather spatial research | Previously implemented node/query estimation | Same-time estimates between nodes | Secondary experiment retained in the spatial guide |
 
@@ -80,7 +80,7 @@ not the default India/Mandi workflow.
 | `ml/models/india_mandi_modeled_6h_v1/` | Teacher/student per-channel UBJ files, linear NPZ, reports/checksums |
 | `ml/generated/india_mandi_modeled_6h_v1/` | Separate India/Mandi compact C export and compiled-host parity |
 | `reports/india_mandi_phase/` | Current numerical test, review and verification evidence |
-| `ml/hazard_context/`, `configs/himalayan_warning_v1.json` | Independent-event next-six-hour research pipeline |
+| `ml/hazard_context/`, `configs/himalayan_warning_v2.json` | Independent-event next-six-hour research pipeline |
 | `ml/india_sensor/`, `ml/models/india_sensor_v1/` | Earlier India weather-threshold experiment |
 | `ml/models/india_cpcb_*` | Reduced-input Indian observational comparisons |
 | `ml/models/uci_beijing_*`, `ml/event_classifier/` | Historical foreign/rule references; excluded from current accuracy run |

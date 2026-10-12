@@ -120,7 +120,7 @@ def evaluate(cfg):
                 results=results,validation_selected_heads=choices,examples=examples,
                 hazard_results={t:dict(status='NOT_EVALUABLE_NO_ADMITTED_EVENT_LABELS',trained=False,accuracy=None,
                                       reason='Modeled weather/rain cannot supply independent Himalayan occurrence labels or monitored negatives')
-                                for t in ['cloudburst','flash_flood','landslide','snowstorm']},
+                                for t in ['cloudburst','storm','flash_flood','landslide','snowstorm']},
                 geographic_validation='NOT_EVALUATED_SINGLE_MANDI_GRID',field_accuracy='NOT_ESTABLISHED',deployment_approved=False,
                 test_exposure_note=cfg['test_exposure_note'])
 

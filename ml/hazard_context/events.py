@@ -137,6 +137,8 @@ def admit(record, source, restricted=False, allow_fixture=False):
         reasons.append('CLOUDBURST_LOCAL_GAUGE_EVIDENCE_REQUIRED')
     if r['event_type']=='snowstorm' and r['evidence_kind']!='confirmed_occurrence':
         reasons.append('SNOWSTORM_CONFIRMED_OCCURRENCE_REQUIRED')
+    if r['event_type']=='storm' and r['evidence_kind']!='confirmed_occurrence':
+        reasons.append('STORM_CONFIRMED_OCCURRENCE_REQUIRED')
     status='admitted_for_training' if not reasons and source.get('status')=='admitted_for_training' else 'research_only'
     if source.get('status')=='rejected':status='rejected'
     elif source.get('status')=='candidate':status='candidate'

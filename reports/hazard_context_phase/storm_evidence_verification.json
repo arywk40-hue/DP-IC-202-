@@ -1,0 +1,13 @@
+{
+  "pytest_passed": 199,
+  "subtests_passed": 14,
+  "lint": "passed",
+  "expanded_protocol": "configs/himalayan_warning_v2.json",
+  "frozen_v1_modified": false,
+  "observed_candidate_report_times": 869,
+  "mandi_candidate_report_times": 26,
+  "admitted_hazard_episodes": 0,
+  "hazard_models_trained": 0,
+  "raw_data_committed": false,
+  "forecasts_promoted_to_event_truth": false
+}
