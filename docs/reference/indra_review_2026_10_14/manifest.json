@@ -1,0 +1,30 @@
+{
+  "README.md": {
+    "sha256": "238ba82646b8956ca3d0959a7de966fbd557c89d20538ba8bd8d79b365f345e8",
+    "bytes": 1279
+  },
+  "INDRA_review.md": {
+    "sha256": "9992981ade2337ebc1fe1c9620411570cd1bd1b6db967f75f8802fcfa31eddb0",
+    "bytes": 55598
+  },
+  "Codex_prompts.md": {
+    "sha256": "f87dbe7039932ebdc29df8b3a768a9c3638f7ec685d4458548a0194fe03bfbbc",
+    "bytes": 57818
+  },
+  "planning_simulation.py": {
+    "sha256": "0722c4047ea4aa25b3a7c78d9b86000981a663d3dbc493182b27e2fd00bda739",
+    "bytes": 15744
+  },
+  "planning_results.json": {
+    "sha256": "f3f5b63d0c4c4e72204984ec5f821a99dc4611923f0ef120d85f1c615f9e7ed2",
+    "bytes": 41471
+  },
+  "export_probe.json": {
+    "sha256": "c7a30c3a3f869bbde0722c273352cb9d3ed77c5ad2dfcdb78176791f2a9724df",
+    "bytes": 2226
+  },
+  "verification_receipt.json": {
+    "sha256": "6388db72bfb0f9f56a489ddcfc2ca0d4f08bd9c0b67212cb4c90ef1733a81cbe",
+    "bytes": 546
+  }
+}

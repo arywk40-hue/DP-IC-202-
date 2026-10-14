@@ -1,0 +1,11 @@
+{
+  "schema_version": "indra_himachal_readiness_v1",
+  "software": "IN_PROGRESS",
+  "empirical_hazard_models": "NOT_READY",
+  "empirical_accuracy": "NOT_EVALUATED",
+  "board_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "public_notifications_enabled": false,
+  "teammate_integration": "PENDING_EXTERNAL_UI",
+  "evidence": "docs/plans/INDRA_HIMACHAL_PLAN.md"
+}

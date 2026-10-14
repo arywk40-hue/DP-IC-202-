@@ -95,5 +95,6 @@
     "storm": "NO_ADMITTED_TRAINING_CORPUS"
   },
   "raw_data_policy": "Local and ignored; retain provenance and research model artifacts",
-  "active_himalayan_protocol": "configs/himalayan_warning_v2.json"
+  "active_himalayan_protocol": "configs/himalayan_warning_v2.json",
+  "committed_export_verification": "configs/committed_exports_v1.json"
 }

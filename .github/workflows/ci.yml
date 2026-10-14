@@ -22,6 +22,8 @@ jobs:
         run: ruff check ml/six_sensor_forecast ml/event_classifier ml/deployment ml/datasets ml/spatial_ensemble ml/field ml/india_sensor ml/hazard_context ml/operational tests esp32/ml_integration/tools --select E9,F63,F7,F82
       - name: Run model, data contract and compiled C parity tests
         run: python -m pytest -q
+      - name: Verify committed shipping exports without source datasets
+        run: python -m ml.deployment.verify_exports --catalog configs/model_catalog.json --output reports/deployment/committed_export_verification.json --offline
 
   esp32-model:
     runs-on: ubuntu-latest

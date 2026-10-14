@@ -1,0 +1,8 @@
+# Isolated conventional-ML host runtime; compatible with the CI experiment set.
+# Keep historical training environments in their existing requirements files.
+numpy==2.3.4
+pandas==3.0.3
+scipy==1.16.3
+scikit-learn==1.7.2
+xgboost==3.1.1
+pyarrow==21.0.0

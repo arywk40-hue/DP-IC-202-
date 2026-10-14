@@ -1,0 +1,39 @@
+{
+  "phase": "A",
+  "status": "COMPLETE",
+  "baseline_commit": "6bcda6b689868682cabfd95808eeb611dcb4aed3",
+  "baseline_tests": {
+    "passed": 206,
+    "subtests_passed": 14,
+    "wall_seconds": 70.14
+  },
+  "expanded_tests": {
+    "passed": 209,
+    "subtests_passed": 124,
+    "wall_seconds": 25.16
+  },
+  "lint": "PASSED",
+  "offline_committed_exports": "reports/deployment/committed_export_verification.json",
+  "protected_files_checked": 100,
+  "protected_files_changed": [],
+  "source_dataset_downloads": false,
+  "model_training": false,
+  "board_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "empirical_accuracy": "NOT_EVALUATED",
+  "remaining_phases": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N"
+  ]
+}

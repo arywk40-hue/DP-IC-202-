@@ -1,0 +1,18 @@
+{
+  "commit": "6bcda6b689868682cabfd95808eeb611dcb4aed3",
+  "date": "2026-10-14",
+  "python": "3.12.14",
+  "tests": {
+    "passed": 206,
+    "subtests_passed": 14,
+    "warnings": 2,
+    "wall_seconds": 17.07
+  },
+  "lint": "passed",
+  "board_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "repository_mutations": false,
+  "planning_simulation_only": true,
+  "runtime_architecture": "conventional ML and deterministic rules",
+  "architecture_correction": "runtime LLM removed per user clarification; research receipts retained"
+}
