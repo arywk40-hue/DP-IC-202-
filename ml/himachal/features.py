@@ -153,6 +153,10 @@ def build_packet(records: list[dict], issue_time_utc: str, *, noise_sigma=None) 
     add("wind_increase_15min", None if change is None or not wind_calibrated else change >= config["wind_increase_15min_mps"]
         and current["wind_speed_mps"] >= config["wind_current_minimum_mps"], "boolean",
         "UNVERIFIED_WIND_CALIBRATION" if not wind_calibrated else None)
+    hourly_change = features["wind_speed_mps_delta_1h"]["value"]
+    add("wind_increase_1h_companion", None if hourly_change is None or not wind_calibrated else hourly_change >= config["wind_increase_15min_mps"]
+        and current["wind_speed_mps"] >= config["wind_current_minimum_mps"], "boolean",
+        "UNVERIFIED_WIND_CALIBRATION" if not wind_calibrated else None)
     add("calendar_jjas_proxy", issue.tz_convert("Asia/Kolkata").month in (6, 7, 8, 9), "boolean", "CONTEXT_NOT_EVENT_EVIDENCE")
     availability = {}
     for name, seconds in (("event_hourly_seven_snapshots", 21600), ("teacher_24h", 86400)):

@@ -1,0 +1,62 @@
+{
+  "schema_version": "indra_himachal_rules_v1",
+  "feature_version": "indra_himachal_features_v1",
+  "scope": "CURRENT_CONDITION_RESEARCH_RISK_ONLY",
+  "rain": {
+    "rh_min_pct": 85,
+    "pressure_delta_6h_max_hpa": -1.5,
+    "temperature_min_exclusive_c": 3,
+    "washout_feature": "washout_hourly"
+  },
+  "snowstorm": {
+    "temperature_max_c": 1,
+    "rh_min_pct": 85,
+    "wind_min_mps": 9,
+    "pressure_delta_6h_max_hpa": -3,
+    "washout_feature": "washout_hourly"
+  },
+  "rainstorm_sequence": {
+    "pre_drop_window_seconds": 21600,
+    "pre_drop_ending_seconds_before_issue": 900,
+    "pre_drop_max_hpa": -3.5,
+    "subsequent_pressure_rebound_min_hpa": 1.5,
+    "subsequent_temperature_delta_max_c": -3,
+    "temperature_min_exclusive_c": 3,
+    "wind_min_mps": 10,
+    "washout_feature": "washout_15min_native",
+    "role": "SEPARATE_AUXILIARY_SEQUENCE_NOT_AN_INDEPENDENT_STORM_DETECTOR"
+  },
+  "cloudburst_native": {
+    "profile": "cloudburst_risk_native_15min_v1",
+    "criteria": [
+      {"feature": "relative_humidity_pct", "operator": ">=", "threshold": 90, "weight": 0.2, "dynamic": true},
+      {"feature": "pressure_hpa_delta_15min", "operator": "<=", "threshold": -1, "weight": 0.2, "dynamic": true},
+      {"feature": "temperature_c_delta_15min", "operator": "<=", "threshold": -2, "weight": 0.2, "dynamic": true},
+      {"feature": "wind_increase_15min", "operator": "==", "threshold": true, "weight": 0.15, "dynamic": true},
+      {"feature": "washout_15min_native", "operator": "==", "threshold": true, "weight": 0.15, "dynamic": true},
+      {"feature": "calendar_jjas_proxy", "operator": "==", "threshold": true, "weight": 0.05, "dynamic": false},
+      {"feature": "reviewed_terrain_exposure", "operator": "==", "threshold": true, "weight": 0.05, "dynamic": false}
+    ]
+  },
+  "cloudburst_hourly": {
+    "profile": "cloudburst_risk_hourly_companion_v1",
+    "role": "DISTINCT_EXPLORATORY_HOURLY_PATTERN_NOT_15MIN_VALIDATION",
+    "criteria": [
+      {"feature": "relative_humidity_pct", "operator": ">=", "threshold": 90, "weight": 0.2, "dynamic": true},
+      {"feature": "pressure_hpa_delta_1h", "operator": "<=", "threshold": -1.5, "weight": 0.2, "dynamic": true},
+      {"feature": "temperature_c_delta_1h", "operator": "<=", "threshold": -2, "weight": 0.2, "dynamic": true},
+      {"feature": "wind_increase_1h_companion", "operator": "==", "threshold": true, "weight": 0.15, "dynamic": true},
+      {"feature": "washout_hourly", "operator": "==", "threshold": true, "weight": 0.15, "dynamic": true},
+      {"feature": "calendar_jjas_proxy", "operator": "==", "threshold": true, "weight": 0.05, "dynamic": false},
+      {"feature": "reviewed_terrain_exposure", "operator": "==", "threshold": true, "weight": 0.05, "dynamic": false}
+    ]
+  },
+  "watch_threshold": 0.4,
+  "warning_candidate_threshold": 0.7,
+  "minimum_warning_dynamic_matches": 3,
+  "minimum_warning_available_weight": 0.9,
+  "human_confirmation_required": true,
+  "empirical_validation": "NOT_EVALUATED",
+  "training_labels_allowed": false,
+  "probabilities_available": false
+}

@@ -69,6 +69,8 @@ proxy starts at a genuine 15-minute increase of 3 m/s and current wind 8 m/s;
 an explicit wind calibration ID is required. Calibration metadata is a source
 claim until independently checked by the ingestion/registration layer. No gust
 observation is inferred. June–September uses the Indian local calendar only.
+The separate hourly companion applies that wind increase/current-wind setting
+over a genuine full hour and retains a distinct name; it is not a 15-minute proxy.
 
 ## Meteorological estimates
 

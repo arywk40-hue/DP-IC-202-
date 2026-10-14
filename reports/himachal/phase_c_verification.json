@@ -1,0 +1,23 @@
+{
+  "phase": "C",
+  "status": "COMPLETE",
+  "focused_tests": {
+    "passed": 26,
+    "subtests_passed": 22,
+    "wall_seconds": 0.77
+  },
+  "full_suite": {
+    "passed": 235,
+    "subtests_passed": 146,
+    "wall_seconds": 22.57
+  },
+  "lint": "PASSED",
+  "protected_artifacts": "UNCHANGED",
+  "empirical_accuracy": "NOT_EVALUATED",
+  "probabilities_available": false,
+  "public_notifications_enabled": false,
+  "warnings": [
+    "Existing pandas deprecation",
+    "Existing NumPy/netCDF binary-size diagnostic"
+  ]
+}
