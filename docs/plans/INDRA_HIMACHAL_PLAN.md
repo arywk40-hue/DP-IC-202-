@@ -7,7 +7,7 @@ Exactly six physical channels; derived history and metadata are separate. Conven
 | Phase | Deliverable | Status |
 | --- | --- | --- |
 | A | Audit, protected paths, offline committed-export checks and CI | COMPLETE |
-| B | Causal native-cadence feature contract and meteorology | PENDING |
+| B | Causal native-cadence feature contract and meteorology | COMPLETE |
 | C | Versioned rain/snowstorm/cloudburst risk rules | PENDING |
 | D | Source provenance and independent observed labels | PENDING |
 | E | Bounded anomaly engine and Python/C parity | PENDING |
@@ -36,3 +36,5 @@ Each phase requires its relevant tests, existing regression suite, evidence rece
 Phase A: verify the supplied package, recreate the pinned host environment, establish baseline tests, compile each committed export and test numerical parity, exact regeneration, provenance and tamper rejection. Legacy country/evidence macro differences require explicit compatibility, not numerical changes.
 
 Validation: 209 tests and 124 subtests passed; CI-equivalent Ruff and offline six-profile committed-export verification passed. All protected artifact hashes unchanged. See `CURRENT_REPO_AUDIT.md` and `reports/deployment/phase_a_verification.json`. Next: Phase B native feature engine, then Phase C rules.
+
+Phase B: new snapshot provenance/QC adapter, exact native features, water/ice humidity estimates and NWS branch-aware heat index; hourly/native washout and wind-calibration availability. Relevant existing/new checks and full regression suite passed. Existing models/headers unchanged. Next: versioned current-condition risk rules (Phase C).

@@ -1,0 +1,21 @@
+{
+  "schema_version": "indra_himachal_features_v1",
+  "max_native_records": 10000,
+  "hourly_washout": {
+    "baseline": "median_previous_three_complete_hourly_values",
+    "minimum_baselines_ug_m3": [10, 20],
+    "minimum_declines_ug_m3": [5, 10],
+    "relative_decline": 0.2,
+    "calibrated_noise_sigma_multiplier": 3
+  },
+  "native_washout": {
+    "profile": "previous_hour_native_median_to_current_15min_v1",
+    "baseline_interval": "[issue-75min,issue-15min)",
+    "maximum_native_cadence_seconds": 900
+  },
+  "sharp_rh_change_1h_pp": 10,
+  "wind_increase_15min_mps": 3,
+  "wind_current_minimum_mps": 8,
+  "meteorology_version": "npl_magnus_water_rh_nws_complete_v1",
+  "evidence_role": "DETERMINISTIC_FEATURES_NOT_EVENT_LABELS"
+}

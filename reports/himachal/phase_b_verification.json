@@ -1,0 +1,20 @@
+{
+  "phase": "B",
+  "status": "COMPLETE",
+  "relevant_tests": {
+    "passed": 62,
+    "subtests_passed": 14,
+    "wall_seconds": 4.09,
+    "note": "Before adding the separate disjoint storm-window test; that test is included in the final full suite."
+  },
+  "full_suite": {
+    "passed": 224,
+    "subtests_passed": 138,
+    "wall_seconds": 21.0
+  },
+  "lint": "PASSED",
+  "protected_artifacts": "UNCHANGED",
+  "native_fixture": "SYNTHETIC_SOFTWARE_CONTRACT_ONLY",
+  "empirical_accuracy": "NOT_EVALUATED",
+  "hardware_execution": "NOT_TESTED"
+}
