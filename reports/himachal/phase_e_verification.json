@@ -1,0 +1,39 @@
+{
+  "phase": "E",
+  "status": "COMPLETE",
+  "full_suite": {
+    "passed": 258,
+    "subtests_passed": 153,
+    "wall_seconds": 26.33
+  },
+  "focused_suite": {
+    "passed": 10,
+    "subtests_passed": 7,
+    "wall_seconds": 1.77
+  },
+  "lint": "PASSED",
+  "host_c_parity_rows": 220,
+  "host_max_absolute_error": 4.960937758369255e-07,
+  "anomaly_state_bytes": 424,
+  "xtensa_module_text_bytes": 1084,
+  "xtensa_literal_bytes": 80,
+  "xtensa_rodata_bytes": 144,
+  "cross_builds": "edge_cross_builds.json",
+  "anomaly_static_analysis": "anomaly_cross_object.json",
+  "final_himachal_firmware_flash_bytes": 348109,
+  "final_himachal_firmware_ram_bytes": 23340,
+  "protected_artifacts": "UNCHANGED",
+  "hardware_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "physical_latency": "NOT_TESTED",
+  "physical_peak_stack": "NOT_MEASURED",
+  "sources_sha256": {
+    "ml/himachal/anomaly.py": "21c357f32ed29818439120d430f953513f8e82fd376d85d5cbc475010716e189",
+    "ml/himachal/anomaly_codegen.py": "3dbd57bdef90190dfe42adfbcee839e1a29105dbd2dd7ae9aa5ebac388f541b1",
+    "ml/himachal/edge_rules.py": "913bdb1f82a8bc5511675e7e9486dbc55a2b74ae32dd87bfdbda4dbb0be9a5e1",
+    "configs/himachal_anomaly_v1.json": "761c3662014706406accd34a61be5d86f497298196eb2fa76f64ca8891875573",
+    "esp32/himachal_node/include/indra_anomaly.h": "6dae5bc69b1a167c31dac9b6ad3189dddfdc75063290a10ff303ff09e88b8328",
+    "esp32/himachal_node/include/indra_local_rules.h": "8fca262871e931a8bfbe43c36df17c4f8aa001e4c915f04f24ce6b5ea9fe672c",
+    "esp32/himachal_node/src/main.cpp": "11e219e8690f627b14a6f84e568c708b5ac11ba2acc0ae9280b63d6c6d027b7c"
+  }
+}

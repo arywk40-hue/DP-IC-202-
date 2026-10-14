@@ -1,0 +1,18 @@
+{
+  "schema_version": "indra_himachal_anomaly_parity_v1",
+  "status": "HOST_PARITY_PASSED",
+  "rows": 220,
+  "max_absolute_error": 4.960937758369255e-07,
+  "absolute_tolerance": 2e-06,
+  "relative_tolerance": 1e-06,
+  "config_sha256": "aed660538746232f49536624d7328b3e3d6d745778603170063d81656ec94726",
+  "header_sha256": "6dae5bc69b1a167c31dac9b6ad3189dddfdc75063290a10ff303ff09e88b8328",
+  "measured_host_state_bytes": 424,
+  "measured_host_object_file_bytes": 5848,
+  "host_object_size_command": "__TEXT\t__DATA\t__OBJC\tothers\tdec\thex\n3318\t424\t0\t128\t3870\tf1e\n",
+  "budget_scope": "Host object includes runner; board section/flash sizes measured by separate cross-build. State excludes call stack scratch; board peak stack/latency remain unmeasured.",
+  "evidence_kind": "SYNTHETIC_SOFTWARE_CONTRACT_ONLY",
+  "heap_in_inference": false,
+  "hardware_execution": "NOT_TESTED",
+  "local_rule_header_sha256": "8fca262871e931a8bfbe43c36df17c4f8aa001e4c915f04f24ce6b5ea9fe672c"
+}

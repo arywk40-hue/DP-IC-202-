@@ -10,7 +10,7 @@ Exactly six physical channels; derived history and metadata are separate. Conven
 | B | Causal native-cadence feature contract and meteorology | COMPLETE |
 | C | Versioned rain/snowstorm/cloudburst risk rules | COMPLETE |
 | D | Source provenance and independent observed labels | COMPLETE |
-| E | Bounded anomaly engine and Python/C parity | PENDING |
+| E | Bounded anomaly engine and Python/C parity | COMPLETE |
 | F | Dynamic registration, health, authenticated consensus and radio simulation | PENDING |
 | G | Independent supervised model pipeline and registry | PENDING |
 | H | Leakage-safe evaluation and evidence receipts | PENDING |
@@ -42,3 +42,5 @@ Phase B: new snapshot provenance/QC adapter, exact native features, water/ice hu
 Phase C: three risk-only current-condition rules, distinct hourly/native cloudburst profiles, explicit non-renormalized missing evidence and auxiliary disjoint storm sequence. Focused 26-test suite passed; full regression and lint passed. No independent hazard weights fitted; no probabilities, lead times or dispatch enabled. Next: source/label pipeline (Phase D).
 
 Phase D: bounded cached context acquisition, audited manual imports, IMERG/POWER normalization, source ancestry deduplication and independent onset-label adapter reuse existing conservative gates. Full suite: 248 tests / 146 subtests passed. Offline label and manual-access CLI smoke runs returned NOT_READY as required; fixtures are never empirical training evidence. No real source download or fitted hazard head. Next: Phase E ESP32 anomaly/C contracts.
+
+Phase E: bounded diagnostics, generated Python/C stateful parity and capability-limited local risk indicator; isolated physical-default-disabled firmware. Full suite 258 tests / 153 subtests; four firmware cross-builds pass. Anomaly state 424 bytes; Xtensa object/static stack and full firmware sizes recorded. Native minute collector spans 75 min and cannot establish local rain/snow six-hour pressure history; hourly mode and server histories are separate supported paths. Board/RF/latency/peak stack remain NOT_TESTED. Next: Phase F dynamic nodes/health/authenticated consensus and radio scheduling.

@@ -1,0 +1,119 @@
+{
+  "schema_version": "indra_himachal_edge_cross_builds_v1",
+  "evidence": "CROSS_COMPILATION_ONLY",
+  "configured_board": "esp32-s3-devkitc-1; compiled N8 profile, actual installed hardware unidentified",
+  "jobs": [
+    {
+      "command": [
+        "pio",
+        "run",
+        "-d",
+        "esp32/himachal_node"
+      ],
+      "exit_code": 0,
+      "memory_lines": [
+        "RAM:   [=         ]   7.1% (used 23340 bytes from 327680 bytes)",
+        "Flash: [=         ]  10.4% (used 348109 bytes from 3342336 bytes)"
+      ],
+      "summary": [
+        "RAM:   [=         ]   7.1% (used 23340 bytes from 327680 bytes)",
+        "Flash: [=         ]  10.4% (used 348109 bytes from 3342336 bytes)",
+        "Building .pio/build/himachal-research/firmware.bin",
+        "esptool.py v4.11.0",
+        "Creating esp32s3 image...",
+        "Merged 2 ELF sections",
+        "Successfully created esp32s3 image.",
+        "========================= [SUCCESS] Took 3.13 seconds ========================="
+      ]
+    },
+    {
+      "command": [
+        "pio",
+        "run",
+        "-d",
+        "esp32/operational_node"
+      ],
+      "exit_code": 0,
+      "memory_lines": [
+        "RAM:   [=         ]   6.3% (used 20508 bytes from 327680 bytes)",
+        "Flash: [=         ]   9.5% (used 317349 bytes from 3342336 bytes)"
+      ],
+      "summary": [
+        "|-- Wire @ 2.0.0",
+        "Building in release mode",
+        "Retrieving maximum program size .pio/build/operational-driver-preparation/firmware.elf",
+        "Checking size .pio/build/operational-driver-preparation/firmware.elf",
+        "Advanced Memory Usage is available via \"PlatformIO Home > Project Inspect\"",
+        "RAM:   [=         ]   6.3% (used 20508 bytes from 327680 bytes)",
+        "Flash: [=         ]   9.5% (used 317349 bytes from 3342336 bytes)",
+        "========================= [SUCCESS] Took 1.21 seconds ========================="
+      ]
+    },
+    {
+      "command": [
+        "pio",
+        "run",
+        "-d",
+        "esp32/ml_integration",
+        "-e",
+        "esp32-s3-ml",
+        "-e",
+        "esp32-s3-ml-usb"
+      ],
+      "exit_code": 0,
+      "memory_lines": [
+        "RAM:   [=         ]   5.8% (used 18848 bytes from 327680 bytes)",
+        "Flash: [=         ]   9.5% (used 316853 bytes from 3342336 bytes)",
+        "RAM:   [=         ]   5.8% (used 19080 bytes from 327680 bytes)",
+        "Flash: [=         ]   9.4% (used 314101 bytes from 3342336 bytes)"
+      ],
+      "summary": [
+        "Successfully created esp32s3 image.",
+        "========================= [SUCCESS] Took 0.81 seconds =========================",
+        "",
+        "Environment      Status    Duration",
+        "---------------  --------  ------------",
+        "esp32-s3-ml      SUCCESS   00:00:00.794",
+        "esp32-s3-ml-usb  SUCCESS   00:00:00.809",
+        "========================= 2 succeeded in 00:00:01.602 ========================="
+      ]
+    }
+  ],
+  "artifacts": {
+    "esp32/himachal_node/.pio/build/himachal-research/firmware.elf": {
+      "bytes": 8966732,
+      "sha256": "d6aef2f63c675fb8b950be3d75b89cc7e4b2ecdb6db0effd85044c73d41a4eed"
+    },
+    "esp32/himachal_node/.pio/build/himachal-research/firmware.bin": {
+      "bytes": 348480,
+      "sha256": "14c4e3363685edad6149bdee61fa6bd51a2801313876a3319bff21b640300e72"
+    },
+    "esp32/operational_node/.pio/build/operational-driver-preparation/firmware.elf": {
+      "bytes": 8040320,
+      "sha256": "fd9cdee846e6bb86869f8b386489dc395f372c3b474fcbec8301534c1a39d495"
+    },
+    "esp32/operational_node/.pio/build/operational-driver-preparation/firmware.bin": {
+      "bytes": 317712,
+      "sha256": "0dbd2369fbd0c2abd89bc55422a9a8c025bf23f3e25c5ec9f140ea55a71196ab"
+    },
+    "esp32/ml_integration/.pio/build/esp32-s3-ml/firmware.elf": {
+      "bytes": 7261008,
+      "sha256": "253b20d4fefb372419fe0ba90206866b815d7c7ff68e77bf75694af26566e1ca"
+    },
+    "esp32/ml_integration/.pio/build/esp32-s3-ml/firmware.bin": {
+      "bytes": 317216,
+      "sha256": "b457c870c87203e62d381f41dd8007d63e0ed62586196cb83f63a5c9c6f0af56"
+    },
+    "esp32/ml_integration/.pio/build/esp32-s3-ml-usb/firmware.elf": {
+      "bytes": 7699572,
+      "sha256": "f0a6326bdb01ff30fecd081d123e5f78a8df8e84464d1a752a63d4551f1f50c1"
+    },
+    "esp32/ml_integration/.pio/build/esp32-s3-ml-usb/firmware.bin": {
+      "bytes": 314464,
+      "sha256": "8879b4d9a42eb633f602d990ca46b9bb94d3ef1577d4a4fe8abdfe9182d9964b"
+    }
+  },
+  "board_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "physical_mode_default": false
+}

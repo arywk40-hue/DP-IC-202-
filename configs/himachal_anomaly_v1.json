@@ -1,0 +1,17 @@
+{
+  "schema_version": "indra_himachal_anomaly_v1",
+  "ring_capacity": 16,
+  "warmup_valid_samples": 8,
+  "mad_consistency_factor": 1.4826,
+  "threshold_scale": 5.0,
+  "noise_floors": [0.2, 1.0, 0.1, 2.0, 3.0, 0.3],
+  "ewma_alpha": 0.125,
+  "serial_demo_native_cadence_seconds": 60,
+  "maximum_gap_intervals": 3,
+  "maximum_clock_uncertainty_seconds": 30,
+  "unix_time_bounds": [1577836800, 2145916800],
+  "anomaly_flash_budget_bytes": 32768,
+  "anomaly_state_budget_bytes": 4096,
+  "threshold_evidence": "INITIAL_RESEARCH_DEFAULTS_NOT_INDEPENDENTLY_FITTED",
+  "hardware_validated": false
+}

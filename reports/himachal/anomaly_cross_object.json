@@ -1,0 +1,10 @@
+{
+  "schema_version": "indra_anomaly_cross_object_v1",
+  "evidence": "CROSS_COMPILED_STATIC_ANALYSIS_ONLY",
+  "object_bytes": 5252,
+  "sections": "probe.o  :\nsection        size   addr\n.literal         80      0\n.text          1084      0\n.data             0      0\n.bss            424      0\n.rodata         144      0\n.comment         45      0\n.xtensa.info     56      0\n.xt.lit           8      0\n.xt.prop        540      0\nTotal          2381\n\n\n",
+  "compiler_static_stack_usage": "indra_anomaly.h:14:22:indra_median16\t176\tstatic\nindra_anomaly.h:18:20:indra_anomaly_reset.constprop\t32\tstatic\nindra_anomaly.h:20:19:indra_anomaly_push.constprop\t480\tstatic\nprobe.c:3:5:indra_cross_probe\t32\tstatic\n",
+  "hardware_peak_stack": "NOT_MEASURED",
+  "hardware_latency": "NOT_TESTED",
+  "note": "Object excludes linked libm/float helpers; full firmware sizes recorded separately. Static stack analysis is not a board peak measurement."
+}

@@ -101,3 +101,4 @@ esp32/ml_integration/include/build_identity.h
 
 # Local Himachal raw downloads, caches and private label working files.
 /data/himachal/
+/esp32/himachal_node/include/device_config.h
