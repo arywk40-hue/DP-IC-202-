@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
-TARGETS = {'extreme_rainfall', 'heavy_rainfall', 'cloudburst', 'flood', 'flash_flood',
+TARGETS = {'rain', 'extreme_rainfall', 'heavy_rainfall', 'cloudburst', 'flood', 'flash_flood',
            'landslide', 'wildfire', 'storm', 'snowstorm', 'thermal_anomaly', 'heatwave', 'cold_wave'}
 DEFAULT_TRAINING_TARGETS = ('extreme_rainfall', 'cloudburst', 'flash_flood',
                             'landslide', 'wildfire', 'storm', 'snowstorm')

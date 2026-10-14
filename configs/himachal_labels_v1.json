@@ -1,0 +1,19 @@
+{
+  "schema_version": "indra_himachal_labels_v1",
+  "label_mode": "onset_in_next_h_hours",
+  "horizon_hours": 6,
+  "history_minutes": 1440,
+  "cadence_seconds": 3600,
+  "public_to_observed_target": {"rain": "rain", "snowstorm": "snowstorm", "cloudburst_risk": "cloudburst"},
+  "definitions": {
+    "rain": "Gauge-sensitive research profile: independent observed liquid accumulation >=0.2 mm in one explicitly timed hour; onset interval/review required, not an IMD universal warning definition",
+    "snowstorm": "Independently confirmed occurrence under a reviewed snowstorm definition; cold/humidity or snowfall amount alone is insufficient",
+    "cloudburst": "Reviewed local gauge accumulation >=100 mm in an explicitly verified one-hour interval, physical event identity and onset uncertainty retained"
+  },
+  "matching": {"spatial_radius_km": 1.0, "maximum_spatial_uncertainty_km": 0.5, "maximum_temporal_uncertainty_hours": 0.25, "post_event_hours": 12.0, "event_separation_hours": 24.0, "max_pairs": 1000000},
+  "minimum_independent_event_groups_for_fitting": 50,
+  "minimum_independent_sites_for_fitting": 10,
+  "synthetic_empirical_training_allowed": false,
+  "rule_empirical_training_allowed": false,
+  "deployment_approved": false
+}

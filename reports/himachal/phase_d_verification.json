@@ -1,0 +1,21 @@
+{
+  "phase": "D",
+  "status": "COMPLETE",
+  "full_suite": {
+    "passed": 248,
+    "subtests_passed": 146,
+    "wall_seconds": 26.59
+  },
+  "related_suite": {
+    "passed": 58,
+    "wall_seconds": 4.48
+  },
+  "lint": "PASSED",
+  "offline_label_cli": "NOT_READY; SYNTHETIC_CONTRACT_ONLY; zero admitted empirical windows",
+  "manual_access_cli": "NOT_READY; approved export and metadata required",
+  "provider_network_calls": "MOCKED_IN_TESTS_ONLY",
+  "new_real_source_downloads": 0,
+  "protected_artifacts": "UNCHANGED",
+  "empirical_training_approved": false,
+  "deployment_approved": false
+}

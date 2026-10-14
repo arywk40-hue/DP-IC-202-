@@ -98,3 +98,6 @@ esp32/ml_integration/include/build_identity.h
 /data/india_mandi_modeled/raw/
 /data/india_mandi_modeled/observations.csv
 /data/india_mandi_modeled/context.csv
+
+# Local Himachal raw downloads, caches and private label working files.
+/data/himachal/

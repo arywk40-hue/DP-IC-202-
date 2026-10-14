@@ -7,5 +7,12 @@
   "radio_execution": "NOT_TESTED",
   "public_notifications_enabled": false,
   "teammate_integration": "PENDING_EXTERNAL_UI",
-  "evidence": "docs/plans/INDRA_HIMACHAL_PLAN.md"
+  "evidence": "docs/plans/INDRA_HIMACHAL_PLAN.md",
+  "completed_phases": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "next_phase": "E"
 }
