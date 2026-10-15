@@ -1,0 +1,118 @@
+{
+  "schema_version": "indra_himachal_network_phase_verification_v1",
+  "date_local": "2026-10-15",
+  "timezone": "Asia/Kolkata",
+  "phase": "F",
+  "status": "IN_PROGRESS_RUNTIME_AND_STRESS_RESEARCH_ONLY",
+  "runtime_commit": "678af54",
+  "full_suite": {
+    "passed": 295,
+    "subtests_passed": 172,
+    "seconds": 46.14,
+    "warnings": 3
+  },
+  "lint": "PASSED",
+  "firmware_cross_build": {
+    "environment": "himachal-research",
+    "result": "PASSED",
+    "flash_bytes": 348109,
+    "static_ram_bytes": 23340,
+    "physical_execution": "NOT_TESTED",
+    "crypto_runtime_on_board": "NOT_TESTED_HEADERS_INCLUDED_ONLY"
+  },
+  "protected_artifacts": {
+    "checked": 129,
+    "mismatches": 0
+  },
+  "retained_scale_run": {
+    "groups": 24,
+    "seeds_per_group": 30,
+    "rounds_per_seed": 60,
+    "nodes": [
+      3,
+      10,
+      50,
+      200
+    ],
+    "scenarios": 6,
+    "wall_seconds": 700.4384983749478,
+    "rerun_this_push": false,
+    "evidence_kind": "SYNTHETIC_NETWORK_ENGINEERING_ONLY",
+    "note": "Retained earlier engineering run; provisioning atomicity fix does not change simulator registration inputs. Fresh bounded CLI replay checked below."
+  },
+  "fresh_smoke": {
+    "groups": 8,
+    "seeds_per_group": 1,
+    "rounds_per_seed": 3,
+    "nodes": [
+      3,
+      10,
+      50,
+      200
+    ],
+    "scenarios": [
+      "nominal",
+      "combined"
+    ],
+    "completed": true,
+    "positive_queries": 0,
+    "note": "Execution-only smoke; this short seeded run has no positive queries and is not positive-event performance evidence."
+  },
+  "nominal_scale_results": [
+    {
+      "nodes": 3,
+      "positive_synthetic_queries": 387,
+      "negative_synthetic_queries": 1413,
+      "false_corrob_fraction": 0.0,
+      "missed_positive_fraction": 0.3850129198966408
+    },
+    {
+      "nodes": 10,
+      "positive_synthetic_queries": 364,
+      "negative_synthetic_queries": 1436,
+      "false_corrob_fraction": 0.0,
+      "missed_positive_fraction": 0.8956043956043956
+    },
+    {
+      "nodes": 50,
+      "positive_synthetic_queries": 342,
+      "negative_synthetic_queries": 1458,
+      "false_corrob_fraction": 0.0,
+      "missed_positive_fraction": 1.0
+    },
+    {
+      "nodes": 200,
+      "positive_synthetic_queries": 328,
+      "negative_synthetic_queries": 1472,
+      "false_corrob_fraction": 0.0,
+      "missed_positive_fraction": 1.0
+    }
+  ],
+  "physical_radio": "NOT_TESTED",
+  "live_dashboard_corroboration": "NOT_CONNECTED",
+  "forecast_model_changed": false,
+  "public_notifications_enabled": false,
+  "empirical_hazard_accuracy": "NOT_EVALUATED",
+  "remaining": [
+    "On-device crypto self-test and authenticated transport execution",
+    "Live dashboard integration and restart persistence",
+    "Scheduling/load changes followed by fresh scale evaluation",
+    "History-driven anomaly/rule/model actor simulation",
+    "Physical radio and board measurements"
+  ],
+  "sources_sha256": {
+    "ml/himachal/nodes.py": "b740b323baccb4a7bd947be409a13bb454204c549a91ed83fcdd0f4ee5fb731b",
+    "ml/himachal/health.py": "fcc071c083dd5076532fe89e195b29e21feb0cf0fa6bef291d01267be092425e",
+    "ml/himachal/neighbours.py": "c92ab59b72323e3c3d9d7817031b6b926bbeb517cd008e90b2ea6d458ab3ebba",
+    "ml/himachal/consensus.py": "f57ac3690a86f8f3518a38f3881c04ecd4b214b376cff355c1e7525d9dd32e41",
+    "ml/himachal/radio.py": "b443855c87b4eec7cf5c0d58582d6d92e8388ca155e908f5c904e7f1063ea9e5",
+    "configs/himachal_network_v1.json": "dfd87194353abfd4449a262dc4982eb393f32d5f9f412edd4d822030a166febb",
+    "configs/india_radio_profile_v1.json": "f75a168369baa352dda705736b0df1ddf641ae7923d286525970ccf0990768af",
+    "esp32/himachal_node/include/indra_peer_protocol.h": "410c7bea745733e4c1a78a674b986e21f216a0304dfec9bede2f4bfbd092ad20",
+    "esp32/himachal_node/include/indra_consensus_policy.h": "0ade5bba824c365a801735bcbca79ef239c69fb23c8327cc097bb5f2a3e5869f",
+    "simulator/network.py": "f0ade196173b3595a6ccdd361bb7da6cbad618e25a3f62f9be14794b47073acb",
+    "simulator/radio.py": "8fc79df77ccc9141e70c35ebdcd3f9eafa165dd28fb95f1aebbc0541c372a780",
+    "simulator/run_network.py": "e4198fc1c6f60bb478d4ff2f40cb25a9ff236b33eac86e00b93befb27034f0d0",
+    "reports/himachal/network_scale.json": "8a215e8c92f95ba098dd889290bcb6e70f600709181d2289375217aba96f87fe"
+  }
+}

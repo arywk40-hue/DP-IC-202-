@@ -22,5 +22,8 @@
   "online_learning": "ERA5_RESEARCH_REPLAY_IMPLEMENTED_NOT_LIVE",
   "neural_forecast_candidates": "OFFLINE_TRAINED_MODELED_DATA_ONLY",
   "six_sensor_online_learning": "NOT_IMPLEMENTED",
-  "era5_online_research": "DELAYED_LABEL_PREQUENTIAL_SGD_TESTED"
+  "era5_online_research": "DELAYED_LABEL_PREQUENTIAL_SGD_TESTED",
+  "neighbour_network": "AUTHENTICATED_RUNTIME_AND_SYNTHETIC_STRESS_TESTED_NOT_LIVE",
+  "network_scale": "SINGLE_CHANNEL_CONGESTION_FAILURES_RECORDED",
+  "network_evidence": "reports/himachal/phase_f_verification.json"
 }
