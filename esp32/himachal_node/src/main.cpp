@@ -3,6 +3,8 @@
 #include "sensor_hub.h"
 #include "indra_anomaly.h"
 #include "indra_local_rules.h"
+#include "indra_peer_protocol.h"
+#include "indra_consensus_policy.h"
 #if __has_include("device_config.h")
 #include "device_config.h"
 #else
