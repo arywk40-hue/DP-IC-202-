@@ -24,6 +24,9 @@ async function request(path, options = {}) {
 }
 export const getNodes = () => request('/api/nodes');
 export const getStatus = () => request('/api/status');
+export const getStormReport = () => request('/api/storm-risk/report');
+export const getStormScores = () => request('/api/storm-risk/scores');
+export const getStormHeatmap = (feature) => request(`/api/storm-risk/heatmap?feature=${encodeURIComponent(feature)}`);
 export const getTelemetry = (id) => request(`/api/nodes/${encodeURIComponent(id)}/telemetry`);
 export const getHeatmap = async () => {
   const payload = await request('/api/kriging/heatmap');

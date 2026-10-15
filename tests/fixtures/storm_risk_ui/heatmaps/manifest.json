@@ -1,0 +1,17 @@
+{
+  "features": [
+    "t2m"
+  ],
+  "frames": [
+    {
+      "time": "2020-07-30T23:00:00+00:00",
+      "file": "20200730T230000Z.npz",
+      "sha256": "e9692bde9d83012d71890644a8ee5cb364221afc38b6f515b82f6a81a17e1744"
+    }
+  ],
+  "method": "ORIGINAL_ERA5_GRID_NO_INTERPOLATION",
+  "evidence": "synthetic_engineering",
+  "units": {
+    "t2m": "degC"
+  }
+}

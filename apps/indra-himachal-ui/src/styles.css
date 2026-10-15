@@ -12,6 +12,17 @@
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace;
 }
 
+.storm-risk-panel { margin: 6px 12px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; max-height: 42vh; overflow: auto; font-size: 12px; }
+.storm-risk-panel summary { cursor: pointer; color: var(--teal); }
+.storm-risk-panel > summary { position: sticky; top: -8px; z-index: 1; padding: 8px 0; background: var(--panel); }
+.storm-risk-panel ul { overflow-wrap: anywhere; }
+.storm-table-wrap { overflow-x: auto; }
+.storm-risk-panel table { border-collapse: collapse; width: 100%; }
+.storm-risk-panel th, .storm-risk-panel td { text-align: left; padding: 6px; border-bottom: 1px solid var(--border); }
+.storm-risk-panel select { margin: 8px; max-width: 65%; background: var(--panel); color: var(--text); }
+.storm-feature-grid { margin: 8px 0; }
+.storm-feature-grid svg { width: 220px; max-width: 100%; height: 150px; }
+
 * {
   box-sizing: border-box;
 }

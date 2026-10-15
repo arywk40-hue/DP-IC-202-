@@ -1,0 +1,173 @@
+{
+  "schema_version": "indra_storm_pipeline_verification_v1",
+  "date_local": "2026-10-15",
+  "timezone": "Asia/Kolkata",
+  "software_implementation": "IMPLEMENTED_AND_TESTED",
+  "empirical_event_model": "NOT_READY_NO_CONFIRMED_LOCAL_INPUTS",
+  "full_python_suite": {
+    "passed": 309,
+    "subtests_passed": 172,
+    "seconds": 57.42,
+    "warnings": 3
+  },
+  "javascript_tests": {
+    "passed": 2
+  },
+  "browser_tests": {
+    "passed": 6,
+    "seconds": 40.5,
+    "projects": [
+      "desktop_1440x1000",
+      "mobile_390x844"
+    ],
+    "cases": [
+      "existing model/node/risk/RPC flow",
+      "API loss and stale cache",
+      "storm research gate/anomaly/neighbour/feature grid"
+    ]
+  },
+  "frontend_build": "PASSED",
+  "lint": "PASSED",
+  "protected_artifacts": {
+    "count": 129,
+    "mismatches": 0
+  },
+  "local_run": "outputs/storm_pipeline_submission_v2",
+  "evidence_kind": "synthetic_engineering",
+  "features": 588,
+  "rows": 5664,
+  "sample_counts": {
+    "train": {
+      "total_rows": 3360,
+      "labeled_rows": 3360,
+      "positive_samples": 411,
+      "negative_samples": 2949
+    },
+    "calib": {
+      "total_rows": 1152,
+      "labeled_rows": 1152,
+      "positive_samples": 135,
+      "negative_samples": 1017
+    },
+    "test": {
+      "total_rows": 1152,
+      "labeled_rows": 1152,
+      "positive_samples": 135,
+      "negative_samples": 1017
+    }
+  },
+  "ensemble_weights": {
+    "ridge": 0.2,
+    "xgb": 0.2,
+    "mlp": 0.6
+  },
+  "model_artifact": {
+    "file": "ensemble_2020-07-07.joblib",
+    "sha256": "235d734533872b01e94069a7f0280c7c0c3be48e58192b8ca333fab112c97c14",
+    "loading": "ONLY_TRUST_OWNER_GENERATED_LOCAL_JOBLIB"
+  },
+  "mapped_gate": false,
+  "gate_failures": [
+    "SYNTHETIC_EVIDENCE_ONLY",
+    "BRIER_SKILL_LOWER_BOUND_NOT_ABOVE_MINIMUM"
+  ],
+  "synthetic_diagnostics": "WITHHELD_NOT_EMPIRICAL_SKILL",
+  "heatmap_frames": 1440,
+  "png_features": 21,
+  "online": {
+    "status": "COMPLETED_RETROSPECTIVE_PREQUENTIAL_REPLAY",
+    "calibrated": false,
+    "predictions": 3456,
+    "updates": 24,
+    "evidence_kind": "synthetic_engineering",
+    "frozen_before_test": true,
+    "pending_labels": 92,
+    "scaler_sha256": "92e41aa16742f67a1c845e7f679ec217f0571f135e17ce87e4846024871b03dc"
+  },
+  "online_checkpoints": [
+    "2020-07-24.joblib",
+    "2020-07-30_final.joblib"
+  ],
+  "missing_input_run": "outputs/storm_pipeline_missing_inputs_v1",
+  "missing_input_report": "NOT_READY_WITH_REPORT_AND_CSV_EXIT_2",
+  "real_era5": "NOT_PRESENT_IN_REPOSITORY_OR_DOWNLOADS_NON_IGNORED_AND_IGNORED_PATHS_SCANNED",
+  "actual_run_api": "REPORT_SCORES_HEATMAP_MATCH_EXPORTED_FILES",
+  "hardware_execution": "NOT_TESTED",
+  "active_six_sensor_forecast": "UNCHANGED_COMPACT_MANDI_XGBOOST",
+  "scope": "Separate ERA5 context research; no six-sensor forecast promotion or real-event claim",
+  "sources_sha256": {
+    "storm_risk/__init__.py": "ff9fd6b19eb8b5cebefe7ba6f98c05f3024cd359042108261bf8d27b214e76bd",
+    "storm_risk/cli.py": "207bf44cb276d38ead2bbbd7320e61c478248081c915906281ef082325a6c375",
+    "storm_risk/pipeline.py": "c32c30f722b412dfd3ac46f6dc7d55d22d77832f5a79633a1401859fd1685fd3",
+    "storm_risk/settings.py": "41dd85d452dfcb4ef966c97b99f0fc052cb50c65aa1a4de73f5e8f4574717963",
+    "storm_risk/demo.py": "cbb8f358d480046951a4e1354ee98132cfa9964abe7d199bd33064c2ea4d6c4d",
+    "storm_risk/anomaly/__init__.py": "4233949d40fa236cd8d8e7b2b68b1c9f8f54e5576eb4d8451a73744d8f7f5e44",
+    "storm_risk/anomaly/anomaly.py": "98076c107b5497b4185f5c47c9651f9c5e4f880c9465d21d020b7299f203e3c3",
+    "storm_risk/calibration/__init__.py": "4881917b375d4354bb39b1117707242aa7132f5313f3ee5fb0e60c59289a2630",
+    "storm_risk/calibration/calibrate.py": "057143c40bf49e71f146d3d25b16651b2ad7df897f4cba019873e3861932fc87",
+    "storm_risk/io/__init__.py": "c21d1a6bde437e7a52fef1362b696ddcaff892419fa863f1030788ccfff2a587",
+    "storm_risk/io/outputs.py": "466d11a36b9f2e56f2007e81a817fe598eb6c8abc0481a8cae2c3a01dea084a4",
+    "storm_risk/features/lagged.py": "7e2db6e8feb91d86574b001d11c1f3bdd0c96dded0a70eeea50ed0e8396c88b4",
+    "storm_risk/features/__init__.py": "b432ac3f44355262f4d78aec9c73111b8e01c4dc81a49fd54b32e5a955fcf992",
+    "storm_risk/features/derived.py": "d0d0379bb5bac43ba8ba2fed6c14947fdc6e8424a80c25e5272021201669828d",
+    "storm_risk/models/xgb_model.py": "4d6e81f96605bec4d8eceb37baf910ec1413b71faab2af47d2d0d8139b732400",
+    "storm_risk/models/online.py": "6cc4e83b85ef16e0c99a6043e97820d7293574c0d342955fe189d822e21281ca",
+    "storm_risk/models/__init__.py": "963d772c60c8d08b2747991fb09c1d0012e4b33854a905a4ac2f44c4392e3b2b",
+    "storm_risk/models/ridge_model.py": "eb8f768869a3ab3c901f91964dc59803b71768d2b257d7c78540dbb381346340",
+    "storm_risk/models/mlp_model.py": "c1d98618e600c2a2214bc41abd700b666806f359ef9a8b96b13fca91d5390c0f",
+    "storm_risk/models/ensemble.py": "7cf3c160cd5d2138a3def8494d64e8df2b8fabc1de72a511115f3149a3a9670e",
+    "storm_risk/confirmation/neighbour.py": "a9bb8ada216a77ef8e76d5cf62c03e77cdb8f74247c7602f040477ec0aa8b617",
+    "storm_risk/confirmation/__init__.py": "62d494d98611ee0baaf9f6db06a0964891c502ee43624c33331f73e021574dcc",
+    "storm_risk/viz/__init__.py": "b84ffdf55f71c50033e78c3ebb0263942d6133a350f75e5b9e446ae8c5a13120",
+    "storm_risk/viz/heatmaps.py": "81aeeff39c79002529c251a6c7c897cbf1e8b7c10c476ce14afb11a76d64c5a9",
+    "storm_risk/data/labels.py": "0d0526a34445c7f9287f3f358b7c4c53d87066784690a58f9aeedfd6d9343a86",
+    "storm_risk/data/__init__.py": "530cb4c49a82c4a61940b99fa346e663ed415edc704accb833250f0d1b001d02",
+    "storm_risk/data/era5_loader.py": "5e23d71dbea18855aa2bf63083efcf632a1544edabc73cd3fe01ee9ceb8dc738",
+    "storm_risk/data/splits.py": "e5acb5e25a89a1ca2e20aeaa7763e03a83c226d0f2745bcb4ab1dd2426af600b",
+    "storm_risk/validation/bootstrap.py": "d095f78db3c358900eeb1fbe2a46a152d0a14409791d4ab78d4b744438bb733e",
+    "storm_risk/validation/metrics.py": "adfa4cabcf86fa8c8800dab36ad3bbbb176e948babc4445199cd43b9ece1d8c2",
+    "storm_risk/validation/reliability.py": "b7fe91e453c0412c470a768eff3930159bf65ca1ad05464bc92735ca4ecc5cc1",
+    "storm_risk/validation/__init__.py": "b10c8eed00fefeb541fc9abc6f30a7bd9cca55049ba2d44cef0f174038bd12d2",
+    "storm_risk/validation/gate.py": "47ffcd75260c3a72aaafc947d36ad3fc9a695367a106fb64833e8702968973ce",
+    "storm_risk/config/gate.yaml": "0a471c3a6c42bb92dcca1f3f5a369017f40216371222fc6afd947932b5e06791",
+    "storm_risk/config/default.yaml": "165ebd54c68bf6ac60d5250cfa1f890e159b9044525c71fc963795c7961897b7",
+    "server/storm_run.py": "0c2de994198077953d153fa9134a29430b4221fdfe74c75d0142e1414328aff4",
+    "server/dashboard.py": "35b3f1c1828f9426f5569d3ad531995aab5161f662f7488d369a8cb209ed5001",
+    "tests/storm_risk/test_online_predict_before_update.py": "b228d7766c36ac725c6d2e0113562f0204373685a94020c0bcd67c80293e5afa",
+    "tests/storm_risk/conftest.py": "760b597535b32d245ba0880dcef6e5d2c30a31dc34d758ac4fe579fe14c0cf0b",
+    "tests/storm_risk/test_dashboard_outputs.py": "c65293c701cf3f8ebee66c8a8b1a716b33fdf9c9ae8e251dfd640e30c17cd722",
+    "tests/storm_risk/test_split_isolation.py": "1aa2fd07b227bcd2f8ef0ffd2c31795885836c477d7ac256cc028d3f9cad16ae",
+    "tests/storm_risk/test_calibrator_skip.py": "d89d38a58797856dc67f3a849b433f02eb0ddba50193c51309ba02385c6be261",
+    "tests/storm_risk/test_data_evidence.py": "50fa52f1087114b50ad8dd8b4e0e95ce3e01f2b25db00a5942a410292979309c",
+    "tests/storm_risk/test_neighbour_confirmation.py": "597d19c33744a092399b1e87ed480f8cf8eb11b8a9e93b509354602833e033e7",
+    "tests/storm_risk/test_reliability_bins.py": "94928fbd340f51320338436896406758fda6f69f2e61a84b95f547aff94e7d1d",
+    "tests/storm_risk/test_no_future_leakage.py": "27f0fc7796196cd4a5dd03a7cd9fbdfd9970c11f0aa4596a3b1b7457519d77c9",
+    "tests/storm_risk/test_anomaly_flags.py": "35041d3d50bb09082001c232d30fe1fb38d72307c34f731c4cd42c702441c45e",
+    "apps/indra-himachal-ui/src/components/StormRiskPanel.jsx": "be6901667e50156dfdcbdd3a123c283793ef6e3d0e2d52b3bc84a64dca4cd223"
+  },
+  "model_bundle_contents": "THREE_MODELS_SCALER_WEIGHTS_MAPPER_SETTINGS_VERSIONS_VERIFIED",
+  "mlp_architecture": [
+    588,
+    64,
+    1
+  ],
+  "mlp_epochs": 30,
+  "online_checkpoint_contents": "MODEL_FIXED_SCALER_WEIGHTS_PENDING_PREDICTIONS_AUDIT_SETTINGS_VERIFIED",
+  "live_preview_http": "FRONTEND_STATUS_REPORT_SCORES_HEATMAP_ALL_200",
+  "actual_run_browser_checks": {
+    "passed": 2,
+    "projects": [
+      "desktop",
+      "mobile"
+    ],
+    "run_id": "storm_pipeline_submission_v2",
+    "errors": 0,
+    "horizontal_overflow": false
+  },
+  "screenshots_sha256": {
+    "actual_run_mobile.png": "c831766dab1fec4ef3178b4d7a7b4cb7170a747559d6cec4da1f2ff00220e641",
+    "desktop.png": "9bf519a070149e843f491964a1dc46a40b4f16611f98a1ee47b4625adff686d7",
+    "mobile.png": "5ac564d9da314372123034bd558c86523c31c579fe74f2962990246faf95cf4f",
+    "actual_run_desktop.png": "2875e84d2640b26c425b7fff34326b19b4315f87245e14b62165142131646460"
+  }
+}

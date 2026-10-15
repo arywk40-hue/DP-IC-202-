@@ -50,15 +50,15 @@ export default function TelemetryPanel({ nodeName, telemetry, loading, cached, r
         </div>)}
       </div>
       <p className="evidence-note">Forecast for {date(telemetry.forecastTimestamp)}<br />
-        Model: {telemetry.forecastModel?.id}. Trained on Mandi-location modeled grids; field accuracy unverified.
+        Model: {telemetry.forecastModel?.id}. Trained on Mandi-location modeled grids; field validation pending.
       </p>
       <h3>Experimental risk assessments</h3>
-      <p className="evidence-note">Current sensor patterns, not six-hour event forecasts. Scores are not probabilities. A non-match does not establish safety.</p>
+      <p className="evidence-note">Current sensor patterns, not six-hour event forecasts. Experimental uncalibrated risk scores. A non-match does not establish safety.</p>
       {Object.values(telemetry.risks || {}).map((risk) => <article key={risk.target} className={`risk-card risk-${risk.abstain ? 'unknown' : risk.level}`}>
         <h4>{risk.display_name}</h4>
         <strong>{risk.abstain ? 'Unknown / insufficient evidence' : risk.level.replaceAll('_',' ')}</strong>
         <div>Rule score: {Number.isFinite(risk.score) ? `${risk.score.toFixed(2)} / 1` : 'Unavailable'} · Evidence coverage: {Math.round(risk.coverage*100)}%</div>
-        <div>Probability: unavailable · Peer corroboration: {risk.corroboration}</div>
+        <div>Calibration: unavailable · Peer corroboration: {risk.corroboration}</div>
         <details><summary>Rule evidence ({risk.triggered_evidence.length} matched)</summary>
           <ul>{risk.evidence.map(e => <li key={e.feature}>{e.feature}: {e.value == null ? 'Unavailable' : String(e.value)} {e.unit} — {e.matched == null ? 'unknown' : e.matched ? 'matched' : 'not matched'}</li>)}</ul>
           <small>{risk.profile} · {risk.confidence_kind}</small>

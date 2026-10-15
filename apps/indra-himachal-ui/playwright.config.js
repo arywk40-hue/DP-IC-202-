@@ -8,7 +8,7 @@ export default defineConfig({
     { name: 'mobile', use: { viewport: {width:390,height:844}, isMobile:true, hasTouch:true } }
   ],
   webServer: {
-    command: `cd ../.. && "${python}" -m server.dashboard --demo --ui apps/indra-himachal-ui/dist --db data/himachal/dashboard_e2e.sqlite --port 8081`,
+    command: `cd ../.. && "${python}" -m server.dashboard --demo --ui apps/indra-himachal-ui/dist --db data/himachal/dashboard_e2e.sqlite --port 8081 --storm-risk-run tests/fixtures/storm_risk_ui`,
     url: 'http://127.0.0.1:8081/api/status', timeout:60000, reuseExistingServer:false
   }
 });

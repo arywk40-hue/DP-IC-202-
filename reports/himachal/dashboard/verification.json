@@ -22,7 +22,7 @@
       "passed": 2
     },
     "browser_tests": {
-      "passed": 4,
+      "passed": 6,
       "projects": [
         "desktop_1440x1000",
         "mobile_390x844"
@@ -30,16 +30,17 @@
       "browser": "Installed Google Chrome via Playwright 1.56.1",
       "cases": [
         "Six channels, saved-model estimates, node selection, three experimental risk cards, incomplete-history abstention, disabled RPC, no horizontal overflow, no page errors",
-        "API loss shows cached and stale warnings"
+        "API loss shows cached and stale warnings",
+        "ERA5 research gate/warnings, anomaly markers, neighbouring-grid confirmation and feature grid (synthetic UI contract fixture)"
       ]
     },
     "frontend_production_build": "PASSED",
     "full_working_tree_regression": {
-      "passed": 281,
+      "passed": 309,
       "subtests_passed": 172,
-      "seconds": 47.24,
+      "seconds": 57.42,
       "warnings": 3,
-      "note": "Includes the separate uncommitted Phase F runtime tests; not a claim of completed F/G\u2013N scope"
+      "note": "Includes separate network and ERA5 research implementations; not field evidence"
     },
     "ruff": "PASSED",
     "protected_files": {
@@ -57,22 +58,23 @@
   "spatial_surface": "UNAVAILABLE",
   "rpc": "DISABLED",
   "files_sha256": {
-    "apps/indra-himachal-ui/src/App.jsx": "132b86c662fc86cdf022039e6d78ec0692d57ef44d20174f3864af64a223345c",
+    "apps/indra-himachal-ui/src/App.jsx": "5b4bfa3af14ec20b1a5b51179ea2bb1c08f1fcc8e8080e50b8c536b0d88ffa41",
     "apps/indra-himachal-ui/src/api/cache.js": "0a93a156b2ae54c71d949b629724cedb62fb132ff8291a773c080c4f555ed8ed",
-    "apps/indra-himachal-ui/src/api/client.js": "26046d4d247397faad9484824b565badadc0a74fc8a6ca999a5d5cc5625f68b4",
+    "apps/indra-himachal-ui/src/api/client.js": "7a060af6ad9a9e781c968264dccc1365ca37426ad4f6a3938b151fe68ebcfdfa",
     "apps/indra-himachal-ui/src/api/contract.js": "c14353c54dcfd7b9528adc1bdc143e729b35c2f178504ac539448d6c8701a0d5",
-    "apps/indra-himachal-ui/src/components/MapView.jsx": "686c5937d44353d034df79c83259857ebc29896fddd729bd70b9537b38e660d7",
+    "apps/indra-himachal-ui/src/components/MapView.jsx": "750ae0aa0b3b4870cdbd10b29b809688176c1a5f99144498bacde86c3f05310a",
     "apps/indra-himachal-ui/src/components/NodeList.jsx": "559ef8af8a363fafbef3afa7065d2871d1d5f4233faa6aa2f5b5b7ecf2d2134d",
     "apps/indra-himachal-ui/src/components/RpcMenu.jsx": "8da06857520b6c51eae6391dd5fa2eed799b794571adc2d0f85c093c074b82da",
     "apps/indra-himachal-ui/src/components/StatusHeader.jsx": "d3d017886d008b48b5c67420a3da130cec9c82a46e56b6abf776a33f2542ffb2",
-    "apps/indra-himachal-ui/src/components/TelemetryPanel.jsx": "5ed51a2bcfaf09e2ada8cc6291b5ca86a852878a03f87d78b6a42c9db4a56d06",
+    "apps/indra-himachal-ui/src/components/TelemetryPanel.jsx": "3416abd663dc3ca22551fadc9cf90dff367888874cffe099eb821bae0d2ece1e",
     "apps/indra-himachal-ui/src/main.jsx": "5044d7eafc37db1f3d2b9c0a1fdbe201ac24734b7ecbae8d52267cd3aeb4430c",
-    "apps/indra-himachal-ui/src/styles.css": "6d1396da1bee331e49ad936bc0313926a618c6bf5a1d5fe194554a4c9dc57d90",
+    "apps/indra-himachal-ui/src/styles.css": "d5b3446d082f6acf154bd3de9c0a8d0aba1d4bc56e5321e2686efad370ac3230",
     "server/__init__.py": "6f299b2bc7540ffde6808f94bb18a33aef474ba6ccac39949e37e949eafefdb8",
-    "server/dashboard.py": "4fdbf36b06de1829335e646546a39ef9d160df2220d2fb0d493e81447f6c66af"
+    "server/dashboard.py": "35b3f1c1828f9426f5569d3ad531995aab5161f662f7488d369a8cb209ed5001"
   },
   "screenshots": {
-    "desktop.png": "f96951f1fb35dd8b99fe2faefd90839a9faa02ee78e46c3de748108e2179fa80",
-    "mobile.png": "dc2a08781a80c2180a2c7326c8ad92ba812ad6509fc4f4da56a2b9a3f105676c"
-  }
+    "desktop.png": "1cfa275855be8263fd7fe35776f052ba268a0f6c07d69a3e64ea1ffad81217fe",
+    "mobile.png": "e96f09d188f3457c2b389f5f9ba9ef1c3a76fe96cff00eee059d155aa9bd2ce5"
+  },
+  "storm_context_pipeline": "reports/storm_risk_pipeline_v1/verification.json"
 }

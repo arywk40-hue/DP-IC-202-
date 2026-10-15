@@ -25,5 +25,9 @@
   "era5_online_research": "DELAYED_LABEL_PREQUENTIAL_SGD_TESTED",
   "neighbour_network": "AUTHENTICATED_RUNTIME_AND_SYNTHETIC_STRESS_TESTED_NOT_LIVE",
   "network_scale": "SINGLE_CHANNEL_CONGESTION_FAILURES_RECORDED",
-  "network_evidence": "reports/himachal/phase_f_verification.json"
+  "network_evidence": "reports/himachal/phase_f_verification.json",
+  "storm_context_pipeline": "IMPLEMENTED_SYNTHETIC_TESTED_LOCAL_FILES_ONLY",
+  "storm_context_ui": "REPORT_SCORES_ANOMALIES_GRID_CONFIRMATION_FEATURE_MAPS_CONNECTED",
+  "storm_context_calibrated": false,
+  "storm_context_evidence": "reports/storm_risk_pipeline_v1/verification.json"
 }

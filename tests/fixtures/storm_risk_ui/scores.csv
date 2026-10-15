@@ -1,0 +1,5 @@
+time,lat,lon,split,ridge_risk_uncal,xgb_risk_uncal,mlp_risk_uncal,ensemble_risk_uncal,anomaly_flag,anomaly_features,anomaly_available,neighbour_confirmed
+2020-07-30T23:00:00+00:00,31.5,76.75,test,0.9,0.9,0.9,0.9,True,t2m,True,True
+2020-07-30T23:00:00+00:00,31.5,77.0,test,0.9,0.9,0.9,0.9,False,,True,True
+2020-07-30T23:00:00+00:00,31.75,76.75,test,0.9,0.9,0.9,0.9,False,,True,True
+2020-07-30T23:00:00+00:00,31.75,77.0,test,0.1,0.1,0.1,0.1,False,,True,False

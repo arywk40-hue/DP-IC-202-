@@ -1,0 +1,61 @@
+{
+  "schema_version": "indra_storm_risk_report_v1",
+  "run_id": "synthetic_ui_contract_fixture",
+  "status": "SYNTHETIC_UI_FIXTURE",
+  "evidence_kind": "synthetic_engineering",
+  "target": {
+    "name": "cloudburst",
+    "lead_hours": 0
+  },
+  "calibrated": false,
+  "calibration_method": "none",
+  "gate_failures": [
+    "SYNTHETIC_EVIDENCE_ONLY"
+  ],
+  "warnings": [
+    "UI_CONTRACT_FIXTURE_NOT_TRAINED_MODEL"
+  ],
+  "sample_counts": {},
+  "metrics": {},
+  "confidence_intervals": null,
+  "ensemble_weights": {
+    "ridge": 0.4,
+    "xgb": 0.3,
+    "mlp": 0.3
+  },
+  "score_columns": [
+    "time",
+    "lat",
+    "lon",
+    "split",
+    "ridge_risk_uncal",
+    "xgb_risk_uncal",
+    "mlp_risk_uncal",
+    "ensemble_risk_uncal",
+    "anomaly_flag",
+    "anomaly_features",
+    "anomaly_available",
+    "neighbour_confirmed"
+  ],
+  "output_kind": "EXPERIMENTAL_RISK_UNCALIBRATED",
+  "online": {
+    "status": "DISABLED"
+  },
+  "heatmaps": {
+    "features": [
+      "t2m"
+    ],
+    "frames": [
+      {
+        "time": "2020-07-30T23:00:00+00:00",
+        "file": "20200730T230000Z.npz",
+        "sha256": "e9692bde9d83012d71890644a8ee5cb364221afc38b6f515b82f6a81a17e1744"
+      }
+    ],
+    "method": "ORIGINAL_ERA5_GRID_NO_INTERPOLATION",
+    "evidence": "synthetic_engineering",
+    "units": {
+      "t2m": "degC"
+    }
+  }
+}

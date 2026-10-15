@@ -41,8 +41,11 @@ export default function MapView({
 
     mapRef.current = map;
     requestAnimationFrame(() => map.invalidateSize());
+    const resizeObserver = new ResizeObserver(() => map.invalidateSize({pan: false}));
+    resizeObserver.observe(containerRef.current);
 
     return () => {
+      resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;
       markersRef.current = {};

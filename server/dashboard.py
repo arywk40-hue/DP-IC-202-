@@ -27,6 +27,7 @@ from ml.himachal.rules import evaluate
 from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.six_sensor_forecast.predict import predict
+from server.storm_run import StormRun
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "ml/models/india_mandi_modeled_6h_v1"
@@ -147,11 +148,30 @@ class Store:
             return [json.loads(r[0]) for r in db.execute("SELECT payload FROM nodes ORDER BY id LIMIT 201")]
 
 
-def create_app(db_path, *, ui_dir=None, clock=None):
+def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
     store = Store(db_path)
     started = time.monotonic()
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
+    storm = StormRun(storm_risk_run)
+
+    def storm_read(method, *args):
+        try:
+            return method(*args)
+        except (ValueError, KeyError, OSError) as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get('/api/storm-risk/report')
+    def storm_report():
+        return storm_read(storm.report)
+
+    @app.get('/api/storm-risk/scores')
+    def storm_scores(limit: int = 200):
+        return storm_read(storm.scores, limit)
+
+    @app.get('/api/storm-risk/heatmap')
+    def storm_heatmap(feature: str | None = None, time: str | None = None):
+        return storm_read(storm.heatmap, feature, time)
 
     def nodes():
         now_ms = (clock() if clock else time.time())*1000
@@ -216,10 +236,11 @@ def main():
     sources.add_argument("--demo", action="store_true", help="Replace store with clearly marked synthetic fixtures")
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--ui", type=Path)
+    parser.add_argument('--storm-risk-run', type=Path, help='Owner-generated experimental ERA5 run directory')
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("Use a local unprivileged port")
-    app = create_app(args.db, ui_dir=args.ui)
+    app = create_app(args.db, ui_dir=args.ui, storm_risk_run=args.storm_risk_run)
     if args.observations or args.demo:
         raw = demo_observations() if args.demo else read_observations(args.observations)
         prepared = assess(raw)

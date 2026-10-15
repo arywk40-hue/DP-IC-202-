@@ -4,6 +4,7 @@ import NodeList from './components/NodeList';
 import MapView from './components/MapView';
 import TelemetryPanel from './components/TelemetryPanel';
 import RpcMenu from './components/RpcMenu';
+import StormRiskPanel from './components/StormRiskPanel';
 import { getNodes, getStatus, getHeatmap, getTelemetry } from './api/client';
 import { withCache } from './api/cache';
 import { DASHBOARD_API_VERSION } from './api/contract';
@@ -120,10 +121,11 @@ export default function App() {
 
       <div className="research-banner">
         {status?.syntheticDemo ? 'SYNTHETIC DEMO — not observed Mandi weather. ' : 'Research prototype. '}
-        Six-hour numerical forecasts · Experimental current-condition risk scores · No calibrated hazard probabilities or public alerts.
+        Six-hour numerical forecasts · Experimental current-condition risk scores · Public alerts disabled.
         {status?.staleNodes > 0 && ` ${status.staleNodes} node(s) have stale observations.`}
       </div>
       {error && <div className="version-banner" role="alert">Connection/data unavailable. {error}</div>}
+      <StormRiskPanel />
       <div className="app-body">
         <NodeList
           nodes={nodes}

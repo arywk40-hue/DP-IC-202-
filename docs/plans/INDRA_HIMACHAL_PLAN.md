@@ -12,7 +12,7 @@ Exactly six physical channels; derived history and metadata are separate. Conven
 | D | Source provenance and independent observed labels | COMPLETE |
 | E | Bounded anomaly engine and Python/C parity | COMPLETE |
 | F | Dynamic registration, health, authenticated consensus and radio simulation | IN_PROGRESS |
-| G | Independent supervised model pipeline and registry | PENDING |
+| G | Independent supervised model pipeline and registry | PARTIAL — separate ERA5 risk pipeline implemented/tested; empirical training and six-channel promotion pending |
 | H | Leakage-safe evaluation and evidence receipts | PENDING |
 | I | Supported elevation-aware spatial estimates and uncertainty | PENDING |
 | J | Isolated persistent backend and bounded jobs/SSE | PARTIAL — read-only SQLite dashboard adapter; jobs/SSE pending |
@@ -58,3 +58,15 @@ User requested an architecture beyond XGBoost. Two six-channel, 66-history-featu
 ## ERA5 online research replay (2026-10-15)
 
 User supplied a specific SGDClassifier/partial_fit research specification. Implemented a separate ERA5-context daily learner with fixed warm-up scaling/weights, delayed outcome availability, durable prediction-before-update records, prequential reference/rolling diagnostics, frozen holdout and resumable local joblib checkpoints. Synthetic engineering runs verify causality/execution only. Existing six-channel forecasting, deployed risk rules and independent-event admission remain unchanged. No live service or empirical hazard probability is enabled. See `docs/ONLINE_STORM_RESEARCH.md`.
+
+## Config-driven ERA5 ensemble and research UI (2026-10-15)
+
+Implemented the supplied `STORM_RISK_IMPLEMENTATION_SPEC.md` as an isolated
+`storm_risk` package: 588 causal features, independently recorded labels and
+monitored negatives, chronological ridge/XGBoost/MLP fits, calibration-only
+ensemble/mapping, held-out day-bootstrap gate, separate anomalies and grid
+confirmation, optional frozen-holdout online replay, artifact exports and a
+React research panel. All demonstrated models use synthetic engineering data;
+the evidence gate remains closed. No real local ERA5/event files were present.
+The six-channel student and all original weights remain unchanged. See
+`storm_risk/README.md` and `reports/storm_risk_pipeline_v1/ACCEPTANCE.md`.
