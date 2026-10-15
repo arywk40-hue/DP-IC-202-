@@ -107,3 +107,9 @@ esp32/ml_integration/include/build_identity.h
 node_modules/
 playwright-report/
 test-results/
+
+# Storm context source files and local fitted artifacts; retain code/config/reports.
+/storm_risk/data/raw/
+/storm_risk/data/confirmed_labels.csv
+/storm_risk/data/confirmed_events.csv
+/outputs/
