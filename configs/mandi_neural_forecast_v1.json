@@ -1,0 +1,18 @@
+{
+  "schema_version": "indra_mandi_neural_benchmark_v1",
+  "base_config": "configs/mandi_modeled_forecast_v1.json",
+  "models_output": "ml/models/india_mandi_neural_history_v1",
+  "reports_output": "reports/india_mandi_neural_history_v1",
+  "architectures": [[32], [64, 32]],
+  "seed": 42,
+  "max_epochs": 80,
+  "patience": 12,
+  "batch_size": 256,
+  "learning_rate": 0.001,
+  "alpha": 0.01,
+  "threads": 2,
+  "minimum_improvement": 0.0001,
+  "residual_blend_candidates": [0, 0.25, 0.5, 0.75, 1],
+  "deployment_approved": false,
+  "online_learning_enabled": false
+}

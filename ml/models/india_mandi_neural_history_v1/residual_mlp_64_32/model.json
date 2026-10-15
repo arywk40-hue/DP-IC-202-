@@ -1,0 +1,304 @@
+{
+  "schema_version": "indra_mandi_residual_mlp_v1",
+  "artifact": "weights.npz",
+  "artifact_sha256": "51cb87e10e78c6d8984152151e6743cd48249baa2876dbd7052060be466fb5a3",
+  "features": [
+    "temperature_c",
+    "temperature_c_lag_1h",
+    "temperature_c_lag_3h",
+    "temperature_c_lag_6h",
+    "temperature_c_lag_12h",
+    "temperature_c_lag_24h",
+    "temperature_c_delta_1h",
+    "temperature_c_mean_6h",
+    "temperature_c_std_6h",
+    "temperature_c_mean_24h",
+    "temperature_c_std_24h",
+    "relative_humidity_pct",
+    "relative_humidity_pct_lag_1h",
+    "relative_humidity_pct_lag_3h",
+    "relative_humidity_pct_lag_6h",
+    "relative_humidity_pct_lag_12h",
+    "relative_humidity_pct_lag_24h",
+    "relative_humidity_pct_delta_1h",
+    "relative_humidity_pct_mean_6h",
+    "relative_humidity_pct_std_6h",
+    "relative_humidity_pct_mean_24h",
+    "relative_humidity_pct_std_24h",
+    "pressure_hpa",
+    "pressure_hpa_lag_1h",
+    "pressure_hpa_lag_3h",
+    "pressure_hpa_lag_6h",
+    "pressure_hpa_lag_12h",
+    "pressure_hpa_lag_24h",
+    "pressure_hpa_delta_1h",
+    "pressure_hpa_mean_6h",
+    "pressure_hpa_std_6h",
+    "pressure_hpa_mean_24h",
+    "pressure_hpa_std_24h",
+    "pm25_ug_m3",
+    "pm25_ug_m3_lag_1h",
+    "pm25_ug_m3_lag_3h",
+    "pm25_ug_m3_lag_6h",
+    "pm25_ug_m3_lag_12h",
+    "pm25_ug_m3_lag_24h",
+    "pm25_ug_m3_delta_1h",
+    "pm25_ug_m3_mean_6h",
+    "pm25_ug_m3_std_6h",
+    "pm25_ug_m3_mean_24h",
+    "pm25_ug_m3_std_24h",
+    "pm10_ug_m3",
+    "pm10_ug_m3_lag_1h",
+    "pm10_ug_m3_lag_3h",
+    "pm10_ug_m3_lag_6h",
+    "pm10_ug_m3_lag_12h",
+    "pm10_ug_m3_lag_24h",
+    "pm10_ug_m3_delta_1h",
+    "pm10_ug_m3_mean_6h",
+    "pm10_ug_m3_std_6h",
+    "pm10_ug_m3_mean_24h",
+    "pm10_ug_m3_std_24h",
+    "wind_speed_mps",
+    "wind_speed_mps_lag_1h",
+    "wind_speed_mps_lag_3h",
+    "wind_speed_mps_lag_6h",
+    "wind_speed_mps_lag_12h",
+    "wind_speed_mps_lag_24h",
+    "wind_speed_mps_delta_1h",
+    "wind_speed_mps_mean_6h",
+    "wind_speed_mps_std_6h",
+    "wind_speed_mps_mean_24h",
+    "wind_speed_mps_std_24h"
+  ],
+  "targets": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "architecture": {
+    "hidden_layers": [
+      64,
+      32
+    ],
+    "selected_epoch": 33,
+    "epochs_run": 45,
+    "normalized_validation_mae": 0.28822779467678555,
+    "validation_trace": [
+      {
+        "epoch": 1,
+        "normalized_validation_mae": 0.3998466900843103
+      },
+      {
+        "epoch": 2,
+        "normalized_validation_mae": 0.35424961207056715
+      },
+      {
+        "epoch": 3,
+        "normalized_validation_mae": 0.3374050916252785
+      },
+      {
+        "epoch": 4,
+        "normalized_validation_mae": 0.3231233652821133
+      },
+      {
+        "epoch": 5,
+        "normalized_validation_mae": 0.31396185020726913
+      },
+      {
+        "epoch": 6,
+        "normalized_validation_mae": 0.30766097974751827
+      },
+      {
+        "epoch": 7,
+        "normalized_validation_mae": 0.30377630278943407
+      },
+      {
+        "epoch": 8,
+        "normalized_validation_mae": 0.29985544285289617
+      },
+      {
+        "epoch": 9,
+        "normalized_validation_mae": 0.2982193622375033
+      },
+      {
+        "epoch": 10,
+        "normalized_validation_mae": 0.29594968879236766
+      },
+      {
+        "epoch": 11,
+        "normalized_validation_mae": 0.2951969462560002
+      },
+      {
+        "epoch": 12,
+        "normalized_validation_mae": 0.2944156725913811
+      },
+      {
+        "epoch": 13,
+        "normalized_validation_mae": 0.29368926418432156
+      },
+      {
+        "epoch": 14,
+        "normalized_validation_mae": 0.29219430555864057
+      },
+      {
+        "epoch": 15,
+        "normalized_validation_mae": 0.29136031255217415
+      },
+      {
+        "epoch": 16,
+        "normalized_validation_mae": 0.29089985981502325
+      },
+      {
+        "epoch": 17,
+        "normalized_validation_mae": 0.2909241101351069
+      },
+      {
+        "epoch": 18,
+        "normalized_validation_mae": 0.29060433505407374
+      },
+      {
+        "epoch": 19,
+        "normalized_validation_mae": 0.29108441959896714
+      },
+      {
+        "epoch": 20,
+        "normalized_validation_mae": 0.2909296201296589
+      },
+      {
+        "epoch": 21,
+        "normalized_validation_mae": 0.29112679051789103
+      },
+      {
+        "epoch": 22,
+        "normalized_validation_mae": 0.29197576361775585
+      },
+      {
+        "epoch": 23,
+        "normalized_validation_mae": 0.2915063937137272
+      },
+      {
+        "epoch": 24,
+        "normalized_validation_mae": 0.29118720418280736
+      },
+      {
+        "epoch": 25,
+        "normalized_validation_mae": 0.2914075749910577
+      },
+      {
+        "epoch": 26,
+        "normalized_validation_mae": 0.2916243875064651
+      },
+      {
+        "epoch": 27,
+        "normalized_validation_mae": 0.2906753099247289
+      },
+      {
+        "epoch": 28,
+        "normalized_validation_mae": 0.29057175739225455
+      },
+      {
+        "epoch": 29,
+        "normalized_validation_mae": 0.29043993441537935
+      },
+      {
+        "epoch": 30,
+        "normalized_validation_mae": 0.28940232640559044
+      },
+      {
+        "epoch": 31,
+        "normalized_validation_mae": 0.28933183693303793
+      },
+      {
+        "epoch": 32,
+        "normalized_validation_mae": 0.2885726607394563
+      },
+      {
+        "epoch": 33,
+        "normalized_validation_mae": 0.28822779467678555
+      },
+      {
+        "epoch": 34,
+        "normalized_validation_mae": 0.2890364152377625
+      },
+      {
+        "epoch": 35,
+        "normalized_validation_mae": 0.28937362816044565
+      },
+      {
+        "epoch": 36,
+        "normalized_validation_mae": 0.28902443671803896
+      },
+      {
+        "epoch": 37,
+        "normalized_validation_mae": 0.28898336211843106
+      },
+      {
+        "epoch": 38,
+        "normalized_validation_mae": 0.28915591279191577
+      },
+      {
+        "epoch": 39,
+        "normalized_validation_mae": 0.2896995980950384
+      },
+      {
+        "epoch": 40,
+        "normalized_validation_mae": 0.28934195961255665
+      },
+      {
+        "epoch": 41,
+        "normalized_validation_mae": 0.2896717970263566
+      },
+      {
+        "epoch": 42,
+        "normalized_validation_mae": 0.2894933482238404
+      },
+      {
+        "epoch": 43,
+        "normalized_validation_mae": 0.2891338810837728
+      },
+      {
+        "epoch": 44,
+        "normalized_validation_mae": 0.28961914651195986
+      },
+      {
+        "epoch": 45,
+        "normalized_validation_mae": 0.2897363446086238
+      }
+    ],
+    "residual_weights": [
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      0.75,
+      1.0
+    ],
+    "parameter_count": 6566
+  },
+  "horizon_hours": 6,
+  "source_sha256": "fe9696dbb09b1016ee9467a2a5ac636868ed584b5dc0e2dec4a70df096ca1f4e",
+  "config_sha256": "67d530ea90850384433f1bd2a2d29a48f8b9375562b3f16c0fad453cb120d797",
+  "base_config_sha256": "b1f0fd8065f8eb31a4dbf751bfba1bd214a9f17ee54247c9f61b1b1d760cf051",
+  "fit_seconds": 2.4521037910017185,
+  "country": "IN",
+  "evidence": "MODELED_GRID_RETROSPECTIVE",
+  "deployment_approved": false,
+  "normalization": "TRAIN_ONLY_FEATURE_AND_TARGET_RESIDUAL_MEAN_STD",
+  "architecture_family": "Shared multi-output residual feed-forward neural network with causal history features",
+  "prediction": "physical_clip(current + validation_weight * inverse_scaled_network_residual)",
+  "feature_history_hours": 24,
+  "online_learning_enabled": false,
+  "selection": "Chronological validation for epoch and per-target blend; no random validation split",
+  "source_dates": {
+    "start": "2024-01-01",
+    "end": "2026-10-10"
+  },
+  "software": {
+    "python": "3.13.0",
+    "numpy": "2.3.4",
+    "sklearn": "1.7.2"
+  }
+}

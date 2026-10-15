@@ -1,0 +1,315 @@
+{
+  "schema_version": "indra_mandi_residual_mlp_v1",
+  "artifact": "weights.npz",
+  "artifact_sha256": "b370c68c1630cd0813b79c77c2d8eaf633ffa46352d81485430fa6bf77ca1788",
+  "features": [
+    "temperature_c",
+    "temperature_c_lag_1h",
+    "temperature_c_lag_3h",
+    "temperature_c_lag_6h",
+    "temperature_c_lag_12h",
+    "temperature_c_lag_24h",
+    "temperature_c_delta_1h",
+    "temperature_c_mean_6h",
+    "temperature_c_std_6h",
+    "temperature_c_mean_24h",
+    "temperature_c_std_24h",
+    "relative_humidity_pct",
+    "relative_humidity_pct_lag_1h",
+    "relative_humidity_pct_lag_3h",
+    "relative_humidity_pct_lag_6h",
+    "relative_humidity_pct_lag_12h",
+    "relative_humidity_pct_lag_24h",
+    "relative_humidity_pct_delta_1h",
+    "relative_humidity_pct_mean_6h",
+    "relative_humidity_pct_std_6h",
+    "relative_humidity_pct_mean_24h",
+    "relative_humidity_pct_std_24h",
+    "pressure_hpa",
+    "pressure_hpa_lag_1h",
+    "pressure_hpa_lag_3h",
+    "pressure_hpa_lag_6h",
+    "pressure_hpa_lag_12h",
+    "pressure_hpa_lag_24h",
+    "pressure_hpa_delta_1h",
+    "pressure_hpa_mean_6h",
+    "pressure_hpa_std_6h",
+    "pressure_hpa_mean_24h",
+    "pressure_hpa_std_24h",
+    "pm25_ug_m3",
+    "pm25_ug_m3_lag_1h",
+    "pm25_ug_m3_lag_3h",
+    "pm25_ug_m3_lag_6h",
+    "pm25_ug_m3_lag_12h",
+    "pm25_ug_m3_lag_24h",
+    "pm25_ug_m3_delta_1h",
+    "pm25_ug_m3_mean_6h",
+    "pm25_ug_m3_std_6h",
+    "pm25_ug_m3_mean_24h",
+    "pm25_ug_m3_std_24h",
+    "pm10_ug_m3",
+    "pm10_ug_m3_lag_1h",
+    "pm10_ug_m3_lag_3h",
+    "pm10_ug_m3_lag_6h",
+    "pm10_ug_m3_lag_12h",
+    "pm10_ug_m3_lag_24h",
+    "pm10_ug_m3_delta_1h",
+    "pm10_ug_m3_mean_6h",
+    "pm10_ug_m3_std_6h",
+    "pm10_ug_m3_mean_24h",
+    "pm10_ug_m3_std_24h",
+    "wind_speed_mps",
+    "wind_speed_mps_lag_1h",
+    "wind_speed_mps_lag_3h",
+    "wind_speed_mps_lag_6h",
+    "wind_speed_mps_lag_12h",
+    "wind_speed_mps_lag_24h",
+    "wind_speed_mps_delta_1h",
+    "wind_speed_mps_mean_6h",
+    "wind_speed_mps_std_6h",
+    "wind_speed_mps_mean_24h",
+    "wind_speed_mps_std_24h"
+  ],
+  "targets": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "architecture": {
+    "hidden_layers": [
+      32
+    ],
+    "selected_epoch": 36,
+    "epochs_run": 48,
+    "normalized_validation_mae": 0.28799848503595804,
+    "validation_trace": [
+      {
+        "epoch": 1,
+        "normalized_validation_mae": 0.4443448777678516
+      },
+      {
+        "epoch": 2,
+        "normalized_validation_mae": 0.38067005457334274
+      },
+      {
+        "epoch": 3,
+        "normalized_validation_mae": 0.35381749837854715
+      },
+      {
+        "epoch": 4,
+        "normalized_validation_mae": 0.34014139858652603
+      },
+      {
+        "epoch": 5,
+        "normalized_validation_mae": 0.33125103912895565
+      },
+      {
+        "epoch": 6,
+        "normalized_validation_mae": 0.32418925690242834
+      },
+      {
+        "epoch": 7,
+        "normalized_validation_mae": 0.31885486174198596
+      },
+      {
+        "epoch": 8,
+        "normalized_validation_mae": 0.31386085617384124
+      },
+      {
+        "epoch": 9,
+        "normalized_validation_mae": 0.31023204746026845
+      },
+      {
+        "epoch": 10,
+        "normalized_validation_mae": 0.30735031514922834
+      },
+      {
+        "epoch": 11,
+        "normalized_validation_mae": 0.3044574942684541
+      },
+      {
+        "epoch": 12,
+        "normalized_validation_mae": 0.30259780951374
+      },
+      {
+        "epoch": 13,
+        "normalized_validation_mae": 0.30050297613558646
+      },
+      {
+        "epoch": 14,
+        "normalized_validation_mae": 0.29868454410211975
+      },
+      {
+        "epoch": 15,
+        "normalized_validation_mae": 0.2973811851431767
+      },
+      {
+        "epoch": 16,
+        "normalized_validation_mae": 0.29646700517619434
+      },
+      {
+        "epoch": 17,
+        "normalized_validation_mae": 0.2953678661683327
+      },
+      {
+        "epoch": 18,
+        "normalized_validation_mae": 0.2944210919667451
+      },
+      {
+        "epoch": 19,
+        "normalized_validation_mae": 0.2934122690825038
+      },
+      {
+        "epoch": 20,
+        "normalized_validation_mae": 0.2926863049238876
+      },
+      {
+        "epoch": 21,
+        "normalized_validation_mae": 0.29194772453830714
+      },
+      {
+        "epoch": 22,
+        "normalized_validation_mae": 0.2913996226804424
+      },
+      {
+        "epoch": 23,
+        "normalized_validation_mae": 0.2910054019216497
+      },
+      {
+        "epoch": 24,
+        "normalized_validation_mae": 0.29072288687511777
+      },
+      {
+        "epoch": 25,
+        "normalized_validation_mae": 0.29045288269979874
+      },
+      {
+        "epoch": 26,
+        "normalized_validation_mae": 0.29040682497950343
+      },
+      {
+        "epoch": 27,
+        "normalized_validation_mae": 0.2900465112601994
+      },
+      {
+        "epoch": 28,
+        "normalized_validation_mae": 0.2894295350902578
+      },
+      {
+        "epoch": 29,
+        "normalized_validation_mae": 0.2888131618915124
+      },
+      {
+        "epoch": 30,
+        "normalized_validation_mae": 0.28860793393200307
+      },
+      {
+        "epoch": 31,
+        "normalized_validation_mae": 0.2887375808363132
+      },
+      {
+        "epoch": 32,
+        "normalized_validation_mae": 0.28866402816555997
+      },
+      {
+        "epoch": 33,
+        "normalized_validation_mae": 0.28847027124236607
+      },
+      {
+        "epoch": 34,
+        "normalized_validation_mae": 0.28814613620199137
+      },
+      {
+        "epoch": 35,
+        "normalized_validation_mae": 0.2880727520287583
+      },
+      {
+        "epoch": 36,
+        "normalized_validation_mae": 0.28799848503595804
+      },
+      {
+        "epoch": 37,
+        "normalized_validation_mae": 0.288167703249596
+      },
+      {
+        "epoch": 38,
+        "normalized_validation_mae": 0.2883131375498805
+      },
+      {
+        "epoch": 39,
+        "normalized_validation_mae": 0.2883457853453881
+      },
+      {
+        "epoch": 40,
+        "normalized_validation_mae": 0.2886358004156803
+      },
+      {
+        "epoch": 41,
+        "normalized_validation_mae": 0.28853034705533265
+      },
+      {
+        "epoch": 42,
+        "normalized_validation_mae": 0.2887550096145411
+      },
+      {
+        "epoch": 43,
+        "normalized_validation_mae": 0.28892030636737864
+      },
+      {
+        "epoch": 44,
+        "normalized_validation_mae": 0.2890491260081423
+      },
+      {
+        "epoch": 45,
+        "normalized_validation_mae": 0.28940793587134983
+      },
+      {
+        "epoch": 46,
+        "normalized_validation_mae": 0.28931093922777984
+      },
+      {
+        "epoch": 47,
+        "normalized_validation_mae": 0.28928757083681905
+      },
+      {
+        "epoch": 48,
+        "normalized_validation_mae": 0.28924096537165916
+      }
+    ],
+    "residual_weights": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0
+    ],
+    "parameter_count": 2342
+  },
+  "horizon_hours": 6,
+  "source_sha256": "fe9696dbb09b1016ee9467a2a5ac636868ed584b5dc0e2dec4a70df096ca1f4e",
+  "config_sha256": "67d530ea90850384433f1bd2a2d29a48f8b9375562b3f16c0fad453cb120d797",
+  "base_config_sha256": "b1f0fd8065f8eb31a4dbf751bfba1bd214a9f17ee54247c9f61b1b1d760cf051",
+  "fit_seconds": 1.324718749965541,
+  "country": "IN",
+  "evidence": "MODELED_GRID_RETROSPECTIVE",
+  "deployment_approved": false,
+  "normalization": "TRAIN_ONLY_FEATURE_AND_TARGET_RESIDUAL_MEAN_STD",
+  "architecture_family": "Shared multi-output residual feed-forward neural network with causal history features",
+  "prediction": "physical_clip(current + validation_weight * inverse_scaled_network_residual)",
+  "feature_history_hours": 24,
+  "online_learning_enabled": false,
+  "selection": "Chronological validation for epoch and per-target blend; no random validation split",
+  "source_dates": {
+    "start": "2024-01-01",
+    "end": "2026-10-10"
+  },
+  "software": {
+    "python": "3.13.0",
+    "numpy": "2.3.4",
+    "sklearn": "1.7.2"
+  }
+}

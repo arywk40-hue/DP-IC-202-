@@ -1,0 +1,15 @@
+{
+  "evidence": "HOST_NUMERICAL_PARITY_NOT_BOARD_OR_WEATHER_VALIDATION",
+  "models": {
+    "residual_mlp_32": {
+      "cases": 100,
+      "maximum_absolute_error_against_sklearn": 0.0,
+      "artifact_sha256": "b370c68c1630cd0813b79c77c2d8eaf633ffa46352d81485430fa6bf77ca1788"
+    },
+    "residual_mlp_64_32": {
+      "cases": 100,
+      "maximum_absolute_error_against_sklearn": 0.0,
+      "artifact_sha256": "51cb87e10e78c6d8984152151e6743cd48249baa2876dbd7052060be466fb5a3"
+    }
+  }
+}

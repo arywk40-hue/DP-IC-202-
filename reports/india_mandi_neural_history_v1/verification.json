@@ -1,0 +1,31 @@
+{
+  "schema_version": "indra_neural_forecast_verification_v1",
+  "date_local": "2026-10-15",
+  "source": "EXISTING_MANDI_MODELED_GRID_NOT_PHYSICAL_STATION_DATA",
+  "validation_selection_only": true,
+  "reused_test_benchmark": true,
+  "checks": {
+    "new_contract_tests_passed": 4,
+    "full_working_tree_tests_passed": 285,
+    "full_working_tree_subtests_passed": 172,
+    "full_suite_seconds": 51.69,
+    "full_suite_note": "Includes separate unfinished/uncommitted Phase F tests",
+    "ruff": "PASSED",
+    "existing_and_new_protected_files": 129,
+    "protected_mismatches": 0,
+    "saved_model_evaluation_replay": "PASSED",
+    "full_csv_inference_smoke": "PASSED",
+    "sklearn_inference_parity": "inference_parity.json"
+  },
+  "online_learning_enabled": false,
+  "active_dashboard_model_changed": false,
+  "esp32_exported": false,
+  "physical_execution": "NOT_TESTED",
+  "hazard_accuracy": "NOT_EVALUATED",
+  "code_sha256": {
+    "ml/india_mandi/neural.py": "34c54bc99bceae18e8c11367b147fe5b4b39f2c5cb3b0c3a45780716a656f3e4",
+    "scripts/compare_forecast_architectures.py": "ca3ea289166a30c4fb07a19cbb5bf8420c70bc6702cf179aa6b71e4210badf9d",
+    "scripts/predict_neural_forecast.py": "e36ddbd89e7b69bad39c3c54d2f763d98b7b9f5f8af521fb061ab402fb5ab10b",
+    "configs/mandi_neural_forecast_v1.json": "67d530ea90850384433f1bd2a2d29a48f8b9375562b3f16c0fad453cb120d797"
+  }
+}

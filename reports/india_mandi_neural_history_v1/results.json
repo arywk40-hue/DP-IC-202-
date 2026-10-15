@@ -1,0 +1,1673 @@
+{
+  "schema_version": "indra_mandi_architecture_comparison_v1",
+  "results": {
+    "temperature_c": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 6.075856119054441,
+          "rmse": 7.522274588438157,
+          "r2": 0.24227619211514428,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 1.5045476081643703,
+          "rmse": 1.9979209744276507,
+          "r2": 0.9465473574600797,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.7523727391361406
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 1.236509376430114,
+          "rmse": 1.6585919533162874,
+          "r2": 0.9631623704602599,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.7964880418164763
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 4.171819806465995,
+          "rmse": 5.128279365556507,
+          "r2": 0.6478271117898418,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.3133774525399333
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 1.4270741478843152,
+          "rmse": 1.8868580903724312,
+          "r2": 0.9523249623614111,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.7651237751649714
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 1.2792224290509295,
+          "rmse": 1.692075579663003,
+          "r2": 0.9616600022263733,
+          "persistence_mae": 6.075856119054441,
+          "mae_skill_vs_persistence": 0.7894580773499276
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 3.138211396586927,
+          "rmse": 3.828002664107903,
+          "r2": -1.0397307252636825,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 1.2391723803704526,
+          "rmse": 1.6868370227157852,
+          "r2": 0.6039275599669129,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.6051341914957805
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 1.233380055049722,
+          "rmse": 1.6087481568429347,
+          "r2": 0.6397495766413236,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.6069799324573455
+        },
+        "student": {
+          "rows": 738,
+          "mae": 2.4206590833854142,
+          "rmse": 2.9643673198052927,
+          "r2": -0.2231857383479312,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.22865008838534973
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 1.3362447258379788,
+          "rmse": 1.776680478578823,
+          "r2": 0.5606131691715145,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.5742018121241739
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 1.2213869197929774,
+          "rmse": 1.5858509990345968,
+          "r2": 0.6499314179762601,
+          "persistence_mae": 3.138211396586927,
+          "mae_skill_vs_persistence": 0.6108015791666106
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 4.833123672533335,
+          "rmse": 5.770230089607133,
+          "r2": -0.9041758055211646,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 1.2724251009585383,
+          "rmse": 1.659647879318134,
+          "r2": 0.8424738382756479,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.7367282140554904
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 1.7723963753193368,
+          "rmse": 2.3149445751174995,
+          "r2": 0.6935201153740584,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.6332813941029745
+        },
+        "student": {
+          "rows": 954,
+          "mae": 3.7926353356006324,
+          "rmse": 4.9037551019650465,
+          "r2": -0.37523946408080344,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.2152827875781046
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 1.402894052119116,
+          "rmse": 1.8306086783112476,
+          "r2": 0.8083486802589399,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.7097334669725566
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 1.3505873867831257,
+          "rmse": 1.7323233739353807,
+          "r2": 0.8283757268206159,
+          "persistence_mae": 4.833123672533335,
+          "mae_skill_vs_persistence": 0.7205560051238663
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 5.167777745988634,
+          "rmse": 5.966899392794591,
+          "r2": -1.1117470723947545,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 1.1847246956744977,
+          "rmse": 1.5121074864049062,
+          "r2": 0.864384353920454,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.7707477461479235
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 2.0592275443673134,
+          "rmse": 2.4991797485650125,
+          "r2": 0.6295415918987048,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.6015255211070676
+        },
+        "student": {
+          "rows": 90,
+          "mae": 3.6945869336856743,
+          "rmse": 5.040029642390525,
+          "r2": -0.5066440178689307,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.2850724014682112
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 1.205949177481196,
+          "rmse": 1.510151116436717,
+          "r2": 0.8647350469065739,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.7666406651452289
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 1.0622513951292252,
+          "rmse": 1.3551765968629474,
+          "r2": 0.8910728210508166,
+          "persistence_mae": 5.167777745988634,
+          "mae_skill_vs_persistence": 0.7944471594286784
+        }
+      }
+    },
+    "relative_humidity_pct": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 19.082647553313866,
+          "rmse": 23.398051373353344,
+          "r2": -0.05213866740233186,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 7.287738316654105,
+          "rmse": 9.714680972361526,
+          "r2": 0.8186278139624441,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.6180960584062913
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 5.66443146948946,
+          "rmse": 7.647030803984116,
+          "r2": 0.8876173468861993,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.7031632296480903
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 12.519530932705873,
+          "rmse": 15.385145900914225,
+          "r2": 0.5450990543748518,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.34393113441264866
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 6.668350702161115,
+          "rmse": 8.925457830407012,
+          "r2": 0.8469002060249167,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.6505542177242015
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 6.0819723540116835,
+          "rmse": 8.187596680707363,
+          "r2": 0.87116718865831,
+          "persistence_mae": 19.082647553313866,
+          "mae_skill_vs_persistence": 0.6812825716651935
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 13.59349593495935,
+          "rmse": 17.829210829635397,
+          "r2": -1.1152425034952809,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 6.953045559590289,
+          "rmse": 9.167292552363007,
+          "r2": 0.44078590970483844,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.488502031202389
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 6.424407810351349,
+          "rmse": 8.29446320785606,
+          "r2": 0.5422034729858178,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.5273910522289378
+        },
+        "student": {
+          "rows": 738,
+          "mae": 10.852798748266729,
+          "rmse": 13.12920381726263,
+          "r2": -0.1470245260505807,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.20161827390143083
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 6.767425365562816,
+          "rmse": 8.787065242969337,
+          "r2": 0.48621239178446163,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.5021571052845537
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 6.4519687050061245,
+          "rmse": 8.276826362038024,
+          "r2": 0.5441482649357097,
+          "persistence_mae": 13.59349593495935,
+          "mae_skill_vs_persistence": 0.5253635462226356
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 18.968553459119498,
+          "rmse": 23.546688533220614,
+          "r2": -0.9410949753768498,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 7.002695704368452,
+          "rmse": 9.144840646238853,
+          "r2": 0.7072213585687527,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.6308260553731486
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 7.854233288358452,
+          "rmse": 10.382159338304081,
+          "r2": 0.6226342447307058,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.5859339877821639
+        },
+        "student": {
+          "rows": 954,
+          "mae": 14.133797403870139,
+          "rmse": 17.11721624348284,
+          "r2": -0.025778002374465148,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.254882696546634
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 7.027215534650502,
+          "rmse": 9.21231755214187,
+          "r2": 0.7028847750208888,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.6295333985379875
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 6.81896321538452,
+          "rmse": 9.0292652392638,
+          "r2": 0.7145750532175832,
+          "persistence_mae": 18.968553459119498,
+          "mae_skill_vs_persistence": 0.6405122177565854
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 21.555555555555557,
+          "rmse": 26.06487632385348,
+          "r2": -1.206217706318737,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 7.342887890372188,
+          "rmse": 9.705034882045293,
+          "r2": 0.6941339814120302,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.6593505617868574
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 8.92585039668613,
+          "rmse": 11.349097073417752,
+          "r2": 0.5817271745241699,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.5859141568547672
+        },
+        "student": {
+          "rows": 90,
+          "mae": 14.626060695118374,
+          "rmse": 18.09341342084683,
+          "r2": -0.06310960473945748,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.32147141105120947
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 7.410214653904871,
+          "rmse": 9.52119733973017,
+          "r2": 0.7056119601944246,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.6562271552312173
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 7.5688524211115285,
+          "rmse": 9.738573021140024,
+          "r2": 0.6920163379352657,
+          "persistence_mae": 21.555555555555557,
+          "mae_skill_vs_persistence": 0.6488676711855477
+        }
+      }
+    },
+    "pressure_hpa": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 2.026820717435127,
+          "rmse": 2.501766954752881,
+          "r2": 0.6625810165890942,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 0.8674349104415908,
+          "rmse": 1.1180968011050887,
+          "r2": 0.9326039228020973,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.572021884826942
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 0.7131379567247317,
+          "rmse": 0.9233389258502729,
+          "r2": 0.9540380867419752,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.6481494635464435
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 1.3631429796532102,
+          "rmse": 1.7284354990804365,
+          "r2": 0.8389420511101757,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.3274476780668487
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 0.7985628630618551,
+          "rmse": 1.0298392647975898,
+          "r2": 0.9428238772361867,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.6060022200323621
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 0.8982124023394658,
+          "rmse": 1.1378636909542514,
+          "r2": 0.9301998609279576,
+          "persistence_mae": 2.026820717435127,
+          "mae_skill_vs_persistence": 0.5568367766261423
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 1.2804877056338912,
+          "rmse": 1.5327139560840326,
+          "r2": -0.2619946416062875,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 0.6481694009875891,
+          "rmse": 0.8189649568263926,
+          "r2": 0.6396986205140863,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.49381052380606805
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 0.7033458840936093,
+          "rmse": 0.879968650991475,
+          "r2": 0.5840226456876234,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.4507203146121378
+        },
+        "student": {
+          "rows": 738,
+          "mae": 1.0910738242275215,
+          "rmse": 1.305712551679861,
+          "r2": 0.08413714594661248,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.14792323313452083
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 0.6497149179780598,
+          "rmse": 0.8205020381325018,
+          "r2": 0.6383448819341775,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.492603548539011
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 0.6894210878978737,
+          "rmse": 0.8768917169542233,
+          "r2": 0.5869266062836982,
+          "persistence_mae": 1.2804877056338912,
+          "mae_skill_vs_persistence": 0.4615949181983099
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 1.6803977214565318,
+          "rmse": 2.0705243293997175,
+          "r2": 0.4325861219968167,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 0.946704354898543,
+          "rmse": 1.1878148192818552,
+          "r2": 0.8132602572094231,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.4366188772989049
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 1.0429262218872652,
+          "rmse": 1.3271037110319128,
+          "r2": 0.7668963869862576,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.3793575124683698
+        },
+        "student": {
+          "rows": 954,
+          "mae": 1.4844258325627424,
+          "rmse": 1.883154128286018,
+          "r2": 0.5306346655894331,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.1166223248172018
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 0.9516402480656967,
+          "rmse": 1.1889554469741788,
+          "r2": 0.8129014423708523,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.4336815410337287
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 0.9455192534559781,
+          "rmse": 1.18764652867568,
+          "r2": 0.8133131683496638,
+          "persistence_mae": 1.6803977214565318,
+          "mae_skill_vs_persistence": 0.43732412786395425
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 1.8011073133680549,
+          "rmse": 2.230368749650877,
+          "r2": -0.5204436385748967,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 0.9166847118603729,
+          "rmse": 1.1982730648726605,
+          "r2": 0.5611373941762114,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.4910438122944598
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 1.057737348223255,
+          "rmse": 1.3706169802064563,
+          "r2": 0.4258184957008968,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.41272941352656245
+        },
+        "student": {
+          "rows": 90,
+          "mae": 1.688598914299573,
+          "rmse": 2.1677916913048763,
+          "r2": -0.43632287721095353,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.06246623853749844
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 0.895896041211251,
+          "rmse": 1.1504939484991032,
+          "r2": 0.5954374664872145,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.5025859733277451
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 0.8768169700300291,
+          "rmse": 1.1155404938299445,
+          "r2": 0.6196462850673139,
+          "persistence_mae": 1.8011073133680549,
+          "mae_skill_vs_persistence": 0.5131789407981532
+        }
+      }
+    },
+    "pm25_ug_m3": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 11.294717283556285,
+          "rmse": 15.49231421659099,
+          "r2": 0.1596833858948894,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 6.271376851437474,
+          "rmse": 8.701934143264484,
+          "r2": 0.734880335819639,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.44475132099430004
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 4.696258847162497,
+          "rmse": 6.28807245333722,
+          "r2": 0.8615651511491638,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.5842074901689066
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 8.665299002306433,
+          "rmse": 11.736267344922819,
+          "r2": 0.5177521008467989,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.23280071694029558
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 5.542331385202048,
+          "rmse": 7.594800970858706,
+          "r2": 0.7980503285125707,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.5092987946434924
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 5.039065951369001,
+          "rmse": 6.768888881146917,
+          "r2": 0.8395849444495995,
+          "persistence_mae": 11.294717283556285,
+          "mae_skill_vs_persistence": 0.5538563892426719
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 8.439159889143657,
+          "rmse": 10.69356301250892,
+          "r2": -0.13062889096984054,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 6.2177500783715685,
+          "rmse": 7.859762864097404,
+          "r2": 0.38920693215668645,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.2632264158935731
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 5.682051399150273,
+          "rmse": 7.28671327211137,
+          "r2": 0.47502505794974614,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.32670414190637576
+        },
+        "student": {
+          "rows": 738,
+          "mae": 6.3763572824235535,
+          "rmse": 8.291790267356065,
+          "r2": 0.3202146043767635,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.24443222237959294
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 5.790654207324109,
+          "rmse": 7.361641849086755,
+          "r2": 0.4641730136550628,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.31383522964491417
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 5.751664599025265,
+          "rmse": 7.318021042197377,
+          "r2": 0.4705041984548963,
+          "persistence_mae": 8.439159889143657,
+          "mae_skill_vs_persistence": 0.3184553113605125
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 10.176205457131568,
+          "rmse": 12.819650067466565,
+          "r2": 0.27504352848010183,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 7.020861456931086,
+          "rmse": 9.23720977847021,
+          "r2": 0.6236072902235088,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.3100707836032527
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 6.95767584686603,
+          "rmse": 9.289235568331089,
+          "r2": 0.6193555142649154,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.3162799359568714
+        },
+        "student": {
+          "rows": 954,
+          "mae": 8.407680095613502,
+          "rmse": 10.798335221195885,
+          "r2": 0.4856328781675311,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.17379025698411665
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 7.133824415946781,
+          "rmse": 9.437349301136527,
+          "r2": 0.6071202458761773,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.298970088015731
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 7.337020734038795,
+          "rmse": 9.631066872698694,
+          "r2": 0.5908256637326867,
+          "persistence_mae": 10.176205457131568,
+          "mae_skill_vs_persistence": 0.27900229953622335
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 10.88222232606676,
+          "rmse": 13.14877271025037,
+          "r2": -0.6882327465240123,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 6.404076692356008,
+          "rmse": 8.199775812304374,
+          "r2": 0.34345297040512957,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.4115102135879005
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 6.453386553625266,
+          "rmse": 8.269008748131945,
+          "r2": 0.33231935589798733,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.40697898276098177
+        },
+        "student": {
+          "rows": 90,
+          "mae": 7.748085442913903,
+          "rmse": 9.250891096261116,
+          "r2": 0.1643411435170702,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.288005224415007
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 6.748487457870608,
+          "rmse": 8.461439455755459,
+          "r2": 0.3008821574789673,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.37986127689143045
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 6.586186163225922,
+          "rmse": 8.476398626611472,
+          "r2": 0.2984079997485669,
+          "persistence_mae": 10.88222232606676,
+          "mae_skill_vs_persistence": 0.39477562892189
+        }
+      }
+    },
+    "pm10_ug_m3": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 18.111795412591153,
+          "rmse": 26.675335756254995,
+          "r2": 0.2124369612157766,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 11.285434897604725,
+          "rmse": 17.98891274062062,
+          "r2": 0.6418414135594803,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.37690137059746187
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 8.566222554348585,
+          "rmse": 12.95328514177144,
+          "r2": 0.8142942339126324,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.5270362568034848
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 14.80548947102667,
+          "rmse": 22.405815822120807,
+          "r2": 0.44436824213442816,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.1825498724033714
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 10.419714299066008,
+          "rmse": 16.9387619770398,
+          "r2": 0.6824377518936241,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.42470008843947527
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 9.536460100701998,
+          "rmse": 14.892403530620925,
+          "r2": 0.7545318621112447,
+          "persistence_mae": 18.111795412591153,
+          "mae_skill_vs_persistence": 0.47346688257795033
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 10.288211386248994,
+          "rmse": 13.04834504173575,
+          "r2": 0.10993069712791503,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 8.155404607033871,
+          "rmse": 10.352140690551341,
+          "r2": 0.4397610625503118,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.20730588623653157
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 7.487447029250727,
+          "rmse": 9.643766763007203,
+          "r2": 0.5138096271943072,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.2722304443259894
+        },
+        "student": {
+          "rows": 738,
+          "mae": 8.329084361061897,
+          "rmse": 10.454440405609521,
+          "r2": 0.4286338058803342,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.19042445296231225
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 7.561784114254618,
+          "rmse": 9.680431195482546,
+          "r2": 0.5101057259123123,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.26500498188037447
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 8.185505504358213,
+          "rmse": 10.268294555058377,
+          "r2": 0.44879950999016915,
+          "persistence_mae": 10.288211386248994,
+          "mae_skill_vs_persistence": 0.20438012040666398
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 12.675052378912392,
+          "rmse": 15.937590462737825,
+          "r2": 0.3270722270068033,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 9.279459337783694,
+          "rmse": 12.153168445709923,
+          "r2": 0.6087069251091308,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.26789577980584756
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 9.32101182430998,
+          "rmse": 12.051406996172854,
+          "r2": 0.6152322761637998,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.26461749066872187
+        },
+        "student": {
+          "rows": 954,
+          "mae": 10.55336964672404,
+          "rmse": 13.469497062190204,
+          "r2": 0.5193533863494878,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.16739045084485937
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 9.189200971512975,
+          "rmse": 12.007315740948986,
+          "r2": 0.618042546874588,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.27501672602149263
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 9.869706562298619,
+          "rmse": 12.669253894017025,
+          "r2": 0.574768717544959,
+          "persistence_mae": 12.675052378912392,
+          "mae_skill_vs_persistence": 0.2213281438805771
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 17.411110975477428,
+          "rmse": 20.259049910918883,
+          "r2": -0.9020818777756408,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 9.97517549678426,
+          "rmse": 12.782838479322923,
+          "r2": 0.24273887609182987,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.4270798968064855
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 10.379931932886443,
+          "rmse": 12.572327277304668,
+          "r2": 0.2674750613119584,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.4038328773214992
+        },
+        "student": {
+          "rows": 90,
+          "mae": 12.8609429145356,
+          "rmse": 15.574335721074426,
+          "r2": -0.12411339601033977,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.2613370317006469
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 10.802410188695045,
+          "rmse": 13.167393136736827,
+          "r2": 0.19649115118888005,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.3795680124083045
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 11.219801616051207,
+          "rmse": 13.936821148775918,
+          "r2": 0.09984248284487296,
+          "persistence_mae": 17.411110975477428,
+          "mae_skill_vs_persistence": 0.35559530739573897
+        }
+      }
+    },
+    "wind_speed_mps": {
+      "train": {
+        "persistence": {
+          "rows": 22602,
+          "mae": 0.7130948582956492,
+          "rmse": 0.9067612948892042,
+          "r2": -0.7163059605227546,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 22602,
+          "mae": 0.41067214544499464,
+          "rmse": 0.5318189333482872,
+          "r2": 0.40961358991666674,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.42409885491737775
+        },
+        "teacher": {
+          "rows": 22602,
+          "mae": 0.32720371647080854,
+          "rmse": 0.4274692401187743,
+          "r2": 0.6185667914742292,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.5411498026323591
+        },
+        "student": {
+          "rows": 22602,
+          "mae": 0.5306836576442229,
+          "rmse": 0.6658426930688233,
+          "r2": 0.07455196181921597,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.25580215385005434
+        },
+        "residual_mlp_32": {
+          "rows": 22602,
+          "mae": 0.37305333204427593,
+          "rmse": 0.48836389581027684,
+          "r2": 0.5021530373143508,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.4768531455465803
+        },
+        "residual_mlp_64_32": {
+          "rows": 22602,
+          "mae": 0.353224296511082,
+          "rmse": 0.4645561784668666,
+          "r2": 0.5495099079664817,
+          "persistence_mae": 0.7130948582956492,
+          "mae_skill_vs_persistence": 0.5046601550944921
+        }
+      },
+      "validation": {
+        "persistence": {
+          "rows": 738,
+          "mae": 0.5761111115870194,
+          "rmse": 0.7480501301874067,
+          "r2": -1.2396686944148936,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 738,
+          "mae": 0.3649667216146817,
+          "rmse": 0.44299033425943246,
+          "r2": 0.21456387072614191,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.366499422985778
+        },
+        "teacher": {
+          "rows": 738,
+          "mae": 0.32151187170956913,
+          "rmse": 0.38726905088669156,
+          "r2": 0.39972817934739124,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.4419273205408295
+        },
+        "student": {
+          "rows": 738,
+          "mae": 0.4929690501025972,
+          "rmse": 0.5959831084613008,
+          "r2": -0.42164209947417675,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.14431601788653226
+        },
+        "residual_mlp_32": {
+          "rows": 738,
+          "mae": 0.3077034435155018,
+          "rmse": 0.38050298405458766,
+          "r2": 0.4205199246558937,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.4658956626129501
+        },
+        "residual_mlp_64_32": {
+          "rows": 738,
+          "mae": 0.2961042506263983,
+          "rmse": 0.3736617910993581,
+          "r2": 0.44116994375174623,
+          "persistence_mae": 0.5761111115870194,
+          "mae_skill_vs_persistence": 0.4860292664539715
+        }
+      },
+      "future_test": {
+        "persistence": {
+          "rows": 954,
+          "mae": 0.5945492655006033,
+          "rmse": 0.7637696143574855,
+          "r2": -1.253095574459456,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 954,
+          "mae": 0.3415043818932995,
+          "rmse": 0.43046199977263033,
+          "r2": 0.28431074104612186,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.42560793241287254
+        },
+        "teacher": {
+          "rows": 954,
+          "mae": 0.3215255226971156,
+          "rmse": 0.40310595292089735,
+          "r2": 0.37238504299928177,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.4592113028238375
+        },
+        "student": {
+          "rows": 954,
+          "mae": 0.46416526483696935,
+          "rmse": 0.5784783880983098,
+          "r2": -0.2924957933850123,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.2192989012506006
+        },
+        "residual_mlp_32": {
+          "rows": 954,
+          "mae": 0.2978888576622681,
+          "rmse": 0.3852981920425067,
+          "r2": 0.42661173048434897,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.49896690661715093
+        },
+        "residual_mlp_64_32": {
+          "rows": 954,
+          "mae": 0.31578386190271074,
+          "rmse": 0.4033618177702358,
+          "r2": 0.3715880536744375,
+          "persistence_mae": 0.5945492655006033,
+          "mae_skill_vs_persistence": 0.46886846855857345
+        }
+      },
+      "fresh_future_test": {
+        "persistence": {
+          "rows": 90,
+          "mae": 0.5626666671335697,
+          "rmse": 0.6934406971773235,
+          "r2": -1.0672397147666448,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.0
+        },
+        "temporal_ridge": {
+          "rows": 90,
+          "mae": 0.3556611302014093,
+          "rmse": 0.4310787621478386,
+          "r2": 0.20111283923618783,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.3679008354746204
+        },
+        "teacher": {
+          "rows": 90,
+          "mae": 0.3215734614133835,
+          "rmse": 0.40802721505773243,
+          "r2": 0.28426797560575034,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.42848318516610095
+        },
+        "student": {
+          "rows": 90,
+          "mae": 0.41336495951997737,
+          "rmse": 0.5292065490552024,
+          "r2": -0.2039892447516185,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.26534663653382917
+        },
+        "residual_mlp_32": {
+          "rows": 90,
+          "mae": 0.3120966707626535,
+          "rmse": 0.3877644229477924,
+          "r2": 0.3535899378378443,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.44532582256455966
+        },
+        "residual_mlp_64_32": {
+          "rows": 90,
+          "mae": 0.34540041861861204,
+          "rmse": 0.4418456895895846,
+          "r2": 0.1607073255483008,
+          "persistence_mae": 0.5626666671335697,
+          "mae_skill_vs_persistence": 0.38613669727725586
+        }
+      }
+    }
+  },
+  "candidates": {
+    "residual_mlp_32": {
+      "architecture": {
+        "hidden_layers": [
+          32
+        ],
+        "selected_epoch": 36,
+        "epochs_run": 48,
+        "normalized_validation_mae": 0.28799848503595804,
+        "validation_trace": [
+          {
+            "epoch": 1,
+            "normalized_validation_mae": 0.4443448777678516
+          },
+          {
+            "epoch": 2,
+            "normalized_validation_mae": 0.38067005457334274
+          },
+          {
+            "epoch": 3,
+            "normalized_validation_mae": 0.35381749837854715
+          },
+          {
+            "epoch": 4,
+            "normalized_validation_mae": 0.34014139858652603
+          },
+          {
+            "epoch": 5,
+            "normalized_validation_mae": 0.33125103912895565
+          },
+          {
+            "epoch": 6,
+            "normalized_validation_mae": 0.32418925690242834
+          },
+          {
+            "epoch": 7,
+            "normalized_validation_mae": 0.31885486174198596
+          },
+          {
+            "epoch": 8,
+            "normalized_validation_mae": 0.31386085617384124
+          },
+          {
+            "epoch": 9,
+            "normalized_validation_mae": 0.31023204746026845
+          },
+          {
+            "epoch": 10,
+            "normalized_validation_mae": 0.30735031514922834
+          },
+          {
+            "epoch": 11,
+            "normalized_validation_mae": 0.3044574942684541
+          },
+          {
+            "epoch": 12,
+            "normalized_validation_mae": 0.30259780951374
+          },
+          {
+            "epoch": 13,
+            "normalized_validation_mae": 0.30050297613558646
+          },
+          {
+            "epoch": 14,
+            "normalized_validation_mae": 0.29868454410211975
+          },
+          {
+            "epoch": 15,
+            "normalized_validation_mae": 0.2973811851431767
+          },
+          {
+            "epoch": 16,
+            "normalized_validation_mae": 0.29646700517619434
+          },
+          {
+            "epoch": 17,
+            "normalized_validation_mae": 0.2953678661683327
+          },
+          {
+            "epoch": 18,
+            "normalized_validation_mae": 0.2944210919667451
+          },
+          {
+            "epoch": 19,
+            "normalized_validation_mae": 0.2934122690825038
+          },
+          {
+            "epoch": 20,
+            "normalized_validation_mae": 0.2926863049238876
+          },
+          {
+            "epoch": 21,
+            "normalized_validation_mae": 0.29194772453830714
+          },
+          {
+            "epoch": 22,
+            "normalized_validation_mae": 0.2913996226804424
+          },
+          {
+            "epoch": 23,
+            "normalized_validation_mae": 0.2910054019216497
+          },
+          {
+            "epoch": 24,
+            "normalized_validation_mae": 0.29072288687511777
+          },
+          {
+            "epoch": 25,
+            "normalized_validation_mae": 0.29045288269979874
+          },
+          {
+            "epoch": 26,
+            "normalized_validation_mae": 0.29040682497950343
+          },
+          {
+            "epoch": 27,
+            "normalized_validation_mae": 0.2900465112601994
+          },
+          {
+            "epoch": 28,
+            "normalized_validation_mae": 0.2894295350902578
+          },
+          {
+            "epoch": 29,
+            "normalized_validation_mae": 0.2888131618915124
+          },
+          {
+            "epoch": 30,
+            "normalized_validation_mae": 0.28860793393200307
+          },
+          {
+            "epoch": 31,
+            "normalized_validation_mae": 0.2887375808363132
+          },
+          {
+            "epoch": 32,
+            "normalized_validation_mae": 0.28866402816555997
+          },
+          {
+            "epoch": 33,
+            "normalized_validation_mae": 0.28847027124236607
+          },
+          {
+            "epoch": 34,
+            "normalized_validation_mae": 0.28814613620199137
+          },
+          {
+            "epoch": 35,
+            "normalized_validation_mae": 0.2880727520287583
+          },
+          {
+            "epoch": 36,
+            "normalized_validation_mae": 0.28799848503595804
+          },
+          {
+            "epoch": 37,
+            "normalized_validation_mae": 0.288167703249596
+          },
+          {
+            "epoch": 38,
+            "normalized_validation_mae": 0.2883131375498805
+          },
+          {
+            "epoch": 39,
+            "normalized_validation_mae": 0.2883457853453881
+          },
+          {
+            "epoch": 40,
+            "normalized_validation_mae": 0.2886358004156803
+          },
+          {
+            "epoch": 41,
+            "normalized_validation_mae": 0.28853034705533265
+          },
+          {
+            "epoch": 42,
+            "normalized_validation_mae": 0.2887550096145411
+          },
+          {
+            "epoch": 43,
+            "normalized_validation_mae": 0.28892030636737864
+          },
+          {
+            "epoch": 44,
+            "normalized_validation_mae": 0.2890491260081423
+          },
+          {
+            "epoch": 45,
+            "normalized_validation_mae": 0.28940793587134983
+          },
+          {
+            "epoch": 46,
+            "normalized_validation_mae": 0.28931093922777984
+          },
+          {
+            "epoch": 47,
+            "normalized_validation_mae": 0.28928757083681905
+          },
+          {
+            "epoch": 48,
+            "normalized_validation_mae": 0.28924096537165916
+          }
+        ],
+        "residual_weights": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.75,
+          1.0
+        ],
+        "parameter_count": 2342
+      },
+      "artifact_sha256": "b370c68c1630cd0813b79c77c2d8eaf633ffa46352d81485430fa6bf77ca1788",
+      "artifact_bytes": 20862,
+      "offline_fit_seconds": 1.324718749965541,
+      "inference_rows": 24336,
+      "host_latency_is_not_esp32_latency": true,
+      "host_batch_inference_and_scoring_seconds": 0.053312874981202185
+    },
+    "residual_mlp_64_32": {
+      "architecture": {
+        "hidden_layers": [
+          64,
+          32
+        ],
+        "selected_epoch": 33,
+        "epochs_run": 45,
+        "normalized_validation_mae": 0.28822779467678555,
+        "validation_trace": [
+          {
+            "epoch": 1,
+            "normalized_validation_mae": 0.3998466900843103
+          },
+          {
+            "epoch": 2,
+            "normalized_validation_mae": 0.35424961207056715
+          },
+          {
+            "epoch": 3,
+            "normalized_validation_mae": 0.3374050916252785
+          },
+          {
+            "epoch": 4,
+            "normalized_validation_mae": 0.3231233652821133
+          },
+          {
+            "epoch": 5,
+            "normalized_validation_mae": 0.31396185020726913
+          },
+          {
+            "epoch": 6,
+            "normalized_validation_mae": 0.30766097974751827
+          },
+          {
+            "epoch": 7,
+            "normalized_validation_mae": 0.30377630278943407
+          },
+          {
+            "epoch": 8,
+            "normalized_validation_mae": 0.29985544285289617
+          },
+          {
+            "epoch": 9,
+            "normalized_validation_mae": 0.2982193622375033
+          },
+          {
+            "epoch": 10,
+            "normalized_validation_mae": 0.29594968879236766
+          },
+          {
+            "epoch": 11,
+            "normalized_validation_mae": 0.2951969462560002
+          },
+          {
+            "epoch": 12,
+            "normalized_validation_mae": 0.2944156725913811
+          },
+          {
+            "epoch": 13,
+            "normalized_validation_mae": 0.29368926418432156
+          },
+          {
+            "epoch": 14,
+            "normalized_validation_mae": 0.29219430555864057
+          },
+          {
+            "epoch": 15,
+            "normalized_validation_mae": 0.29136031255217415
+          },
+          {
+            "epoch": 16,
+            "normalized_validation_mae": 0.29089985981502325
+          },
+          {
+            "epoch": 17,
+            "normalized_validation_mae": 0.2909241101351069
+          },
+          {
+            "epoch": 18,
+            "normalized_validation_mae": 0.29060433505407374
+          },
+          {
+            "epoch": 19,
+            "normalized_validation_mae": 0.29108441959896714
+          },
+          {
+            "epoch": 20,
+            "normalized_validation_mae": 0.2909296201296589
+          },
+          {
+            "epoch": 21,
+            "normalized_validation_mae": 0.29112679051789103
+          },
+          {
+            "epoch": 22,
+            "normalized_validation_mae": 0.29197576361775585
+          },
+          {
+            "epoch": 23,
+            "normalized_validation_mae": 0.2915063937137272
+          },
+          {
+            "epoch": 24,
+            "normalized_validation_mae": 0.29118720418280736
+          },
+          {
+            "epoch": 25,
+            "normalized_validation_mae": 0.2914075749910577
+          },
+          {
+            "epoch": 26,
+            "normalized_validation_mae": 0.2916243875064651
+          },
+          {
+            "epoch": 27,
+            "normalized_validation_mae": 0.2906753099247289
+          },
+          {
+            "epoch": 28,
+            "normalized_validation_mae": 0.29057175739225455
+          },
+          {
+            "epoch": 29,
+            "normalized_validation_mae": 0.29043993441537935
+          },
+          {
+            "epoch": 30,
+            "normalized_validation_mae": 0.28940232640559044
+          },
+          {
+            "epoch": 31,
+            "normalized_validation_mae": 0.28933183693303793
+          },
+          {
+            "epoch": 32,
+            "normalized_validation_mae": 0.2885726607394563
+          },
+          {
+            "epoch": 33,
+            "normalized_validation_mae": 0.28822779467678555
+          },
+          {
+            "epoch": 34,
+            "normalized_validation_mae": 0.2890364152377625
+          },
+          {
+            "epoch": 35,
+            "normalized_validation_mae": 0.28937362816044565
+          },
+          {
+            "epoch": 36,
+            "normalized_validation_mae": 0.28902443671803896
+          },
+          {
+            "epoch": 37,
+            "normalized_validation_mae": 0.28898336211843106
+          },
+          {
+            "epoch": 38,
+            "normalized_validation_mae": 0.28915591279191577
+          },
+          {
+            "epoch": 39,
+            "normalized_validation_mae": 0.2896995980950384
+          },
+          {
+            "epoch": 40,
+            "normalized_validation_mae": 0.28934195961255665
+          },
+          {
+            "epoch": 41,
+            "normalized_validation_mae": 0.2896717970263566
+          },
+          {
+            "epoch": 42,
+            "normalized_validation_mae": 0.2894933482238404
+          },
+          {
+            "epoch": 43,
+            "normalized_validation_mae": 0.2891338810837728
+          },
+          {
+            "epoch": 44,
+            "normalized_validation_mae": 0.28961914651195986
+          },
+          {
+            "epoch": 45,
+            "normalized_validation_mae": 0.2897363446086238
+          }
+        ],
+        "residual_weights": [
+          1.0,
+          1.0,
+          0.75,
+          1.0,
+          0.75,
+          1.0
+        ],
+        "parameter_count": 6566
+      },
+      "artifact_sha256": "51cb87e10e78c6d8984152151e6743cd48249baa2876dbd7052060be466fb5a3",
+      "artifact_bytes": 53604,
+      "offline_fit_seconds": 2.4521037910017185,
+      "inference_rows": 24336,
+      "host_latency_is_not_esp32_latency": true,
+      "host_batch_inference_and_scoring_seconds": 0.04649079201044515
+    }
+  },
+  "validation_selected_heads": {
+    "temperature_c": "residual_mlp_64_32",
+    "relative_humidity_pct": "teacher",
+    "pressure_hpa": "temporal_ridge",
+    "pm25_ug_m3": "teacher",
+    "pm10_ug_m3": "teacher",
+    "wind_speed_mps": "residual_mlp_64_32"
+  },
+  "source_sha256": "fe9696dbb09b1016ee9467a2a5ac636868ed584b5dc0e2dec4a70df096ca1f4e",
+  "source_period": {
+    "start": "2024-01-01",
+    "end": "2026-10-10"
+  },
+  "rows_by_role": {
+    "train": 22602,
+    "validation": 738,
+    "future_test": 954,
+    "fresh_future_test": 90
+  },
+  "original_test_exposure_note": "Some September/October dates appeared in earlier API transfer diagnostics; no new model selection uses test results. The October 7-10 subset is reported separately.",
+  "test_status": "REUSED_RETROSPECTIVE_BENCHMARK_NOT_NEW_UNSEEN_FIELD_TEST",
+  "evidence": "MODELED_GRID_RETROSPECTIVE",
+  "field_accuracy": "NOT_ESTABLISHED",
+  "china_data_or_weights_used": false,
+  "online_learning_enabled": false,
+  "hazard_accuracy": "NOT_EVALUATED_NO_INDEPENDENT_LABELS",
+  "deployment_approved": false
+}

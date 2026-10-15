@@ -133,6 +133,11 @@
     "docs/reference/dp_mesh_dashboard_handoff/mesh-dashboard/src/components/TelemetryPanel.jsx": "a9b54d6e3eab51fb5ede218de7d779bbee58787125050eb7dc0f54bfcacfeecb",
     "docs/reference/dp_mesh_dashboard_handoff/mesh-dashboard/src/main.jsx": "5044d7eafc37db1f3d2b9c0a1fdbe201ac24734b7ecbae8d52267cd3aeb4430c",
     "docs/reference/dp_mesh_dashboard_handoff/mesh-dashboard/src/styles.css": "d5c063a4d94870dd943da5ae566e99500c26e0f08c51eb147656b07bd8879015",
-    "docs/reference/dp_mesh_dashboard_handoff/mesh-dashboard/vite.config.js": "7adbd06f44beff2ce95e1586dd1cd98303cd7a66eae1e8218402a4133c33d43a"
+    "docs/reference/dp_mesh_dashboard_handoff/mesh-dashboard/vite.config.js": "7adbd06f44beff2ce95e1586dd1cd98303cd7a66eae1e8218402a4133c33d43a",
+    "ml/models/india_mandi_neural_history_v1/README.md": "b08b53dc9dfbe3dfb46b8102a03d0bf01744309e75a9d4f89490b7c9a6b84b2c",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_32/model.json": "fea9d73dbc27d3479d38a547c937075102b2e81aeb11b5f2b41a7b0b47757af8",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_32/weights.npz": "b370c68c1630cd0813b79c77c2d8eaf633ffa46352d81485430fa6bf77ca1788",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32/model.json": "3e15f653c05b899453d60c13055b69ac3f88e52bae4478a2a6464de062702524",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32/weights.npz": "51cb87e10e78c6d8984152151e6743cd48249baa2876dbd7052060be466fb5a3"
   }
 }

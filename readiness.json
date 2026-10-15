@@ -18,5 +18,7 @@
   "next_phase": "F",
   "dashboard": "SAVED_MODEL_AND_RULES_CONNECTED",
   "live_telemetry_bridge": "NOT_CONNECTED",
-  "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS"
+  "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS",
+  "online_learning": "NOT_IMPLEMENTED",
+  "neural_forecast_candidates": "OFFLINE_TRAINED_MODELED_DATA_ONLY"
 }
