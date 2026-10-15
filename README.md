@@ -27,3 +27,5 @@ Raw datasets stay local. Country/source/model roles are explicit in the catalog.
 Historical Beijing comparisons and spatial experiments are retained separately
 for reproducibility. No physical ESP32 field validation or operational disaster
 warning is claimed.
+
+Connected teammate dashboard: [setup, six-channel inputs and evidence limits](docs/HIMACHAL_DASHBOARD_INTEGRATION.md). After installing dashboard dependencies, run `python scripts/run_himachal_demo.py --offline` and open http://127.0.0.1:8080. Synthetic demo; live telemetry transport remains to be connected.

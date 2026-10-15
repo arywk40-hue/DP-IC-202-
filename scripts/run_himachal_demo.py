@@ -1,0 +1,31 @@
+"""Start the connected local UI and saved-model backend; no weather API needed."""
+import argparse
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+APP = ROOT/"apps/indra-himachal-ui"
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--offline", action="store_true", help="No downloads; dependencies must already be installed")
+    p.add_argument("--port", type=int, default=8080)
+    p.add_argument("--observations", type=Path, help="Use reviewed native snapshots instead of synthetic demo")
+    p.add_argument("--db", type=Path, default=ROOT/"data/himachal/dashboard.sqlite")
+    args = p.parse_args()
+    if not (APP/"node_modules/.bin/vite").exists():
+        p.error("Install once: pip install -r requirements-dashboard.txt; cd apps/indra-himachal-ui && npm ci")
+    subprocess.run(["npm", "run", "build"], cwd=APP, check=True)
+    print(f"Open http://127.0.0.1:{args.port} — " + ("IMPORTED OBSERVATIONS" if args.observations else "SYNTHETIC DEMO"), flush=True)
+    command = [sys.executable, "-m", "server.dashboard", "--ui", str(APP/"dist"), "--db", str(args.db), "--port", str(args.port)]
+    command += ["--observations", str(args.observations)] if args.observations else ["--demo"]
+    try:
+        subprocess.run(command, cwd=ROOT, check=True)
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == "__main__":
+    main()

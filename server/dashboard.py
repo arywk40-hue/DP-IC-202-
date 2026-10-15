@@ -1,0 +1,234 @@
+"""Read-only, loopback dashboard adapter over validated INDRA observations.
+
+Inputs are operator-imported snapshots, never untrusted API claims of physical
+identity. No RPC, RF, public warnings, empirical hazard probabilities or cloud
+credentials are implemented by this adapter.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import defaultdict
+import copy
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+from pathlib import Path
+import sqlite3
+import time
+
+from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+import pandas as pd
+
+from ml.himachal.contracts import METADATA, snapshot
+from ml.himachal.features import build_packet
+from ml.himachal.rules import evaluate
+from ml.operational.contracts import UNITS, utc
+from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.six_sensor_forecast.predict import predict
+
+ROOT = Path(__file__).resolve().parents[1]
+MODEL = ROOT / "ml/models/india_mandi_modeled_6h_v1"
+API_VERSION = "0.2.0"
+MAX_ROWS = 50_000
+
+
+def demo_observations(now=None):
+    """Deterministic engineering fixtures; not downloaded or observed weather."""
+    end = pd.Timestamp(now or datetime.now(timezone.utc)).floor("15min")
+    rows = []
+    for number, scenario in enumerate(("rain", "snow", "cloudburst", "incomplete"), 1):
+        for tick in range(29 if scenario != "incomplete" else 1):
+            stamp = (end - pd.Timedelta(minutes=15 * (28-tick) if scenario != "incomplete" else 0)).isoformat()
+            temperature, humidity, pressure, pm25, pm10, wind = 20., 90., 900.-tick*.25, 40., 80., 5.
+            if scenario == "snow":
+                temperature, wind = 0., 10.
+            if tick == 28:
+                pm25, pm10 = 20., 40.
+                if scenario == "cloudburst":
+                    temperature, pressure, wind = 17., pressure-1.25, 10.
+            rows.append(dict(node_id=f"demo-{number:02d}", physical_site_id=f"synthetic-site-{number}",
+                registration_id=f"synthetic-registration-{number}", latitude=31.71+(number%2)*.012,
+                longitude=76.93+(number//2)*.012, elevation_m=1000.+number*100,
+                elevation_datum="surveyed_orthometric", sensor_height_m=2., wind_height_m=10.,
+                native_interval_seconds=900, source_class="synthetic_demo", source_id="dashboard_engineering_fixture",
+                source_cell_id=None, pressure_reference="station", timestamp_utc=stamp, valid_time_utc=stamp,
+                available_at_utc=stamp, sensor_model="synthetic_not_hardware",
+                calibration_ids={c: "synthetic_contract_only" for c in RAW_SENSOR_COLUMNS},
+                measurements=dict(zip(RAW_SENSOR_COLUMNS, (temperature,humidity,pressure,pm25,pm10,wind))),
+                units=UNITS.copy()))
+    return rows
+
+
+def read_observations(path):
+    path = Path(path)
+    if path.stat().st_size > 64*1024*1024:
+        raise ValueError("Observation file exceeds 64 MiB")
+    data = json.loads(path.read_text(), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
+    if not isinstance(data, list) or not 1 <= len(data) <= MAX_ROWS:
+        raise ValueError("Expected bounded nonempty list of native six-channel snapshots")
+    return data
+
+
+def assess(rows, *, now=None, model_dir=MODEL):
+    if not isinstance(rows, list) or not 1 <= len(rows) <= MAX_ROWS:
+        raise ValueError("Bounded native snapshot list required")
+    clock = utc(now or datetime.now(timezone.utc).isoformat())
+    groups = defaultdict(list)
+    for raw in rows:
+        row = snapshot(raw)
+        if utc(row["available_at_utc"]) > clock or utc(row["timestamp_utc"]) > clock:
+            raise ValueError("Future or not-yet-available observations cannot be displayed")
+        if len(row["node_id"]) > 80 or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" for c in row["node_id"]):
+            raise ValueError("Node IDs must be bounded URL-safe identifiers")
+        # build_packet revalidates canonical fields, not its own extra outputs.
+        groups[row["node_id"]].append({k: row[k] for k in METADATA | {"measurements", "units", "quality_flags"}})
+    if len(groups) > 200:
+        raise ValueError("Dashboard import supports at most 200 nodes")
+    result = []
+    forecast_rows = []
+    for node_id, history in sorted(groups.items()):
+        history.sort(key=lambda x: utc(x["timestamp_utc"]))
+        latest = history[-1]
+        packet = build_packet(history, latest["timestamp_utc"])
+        profile = "hourly_companion" if latest["native_interval_seconds"] == 3600 else "native_15min"
+        rules = evaluate(packet, profile=profile)
+        timestamp = int(utc(latest["timestamp_utc"]).timestamp()*1000)
+        age = (clock-utc(latest["timestamp_utc"])).total_seconds()
+        stale = age > max(120, latest["native_interval_seconds"]*2)
+        forecast_rows.append(dict(location_id=node_id, timestamp_utc=latest["timestamp_utc"], **latest["measurements"]))
+        result.append(dict(id=node_id, name=node_id, lat=latest["latitude"], lng=latest["longitude"],
+            lastSeen=timestamp, battery=None, anomalyIndex=None, anomalyLabel="Experimental risk assessment",
+            stale=stale, reportingIntervalSeconds=latest["native_interval_seconds"],
+            sourceClass=latest["source_class"], sourceId=latest["source_id"], sourceCellId=latest["source_cell_id"],
+            pressureReference=latest["pressure_reference"], registrationId=latest["registration_id"],
+            elevationM=latest["elevation_m"], timestamp=timestamp, sensors=latest["measurements"], units=UNITS.copy(),
+            risks=rules["outputs"], stormSequence=rules["rainstorm_sequence"],
+            history=[dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in history[-97:]],
+            featureAvailability=packet["history_availability"],
+            empiricalValidation="NOT_EVALUATED", probability=None, publicNotificationsEnabled=False,
+            unavailableTargets=["flash_flood", "landslide"],
+            syntheticDemo=latest["source_class"] == "synthetic_demo"))
+    # Reuse the saved India/Mandi student and its existing checksums, feature
+    # order, learned change/persistence weights and physical bounds.
+    forecasts = predict(pd.DataFrame(forecast_rows), Path(model_dir), "student")
+    for node, forecast in zip(result, forecasts.to_dict("records")):
+        node["forecast6h"] = {c: float(forecast["forecast_"+c]) if math.isfinite(forecast["forecast_"+c]) else None
+                              for c in RAW_SENSOR_COLUMNS}
+        node["forecastTimestamp"] = forecast["forecast_timestamp_utc"].isoformat()
+        node["forecastStatus"] = forecast["status"]
+        node["forecastModel"] = dict(id=Path(model_dir).name, country="IN",
+            trainingEvidence="MODELED_GRID_RETROSPECTIVE", fieldValidated=False,
+            reportSha256=hashlib.sha256((Path(model_dir)/"training_report.json").read_bytes()).hexdigest())
+        node["assessmentAsOf"] = node["timestamp"]
+    return result
+
+
+class Store:
+    """Atomic whole-import replacement; no mixing demo and physical histories."""
+    def __init__(self, path):
+        self.path = str(path)
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        with self.connect() as db:
+            db.execute("CREATE TABLE IF NOT EXISTS nodes (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
+
+    def connect(self):
+        return sqlite3.connect(self.path, timeout=5)
+
+    def replace(self, nodes):
+        payloads = [(n["id"], json.dumps(n, allow_nan=False, separators=(",", ":"))) for n in nodes]
+        with self.connect() as db:
+            db.execute("DELETE FROM nodes")
+            db.executemany("INSERT INTO nodes VALUES (?, ?)", payloads)
+
+    def all(self):
+        with self.connect() as db:
+            return [json.loads(r[0]) for r in db.execute("SELECT payload FROM nodes ORDER BY id LIMIT 201")]
+
+
+def create_app(db_path, *, ui_dir=None, clock=None):
+    store = Store(db_path)
+    started = time.monotonic()
+    app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
+    app.state.store = store
+
+    def nodes():
+        now_ms = (clock() if clock else time.time())*1000
+        values = copy.deepcopy(store.all())
+        for n in values:
+            n["stale"] = now_ms-n["lastSeen"] > max(120, n["reportingIntervalSeconds"]*2)*1000
+            n["ageSeconds"] = max(0., (now_ms-n["lastSeen"])/1000)
+            n["assessmentUsableNow"] = not n["stale"]
+        return values
+
+    def node(identity):
+        item = next((n for n in nodes() if n["id"] == identity), None)
+        if item is None:
+            raise HTTPException(404, "Unknown node")
+        return item
+
+    @app.get("/api/nodes")
+    def list_nodes():
+        return [{k: n[k] for k in ("id", "name", "lat", "lng", "lastSeen", "battery", "anomalyIndex", "stale",
+                "sourceClass", "reportingIntervalSeconds")} for n in nodes()]
+
+    @app.get("/api/nodes/{identity}/telemetry")
+    def telemetry(identity: str):
+        return node(identity)
+
+    @app.get("/api/status")
+    def status():
+        items = nodes()
+        return dict(appVersion=API_VERSION, uptimeSeconds=int(time.monotonic()-started), batteryVoltage=None,
+            meshNodeCount=len(items), sourceClasses=sorted({n["sourceClass"] for n in items}),
+            syntheticDemo=any(n["syntheticDemo"] for n in items), adapter="INDRA_READ_ONLY_LOCAL",
+            rpcAvailable=False, hardwareConnected=False, empiricalHazardModels="NOT_READY",
+            empiricalAccuracy="NOT_EVALUATED", publicNotificationsEnabled=False,
+            forecastModel="india_mandi_modeled_6h_v1", transport="HTTP_LOCAL_NO_RF",
+            empty=not items, staleNodes=sum(n["stale"] for n in items))
+
+    @app.get("/api/kriging/heatmap")
+    def heatmap():
+        # No surface is invented by smoothing categorical or uncalibrated risk.
+        return dict(type="FeatureCollection", features=[], status="NOT_AVAILABLE",
+            reason="Spatial validation and sufficient independent node coverage required; node readings remain visible",
+            method=None, uncertainty=None, probability=None)
+
+    @app.post("/api/rpc/{identity}")
+    def rpc(identity: str):
+        node(identity)
+        raise HTTPException(501, "No connected hardware RPC transport; command not sent or acknowledged")
+
+    if ui_dir is not None:
+        path = Path(ui_dir)
+        if not (path/"index.html").is_file():
+            raise ValueError("Build the dashboard before serving its static assets")
+        app.mount("/", StaticFiles(directory=path, html=True), name="dashboard")
+    return app
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--db", type=Path, default=ROOT/"data/himachal/dashboard.sqlite")
+    sources = parser.add_mutually_exclusive_group()
+    sources.add_argument("--observations", type=Path)
+    sources.add_argument("--demo", action="store_true", help="Replace store with clearly marked synthetic fixtures")
+    parser.add_argument("--port", type=int, default=8080)
+    parser.add_argument("--ui", type=Path)
+    args = parser.parse_args()
+    if not 1024 <= args.port <= 65535:
+        parser.error("Use a local unprivileged port")
+    app = create_app(args.db, ui_dir=args.ui)
+    if args.observations or args.demo:
+        raw = demo_observations() if args.demo else read_observations(args.observations)
+        prepared = assess(raw)
+        app.state.store.replace(prepared)
+        print(json.dumps(dict(nodes=len(prepared), mode="SYNTHETIC_DEMO" if args.demo else "OPERATOR_IMPORT",
+            probabilities="UNAVAILABLE", hardware_rpc=False)))
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=args.port)
+
+
+if __name__ == "__main__":
+    main()

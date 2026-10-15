@@ -12,3 +12,5 @@ and local working outputs remain ignored. Neither script invents event truth.
 
 Copernicus account setup, portal selections and request-size batching:
 [download guide](../docs/reference/COPERNICUS_MANDI_DOWNLOAD.md).
+
+The connected teammate dashboard starts with `run_himachal_demo.py --offline`. `import_dashboard_observations.py` atomically refreshes its store from reviewed native snapshots. See [integration guide](../docs/HIMACHAL_DASHBOARD_INTEGRATION.md).

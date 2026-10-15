@@ -1,0 +1,78 @@
+{
+  "schema_version": "indra_dashboard_integration_verification_v1",
+  "date_local": "2026-10-15",
+  "timezone": "Asia/Kolkata",
+  "working_ui": "apps/indra-himachal-ui",
+  "original_handoff": "docs/reference/dp_mesh_dashboard_handoff/original_manifest.json",
+  "api_version": "0.2.0",
+  "forecast_model": "india_mandi_modeled_6h_v1",
+  "forecast_training_evidence": "MANDI_LOCATION_MODELED_GRID_NOT_VERIFIED_STATION_DATA",
+  "risk_engine": "ml.himachal.rules",
+  "targets": [
+    "rain",
+    "snowstorm",
+    "cloudburst_risk"
+  ],
+  "evidence_kind": "SOFTWARE_INTEGRATION_WITH_SYNTHETIC_INPUT_FIXTURES",
+  "checks": {
+    "backend_tests": {
+      "passed": 5
+    },
+    "javascript_tests": {
+      "passed": 2
+    },
+    "browser_tests": {
+      "passed": 4,
+      "projects": [
+        "desktop_1440x1000",
+        "mobile_390x844"
+      ],
+      "browser": "Installed Google Chrome via Playwright 1.56.1",
+      "cases": [
+        "Six channels, saved-model estimates, node selection, three experimental risk cards, incomplete-history abstention, disabled RPC, no horizontal overflow, no page errors",
+        "API loss shows cached and stale warnings"
+      ]
+    },
+    "frontend_production_build": "PASSED",
+    "full_working_tree_regression": {
+      "passed": 281,
+      "subtests_passed": 172,
+      "seconds": 47.24,
+      "warnings": 3,
+      "note": "Includes the separate uncommitted Phase F runtime tests; not a claim of completed F/G\u2013N scope"
+    },
+    "ruff": "PASSED",
+    "protected_files": {
+      "count": 124,
+      "mismatches": 0
+    },
+    "git_diff_check": "PASSED; preserved original handoff whitespace excluded by .gitattributes"
+  },
+  "physical_sensor_execution": "NOT_TESTED",
+  "radio_execution": "NOT_TESTED",
+  "empirical_hazard_accuracy": "NOT_EVALUATED",
+  "calibrated_probabilities": false,
+  "public_notifications_enabled": false,
+  "live_telemetry_bridge": "NOT_CONNECTED",
+  "spatial_surface": "UNAVAILABLE",
+  "rpc": "DISABLED",
+  "files_sha256": {
+    "apps/indra-himachal-ui/src/App.jsx": "132b86c662fc86cdf022039e6d78ec0692d57ef44d20174f3864af64a223345c",
+    "apps/indra-himachal-ui/src/api/cache.js": "0a93a156b2ae54c71d949b629724cedb62fb132ff8291a773c080c4f555ed8ed",
+    "apps/indra-himachal-ui/src/api/client.js": "26046d4d247397faad9484824b565badadc0a74fc8a6ca999a5d5cc5625f68b4",
+    "apps/indra-himachal-ui/src/api/contract.js": "c14353c54dcfd7b9528adc1bdc143e729b35c2f178504ac539448d6c8701a0d5",
+    "apps/indra-himachal-ui/src/components/MapView.jsx": "686c5937d44353d034df79c83259857ebc29896fddd729bd70b9537b38e660d7",
+    "apps/indra-himachal-ui/src/components/NodeList.jsx": "559ef8af8a363fafbef3afa7065d2871d1d5f4233faa6aa2f5b5b7ecf2d2134d",
+    "apps/indra-himachal-ui/src/components/RpcMenu.jsx": "8da06857520b6c51eae6391dd5fa2eed799b794571adc2d0f85c093c074b82da",
+    "apps/indra-himachal-ui/src/components/StatusHeader.jsx": "d3d017886d008b48b5c67420a3da130cec9c82a46e56b6abf776a33f2542ffb2",
+    "apps/indra-himachal-ui/src/components/TelemetryPanel.jsx": "5ed51a2bcfaf09e2ada8cc6291b5ca86a852878a03f87d78b6a42c9db4a56d06",
+    "apps/indra-himachal-ui/src/main.jsx": "5044d7eafc37db1f3d2b9c0a1fdbe201ac24734b7ecbae8d52267cd3aeb4430c",
+    "apps/indra-himachal-ui/src/styles.css": "6d1396da1bee331e49ad936bc0313926a618c6bf5a1d5fe194554a4c9dc57d90",
+    "server/__init__.py": "6f299b2bc7540ffde6808f94bb18a33aef474ba6ccac39949e37e949eafefdb8",
+    "server/dashboard.py": "4fdbf36b06de1829335e646546a39ef9d160df2220d2fb0d493e81447f6c66af"
+  },
+  "screenshots": {
+    "desktop.png": "f96951f1fb35dd8b99fe2faefd90839a9faa02ee78e46c3de748108e2179fa80",
+    "mobile.png": "dc2a08781a80c2180a2c7326c8ad92ba812ad6509fc4f4da56a2b9a3f105676c"
+  }
+}

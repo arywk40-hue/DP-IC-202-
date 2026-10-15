@@ -1,0 +1,125 @@
+{
+  "source": "/Users/ariyanbhakat/Downloads/DP_Mesh_Dashboard_Handoff",
+  "files": [
+    {
+      "path": "High_Level_Systems_Complete.md",
+      "sha256": "6076e4f26ac4b6877bf61d278da806e5903ee58e3ae1104a6726ee62951ad1a9",
+      "bytes": 14993
+    },
+    {
+      "path": "High_Level_Systems_Report.md",
+      "sha256": "b8487baab78981bea1372c042889f8ccf41d38d3c3f981b68e173c2075530e30",
+      "bytes": 8677
+    },
+    {
+      "path": "integration/API_CONTRACT.md",
+      "sha256": "44755507eb4a3736e3aa9070f1cb5125d43a75a05a43edbfd5640cd34d16a29a",
+      "bytes": 634
+    },
+    {
+      "path": "integration/HANDOFF.md",
+      "sha256": "061c2801318e552aed8743c50213cb1a713af0c6954484670413e9ef8b2fdd99",
+      "bytes": 2111
+    },
+    {
+      "path": "integration/esp32_master_test/esp32_master_test.ino",
+      "sha256": "88e60879f8bfd34e807893fdcebc88f72b2bed366f31f6196130b8fcdfade6a8",
+      "bytes": 7245
+    },
+    {
+      "path": "integration/example_payloads.json",
+      "sha256": "c3d76e8d9821299ee75bb04314f4e0c38fc700180ee5bce0446f5849f42c1075",
+      "bytes": 1498
+    },
+    {
+      "path": "mesh-dashboard/README.md",
+      "sha256": "8ab8da87883fb199b0c7751743e72ddddf3a5e5d5a8f984e575b5af8be3523fc",
+      "bytes": 4922
+    },
+    {
+      "path": "mesh-dashboard/index.html",
+      "sha256": "84dc4344821822d0005132080cc607016be2e16ba253ec73b1f85cd1a9084a6f",
+      "bytes": 373
+    },
+    {
+      "path": "mesh-dashboard/mock-master.mjs",
+      "sha256": "8ae522cdf3f9534264e769bc0652bfb3f7dbb9d8eb68ff86b3d49960b3e7ba12",
+      "bytes": 3686
+    },
+    {
+      "path": "mesh-dashboard/package-lock.json",
+      "sha256": "38ff02be12f916c4c795cd076205b3ecc9dfaf26de46be209b7ab77d81ece81a",
+      "bytes": 224637
+    },
+    {
+      "path": "mesh-dashboard/package.json",
+      "sha256": "71b10a6576158b493510b82c3c7fe13ad07757779cea85d235126a4f3e426261",
+      "bytes": 483
+    },
+    {
+      "path": "mesh-dashboard/public/favicon.svg",
+      "sha256": "947f55a6f4c12b0ac025dc0d7a26ceed3cbe867da12eb1e4d3d5ef56afd3ac89",
+      "bytes": 172
+    },
+    {
+      "path": "mesh-dashboard/src/App.jsx",
+      "sha256": "265120a98e2b6170b6ca08c6b3b4e35a92bdd1ae6e4bbe55ec3662e91f44aa7e",
+      "bytes": 4404
+    },
+    {
+      "path": "mesh-dashboard/src/api/cache.js",
+      "sha256": "4217e66bfeb8eda4d1e6e5e6f22b66aca13991d69cae446a9846499e2fe104a3",
+      "bytes": 2428
+    },
+    {
+      "path": "mesh-dashboard/src/api/client.js",
+      "sha256": "0913ec01a60f8996b29bdeea5ec89d76a3decf536ac2423727bde498a7e4cd35",
+      "bytes": 9126
+    },
+    {
+      "path": "mesh-dashboard/src/api/contract.js",
+      "sha256": "72ae00a6941edc16b012c77941fbbcd6ba3fc3b4ccceff7f1c33f127ca3c91d7",
+      "bytes": 1539
+    },
+    {
+      "path": "mesh-dashboard/src/components/MapView.jsx",
+      "sha256": "001e2e3a399a52477133b054b6c1ba73ff6a57608dea61ed111ce8a76d70988d",
+      "bytes": 6486
+    },
+    {
+      "path": "mesh-dashboard/src/components/NodeList.jsx",
+      "sha256": "bac13a837111049b2f92618a87f754694b2d4c4022e451eb58ec91c04f5fcacc",
+      "bytes": 2170
+    },
+    {
+      "path": "mesh-dashboard/src/components/RpcMenu.jsx",
+      "sha256": "a5fb1f9f2cc01b136972b3dda3a4b6e343715005d975f967f4812e019bf8c56a",
+      "bytes": 2277
+    },
+    {
+      "path": "mesh-dashboard/src/components/StatusHeader.jsx",
+      "sha256": "3584df84dbffbd8b379cb1891e7bbf37a39702b7152d01a68b73f9a543606601",
+      "bytes": 2231
+    },
+    {
+      "path": "mesh-dashboard/src/components/TelemetryPanel.jsx",
+      "sha256": "a9b54d6e3eab51fb5ede218de7d779bbee58787125050eb7dc0f54bfcacfeecb",
+      "bytes": 2677
+    },
+    {
+      "path": "mesh-dashboard/src/main.jsx",
+      "sha256": "5044d7eafc37db1f3d2b9c0a1fdbe201ac24734b7ecbae8d52267cd3aeb4430c",
+      "bytes": 321
+    },
+    {
+      "path": "mesh-dashboard/src/styles.css",
+      "sha256": "d5c063a4d94870dd943da5ae566e99500c26e0f08c51eb147656b07bd8879015",
+      "bytes": 9992
+    },
+    {
+      "path": "mesh-dashboard/vite.config.js",
+      "sha256": "7adbd06f44beff2ce95e1586dd1cd98303cd7a66eae1e8218402a4133c33d43a",
+      "bytes": 1171
+    }
+  ]
+}

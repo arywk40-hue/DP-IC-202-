@@ -6,7 +6,7 @@
   "board_execution": "NOT_TESTED",
   "radio_execution": "NOT_TESTED",
   "public_notifications_enabled": false,
-  "teammate_integration": "PENDING_EXTERNAL_UI",
+  "teammate_integration": "LOCAL_DASHBOARD_ADAPTER_TESTED",
   "evidence": "docs/plans/INDRA_HIMACHAL_PLAN.md",
   "completed_phases": [
     "A",
@@ -15,5 +15,8 @@
     "D",
     "E"
   ],
-  "next_phase": "F"
+  "next_phase": "F",
+  "dashboard": "SAVED_MODEL_AND_RULES_CONNECTED",
+  "live_telemetry_bridge": "NOT_CONNECTED",
+  "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS"
 }
