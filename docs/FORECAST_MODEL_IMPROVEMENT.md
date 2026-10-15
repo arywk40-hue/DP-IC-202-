@@ -125,3 +125,5 @@ Implementation reference: sklearn supports multi-output MLP regression and
 incremental fitting via `partial_fit`; using that API inside an offline training
 script does not create a deployed learning service:
 https://scikit-learn.org/1.7/modules/generated/sklearn.neural_network.MLPRegressor.html
+
+A separate ERA5-context SGD online research replay has since been implemented; see [its scope and tests](ONLINE_STORM_RESEARCH.md). It does not update the six-channel numerical forecast model or connect a live learning worker to the dashboard/ESP32.

@@ -19,6 +19,8 @@
   "dashboard": "SAVED_MODEL_AND_RULES_CONNECTED",
   "live_telemetry_bridge": "NOT_CONNECTED",
   "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS",
-  "online_learning": "NOT_IMPLEMENTED",
-  "neural_forecast_candidates": "OFFLINE_TRAINED_MODELED_DATA_ONLY"
+  "online_learning": "ERA5_RESEARCH_REPLAY_IMPLEMENTED_NOT_LIVE",
+  "neural_forecast_candidates": "OFFLINE_TRAINED_MODELED_DATA_ONLY",
+  "six_sensor_online_learning": "NOT_IMPLEMENTED",
+  "era5_online_research": "DELAYED_LABEL_PREQUENTIAL_SGD_TESTED"
 }

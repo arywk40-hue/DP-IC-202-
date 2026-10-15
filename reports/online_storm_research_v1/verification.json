@@ -1,0 +1,99 @@
+{
+  "schema_version": "indra_online_research_verification_v1",
+  "date_local": "2026-10-15",
+  "evidence_kind": "SYNTHETIC_ENGINEERING_REPLAY_ONLY",
+  "model_runs": {
+    "cloudburst": {
+      "prediction_rows": 3696,
+      "mature_scored_rows": 3696,
+      "pending_labels": 0,
+      "update_batches": 78,
+      "model_version": 79,
+      "fixed_class_weights": {
+        "0": 0.5441810344827587,
+        "1": 6.158536585365853
+      },
+      "fixed_scaler_sha256": "301d7346a734a1de0d7e9b0afaabb77553a9be51f8054ab2d81e4bb5c27bd9c2",
+      "initial_warmup": {
+        "action": "INITIAL_FIT",
+        "at": "2024-01-24T00:00:00+00:00",
+        "rows": 1010,
+        "maximum_feature_time": "2024-01-22T00:00:00+00:00",
+        "maximum_label_available_at": "2024-01-24T00:00:00+00:00",
+        "class_counts": {
+          "0": 928,
+          "1": 82
+        },
+        "scaler_sha256": "301d7346a734a1de0d7e9b0afaabb77553a9be51f8054ab2d81e4bb5c27bd9c2"
+      },
+      "checkpoint_files": [
+        "cloudburst_2024-02-22.joblib",
+        "cloudburst_2024-03-23.joblib",
+        "cloudburst_2024-04-11_final.joblib"
+      ],
+      "source_manifest_sha256": "a249704cc600ea1372c4c3fac62863228c99fe5becb7625a5df52b89c63877ad"
+    },
+    "snowstorm": {
+      "prediction_rows": 3696,
+      "mature_scored_rows": 3696,
+      "pending_labels": 0,
+      "update_batches": 78,
+      "model_version": 79,
+      "fixed_class_weights": {
+        "0": 0.5233160621761658,
+        "1": 11.222222222222221
+      },
+      "fixed_scaler_sha256": "301d7346a734a1de0d7e9b0afaabb77553a9be51f8054ab2d81e4bb5c27bd9c2",
+      "initial_warmup": {
+        "action": "INITIAL_FIT",
+        "at": "2024-01-24T00:00:00+00:00",
+        "rows": 1010,
+        "maximum_feature_time": "2024-01-22T00:00:00+00:00",
+        "maximum_label_available_at": "2024-01-24T00:00:00+00:00",
+        "class_counts": {
+          "0": 965,
+          "1": 45
+        },
+        "scaler_sha256": "301d7346a734a1de0d7e9b0afaabb77553a9be51f8054ab2d81e4bb5c27bd9c2"
+      },
+      "checkpoint_files": [
+        "snowstorm_2024-02-22.joblib",
+        "snowstorm_2024-03-23.joblib",
+        "snowstorm_2024-04-11_final.joblib"
+      ],
+      "source_manifest_sha256": "88a704067fc6e0ba67aab50d57679416af3814f4d088eb115fc9b1f072c450a3"
+    }
+  },
+  "public_cli_resume_parity": {
+    "predictions_identical": true,
+    "metrics_identical": true,
+    "coefficients_bitwise_equal": true,
+    "intercepts_bitwise_equal": true,
+    "optimizer_step_identical": true
+  },
+  "checks": {
+    "focused_tests_passed": 9,
+    "full_working_tree_tests_passed": 294,
+    "subtests_passed": 172,
+    "full_suite_seconds": 49.13,
+    "full_suite_note": "Includes separate unfinished/uncommitted Phase F tests",
+    "ruff": "PASSED",
+    "diff_check": "PASSED",
+    "protected_files_checked": 129,
+    "protected_mismatches": 0
+  },
+  "real_data_tested": false,
+  "empirical_hazard_accuracy": "NOT_EVALUATED",
+  "calibrated": false,
+  "live_service_connected": false,
+  "six_sensor_model_modified": false,
+  "public_notifications_enabled": false,
+  "code_sha256": {
+    "ml/hazard_context/online.py": "b80323ce358e2f66d05c0897b8964f07e2b58a3c5b91f2bc6a937721d20e09ea",
+    "ml/hazard_context/online_data.py": "08fc368157cf9836b4f80bfb4e95c0d8f9cbfb9e28917efff9a499a48d7f55f5",
+    "ml/hazard_context/online_demo.py": "54805d67bbc555fbc9db28a258b58574f75b72564d7a171c0c93cf66934e8644",
+    "scripts/online_storm_risk.py": "c993b6ce67ca34c75730302b3b4f1b5c4d6a1a7df68fd49dc2d54a703cf4431c",
+    "scripts/demo_online_storm.py": "8d73ef885639b51f441d91b738744d52730f96a3cd8fbc76fe33d7a403f214ce",
+    "configs/online_storm_research_v1.json": "87ba33c3fe0f713fcd6c97085bd7ce7a7fae8593c7b2a7b20b95d46e12c499aa"
+  }
+}

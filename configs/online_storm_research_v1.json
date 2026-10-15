@@ -1,0 +1,17 @@
+{
+  "schema_version": "indra_online_storm_research_v1",
+  "settings": {
+    "warmup_days": 30,
+    "reference_days": 7,
+    "rolling_days": 30,
+    "min_positives": 10,
+    "min_negatives": 10,
+    "min_reference_rows": 24,
+    "drift_brier_increase": 0.05,
+    "checkpoint_days": 30,
+    "eta0": 0.01,
+    "alpha": 0.0001,
+    "seed": 42,
+    "holdout_start": null
+  }
+}
