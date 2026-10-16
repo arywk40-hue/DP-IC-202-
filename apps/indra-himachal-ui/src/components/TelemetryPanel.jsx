@@ -50,8 +50,19 @@ export default function TelemetryPanel({ nodeName, telemetry, loading, cached, r
         </div>)}
       </div>
       <p className="evidence-note">Forecast for {date(telemetry.forecastTimestamp)}<br />
-        Model: {telemetry.forecastModel?.id}. Trained on Mandi-location modeled grids; field validation pending.
+        <strong>{telemetry.forecastModel?.displayName || telemetry.forecastModel?.id}</strong><br />
+        Model: {telemetry.forecastModel?.id}<br />
+        Forecast status: {telemetry.forecastStatus}<br />
+        Complete hourly snapshots: {telemetry.forecastHistoryRows ?? 0}/{telemetry.forecastHistoryRequired ?? 25}<br />
+        {telemetry.forecastStatus === 'WARMING_UP_PERSISTENCE' && <>Warm-up: estimates copy current readings until the required history is available.<br /></>}
+        {telemetry.forecastModel?.family}<br />
+        Trained on Mandi-location modeled grids; field validation pending.
       </p>
+      {telemetry.forecastModel?.blendWeights && <details className="forecast-components"><summary>Forecast model components</summary>
+        <ul>{Object.entries(telemetry.forecastModel.blendWeights).map(([target,head]) => <li key={target}>
+          {CHANNELS[target]?.[0] || target}: {head.neural}; blend {Object.entries(head.weights).map(([name,value]) => `${name} ${value.toFixed(2)}`).join(' · ')}
+        </li>)}</ul>
+      </details>}
       <h3>Experimental risk assessments</h3>
       <p className="evidence-note">Current sensor patterns, not six-hour event forecasts. Experimental uncalibrated risk scores. A non-match does not establish safety.</p>
       {Object.values(telemetry.risks || {}).map((risk) => <article key={risk.target} className={`risk-card risk-${risk.abstain ? 'unknown' : risk.level}`}>

@@ -16,11 +16,11 @@
     "E"
   ],
   "next_phase": "F",
-  "dashboard": "SAVED_MODEL_AND_RULES_CONNECTED",
+  "dashboard": "NEURAL_HYBRID_FORECAST_AND_RULES_CONNECTED",
   "live_telemetry_bridge": "NOT_CONNECTED",
   "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS",
   "online_learning": "ERA5_RESEARCH_REPLAY_IMPLEMENTED_NOT_LIVE",
-  "neural_forecast_candidates": "OFFLINE_TRAINED_MODELED_DATA_ONLY",
+  "neural_forecast_candidates": "VALIDATION_SELECTED_ACTIVE_GATEWAY_HYBRID_MODELED_DATA_ONLY",
   "six_sensor_online_learning": "NOT_IMPLEMENTED",
   "era5_online_research": "DELAYED_LABEL_PREQUENTIAL_SGD_TESTED",
   "neighbour_network": "AUTHENTICATED_RUNTIME_AND_SYNTHETIC_STRESS_TESTED_NOT_LIVE",
@@ -29,5 +29,9 @@
   "storm_context_pipeline": "IMPLEMENTED_SYNTHETIC_TESTED_LOCAL_FILES_ONLY",
   "storm_context_ui": "REPORT_SCORES_ANOMALIES_GRID_CONFIRMATION_FEATURE_MAPS_CONNECTED",
   "storm_context_calibrated": false,
-  "storm_context_evidence": "reports/storm_risk_pipeline_v1/verification.json"
+  "storm_context_evidence": "reports/storm_risk_pipeline_v1/verification.json",
+  "numerical_forecast_model": "india_mandi_hybrid_6h_v1",
+  "numerical_forecast_history_hours": 24,
+  "numerical_forecast_fallback": "EXPLICIT_PERSISTENCE_WARMUP",
+  "numerical_forecast_evidence": "reports/india_mandi_hybrid_6h_v1/REPORT.md"
 }

@@ -13,6 +13,12 @@ positions and a 954-pair temporal holdout. This is not measured Mandi field
 accuracy. The API pressure is grid-surface pressure; independent hazard heads
 remain unfitted.
 
+The active dashboard forecast is now **`india_mandi_hybrid_6h_v1`**: a
+validation-selected residual neural network + history XGBoost + ridge ensemble.
+It uses 24 hours of six-channel history; incomplete histories show an explicit
+persistence warm-up. [Hybrid results and verification](reports/india_mandi_hybrid_6h_v1/REPORT.md).
+This promotion runs on the Python gateway; the compact ESP32 export is separate.
+
 ```sh
 python3 scripts/test_india_mandi.py --offline   # local cached data; no retraining
 python3 scripts/test_india_mandi.py --prepare   # download ignored source on a fresh checkout

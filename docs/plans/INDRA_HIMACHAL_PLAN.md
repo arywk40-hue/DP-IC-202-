@@ -53,7 +53,7 @@ User supplied DP Mesh Dashboard and requested connection before the remaining ph
 
 ## Numerical architecture improvement (2026-10-15)
 
-User requested an architecture beyond XGBoost. Two six-channel, 66-history-feature residual neural networks were trained and compared on the existing Mandi modeled cohort. Validation chooses neural temperature/wind, ridge pressure and XGBoost teacher humidity/PM heads. The research candidates are saved separately; no existing weight/export or active UI profile is replaced. This numerical experiment does not complete the independent hazard training/evaluation phases. Online learning remains NOT_IMPLEMENTED; see `docs/FORECAST_MODEL_IMPROVEMENT.md`.
+User requested an architecture beyond XGBoost. Two six-channel, 66-history-feature residual neural networks were trained and compared on the existing Mandi modeled cohort. Validation chooses neural temperature/wind, ridge pressure and XGBoost teacher humidity/PM heads. The research candidates were initially saved separately; the subsequent dashboard promotion is recorded below. Existing weights/exports are preserved. This numerical experiment does not complete the independent hazard training/evaluation phases. Online learning remains NOT_IMPLEMENTED; see `docs/FORECAST_MODEL_IMPROVEMENT.md`.
 
 ## ERA5 online research replay (2026-10-15)
 
@@ -70,3 +70,7 @@ React research panel. All demonstrated models use synthetic engineering data;
 the evidence gate remains closed. No real local ERA5/event files were present.
 The six-channel student and all original weights remain unchanged. See
 `storm_risk/README.md` and `reports/storm_risk_pipeline_v1/ACCEPTANCE.md`.
+
+## Active six-channel hybrid promotion — 16 October 2026
+
+The dashboard now calls `india_mandi_hybrid_6h_v1`: validation-selected residual MLP, history XGBoost and temporal ridge predictions. All six targets use nonzero neural coefficients. Its 66 causal features require 25 complete hourly snapshots spanning 24 hours; missing history is explicit persistence warm-up, and missing current inputs produce unavailable outputs. Legacy cached forecasts are recomputed rather than relabelled. Selection uses validation only; the 954-row test is a reused Mandi modeled-grid cohort, not independent sensor validation. This is a gateway promotion; original weights and ESP32 exports remain unchanged. It does not complete hazard training, live online adaptation or physical execution. See `reports/india_mandi_hybrid_6h_v1/REPORT.md` and `docs/HIMACHAL_DASHBOARD_INTEGRATION.md`.

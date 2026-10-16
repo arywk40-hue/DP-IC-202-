@@ -1,0 +1,16 @@
+{
+  "schema_version": "indra_mandi_hybrid_build_v1",
+  "profile_id": "india_mandi_hybrid_6h_v1",
+  "base_config": "configs/mandi_modeled_forecast_v1.json",
+  "base_model": "ml/models/india_mandi_modeled_6h_v1",
+  "neural_candidates": [
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_32",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32"
+  ],
+  "simplex_step": 0.05,
+  "threads": 2,
+  "models_output": "ml/models/india_mandi_hybrid_6h_v1",
+  "reports_output": "reports/india_mandi_hybrid_6h_v1",
+  "warmup_fallback": "persistence",
+  "field_validated": false
+}

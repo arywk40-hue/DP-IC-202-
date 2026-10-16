@@ -145,5 +145,8 @@ The React panel shows uncalibrated score labels, per-cell anomaly markers,
 neighbour-confirmed experimental status, feature grids and gate failures.
 Unavailable runs and corrupted files produce explicit errors, without creating
 browser data or simulated physical acknowledgements. The node telemetry
-forecast remains the existing Mandi XGBoost student until its separate ensemble
-integration is completed. Public notifications remain disabled.
+forecast now uses the separate six-channel Mandi neural/history-XGBoost/ridge
+hybrid (`india_mandi_hybrid_6h_v1`), with a labelled persistence warm-up when
+24 hours of complete hourly history are unavailable. These numerical forecasts
+remain distinct from this ERA5 hazard research panel. Public notifications
+remain disabled.

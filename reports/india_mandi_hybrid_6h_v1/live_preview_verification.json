@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-10-16T10:32:34.605Z",
+  "previews": [
+    {
+      "port": 8080,
+      "apiVersion": "0.3.0",
+      "model": "india_mandi_hybrid_6h_v1",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "input": {
+        "temperature_c": 20,
+        "relative_humidity_pct": 90,
+        "pressure_hpa": 876,
+        "pm25_ug_m3": 20,
+        "pm10_ug_m3": 40,
+        "wind_speed_mps": 5
+      },
+      "forecast6h": {
+        "temperature_c": 23.552729763846713,
+        "relative_humidity_pct": 85.3519142750327,
+        "pressure_hpa": 879.4924819390237,
+        "pm25_ug_m3": 15.09744308612969,
+        "pm10_ug_m3": 44.36031250882469,
+        "wind_speed_mps": 4.229128261402388
+      },
+      "forecastTimestamp": "2026-10-16T16:15:00+00:00",
+      "warmupStatus": "WARMING_UP_PERSISTENCE",
+      "pageErrors": [],
+      "syntheticDemo": true
+    },
+    {
+      "port": 8082,
+      "apiVersion": "0.3.0",
+      "model": "india_mandi_hybrid_6h_v1",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "input": {
+        "temperature_c": 20,
+        "relative_humidity_pct": 90,
+        "pressure_hpa": 876,
+        "pm25_ug_m3": 20,
+        "pm10_ug_m3": 40,
+        "wind_speed_mps": 5
+      },
+      "forecast6h": {
+        "temperature_c": 23.552729763846713,
+        "relative_humidity_pct": 85.3519142750327,
+        "pressure_hpa": 879.4924819390237,
+        "pm25_ug_m3": 15.09744308612969,
+        "pm10_ug_m3": 44.36031250882469,
+        "wind_speed_mps": 4.229128261402388
+      },
+      "forecastTimestamp": "2026-10-16T16:15:00+00:00",
+      "warmupStatus": "WARMING_UP_PERSISTENCE",
+      "pageErrors": [],
+      "syntheticDemo": true
+    }
+  ]
+}

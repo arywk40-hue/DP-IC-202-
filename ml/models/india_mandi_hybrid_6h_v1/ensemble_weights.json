@@ -1,0 +1,67 @@
+{
+  "schema_version": "indra_mandi_hybrid_weights_v1",
+  "family_order": [
+    "neural",
+    "xgb_history",
+    "ridge_history"
+  ],
+  "heads": {
+    "temperature_c": {
+      "neural": "residual_mlp_64_32",
+      "weights": {
+        "neural": 0.4,
+        "xgb_history": 0.35,
+        "ridge_history": 0.25
+      },
+      "validation_mae": 1.1352891143016672
+    },
+    "relative_humidity_pct": {
+      "neural": "residual_mlp_64_32",
+      "weights": {
+        "neural": 0.5,
+        "xgb_history": 0.5,
+        "ridge_history": 0.0
+      },
+      "validation_mae": 6.248202517622656
+    },
+    "pressure_hpa": {
+      "neural": "residual_mlp_32",
+      "weights": {
+        "neural": 0.35,
+        "xgb_history": 0.15,
+        "ridge_history": 0.5
+      },
+      "validation_mae": 0.6221302250382743
+    },
+    "pm25_ug_m3": {
+      "neural": "residual_mlp_64_32",
+      "weights": {
+        "neural": 0.4,
+        "xgb_history": 0.55,
+        "ridge_history": 0.05
+      },
+      "validation_mae": 5.615773257249931
+    },
+    "pm10_ug_m3": {
+      "neural": "residual_mlp_32",
+      "weights": {
+        "neural": 0.4,
+        "xgb_history": 0.55,
+        "ridge_history": 0.05
+      },
+      "validation_mae": 7.305441178587218
+    },
+    "wind_speed_mps": {
+      "neural": "residual_mlp_64_32",
+      "weights": {
+        "neural": 0.9,
+        "xgb_history": 0.1,
+        "ridge_history": 0.0
+      },
+      "validation_mae": 0.2957303430497658
+    }
+  },
+  "selection": "CHRONOLOGICAL_VALIDATION_MAE_ONLY",
+  "validation_rows": 738,
+  "simplex_step": 0.05
+}

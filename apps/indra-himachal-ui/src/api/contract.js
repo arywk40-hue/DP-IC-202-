@@ -1,7 +1,7 @@
-// Shared constants — keep in lockstep with Master /api/status.appVersion
-// and firmware/rpc.h. See ../integration/API_CONTRACT.md (repo root).
+// Keep in lockstep with the Python adapter's /api/status.appVersion.
+// The original teammate firmware contract is preserved separately in docs/reference/.
 
-export const DASHBOARD_API_VERSION = '0.2.0';
+export const DASHBOARD_API_VERSION = '0.3.0';
 
 // LiFePO4 on the 3.3 V rail (overview §4). Display volts, never invent %.
 export const BATTERY_WARN_V = 3.1;

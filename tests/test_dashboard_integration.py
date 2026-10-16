@@ -24,7 +24,7 @@ def test_saved_india_model_and_rule_evidence_have_distinct_meaning(assessed):
     for node in assessed:
         assert set(node["sensors"]) == set(RAW_SENSOR_COLUMNS)
         assert set(node["forecast6h"]) == set(RAW_SENSOR_COLUMNS)
-        assert node["forecastModel"]["id"] == "india_mandi_modeled_6h_v1"
+        assert node['forecastModel']['configuredId'] == 'india_mandi_hybrid_6h_v1'
         assert not node["forecastModel"]["fieldValidated"]
         assert node["probability"] is None
         assert node["syntheticDemo"]
@@ -38,6 +38,9 @@ def test_saved_india_model_and_rule_evidence_have_distinct_meaning(assessed):
     assert assessed[1]["risks"]["snowstorm"]["score"] == 1
     assert assessed[2]["risks"]["cloudburst_risk"]["level"] == "local_warning_candidate"
     assert assessed[3]["risks"]["cloudburst_risk"]["abstain"]
+    assert all(n['forecastModel']['id'] == 'india_mandi_hybrid_6h_v1' and n['forecastStatus'] == 'HYBRID_READY' for n in assessed[:3])
+    assert assessed[3]['forecastStatus'] == 'WARMING_UP_PERSISTENCE'
+    assert assessed[3]['forecast6h'] == assessed[3]['sensors']
     json.dumps(assessed, allow_nan=False)
 
 
@@ -48,7 +51,8 @@ def test_five_endpoint_handoff_and_restart_staleness(assessed):
         store.replace(assessed)
         epoch = assessed[0]["timestamp"]/1000
         with TestClient(create_app(db, clock=lambda: epoch)) as client:
-            assert client.get("/api/status").json()["appVersion"] == "0.2.0"
+            assert client.get("/api/status").json()["appVersion"] == "0.3.0"
+            assert client.get('/api/status').json()['forecastModel'] == 'india_mandi_hybrid_6h_v1'
             assert len(client.get("/api/nodes").json()) == 4
             telemetry = client.get("/api/nodes/demo-03/telemetry").json()
             assert telemetry["assessmentUsableNow"]
@@ -91,9 +95,8 @@ def test_future_duplicate_relocation_and_forecast_checksum_fail_closed(tmp_path)
         assess(moved, now=NOW)
     root = Path(__file__).resolve().parents[1]
     import shutil
-    shutil.copytree(root/"ml/models/india_mandi_modeled_6h_v1", tmp_path/"model")
-    entry = json.loads((tmp_path/"model/training_report.json").read_text())["models"]["temperature_c"]
-    with (tmp_path/"model"/entry["student_file"]).open("ab") as f:
+    shutil.copytree(root/"ml/models/india_mandi_hybrid_6h_v1", tmp_path/"model")
+    with (tmp_path/"model/ensemble_weights.json").open("ab") as f:
         f.write(b"tamper")
     with pytest.raises(ValueError, match="checksum"):
         assess(raw, now=NOW, model_dir=tmp_path/"model")

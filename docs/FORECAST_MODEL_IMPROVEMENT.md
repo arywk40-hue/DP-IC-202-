@@ -1,8 +1,15 @@
 # Forecast architecture and online-learning status
 
-Status: 15 October 2026. The deployed dashboard still uses the saved compact
-Mandi XGBoost student. Two additional neural models are trained, saved and
-benchmarked as isolated research candidates.
+Status: 16 October 2026. The active dashboard now uses
+`india_mandi_hybrid_6h_v1`: a validation-selected residual neural network,
+history XGBoost and temporal ridge blend. Both trained neural candidates are
+included in its versioned component manifest. Every target has a nonzero neural
+coefficient. The compact model remains the separate existing firmware export.
+
+The gateway integration and persistence warm-up are described in
+[the dashboard guide](HIMACHAL_DASHBOARD_INTEGRATION.md). Selection coefficients,
+retrospective metrics and verification are in
+[the hybrid report](../reports/india_mandi_hybrid_6h_v1/REPORT.md).
 
 ## Architecture implemented in this experiment
 
@@ -48,7 +55,8 @@ Weights and normalization are stored in bounded, checksum-verified NumPy archive
 under `ml/models/india_mandi_neural_history_v1/`; no pickle/joblib loading is used.
 Original trained models and exports remain byte-for-byte unchanged. The neural
 candidates have no ESP32 export, quantization or on-board execution receipt.
-They are not automatically substituted into the active dashboard/firmware.
+They now contribute to the active dashboard hybrid. No firmware substitution
+or neural edge export is claimed.
 
 ## Reproduce and run inference
 
@@ -110,8 +118,8 @@ snowstorm labels.
 
 - Connect the physical ESP32 telemetry bridge and verify clock, units, pressure,
   calibration and complete native histories.
-- Evaluate the selected architecture on new measured Mandi data, then decide
-  whether to promote a host model or build and verify a compact edge export.
+- Evaluate the active gateway architecture on new measured Mandi data; build
+  and verify a compact neural/hybrid edge export if that deployment is needed.
 - Implement and replay-test the delayed-label shadow update service before
   enabling live adaptation.
 - Obtain independent hazard labels and coverage evidence for rain, snowstorm,

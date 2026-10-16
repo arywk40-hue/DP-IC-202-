@@ -1,6 +1,6 @@
 # Implemented INDRA India/Mandi architecture
 
-Updated 11 October 2026. The primary contract has six physical channels:
+Updated 16 October 2026. The primary contract has six physical channels:
 temperature, relative humidity, station pressure, PM2.5, PM10 and wind. History
 and derived values come from these channels; they are not extra sensors.
 
@@ -12,11 +12,11 @@ flowchart LR
   B --> C[Six values and exact UTC hourly positions]
   C --> D[66 causal history features]
   D --> E[Chronological train / validation / test]
-  E --> F[History XGBoost and residual ridge]
+  E --> F[Residual MLPs, history XGBoost and residual ridge]
   E --> G[Compact six-input student]
-  F --> H[Validation-only choices]
-  G --> H
-  H --> I[Held-out modeled-value MAE / RMSE / R2]
+  F --> H[Validation-only per-target convex blend]
+  H --> I[Reused retrospective modeled-value metrics]
+  H --> K[Active Python dashboard hybrid]
   G --> J[Separate C export and compiled-host parity]
 ```
 
@@ -26,6 +26,7 @@ flowchart LR
 | Canonical feature/target construction | `ml/six_sensor_forecast/features.py` |
 | Residual tree teacher/student fitting | `ml/six_sensor_forecast/train.py` |
 | Linear temporal fitting and India-only evaluation | `ml/india_mandi/benchmark.py` |
+| Active gateway hybrid | `ml/india_mandi/hybrid.py`, `scripts/promote_mandi_hybrid.py` |
 | Public runnable entry point | `scripts/test_india_mandi.py` |
 | Six-output compact C export | `ml/six_sensor_forecast/export.py` |
 | Frozen profile and model country/source catalog | `configs/mandi_modeled_forecast_v1.json`, `configs/model_catalog.json` |
@@ -46,6 +47,14 @@ This profile uses temporal-only splits with six-hour label purges, not fabricate
 held-out stations. Historical teacher/linear inputs require a complete 24-hour
 span. The compact student accepts one current snapshot. File hashes, feature
 orders and source/config provenance are retained beside the weights.
+
+**Active gateway:** `india_mandi_hybrid_6h_v1` combines predictions from the saved
+66→32→6 and 66→64→32→6 residual neural candidates, history XGBoost and ridge.
+Validation selects a neural architecture and three convex coefficients per target.
+No original model weights are rewritten. Complete history is required; otherwise
+the API/UI explicitly reports persistence warm-up or unavailable current inputs.
+The compact student remains the separate edge export. See
+[hybrid report](../reports/india_mandi_hybrid_6h_v1/REPORT.md).
 
 **Evidence boundary:** India-only describes where INDRA's fit/evaluation records
 come from and excludes Beijing records/pretrained weights. ECMWF/CAMS are global

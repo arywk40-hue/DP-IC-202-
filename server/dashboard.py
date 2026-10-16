@@ -10,7 +10,6 @@ import argparse
 from collections import defaultdict
 import copy
 from datetime import datetime, timezone
-import hashlib
 import json
 import math
 from pathlib import Path
@@ -26,12 +25,12 @@ from ml.himachal.features import build_packet
 from ml.himachal.rules import evaluate
 from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
-from ml.six_sensor_forecast.predict import predict
+from ml.india_mandi.hybrid import DEFAULT_MODEL, PROFILE_ID, Hybrid
 from server.storm_run import StormRun
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL = ROOT / "ml/models/india_mandi_modeled_6h_v1"
-API_VERSION = "0.2.0"
+MODEL = DEFAULT_MODEL
+API_VERSION = "0.3.0"
 MAX_ROWS = 50_000
 
 
@@ -40,12 +39,12 @@ def demo_observations(now=None):
     end = pd.Timestamp(now or datetime.now(timezone.utc)).floor("15min")
     rows = []
     for number, scenario in enumerate(("rain", "snow", "cloudburst", "incomplete"), 1):
-        for tick in range(29 if scenario != "incomplete" else 1):
-            stamp = (end - pd.Timedelta(minutes=15 * (28-tick) if scenario != "incomplete" else 0)).isoformat()
+        for tick in range(97 if scenario != "incomplete" else 1):
+            stamp = (end - pd.Timedelta(minutes=15 * (96-tick) if scenario != "incomplete" else 0)).isoformat()
             temperature, humidity, pressure, pm25, pm10, wind = 20., 90., 900.-tick*.25, 40., 80., 5.
             if scenario == "snow":
                 temperature, wind = 0., 10.
-            if tick == 28:
+            if tick == 96:
                 pm25, pm10 = 20., 40.
                 if scenario == "cloudburst":
                     temperature, pressure, wind = 17., pressure-1.25, 10.
@@ -72,6 +71,46 @@ def read_observations(path):
     return data
 
 
+def apply_forecasts(nodes, histories, engine, clock):
+    """Take exact hourly snapshots ending at each observation; never fill values."""
+    rows = []
+    for node in nodes:
+        end = pd.Timestamp(node['timestamp'], unit='ms', tz='UTC')
+        lookup = {utc(r['timestamp']): r for r in histories[node['id']]}
+        expected = [end-pd.Timedelta(hours=h) for h in range(24, -1, -1)]
+        stored = []
+        missing = []
+        for stamp in expected:
+            observation = lookup.get(stamp)
+            values = {c: None if observation is None else observation.get(c) for c in RAW_SENSOR_COLUMNS}
+            if observation is not None:
+                stored.append(dict(timestamp=stamp.isoformat(), **values))
+            if any(v is None for v in values.values()):
+                missing.append(stamp.isoformat())
+            rows.append(dict(location_id=node['id'], timestamp_utc=stamp.isoformat(), **values))
+        node['forecastHistory'] = stored
+        node['forecastHistoryRows'] = 25-len(missing)
+        node['forecastHistoryRequired'] = 25
+        node['forecastMissingHours'] = missing
+    forecasts = engine.predict(pd.DataFrame(rows))
+    latest = forecasts.groupby('location_id', sort=False).tail(1).set_index('location_id')
+    for node in nodes:
+        forecast = latest.loc[node['id']]
+        ready = forecast['status'] == 'HYBRID_READY'
+        node['forecast6h'] = {c: float(forecast['forecast_'+c]) if math.isfinite(forecast['forecast_'+c]) else None for c in RAW_SENSOR_COLUMNS}
+        node['forecastTimestamp'] = forecast['forecast_timestamp_utc'].isoformat()
+        node['forecastIssuedAt'] = clock.isoformat()
+        node['forecastStatus'] = forecast['status']
+        node['forecastModel'] = dict(id=forecast['model_id'], configuredId=PROFILE_ID,
+            displayName='Mandi neural hybrid' if ready else 'Persistence warm-up' if forecast['status']=='WARMING_UP_PERSISTENCE' else 'Unavailable',
+            family='Neural + history XGBoost + ridge' if ready else 'Persistence' if forecast['status']=='WARMING_UP_PERSISTENCE' else None,
+            country='IN', trainingEvidence='MODELED_GRID_RETROSPECTIVE', fieldValidated=False,
+            profileSha256=engine.profile_sha256, blendWeights=engine.weights['heads'] if ready else None,
+            historySampling='EXACT_ONE_HOUR_SPACING_AT_OBSERVATION_PHASE_NO_INTERPOLATION')
+        node['assessmentAsOf'] = node['timestamp']
+    return nodes
+
+
 def assess(rows, *, now=None, model_dir=MODEL):
     if not isinstance(rows, list) or not 1 <= len(rows) <= MAX_ROWS:
         raise ValueError("Bounded native snapshot list required")
@@ -88,7 +127,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
     if len(groups) > 200:
         raise ValueError("Dashboard import supports at most 200 nodes")
     result = []
-    forecast_rows = []
+    forecast_histories = {}
     for node_id, history in sorted(groups.items()):
         history.sort(key=lambda x: utc(x["timestamp_utc"]))
         latest = history[-1]
@@ -98,7 +137,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
         timestamp = int(utc(latest["timestamp_utc"]).timestamp()*1000)
         age = (clock-utc(latest["timestamp_utc"])).total_seconds()
         stale = age > max(120, latest["native_interval_seconds"]*2)
-        forecast_rows.append(dict(location_id=node_id, timestamp_utc=latest["timestamp_utc"], **latest["measurements"]))
+        forecast_histories[node_id] = [dict(timestamp=r['timestamp_utc'], **r['measurements']) for r in history]
         result.append(dict(id=node_id, name=node_id, lat=latest["latitude"], lng=latest["longitude"],
             lastSeen=timestamp, battery=None, anomalyIndex=None, anomalyLabel="Experimental risk assessment",
             stale=stale, reportingIntervalSeconds=latest["native_interval_seconds"],
@@ -111,19 +150,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
             empiricalValidation="NOT_EVALUATED", probability=None, publicNotificationsEnabled=False,
             unavailableTargets=["flash_flood", "landslide"],
             syntheticDemo=latest["source_class"] == "synthetic_demo"))
-    # Reuse the saved India/Mandi student and its existing checksums, feature
-    # order, learned change/persistence weights and physical bounds.
-    forecasts = predict(pd.DataFrame(forecast_rows), Path(model_dir), "student")
-    for node, forecast in zip(result, forecasts.to_dict("records")):
-        node["forecast6h"] = {c: float(forecast["forecast_"+c]) if math.isfinite(forecast["forecast_"+c]) else None
-                              for c in RAW_SENSOR_COLUMNS}
-        node["forecastTimestamp"] = forecast["forecast_timestamp_utc"].isoformat()
-        node["forecastStatus"] = forecast["status"]
-        node["forecastModel"] = dict(id=Path(model_dir).name, country="IN",
-            trainingEvidence="MODELED_GRID_RETROSPECTIVE", fieldValidated=False,
-            reportSha256=hashlib.sha256((Path(model_dir)/"training_report.json").read_bytes()).hexdigest())
-        node["assessmentAsOf"] = node["timestamp"]
-    return result
+    return apply_forecasts(result, forecast_histories, Hybrid(Path(model_dir)), clock)
 
 
 class Store:
@@ -153,6 +180,15 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
     started = time.monotonic()
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
+    existing = store.all()
+    if existing:
+        engine = Hybrid()
+        if any(n.get('forecastModel', {}).get('profileSha256') != engine.profile_sha256 for n in existing):
+            # Recompute old persisted predictions from retained canonical history.
+            # A new model label is never attached to an old XGBoost prediction.
+            now = pd.Timestamp(clock() if clock else time.time(), unit='s', tz='UTC')
+            histories = {n['id']: n.get('forecastHistory', n.get('history', [])) for n in existing}
+            store.replace(apply_forecasts(existing, histories, engine, now))
     storm = StormRun(storm_risk_run)
 
     def storm_read(method, *args):
@@ -205,7 +241,9 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
             syntheticDemo=any(n["syntheticDemo"] for n in items), adapter="INDRA_READ_ONLY_LOCAL",
             rpcAvailable=False, hardwareConnected=False, empiricalHazardModels="NOT_READY",
             empiricalAccuracy="NOT_EVALUATED", publicNotificationsEnabled=False,
-            forecastModel="india_mandi_modeled_6h_v1", transport="HTTP_LOCAL_NO_RF",
+            forecastModel=PROFILE_ID, forecastArchitecture='NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE',
+            forecastModelsInUse=sorted({n['forecastModel']['id'] for n in items}), forecastHistoryHours=24,
+            forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS', transport="HTTP_LOCAL_NO_RF",
             empty=not items, staleNodes=sum(n["stale"] for n in items))
 
     @app.get("/api/kriging/heatmap")

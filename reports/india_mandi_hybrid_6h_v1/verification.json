@@ -1,0 +1,86 @@
+{
+  "schema_version": "indra_mandi_hybrid_integration_verification_v1",
+  "checked_at_utc": "2026-10-16T10:36:46.585902+00:00",
+  "parent_commit": "2dc0f370cfd5ee4f8d8f5980792fd084feaee416",
+  "python": "3.13.0",
+  "active_profile": "india_mandi_hybrid_6h_v1",
+  "api_version": "0.3.0",
+  "runtime": "PYTHON_GATEWAY",
+  "evidence": "REUSED_RETROSPECTIVE_MANDI_MODELED_GRID_AND_SYNTHETIC_SOFTWARE_TESTS",
+  "field_validated": false,
+  "hardware_execution_verified": false,
+  "hazard_accuracy_evaluated": false,
+  "live_online_learning": false,
+  "checks": {
+    "pytest": {
+      "command": "python -m pytest -q",
+      "passed": 316,
+      "subtests_passed": 172,
+      "warnings": 3,
+      "seconds": 57.0
+    },
+    "browser": {
+      "command": "INDRA_PYTHON=<environment>/bin/python npx playwright test",
+      "passed": 6,
+      "projects": [
+        "desktop",
+        "mobile"
+      ],
+      "page_errors": 0
+    },
+    "javascript": {
+      "command": "npm test",
+      "passed": 2
+    },
+    "production_build": {
+      "command": "npm run build",
+      "status": "PASSED",
+      "api_version": "0.3.0"
+    },
+    "ruff": {
+      "select": "E9,F63,F7,F82,F401",
+      "status": "PASSED"
+    },
+    "shipping_parity_max_absolute_error": 0.0,
+    "validation_only_selection": "TESTED_WITH_POISONED_FUTURE_TARGETS_AND_SOURCE_MISMATCH_REJECTION",
+    "causality_and_gaps": "TESTED",
+    "persisted_cache_migration": "RECOMPUTED_VALUES_NOT_RELABELLED",
+    "protected_original_paths": 129,
+    "committed_export_identities": 108,
+    "original_hash_mismatches": [],
+    "legacy_committed_export_profiles": 6,
+    "live_preview_ports": [
+      8080,
+      8082
+    ]
+  },
+  "rows_by_role": {
+    "train": 22602,
+    "validation": 738,
+    "future_test": 954
+  },
+  "receipts": [
+    "live_preview_verification.json",
+    "legacy_export_verification.json"
+  ],
+  "screenshots": [
+    "desktop.png",
+    "mobile.png",
+    "storm-desktop.png",
+    "storm-mobile.png"
+  ],
+  "source_sha256": {
+    "configs/mandi_hybrid_forecast_v1.json": "b79362a88dcf966327994edd91767556a23a457596d9e9c28b002ca2a20f86f6",
+    "ml/india_mandi/hybrid.py": "5793f30e429186fa954d015997c82e60b7d7e867bd177bdb10661ce6ba5bfc7e",
+    "scripts/promote_mandi_hybrid.py": "3d19e3db22e3294fe1fc795253c7cd7179dd7fcd2cefb1de8f26e4d1564d4b67",
+    "server/dashboard.py": "3cebd48199b2bb2381f3d7609fe7332bef76122e30ccc8eb1e58d46c79e4c790",
+    "apps/indra-himachal-ui/src/components/TelemetryPanel.jsx": "736712faf77293074474684ec05138bc5b0afedb660d3abb286523f9c508b664",
+    "apps/indra-himachal-ui/src/api/contract.js": "26a6c5e15036fb9a20e69735154b414cb131b456fb05ac34a77d42cb0df92562",
+    "ml/models/india_mandi_hybrid_6h_v1/profile.json": "8038c4c478fd007c8775777f87b3868c9511c7ba8d0fe45b94cd0a017a5f81ef",
+    "ml/models/india_mandi_hybrid_6h_v1/ensemble_weights.json": "f65094c9e80a1a4a9b3898a9bd3e76f8dd9f1678591d7eeb23a8120b01e4c0d9",
+    "reports/india_mandi_hybrid_6h_v1/results.json": "a69d50d60badedb417ee65f5dd3f6f1e792320d827318c595f4ce1ed566a438e",
+    "tests/test_mandi_hybrid.py": "5cdb56d3d95e4e4ceebe8bb058d0fc6b69ddc42ba55b81f6d60e69a2ba4acb5e",
+    "tests/test_dashboard_integration.py": "9706b0728a02b343deb2d9bdf76d9edc71865659d82cb8ab552fbff226f615f9",
+    "apps/indra-himachal-ui/tests/e2e/dashboard.spec.js": "938d4f5616af625bd6a321224845b7a7405e2e32a257722d8226a531c7cdeec0"
+  }
+}

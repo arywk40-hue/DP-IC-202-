@@ -1,0 +1,46 @@
+{
+  "schema_version": "indra_mandi_hybrid_profile_v1",
+  "id": "india_mandi_hybrid_6h_v1",
+  "display_name": "Mandi neural hybrid",
+  "sensors": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "horizon_hours": 6,
+  "history_hours": 24,
+  "country": "IN",
+  "evidence": "MODELED_GRID_RETROSPECTIVE",
+  "field_validated": false,
+  "warmup_fallback": "persistence",
+  "base_model": "ml/models/india_mandi_modeled_6h_v1",
+  "neural_candidates": {
+    "residual_mlp_32": "ml/models/india_mandi_neural_history_v1/residual_mlp_32",
+    "residual_mlp_64_32": "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32"
+  },
+  "weights_file": "ensemble_weights.json",
+  "weights_sha256": "f65094c9e80a1a4a9b3898a9bd3e76f8dd9f1678591d7eeb23a8120b01e4c0d9",
+  "threads": 2,
+  "component_hashes": {
+    "ml/models/india_mandi_modeled_6h_v1/training_report.json": "1a73833635ac8a9d8c92c890214d0826bed9c9b25f14b7829379286b94774fc7",
+    "ml/models/india_mandi_modeled_6h_v1/ridge_report.json": "5005fd73faaa4658f5a25ea3e31a9d6e3671d48f036d0066209532995a9d8da5",
+    "ml/models/india_mandi_modeled_6h_v1/temporal_ridge.npz": "ce56e87beae86b3c93291a3f0340476feb659a50c6b639cc5ad9a4a34b1ae504",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/temperature_c.ubj": "b669ed3df8ffff3149c383a605f53c2cd1a2ca8c08dabd4c8dca95776f8bcbb1",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/relative_humidity_pct.ubj": "7e422f7b2d9ecfe4b92969a84a7d016a5e410a221a1e6f30490ac07bcffc7d5d",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/pressure_hpa.ubj": "30988256932a28ade725b79f77f4081637c797b85c4a6354b1d6d7816cc739ac",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/pm25_ug_m3.ubj": "7c7e2172c5ea72055a043576f45fefd5eef25f63d771437aa80cfa8d3d0552a5",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/pm10_ug_m3.ubj": "e898918ba6bc8db2ee58bf7ff4a92faa70c8bc0b32b997ca37c2d4bd267938d1",
+    "ml/models/india_mandi_modeled_6h_v1/teacher/wind_speed_mps.ubj": "194e6718cdb92e93d88edccfdd547e0be0ea9c571c90bb32c570c1b4efcca1c1",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_32/model.json": "fea9d73dbc27d3479d38a547c937075102b2e81aeb11b5f2b41a7b0b47757af8",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_32/weights.npz": "b370c68c1630cd0813b79c77c2d8eaf633ffa46352d81485430fa6bf77ca1788",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32/model.json": "3e15f653c05b899453d60c13055b69ac3f88e52bae4478a2a6464de062702524",
+    "ml/models/india_mandi_neural_history_v1/residual_mlp_64_32/weights.npz": "51cb87e10e78c6d8984152151e6743cd48249baa2876dbd7052060be466fb5a3"
+  },
+  "source_sha256": "fe9696dbb09b1016ee9467a2a5ac636868ed584b5dc0e2dec4a70df096ca1f4e",
+  "build_config_sha256": "b79362a88dcf966327994edd91767556a23a457596d9e9c28b002ca2a20f86f6",
+  "selection": "VALIDATION_ONLY_NEURAL_ARCHITECTURE_AND_PER_TARGET_CONVEX_MAE_BLEND",
+  "forecast_task": "SIX_NUMERICAL_MEASUREMENTS_NOT_HAZARD_EVENTS"
+}
