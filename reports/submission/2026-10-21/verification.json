@@ -1,0 +1,99 @@
+{
+  "schema_version": "indra_project_submission_verification_v1",
+  "checked_at_utc": "2026-10-20T19:29:32.141498+00:00",
+  "client_date": "2026-10-21",
+  "client_timezone": "Asia/Kolkata",
+  "parent_commit": "feec384f723930fe1454ff5352f0b0dbf35c10d4",
+  "runtime": {
+    "python": "3.13.0",
+    "node": "v22.23.2"
+  },
+  "scope": "ML_SOFTWARE_PROTOTYPE_NOT_FIELD_HAZARD_VALIDATION",
+  "checks": {
+    "python": {
+      "command": "python -m pytest -q",
+      "passed": 322,
+      "subtests_passed": 172,
+      "seconds": 120.97,
+      "warnings": 3
+    },
+    "browser": {
+      "command": "INDRA_PYTHON=<venv>/bin/python INDRA_SCREENSHOT_DIR=../../reports/submission/2026-10-21 npx playwright test",
+      "passed": 8,
+      "projects": [
+        "desktop",
+        "mobile"
+      ],
+      "evidence": "SYNTHETIC_SOFTWARE_WORKFLOWS"
+    },
+    "mandi_browser": {
+      "command": "npm run test:mandi",
+      "passed": true,
+      "evidence": "HISTORICAL_MANDI_MODELED_REPLAY_NOT_FIELD_ACCURACY",
+      "viewports": [
+        "desktop",
+        "mobile"
+      ],
+      "backend_served_ui": true
+    },
+    "javascript": {
+      "command": "npm test",
+      "passed": 2
+    },
+    "production_build": "PASSED",
+    "ruff": "PASSED",
+    "documentation_links": {
+      "files": 9,
+      "broken": []
+    },
+    "protected_artifacts": {
+      "count": 129,
+      "mismatches": []
+    },
+    "frozen_export_identities": {
+      "count": 108,
+      "mismatches": []
+    }
+  },
+  "evidence_files": [
+    "REPORT.md",
+    "metrics.json",
+    "local_browser_verification.json",
+    "mandi-desktop.png",
+    "mandi-mobile.png",
+    "desktop.png",
+    "mobile.png",
+    "storm-desktop.png",
+    "storm-mobile.png"
+  ],
+  "local_services": {
+    "frontend": "http://127.0.0.1:5173",
+    "backend": "http://127.0.0.1:8080",
+    "data_mode": "HISTORICAL_MANDI_MODELED_REPLAY",
+    "database": "data/himachal/mandi_dashboard.sqlite"
+  },
+  "deployment": "LOCAL_ONLY",
+  "field_accuracy_established": false,
+  "independent_hazard_accuracy_established": false,
+  "board_execution_verified": false,
+  "live_six_sensor_learning": false,
+  "source_sha256": {
+    "ml/india_mandi/submission.py": "9e301b90488f11db0078ab87d9a85935b4688887b2b975fecf6a7e79210b54b5",
+    "scripts/test_mandi_submission.py": "3a5a7a4461f67bcfac1913ed8886c24c4c53a649fc3439de4f065678446e8a81",
+    "tests/test_mandi_submission.py": "1f47e6c141801c8d603c7ac9436d0b862c9ac16618ca544180455b8eb1161315",
+    "apps/indra-himachal-ui/src/App.jsx": "63ba2688f2584d0602096c04d51913d5a724d3db0ecf8b2dd3bcdc8def3142dc",
+    "apps/indra-himachal-ui/src/components/MapView.jsx": "a2c4127d471b9b6acc88bdeb61bac2377e980532412afec32cdc923ed93023fe",
+    "apps/indra-himachal-ui/tests/verify-mandi.mjs": "731d5ae329e0256c5af73923f8a8ec4eb9216cea5a1ad50f8cde793f37f72abd",
+    "apps/indra-himachal-ui/tests/e2e/dashboard.spec.js": "b7c9130383c53743e1cd216eeef062bfc18e5a25b1f0dc7444bfada8fc22aa1d",
+    "reports/submission/2026-10-21/metrics.json": "9c0b0311c357e77e92e7b42a438b0fed12607a66f2b8fa8e0bdddf4a9f4aed6f",
+    "README.md": "c905417d1e6e1b43a719f6855455a610eb565062ee8d5c07f097b1a4715d06a2",
+    "docs/README.md": "6ad3d6c21b07af3a9561371e25cfcf0499b085811e809fb8543672c0927fe47a",
+    "docs/PROJECT_OVERVIEW.md": "a73699d7e2ba6b9268bcb635f9aea7450bfebf8bb2a9074cc3ed96e37e14b740",
+    "docs/FEATURES.md": "ff409f447937e5ee494bc34af3e057cd6211827f88c50f7e031e402497a6969d",
+    "docs/SUBMISSION_GUIDE.md": "f1338d81bbd2f18d1114f3e7c535f491e82082ca4489a08c57ae2a4140351503",
+    "scripts/README.md": "56dc05f7ff49ba0ecd11ab2bd79f5e6b02545bf0fbda9e0a295a31bc5d6ead66",
+    "ml/models/README.md": "a620d3bc8baaae1798929f422a45cffa4cde66d4c3088c42b4bc98d113d257d4",
+    "docs/reviews/2026-10-21-submission-review.md": "5c79f74a952714c0962d2f57fb29c97127cee2e3786122bca0c2e88bc8ce8e92",
+    "reports/submission/2026-10-21/REPORT.md": "547a9ddddbf5abd6d96e8ab4b542bdc6ace2df632f0c294d2bd6f6121473eef9"
+  }
+}

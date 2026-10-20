@@ -35,7 +35,8 @@ export default function App() {
     // Stagger status after nodes so we do not burst the Master's 10 req/s ceiling.
     const nodesRes = await withCache('nodes', getNodes);
     setNodes(nodesRes.value);
-    setSelectedId((current) => current ?? nodesRes.value?.[0]?.id ?? null);
+    setSelectedId((current) => nodesRes.value?.some(node => node.id === current)
+      ? current : nodesRes.value?.[0]?.id ?? null);
     await new Promise((r) => setTimeout(r, 400));
     const statusRes = await withCache('status', getStatus);
     setStatus(statusRes.value);
@@ -120,7 +121,9 @@ export default function App() {
       />
 
       <div className="research-banner">
-        {status?.syntheticDemo ? 'SYNTHETIC DEMO — not observed Mandi weather. ' : 'Research prototype. '}
+        {status?.syntheticDemo ? 'SYNTHETIC DEMO — not observed Mandi weather. '
+          : status?.sourceClasses?.includes('modeled_grid') ? 'HISTORICAL MODELED DATA — not physical sensor readings. '
+          : 'Research prototype. '}
         Six-hour numerical forecasts · Experimental current-condition risk scores · Public alerts disabled.
         {status?.staleNodes > 0 && ` ${status.staleNodes} node(s) have stale observations.`}
       </div>

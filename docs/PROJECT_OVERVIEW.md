@@ -1,117 +1,67 @@
-# INDRA: six-channel India and Himalayan research
+# INDRA project overview
 
-Updated 11 October 2026. The primary scope is **six environmental channels plus
-causal history/derived features**, numerical six-hour forecasting for India/Mandi,
-and independently labeled Himalayan hazard research. The source code, fitted
-numeric models and evaluation workflow are implemented. Physical field skill
-and operational disaster warnings remain unverified.
+Updated 21 October 2026. See [features](FEATURES.md), [submission steps](SUBMISSION_GUIDE.md)
+and [current test results](../reports/submission/2026-10-21/REPORT.md).
 
-## Current outputs and status
+INDRA accepts six environmental channels: temperature, RH, pressure, PM2.5,
+PM10 and wind. Its active gateway forecasts those six numerical measurements
+at an exact six-hour endpoint. It does not predict the intervening six hourly
+values or calibrated future disaster probabilities.
 
-| Component | Inputs | Output | Evidence/status |
-| --- | --- | --- | --- |
-| Mandi numerical forecast | Six channels; compact snapshot or 24h causal history | T/RH/P/PM2.5/PM10/wind at exact +6h | Newly fitted India-location modeled-data benchmark; no China data/weights |
-| Independent Himalayan warning experiment | Same six channels/history; external records as offline labels | Cloudburst, storm, flash-flood, landslide, snowstorm onset within next 6h | Label/training gates implemented; no admitted real training corpus or fitted head |
-| Indian measurement-threshold research | Four available weather measurements plus history/site metadata; PM inactive | +6h high wind, hot temperature, near-saturated humidity | Existing NOAA India research weights; these are measurement thresholds |
-| Current-weather spatial research | Previously implemented node/query estimation | Same-time estimates between nodes | Secondary experiment retained in the spatial guide |
+## Active architecture
 
-The six physical channels, in order, are temperature C, relative humidity %,
-station pressure hPa, PM2.5 ug/m3, PM10 ug/m3 and wind m/s. The numerical Mandi API
-benchmark uses **modeled grid-surface pressure**, not verified station pressure.
-Do not mistake its data kind for calibrated six-channel field measurements.
+25 hourly snapshots → 66 causal current/lag/change/statistical features → saved
+residual MLP + history XGBoost + temporal ridge → validation-selected convex
+blend per target → physical-range-bounded six-output forecast.
 
-## Latest India-only numerical test
+Saved MLPs use 66→32→6 and 66→64→32→6 architectures, with 2,342 and 6,566 learned
+weights/biases. Feature/target scaling was fitted on training data only. Original
+arrays, tree files and ridge weights are checksum-verified through the active
+`india_mandi_hybrid_6h_v1` profile. All six outputs include a neural contribution.
+Missing history uses explicitly labelled persistence; missing current channels
+produce unavailable outputs. The dashboard displays the actual model and weights.
 
-[Full report and examples](../reports/india_mandi_phase/REPORT.md).
-The source has 24,336 hourly modeled positions, 2024-01-01 through 2026-10-10.
-Training: before August 2026. Validation: August. Test: September–10 October,
-954 complete-history forecast pairs. October 7–10 is also reported separately
-(90 pairs). Labels are purged across time boundaries. There is no independent
-geographic test at this single requested grid location.
+## Data and evaluation
 
-MAE is in the target's units; lower is better. The final column was selected
-using validation only, before test scoring.
+The frozen Mandi source contains 24,336 hourly Open-Meteo/ECMWF IFS/CAMS modeled
+positions from 1 January 2024 through 10 October 2026. Complete-history cohorts
+are 22,602 training, 738 August validation and 954 September/October future-test
+pairs. Six-hour labels are purged across split boundaries. Neural architecture
+and blend coefficients were selected on validation only. The test was examined
+previously and remains reused retrospective evidence, not a new untouched test.
+No Chinese rows or pretrained weights enter the current evaluation.
 
-| Target | Persistence MAE | Compact MAE | Selected-history/model MAE | Selected kind |
-| --- | ---: | ---: | ---: | --- |
-| `temperature_c` | 4.833 | 3.793 | 1.772 | teacher |
-| `relative_humidity_pct` | 18.969 | 14.134 | 7.854 | teacher |
-| `pressure_hpa` | 1.680 | 1.484 | 0.947 | temporal_ridge |
-| `pm25_ug_m3` | 10.176 | 8.408 | 6.958 | teacher |
-| `pm10_ug_m3` | 12.675 | 10.553 | 9.321 | teacher |
-| `wind_speed_mps` | 0.595 | 0.464 | 0.322 | teacher |
+The current submission compares both neural models, compact/history XGBoost,
+ridge, persistence and the active hybrid on identical rows. MAE/RMSE/R² and
+input/prediction/later-value examples are in the report. There is no independent
+site test or calibrated six-channel Mandi station accuracy claim. Weather/air
+cells differ, pressure is grid-surface pressure and API history does not establish
+what would have been known at the original issue time.
 
-All six compact heads beat persistence MAE in this retrospective test. Compact
-temperature, humidity and wind still have negative R2, so relative improvement
-is not a sufficient quality certificate. The history teacher and temporal
-linear comparison perform better on this grid. No field accuracy or disaster
-probability is inferred from these results.
+## Dashboard and research boundaries
 
-Sources: Open-Meteo/ECMWF IFS weather and CAMS global PM. Weather and air use
-different grids; global CAMS is approximately 45 km and 3-hourly beneath the
-hourly API output. Original issue-time availability is unverified. The results
-measure retrospective modeled-value prediction, not an operational forecast
-made with only information originally available at issue time.
+The local React/FastAPI/SQLite application shows node/source/timestamps, six
+measurements and histories, six-hour forecasts, model components, risk evidence,
+explicit unavailable values, offline cache and stale state. The Mandi replay
+retains historical dates and actual retrieval time; current hazard rules abstain
+on modeled sources. Synthetic rain/snow/cloudburst fixtures exercise separate
+current-condition rules, not independently observed hazard prediction.
 
-## How to run the current scope
+Anomaly/consensus/radio, spatial experiments, ERA5 risk models and delayed-label
+online research have separate code/tests. They must not be described as a live,
+validated six-sensor product. The available ERA5 fitted demonstration is synthetic.
+One Mandi grid cannot validate neighbour consensus or a spatial weather surface.
 
-```sh
-# With local source snapshots: test only, no retraining or China models.
-python3 scripts/test_india_mandi.py --offline
-# Fresh checkout: download the local ignored source, then test committed weights.
-python3 scripts/test_india_mandi.py --prepare
-# Host-verify the compact Mandi C header; no physical board execution.
-python3 scripts/test_india_mandi.py --offline --export
-```
+The active hybrid runs on the Python gateway. Existing compact C exports and
+separate firmware applications retain their original model identities. Physical
+ESP32 execution, sensor calibration, radio delivery and hybrid edge export remain
+unverified. Public alerts and hardware RPC are disabled.
 
-[Full command guide](../ml/india_mandi/README.md).
-Use the project Python dependencies in a compatible isolated environment.
-`--train` needs a new versioned model/config path; it refuses existing outputs.
-The older comprehensive `scripts/test_models.py` is a historical comparison,
-not the default India/Mandi workflow.
+## Submission status
 
-## Model and file organization
-
-| Path | Role |
-| --- | --- |
-| `configs/model_catalog.json` | Model names, countries, training sources, input/output scope |
-| `configs/mandi_modeled_forecast_v1.json` | Frozen Mandi source periods, split dates and fit candidates |
-| `ml/india_mandi/` | India-only acquisition and numeric comparison |
-| `ml/models/india_mandi_modeled_6h_v1/` | Teacher/student per-channel UBJ files, linear NPZ, reports/checksums |
-| `ml/generated/india_mandi_modeled_6h_v1/` | Separate India/Mandi compact C export and compiled-host parity |
-| `reports/india_mandi_phase/` | Current numerical test, review and verification evidence |
-| `ml/hazard_context/`, `configs/himalayan_warning_v2.json` | Independent-event next-six-hour research pipeline |
-| `ml/india_sensor/`, `ml/models/india_sensor_v1/` | Earlier India weather-threshold experiment |
-| `ml/models/india_cpcb_*` | Reduced-input Indian observational comparisons |
-| `ml/models/uci_beijing_*`, `ml/event_classifier/` | Historical foreign/rule references; excluded from current accuracy run |
-| `docs/archive/`, `docs/SPATIAL_RESEARCH_OVERVIEW.md` | Prior reports and spatial scope, retained for provenance |
-
-Model filenames identify the target channel and units. Existing artifact paths
-are retained to protect hashes and reproducibility; role/country labels prevent
-mixing incompatible experiments. Raw CSV/API responses remain local and ignored.
-
-## What real Indian evidence remains missing
-
-The supplied Himachal files have four channels and unresolved pressure/clock/QC
-issues. The CPCB secondary set has five channels, excludes pressure and assumes
-its timezone; Mandi is absent. NOAA observations have no PM. None establishes
-an observed complete six-channel Mandi hazard corpus.
-
-[Himalayan warning protocol](HIMALAYAN_WARNING_PROTOCOL.md) and
-[institutional request package](reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md)
-define the next evidence steps. Cloudburst requires verified local hourly gauge
-intensity; flash flood/landslide/snowstorm require independent occurrence records.
-All need matched causal observations and monitored non-event periods. API rain
-and artificial samples cannot establish these outcomes.
-
-The prepared sensor readout and existing firmware tests are documented in
-[ESP32 integration](../esp32/ml_integration/README.md). That legacy integration
-still selects retained Beijing forecast/rule weights; it must not be described
-as physical testing of the new Mandi model. The separate India threshold smoke
-firmware and new Mandi C header also remain unverified on a physical board.
-Actual device variant, wiring, calibration, verified UTC and recorded board
-parity/latency are needed for live six-channel testing.
-
-For the retained four-core/current-weather spatial experiments, use
-[SPATIAL_RESEARCH_OVERVIEW.md](SPATIAL_RESEARCH_OVERVIEW.md). They do not override
-the six-channel primary task or supply independent Himalayan event truth.
+The source, saved numerical model, local dashboard and retrospective modeled-data
+testing form the present project prototype. Remaining empirical work requires
+synchronized measured Mandi channels and independently observed event/non-event
+records. Keep future hazard/field claims separate from software test passes.
+The [repository map](../README.md#repository-map) distinguishes active code,
+retained research and historical references without breaking immutable paths.

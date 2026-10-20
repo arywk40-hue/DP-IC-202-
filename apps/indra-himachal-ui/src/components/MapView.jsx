@@ -40,11 +40,14 @@ export default function MapView({
     }).addTo(map);
 
     mapRef.current = map;
-    requestAnimationFrame(() => map.invalidateSize());
-    const resizeObserver = new ResizeObserver(() => map.invalidateSize({pan: false}));
+    let active = true;
+    const frame = requestAnimationFrame(() => { if (active) map.invalidateSize(); });
+    const resizeObserver = new ResizeObserver(() => { if (active) map.invalidateSize({pan: false}); });
     resizeObserver.observe(containerRef.current);
 
     return () => {
+      active = false;
+      cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;

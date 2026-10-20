@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+const screenshots = process.env.INDRA_SCREENSHOT_DIR || '../../reports/india_mandi_hybrid_6h_v1';
 
 test('saved model, six channels, three experimental assessments and unsupported RPC', async ({page}, info) => {
   const errors=[]; page.on('pageerror',error=>errors.push(error.message));
@@ -19,7 +20,7 @@ test('saved model, six channels, three experimental assessments and unsupported 
   await expect(page.locator('.risk-card').filter({hasText:'Snowstorm risk'})).toContainText('local warning candidate');
   await page.locator('.node-row').filter({hasText:'demo-03'}).locator('.node-row-name').click();
   await expect(page.locator('.risk-card').filter({hasText:'Cloudburst risk'})).toContainText('local warning candidate');
-  await page.screenshot({path:`../../reports/india_mandi_hybrid_6h_v1/${info.project.name}.png`,fullPage:true});
+  await page.screenshot({path:`${screenshots}/${info.project.name}.png`,fullPage:true});
   await page.locator('.node-row').filter({hasText:'demo-04'}).locator('.node-row-name').click();
   await expect(page.locator('.risk-card').filter({hasText:'Cloudburst risk'})).toContainText('Unknown / insufficient evidence');
   await expect(page.locator('.telemetry-panel')).toContainText('WARMING_UP_PERSISTENCE');
@@ -52,7 +53,18 @@ test('storm research outputs show gate warnings, anomaly markers and feature gri
   await expect(panel.getByRole('img', {name:'t2m feature heatmap'})).toBeVisible();
   await expect(panel.getByTestId('anomaly-marker')).toHaveCount(3);
   await panel.getByRole('img').scrollIntoViewIfNeeded();
-  await page.screenshot({path:`../../reports/india_mandi_hybrid_6h_v1/storm-${info.project.name}.png`,fullPage:true});
+  await page.screenshot({path:`${screenshots}/storm-${info.project.name}.png`,fullPage:true});
   expect((await panel.innerText()).toLowerCase()).not.toMatch(/probability|chance|likelihood|accuracy|%/);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBeTruthy();
+});
+
+test('replacing the imported nodes selects an available node instead of retaining a removed ID', async ({page}) => {
+  await page.goto('/');
+  await expect(page.getByText('API connected',{exact:true})).toBeVisible();
+  await expect(page.locator('.telemetry-panel')).toContainText('demo-01');
+  const nodes = await (await page.request.get('/api/nodes')).json();
+  await page.route('**/api/nodes', route => route.fulfill({json:nodes.filter(n=>n.id==='demo-02')}));
+  await expect(page.locator('.node-row')).toHaveCount(1,{timeout:20000});
+  await expect(page.locator('.telemetry-panel')).toContainText('demo-02',{timeout:20000});
+  await expect(page.locator('.telemetry-panel')).toContainText('HYBRID_READY');
 });

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test tests/contract.test.js",
-    "test:e2e": "npm run build && playwright test"
+    "test:e2e": "npm run build && playwright test",
+    "test:mandi": "node tests/verify-mandi.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

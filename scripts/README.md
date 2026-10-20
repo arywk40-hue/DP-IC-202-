@@ -2,11 +2,12 @@
 
 | Script | Role | Data/model scope |
 | --- | --- | --- |
-| `test_india_mandi.py` | **Primary India/Mandi numerical benchmark** | Six modeled Mandi channels, newly Mandi-trained weights, existing Indian research profiles; no China models |
+| `test_mandi_submission.py` | **Current submission: seven saved candidates and historical dashboard replay** | Six-channel frozen Mandi model-grid source; no fitting, no China models |
+| `test_india_mandi.py` | Retained baseline/acquisition workflow | Six modeled Mandi channels, newly Mandi-trained weights, existing Indian research profiles; no China models |
 | `test_models.py` | Historical comprehensive audit | Archived feature contracts and foreign/Indian comparisons; retained to reproduce the earlier report |
 | `download_copernicus_mandi.py` | Ten-year archive acquisition | ERA5 2016–2025 monthly requests; dry run by default, no model or hazard-label changes |
 
-Use the primary script for current project results. The historical script is not
+Use `test_mandi_submission.py` for current project results and `test_india_mandi.py --prepare` for source acquisition. The historical script is not
 an independent Himalayan hazard evaluator. Raw downloads, recovered Git files
 and local working outputs remain ignored. Neither script invents event truth.
 

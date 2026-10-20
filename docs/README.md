@@ -3,10 +3,14 @@
 The primary scope is six channels plus features, India/Mandi forecasting, and
 independently labeled Himalayan hazards. Start with the current guides:
 
-- [Project overview](PROJECT_OVERVIEW.md): current scope, measured benchmark and remaining work.
+- [Submission guide](SUBMISSION_GUIDE.md) and [feature/status list](FEATURES.md).
+- [Current seven-model Mandi test](../reports/submission/2026-10-21/REPORT.md): active hybrid, complete comparison and replay evidence.
+- [Dashboard setup](HIMACHAL_DASHBOARD_INTEGRATION.md) and [hybrid architecture](FORECAST_MODEL_IMPROVEMENT.md).
+
+- [Project overview](PROJECT_OVERVIEW.md): current scope, modeled benchmark and remaining work.
 - [Implemented architecture](ARCHITECTURE.md): code/data/model flow and deployment boundary.
 - [Model catalog](../configs/model_catalog.json): countries, datasets, channels and target roles.
-- [India/Mandi results](../reports/india_mandi_phase/REPORT.md) and [commands](../ml/india_mandi/README.md): new six-channel modeled-data numerical test.
+- [India/Mandi results](../reports/india_mandi_phase/REPORT.md) and [commands](../ml/india_mandi/README.md): retained compact/history baseline test; the current hybrid comparison is above.
 - [Himalayan warning protocol](HIMALAYAN_WARNING_PROTOCOL.md): next-six-hour onset labels, evidence gates and metrics.
 - [Cloudburst/storm event prediction update](HIMALAYAN_EVENT_PREDICTIONS.md): expanded v2 protocol and observed storm-report evidence.
 - [Evidence acquisition review](reference/HIMALAYAN_EVIDENCE_PROGRESS.md) and [institutional request package](reference/IMD_HIMACHAL_DATA_REQUEST_PACKAGE.md).
