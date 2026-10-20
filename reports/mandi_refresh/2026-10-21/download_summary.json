@@ -1,0 +1,22 @@
+{
+  "source": "Open-Meteo ECMWF IFS + CAMS global, Mandi",
+  "evidence": "RETROSPECTIVE_MODELED_GRID_NOT_IMD_STATION_OBSERVATIONS",
+  "requested_start": "2026-09-20",
+  "requested_end": "2026-10-19",
+  "rows": 720,
+  "complete_six_channel_rows": 720,
+  "missing_measurements": {
+    "temperature_c": 0,
+    "relative_humidity_pct": 0,
+    "pressure_hpa": 0,
+    "pm25_ug_m3": 0,
+    "pm10_ug_m3": 0,
+    "wind_speed_mps": 0
+  },
+  "observations_sha256": "3bb6b730a31f56084547b59d7c41d1fc122e75f3a18863ff71d3e37cfaefdc32",
+  "retrieved_at_utc": "2026-10-20T19:32:00.158750+00:00",
+  "replay_status": "COMPLETE_25_HOUR_SNAPSHOTS",
+  "replay_reason": null,
+  "training_dataset_modified": false,
+  "models_retrained": false
+}

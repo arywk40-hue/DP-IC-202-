@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-10-20T19:32:43.732Z",
+  "evidence": "HISTORICAL_MANDI_MODELED_REPLAY_NOT_FIELD_ACCURACY",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173",
+      "model": "india_mandi_hybrid_6h_v1",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "nodeId": "mandi-api-grid",
+      "sourceClass": "modeled_grid",
+      "pressureReference": "grid_surface",
+      "stale": true,
+      "forecastTimestamp": "2026-10-20T05:00:00+00:00",
+      "input": {
+        "temperature_c": 9.7,
+        "relative_humidity_pct": 78,
+        "pressure_hpa": 927.7,
+        "pm25_ug_m3": 17.6,
+        "pm10_ug_m3": 20.4,
+        "wind_speed_mps": 1.31
+      },
+      "forecast6h": {
+        "temperature_c": 21.124478767262595,
+        "relative_humidity_pct": 46.59240266751055,
+        "pressure_hpa": 931.9800226043695,
+        "pm25_ug_m3": 12.816327266087134,
+        "pm10_ug_m3": 18.457598082101715,
+        "wind_speed_mps": 0.8228310768817755
+      },
+      "hazardAbstentions": [
+        "rain",
+        "snowstorm",
+        "cloudburst_risk"
+      ],
+      "pageErrors": []
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5173",
+      "model": "india_mandi_hybrid_6h_v1",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "nodeId": "mandi-api-grid",
+      "sourceClass": "modeled_grid",
+      "pressureReference": "grid_surface",
+      "stale": true,
+      "forecastTimestamp": "2026-10-20T05:00:00+00:00",
+      "input": {
+        "temperature_c": 9.7,
+        "relative_humidity_pct": 78,
+        "pressure_hpa": 927.7,
+        "pm25_ug_m3": 17.6,
+        "pm10_ug_m3": 20.4,
+        "wind_speed_mps": 1.31
+      },
+      "forecast6h": {
+        "temperature_c": 21.124478767262595,
+        "relative_humidity_pct": 46.59240266751055,
+        "pressure_hpa": 931.9800226043695,
+        "pm25_ug_m3": 12.816327266087134,
+        "pm10_ug_m3": 18.457598082101715,
+        "wind_speed_mps": 0.8228310768817755
+      },
+      "hazardAbstentions": [
+        "rain",
+        "snowstorm",
+        "cloudburst_risk"
+      ],
+      "pageErrors": []
+    }
+  ],
+  "backendServedUi": true
+}

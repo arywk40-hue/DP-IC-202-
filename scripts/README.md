@@ -2,6 +2,7 @@
 
 | Script | Role | Data/model scope |
 | --- | --- | --- |
+| `fetch_mandi_data.py` | Download latest 30 completed UTC days separately | Six Mandi IFS/CAMS channels + rain/snow/gust context; local ignored snapshots, no retraining |
 | `test_mandi_submission.py` | **Current submission: seven saved candidates and historical dashboard replay** | Six-channel frozen Mandi model-grid source; no fitting, no China models |
 | `test_india_mandi.py` | Retained baseline/acquisition workflow | Six modeled Mandi channels, newly Mandi-trained weights, existing Indian research profiles; no China models |
 | `test_models.py` | Historical comprehensive audit | Archived feature contracts and foreign/Indian comparisons; retained to reproduce the earlier report |
