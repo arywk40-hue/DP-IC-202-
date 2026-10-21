@@ -1,7 +1,7 @@
 {
   "name": "indra-himachal-ui",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "node --test tests/contract.test.js",
     "test:e2e": "npm run build && playwright test",
-    "test:mandi": "node tests/verify-mandi.mjs"
+    "test:mandi": "node tests/verify-mandi.mjs",
+    "test:weather": "node tests/verify-weather.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

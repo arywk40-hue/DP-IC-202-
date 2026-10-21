@@ -16,7 +16,7 @@
     "E"
   ],
   "next_phase": "F",
-  "dashboard": "NEURAL_HYBRID_FORECAST_AND_RULES_CONNECTED",
+  "dashboard": "OBSERVATIONS_PARAMETERS_SYSTEM_WITH_FORECAST_AND_PATTERN_CATEGORIES",
   "live_telemetry_bridge": "NOT_CONNECTED",
   "probability_calibration": "NO_INDEPENDENT_EVENT_LABELS",
   "online_learning": "SIX_SENSOR_DELAYED_LABEL_SHADOW_WORKER_AND_ERA5_RESEARCH_REPLAY",
@@ -42,5 +42,11 @@
     "verification": "reports/mandi_pipeline_v2/verification.json",
     "mandi_data": "RETROSPECTIVE_MODELED_GRID",
     "field_ready": false
-  }
+  },
+  "weather_category_model": "himachal_sensor_patterns_v1",
+  "weather_classification": "IMPLEMENTED_SYNTHETIC_PROXY_SCORES_NOT_EVENT_PROBABILITIES",
+  "parameter_heatmaps": "IMPLEMENTED_SIX_CHANNEL_IDW_WITH_GEOMETRY_SOURCE_TIME_MASKS",
+  "weather_feature_evidence": "reports/weather_features_v1/REPORT.md",
+  "ui": "PRODUCT_STYLE_DESKTOP_MOBILE_TESTED",
+  "ui_evidence": "reports/ui_refresh_v1/REPORT.md"
 }

@@ -1,67 +1,48 @@
-import React from 'react';
-
-
-
-function nodeHealth(lastSeen, interval = 300) {
-  const age = Date.now() - lastSeen;
-  if (age < Math.max(120, interval) * 1000) return 'ok';
-  if (age < Math.max(120, interval * 2) * 1000) return 'late';
-  return 'offline';
-}
-
-function timeAgo(ts) {
-  const s = Math.floor((Date.now() - ts) / 1000);
-  if (s < 60) return `${s}s`;
-  if (s < 3600) return `${Math.floor(s / 60)}m`;
-  return `${Math.floor(s / 3600)}h`;
-}
-
-export default function NodeList({ nodes, selectedId, onSelect, onOpenRpc }) {
-  const live = nodes.filter((n) => nodeHealth(n.lastSeen, n.reportingIntervalSeconds) === 'ok').length;
-
+import React from "react";
+import { locationName, ageLabel } from "../api/presentation";
+export default function NodeList({ nodes, selectedId, onSelect }) {
   return (
-    <div className="node-list">
+    <aside className="node-list" aria-label="Locations">
       <div className="panel-title">
-        Mesh nodes
-        <span className="panel-count">
-          {live}/{nodes.length} recent
-        </span>
+        Locations <span className="panel-count">{nodes.length}</span>
       </div>
+      {!nodes.length && (
+        <p className="empty-message">
+          Your locations will appear here when readings are available.
+        </p>
+      )}
       <ul>
-        {nodes.map((node) => {
-          const health = nodeHealth(node.lastSeen, node.reportingIntervalSeconds);
-          return (
-            <li
-              key={node.id}
-              className={`node-row ${node.id === selectedId ? 'node-row-active' : ''}`}
+        {nodes.map((node) => (
+          <li
+            key={node.id}
+            className={`node-row ${node.id === selectedId ? "node-row-active" : ""}`}
+          >
+            <button
+              type="button"
+              className="location-button"
+              aria-pressed={node.id === selectedId}
               onClick={() => onSelect(node.id)}
             >
-              <span className={`health-dot health-${health}`} />
-              <div className="node-row-text">
-                <div className="node-row-name">{node.name}</div>
-                <div className="node-row-meta">
-                  {timeAgo(node.lastSeen)} ago · {node.sourceClass} · {Number.isFinite(node.battery) ? `${node.battery.toFixed(2)} V` : 'Battery unknown'}
-                </div>
-              </div>
-              <div className="node-row-flags">
-                {node.anomalyIndex > 0 && <span className="badge badge-danger">ALERT</span>}
-                {health === 'offline' && <span className="badge badge-danger">OFFLINE</span>}
-                {health === 'late' && <span className="badge badge-warning">LATE</span>}
-                <button
-                  type="button"
-                  className="node-rpc-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenRpc(node.id);
-                  }}
-                >
-                  RPC
-                </button>
-              </div>
-            </li>
-          );
-        })}
+              <span
+                className={`health-dot ${node.stale ? "health-late" : "health-ok"}`}
+              />
+              <span className="node-row-text">
+                <span className="node-row-name">{locationName(node)}</span>
+                <span className="node-row-meta">
+                  {node.lat?.toFixed(3)}° N, {node.lng?.toFixed(3)}° E
+                </span>
+                <span className="node-row-age">
+                  {ageLabel(node.lastSeen)}
+                  {node.stale ? " · Older reading" : ""}
+                </span>
+              </span>
+              <span className="location-chevron" aria-hidden="true">
+                ›
+              </span>
+            </button>
+          </li>
+        ))}
       </ul>
-    </div>
+    </aside>
   );
 }

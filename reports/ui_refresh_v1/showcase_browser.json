@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-21T12:12:06.072Z",
+  "evidence": "SYNTHETIC_TWELVE_LOCATION_SOFTWARE_DEMO_NOT_OBSERVED_WEATHER",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "nodes": 12,
+      "status": "AREA_ESTIMATE",
+      "channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "heatwavePatternMatched": true,
+      "pageErrors": [],
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "nodes": 12,
+      "status": "AREA_ESTIMATE",
+      "channels": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "pressure_hpa",
+        "pm25_ug_m3",
+        "pm10_ug_m3",
+        "wind_speed_mps"
+      ],
+      "heatwavePatternMatched": true,
+      "pageErrors": [],
+      "horizontalOverflow": false
+    }
+  ]
+}

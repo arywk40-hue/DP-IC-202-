@@ -29,9 +29,10 @@ export const getStormReport = () => request('/api/storm-risk/report');
 export const getStormScores = () => request('/api/storm-risk/scores');
 export const getStormHeatmap = (feature) => request(`/api/storm-risk/heatmap?feature=${encodeURIComponent(feature)}`);
 export const getTelemetry = (id) => request(`/api/nodes/${encodeURIComponent(id)}/telemetry`);
-export const getHeatmap = async () => {
-  const payload = await request('/api/kriging/heatmap');
-  return { points: normalizeHeatmap(payload), status: payload.status, reason: payload.reason };
+export const getAllParameterMaps = () => request('/api/parameter-heatmaps');
+export const getHeatmap = async (channel='temperature_c') => {
+  const payload = await request(`/api/kriging/heatmap?channel=${encodeURIComponent(channel)}`);
+  return { ...payload, points: normalizeHeatmap(payload) };
 };
 export async function sendRpc(id, command, params = {}) {
   const ack = await request(`/api/rpc/${encodeURIComponent(id)}`, {

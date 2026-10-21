@@ -1,0 +1,119 @@
+{
+  "verified_at_utc": "2026-10-21T12:19:12.932199+00:00",
+  "baseline_commit": "53aff468c89ef8f9fe6509511a0c443e2da0e2d6",
+  "checks": [
+    {
+      "command": ".venv/bin/pytest -q",
+      "result": "PASS",
+      "tests": 348,
+      "subtests": 172,
+      "warnings": 3,
+      "seconds": 64.97
+    },
+    {
+      "command": ".venv/bin/pytest -q tests/test_dashboard_integration.py tests/test_weather_features.py",
+      "result": "PASS",
+      "tests": 14
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "PASS",
+      "tests": 12,
+      "viewports": [
+        "desktop",
+        "mobile"
+      ]
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 2
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:weather",
+      "result": "PASS",
+      "scope": "twelve-location simulated local preview"
+    },
+    {
+      "command": "INDRA_MANDI_URL=http://127.0.0.1:8080 INDRA_EXPECT_ONLINE=1 npm run test:mandi",
+      "result": "PASS",
+      "scope": "historical Mandi modeled source and shadow state"
+    },
+    {
+      "command": ".venv/bin/python scripts/test_weather_features.py",
+      "result": "PASS",
+      "scope": "synthetic definition recovery and six spatial HTTP layers"
+    },
+    {
+      "command": "ruff check and git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "original_artifact_integrity": {
+    "docs/plans/PROTECTED_PATHS.json": {
+      "verified_files": 129,
+      "mismatches": []
+    },
+    "configs/committed_exports_v1.json": {
+      "verified_files": 108,
+      "mismatches": []
+    }
+  },
+  "field_validated": false,
+  "real_event_probability_calibrated": false,
+  "publicly_deployed": false,
+  "forecast_profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "category_profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+  "local_urls": {
+    "simulated_preview": "http://127.0.0.1:8082",
+    "historical_mandi": "http://127.0.0.1:8080"
+  },
+  "schema_version": "indra_ui_refresh_verification_v1",
+  "source_files": {
+    "apps/indra-himachal-ui/src/styles.css": "64d72dca5e220514cf810c3ee4cd1e3db4b733355efbfb398b275b23a94d2712",
+    "apps/indra-himachal-ui/src/main.jsx": "5044d7eafc37db1f3d2b9c0a1fdbe201ac24734b7ecbae8d52267cd3aeb4430c",
+    "apps/indra-himachal-ui/src/App.jsx": "3a097d4a3db140f748e45cb8329c076937b92fcdc97f9beb28872b6402a2d3f5",
+    "apps/indra-himachal-ui/src/components/RpcMenu.jsx": "8da06857520b6c51eae6391dd5fa2eed799b794571adc2d0f85c093c074b82da",
+    "apps/indra-himachal-ui/src/components/MapView.jsx": "5f75eb542ab075514cfb509037fba3701a49431fccc44738e01650def9e6b882",
+    "apps/indra-himachal-ui/src/components/StormRiskPanel.jsx": "be6901667e50156dfdcbdd3a123c283793ef6e3d0e2d52b3bc84a64dca4cd223",
+    "apps/indra-himachal-ui/src/components/ModelLab.jsx": "a0b1d3799065cb31643d97f2b80e7728f3e1d0d66a801304e3211be752624862",
+    "apps/indra-himachal-ui/src/components/NodeList.jsx": "ebce5f67e49d499e55acf8f7fbc6efe4eba44110fa65f37208ca57eb5251cfbc",
+    "apps/indra-himachal-ui/src/components/StatusHeader.jsx": "3c57066e14fbc4573ea529a08e375513ad0652a08f503dafa7f1b3662cc082c2",
+    "apps/indra-himachal-ui/src/components/WeatherCategories.jsx": "bd478ffb0a77790025ec4b43ab5f8a0978be465a0690df66525a75213afe6631",
+    "apps/indra-himachal-ui/src/components/ParameterMaps.jsx": "e9eb292547bd801d8108b84e8916848853927113be6882b0559b7eb05c3a80b1",
+    "apps/indra-himachal-ui/src/components/TelemetryPanel.jsx": "ead9084c9dd8510e7964b72f37dbdc3202ed0295f6668ea04aae5318b0a671ef",
+    "apps/indra-himachal-ui/src/api/client.js": "a551ed82363e79aa0cb55b99e855dfb03a672c40389919f5bd576aa9a1859cc4",
+    "apps/indra-himachal-ui/src/api/cache.js": "0a93a156b2ae54c71d949b629724cedb62fb132ff8291a773c080c4f555ed8ed",
+    "apps/indra-himachal-ui/src/api/parameter-colors.js": "a809babfe81b694184c8911864f48e4cb849f37290da6a7e49120d525052aa40",
+    "apps/indra-himachal-ui/src/api/contract.js": "71503131374ae045d8713ff5377a263d152f7f5ba4ac359eb53bc523909e9838",
+    "apps/indra-himachal-ui/src/api/presentation.js": "11e6eeb916cea481517cf9abcd517c3111610988b8d80bcf95305d0c52cba92a"
+  },
+  "screenshots": {
+    "categories-mobile.png": "4966ea1881ba8c776484128f3e821e694cfdbce175aac4d4fcf5d6094853b763",
+    "categories-desktop.png": "32c35b3d02b0d75ed6ae9264236002c35dc7971ab52b9b0e33dc5a891e25015b",
+    "model-mobile.png": "a6e62248d0f60d7300a924f679f11a8c5bfe360626598af5608fa78fdcc94e90",
+    "desktop.png": "60dd73c1f3b16b9b0911ec8f49b4cb65598265209339378cd9b2776280c96dfe",
+    "mandi-desktop.png": "97a85fc7b9920d526af08859dd12b47045ea5ca81fb9f9b1816030e4e30da83e",
+    "mandi-system-desktop.png": "cf854e52d5cb0dedc95df55bb3852ee061f0b9a7b699cf321b7527374cf2e2c8",
+    "parameters-desktop.png": "ffc4d352f5463fed5d46f93e08dbd676093884978b4bbe14881f59d84bc0f499",
+    "mandi-system-mobile.png": "8b10d4bb3ae68c0ed60a6925886a4ccc11281a25727d01166d5ffe5d179abc58",
+    "map-desktop.png": "0029a8a257a6a69b1b5ed18f614e2db77ffca5f00b1d85f14dfb03059120de2e",
+    "model-desktop.png": "70d86b920a5b521b7f0eaef19e9f55ab28f63e5aac43b5a27e2d73da85a94410",
+    "showcase-mobile.png": "5f2663337aa95c1285781a6f30686528f4993d7f9977b774a7e05b1535dda53c",
+    "map-mobile.png": "f68d92eae2f4b4ba5e7d0e7e2df0555d4b67d973646f530c79879fd076543b84",
+    "showcase-desktop.png": "332c9553a1eb54ef555c1ff81b970dfc10b3742c5019aad22ed65983586b48fc",
+    "system-mobile.png": "7e9e8ee86e6f2d664dff3c6f3f570ed33fc577f05996ee1bf7d62dd6bc1b800c",
+    "mandi-mobile.png": "982109e5baf927ca8ab524cd0ffe18ac5fb34fd9822bab6b26b4e7d3b24aa3d2",
+    "mobile.png": "6f2bb0739c5285b8e807034ded53cee3a36c848157f62a971643f74cfaa81063",
+    "system-desktop.png": "323e2e299aebff45a1cc824d38ce0042af345fea797904976ee7b5383d224e01",
+    "parameters-mobile.png": "6aa01e08a9e4609be7aff30d60f32b3909c6ccf17beb358e2efb07db2e528100"
+  },
+  "browser_receipts": {
+    "showcase_browser.json": "408d026f4fd75b2340d16149a79791ec6fe2d1a370d50eb52f633aff933cd91b",
+    "local_browser_verification.json": "021fcb4ecdfb21f61705958a106ca1bf9a4c1b56445d3d8cdc35c585121642ec"
+  }
+}

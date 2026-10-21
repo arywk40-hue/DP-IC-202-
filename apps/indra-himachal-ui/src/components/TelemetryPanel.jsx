@@ -1,85 +1,251 @@
-import React from 'react';
-import { batteryLevel } from '../api/contract';
-
+import React from "react";
+import WeatherCategories from "./WeatherCategories";
+import { readingTime, sourceName } from "../api/presentation";
 const CHANNELS = {
-  temperature_c: ['Temperature', '°C'], relative_humidity_pct: ['Relative humidity', '%'],
-  pressure_hpa: ['Station / grid pressure', 'hPa'], pm25_ug_m3: ['PM2.5', 'µg/m³'],
-  pm10_ug_m3: ['PM10', 'µg/m³'], wind_speed_mps: ['Wind speed', 'm/s']
+  temperature_c: ["Temperature", "°C"],
+  relative_humidity_pct: ["Humidity", "%"],
+  pressure_hpa: ["Pressure", "hPa"],
+  pm25_ug_m3: ["PM2.5", "µg/m³"],
+  pm10_ug_m3: ["PM10", "µg/m³"],
+  wind_speed_mps: ["Wind", "m/s"],
 };
-const fmt = (v) => Number.isFinite(v) ? v.toFixed(1) : 'Unavailable';
-const date = (v) => v ? new Date(v).toLocaleString() : 'Unknown';
-
+const fmt = (v) => (Number.isFinite(v) ? v.toFixed(1) : "—");
 function History({ rows, channel }) {
-  const finite = rows.map((r,i) => ({ i, value: r[channel] })).filter(p => Number.isFinite(p.value));
-  if (finite.length < 2) return <small>Insufficient history</small>;
-  const low = Math.min(...finite.map(p => p.value));
-  const high = Math.max(...finite.map(p => p.value));
-  // Preserve gaps: no line segment crosses a missing sensor sample.
-  const segments = []; let segment = [];
-  rows.forEach((r,i) => {
-    if (!Number.isFinite(r[channel])) { if (segment.length) segments.push(segment); segment=[]; }
-    else segment.push(`${(i/(rows.length-1))*180},${36-(r[channel]-low)/(high-low || 1)*30}`);
+  const finite = rows.map((r) => r[channel]).filter(Number.isFinite);
+  if (finite.length < 2) return <div className="history-empty" />;
+  const low = Math.min(...finite),
+    high = Math.max(...finite);
+  const segments = [];
+  let segment = [];
+  rows.forEach((r, i) => {
+    if (!Number.isFinite(r[channel])) {
+      if (segment.length) segments.push(segment);
+      segment = [];
+    } else
+      segment.push(
+        `${(i / (rows.length - 1)) * 180},${36 - ((r[channel] - low) / (high - low || 1)) * 28}`,
+      );
   });
   if (segment.length) segments.push(segment);
-  return <svg viewBox="0 0 180 40" role="img" aria-label={`${CHANNELS[channel][0]} recent observations`}>
-    {segments.map((points,i) => <polyline key={i} points={points.join(' ')} fill="none" stroke="currentColor" strokeWidth="1.5" />)}
-  </svg>;
+  return (
+    <svg
+      viewBox="0 0 180 40"
+      role="img"
+      aria-label={`${CHANNELS[channel][0]} recent observations`}
+    >
+      {segments.map((v, i) => (
+        <polyline
+          key={i}
+          points={v.join(" ")}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.7"
+        />
+      ))}
+    </svg>
+  );
 }
-
-export default function TelemetryPanel({ nodeName, telemetry, loading, cached, rpcAvailable, onOpenRpc }) {
-  if (!nodeName) return <div className="telemetry-panel telemetry-empty">No observations loaded. Import six-channel snapshots or start the labelled demo.</div>;
-  return <section className="telemetry-panel" aria-label="Node telemetry">
-    <div className="panel-title row-title">{nodeName}
-      {rpcAvailable && onOpenRpc && <button className="rpc-send-btn" onClick={onOpenRpc}>Send RPC…</button>}
-    </div>
-    {loading && <p>Loading…</p>}
-    {!loading && !telemetry && <p>Telemetry unavailable.</p>}
-    {!loading && telemetry && <>
-      <div className="research-banner source-banner">
-        <strong>{telemetry.syntheticDemo ? 'SYNTHETIC DEMO' : telemetry.sourceClass}</strong><br />
-        Observation: {date(telemetry.timestamp)}<br />
-        {(cached || telemetry.stale) && <strong className="stale-notice">{cached ? 'CACHED · ' : ''}STALE / HISTORICAL — not a current warning<br /></strong>}
-        Source: {telemetry.sourceId}<br />Pressure: {telemetry.pressureReference}
-      </div>
-      <div className="sensor-grid">
-        {Object.entries(CHANNELS).map(([key,[label,unit]]) => <div className="sensor-cell" key={key}>
-          <span className="sensor-label">{label}</span>
-          <span className="sensor-value">{fmt(telemetry.sensors?.[key])} <span className="sensor-unit">{unit}</span></span>
-          <History rows={telemetry.history || []} channel={key} />
-          <span className="forecast-value">+6h estimate: {fmt(telemetry.forecast6h?.[key])} {unit}</span>
-        </div>)}
-      </div>
-      <p className="evidence-note">Forecast for {date(telemetry.forecastTimestamp)}<br />
-        <strong>{telemetry.forecastModel?.displayName || telemetry.forecastModel?.id}</strong><br />
-        Model: {telemetry.forecastModel?.id}<br />
-        Forecast status: {telemetry.forecastStatus}<br />
-        Complete hourly snapshots: {telemetry.forecastHistoryRows ?? 0}/{telemetry.forecastHistoryRequired ?? 25}<br />
-        {telemetry.forecastStatus === 'WARMING_UP_PERSISTENCE' && <>Warm-up: estimates copy current readings until the required history is available.<br /></>}
-        {telemetry.forecastModel?.family}<br />
-        Trained on Mandi-location modeled grids; field validation pending.
+export function TechnicalDetails({ telemetry: t, rpcAvailable, onOpenRpc }) {
+  if (!t)
+    return (
+      <p className="empty-message">
+        Select a location to see its data details.
       </p>
-      {telemetry.forecastModel?.blendWeights && <details className="forecast-components"><summary>Forecast model components</summary>
-        <ul>{Object.entries(telemetry.forecastModel.blendWeights).map(([target,head]) => <li key={target}>
-          {CHANNELS[target]?.[0] || target}: {head.neural && `${head.neural}; `}blend {Object.entries(head.weights).filter(([,value])=>value>0.0001).map(([name,value]) => `${name} ${value.toFixed(2)}`).join(' · ')}
-        </li>)}</ul>
-      </details>}
-      <h3>Experimental risk assessments</h3>
-      <p className="evidence-note">Current sensor patterns, not six-hour event forecasts. Experimental uncalibrated risk scores. A non-match does not establish safety.</p>
-      {Object.values(telemetry.risks || {}).map((risk) => <article key={risk.target} className={`risk-card risk-${risk.abstain ? 'unknown' : risk.level}`}>
-        <h4>{risk.display_name}</h4>
-        <strong>{risk.abstain ? 'Unknown / insufficient evidence' : risk.level.replaceAll('_',' ')}</strong>
-        <div>Rule score: {Number.isFinite(risk.score) ? `${risk.score.toFixed(2)} / 1` : 'Unavailable'} · Evidence coverage: {Math.round(risk.coverage*100)}%</div>
-        <div>Calibration: unavailable · Peer corroboration: {risk.corroboration}</div>
-        <details><summary>Rule evidence ({risk.triggered_evidence.length} matched)</summary>
-          <ul>{risk.evidence.map(e => <li key={e.feature}>{e.feature}: {e.value == null ? 'Unavailable' : String(e.value)} {e.unit} — {e.matched == null ? 'unknown' : e.matched ? 'matched' : 'not matched'}</li>)}</ul>
-          <small>{risk.profile} · {risk.confidence_kind}</small>
-        </details>
-      </article>)}
-      <p className="evidence-note">Storm sequence: {telemetry.stormSequence?.matched == null ? 'Unavailable / incomplete native history' : telemetry.stormSequence.matched ? 'Experimental sequence matched' : 'Sequence not matched'}.<br />
-        Flash flood and landslide predictors: unavailable. Public alerts disabled; human review required.</p>
-      <div className={`telemetry-footer batt-${batteryLevel(telemetry.battery)}`}>
-        Battery: {Number.isFinite(telemetry.battery) ? `${telemetry.battery.toFixed(2)} V` : 'Not measured'}
+    );
+  return (
+    <section className="technical-details">
+      <div className="section-heading">
+        <h2>Location details</h2>
+        <code>{t.id}</code>
       </div>
-    </>}
-  </section>;
+      <dl className="detail-list">
+        <div>
+          <dt>Data source</dt>
+          <dd>{sourceName(t.sourceClass)}</dd>
+        </div>
+        <div>
+          <dt>Source identity</dt>
+          <dd>{t.sourceId}</dd>
+        </div>
+        <div>
+          <dt>Observed</dt>
+          <dd>{readingTime(t.timestamp)}</dd>
+        </div>
+        <div>
+          <dt>Pressure reference</dt>
+          <dd>{t.pressureReference}</dd>
+        </div>
+        <div>
+          <dt>Forecast model</dt>
+          <dd>
+            {t.forecastModel?.displayName}
+            <br />
+            <code>{t.forecastModel?.id}</code>
+          </dd>
+        </div>
+        <div>
+          <dt>Forecast state</dt>
+          <dd>
+            {t.forecastStatus} · {t.forecastHistoryRows ?? 0}/
+            {t.forecastHistoryRequired ?? 25} hourly readings
+          </dd>
+        </div>
+        <div>
+          <dt>Forecast endpoint</dt>
+          <dd>{readingTime(t.forecastTimestamp)}</dd>
+        </div>
+      </dl>
+      <p className="evidence-note">
+        Forecasting uses Mandi modeled grids for training. Field accuracy is not
+        established. Pattern classification uses simulated scenarios and has no
+        calibrated real-event probabilities.
+      </p>
+      {t.forecastModel?.blendWeights && (
+        <details className="forecast-components">
+          <summary>Forecast model components</summary>
+          <ul>
+            {Object.entries(t.forecastModel.blendWeights).map(([key, head]) => (
+              <li key={key}>
+                {CHANNELS[key]?.[0]}:{" "}
+                {Object.entries(head.weights)
+                  .filter(([, v]) => v > 0.0001)
+                  .map(([k, v]) => `${k} ${v.toFixed(2)}`)
+                  .join(" · ")}
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+      <details className="legacy-assessments">
+        <summary>Additional sensor-rule checks</summary>
+        <p className="evidence-note">
+          Current-condition rules. These checks do not confirm events or predict
+          hazards six hours ahead.
+        </p>
+        {Object.values(t.risks || {}).map((r) => (
+          <article className="risk-card" key={r.target}>
+            <h4>{r.display_name}</h4>
+            <strong>
+              {r.abstain
+                ? "Insufficient evidence"
+                : r.level.replaceAll("_", " ")}
+            </strong>
+            <p>Rule score: {fmt(r.score)} / 1 · Calibration: unavailable</p>
+            <details>
+              <summary>Rule evidence</summary>
+              <ul>
+                {r.evidence.map((e) => (
+                  <li key={e.feature}>
+                    {e.feature}:{" "}
+                    {e.value == null ? "Unavailable" : String(e.value)} {e.unit}{" "}
+                    ·{" "}
+                    {e.matched == null
+                      ? "unknown"
+                      : e.matched
+                        ? "matched"
+                        : "not matched"}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </article>
+        ))}
+        <p className="evidence-note">
+          Storm sequence:{" "}
+          {t.stormSequence?.matched == null
+            ? "Unavailable"
+            : t.stormSequence.matched
+              ? "Sequence matched"
+              : "Not matched"}
+          . Flash flood and landslide predictors are unavailable. Public alerts
+          are disabled.
+        </p>
+      </details>
+      {rpcAvailable ? (
+        <button className="secondary-button" onClick={onOpenRpc}>
+          Device commands
+        </button>
+      ) : (
+        <p className="evidence-note">Device controls are not connected.</p>
+      )}
+    </section>
+  );
+}
+export default function TelemetryPanel({
+  nodeName,
+  telemetry: t,
+  loading,
+  cached,
+}) {
+  if (!nodeName)
+    return (
+      <section className="telemetry-panel telemetry-empty">
+        <h2>Choose a location</h2>
+        <p>Readings and weather patterns will appear here.</p>
+      </section>
+    );
+  return (
+    <section className="telemetry-panel" aria-label="Location conditions">
+      <div className="location-heading">
+        <span className="eyebrow">Selected location</span>
+        <h2>{nodeName}</h2>
+        <p>{t ? readingTime(t.timestamp) : "Loading latest reading…"}</p>
+      </div>
+      {loading && <p className="loading-state">Updating readings…</p>}
+      {!loading && !t && (
+        <p className="empty-message">
+          We couldn’t load this location. Please try again.
+        </p>
+      )}
+      {!loading && t && (
+        <>
+          <div className="source-banner">
+            <span className="source-label">{sourceName(t.sourceClass)}</span>
+            {(cached || t.stale) && (
+              <span className="stale-notice">
+                {cached ? "Saved reading" : "Older reading"}
+              </span>
+            )}
+          </div>
+          <div className="sensor-grid">
+            {Object.entries(CHANNELS).map(([key, [name, unit]]) => (
+              <div className="sensor-cell" key={key}>
+                <span className="sensor-label">{name}</span>
+                <div className="sensor-value">
+                  {fmt(t.sensors?.[key])}
+                  <span className="sensor-unit"> {unit}</span>
+                </div>
+                <History rows={t.history || []} channel={key} />
+              </div>
+            ))}
+          </div>
+          <section className="forecast-section">
+            <div className="section-heading">
+              <h3>Six hours ahead</h3>
+              <span className="section-tag">Estimate</span>
+            </div>
+            <p className="forecast-time">{readingTime(t.forecastTimestamp)}</p>
+            {t.forecastStatus === "WARMING_UP_PERSISTENCE" && (
+              <p className="reading-note">
+                Building history. These estimates currently repeat the latest
+                readings.
+              </p>
+            )}
+            <div className="forecast-list">
+              {Object.entries(CHANNELS).map(([key, [name, unit]]) => (
+                <div key={key}>
+                  <span>{name}</span>
+                  <strong>
+                    {fmt(t.forecast6h?.[key])}
+                    <small> {unit}</small>
+                  </strong>
+                </div>
+              ))}
+            </div>
+          </section>
+          <WeatherCategories classification={t.weatherCategories} />
+        </>
+      )}
+    </section>
+  );
 }

@@ -1,6 +1,10 @@
 # INDRA — six-channel Mandi forecasting prototype
 
 INDRA forecasts **temperature, humidity, pressure, PM2.5, PM10 and wind at +6 hours**.
+It also provides **six parameter heatmaps** from synchronized locations and
+**ten current weather-pattern categories** from a synthetic-trained classifier.
+See [the feature guide and complete local demo](docs/PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md).
+Category scores are not calibrated real-event probabilities.
 The active Python backend uses LightGBM, a residual neural network, the retained
 hybrid and persistence in `india_mandi_tabular_v2`. It derives 66 causal features from 25 hourly
 snapshots spanning 24 hours. Short histories explicitly use persistence warm-up.
@@ -11,6 +15,8 @@ A durable delayed-label online learner is implemented in shadow mode.
 
 ## Start here
 
+- [Current interface and deployment handoff](docs/UI_AND_DEPLOYMENT_STATUS.md)
+
 - [Current v2 pipeline, comparison and online-learning guide](docs/MANDI_V2_PIPELINE.md)
 - [Features and what is actually available](docs/FEATURES.md)
 - [Submission guide and demonstration steps](docs/SUBMISSION_GUIDE.md)
@@ -19,6 +25,8 @@ A durable delayed-label online learner is implemented in shadow mode.
 - [Documentation index](docs/README.md)
 
 ## Run locally
+
+Complete synthetic maps/category showcase: `.venv/bin/python scripts/run_himachal_demo.py --offline --weather-demo --db data/himachal/weather_demo.sqlite --port 8082`, then open http://127.0.0.1:8082. It stays separate from the downloaded Mandi view.
 
 Python 3.13 and Node 22 are the tested setup. From the repository root:
 
