@@ -14,6 +14,7 @@ Status: 21 October 2026. [Current v2 pipeline and results](MANDI_V2_PIPELINE.md)
 | Data quality and source | Units, pressure reference, source class, calibration identities and availability | Modeled source cannot silently become physical station evidence |
 | Current rain/snowstorm/cloudburst rule cards | Experimental current-condition matches and evidence/abstention | Synthetic contract tests; not calibrated probabilities or six-hour hazard predictions |
 | Weather category classification | Ten overlapping categories from a saved LightGBM/MLP blend | Trained/tested on independent synthetic proxy episodes; scores are not real-event probabilities. Six complete native hours required |
+| Cloudburst / flash-flood / landslide scenarios | Six-hour Monte Carlo fractions with central/drier/wetter assumption ranges | [Research-informed simulator](SYNTHETIC_HAZARD_SCENARIOS.md); generated 786,432 synthetic futures. Rainfall/soil/catchment priors are assumptions; no observed-event accuracy or calibrated probabilities |
 | Storm sequence | Six-hour pressure fall and native 15-minute rebound/cooling/washout sequence | Requires appropriate cadence/source; hourly Mandi API cannot provide 15-minute evidence |
 | Anomaly detection | Bounded six-channel engineering detector and Python/C parity | Tested separately; not wired as a validated live dashboard alarm |
 | Neighbour inference | Registration, health, authenticated consensus and radio simulation modules | Engineering tests only; live radios and dashboard corroboration remain incomplete |
