@@ -92,3 +92,27 @@ Reproduce the download and evaluation:
 ```
 
 Attribution: Open-Meteo, ECMWF IFS, Copernicus Atmosphere Monitoring Service (CAMS).
+
+## Prospective collection progress
+
+The collector received the 17:00 UTC API values on 21 October and completed its
+first shadow update. That first forecast was saved at 16:48 UTC using an 11:00
+input: its remaining issuance lead was only **11.65 minutes**. It verifies delayed
+scoring/update plumbing, not a full six-hour forecast issued at 11:00.
+
+The System/model panel now separates scored forecasts issued within their input
+hour from those issued using delayed inputs, and shows actual remaining lead.
+The ordinary rolling error summary still includes both groups; its interpretation
+must retain that timing distinction. Issued within the input hour means a
+processing delay below 60 minutes, not exactly six hours of wall-clock lead.
+
+Regenerate the journal audit without fitting/promoting any model:
+
+```sh
+.venv/bin/python scripts/report_mandi_live.py
+```
+
+[Audited input/prediction/later-value comparisons](../reports/mandi_current_api_v1/prospective/REPORT.md)
+include issue, target, retrieval and update timestamps. The report checks that
+predictions precede their target and labels are available before the update.
+One scored case is insufficient to assess whether online learning improves errors.

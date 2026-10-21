@@ -8,8 +8,8 @@ SQLite checkpoints contain numerical SGD state, never executable pickle objects.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 import sqlite3
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -35,8 +35,8 @@ class OnlineLearner:
 
     def __init__(self, path, model_sha, mean, std, residual_scale):
         self.path, self.model_sha = Path(path), model_sha
-        self.mean, self.std, self.scale = map(
-            lambda x: np.asarray(x, float), (mean, std, residual_scale)
+        self.mean, self.std, self.scale = (
+            np.asarray(x, float) for x in (mean, std, residual_scale)
         )
         if (
             self.mean.shape != (66,)
@@ -49,13 +49,13 @@ class OnlineLearner:
             raise ValueError("Fixed finite train-only online scaler required")
         self.path.parent.mkdir(parents=True, exist_ok=True)
         identity = encode(
-            dict(
-                schema="indra_delayed_numeric_sgd_v1",
-                model=model_sha,
-                mean=self.mean.tolist(),
-                std=self.std.tolist(),
-                residual_scale=self.scale.tolist(),
-            )
+            {
+                "schema": "indra_delayed_numeric_sgd_v1",
+                "model": model_sha,
+                "mean": self.mean.tolist(),
+                "std": self.std.tolist(),
+                "residual_scale": self.scale.tolist(),
+            }
         )
         with self.connect() as db:
             db.execute(
@@ -103,11 +103,11 @@ class OnlineLearner:
 
     @staticmethod
     def checkpoint(models):
-        return dict(
-            coef=[m.coef_.tolist() for m in models],
-            intercept=[float(m.intercept_[0]) for m in models],
-            steps=[float(m.t_) for m in models],
-        )
+        return {
+            "coef": [m.coef_.tolist() for m in models],
+            "intercept": [float(m.intercept_[0]) for m in models],
+            "steps": [float(m.t_) for m in models],
+        }
 
     def observe(
         self,
@@ -155,7 +155,7 @@ class OnlineLearner:
                     )
                 # A later download can contain the same observation again. Keep
                 # its first recorded availability; never learn the label twice.
-                return dict(duplicate=True, updated=0)
+                return {"duplicate": True, "updated": 0}
             state = db.execute(
                 "SELECT checkpoint,updates,clock,mode FROM state WHERE namespace=?",
                 (namespace,),
@@ -228,11 +228,16 @@ class OnlineLearner:
                     mode,
                 ),
             )
-            return dict(duplicate=False, updated=updated, revision=revision + updated)
+            return {
+                "duplicate": False,
+                "updated": updated,
+                "revision": revision + updated,
+            }
 
     def summary(self):
         """Read model/learning identity and per-target prequential diagnostics."""
         with self.connect() as db:
+            db.execute("BEGIN")  # One snapshot while the collector can keep writing.
             states = db.execute(
                 "SELECT namespace,updates,clock,mode FROM state ORDER BY namespace"
             ).fetchall()
@@ -242,6 +247,12 @@ class OnlineLearner:
             rows = db.execute(
                 "SELECT base,shadow,truth FROM forecasts WHERE scored=1 ORDER BY target DESC LIMIT 720"
             ).fetchall()
+            timely, timely_scored, lead_min, lead_max = db.execute(
+                "SELECT coalesce(sum(eligible=1 AND issued_at<issue+3600),0),"
+                "coalesce(sum(scored=1 AND issued_at<issue+3600),0),"
+                "min(CASE WHEN scored=1 THEN (target-issued_at)/60.0 END),"
+                "max(CASE WHEN scored=1 THEN (target-issued_at)/60.0 END) FROM forecasts"
+            ).fetchone()
         metrics = {}
         drift = False
         if rows:
@@ -251,42 +262,52 @@ class OnlineLearner:
             for j, c in enumerate(RAW_SENSOR_COLUMNS):
                 b = float(np.abs(base[:, j] - truth[:, j]).mean())
                 s = float(np.abs(shadow[:, j] - truth[:, j]).mean())
-                metrics[c] = dict(base_mae=b, shadow_mae=s, rows=len(rows))
+                metrics[c] = {"base_mae": b, "shadow_mae": s, "rows": len(rows)}
             drift = bool(
                 np.mean((np.abs(shadow - truth) - np.abs(base - truth)) / self.scale)
                 > 0.05
             )
-        return dict(
-            enabled=True,
-            status="AWAITING_HOURLY_INPUT"
+        return {
+            "enabled": True,
+            "status": "AWAITING_HOURLY_INPUT"
             if not total
             else "HISTORICAL_ONLY_NO_LIVE_UPDATE"
             if not eligible
             else "LEARNING_SHADOW",
-            role="SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
-            model_sha256=self.model_sha,
-            scaler="FROZEN_TRAIN_ONLY",
-            updates=sum(s[1] for s in states),
-            forecasts=total,
-            eligible_forecasts=eligible,
-            scored_forecasts=scored,
-            pending=eligible - scored,
-            historical_ineligible_forecasts=total - eligible,
-            drift_warning=drift,
-            rolling_metrics=metrics,
-            namespaces=[
-                dict(
-                    id=s[0],
-                    updates=s[1],
-                    last_processed_at=pd.Timestamp(
+            "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+            "model_sha256": self.model_sha,
+            "scaler": "FROZEN_TRAIN_ONLY",
+            "updates": sum(s[1] for s in states),
+            "forecasts": total,
+            "eligible_forecasts": eligible,
+            "scored_forecasts": scored,
+            "pending": eligible - scored,
+            "historical_ineligible_forecasts": total - eligible,
+            "drift_warning": drift,
+            "rolling_metrics": metrics,
+            "timing": {
+                "definition": "ISSUED_IN_INPUT_HOUR_MEANS_ISSUE_TIME_WITHIN_60_MINUTES_OF_INPUT_VALID_TIME",
+                "issued_in_input_hour_forecasts": timely,
+                "scored_issued_in_input_hour": timely_scored,
+                "scored_delayed_input_forecasts": scored - timely_scored,
+                "scored_actual_lead_min_minutes": lead_min,
+                "scored_actual_lead_max_minutes": lead_max,
+                "metrics_include_delayed_inputs": True,
+                "verified_full_six_hour_skill": False,
+            },
+            "namespaces": [
+                {
+                    "id": s[0],
+                    "updates": s[1],
+                    "last_processed_at": pd.Timestamp(
                         s[2], unit="s", tz="UTC"
                     ).isoformat(),
-                    mode=s[3],
-                )
+                    "mode": s[3],
+                }
                 for s in states
             ],
-            field_validated=False,
-        )
+            "field_validated": False,
+        }
 
 
 def for_model(path, engine):
@@ -303,6 +324,7 @@ def for_model(path, engine):
 def ingest_native(records, path, engine, *, clock=None):
     """Live-file importer; actual availability is never replaced by valid time."""
     import hashlib
+
     from ml.himachal.contracts import METADATA, snapshot
     from ml.six_sensor_forecast.features import build_features
 

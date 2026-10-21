@@ -1,0 +1,139 @@
+{
+  "executed_at_utc": "2026-10-21T17:25:29.833674+00:00",
+  "source_class": "modeled_grid",
+  "evidence": "PROSPECTIVELY_SAVED_PREDICTIONS_VS_LATER_MODEL_GRID_VALUES_NOT_STATION_TRUTH",
+  "namespace": "live:75f010d5d44d2efa94b165c45b90a137",
+  "model_id": "india_mandi_tabular_v2",
+  "profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "scored_forecasts": 1,
+  "pending_forecasts": 6,
+  "scored_issued_in_input_hour": 0,
+  "scored_delayed_input_forecasts": 1,
+  "comparisons": [
+    {
+      "input_valid_utc": "2026-10-21T11:00:00+00:00",
+      "target_valid_utc": "2026-10-21T17:00:00+00:00",
+      "issued_at_utc": "2026-10-21T16:48:21+00:00",
+      "truth_available_utc": "2026-10-21T17:07:01+00:00",
+      "learned_at_utc": "2026-10-21T17:07:01+00:00",
+      "actual_remaining_lead_minutes": 11.65,
+      "issued_in_input_hour": false,
+      "checkpoint_revision_at_prediction": 0,
+      "input": {
+        "temperature_c": 25.0,
+        "relative_humidity_pct": 50.0,
+        "pressure_hpa": 931.3,
+        "pm25_ug_m3": 10.5,
+        "pm10_ug_m3": 13.0,
+        "wind_speed_mps": 0.93
+      },
+      "prediction": {
+        "temperature_c": 13.83769513165537,
+        "relative_humidity_pct": 83.34324209585594,
+        "pressure_hpa": 929.9492297214434,
+        "pm25_ug_m3": 26.395423231481796,
+        "pm10_ug_m3": 30.53321014207862,
+        "wind_speed_mps": 0.7661532597355818
+      },
+      "shadow_prediction": {
+        "temperature_c": 13.83769513165537,
+        "relative_humidity_pct": 83.34324209585594,
+        "pressure_hpa": 929.9492297214434,
+        "pm25_ug_m3": 26.395423231481796,
+        "pm10_ug_m3": 30.53321014207862,
+        "wind_speed_mps": 0.7661532597355818
+      },
+      "later_api_values": {
+        "temperature_c": 14.5,
+        "relative_humidity_pct": 82.0,
+        "pressure_hpa": 930.9,
+        "pm25_ug_m3": 26.5,
+        "pm10_ug_m3": 28.8,
+        "wind_speed_mps": 0.65
+      },
+      "absolute_errors": {
+        "temperature_c": 0.6623048683446306,
+        "relative_humidity_pct": 1.343242095855942,
+        "pressure_hpa": 0.950770278556547,
+        "pm25_ug_m3": 0.10457676851820352,
+        "pm10_ug_m3": 1.7332101420786188,
+        "wind_speed_mps": 0.11615325973558177
+      }
+    }
+  ],
+  "online": {
+    "enabled": true,
+    "status": "LEARNING_SHADOW",
+    "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+    "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+    "scaler": "FROZEN_TRAIN_ONLY",
+    "updates": 1,
+    "forecasts": 67,
+    "eligible_forecasts": 7,
+    "scored_forecasts": 1,
+    "pending": 6,
+    "historical_ineligible_forecasts": 60,
+    "drift_warning": false,
+    "rolling_metrics": {
+      "temperature_c": {
+        "base_mae": 0.6623048683446306,
+        "shadow_mae": 0.6623048683446306,
+        "rows": 1
+      },
+      "relative_humidity_pct": {
+        "base_mae": 1.343242095855942,
+        "shadow_mae": 1.343242095855942,
+        "rows": 1
+      },
+      "pressure_hpa": {
+        "base_mae": 0.950770278556547,
+        "shadow_mae": 0.950770278556547,
+        "rows": 1
+      },
+      "pm25_ug_m3": {
+        "base_mae": 0.10457676851820352,
+        "shadow_mae": 0.10457676851820352,
+        "rows": 1
+      },
+      "pm10_ug_m3": {
+        "base_mae": 1.7332101420786188,
+        "shadow_mae": 1.7332101420786188,
+        "rows": 1
+      },
+      "wind_speed_mps": {
+        "base_mae": 0.11615325973558177,
+        "shadow_mae": 0.11615325973558177,
+        "rows": 1
+      }
+    },
+    "timing": {
+      "definition": "ISSUED_IN_INPUT_HOUR_MEANS_ISSUE_TIME_WITHIN_60_MINUTES_OF_INPUT_VALID_TIME",
+      "issued_in_input_hour_forecasts": 2,
+      "scored_issued_in_input_hour": 0,
+      "scored_delayed_input_forecasts": 1,
+      "scored_actual_lead_min_minutes": 11.65,
+      "scored_actual_lead_max_minutes": 11.65,
+      "metrics_include_delayed_inputs": true,
+      "verified_full_six_hour_skill": false
+    },
+    "namespaces": [
+      {
+        "id": "live:26846f58a2241779563af8f4aa4e3258",
+        "updates": 0,
+        "last_processed_at": "2026-10-21T07:39:08+00:00",
+        "mode": "LIVE_SHADOW"
+      },
+      {
+        "id": "live:75f010d5d44d2efa94b165c45b90a137",
+        "updates": 1,
+        "last_processed_at": "2026-10-21T17:07:01+00:00",
+        "mode": "LIVE_SHADOW"
+      }
+    ],
+    "field_validated": false
+  },
+  "field_validated": false,
+  "calibrated_event_probabilities": false,
+  "weights_promoted": false,
+  "conclusion": "Sample is too small to assess improvement; delayed startup predictions are not full six-hour issuance tests."
+}

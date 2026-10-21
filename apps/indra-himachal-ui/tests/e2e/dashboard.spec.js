@@ -72,6 +72,22 @@ test("connection loss labels saved readings and maps instead of suggesting they 
   );
 });
 
+test("rapid map zoom and navigation do not leave callbacks on a removed map", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await connected(page);
+  for (let i = 0; i < 6; i++) {
+    await page.getByRole("button", {name:"Zoom in",exact:true}).click();
+    await view(page, "System");
+    await expect(page.locator(".system-view")).toBeVisible();
+    await view(page, "Observations");
+    await expect(page.getByRole("region", {name:"Location map"})).toBeVisible();
+  }
+  // Drain Leaflet's 250 ms transition fallback to catch removed-pane callbacks.
+  await page.waitForTimeout(350);
+  expect(errors).toEqual([]);
+});
+
 test("hazard scenarios show three simulation fractions without promoting them to event probabilities", async ({ page }, info) => {
   await connected(page);
   const panel = page.getByRole("region", { name: "Hazard scenarios" });

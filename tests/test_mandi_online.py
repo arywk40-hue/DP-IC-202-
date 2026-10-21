@@ -1,6 +1,7 @@
 """Delayed-label learning and checkpoint causality; synthetic fixtures only."""
 
 import json
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -153,9 +154,9 @@ def test_scaler_identity_and_processing_clock_fail_closed(tmp_path):
 def test_native_worker_reuses_persisted_history_and_learns_after_target_arrives(
     tmp_path,
 ):
-    from tests.test_himachal_features import native_records
     from ml.india_mandi.online import ingest_native
     from ml.india_mandi.tabular_v2 import TabularV2
+    from tests.test_himachal_features import native_records
 
     records = native_records(cadence=3600, hours=30)
     engine = TabularV2()
@@ -174,9 +175,9 @@ def test_native_worker_reuses_persisted_history_and_learns_after_target_arrives(
 
 
 def test_native_worker_explicitly_skips_nonhourly_readings(tmp_path):
-    from tests.test_himachal_features import native_records
     from ml.india_mandi.online import ingest_native
     from ml.india_mandi.tabular_v2 import TabularV2
+    from tests.test_himachal_features import native_records
 
     records = native_records(cadence=900, hours=7)
     result = ingest_native(
@@ -187,6 +188,30 @@ def test_native_worker_explicitly_skips_nonhourly_readings(tmp_path):
     )
     assert result["skipped_nonhourly_rows"] == len(records) and result["updates"] == 0
     assert result["status"] == "AWAITING_HOURLY_INPUT"
+
+
+def test_summary_separates_delayed_startup_from_input_hour_forecasts(tmp_path):
+    l = learner(tmp_path / "timing.sqlite")
+    l.observe(
+        "station",
+        START,
+        START,
+        BASE,
+        np.ones(66),
+        BASE,
+        START + pd.Timedelta(hours=5, minutes=45),
+    )
+    event(l, 6)
+    timing = l.summary()["timing"]
+    assert timing["scored_delayed_input_forecasts"] == 1
+    assert timing["scored_issued_in_input_hour"] == 0
+    assert timing["scored_actual_lead_min_minutes"] == 15
+    event(l, 12)
+    timing = l.summary()["timing"]
+    assert timing["scored_delayed_input_forecasts"] == 1
+    assert timing["scored_issued_in_input_hour"] == 1
+    assert timing["scored_actual_lead_max_minutes"] == 360
+    assert timing["verified_full_six_hour_skill"] is False
 
 
 def test_concurrent_live_writers_take_processing_time_after_lock(tmp_path):

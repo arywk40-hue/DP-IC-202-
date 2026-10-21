@@ -5,7 +5,7 @@ import { resolve, join } from "node:path";
 import { chromium } from "@playwright/test";
 
 const base = process.env.INDRA_MANDI_URL || "http://127.0.0.1:8080";
-const output = resolve("../../reports/mandi_current_api_v1");
+const output = resolve(process.env.INDRA_SCREENSHOT_DIR || "../../reports/mandi_current_api_v1");
 mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ channel: process.env.CI ? "chromium" : "chrome" });
 const checks = [];
@@ -30,6 +30,10 @@ try {
     assert.equal(t.hazardScenarios.probability, null);
     assert.equal(t.hazardScenarios.public_alerts_enabled, false);
     await page.getByRole("heading", {name:"Hazard scenarios",exact:true}).waitFor();
+    await page.getByRole("navigation").getByRole("button", {name:"System",exact:true}).click();
+    await page.locator(".model-lab > summary").click();
+    await page.getByTestId("online-timing").waitFor();
+    assert.match(await page.getByTestId("online-timing").innerText(), /do not establish six-hour forecasting accuracy/);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.screenshot({ path: join(output, "current-" + name + ".png"), fullPage: true });
     assert.deepEqual(errors, []);

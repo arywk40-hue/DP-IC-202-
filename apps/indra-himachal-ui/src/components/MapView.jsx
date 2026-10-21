@@ -36,6 +36,9 @@ export default function MapView({
       zoomControl: true,
       attributionControl: true,
       scrollWheelZoom: false,
+      // Views unmount this map. Leaflet 1.9's delayed zoom transition can
+      // otherwise access a removed pane after rapid navigation.
+      zoomAnimation: false,
     }).setView([31.71, 76.933], 14);
 
     const grid = L.gridLayer({
@@ -89,6 +92,7 @@ export default function MapView({
       active = false;
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
+      map.stop();
       map.remove();
       mapRef.current = null;
       markersRef.current = {};
@@ -120,11 +124,11 @@ export default function MapView({
       lastBoundsKeyRef.current = boundsKey;
       if (validNodes.length === 1) {
         map.setView([validNodes[0].lat, validNodes[0].lng], 15, {
-          animate: true,
+          animate: false,
         });
       } else {
         const bounds = L.latLngBounds(validNodes.map((n) => [n.lat, n.lng]));
-        map.fitBounds(bounds.pad(0.35), { maxZoom: 16, animate: true });
+        map.fitBounds(bounds.pad(0.35), { maxZoom: 16, animate: false });
       }
     }
   }, [nodes]);

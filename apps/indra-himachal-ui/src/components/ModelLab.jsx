@@ -51,6 +51,14 @@ export default function ModelLab(){
         <p>Predict and save first. Learn only after the matching +6h observation arrives. Scalers stay frozen. Shadow predictions never replace the displayed offline forecast.</p>
       </div><div className="lab-online-stats"><span><strong>{online?.updates??0}</strong> matured updates</span><span><strong>{online?.pending??0}</strong> waiting for truth</span><span><strong>{online?.historical_ineligible_forecasts??0}</strong> historical inputs excluded</span></div></div>
       {online?.drift_warning&&<p className="lab-warning">Shadow errors have worsened relative to the frozen baseline. Review drift diagnostics before any promotion.</p>}
+      {online?.timing&&<p className="lab-note" data-testid="online-timing">
+        {online.timing.scored_issued_in_input_hour} scored forecasts were issued within the input hour;
+        {' '}{online.timing.scored_delayed_input_forecasts} used delayed inputs.
+        {Number.isFinite(online.timing.scored_actual_lead_min_minutes)&&<>
+          {' '}Actual remaining lead: {online.timing.scored_actual_lead_min_minutes.toFixed(1)}–{online.timing.scored_actual_lead_max_minutes.toFixed(1)} minutes.
+        </>}
+        {' '}These counts do not establish six-hour forecasting accuracy.
+      </p>}
       <details><summary>Candidate and research details</summary><p>Compared: expanded-data LightGBM, residual MLP, retained hybrid and persistence. TabPFN: {typeof data.tabpfn_status==='string'?data.tabpfn_status:data.tabpfn_status?.status}.</p>
         {data.online_replay&&<p>Separate research replay: {data.online_replay.updates.toLocaleString()} matured shadow updates; {data.online_replay.pending} forecasts awaiting truth. This assumes timely historical arrivals and is not the live worker count above.</p>}
         <p>The separate prequential replay simulates timely arrivals. It is not a live learning or field-accuracy receipt.</p></details>

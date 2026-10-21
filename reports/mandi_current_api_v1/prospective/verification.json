@@ -1,0 +1,21 @@
+{
+  "python_targeted_tests": 19,
+  "desktop_mobile_live_checks": 2,
+  "build": "PASSED",
+  "lint": "PASSED",
+  "model_weights_promoted": false,
+  "nominal_target_hours": 6,
+  "scored_actual_lead_minutes": 11.65,
+  "full_six_hour_prospective_skill_verified": false,
+  "docs/plans/PROTECTED_PATHS.json": {
+    "unchanged": true,
+    "files": 129
+  },
+  "configs/committed_exports_v1.json": {
+    "unchanged": true,
+    "files": 108
+  },
+  "desktop_mobile_regression_tests": 16,
+  "map_navigation_regression": "PASSED",
+  "collector_interval_seconds": 900
+}
