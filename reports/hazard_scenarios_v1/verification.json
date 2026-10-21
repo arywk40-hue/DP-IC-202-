@@ -1,0 +1,25 @@
+{
+  "python_tests": 354,
+  "python_subtests": 172,
+  "python_warnings": 3,
+  "desktop_mobile_browser_tests": 14,
+  "javascript_contract_tests": 2,
+  "final_metadata_targeted_tests": 11,
+  "build": "PASSED",
+  "ruff": "PASSED",
+  "synthetic_data_git_ignored": true,
+  "observed_hazard_accuracy": null,
+  "public_alerts_enabled": false,
+  "protected_files": {
+    "docs/plans/PROTECTED_PATHS.json": {
+      "count": 129,
+      "unchanged": true
+    },
+    "configs/committed_exports_v1.json": {
+      "count": 108,
+      "unchanged": true
+    }
+  },
+  "model_config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+  "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d"
+}

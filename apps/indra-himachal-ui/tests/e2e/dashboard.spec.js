@@ -72,6 +72,23 @@ test("connection loss labels saved readings and maps instead of suggesting they 
   );
 });
 
+test("hazard scenarios show three simulation fractions without promoting them to event probabilities", async ({ page }, info) => {
+  await connected(page);
+  const panel = page.getByRole("region", { name: "Hazard scenarios" });
+  await expect(panel).toContainText("not the chance of a real event");
+  for (const id of ["cloudburst", "flash_flood", "landslide"]) {
+    await expect(panel.getByTestId(`scenario-${id}`)).toContainText("Central case");
+    await expect(panel.getByTestId(`scenario-${id}`)).toContainText("Across assumptions");
+  }
+  await panel.getByText("How are these calculated?").click();
+  await expect(panel).toContainText("not a confidence interval");
+  await expect(panel).toContainText("No alerts are sent");
+  const payload = await (await page.request.get("/api/nodes/demo-01/telemetry")).json();
+  expect(payload.hazardScenarios.probability).toBeNull();
+  expect(payload.hazardScenarios.public_alerts_enabled).toBe(false);
+  await panel.screenshot({path: `${screenshots}/hazard-scenarios-${info.project.name}.png`});
+});
+
 test("technical model evidence and rule checks remain accessible in System", async ({
   page,
 }, info) => {

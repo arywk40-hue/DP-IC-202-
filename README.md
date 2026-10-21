@@ -5,6 +5,9 @@ It also provides **six parameter heatmaps** from synchronized locations and
 **ten current weather-pattern categories** from a synthetic-trained classifier.
 See [the feature guide and complete local demo](docs/PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md).
 Category scores are not calibrated real-event probabilities.
+It also provides [cloudburst, flash-flood and landslide scenarios](docs/SYNTHETIC_HAZARD_SCENARIOS.md)
+using a documented Monte Carlo simulator. Their percentages describe simulated
+outcomes under assumed rainfall/soil/drainage, not real-event probabilities.
 The active Python backend uses LightGBM, a residual neural network, the retained
 hybrid and persistence in `india_mandi_tabular_v2`. It derives 66 causal features from 25 hourly
 snapshots spanning 24 hours. Short histories explicitly use persistence warm-up.

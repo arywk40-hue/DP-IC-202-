@@ -1,0 +1,53 @@
+{
+  "id": "himalayan_synthetic_scenarios_v1",
+  "version": 1,
+  "horizon_hours": 6,
+  "step_hours": 0.5,
+  "draws": 2048,
+  "field_validated": false,
+  "prior_evidence": "ENGINEERING_ASSUMPTIONS_NOT_EMPIRICALLY_ESTIMATED_PRIORS",
+  "cloudburst_threshold_mm_in_1h": 100,
+  "landslide_id_coefficient": 73.9,
+  "landslide_id_exponent": -0.79,
+  "landslide_duration_hours": [5, 6],
+  "rain_link": {
+    "intercept": -3.2,
+    "humidity": 2.0,
+    "pressure_fall": 0.7,
+    "wind": 0.6,
+    "cooling": 0.3,
+    "log_rate_intercept": 0.8,
+    "log_rate_strength": 2.6,
+    "log_rate_sigma": 1.0,
+    "temporal_ar": 0.75,
+    "rain_rate_cap_mm_h": 400
+  },
+  "families": {
+    "drier": {"rain_multiplier": 0.5, "soil_wetness": [0.05, 0.35], "capacity_m3_s_km2": [8, 20], "susceptible_fraction": 0.2},
+    "central": {"rain_multiplier": 1.0, "soil_wetness": [0.3, 0.75], "capacity_m3_s_km2": [3, 15], "susceptible_fraction": 0.45},
+    "wetter": {"rain_multiplier": 2.0, "soil_wetness": [0.65, 0.95], "capacity_m3_s_km2": [1, 8], "susceptible_fraction": 0.7}
+  },
+  "latent_ranges": {
+    "soil_storage_mm": [50, 200],
+    "dry_runoff_coefficient": [0.1, 0.3],
+    "wet_runoff_coefficient": 0.95,
+    "catchment_area_km2": [0.2, 5.0],
+    "concentration_time_hours": [0.5, 1.0, 2.0]
+  },
+  "assumptions": {
+    "rain_link": "Every coefficient, distribution, cap, and temporal relationship is an engineering assumption; no paper supplies P(rain|these six channels).",
+    "families": "Unweighted sensitivity cases, not estimated climate frequencies, posterior credible intervals, or known Mandi catchments.",
+    "latent_ranges": "All numeric hydrologic ranges are assumed, not surveyed at Mandi. Uniform distributions are convenience priors.",
+    "landslide": "Nepal rainfall threshold transferred only for sensitivity, restricted to 5 and 6 hours within its reported 5-hour to 30-day domain. The study lacks non-landslide rainfall records and partly estimates subdaily rainfall. Soil multiplier 1.4 - 0.7*wetness and susceptibility fractions are assumptions. Exceedance is a rainfall-trigger proxy, not slope failure.",
+    "cloudburst": "A simulated rolling one-hour total >=100 mm is a rainfall-threshold exceedance, not confirmation of a small-area cloudburst.",
+    "flood": "Simplified Rational Method peak/runoff-capacity exceedance with duration equal to assumed concentration time; not routed river flow or a confirmed flood.",
+    "particulates": "PM channels are validated and preserved in the six-channel contract, but do not drive the rain generator; no supported causal rain link is claimed."
+  },
+  "sources": [
+    {"id": "singh_thapliyal_2022", "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/5084", "doi": "10.54302/mausam.v73i1.5084", "supports": "100 mm in one hour cloudburst threshold; upper-air conditions and radar matter. Does not supply six-sensor probabilities."},
+    {"id": "dahal_hasegawa_2008", "url": "https://doi.org/10.1016/j.geomorph.2008.01.014", "supports": "Nepal lower-envelope rainfall threshold I=73.90*D^-0.79, intensity mm/h, duration hours. Not an event probability or Mandi calibration."},
+    {"id": "txdot_rational_method", "url": "https://www.txdot.gov/content/txdotoms/us/en/manuals/des/hyd/chapter-4--hydrology/section-12--rational-method/procedure-for-using-the-rational-method.html", "supports": "Q depends on runoff coefficient, rainfall intensity over concentration time, and area. Metric conversion 1/3.6 for area in km2."},
+    {"id": "wmo_ffg_guide", "url": "https://etrp.wmo.int/pluginfile.php/99357/mod_resource/content/1/BSMEFFG_UserGuide-opt.pdf?forcedownload=1", "supports": "Flood guidance requires catchment/drainage characteristics and soil water deficit; these are unobserved latent variables here."},
+    {"id": "manali_2023_case", "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/6447", "doi": "10.54302/mausam.v75i4.6447", "supports": "Regional monsoon, western-disturbance and terrain context. Does not provide numeric priors for this simulator."}
+  ]
+}

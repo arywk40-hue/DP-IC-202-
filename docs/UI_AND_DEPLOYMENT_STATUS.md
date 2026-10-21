@@ -9,7 +9,8 @@ station readings. Changing the interface does not change the provenance of data.
 
 - **Observations:** locations, an offline-capable geographic coordinate grid,
   selectable parameter overlays, six current readings, a six-hour numerical
-  forecast and compact weather-pattern matches.
+  forecast, compact weather-pattern matches and three explicitly simulated
+  [hazard scenarios](SYNTHETIC_HAZARD_SCENARIOS.md) with assumption ranges.
 - **Parameters:** six measurement maps, ranges and units. Selecting a map returns
   to the matching geographic overlay. Unsupported areas stay unavailable.
 - **System:** source identities, timestamps, forecast model/components, rule

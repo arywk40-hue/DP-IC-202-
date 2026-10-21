@@ -716,11 +716,13 @@ select {
   margin: 14px 0 5px;
   line-height: 1.5;
 }
-.score-explanation summary {
+.score-explanation summary,
+.hazard-explanation summary {
   font-size: 10px;
   color: var(--text-muted);
 }
-.score-explanation p {
+.score-explanation p,
+.hazard-explanation p {
   font-size: 11px;
   margin-top: 10px;
   color: var(--text-muted);

@@ -1,0 +1,114 @@
+{
+  "model_id": "himalayan_synthetic_scenarios_v1",
+  "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+  "generator_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+  "generator_files": {
+    "ml/himachal/hazard_scenarios.py": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+    "ml/himachal/weather_categories.py": "a70337d48291e89eb46a528b3a9728892d5bc81f2128b289faf05bd558921338",
+    "scripts/generate_hazard_scenarios.py": "d0f87e1528b4db8c6322a3d04ba7ad57be90104ae304fa25d0998794a4e90fb7"
+  },
+  "numpy_version": "2.3.4",
+  "parent_sampling": "Oversampled engineered weather regimes; not representative of Mandi climate frequencies.",
+  "dataset_sha256": "8ee96c0a9c7c5131dd805f680656d064fde71294903300da73019d9fbdc37cb4",
+  "dataset_path": "data/himachal/hazard_scenarios_v1/scenarios.npz",
+  "parent_episodes": 2048,
+  "draws_per_parent_per_family": 128,
+  "assumption_families": [
+    "drier",
+    "central",
+    "wetter"
+  ],
+  "synthetic_future_worlds": 786432,
+  "horizon_hours": 6,
+  "native_simulation_step_minutes": 30,
+  "seed": 20261021,
+  "physical_channels": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "past_only_features": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps",
+    "temperature_c_delta_1h",
+    "relative_humidity_pct_delta_1h",
+    "pressure_hpa_delta_1h",
+    "pm25_ug_m3_delta_1h",
+    "pm10_ug_m3_delta_1h",
+    "wind_speed_mps_delta_1h",
+    "pressure_hpa_delta_6h"
+  ],
+  "targets": [
+    "cloudburst",
+    "flash_flood",
+    "landslide"
+  ],
+  "label_evidence": "SIMULATED_OUTCOMES_NOT_OBSERVED_EVENTS",
+  "observed_event_labels": 0,
+  "field_validated": false,
+  "calibrated_event_probabilities": false,
+  "accuracy": null,
+  "accuracy_reason": "No independent observed labels; simulation prevalence is not accuracy.",
+  "split_policy": "No classifier fitted. For later ML, split parent episode IDs before expanding latent worlds; never split worlds from one history across train/test.",
+  "families": {
+    "drier": {
+      "synthetic_outcome_fraction": {
+        "cloudburst": 0.00563812255859375,
+        "flash_flood": 0.018054962158203125,
+        "landslide": 0.01171112060546875
+      },
+      "mean_conditional_fraction": [
+        0.00563812255859375,
+        0.018054962158203125,
+        0.01171112060546875
+      ]
+    },
+    "central": {
+      "synthetic_outcome_fraction": {
+        "cloudburst": 0.019138336181640625,
+        "flash_flood": 0.07218551635742188,
+        "landslide": 0.047962188720703125
+      },
+      "mean_conditional_fraction": [
+        0.019138336181640625,
+        0.07218551635742188,
+        0.047962188720703125
+      ]
+    },
+    "wetter": {
+      "synthetic_outcome_fraction": {
+        "cloudburst": 0.04724884033203125,
+        "flash_flood": 0.15180587768554688,
+        "landslide": 0.10369110107421875
+      },
+      "mean_conditional_fraction": [
+        0.04724884033203125,
+        0.15180587768554688,
+        0.10369110107421875
+      ]
+    }
+  },
+  "fresh_seed_convergence": {
+    "parent_episodes": 64,
+    "draws_each": 4096,
+    "seeds": [
+      20461021,
+      20561021
+    ],
+    "mean_absolute_fraction_difference": 0.0020807054307725695,
+    "maximum_absolute_fraction_difference": 0.02685546875,
+    "meaning": "Numerical simulation consistency only, not event forecasting skill."
+  },
+  "mean_assumption_range_width": [
+    0.0416107177734375,
+    0.13375091552734375,
+    0.09197998046875
+  ]
+}

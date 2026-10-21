@@ -28,6 +28,7 @@ from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
 from server.storm_run import StormRun
 from ml.himachal.weather_categories import WeatherCategories, synthetic_episodes
+from ml.himachal.hazard_scenarios import HazardScenarios
 from ml.himachal.parameter_maps import parameter_maps, geojson
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -149,6 +150,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
         raise ValueError("Dashboard import supports at most 200 nodes")
     result = []
     classifier=WeatherCategories()
+    scenario_engine=HazardScenarios()
     forecast_histories = {}
     for node_id, history in sorted(groups.items()):
         history.sort(key=lambda x: utc(x["timestamp_utc"]))
@@ -163,12 +165,14 @@ def assess(rows, *, now=None, model_dir=MODEL):
         class_history=[dict(timestamp=r['timestamp_utc'],**r['measurements']) for r in history]
         categories=classifier.predict(class_history,latest['native_interval_seconds'])
         categories.update(observation_timestamp=timestamp,assessed_at_utc=clock.isoformat(),source_class=latest['source_class'])
+        scenarios=scenario_engine.predict(class_history,latest['native_interval_seconds'])
+        scenarios.update(source_class=latest['source_class'],assessed_at_utc=clock.isoformat())
         result.append(dict(id=node_id, name=node_id, lat=latest["latitude"], lng=latest["longitude"],
             lastSeen=timestamp, battery=None, anomalyIndex=None, anomalyLabel="Experimental risk assessment",
             stale=stale, reportingIntervalSeconds=latest["native_interval_seconds"],
             sourceClass=latest["source_class"], sourceId=latest["source_id"], sourceCellId=latest["source_cell_id"],
             pressureReference=latest["pressure_reference"], registrationId=latest["registration_id"],
-            physicalSiteId=latest['physical_site_id'],weatherCategories=categories,
+            physicalSiteId=latest['physical_site_id'],weatherCategories=categories,hazardScenarios=scenarios,
             elevationM=latest["elevation_m"], timestamp=timestamp, sensors=latest["measurements"], units=UNITS.copy(),
             risks=rules["outputs"], stormSequence=rules["rainstorm_sequence"],
             history=[dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in history[-97:]],
@@ -208,6 +212,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
     app.state.store = store
     engine = load_forecaster(model_dir)
     classifier=WeatherCategories()
+    scenario_engine=HazardScenarios()
     app.state.forecaster = engine
     existing = store.all()
     if existing:
@@ -222,6 +227,12 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
             for n in existing:
                 n['weatherCategories']=classifier.predict(n.get('history',[]),n['reportingIntervalSeconds'])
                 n['weatherCategories'].update(observation_timestamp=n['timestamp'],assessed_at_utc=datetime.fromtimestamp(clock() if clock else time.time(),timezone.utc).isoformat(),source_class=n['sourceClass'])
+            store.replace(existing)
+        existing=store.all()
+        if any(n.get('hazardScenarios',{}).get('config_sha256')!=scenario_engine.sha256 or n.get('hazardScenarios',{}).get('implementation_sha256')!=scenario_engine.implementation_sha256 for n in existing):
+            for n in existing:
+                n['hazardScenarios']=scenario_engine.predict(n.get('history',[]),n['reportingIntervalSeconds'])
+                n['hazardScenarios'].update(source_class=n['sourceClass'],assessed_at_utc=datetime.fromtimestamp(clock() if clock else time.time(),timezone.utc).isoformat())
             store.replace(existing)
     storm = StormRun(storm_risk_run)
     online_learner=None

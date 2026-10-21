@@ -1,5 +1,6 @@
 import React from "react";
 import WeatherCategories from "./WeatherCategories";
+import HazardScenarios from "./HazardScenarios";
 import { readingTime, sourceName } from "../api/presentation";
 const CHANNELS = {
   temperature_c: ["Temperature", "°C"],
@@ -244,6 +245,7 @@ export default function TelemetryPanel({
             </div>
           </section>
           <WeatherCategories classification={t.weatherCategories} />
+          <HazardScenarios assessment={t.hazardScenarios} />
         </>
       )}
     </section>

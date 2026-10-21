@@ -1,0 +1,832 @@
+{
+  "8080": {
+    "url": "http://127.0.0.1:8080",
+    "status": {
+      "appVersion": "0.5.0",
+      "uptimeSeconds": 36,
+      "batteryVoltage": null,
+      "meshNodeCount": 1,
+      "sourceClasses": [
+        "modeled_grid"
+      ],
+      "syntheticDemo": false,
+      "adapter": "INDRA_READ_ONLY_LOCAL",
+      "rpcAvailable": false,
+      "hardwareConnected": false,
+      "empiricalHazardModels": "NOT_READY",
+      "empiricalAccuracy": "NOT_EVALUATED",
+      "publicNotificationsEnabled": false,
+      "forecastModel": "india_mandi_tabular_v2",
+      "forecastArchitecture": "LightGBM + residual neural + retained hybrid + persistence",
+      "forecastModelsInUse": [
+        "india_mandi_tabular_v2"
+      ],
+      "forecastHistoryHours": 24,
+      "forecastFallback": "PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS",
+      "transport": "HTTP_LOCAL_NO_RF",
+      "empty": false,
+      "staleNodes": 1
+    },
+    "nodes": [
+      {
+        "node": "mandi-api-grid",
+        "source_class": "modeled_grid",
+        "timestamp": 1792450800000,
+        "stale": true,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.00146484375
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.00146484375
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0048828125,
+            "scenario_fraction": 0.0048828125,
+            "assumption_range": [
+              0.0,
+              0.0419921875
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0048828125,
+              "wetter": 0.0419921875
+            },
+            "probability": null,
+            "mc_standard_error": 0.0015403065470330675
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.00732421875,
+            "scenario_fraction": 0.00732421875,
+            "assumption_range": [
+              0.00048828125,
+              0.02587890625
+            ],
+            "families": {
+              "drier": 0.00048828125,
+              "central": 0.00732421875,
+              "wetter": 0.02587890625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0018841669881176607
+          }
+        ]
+      }
+    ]
+  },
+  "8082": {
+    "url": "http://127.0.0.1:8082",
+    "status": {
+      "appVersion": "0.5.0",
+      "uptimeSeconds": 33,
+      "batteryVoltage": null,
+      "meshNodeCount": 12,
+      "sourceClasses": [
+        "synthetic_demo"
+      ],
+      "syntheticDemo": true,
+      "adapter": "INDRA_READ_ONLY_LOCAL",
+      "rpcAvailable": false,
+      "hardwareConnected": false,
+      "empiricalHazardModels": "NOT_READY",
+      "empiricalAccuracy": "NOT_EVALUATED",
+      "publicNotificationsEnabled": false,
+      "forecastModel": "india_mandi_tabular_v2",
+      "forecastArchitecture": "LightGBM + residual neural + retained hybrid + persistence",
+      "forecastModelsInUse": [
+        "india_mandi_tabular_v2",
+        "persistence_six_sensor_v1"
+      ],
+      "forecastHistoryHours": 24,
+      "forecastFallback": "PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS",
+      "transport": "HTTP_LOCAL_NO_RF",
+      "empty": false,
+      "staleNodes": 0
+    },
+    "nodes": [
+      {
+        "node": "demo-01",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.02734375,
+            "scenario_fraction": 0.02734375,
+            "assumption_range": [
+              0.00537109375,
+              0.08935546875
+            ],
+            "families": {
+              "drier": 0.00537109375,
+              "central": 0.02734375,
+              "wetter": 0.08935546875
+            },
+            "probability": null,
+            "mc_standard_error": 0.003603659526153689
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.17333984375,
+            "scenario_fraction": 0.17333984375,
+            "assumption_range": [
+              0.02685546875,
+              0.466796875
+            ],
+            "families": {
+              "drier": 0.02685546875,
+              "central": 0.17333984375,
+              "wetter": 0.466796875
+            },
+            "probability": null,
+            "mc_standard_error": 0.008364649104882717
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.13232421875,
+            "scenario_fraction": 0.13232421875,
+            "assumption_range": [
+              0.02490234375,
+              0.3193359375
+            ],
+            "families": {
+              "drier": 0.02490234375,
+              "central": 0.13232421875,
+              "wetter": 0.3193359375
+            },
+            "probability": null,
+            "mc_standard_error": 0.0074874413043596886
+          }
+        ]
+      },
+      {
+        "node": "demo-02",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.00244140625,
+            "scenario_fraction": 0.00244140625,
+            "assumption_range": [
+              0.0009765625,
+              0.0087890625
+            ],
+            "families": {
+              "drier": 0.0009765625,
+              "central": 0.00244140625,
+              "wetter": 0.0087890625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0010904964522923213
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.01953125,
+            "scenario_fraction": 0.01953125,
+            "assumption_range": [
+              0.00244140625,
+              0.1123046875
+            ],
+            "families": {
+              "drier": 0.00244140625,
+              "central": 0.01953125,
+              "wetter": 0.1123046875
+            },
+            "probability": null,
+            "mc_standard_error": 0.003057855236785974
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.02587890625,
+            "scenario_fraction": 0.02587890625,
+            "assumption_range": [
+              0.001953125,
+              0.06640625
+            ],
+            "families": {
+              "drier": 0.001953125,
+              "central": 0.02587890625,
+              "wetter": 0.06640625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0035084432521235043
+          }
+        ]
+      },
+      {
+        "node": "demo-03",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.09228515625,
+            "scenario_fraction": 0.09228515625,
+            "assumption_range": [
+              0.02685546875,
+              0.2216796875
+            ],
+            "families": {
+              "drier": 0.02685546875,
+              "central": 0.09228515625,
+              "wetter": 0.2216796875
+            },
+            "probability": null,
+            "mc_standard_error": 0.006395517159637317
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.33740234375,
+            "scenario_fraction": 0.33740234375,
+            "assumption_range": [
+              0.08642578125,
+              0.6953125
+            ],
+            "families": {
+              "drier": 0.08642578125,
+              "central": 0.33740234375,
+              "wetter": 0.6953125
+            },
+            "probability": null,
+            "mc_standard_error": 0.010448020572239175
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.22802734375,
+            "scenario_fraction": 0.22802734375,
+            "assumption_range": [
+              0.05908203125,
+              0.48046875
+            ],
+            "families": {
+              "drier": 0.05908203125,
+              "central": 0.22802734375,
+              "wetter": 0.48046875
+            },
+            "probability": null,
+            "mc_standard_error": 0.009271061175427293
+          }
+        ]
+      },
+      {
+        "node": "demo-04",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "persistence_six_sensor_v1",
+        "scenario_status": "UNAVAILABLE",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": []
+      },
+      {
+        "node": "demo-05",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0009765625
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0009765625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0009765625
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0009765625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          }
+        ]
+      },
+      {
+        "node": "demo-06",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.001953125,
+            "scenario_fraction": 0.001953125,
+            "assumption_range": [
+              0.0,
+              0.02197265625
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.001953125,
+              "wetter": 0.02197265625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0009756083595670032
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0703125,
+            "scenario_fraction": 0.0703125,
+            "assumption_range": [
+              0.00341796875,
+              0.25390625
+            ],
+            "families": {
+              "drier": 0.00341796875,
+              "central": 0.0703125,
+              "wetter": 0.25390625
+            },
+            "probability": null,
+            "mc_standard_error": 0.005649627180374089
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.05419921875,
+            "scenario_fraction": 0.05419921875,
+            "assumption_range": [
+              0.0068359375,
+              0.1591796875
+            ],
+            "families": {
+              "drier": 0.0068359375,
+              "central": 0.05419921875,
+              "wetter": 0.1591796875
+            },
+            "probability": null,
+            "mc_standard_error": 0.005003010003991974
+          }
+        ]
+      },
+      {
+        "node": "demo-07",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          }
+        ]
+      },
+      {
+        "node": "demo-08",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          }
+        ]
+      },
+      {
+        "node": "demo-09",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.00048828125
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.00048828125
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.00048828125
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.00048828125
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          }
+        ]
+      },
+      {
+        "node": "demo-10",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          }
+        ]
+      },
+      {
+        "node": "demo-11",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.0,
+            "scenario_fraction": 0.0,
+            "assumption_range": [
+              0.0,
+              0.0009765625
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.0,
+              "wetter": 0.0009765625
+            },
+            "probability": null,
+            "mc_standard_error": 0.0
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.001953125,
+            "scenario_fraction": 0.001953125,
+            "assumption_range": [
+              0.0,
+              0.0126953125
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.001953125,
+              "wetter": 0.0126953125
+            },
+            "probability": null,
+            "mc_standard_error": 0.0009756083595670032
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.00048828125,
+            "scenario_fraction": 0.00048828125,
+            "assumption_range": [
+              0.0,
+              0.00537109375
+            ],
+            "families": {
+              "drier": 0.0,
+              "central": 0.00048828125,
+              "wetter": 0.00537109375
+            },
+            "probability": null,
+            "mc_standard_error": 0.0004881620261549802
+          }
+        ]
+      },
+      {
+        "node": "demo-12",
+        "source_class": "synthetic_demo",
+        "timestamp": 1792598400000,
+        "stale": false,
+        "forecast_model": "india_mandi_tabular_v2",
+        "scenario_status": "SYNTHETIC_SCENARIOS_ONLY",
+        "config_sha256": "1959574a928545c9b4aa53486d83ffe4e43fda042f01e62add083bdc2ee9e494",
+        "implementation_sha256": "375ae1ede018e40512ab56a73244b51d20d4ebdbcc1b1e5d8450b1a5bd68776d",
+        "targets": [
+          {
+            "id": "cloudburst",
+            "name": "Cloudburst rainfall threshold",
+            "cloudburst_risk_uncal": 0.12548828125,
+            "scenario_fraction": 0.12548828125,
+            "assumption_range": [
+              0.0322265625,
+              0.2939453125
+            ],
+            "families": {
+              "drier": 0.0322265625,
+              "central": 0.12548828125,
+              "wetter": 0.2939453125
+            },
+            "probability": null,
+            "mc_standard_error": 0.007320140656965161
+          },
+          {
+            "id": "flash_flood",
+            "name": "Flash-flood runoff scenario",
+            "flash_flood_risk_uncal": 0.43408203125,
+            "scenario_fraction": 0.43408203125,
+            "assumption_range": [
+              0.11181640625,
+              0.7734375
+            ],
+            "families": {
+              "drier": 0.11181640625,
+              "central": 0.43408203125,
+              "wetter": 0.7734375
+            },
+            "probability": null,
+            "mc_standard_error": 0.01095210679548479
+          },
+          {
+            "id": "landslide",
+            "name": "Landslide rainfall trigger",
+            "landslide_risk_uncal": 0.27783203125,
+            "scenario_fraction": 0.27783203125,
+            "assumption_range": [
+              0.07080078125,
+              0.5361328125
+            ],
+            "families": {
+              "drier": 0.07080078125,
+              "central": 0.27783203125,
+              "wetter": 0.5361328125
+            },
+            "probability": null,
+            "mc_standard_error": 0.009897950823214815
+          }
+        ]
+      }
+    ]
+  }
+}
