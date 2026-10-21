@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { chromium } from "@playwright/test";
 const base = process.env.INDRA_WEATHER_URL || "http://127.0.0.1:8082";
-const output = "../../reports/ui_refresh_v1";
+const output = process.env.INDRA_SCREENSHOT_DIR || "../../reports/ui_refresh_v1";
 const browser = await chromium.launch({
   channel: process.env.CI ? "chromium" : "chrome",
 });

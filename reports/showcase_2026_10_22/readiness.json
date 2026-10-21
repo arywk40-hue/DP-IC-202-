@@ -1,0 +1,23 @@
+{
+  "checked_at_ist": "2026-10-22T02:23:55.364493+05:30",
+  "software_showcase": "PASSED",
+  "current_mandi_viewports": 2,
+  "synthetic_network_viewports": 2,
+  "current_mandi_locations": 1,
+  "simulated_locations": 12,
+  "parameter_maps": 6,
+  "shadow_updates": 4,
+  "pending_forecasts": 6,
+  "scored_within_input_hour": 0,
+  "field_hazard_accuracy_verified": false,
+  "physical_hardware_verified": false,
+  "public_hosting_performed": false,
+  "docs/plans/PROTECTED_PATHS.json": {
+    "files": 129,
+    "unchanged": true
+  },
+  "configs/committed_exports_v1.json": {
+    "files": 108,
+    "unchanged": true
+  }
+}

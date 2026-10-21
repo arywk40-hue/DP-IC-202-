@@ -1,0 +1,289 @@
+{
+  "executed_at_utc": "2026-10-21T20:52:41.264163+00:00",
+  "source_class": "modeled_grid",
+  "evidence": "PROSPECTIVELY_SAVED_PREDICTIONS_VS_LATER_MODEL_GRID_VALUES_NOT_STATION_TRUTH",
+  "namespace": "live:75f010d5d44d2efa94b165c45b90a137",
+  "model_id": "india_mandi_tabular_v2",
+  "profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "scored_forecasts": 4,
+  "pending_forecasts": 6,
+  "scored_issued_in_input_hour": 0,
+  "scored_delayed_input_forecasts": 4,
+  "comparisons": [
+    {
+      "input_valid_utc": "2026-10-21T11:00:00+00:00",
+      "target_valid_utc": "2026-10-21T17:00:00+00:00",
+      "issued_at_utc": "2026-10-21T16:48:21+00:00",
+      "truth_available_utc": "2026-10-21T17:07:01+00:00",
+      "learned_at_utc": "2026-10-21T17:07:01+00:00",
+      "actual_remaining_lead_minutes": 11.65,
+      "issued_in_input_hour": false,
+      "checkpoint_revision_at_prediction": 0,
+      "input": {
+        "temperature_c": 25.0,
+        "relative_humidity_pct": 50.0,
+        "pressure_hpa": 931.3,
+        "pm25_ug_m3": 10.5,
+        "pm10_ug_m3": 13.0,
+        "wind_speed_mps": 0.93
+      },
+      "prediction": {
+        "temperature_c": 13.83769513165537,
+        "relative_humidity_pct": 83.34324209585594,
+        "pressure_hpa": 929.9492297214434,
+        "pm25_ug_m3": 26.395423231481796,
+        "pm10_ug_m3": 30.53321014207862,
+        "wind_speed_mps": 0.7661532597355818
+      },
+      "shadow_prediction": {
+        "temperature_c": 13.83769513165537,
+        "relative_humidity_pct": 83.34324209585594,
+        "pressure_hpa": 929.9492297214434,
+        "pm25_ug_m3": 26.395423231481796,
+        "pm10_ug_m3": 30.53321014207862,
+        "wind_speed_mps": 0.7661532597355818
+      },
+      "later_api_values": {
+        "temperature_c": 14.5,
+        "relative_humidity_pct": 82.0,
+        "pressure_hpa": 930.9,
+        "pm25_ug_m3": 26.5,
+        "pm10_ug_m3": 28.8,
+        "wind_speed_mps": 0.65
+      },
+      "absolute_errors": {
+        "temperature_c": 0.6623048683446306,
+        "relative_humidity_pct": 1.343242095855942,
+        "pressure_hpa": 0.950770278556547,
+        "pm25_ug_m3": 0.10457676851820352,
+        "pm10_ug_m3": 1.7332101420786188,
+        "wind_speed_mps": 0.11615325973558177
+      }
+    },
+    {
+      "input_valid_utc": "2026-10-21T12:00:00+00:00",
+      "target_valid_utc": "2026-10-21T18:00:00+00:00",
+      "issued_at_utc": "2026-10-21T16:48:21+00:00",
+      "truth_available_utc": "2026-10-21T18:09:39+00:00",
+      "learned_at_utc": "2026-10-21T18:09:39+00:00",
+      "actual_remaining_lead_minutes": 71.65,
+      "issued_in_input_hour": false,
+      "checkpoint_revision_at_prediction": 0,
+      "input": {
+        "temperature_c": 22.6,
+        "relative_humidity_pct": 56.0,
+        "pressure_hpa": 931.0,
+        "pm25_ug_m3": 13.2,
+        "pm10_ug_m3": 15.5,
+        "wind_speed_mps": 0.29
+      },
+      "prediction": {
+        "temperature_c": 12.406128290712054,
+        "relative_humidity_pct": 90.52168029922635,
+        "pressure_hpa": 929.5229305681031,
+        "pm25_ug_m3": 27.77626741060496,
+        "pm10_ug_m3": 29.676679032200408,
+        "wind_speed_mps": 0.8497758471696824
+      },
+      "shadow_prediction": {
+        "temperature_c": 12.406128290712054,
+        "relative_humidity_pct": 90.52168029922635,
+        "pressure_hpa": 929.5229305681031,
+        "pm25_ug_m3": 27.77626741060496,
+        "pm10_ug_m3": 29.676679032200408,
+        "wind_speed_mps": 0.8497758471696824
+      },
+      "later_api_values": {
+        "temperature_c": 13.1,
+        "relative_humidity_pct": 89.0,
+        "pressure_hpa": 930.3,
+        "pm25_ug_m3": 26.6,
+        "pm10_ug_m3": 28.9,
+        "wind_speed_mps": 0.76
+      },
+      "absolute_errors": {
+        "temperature_c": 0.6938717092879454,
+        "relative_humidity_pct": 1.5216802992263467,
+        "pressure_hpa": 0.7770694318968481,
+        "pm25_ug_m3": 1.1762674106049573,
+        "pm10_ug_m3": 0.7766790322004091,
+        "wind_speed_mps": 0.08977584716968234
+      }
+    },
+    {
+      "input_valid_utc": "2026-10-21T13:00:00+00:00",
+      "target_valid_utc": "2026-10-21T19:00:00+00:00",
+      "issued_at_utc": "2026-10-21T16:48:21+00:00",
+      "truth_available_utc": "2026-10-21T19:09:52+00:00",
+      "learned_at_utc": "2026-10-21T19:09:52+00:00",
+      "actual_remaining_lead_minutes": 131.65,
+      "issued_in_input_hour": false,
+      "checkpoint_revision_at_prediction": 0,
+      "input": {
+        "temperature_c": 20.8,
+        "relative_humidity_pct": 61.0,
+        "pressure_hpa": 931.0,
+        "pm25_ug_m3": 17.6,
+        "pm10_ug_m3": 19.9,
+        "wind_speed_mps": 0.05
+      },
+      "prediction": {
+        "temperature_c": 11.602480516604581,
+        "relative_humidity_pct": 91.96120225396717,
+        "pressure_hpa": 929.4494621522664,
+        "pm25_ug_m3": 26.814876393355426,
+        "pm10_ug_m3": 29.553376746220053,
+        "wind_speed_mps": 1.0834995532930516
+      },
+      "shadow_prediction": {
+        "temperature_c": 11.602480516604581,
+        "relative_humidity_pct": 91.96120225396717,
+        "pressure_hpa": 929.4494621522664,
+        "pm25_ug_m3": 26.814876393355426,
+        "pm10_ug_m3": 29.553376746220053,
+        "wind_speed_mps": 1.0834995532930516
+      },
+      "later_api_values": {
+        "temperature_c": 12.1,
+        "relative_humidity_pct": 93.0,
+        "pressure_hpa": 930.1,
+        "pm25_ug_m3": 25.4,
+        "pm10_ug_m3": 27.8,
+        "wind_speed_mps": 0.99
+      },
+      "absolute_errors": {
+        "temperature_c": 0.4975194833954184,
+        "relative_humidity_pct": 1.0387977460328273,
+        "pressure_hpa": 0.6505378477336308,
+        "pm25_ug_m3": 1.4148763933554278,
+        "pm10_ug_m3": 1.7533767462200522,
+        "wind_speed_mps": 0.0934995532930516
+      }
+    },
+    {
+      "input_valid_utc": "2026-10-21T14:00:00+00:00",
+      "target_valid_utc": "2026-10-21T20:00:00+00:00",
+      "issued_at_utc": "2026-10-21T16:48:21+00:00",
+      "truth_available_utc": "2026-10-21T20:48:36+00:00",
+      "learned_at_utc": "2026-10-21T20:48:36+00:00",
+      "actual_remaining_lead_minutes": 191.65,
+      "issued_in_input_hour": false,
+      "checkpoint_revision_at_prediction": 0,
+      "input": {
+        "temperature_c": 19.6,
+        "relative_humidity_pct": 65.0,
+        "pressure_hpa": 931.2,
+        "pm25_ug_m3": 20.4,
+        "pm10_ug_m3": 22.7,
+        "wind_speed_mps": 0.0
+      },
+      "prediction": {
+        "temperature_c": 11.501107262553521,
+        "relative_humidity_pct": 92.07886156204614,
+        "pressure_hpa": 929.2054838990142,
+        "pm25_ug_m3": 22.560461455067905,
+        "pm10_ug_m3": 23.651704091257294,
+        "wind_speed_mps": 1.2854021677752336
+      },
+      "shadow_prediction": {
+        "temperature_c": 11.501107262553521,
+        "relative_humidity_pct": 92.07886156204614,
+        "pressure_hpa": 929.2054838990142,
+        "pm25_ug_m3": 22.560461455067905,
+        "pm10_ug_m3": 23.651704091257294,
+        "wind_speed_mps": 1.2854021677752336
+      },
+      "later_api_values": {
+        "temperature_c": 11.7,
+        "relative_humidity_pct": 93.0,
+        "pressure_hpa": 929.3,
+        "pm25_ug_m3": 24.0,
+        "pm10_ug_m3": 26.3,
+        "wind_speed_mps": 1.24
+      },
+      "absolute_errors": {
+        "temperature_c": 0.19889273744647795,
+        "relative_humidity_pct": 0.9211384379538572,
+        "pressure_hpa": 0.09451610098574292,
+        "pm25_ug_m3": 1.4395385449320948,
+        "pm10_ug_m3": 2.648295908742707,
+        "wind_speed_mps": 0.04540216777523365
+      }
+    }
+  ],
+  "online": {
+    "enabled": true,
+    "status": "LEARNING_SHADOW",
+    "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+    "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+    "scaler": "FROZEN_TRAIN_ONLY",
+    "updates": 4,
+    "forecasts": 70,
+    "eligible_forecasts": 10,
+    "scored_forecasts": 4,
+    "pending": 6,
+    "historical_ineligible_forecasts": 60,
+    "drift_warning": false,
+    "rolling_metrics": {
+      "temperature_c": {
+        "base_mae": 0.5131471996186181,
+        "shadow_mae": 0.5131471996186181,
+        "rows": 4
+      },
+      "relative_humidity_pct": {
+        "base_mae": 1.2062146447672433,
+        "shadow_mae": 1.2062146447672433,
+        "rows": 4
+      },
+      "pressure_hpa": {
+        "base_mae": 0.6182234147931922,
+        "shadow_mae": 0.6182234147931922,
+        "rows": 4
+      },
+      "pm25_ug_m3": {
+        "base_mae": 1.0338147793526709,
+        "shadow_mae": 1.0338147793526709,
+        "rows": 4
+      },
+      "pm10_ug_m3": {
+        "base_mae": 1.7278904573104468,
+        "shadow_mae": 1.7278904573104468,
+        "rows": 4
+      },
+      "wind_speed_mps": {
+        "base_mae": 0.08620770699338734,
+        "shadow_mae": 0.08620770699338734,
+        "rows": 4
+      }
+    },
+    "timing": {
+      "definition": "ISSUED_IN_INPUT_HOUR_MEANS_ISSUE_TIME_WITHIN_60_MINUTES_OF_INPUT_VALID_TIME",
+      "issued_in_input_hour_forecasts": 5,
+      "scored_issued_in_input_hour": 0,
+      "scored_delayed_input_forecasts": 4,
+      "scored_actual_lead_min_minutes": 11.65,
+      "scored_actual_lead_max_minutes": 191.65,
+      "metrics_include_delayed_inputs": true,
+      "verified_full_six_hour_skill": false
+    },
+    "namespaces": [
+      {
+        "id": "live:26846f58a2241779563af8f4aa4e3258",
+        "updates": 0,
+        "last_processed_at": "2026-10-21T07:39:08+00:00",
+        "mode": "LIVE_SHADOW"
+      },
+      {
+        "id": "live:75f010d5d44d2efa94b165c45b90a137",
+        "updates": 4,
+        "last_processed_at": "2026-10-21T20:48:36+00:00",
+        "mode": "LIVE_SHADOW"
+      }
+    ],
+    "field_validated": false
+  },
+  "field_validated": false,
+  "calibrated_event_probabilities": false,
+  "weights_promoted": false,
+  "conclusion": "Sample is too small to assess improvement; delayed startup predictions are not full six-hour issuance tests."
+}

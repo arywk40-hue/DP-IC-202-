@@ -4,6 +4,12 @@ INDRA is a six-channel environmental forecasting and Himalayan risk research pro
 
 ## Files for the examiner
 
+**Current showcase:** follow the [five-minute runbook](SHOWCASE_RUNBOOK.md).
+The :8080 view now uses the current API collector, not just the original frozen
+archive. Its update count is live and must not be described as permanently zero.
+Current values remain model grids, not physical station measurements. The
+runbook covers both :8080 and the separate twelve-location :8082 demonstration.
+
 The two newly completed features are documented in
 [parameter maps and weather categories](PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md)
 and the [feature report](../reports/weather_features_v1/REPORT.md).
@@ -32,14 +38,26 @@ npm ci --prefix apps/indra-himachal-ui
 .venv/bin/python scripts/train_mandi_v2.py --prepare
 # Evaluate frozen committed components; does not select new weights:
 .venv/bin/python scripts/train_mandi_v2.py --evaluate
-.venv/bin/python scripts/run_himachal_demo.py --offline --db data/himachal/mandi_dashboard.sqlite --observations data/himachal/live_hourly.json --online-state data/himachal/mandi_v2_online_live.sqlite
+# Obtain the current input file on a fresh checkout, before starting its collector:
+.venv/bin/python scripts/fetch_mandi_live.py
+.venv/bin/python -m server.dashboard --observations data/himachal/mandi_current_api_v1/history.json --db data/himachal/mandi_dashboard.sqlite --online-state data/himachal/mandi_v2_online_live.sqlite --ui apps/indra-himachal-ui/dist --port 8080
 ```
 
 Open http://127.0.0.1:8080. For development run `npm run dev --prefix apps/indra-himachal-ui` and open http://127.0.0.1:5173. The backend also serves the built UI. The preparation step initially creates the stable input file only when absent, preserving an existing live stream. Matching frozen source/model hashes are required; changed upstream values require a new version.
 
-Demonstrate the historical-modeled banner, one grid node, six readings, `HYBRID_READY`, 25/25 hourly history, +6h forecasts, blend details and the model workspace's mixed v1/v2 results. Historical inputs correctly show stale state, zero eligible live updates and unavailable hazard probabilities. The separate replay count is simulated timely-arrival research, not a live count.
+Demonstrate the weather-model source label, actual input time, one grid location,
+six readings, `HYBRID_READY`, 25/25 hourly history, +6h numerical forecasts, blend
+details and the model workspace's mixed v1/v2 results. The initial archive-only
+replay had zero eligible live updates; the current collector can now show updates.
+Read its actual count and issuance timing. The separate retrospective replay count
+is simulated timely-arrival research, not the current worker count. Hazard
+scenarios remain synthetic conditional fractions, not calibrated probabilities.
 
-To watch future reviewed hourly files, start `scripts/online_mandi_worker.py` with the same input/state paths and `--watch-seconds 5`. Published offline outputs remain unchanged by shadow updates. See the pipeline guide for source identities and availability requirements.
+For the current API feed, run `scripts/fetch_mandi_live.py` as shown in the
+runbook. It both publishes new snapshots and drives the shadow learner; no second
+worker is needed. The older `scripts/online_mandi_worker.py` remains available
+for separately supplied reviewed hourly files. Published offline outputs remain
+unchanged by shadow updates.
 
 Synthetic multi-node/current-rule fixtures are a separate demonstration. Use a separate database when running the demo without `--observations`; do not present those fixtures as measured Mandi weather.
 
@@ -51,11 +69,14 @@ Synthetic multi-node/current-rule fixtures are a separate demonstration. Use a s
 npm test --prefix apps/indra-himachal-ui
 # Browser tests require Chrome on macOS, Chromium in CI:
 INDRA_PYTHON="$PWD/.venv/bin/python" npm run test:e2e --prefix apps/indra-himachal-ui
-# With the actual local Mandi application running:
-npm run test:mandi --prefix apps/indra-himachal-ui
+# With the actual current Mandi application running:
+cd apps/indra-himachal-ui
+node tests/verify-current-mandi.mjs
 ```
 
-Synthetic browser fixtures verify wiring only. The actual Mandi browser test separately checks source labels, numerical forecasts and hazard abstention; it saves current UI evidence in `reports/weather_features_v1/`.
+Synthetic browser fixtures verify wiring only. The current Mandi browser check
+verifies source labels, numerical forecasts and timing diagnostics. The older
+`npm run test:mandi` check targets the historical archive node specifically.
 
 ## Questions to answer
 
