@@ -1,0 +1,55 @@
+{
+  "enabled": true,
+  "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+  "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "scaler": "FROZEN_TRAIN_ONLY",
+  "updates": 1170,
+  "forecasts": 1176,
+  "eligible_forecasts": 1176,
+  "scored_forecasts": 1170,
+  "pending": 6,
+  "historical_ineligible_forecasts": 0,
+  "drift_warning": false,
+  "rolling_metrics": {
+    "temperature_c": {
+      "base_mae": 1.5310182505281766,
+      "shadow_mae": 1.4545190112055832,
+      "rows": 720
+    },
+    "relative_humidity_pct": {
+      "base_mae": 7.173915753008556,
+      "shadow_mae": 6.735032953211008,
+      "rows": 720
+    },
+    "pressure_hpa": {
+      "base_mae": 0.9454771793446201,
+      "shadow_mae": 0.8064640773896324,
+      "rows": 720
+    },
+    "pm25_ug_m3": {
+      "base_mae": 6.3747904302350635,
+      "shadow_mae": 5.914753222164676,
+      "rows": 720
+    },
+    "pm10_ug_m3": {
+      "base_mae": 8.362048049549793,
+      "shadow_mae": 8.072586582478452,
+      "rows": 720
+    },
+    "wind_speed_mps": {
+      "base_mae": 0.31591570797523294,
+      "shadow_mae": 0.29179597212106434,
+      "rows": 720
+    }
+  },
+  "namespaces": [
+    {
+      "id": "simulated:5d492e36e5d8a18c15fa8cad",
+      "updates": 1170,
+      "last_processed_at": "2026-10-19T23:00:00+00:00",
+      "mode": "SIMULATED_TIMELY_MODEL_GRID_REPLAY_NOT_LIVE"
+    }
+  ],
+  "field_validated": false,
+  "evidence": "RETROSPECTIVE_PREQUENTIAL_SIMULATION_ASSUMES_TIMELY_ARRIVAL"
+}

@@ -1,10 +1,11 @@
 # Model index
 
-The active gateway model is **`india_mandi_hybrid_6h_v1`**. Start there.
+The active gateway model is **`india_mandi_tabular_v2`**. Start there.
 
 | Directory | Role | Training/evidence |
 | --- | --- | --- |
-| `india_mandi_hybrid_6h_v1` | Active six-channel +6h gateway ensemble | Validation-selected prediction blend; no new fitting on the test set |
+| `india_mandi_tabular_v2` | Active expanded-data LightGBM/MLP/retained-hybrid ensemble | 35,520 Mandi modeled positions; delayed-label learner is separate shadow state |
+| `india_mandi_hybrid_6h_v1` | Retained v1 baseline and rollback | Validation-selected prediction blend; no new fitting on the test set |
 | `india_mandi_neural_history_v1` | MLP32 and MLP64→32 components | Frozen six-channel Mandi IFS/CAMS modeled history |
 | `india_mandi_modeled_6h_v1` | History XGBoost/ridge components and compact baseline | Same frozen Mandi modeled source; compact C export is separate |
 | `india_cpcb_5sensor_6h`, `india_cpcb_pm_6h` | Retained reduced-input Indian comparisons | CPCB secondary observations; not complete six-channel Mandi validation |

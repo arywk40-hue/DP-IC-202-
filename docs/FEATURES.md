@@ -1,6 +1,6 @@
 # INDRA features — current implementation
 
-Status: 21 October 2026. This is the feature list for the project submission.
+Status: 21 October 2026. [Current v2 pipeline and results](MANDI_V2_PIPELINE.md). This is the feature list for the project submission.
 "Implemented" describes software; its evidence column states what has been tested.
 
 ## Product and research features
@@ -8,7 +8,7 @@ Status: 21 October 2026. This is the feature list for the project submission.
 | Feature | What is provided | Evidence and limitation |
 | --- | --- | --- |
 | Six-channel input | Temperature, RH, pressure, PM2.5, PM10, wind, units and timestamps | Canonical range/QC checks; no seventh physical channel |
-| Six-hour numerical forecast | Six endpoint values at t+6h from the active neural/tree/ridge ensemble | Tested against 954 later Mandi API/model values; not measured station accuracy |
+| Six-hour numerical forecast | Six endpoint values at t+6h from the active neural/tree/ridge ensemble | Current v2 tested against 1,170 later Mandi API/model values; not measured station accuracy |
 | History and fallback | 66 causal features, 24h history; explicit persistence warm-up or missing-input status | Gap/missing-channel and no-future-dependence tests |
 | Dashboard telemetry | Node list/map, six values/mini-histories, forecasts, model identity, coefficients, source and timestamps | Local backend/browser integration; Mandi replay is historical and stale |
 | Data quality and source | Units, pressure reference, source class, calibration identities and availability | Modeled source cannot silently become physical station evidence |
@@ -20,7 +20,7 @@ Status: 21 October 2026. This is the feature list for the project submission.
 | ERA5 risk research panel | Optional owner-generated scores, anomaly markers and feature grids | Available example is synthetic engineering data, not actual Mandi event accuracy |
 | Offline/cache operation | Versioned cache, stale notices and unavailable states | Does not manufacture current readings or physical acknowledgements |
 | ESP32 research | Separate compiled C exports and firmware applications | Host/build receipts exist; physical execution and hybrid edge export remain untested |
-| Online learning | Separate delayed-label ERA5 SGD research replay | No live six-sensor learner updates dashboard/ESP32 weights |
+| Online learning | Durable six-channel delayed-label SGD shadow worker, plus separate ERA5 replay | Predict/save before update, exact +6h truth and fixed scaler; shadow updates do not replace offline/ESP32 outputs |
 | Hardware commands/alerts | Explicitly disabled RPC and public notifications | No live sensor bridge or public warning service |
 
 ## Six input/output channels
@@ -51,7 +51,7 @@ These estimates retain missing/domain/calibration states. They do not add sensor
 or turn pollutant washout into measured precipitation. Actual source availability
 is respected; a retrospectively downloaded file is not treated as known earlier.
 
-## What the Mandi run tests
+## Retained v1 Mandi submission run
 
 Seven comparisons use the same 954 labels: persistence, compact XGBoost, history
 XGBoost, ridge, MLP32, MLP64→32 and the fixed active hybrid. Report MAE/RMSE/R²

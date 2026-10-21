@@ -1,6 +1,8 @@
 # Forecast architecture and online-learning status
 
-Status: 16 October 2026. The active dashboard now uses
+Status: 21 October 2026. The active pipeline is now [Mandi v2](MANDI_V2_PIPELINE.md), with LightGBM and a durable delayed-label shadow worker. The v1 experiment below is retained history.
+
+Earlier status: 16 October 2026. The active dashboard now uses
 `india_mandi_hybrid_6h_v1`: a validation-selected residual neural network,
 history XGBoost and temporal ridge blend. Both trained neural candidates are
 included in its versioned component manifest. Every target has a nonzero neural
@@ -86,7 +88,7 @@ predictions and an explicit status. The output has six numerical endpoints at
 
 ## Is online learning implemented?
 
-**No live online-learning loop is implemented.** Recording, importing, plotting
+**The historical v1 experiment had no live online-learning loop. Current v2 has an event-driven shadow worker; see the linked guide.** Recording, importing, plotting
 and refreshing observations do not change learned weights. The new benchmark's
 `partial_fit` calls implement offline training epochs over the historical
 training partition; they do not wire online learning into the product.

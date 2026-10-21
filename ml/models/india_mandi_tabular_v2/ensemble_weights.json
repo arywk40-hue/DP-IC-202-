@@ -1,0 +1,65 @@
+{
+  "family_order": [
+    "legacy_hybrid",
+    "lightgbm",
+    "mlp_v2",
+    "persistence"
+  ],
+  "selection": "CHRONOLOGICAL_VALIDATION_MAE_ONLY",
+  "heads": {
+    "temperature_c": {
+      "weights": {
+        "legacy_hybrid": 0.21665826284675083,
+        "lightgbm": 0.43552411153857656,
+        "mlp_v2": 0.34781762561467267,
+        "persistence": 0.0
+      },
+      "validation_mae": 1.092220284582536
+    },
+    "relative_humidity_pct": {
+      "weights": {
+        "legacy_hybrid": 0.028349019173475307,
+        "lightgbm": 0.40301655426091515,
+        "mlp_v2": 0.5686344265656096,
+        "persistence": 0.0
+      },
+      "validation_mae": 5.8839410096450635
+    },
+    "pressure_hpa": {
+      "weights": {
+        "legacy_hybrid": 0.84268441923919,
+        "lightgbm": 0.1558723472024987,
+        "mlp_v2": 0.0014432335583112346,
+        "persistence": 0.0
+      },
+      "validation_mae": 0.6201799222480768
+    },
+    "pm25_ug_m3": {
+      "weights": {
+        "legacy_hybrid": 0.0,
+        "lightgbm": 0.7244671837673389,
+        "mlp_v2": 0.24284225132519968,
+        "persistence": 0.032690564907461424
+      },
+      "validation_mae": 5.383402898726704
+    },
+    "pm10_ug_m3": {
+      "weights": {
+        "legacy_hybrid": 0.0,
+        "lightgbm": 0.7833525603727608,
+        "mlp_v2": 0.21664743962723915,
+        "persistence": 0.0
+      },
+      "validation_mae": 6.9665382931137945
+    },
+    "wind_speed_mps": {
+      "weights": {
+        "legacy_hybrid": 0.5362027047085122,
+        "lightgbm": 0.12011067929714066,
+        "mlp_v2": 0.3436866159943472,
+        "persistence": 0.0
+      },
+      "validation_mae": 0.2931852204214455
+    }
+  }
+}

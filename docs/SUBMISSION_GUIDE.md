@@ -1,31 +1,20 @@
 # Submission and local demonstration
 
-## Present this scope
-
-**INDRA: six-channel environmental forecasting and Himalayan risk research prototype.**
-The completed deliverable is a working local ML/dashboard prototype, with a
-validation-selected neural/history-XGBoost/ridge measurement forecaster and a
-reproducible retrospective Mandi modeled-data test. Disaster probability, deployed
-sensor/radio operation and live online adaptation are separate unfinished claims.
+INDRA is a six-channel environmental forecasting and Himalayan risk research prototype. The active gateway is `india_mandi_tabular_v2`: LightGBM, a residual MLP, retained hybrid and persistence with validation-selected prediction blends. A persistent delayed-label learner runs in shadow mode. Physical station accuracy, disaster probabilities, promotion of adaptive outputs and ESP32/RF execution remain separate empirical work.
 
 ## Files for the examiner
 
-1. [Feature/status list](FEATURES.md): what the project provides and what is experimental.
-2. [Project overview](PROJECT_OVERVIEW.md) and [implemented architecture](ARCHITECTURE.md).
-3. [Current Mandi report](../reports/submission/2026-10-21/REPORT.md) and its `metrics.json`:
-   source, inputs, exact +6h labels, seven model comparisons, MAE/RMSE/R² and examples.
-4. [Active model profile](../ml/models/india_mandi_hybrid_6h_v1/profile.json) and
-   [blend coefficients](../ml/models/india_mandi_hybrid_6h_v1/ensemble_weights.json).
-   The profile links checksummed neural arrays, XGBoost heads and ridge arrays.
-5. `reports/submission/2026-10-21/verification.json`: executed software/browser and
-   integrity checks. Historical reports elsewhere retain their original scope.
+1. [Features](FEATURES.md), [overview](PROJECT_OVERVIEW.md) and [architecture](ARCHITECTURE.md).
+2. [Current Mandi report](../reports/mandi_pipeline_v2/REPORT.md), its `results.json` and `verification.json`: data provenance, inputs, exact +6h targets, comparisons, software/browser checks and limits.
+3. [Active profile](../ml/models/india_mandi_tabular_v2/profile.json) and [blend coefficients](../ml/models/india_mandi_tabular_v2/ensemble_weights.json). These reference checksummed learned artifacts; weights are not hidden in the frontend.
+4. [Pipeline and online-learning guide](MANDI_V2_PIPELINE.md): reproduction, durable shadow state and rollback.
+5. [Synthetic PM report](../reports/mandi_synthetic_pm_v1/README.md): explicitly separate simulation data, excluded from reported forecast scores.
 
-Submit source and committed trained artifacts. Do not add raw CSVs, .venv,
-node_modules, local SQLite, API keys or generated working directories. Preserve
-model paths: renaming them breaks checked references. The frozen export catalog
-is historical; the active gateway profile is selected in `server/dashboard.py`.
+Retained v1 results are in `reports/submission/2026-10-21/`; `scripts/test_mandi_submission.py` reproduces that version. Preserve their original model/report paths. The frozen export catalog is historical; `ml/india_mandi/registry.py` selects the active gateway.
 
-## Reproduce the numerical test
+Submit source and committed trained artifacts. Raw CSVs, virtual environments, node_modules, SQLite state, credentials and downloaded TabPFN checkpoints stay local.
+
+## Reproduce and show the model
 
 From the repository root with Python 3.13 and Node 22:
 
@@ -33,33 +22,20 @@ From the repository root with Python 3.13 and Node 22:
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements-dashboard.txt
 npm ci --prefix apps/indra-himachal-ui
-.venv/bin/python scripts/test_mandi_submission.py
+# Download the configured source if it is absent; does not train:
+.venv/bin/python scripts/train_mandi_v2.py --prepare
+# Evaluate frozen committed components; does not select new weights:
+.venv/bin/python scripts/train_mandi_v2.py --evaluate
+.venv/bin/python scripts/run_himachal_demo.py --offline --db data/himachal/mandi_dashboard.sqlite --observations data/himachal/live_hourly.json --online-state data/himachal/mandi_v2_online_live.sqlite
 ```
 
-The test requires the existing ignored `data/india_mandi_modeled/observations.csv`
-and its matching committed provenance manifest. On a fresh checkout use
-`.venv/bin/python scripts/test_india_mandi.py --prepare` first to fetch the frozen
-period. No new source, model or report should silently replace a version whose
-hash differs. The submission test does not train, select weights or use Beijing.
+Open http://127.0.0.1:8080. For development run `npm run dev --prefix apps/indra-himachal-ui` and open http://127.0.0.1:5173. The backend also serves the built UI. The preparation step initially creates the stable input file only when absent, preserving an existing live stream. Matching frozen source/model hashes are required; changed upstream values require a new version.
 
-## Show the Mandi dashboard
+Demonstrate the historical-modeled banner, one grid node, six readings, `HYBRID_READY`, 25/25 hourly history, +6h forecasts, blend details and the model workspace's mixed v1/v2 results. Historical inputs correctly show stale state, zero eligible live updates and unavailable hazard probabilities. The separate replay count is simulated timely-arrival research, not a live count.
 
-```sh
-.venv/bin/python scripts/run_himachal_demo.py --offline --db data/himachal/mandi_dashboard.sqlite --observations data/himachal/mandi_replay.json
-```
+To watch future reviewed hourly files, start `scripts/online_mandi_worker.py` with the same input/state paths and `--watch-seconds 5`. Published offline outputs remain unchanged by shadow updates. See the pipeline guide for source identities and availability requirements.
 
-Open http://127.0.0.1:8080. For development, run
-`npm run dev --prefix apps/indra-himachal-ui` in another terminal and open
-http://127.0.0.1:5173. Both pages use the same local backend. With both running, verify the actual Mandi replay using `npm run test:mandi --prefix apps/indra-himachal-ui`; it saves desktop/mobile screenshots and a receipt next to the report.
-
-Demonstrate the historical-modeled banner, one `mandi-api-grid` node, six readings,
-`HYBRID_READY`, 25/25 hourly history, +6h values, model blend details, stale times,
-and unavailable hazard scores. Explain why there is only one node and no native
-15-minute sequence or validated risk map. This is the honest API-data demonstration.
-
-For rule and multi-node UI wiring only, stop the backend and run
-`.venv/bin/python scripts/run_himachal_demo.py --offline`. It explicitly replaces
-the selected local store with synthetic fixtures. Do not label them real Mandi tests.
+Synthetic multi-node/current-rule fixtures are a separate demonstration. Use a separate database when running the demo without `--observations`; do not present those fixtures as measured Mandi weather.
 
 ## Software verification
 
@@ -67,26 +43,17 @@ the selected local store with synthetic fixtures. Do not label them real Mandi t
 .venv/bin/python -m pip install -r requirements-physics.txt -r requirements-hazard-context.txt -r requirements-operational.txt -r requirements-online-research.txt -r requirements-storm-risk.txt
 .venv/bin/python -m pytest -q
 npm test --prefix apps/indra-himachal-ui
-export INDRA_PYTHON="$PWD/.venv/bin/python"
-cd apps/indra-himachal-ui
-INDRA_SCREENSHOT_DIR=../../reports/submission/2026-10-21 npm run test:e2e
+# Browser tests require Chrome on macOS, Chromium in CI:
+INDRA_PYTHON="$PWD/.venv/bin/python" npm run test:e2e --prefix apps/indra-himachal-ui
+# With the actual local Mandi application running:
+npm run test:mandi --prefix apps/indra-himachal-ui
 ```
 
-Browser tests require installed Chrome on macOS (Chromium in CI). Their synthetic
-fixtures verify software only; the Mandi numerical report is a separate run.
+Synthetic browser fixtures verify wiring only. The actual Mandi browser test separately checks source labels, numerical forecasts and hazard abstention; it saves evidence in `reports/mandi_pipeline_v2/`.
 
-## Answer these questions explicitly
+## Questions to answer
 
-- **What are labels?** The six API/model values exactly six hours after an input;
-  current hazard rules are not independent event labels.
-- **Where are weights?** Referenced original arrays/trees plus per-target convex
-  prediction coefficients in the active profile. No trained weights are hidden
-  in frontend JavaScript.
-- **Can this predict cloudbursts/floods/landslides?** No validated predictor exists
-  for those outcomes. Collect matched independent events and monitored negatives.
-- **Why not call it Indian station accuracy?** The six-channel Mandi source is a
-  retrospective weather/air modeled grid with different resolutions and unverified
-  original issue-time availability. It is not synchronized station ground truth.
-- **What remains?** Measured Mandi tests, sensor/ESP32/RF integration, independently
-  validated hazard training/calibration, live learning and deployment. Keep both
-  services local until the backend is ready, as requested.
+- **Labels:** the six modeled values exactly six hours later. Current sensor rules are not independent hazard labels.
+- **Accuracy:** report MAE/RMSE/R² in channel units, including regressions. The test is retrospective/reused, not synchronized station truth.
+- **Synthetic PM:** simulated missing history can exercise the pipeline; it cannot establish historical pollution or event accuracy.
+- **Remaining work:** measured six-channel Mandi evaluation, independent event/non-event records, sensor/ESP32/RF tests, validated hazard fitting/calibration and controlled shadow-model promotion. Both services stay local as requested.

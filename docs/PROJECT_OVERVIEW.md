@@ -1,67 +1,29 @@
 # INDRA project overview
 
-Updated 21 October 2026. See [features](FEATURES.md), [submission steps](SUBMISSION_GUIDE.md)
-and [current test results](../reports/submission/2026-10-21/REPORT.md).
+Updated 21 October 2026. See [features](FEATURES.md), [current pipeline](MANDI_V2_PIPELINE.md), [submission steps](SUBMISSION_GUIDE.md) and [results](../reports/mandi_pipeline_v2/REPORT.md).
 
-INDRA accepts six environmental channels: temperature, RH, pressure, PM2.5,
-PM10 and wind. Its active gateway forecasts those six numerical measurements
-at an exact six-hour endpoint. It does not predict the intervening six hourly
-values or calibrated future disaster probabilities.
+## Active numerical model
 
-## Active architecture
+INDRA uses temperature, RH, pressure, PM2.5, PM10 and wind. Twenty-five hourly snapshots produce 66 causal current/lag/change/statistical features. The gateway combines six LightGBM residual heads, a 66→64→32→6 residual MLP, the retained v1 hybrid and persistence. Per-target convex weights were selected using August validation only. Outputs are six bounded numerical measurements at exactly +6h, not six intermediate hourly forecasts or future disaster probabilities.
 
-25 hourly snapshots → 66 causal current/lag/change/statistical features → saved
-residual MLP + history XGBoost + temporal ridge → validation-selected convex
-blend per target → physical-range-bounded six-output forecast.
+The active `india_mandi_tabular_v2` profile checksums its weights and scaler. Missing history explicitly falls back to persistence; missing current channels produce unavailable outputs. The UI displays actual model identity and blend weights. Original v1 and compact firmware models remain preserved.
 
-Saved MLPs use 66→32→6 and 66→64→32→6 architectures, with 2,342 and 6,566 learned
-weights/biases. Feature/target scaling was fitted on training data only. Original
-arrays, tree files and ridge weights are checksum-verified through the active
-`india_mandi_hybrid_6h_v1` profile. All six outputs include a neural contribution.
-Missing history uses explicitly labelled persistence; missing current channels
-produce unavailable outputs. The dashboard displays the actual model and weights.
+## Data and results
 
-## Data and evaluation
+The v2 source has **35,520 complete hourly modeled positions**, October 2022–19 October 2026, from Open-Meteo/ECMWF IFS/CAMS for Mandi. It yields 33,570 training, 738 validation and 1,170 September–October test pairs after history and exact +6h split purging. Earlier test dates were previously examined; this is explicit retrospective reuse. No Chinese rows or weights enter this fitted pipeline. TabPFN's separately pretrained prior was tested as a bounded local diagnostic and is not in the active ensemble.
 
-The frozen Mandi source contains 24,336 hourly Open-Meteo/ECMWF IFS/CAMS modeled
-positions from 1 January 2024 through 10 October 2026. Complete-history cohorts
-are 22,602 training, 738 August validation and 954 September/October future-test
-pairs. Six-hour labels are purged across split boundaries. Neural architecture
-and blend coefficients were selected on validation only. The test was examined
-previously and remains reused retrospective evidence, not a new untouched test.
-No Chinese rows or pretrained weights enter the current evaluation.
+Against v1, v2 improves humidity and wind on the full test and five of six channels on the 210-pair new-date extension. Other errors regress. The report shows these differences rather than claiming universal improvement. No synchronized station or geographically independent Mandi accuracy is established. Weather/air grids differ, pressure is grid-surface pressure, and original issue-time API availability is unverified.
 
-The current submission compares both neural models, compact/history XGBoost,
-ridge, persistence and the active hybrid on identical rows. MAE/RMSE/R² and
-input/prediction/later-value examples are in the report. There is no independent
-site test or calibrated six-channel Mandi station accuracy claim. Weather/air
-cells differ, pressure is grid-surface pressure and API history does not establish
-what would have been known at the original issue time.
+A separate synthetic PM experiment fills older archive gaps for simulation. Its flagged rows are excluded from v2 fitting and the reported accuracy benchmark. See `reports/mandi_synthetic_pm_v1/README.md`.
 
-## Dashboard and research boundaries
+## Online learning and dashboard
 
-The local React/FastAPI/SQLite application shows node/source/timestamps, six
-measurements and histories, six-hour forecasts, model components, risk evidence,
-explicit unavailable values, offline cache and stale state. The Mandi replay
-retains historical dates and actual retrieval time; current hazard rules abstain
-on modeled sources. Synthetic rain/snow/cloudburst fixtures exercise separate
-current-condition rules, not independently observed hazard prediction.
+The local React/FastAPI/SQLite dashboard shows nodes, source timestamps, measurements/history, +6h forecasts, components, risk evidence, cache/stale state and a model comparison workspace. A durable file-watching shadow learner saves forecasts before updating six SGD residual correctors on exact +6h outcomes. It uses fixed training scalers, isolates source/site identities, handles duplicates transactionally and rejects late historical forecasts for live scoring. Shadow learning does not automatically change published outputs.
 
-Anomaly/consensus/radio, spatial experiments, ERA5 risk models and delayed-label
-online research have separate code/tests. They must not be described as a live,
-validated six-sensor product. The available ERA5 fitted demonstration is synthetic.
-One Mandi grid cannot validate neighbour consensus or a spatial weather surface.
+The historical input has zero eligible live updates. A separate simulated timely-arrival replay completed 1,170 updates; its timing assumptions and errors are explicitly labelled. It is not a live sensor test.
 
-The active hybrid runs on the Python gateway. Existing compact C exports and
-separate firmware applications retain their original model identities. Physical
-ESP32 execution, sensor calibration, radio delivery and hybrid edge export remain
-unverified. Public alerts and hardware RPC are disabled.
+## Submission boundaries
 
-## Submission status
+The source, versioned models, local dashboard and retrospective numerical tests form the project prototype. Current hazard rules abstain on modeled inputs. Cloudburst, flood, landslide and snowstorm probabilities require independent event/non-event evidence; synthetic pollution cannot supply it. Synthetic storm fixtures and the ERA5 research demonstration exercise software only. One Mandi grid cannot validate neighbour consensus or a spatial weather surface.
 
-The source, saved numerical model, local dashboard and retrospective modeled-data
-testing form the present project prototype. Remaining empirical work requires
-synchronized measured Mandi channels and independently observed event/non-event
-records. Keep future hazard/field claims separate from software test passes.
-The [repository map](../README.md#repository-map) distinguishes active code,
-retained research and historical references without breaking immutable paths.
+The active ensemble runs on the Python gateway. Physical ESP32 execution, sensor calibration, RF delivery and v2 edge export remain unverified. Public alerts and hardware RPC are disabled. Keep both services local. The [repository map](../README.md#repository-map) distinguishes active code from retained research without breaking immutable artifact paths.

@@ -1,0 +1,126 @@
+{
+  "schema_version": "indra_mandi_pipeline_v2_verification",
+  "verified_at_utc": "2026-10-21T08:08:47.791805+00:00",
+  "baseline_commit": "6d2419c42d0d8493c15a4a85ea553963d5093cf1",
+  "runtime": {
+    "python": "Python 3.13.0",
+    "node": "v22.23.2"
+  },
+  "checks": [
+    {
+      "command": "MPLCONFIGDIR=/private/tmp/indra-v2-mpl XDG_CACHE_HOME=/private/tmp/indra-v2-cache .venv/bin/pytest -q",
+      "result": "PASS",
+      "tests": 339,
+      "subtests": 172,
+      "warnings": 3,
+      "seconds": 123.72
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 2
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "PASS",
+      "tests": 10,
+      "scope": "desktop/mobile synthetic software fixtures; not station accuracy"
+    },
+    {
+      "command": "INDRA_EXPECT_ONLINE=1 npm run test:mandi",
+      "result": "PASS",
+      "scope": "actual local historical Mandi modeled replay; desktop/mobile and backend-served UI"
+    },
+    {
+      "command": ".venv/bin/python scripts/train_mandi_v2.py --evaluate",
+      "result": "PASS",
+      "source_rows": 35520,
+      "future_test_pairs": 1170,
+      "extension_pairs": 210
+    },
+    {
+      "command": ".venv/bin/python scripts/generate_mandi_synthetic_pm.py --verify --reproduce",
+      "result": "PASS",
+      "synthetic_report": "reports/mandi_synthetic_pm_v1/verification.json"
+    },
+    {
+      "command": "ruff check --select E9,F63,F7,F82 and git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "original_artifact_integrity": {
+    "docs/plans/PROTECTED_PATHS.json": {
+      "verified_files": 129,
+      "mismatches": []
+    },
+    "configs/committed_exports_v1.json": {
+      "verified_files": 108,
+      "mismatches": []
+    }
+  },
+  "model_profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "source_sha256": "5d492e36e5d8a18c15fa8cad2c763a6cfe65bb649d3f9b85ff9129e7f177f018",
+  "live_shadow": {
+    "enabled": true,
+    "status": "HISTORICAL_ONLY_NO_LIVE_UPDATE",
+    "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+    "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+    "scaler": "FROZEN_TRAIN_ONLY",
+    "updates": 0,
+    "forecasts": 1,
+    "eligible_forecasts": 0,
+    "scored_forecasts": 0,
+    "pending": 0,
+    "historical_ineligible_forecasts": 1,
+    "drift_warning": false,
+    "rolling_metrics": {},
+    "namespaces": [
+      {
+        "id": "live:26846f58a2241779563af8f4aa4e3258",
+        "updates": 0,
+        "last_processed_at": "2026-10-21T07:39:08+00:00",
+        "mode": "LIVE_SHADOW"
+      }
+    ],
+    "field_validated": false
+  },
+  "simulated_online_replay": {
+    "updates": 1170,
+    "pending": 6,
+    "evidence_kind": "ASSUMED_TIMELY_ARRIVAL_PREQUENTIAL_RESEARCH_NOT_LIVE"
+  },
+  "synthetic_pm_in_active_training_or_evaluation": false,
+  "field_validated": false,
+  "hazard_probability_validated": false,
+  "esp32_v2_executed": false,
+  "local_urls": [
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:8080"
+  ],
+  "evidence_files": {
+    "desktop.png": "a7d4143a5656194ac8010fb9cbe3de334cee25c13c22a0ba58029bbff2b9a7f1",
+    "mandi-desktop.png": "e830d6a494aee2e9945419316fdfa131ab138e16d52e417a13d0a2fde9b054cb",
+    "source_manifest.json": "0ea1cbac580f7f11b8d0c8b9329d7aa4882afb72b561b8df7be74161f517976a",
+    "REPORT.md": "3b6c231e1a1370b17779c79a6fe4774b61dea84310fa8f9b84a1c0aa0f48c481",
+    "evaluation_latest.json": "9c9c7e7374e4c629f89255dd809b12992582143fd89f311a8167f140a0aaf27d",
+    "model-lab-desktop.png": "ac25fd610f0b8956a35b1802674dd02aaf3e98ce34f0e4655facd0686560a03d",
+    "results.json": "101cd94a80a67eeb8a7976feae0afa02e99d4b81997ebc37d0449db960c6e3b7",
+    "local_browser_verification.json": "76741f57387f5b61140db8abbda502d1087d2fe2d3fe85af48b969056b79da34",
+    "storm-mobile.png": "9c6578cf5472180be331f3ef4f45197b16dbfc06d4147ca709073bf536b0ffed",
+    "mandi-mobile.png": "35a8667163867b3f11d72cfb62b616476f82879b3643cd0f158bb83b328ca840",
+    "storm-desktop.png": "11e12b136366156b08918dd5cfd92167882a193c569eb3a23a363821dd4936b2",
+    "mobile.png": "015c900edab983ed4e74643dae78260ac5e6630524637423dbd25411837a829a",
+    "tabpfn.json": "fce51834192e59a645803ee3671e3b44f5083f51f9c76f05404681afcf08ce2d",
+    "model-lab-mobile.png": "a8aee5c640bed7f86e6b42039288a2bd242db451f80633fb6fb7028eea06862f",
+    "online_replay.json": "16181ced92e5e2dcbf9bfb07f818ccee69a0dab08ce6dc33863ffca7a2b48b2b"
+  },
+  "code_sha256": {
+    "ml/india_mandi/tabular_v2.py": "c02b52e4c7788413a030ca2f446f83f51e3fc7b3bf98da90ae08ba561a8b7b4f",
+    "ml/india_mandi/online.py": "38085d7a67262807d35de4d2df95e089ef1a792e5d9d554ca6ce28c76670828b",
+    "ml/india_mandi/registry.py": "3a587a32df3e2d74366f32edcb2c0e24563a40ac76ef74548f8218477461523a",
+    "scripts/train_mandi_v2.py": "5e4513503ab422acad10b26690c637518c1092e26818b6e7ba5e91fe9af0c31e",
+    "scripts/online_mandi_worker.py": "599cfa2c75a6cebe00ac42532c21f4a78ec7e767f45dd4bb2236ff7af126873f",
+    "server/dashboard.py": "cd239916dad250308591419d922564e9ce4333040256338ad3d82d4ecc4b4557",
+    "apps/indra-himachal-ui/tests/verify-mandi.mjs": "9cd683344578b96a40235c3b1abd65548c747678a0427ec1d055f71c11aaeab2"
+  }
+}

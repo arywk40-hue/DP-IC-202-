@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-const screenshots = process.env.INDRA_SCREENSHOT_DIR || '../../reports/india_mandi_hybrid_6h_v1';
+const screenshots = process.env.INDRA_SCREENSHOT_DIR || '../../reports/mandi_pipeline_v2';
 
 test('saved model, six channels, three experimental assessments and unsupported RPC', async ({page}, info) => {
   const errors=[]; page.on('pageerror',error=>errors.push(error.message));
@@ -9,12 +9,12 @@ test('saved model, six channels, three experimental assessments and unsupported 
   await expect(page.locator('.sensor-cell')).toHaveCount(6);
   await expect(page.locator('.risk-card')).toHaveCount(3);
   await expect(page.locator('.source-banner')).toContainText('SYNTHETIC DEMO');
-  await expect(page.locator('.telemetry-panel')).toContainText('india_mandi_hybrid_6h_v1');
-  await expect(page.locator('.telemetry-panel')).toContainText('Mandi neural hybrid');
+  await expect(page.locator('.telemetry-panel')).toContainText('india_mandi_tabular_v2');
+  await expect(page.locator('.telemetry-panel')).toContainText('Mandi tabular ensemble v2');
   await expect(page.locator('.telemetry-panel')).toContainText('HYBRID_READY');
   await expect(page.locator('.telemetry-panel')).toContainText('25/25');
   await page.locator('.forecast-components summary').click();
-  await expect(page.locator('.forecast-components')).toContainText('residual_mlp_');
+  await expect(page.locator('.forecast-components')).toContainText('lightgbm');
   await expect(page.locator('.telemetry-panel')).toContainText('Calibration: unavailable');
   await page.locator('.node-row').filter({hasText:'demo-02'}).locator('.node-row-name').click();
   await expect(page.locator('.risk-card').filter({hasText:'Snowstorm risk'})).toContainText('local warning candidate');
@@ -67,4 +67,19 @@ test('replacing the imported nodes selects an available node instead of retainin
   await expect(page.locator('.node-row')).toHaveCount(1,{timeout:20000});
   await expect(page.locator('.telemetry-panel')).toContainText('demo-02',{timeout:20000});
   await expect(page.locator('.telemetry-panel')).toContainText('HYBRID_READY');
+});
+
+test('model workspace shows mixed comparison and honest delayed-learning state',async({page},info)=>{
+  await page.goto('/');
+  await expect(page.getByText('API connected',{exact:true})).toBeVisible();
+  const lab=page.locator('.model-lab');
+  await expect(lab.locator('summary').first()).toContainText('35,520 modeled hours');
+  await lab.locator('summary').first().click();
+  await expect(lab.getByRole('table',{name:'Forecast model comparison'})).toBeVisible();
+  await expect(lab).toContainText('Improvements are mixed');
+  await expect(lab).toContainText('Worker not configured');
+  await lab.getByLabel('Comparison period').selectOption('future_test');
+  await expect(lab.locator('tbody tr')).toHaveCount(6);
+  await page.screenshot({path:`${screenshots}/model-lab-${info.project.name}.png`,fullPage:true});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBeTruthy();
 });

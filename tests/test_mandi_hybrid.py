@@ -12,7 +12,7 @@ import pytest
 from ml.india_mandi.hybrid import DEFAULT_MODEL, PROFILE_ID, Hybrid, select_blend
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.six_sensor_forecast.predict import predict as compact_predict
-from server.dashboard import MODEL, Store, assess, create_app, demo_observations
+from server.dashboard import Store, assess, create_app, demo_observations
 
 NOW = '2026-10-16T06:00:00Z'
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,8 +34,8 @@ def test_active_api_runs_actual_neural_blend_and_differs_from_compact(engine):
     assert len(raw) == 97
     frame = hourly(raw)
     direct = engine.predict(frame).iloc[-1]
-    node = assess(raw, now=NOW)[0]
-    assert MODEL == DEFAULT_MODEL and node['forecastModel']['id'] == PROFILE_ID
+    node = assess(raw, now=NOW, model_dir=DEFAULT_MODEL)[0]
+    assert node['forecastModel']['id'] == PROFILE_ID
     assert node['forecastStatus'] == 'HYBRID_READY' and node['forecastHistoryRows'] == 25
     assert all(head['weights']['neural'] > 0 for head in node['forecastModel']['blendWeights'].values())
     np.testing.assert_allclose(list(node['forecast6h'].values()), [direct['forecast_'+c] for c in RAW_SENSOR_COLUMNS], rtol=0, atol=1e-6)
@@ -65,14 +65,14 @@ def test_gaps_and_missing_current_never_become_fabricated_history(engine):
 
 def test_off_top_of_hour_native_snapshots_use_exact_hourly_phase():
     rows = [r for r in demo_observations('2026-10-16T06:15:00Z') if r['node_id'] == 'demo-01']
-    node = assess(rows, now='2026-10-16T06:15:01Z')[0]
+    node = assess(rows, now='2026-10-16T06:15:01Z',model_dir=DEFAULT_MODEL)[0]
     assert node['forecastStatus'] == 'HYBRID_READY'
     assert node['forecastTimestamp'] == '2026-10-16T12:15:00+00:00'
     assert all(pd.Timestamp(r['timestamp']).minute == 15 for r in node['forecastHistory'])
 
 
 def test_cache_migration_recomputes_values_instead_of_relabelling(tmp_path):
-    nodes = assess(demo_observations(NOW), now=NOW)
+    nodes = assess(demo_observations(NOW), now=NOW,model_dir=DEFAULT_MODEL)
     expected = copy.deepcopy(nodes[0]['forecast6h'])
     for n in nodes:
         n['forecastModel'] = dict(id='india_mandi_modeled_6h_v1')
@@ -80,7 +80,7 @@ def test_cache_migration_recomputes_values_instead_of_relabelling(tmp_path):
         n.pop('forecastHistory', None)
     path = tmp_path/'cache.sqlite'
     Store(path).replace(nodes)
-    with TestClient(create_app(path, clock=lambda: pd.Timestamp(NOW).timestamp())) as client:
+    with TestClient(create_app(path, clock=lambda: pd.Timestamp(NOW).timestamp(),model_dir=DEFAULT_MODEL)) as client:
         result = client.get('/api/nodes/demo-01/telemetry').json()
         assert result['forecastModel']['id'] == PROFILE_ID
         assert result['forecast6h'] == expected
@@ -89,7 +89,7 @@ def test_cache_migration_recomputes_values_instead_of_relabelling(tmp_path):
     for n in nodes:
         n['history'] = n['history'][-29:]
     Store(path).replace(nodes)
-    with TestClient(create_app(path)) as client:
+    with TestClient(create_app(path,model_dir=DEFAULT_MODEL)) as client:
         result = client.get('/api/nodes/demo-01/telemetry').json()
         assert result['forecastStatus'] == 'WARMING_UP_PERSISTENCE'
         assert result['forecast6h'] == result['sensors']

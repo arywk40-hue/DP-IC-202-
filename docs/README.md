@@ -3,6 +3,8 @@
 The primary scope is six channels plus features, India/Mandi forecasting, and
 independently labeled Himalayan hazards. Start with the current guides:
 
+- [Active Mandi v2 and online-learning workflow](MANDI_V2_PIPELINE.md), [new report](../reports/mandi_pipeline_v2/REPORT.md).
+
 - [Submission guide](SUBMISSION_GUIDE.md) and [feature/status list](FEATURES.md).
 - [Current seven-model Mandi test](../reports/submission/2026-10-21/REPORT.md): active hybrid, complete comparison and replay evidence.
 - [Dashboard setup](HIMACHAL_DASHBOARD_INTEGRATION.md) and [hybrid architecture](FORECAST_MODEL_IMPROVEMENT.md).

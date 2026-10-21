@@ -14,7 +14,7 @@ import pandas as pd
 
 from ml.india_mandi.benchmark import arrays, metric
 from ml.india_mandi.data import load_config
-from ml.india_mandi.hybrid import Hybrid, blend
+from ml.india_mandi.hybrid import DEFAULT_MODEL, Hybrid, blend
 from ml.operational.contracts import UNITS
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.six_sensor_forecast.data import sha256
@@ -144,7 +144,7 @@ def run(config: Path, output: Path, replay_path: Path) -> dict:
         **candidates, 'active_hybrid': predictions}
     metrics = compare(values, labels.loc[mask].to_numpy(float), now.to_numpy(float))
     replay = replay_records(frame, manifest)
-    nodes = assess(replay)
+    nodes = assess(replay,model_dir=DEFAULT_MODEL)
     node = nodes[0]
     if (node['forecastStatus'] != 'HYBRID_READY' or node['sourceClass'] != 'modeled_grid'
             or any(not r['abstain'] or r['probability'] is not None for r in node['risks'].values())):

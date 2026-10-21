@@ -14,6 +14,8 @@ def main():
     p.add_argument("--port", type=int, default=8080)
     p.add_argument("--observations", type=Path, help="Use reviewed native snapshots instead of synthetic demo")
     p.add_argument("--db", type=Path, default=ROOT/"data/himachal/dashboard.sqlite")
+    p.add_argument('--online-state',type=Path,help='Persistent delayed-label shadow state')
+    p.add_argument('--forecast-model',type=Path,help='Explicit versioned model directory; default is active v2')
     args = p.parse_args()
     if not (APP/"node_modules/.bin/vite").exists():
         p.error("Install once: pip install -r requirements-dashboard.txt; cd apps/indra-himachal-ui && npm ci")
@@ -21,6 +23,8 @@ def main():
     print(f"Open http://127.0.0.1:{args.port} — " + ("IMPORTED OBSERVATIONS" if args.observations else "SYNTHETIC DEMO"), flush=True)
     command = [sys.executable, "-m", "server.dashboard", "--ui", str(APP/"dist"), "--db", str(args.db), "--port", str(args.port)]
     command += ["--observations", str(args.observations)] if args.observations else ["--demo"]
+    if args.online_state: command += ['--online-state',str(args.online_state)]
+    if args.forecast_model: command += ['--forecast-model',str(args.forecast_model)]
     try:
         subprocess.run(command, cwd=ROOT, check=True)
     except KeyboardInterrupt:

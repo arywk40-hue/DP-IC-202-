@@ -25,12 +25,12 @@ from ml.himachal.features import build_packet
 from ml.himachal.rules import evaluate
 from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
-from ml.india_mandi.hybrid import DEFAULT_MODEL, PROFILE_ID, Hybrid
+from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
 from server.storm_run import StormRun
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL = DEFAULT_MODEL
-API_VERSION = "0.3.0"
+MODEL = ACTIVE_MODEL
+API_VERSION = "0.4.0"
 MAX_ROWS = 50_000
 
 
@@ -101,9 +101,9 @@ def apply_forecasts(nodes, histories, engine, clock):
         node['forecastTimestamp'] = forecast['forecast_timestamp_utc'].isoformat()
         node['forecastIssuedAt'] = clock.isoformat()
         node['forecastStatus'] = forecast['status']
-        node['forecastModel'] = dict(id=forecast['model_id'], configuredId=PROFILE_ID,
-            displayName='Mandi neural hybrid' if ready else 'Persistence warm-up' if forecast['status']=='WARMING_UP_PERSISTENCE' else 'Unavailable',
-            family='Neural + history XGBoost + ridge' if ready else 'Persistence' if forecast['status']=='WARMING_UP_PERSISTENCE' else None,
+        node['forecastModel'] = dict(id=forecast['model_id'], configuredId=engine.profile['id'],
+            displayName=engine.profile.get('display_name','Mandi neural hybrid') if ready else 'Persistence warm-up' if forecast['status']=='WARMING_UP_PERSISTENCE' else 'Unavailable',
+            family=engine.profile.get('family','Neural + history XGBoost + ridge') if ready else 'Persistence' if forecast['status']=='WARMING_UP_PERSISTENCE' else None,
             country='IN', trainingEvidence='MODELED_GRID_RETROSPECTIVE', fieldValidated=False,
             profileSha256=engine.profile_sha256, blendWeights=engine.weights['heads'] if ready else None,
             historySampling='EXACT_ONE_HOUR_SPACING_AT_OBSERVATION_PHASE_NO_INTERPOLATION')
@@ -150,7 +150,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
             empiricalValidation="NOT_EVALUATED", probability=None, publicNotificationsEnabled=False,
             unavailableTargets=["flash_flood", "landslide"],
             syntheticDemo=latest["source_class"] == "synthetic_demo"))
-    return apply_forecasts(result, forecast_histories, Hybrid(Path(model_dir)), clock)
+    return apply_forecasts(result, forecast_histories, load_forecaster(Path(model_dir)), clock)
 
 
 class Store:
@@ -175,14 +175,15 @@ class Store:
             return [json.loads(r[0]) for r in db.execute("SELECT payload FROM nodes ORDER BY id LIMIT 201")]
 
 
-def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
+def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_dir=MODEL, online_state=None):
     store = Store(db_path)
     started = time.monotonic()
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
+    engine = load_forecaster(model_dir)
+    app.state.forecaster = engine
     existing = store.all()
     if existing:
-        engine = Hybrid()
         if any(n.get('forecastModel', {}).get('profileSha256') != engine.profile_sha256 for n in existing):
             # Recompute old persisted predictions from retained canonical history.
             # A new model label is never attached to an old XGBoost prediction.
@@ -190,6 +191,29 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
             histories = {n['id']: n.get('forecastHistory', n.get('history', [])) for n in existing}
             store.replace(apply_forecasts(existing, histories, engine, now))
     storm = StormRun(storm_risk_run)
+    online_learner=None
+    if online_state is not None:
+        if engine.profile['id']!='india_mandi_tabular_v2': raise ValueError('Online shadow learning requires the v2 fixed scaler')
+        from ml.india_mandi.online import for_model
+        online_learner=for_model(online_state,engine)
+
+    @app.get('/api/model-lab')
+    def model_lab():
+        if engine.profile['id'] != 'india_mandi_tabular_v2':
+            return dict(configured=False,active_model=engine.profile['id'],online=dict(enabled=False))
+        report=json.loads((ROOT/'reports/mandi_pipeline_v2/results.json').read_text())
+        if report['profile_sha256'] != engine.profile_sha256:
+            raise HTTPException(422,'Model evaluation/profile identity mismatch')
+        online=dict(enabled=False,role='NOT_CONFIGURED',updates=0)
+        if online_learner is not None: online=online_learner.summary()
+        replay_path=ROOT/'reports/mandi_pipeline_v2/online_replay.json'
+        replay=json.loads(replay_path.read_text()) if replay_path.exists() else None
+        return dict(configured=True,active_model=engine.profile['id'],display_name=engine.profile['display_name'],
+            data_rows=report['data_rows'],source_start=report['source_start'],source_end=report['source_end'],
+            rows_by_role=report['rows_by_role'],source_kind=report['source_kind'],features=len(engine.profile['features']),
+            metrics={k:report['metrics'][k] for k in ('validation','future_test','new_date_extension')},
+            blend=engine.weights,online=online,online_replay=replay,field_validated=False,
+            test_status=report['test_status'],tabpfn_status=report['tabpfn'])
 
     def storm_read(method, *args):
         try:
@@ -241,7 +265,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None):
             syntheticDemo=any(n["syntheticDemo"] for n in items), adapter="INDRA_READ_ONLY_LOCAL",
             rpcAvailable=False, hardwareConnected=False, empiricalHazardModels="NOT_READY",
             empiricalAccuracy="NOT_EVALUATED", publicNotificationsEnabled=False,
-            forecastModel=PROFILE_ID, forecastArchitecture='NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE',
+            forecastModel=engine.profile['id'], forecastArchitecture=engine.profile.get('family','NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE'),
             forecastModelsInUse=sorted({n['forecastModel']['id'] for n in items}), forecastHistoryHours=24,
             forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS', transport="HTTP_LOCAL_NO_RF",
             empty=not items, staleNodes=sum(n["stale"] for n in items))
@@ -275,14 +299,19 @@ def main():
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--ui", type=Path)
     parser.add_argument('--storm-risk-run', type=Path, help='Owner-generated experimental ERA5 run directory')
+    parser.add_argument('--forecast-model',type=Path,default=MODEL,help='Versioned gateway model; v1 remains available explicitly')
+    parser.add_argument('--online-state',type=Path,help='Optional delayed-label shadow checkpoint, never overwrites offline outputs')
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("Use a local unprivileged port")
-    app = create_app(args.db, ui_dir=args.ui, storm_risk_run=args.storm_risk_run)
+    app = create_app(args.db, ui_dir=args.ui, storm_risk_run=args.storm_risk_run,model_dir=args.forecast_model,online_state=args.online_state)
     if args.observations or args.demo:
         raw = demo_observations() if args.demo else read_observations(args.observations)
-        prepared = assess(raw)
+        prepared = assess(raw,model_dir=args.forecast_model)
         app.state.store.replace(prepared)
+        if args.online_state is not None:
+            from ml.india_mandi.online import ingest_native
+            ingest_native(raw,args.online_state,app.state.forecaster)
         print(json.dumps(dict(nodes=len(prepared), mode="SYNTHETIC_DEMO" if args.demo else "OPERATOR_IMPORT",
             probabilities="UNAVAILABLE", hardware_rpc=False)))
     import uvicorn

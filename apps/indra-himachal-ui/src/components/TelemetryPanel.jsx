@@ -60,7 +60,7 @@ export default function TelemetryPanel({ nodeName, telemetry, loading, cached, r
       </p>
       {telemetry.forecastModel?.blendWeights && <details className="forecast-components"><summary>Forecast model components</summary>
         <ul>{Object.entries(telemetry.forecastModel.blendWeights).map(([target,head]) => <li key={target}>
-          {CHANNELS[target]?.[0] || target}: {head.neural}; blend {Object.entries(head.weights).map(([name,value]) => `${name} ${value.toFixed(2)}`).join(' · ')}
+          {CHANNELS[target]?.[0] || target}: {head.neural && `${head.neural}; `}blend {Object.entries(head.weights).filter(([,value])=>value>0.0001).map(([name,value]) => `${name} ${value.toFixed(2)}`).join(' · ')}
         </li>)}</ul>
       </details>}
       <h3>Experimental risk assessments</h3>

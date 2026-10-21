@@ -2,13 +2,19 @@
 
 | Script | Role | Data/model scope |
 | --- | --- | --- |
+| `train_mandi_v2.py` | Active v2 acquisition/train/frozen-evaluation entry point | Expanded LightGBM/MLP/legacy ensemble; `--prepare`, `--train`, `--evaluate` |
+| `online_mandi_worker.py` | Actual hourly arrival watcher or explicit research replay | Durable exact +6h delayed-label SGD shadow state; no automatic output promotion |
+| `benchmark_tabpfn_mandi.py` | Optional isolated local TabPFN v2 benchmark | 512 training-context / 96 test rows; separate runtime; no hosted inference |
+| `generate_mandi_synthetic_pm.py` | Flagged older-archive PM gap filling | Simulation only; `--verify --reproduce` audits the saved version without overwriting |
 | `fetch_mandi_data.py` | Download latest 30 completed UTC days separately | Six Mandi IFS/CAMS channels + rain/snow/gust context; local ignored snapshots, no retraining |
-| `test_mandi_submission.py` | **Current submission: seven saved candidates and historical dashboard replay** | Six-channel frozen Mandi model-grid source; no fitting, no China models |
+| `test_mandi_submission.py` | Retained v1 submission: seven candidates and historical dashboard replay | Six-channel frozen Mandi model-grid source; no fitting, no China models |
 | `test_india_mandi.py` | Retained baseline/acquisition workflow | Six modeled Mandi channels, newly Mandi-trained weights, existing Indian research profiles; no China models |
 | `test_models.py` | Historical comprehensive audit | Archived feature contracts and foreign/Indian comparisons; retained to reproduce the earlier report |
 | `download_copernicus_mandi.py` | Ten-year archive acquisition | ERA5 2016–2025 monthly requests; dry run by default, no model or hazard-label changes |
 
-Use `test_mandi_submission.py` for current project results and `test_india_mandi.py --prepare` for source acquisition. The historical script is not
+Use `train_mandi_v2.py --evaluate` for current project results. The retained
+`test_mandi_submission.py` reproduces v1 results; `test_india_mandi.py --prepare`
+acquires the older baseline source. The historical script is not
 an independent Himalayan hazard evaluator. Raw downloads, recovered Git files
 and local working outputs remain ignored. Neither script invents event truth.
 

@@ -1,6 +1,6 @@
 # Implemented INDRA India/Mandi architecture
 
-Updated 16 October 2026. The primary contract has six physical channels:
+Updated 21 October 2026. The primary contract has six physical channels:
 temperature, relative humidity, station pressure, PM2.5, PM10 and wind. History
 and derived values come from these channels; they are not extra sensors.
 
@@ -12,7 +12,7 @@ flowchart LR
   B --> C[Six values and exact UTC hourly positions]
   C --> D[66 causal history features]
   D --> E[Chronological train / validation / test]
-  E --> F[Residual MLPs, history XGBoost and residual ridge]
+  E --> F[LightGBM, residual MLP, retained hybrid and persistence]
   E --> G[Compact six-input student]
   F --> H[Validation-only per-target convex blend]
   H --> I[Reused retrospective modeled-value metrics]
@@ -26,10 +26,11 @@ flowchart LR
 | Canonical feature/target construction | `ml/six_sensor_forecast/features.py` |
 | Residual tree teacher/student fitting | `ml/six_sensor_forecast/train.py` |
 | Linear temporal fitting and India-only evaluation | `ml/india_mandi/benchmark.py` |
-| Active gateway hybrid | `ml/india_mandi/hybrid.py`, `scripts/promote_mandi_hybrid.py` |
-| Public runnable entry point | `scripts/test_india_mandi.py` |
+| Active gateway ensemble | `ml/india_mandi/tabular_v2.py`, `ml/india_mandi/registry.py` |
+| Public runnable entry point | `scripts/train_mandi_v2.py` |
+| Delayed-label shadow learner | `ml/india_mandi/online.py`, `scripts/online_mandi_worker.py` |
 | Six-output compact C export | `ml/six_sensor_forecast/export.py` |
-| Frozen profile and model country/source catalog | `configs/mandi_modeled_forecast_v1.json`, `configs/model_catalog.json` |
+| Active configuration; frozen historical export catalog | `configs/mandi_pipeline_v2.json`; `configs/model_catalog.json` |
 
 The history teacher uses 66 features: per channel, current value, 1/3/6/12/24-hour
 lags, one-hour delta, and trailing 6/24-hour mean/std. The compact student uses
@@ -48,13 +49,29 @@ held-out stations. Historical teacher/linear inputs require a complete 24-hour
 span. The compact student accepts one current snapshot. File hashes, feature
 orders and source/config provenance are retained beside the weights.
 
-**Active gateway:** `india_mandi_hybrid_6h_v1` combines predictions from the saved
+**Active gateway:** `india_mandi_tabular_v2` combines six LightGBM residual heads,
+a 66→64→32→6 residual MLP, the retained v1 hybrid and persistence. Per-target
+nonnegative prediction coefficients sum to one and minimize validation MAE.
+Train-only scalers and all component files are checksummed. It was fitted on
+33,570 eligible rows from the expanded 35,520-position Mandi source. Its mixed
+test results and optional TabPFN diagnostic are in the
+[v2 report](../reports/mandi_pipeline_v2/REPORT.md).
+
+The persistent SGD residual learner saves forecasts before exact +6h truth
+updates, with fixed scaling and source-isolated transactional state. It is
+shadow-only; historical late inputs cannot create live learning scores. See
+[operation and replay boundaries](MANDI_V2_PIPELINE.md).
+
+**Retained v1 gateway component:** `india_mandi_hybrid_6h_v1` combines predictions from the saved
 66→32→6 and 66→64→32→6 residual neural candidates, history XGBoost and ridge.
 Validation selects a neural architecture and three convex coefficients per target.
 No original model weights are rewritten. Complete history is required; otherwise
 the API/UI explicitly reports persistence warm-up or unavailable current inputs.
 The compact student remains the separate edge export. See
 [hybrid report](../reports/india_mandi_hybrid_6h_v1/REPORT.md).
+
+The separate synthetic PM gap-fill dataset is excluded from these fits and
+reported holdouts; see [its provenance](../reports/mandi_synthetic_pm_v1/README.md).
 
 **Evidence boundary:** India-only describes where INDRA's fit/evaluation records
 come from and excludes Beijing records/pretrained weights. ECMWF/CAMS are global

@@ -5,6 +5,7 @@ import MapView from './components/MapView';
 import TelemetryPanel from './components/TelemetryPanel';
 import RpcMenu from './components/RpcMenu';
 import StormRiskPanel from './components/StormRiskPanel';
+import ModelLab from './components/ModelLab';
 import { getNodes, getStatus, getHeatmap, getTelemetry } from './api/client';
 import { withCache } from './api/cache';
 import { DASHBOARD_API_VERSION } from './api/contract';
@@ -128,6 +129,7 @@ export default function App() {
         {status?.staleNodes > 0 && ` ${status.staleNodes} node(s) have stale observations.`}
       </div>
       {error && <div className="version-banner" role="alert">Connection/data unavailable. {error}</div>}
+      <ModelLab />
       <StormRiskPanel />
       <div className="app-body">
         <NodeList

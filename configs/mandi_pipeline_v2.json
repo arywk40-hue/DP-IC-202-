@@ -1,0 +1,23 @@
+{
+  "schema_version": "indra_mandi_pipeline_v2",
+  "id": "india_mandi_tabular_v2",
+  "start_date": "2022-10-01",
+  "end_date": "2026-10-19",
+  "validation_start": "2026-08-01T00:00:00Z",
+  "test_start": "2026-09-01T00:00:00Z",
+  "extension_start": "2026-10-11T00:00:00Z",
+  "data": "data/himachal/mandi_expanded_v2",
+  "models": "ml/models/india_mandi_tabular_v2",
+  "reports": "reports/mandi_pipeline_v2",
+  "seed": 42,
+  "threads": 2,
+  "lightgbm_leaves": [15, 31],
+  "lightgbm_rounds": 500,
+  "lightgbm_learning_rate": 0.035,
+  "mlp_hidden": [64, 32],
+  "mlp_epochs": 100,
+  "mlp_patience": 15,
+  "blend_step": 0.05,
+  "online_learning": "DELAYED_LABEL_SHADOW_SGD",
+  "field_validated": false
+}

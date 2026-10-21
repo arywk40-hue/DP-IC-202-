@@ -8,11 +8,13 @@ The original Downloads folder is unchanged.
 
 The working application retains the teammate's React/Leaflet layout and IndexedDB
 cache. Its API adapter now uses `server/dashboard.py`, independently of the
-existing operational application. API version is **0.3.0**: the active six-channel
-forecast is now the saved Mandi neural/history-XGBoost/ridge hybrid, with explicit
+existing operational application. API version is **0.4.0**: the active six-channel
+forecast is now the saved expanded Mandi LightGBM/neural/retained-hybrid ensemble, with explicit
 history and fallback status. API-versioned caches discard older predictions.
 This does not modify the team's firmware
 contract automatically; the communications owner must adopt the versioned adapter.
+
+See [current v2 and online-learning guide](MANDI_V2_PIPELINE.md) for the active model, mixed comparisons, shadow state and rollback.
 
 ## Run locally
 
@@ -56,7 +58,7 @@ belongs in frontend environment variables. Optional OSM background tiles require
 | Dashboard content | Actual implementation/evidence |
 | --- | --- |
 | Six measurements with units and short histories | Native snapshots validated by `ml/himachal/contracts.py`; no seventh physical input |
-| Six numerical +6h estimates | Active `india_mandi_hybrid_6h_v1`: validation-selected residual MLP + history XGBoost + temporal ridge; checksum-verified components and bounds |
+| Six numerical +6h estimates | Active `india_mandi_tabular_v2`: validation-selected LightGBM + residual MLP + retained hybrid + persistence; checksum-verified components and bounds |
 | Rain, snowstorm and cloudburst risk cards | Versioned `ml/himachal/features.py` and `rules.py`, including evidence and abstention |
 | Storm sequence | Separate experimental six-hour pressure fall followed by native 15-minute rebound rule; not a fitted storm model |
 | Node positions | Supplied WGS84 coordinates, with source class and observation age |

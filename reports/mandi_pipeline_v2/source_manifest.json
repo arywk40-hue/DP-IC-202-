@@ -1,0 +1,1767 @@
+{
+  "schema_version": "indra_hourly_forecast_v1",
+  "source_name": "Mandi, India: Open-Meteo/ECMWF IFS and CAMS global modeled grid",
+  "country_code": "IN",
+  "evidence_kind": "MODELED_GRID_RETROSPECTIVE",
+  "requested_latitude": 31.71,
+  "requested_longitude": 76.93,
+  "source_url": "https://open-meteo.com/",
+  "license": "CC BY 4.0; provider attribution required",
+  "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS) global atmospheric composition forecasts",
+  "weather_documentation": "https://open-meteo.com/en/docs/historical-weather-api",
+  "air_documentation": "https://open-meteo.com/en/docs/air-quality-api",
+  "retrieved_at_utc": "2026-10-20T19:44:18.422650+00:00",
+  "experiment_config_sha256": "2ee5c9afec51d49c3a1cab7032b96fc05c21698a75a42ff894b3ee36176f2b49",
+  "observations_sha256": "5d492e36e5d8a18c15fa8cad2c763a6cfe65bb649d3f9b85ff9129e7f177f018",
+  "context_sha256": "ba8a769db2dc8e2f0bcfc6ad03effe0cdbf9eaaecd9e42021c58abb33bc12c3e",
+  "sensor_columns": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "rows": 35520,
+  "locations": [
+    "Mandi_OpenMeteo_Grid"
+  ],
+  "coverage_start_utc": "2022-10-01T00:00:00+00:00",
+  "coverage_end_utc": "2026-10-19T23:00:00+00:00",
+  "complete_six_channel_rows": 35520,
+  "missing_measurements": {
+    "temperature_c": 0,
+    "relative_humidity_pct": 0,
+    "pressure_hpa": 0,
+    "pm25_ug_m3": 0,
+    "pm10_ug_m3": 0,
+    "wind_speed_mps": 0
+  },
+  "pressure_reference": "MODELED_GRID_SURFACE; not verified station pressure",
+  "temporal_resolution": "Hourly API positions; CAMS global underlying product is 3-hourly, approximately 45 km",
+  "co_location": "Different weather/air grids; returned grid coordinates recorded in each receipt; no physical co-location claim",
+  "label_provenance": "Exact +6h modeled values, no observed hazard labels",
+  "original_issue_time_availability": "Not verified; retrospective benchmark, not replay of information known at original issue time",
+  "geographically_independent_validation": false,
+  "deployment_approved": false,
+  "hazard_training_allowed": false,
+  "source_receipts": [
+    {
+      "start_date": "2022-10-01",
+      "end_date": "2022-10-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2022-10-01&end_date=2022-10-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_9036f9e4ef4708ff51e3.json",
+        "sha256": "4efef4389b6debabb883c18c12e6a61f612e68f4625107ff4678329b59d9340c",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2022-10-01&end_date=2022-10-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_88c453a4dd4cba539871.json",
+        "sha256": "b2c07f1de393324fcc498064d276adcf3e5ccb2b2a490a0655a2726acec15db2",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2022-11-01",
+      "end_date": "2022-11-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2022-11-01&end_date=2022-11-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_6407722da7479659a7bf.json",
+        "sha256": "0f03dabef23596aacf3082c3a7c32755b22de368b3d98079b339b2dd6b51d4c4",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2022-11-01&end_date=2022-11-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_5e8e944850e76a0ab2db.json",
+        "sha256": "cf52392a874b98d15d4d333a1be7b2db3830e15aa7f00c45d4c46bcf8a63d37d",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2022-12-01",
+      "end_date": "2022-12-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2022-12-01&end_date=2022-12-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_e6e1c6abfff119dbfe41.json",
+        "sha256": "5f3dfedf351c97a53cd8690bdfad09f921556390dc6512c23fbf7fc9e6f62fcb",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2022-12-01&end_date=2022-12-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_dc456be5118b2b6c3b9a.json",
+        "sha256": "b782f80aad6bf5be43cda0e38bfa31aa078e4450562ad029b2ef729b7d6d90fa",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-01-01",
+      "end_date": "2023-01-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-01-01&end_date=2023-01-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_43e34cb0ca81ae6b2637.json",
+        "sha256": "90f301e96775ff56616a73a82be248feb33f1c5dff1d12c9bd79af61665e6781",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-01-01&end_date=2023-01-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_6d3b1b7d5d4cb375ba50.json",
+        "sha256": "22aaaf863437ff3734cd62d9db00ea44b08df020e0f6cbc2b21a680110ae0587",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-02-01",
+      "end_date": "2023-02-28",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-02-01&end_date=2023-02-28&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_c42a6301fc4ef26744fc.json",
+        "sha256": "76220a05e8227e8e222d7553c6d66e8906e0658ff53f7267096597bceb60eacd",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-02-01&end_date=2023-02-28&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_a0ecedb9e697e3ea8144.json",
+        "sha256": "d1fa32b10c5497cdcc1e4f36bc094eb7b3c20eeb3eed5c3902ab6ea090d94b2a",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-03-01",
+      "end_date": "2023-03-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-03-01&end_date=2023-03-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_015900efb15f41793c23.json",
+        "sha256": "ce43218ee135ac14b717c4c68002a2a7e0d420270fecebd0ca8a542e97855ec0",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-03-01&end_date=2023-03-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_80c6add80441b358c49b.json",
+        "sha256": "0e20438650e38c4e7c4effa0f66a4bbd93c841dea1ecb6ca18beb459398a81a8",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-04-01",
+      "end_date": "2023-04-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-04-01&end_date=2023-04-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_acf13d7f70dae905754e.json",
+        "sha256": "1137e2c5592f392c8980aaf36d88f7cc70f82da63e7c4c50928427cc234b1330",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-04-01&end_date=2023-04-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_49934c4cc3c401686843.json",
+        "sha256": "16ecfa9f3e4764e35f0fa2751b312733b5a84988154a41de5dfec849460c07d4",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-05-01",
+      "end_date": "2023-05-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-05-01&end_date=2023-05-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_59972eba4dcdb09c975c.json",
+        "sha256": "0d6a4c842aa007794f9697c640658296db95a553526d163f1e3eb8ca1fe5bdce",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-05-01&end_date=2023-05-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_aa64f5ed467bf26e1a55.json",
+        "sha256": "4c1becb57e8df218eb5cfe5378452273baf2a14f2bb012446933ae02cb028542",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-06-01",
+      "end_date": "2023-06-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-06-01&end_date=2023-06-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_c780596cccd9cba12a7d.json",
+        "sha256": "4a2cd6463da2e979fd900c5533156717a4556c9fae11db94742fc83794d20502",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-06-01&end_date=2023-06-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_c3d1af9231555279fd6d.json",
+        "sha256": "7de700be776362aa138e96a1639f2bc53b9bca21b97793575770cbafd8571c5f",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-07-01",
+      "end_date": "2023-07-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-07-01&end_date=2023-07-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_96169db3cb0e59419142.json",
+        "sha256": "2fc84e8a213eea20d26c9df81fafc4b0f530a6fb50857e6cf2fa2928a4219ce6",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-07-01&end_date=2023-07-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_07c4aa925c6b2a32a78f.json",
+        "sha256": "7c1bf1a64819aa320ffccf41dbe52060782e8b8c39a5e053f31b2dca44e2448c",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-08-01&end_date=2023-08-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_a7d92f21e11c600a64db.json",
+        "sha256": "6ab96b3a381475b2430968365b8226ee2c8b2b29317a6799882c36124849308f",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-08-01&end_date=2023-08-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_e32b2eba9d3e23e56d5e.json",
+        "sha256": "cadd3aba7a9b5e0221f6e9581129b1321772426ddc1e38c240dd22af1d90d207",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-09-01",
+      "end_date": "2023-09-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-09-01&end_date=2023-09-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_741e562c1ab212a5c04e.json",
+        "sha256": "db95f7f6d52a715429cc21bd00382327f185f3761d803d78dc0a10d36b626865",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-09-01&end_date=2023-09-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_4e49d5929ab7492b6904.json",
+        "sha256": "d28276f37deabde340444d215e07df340c4e5be3e46c60e53faf2c513013dfb7",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-10-01",
+      "end_date": "2023-10-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-10-01&end_date=2023-10-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_dd2d40570216d30fb86a.json",
+        "sha256": "7b3b68349cfb41ae4c6ea0ad4cd78212259e703b775457d7c60e713dd1f3cbed",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-10-01&end_date=2023-10-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_e932845c6580ec54e2ca.json",
+        "sha256": "d8e5e2d9e087655d4a05bdb8753b5963ec5d3b0fc82f26b6f5fd9c8fdb6f5bc3",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-11-01",
+      "end_date": "2023-11-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-11-01&end_date=2023-11-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_626f290a210909d43e57.json",
+        "sha256": "293ff670f95894265b706d0d508082a0d1084db23123c0186d364ccfe2f510d2",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-11-01&end_date=2023-11-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_0bb131a50fe256a9452b.json",
+        "sha256": "7459f4c70144c8ee9cffd28c019dcff17cb7f969c2fbca80a0f7272fea4645a1",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2023-12-01",
+      "end_date": "2023-12-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2023-12-01&end_date=2023-12-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_0d0e48e09ab6b9370f3d.json",
+        "sha256": "48e2261a71714396202bd259f6b46a780d303dd22b8049844fe3dacf587396c8",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2023-12-01&end_date=2023-12-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_51b9cd5c43de962382d4.json",
+        "sha256": "89cfbd68e6c26e7e2ea1f19deb9818c63915b4b9006a2c717e2eec68c2346429",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-01-01",
+      "end_date": "2024-01-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-01-01&end_date=2024-01-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_ba566266b63a1ae57038.json",
+        "sha256": "7cd22b63f735dfcd87007305079b4175d9b2ee9ac75bbef87ca7f3c791fcbff2",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-01-01&end_date=2024-01-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_dd56da67d6378c942f39.json",
+        "sha256": "10cfc82a247c472b69c3a946b8a26727dc00d8a1f0a14b5fcb30169cffce0e6c",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-02-01",
+      "end_date": "2024-02-29",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-02-01&end_date=2024-02-29&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_46b46c2e324bd1f52140.json",
+        "sha256": "71b8bc19db3b9691ae4a2dcd4db82dbb9732432a8633f819337baf134c790358",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-02-01&end_date=2024-02-29&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_bee50c0e442501c39bdf.json",
+        "sha256": "f3dbf19c5d4a48d3c1d92bd226b1cbe6442da90bff2600ae0e3bb24b76222029",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-03-01",
+      "end_date": "2024-03-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-03-01&end_date=2024-03-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_d184ce201c772df42452.json",
+        "sha256": "8bba364a35786f8c8a91406d41ec247e3aa5e401b1da296fcb1a2869c836457e",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-03-01&end_date=2024-03-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_5b410ce1566a5b33b1a7.json",
+        "sha256": "54637ba7252025dfd338d05203cb186b5f5165ae50b3b251ff3570bea241a48f",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-04-01",
+      "end_date": "2024-04-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-04-01&end_date=2024-04-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_dd509ae38fee40a2a86b.json",
+        "sha256": "22bcb533fa4cae2b1ba271e4642b157163c2e33e6d8eecfb1aea2a35ccba99c0",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-04-01&end_date=2024-04-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_bb9037bc8f2bbe1d6e7d.json",
+        "sha256": "4c4000ea56ec6cec3b003e857164983ad489f636737ae86a7595e8353f62e672",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-05-01",
+      "end_date": "2024-05-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-05-01&end_date=2024-05-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_efebe1cd31fee128cfe2.json",
+        "sha256": "a9c3acb4a776e145b18e16767e6c51e781e007520b349ecc2c285ebc11498737",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-05-01&end_date=2024-05-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_cd4095635b1afa9de7cc.json",
+        "sha256": "d8ff364f7a3fdcaa33dd7a554646d966221e4bd7bc1556e21dda20b09405b406",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-06-01",
+      "end_date": "2024-06-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-06-01&end_date=2024-06-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_d769568724f47d7ca05c.json",
+        "sha256": "95cf27874089c0d2e5ee8c33cd43201c258e67bf8facee335a48778178f7630c",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-06-01&end_date=2024-06-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_3b976dda783c21998392.json",
+        "sha256": "ca0128980cdd90a18b18aa387d1187d176f77ec9282ec857c64a460a485ac4a4",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-07-01",
+      "end_date": "2024-07-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-07-01&end_date=2024-07-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_ed417a111abddb4b786d.json",
+        "sha256": "fd49c99c6f1c3636f9dd4c699cac77521e4c5b5bb2ef57a77b08917f0fd8ad00",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-07-01&end_date=2024-07-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_a702c8983f847438d8d1.json",
+        "sha256": "62115355a76783307641c89d87e691c23a21f773529a9ff902667a001d2cb435",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-08-01",
+      "end_date": "2024-08-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-08-01&end_date=2024-08-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_752251a6e0e919b3a3e0.json",
+        "sha256": "9412627f541d537be9f656c3e7cedcd716e856a2cd6884432e3fd34d7a465cdf",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-08-01&end_date=2024-08-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_d6b818402ac9a681e479.json",
+        "sha256": "a2609909615cbee1ee69eec533bae43ce7a6a6365c25ea735edd54ca236d3ff6",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-09-01",
+      "end_date": "2024-09-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-09-01&end_date=2024-09-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_ffb0c1f00802a04e11e6.json",
+        "sha256": "32d78e7161b6adf2a210ba72df2d764d5895af7e3827285f9504a32942312931",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-09-01&end_date=2024-09-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_0b24a6a20231eb54759d.json",
+        "sha256": "1a24e26ef2286b398382ad2e4676dc64d438f2815815d2e46ac91364b4c1cc79",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-10-01",
+      "end_date": "2024-10-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-10-01&end_date=2024-10-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_ea66f503ab2f25fef91f.json",
+        "sha256": "d12f380e1e857aa734f6740f0cc873d07badfb8dad2591605d9b81f50c323d41",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-10-01&end_date=2024-10-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_1fddea48f854884a529f.json",
+        "sha256": "b0d202f955abe00488a9197f0c003bdd22fb2de5a0517be0a966455a0a74caca",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-11-01",
+      "end_date": "2024-11-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-11-01&end_date=2024-11-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_08fe58119cc0477583c4.json",
+        "sha256": "262922324df84de42a90153c8af7f869072a5eadf1cc7db88aaa774048a2639a",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-11-01&end_date=2024-11-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_55eaa7116641c4e8b9c5.json",
+        "sha256": "2866480ec838101583793106b50c5d7c9aa229bc72f3d43bcfb102548de72cfc",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2024-12-01",
+      "end_date": "2024-12-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2024-12-01&end_date=2024-12-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_fd46df8b7e7c96de0aef.json",
+        "sha256": "7da2d4de5adf93bea2707f31b56d900f63a52ccdefe921f20f6448cfe9ff34a9",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2024-12-01&end_date=2024-12-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_62be97853698f8066cb7.json",
+        "sha256": "2bcef42f72bb4e1d5569f9795c7be4c9e03a9caab7cd59fb50b6a1ca6f665e2e",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-01-01",
+      "end_date": "2025-01-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-01-01&end_date=2025-01-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_3ace5c4b916613f189a4.json",
+        "sha256": "ee8f6de3dc4d1e56267eb35e62e211848beab858a88acb27befad9b06f902bdb",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-01-01&end_date=2025-01-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_55091924a28824dc9785.json",
+        "sha256": "13351f9270d0f62ce8794cab7207d17b6ed604d758950ad3542f4b63c4f9a721",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-02-01",
+      "end_date": "2025-02-28",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-02-01&end_date=2025-02-28&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_a24c712b725edf127ed1.json",
+        "sha256": "c8d9ff41b0aa0998e86d9c3d5a0137f22a18fc49cea999af17a83da946755024",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-02-01&end_date=2025-02-28&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_1618a4a90e984db5933d.json",
+        "sha256": "7b84006488535894ca92b253a40c9311704b88682ce23f1e4540b864fcb4861d",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-03-01",
+      "end_date": "2025-03-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-03-01&end_date=2025-03-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_0420d844419335fb6a93.json",
+        "sha256": "fac49b54db772824c409f6ac18c42a165f3fd1e7fed9fea569797fc539316916",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-03-01&end_date=2025-03-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_75591f552dae7cf20b28.json",
+        "sha256": "88b160727aaa588ff1842432f08dc077e2b1f13c11b4c1f81e84d4e61599a681",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-04-01",
+      "end_date": "2025-04-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-04-01&end_date=2025-04-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_ebdcd4b934c8951cc478.json",
+        "sha256": "4a8ca28ee8988afe0953b5133ed4dce62d47cdac242aadf7e600c305caa0d67a",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-04-01&end_date=2025-04-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_5df203d9d70ff7ca67e6.json",
+        "sha256": "b24ecb19d2066f7d64b289ea19f67477c0242c1d5f4d0027edafaa50e46b1c7d",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-05-01",
+      "end_date": "2025-05-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-05-01&end_date=2025-05-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_79862a6d49eb9851878c.json",
+        "sha256": "b922622a0e0fd4315ff964405fb9a29ab1fc68966c3d33d9d5b19e319d2b01db",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-05-01&end_date=2025-05-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_65d006c2cfe53ac4d7c3.json",
+        "sha256": "de7e30b9596f01971495b4be46c82c17ef70984a4b68e753d6ed2501fbe93c1d",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-06-01",
+      "end_date": "2025-06-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-06-01&end_date=2025-06-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_4b8396cdeaef4580e7ad.json",
+        "sha256": "03855f9304cf00355136c2429a4c680256525a00743c22dfb2ac8e6a32e582d2",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-06-01&end_date=2025-06-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_c2163b346e5c2a79641f.json",
+        "sha256": "0571d7141bbf7aa74bd21ee1f832a24d72621eff3ad26bf016716d6d66edcbc0",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-07-01",
+      "end_date": "2025-07-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-07-01&end_date=2025-07-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_de7612ed450affaaab4a.json",
+        "sha256": "60af740827288bb4c494be8778e1b4e19e3d96a74d6b7e3c20b26558d7be813e",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-07-01&end_date=2025-07-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_d2e869cd40609dd3f2cd.json",
+        "sha256": "2597d0172172387a57ddb2050a5dffcee7ab03ac291648715ed0160f13b32df6",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-08-01",
+      "end_date": "2025-08-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-08-01&end_date=2025-08-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_1130d4c5723a66541d02.json",
+        "sha256": "62ae5cfbf93feeee32329c5ce6971311c9940cae9beda06362a8d1b64268674c",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-08-01&end_date=2025-08-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_6a32af218e35ca28cd67.json",
+        "sha256": "91b181f34bf27759bb640a59736948dd187c6d24388abe68c0f4e34dff0f0367",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-09-01",
+      "end_date": "2025-09-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-09-01&end_date=2025-09-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_82f373b7308e2e0ad9ac.json",
+        "sha256": "5ce36a0d1a68c9fca7a81af81e4c6341abdd6ba4e8d3d0f7ecf4972fa135dc45",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-09-01&end_date=2025-09-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_15cf61e3cdf5c1e5bc9c.json",
+        "sha256": "1c1a7afc70b770a069f65fb260aba748f978f788955c1e8d85871c4cf13f9b64",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-10-01",
+      "end_date": "2025-10-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-10-01&end_date=2025-10-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_63ff7e72ab75ae2e3f9e.json",
+        "sha256": "17aac2988891e2da98edd1f11caa637e2dea626c84901db30c563f609700350b",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-10-01&end_date=2025-10-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_6ff3bbda8dd50bb1e1b4.json",
+        "sha256": "c86f5695c77425e19ee88400993d08b21ed98e08b26913f44de4663333c13eea",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-11-01",
+      "end_date": "2025-11-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-11-01&end_date=2025-11-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_1fcb0098bca7add549bf.json",
+        "sha256": "6abadc36775d63a418db0888532eedac1ebff762dfb079b463e441a11c13e2c2",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-11-01&end_date=2025-11-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_84c77a822018e0d7286c.json",
+        "sha256": "36bf8c9567c2f7cf7b00debefcb14e2ba4e3dbfb7478dcbc27be8d774eef2aa2",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2025-12-01",
+      "end_date": "2025-12-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2025-12-01&end_date=2025-12-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_b331600bd153ace91b92.json",
+        "sha256": "5aa3100c43f2484c832746f45656baaad1bb6605fb4a00aebe64eed167968e7e",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2025-12-01&end_date=2025-12-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_c50b6237417c80092cdc.json",
+        "sha256": "f57471eb7b5d3b90b3b01e5a3bf464cd6553f1d52961469544bad7ffa80cc689",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-01-01&end_date=2026-01-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_160d89cb0ff73f9974b3.json",
+        "sha256": "158d481118522fe59583311a32a5ddf95b1b6c72f65161f880a9b1a0b8ec6f05",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-01-01&end_date=2026-01-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_2bd0dfda7572144d1df0.json",
+        "sha256": "fc5b6b6a239878a997336f74d14871799e358520d19c5c20ab89458eab36aecf",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-02-01",
+      "end_date": "2026-02-28",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-02-01&end_date=2026-02-28&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_7306e1235cc8fe12fdaa.json",
+        "sha256": "b6e721b82850e298707ee0eb6d31b2d1cab0e6ba037af74f6ebc098742f05991",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-02-01&end_date=2026-02-28&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_b2e483baf595c289dfc1.json",
+        "sha256": "04651af880e40f89d9d131e7531d91bffb6a14edd45c5ace9c04b5be8c0b9b2d",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-03-01",
+      "end_date": "2026-03-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-03-01&end_date=2026-03-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_c5c3e0a64c3fdecf9d02.json",
+        "sha256": "2a1e15717c7e2dbf397a51a5fc4a9e43c3c081646d8822e7567012ec66e66f36",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-03-01&end_date=2026-03-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_5b591d80bea0d57379c1.json",
+        "sha256": "80dc4212bdf0d97b9f2ed632305be0776165d160ff9fab25b2d7c6f8355dcb1f",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-04-01",
+      "end_date": "2026-04-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-04-01&end_date=2026-04-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_762a7ddd61553ad72ac8.json",
+        "sha256": "7f66dae45f365886e72a7202631523d962166fa2b84c1036f7665648ad73117f",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-04-01&end_date=2026-04-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_72616fd941a4c8ee2af7.json",
+        "sha256": "4d5d0de6223f1947c295890a88a68c0656c7b72c84508018f6ccd7b5cab92cd3",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-05-01",
+      "end_date": "2026-05-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-05-01&end_date=2026-05-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_5f7386fd706931aecc9a.json",
+        "sha256": "e353851c2487691c860a186e7b1342c638b5063f5d1892ef3bf75227050a8023",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-05-01&end_date=2026-05-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_9e3bae2d6c6c5057e9a1.json",
+        "sha256": "dc66590d91eddf22089e56367588af20f02b96d4a687b1c629f034c82083f1fe",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-06-01",
+      "end_date": "2026-06-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-06-01&end_date=2026-06-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_64a9aa2d0c6fd3e8f30b.json",
+        "sha256": "7d12ad14d0e42447d001b148e747b2c06fd5594cbca130131713209470961736",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-06-01&end_date=2026-06-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_0aaff3f9fa02149b9761.json",
+        "sha256": "096a8c6b0efe902ea6fe50dd12dbcb0fe01d5c019486b4378646d921c3877e5b",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-07-01&end_date=2026-07-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_f34504ea53a8033de92d.json",
+        "sha256": "3afa82851c1220658092faf87ccf91bb15f851d0e94988485d07fa04927f3ceb",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-07-01&end_date=2026-07-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_f336d62f693fb8c270d9.json",
+        "sha256": "c200ae0ef1c474014b86356ca02a879cfa780204d2a379b76fbe32a781741a88",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-08-01&end_date=2026-08-31&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_a1f761d29df30aed915b.json",
+        "sha256": "5040791b84f84666923e1455fc6a64aa43fe3f128f5ca15b7f4e11432d5e0fe6",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-08-01&end_date=2026-08-31&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_ab038b2f58a9878d8c93.json",
+        "sha256": "4e90741b2206a3c67ebf46efb45fccc8a968fcf3187ca5e2769c7dffd8904809",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-09-01",
+      "end_date": "2026-09-30",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-09-01&end_date=2026-09-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_5f374dc772d6cd4826e0.json",
+        "sha256": "2c9c5f159ebaba2a08fa0106639ac19ef9fc9f2aa6879a6af959ce56a57d8296",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-09-01&end_date=2026-09-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_545488fa4324e5308a5b.json",
+        "sha256": "732a10a9d278d99ee10026edace23fcaa9a2d31af2ce064a58af638508d46cd8",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    },
+    {
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-19",
+      "weather": {
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-10-01&end_date=2026-10-19&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/weather_a2959519b69e3d830da4.json",
+        "sha256": "e3b36030328350a11444301c1341153dead870d136a706525d2cabb6d8532fb7",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "relative_humidity_2m": "%",
+          "surface_pressure": "hPa",
+          "wind_speed_10m": "m/s",
+          "precipitation": "mm",
+          "snowfall": "cm",
+          "wind_gusts_10m": "m/s"
+        }
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-10-01&end_date=2026-10-19&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "raw_file": "data/himachal/mandi_expanded_v2/raw/air_f29d3c55041169265d03.json",
+        "sha256": "05d44690e32cea723ecfa6135718606e6991220dd25e4d18d3b813bbc765a6da",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994,
+        "elevation": 770.0,
+        "units": {
+          "time": "iso8601",
+          "pm2_5": "\u03bcg/m\u00b3",
+          "pm10": "\u03bcg/m\u00b3"
+        }
+      }
+    }
+  ],
+  "china_rows_used": 0,
+  "china_weights_used": false
+}
