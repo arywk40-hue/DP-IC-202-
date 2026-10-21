@@ -1,0 +1,44 @@
+{
+  "rows": 50376,
+  "six_channel_complete_rows": 50376,
+  "weather_values_preserved": true,
+  "existing_pm_values_preserved": true,
+  "missing_before": {
+    "temperature_c": 0,
+    "relative_humidity_pct": 0,
+    "pressure_hpa": 0,
+    "pm25_ug_m3": 48984,
+    "pm10_ug_m3": 48984,
+    "wind_speed_mps": 0
+  },
+  "missing_after": {
+    "temperature_c": 0,
+    "relative_humidity_pct": 0,
+    "pressure_hpa": 0,
+    "pm25_ug_m3": 0,
+    "pm10_ug_m3": 0,
+    "wind_speed_mps": 0
+  },
+  "synthetic_pm_rows": 48984,
+  "original_complete_pm_rows": 1392,
+  "synthetic_pm_order_violations": 0,
+  "diagnostics": {
+    "pm25_ug_m3": {
+      "min": 1.0356287764326488,
+      "median": 21.537930751691036,
+      "p95": 54.25910361587681,
+      "max": 217.8813048330546,
+      "std": 15.664058936767,
+      "lag1_correlation": 0.9419497007886966
+    },
+    "pm10_ug_m3": {
+      "min": 1.0356287764326488,
+      "median": 32.260083275138456,
+      "p95": 80.54202157840938,
+      "max": 467.36939759969,
+      "std": 23.95493877246974,
+      "lag1_correlation": 0.9263455264653497
+    }
+  },
+  "interpretation": "PROVENANCE_AND_SIMULATION_QA_ONLY_NOT_REALISM_OR_FORECAST_ACCURACY"
+}

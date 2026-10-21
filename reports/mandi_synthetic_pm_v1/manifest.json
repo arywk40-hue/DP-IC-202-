@@ -1,0 +1,45 @@
+{
+  "schema_version": "indra_synthetic_pm_dataset_v1",
+  "evidence_kind": "SYNTHETIC_AUGMENTATION_NOT_MEASURED_OR_API_PM_TRUTH",
+  "rows": 50376,
+  "source_original_sha256": "d657cce0e0e14d894e50d6c51be0866cc2b80ffca5b91248d7acce8cb0b44f77",
+  "reference_sha256": "5d492e36e5d8a18c15fa8cad2c763a6cfe65bb649d3f9b85ff9129e7f177f018",
+  "dataset_sha256": "9c9f185663ff16ea9a3353a8aab136ccbd49a95d396a99f3cb45b1f58b976889",
+  "generator": {
+    "seed": 42,
+    "fit_rows": 33600,
+    "fit_last_time_utc": "2026-07-31T23:00:00+00:00",
+    "fit_before": "2026-08-01T00:00:00+00:00",
+    "features": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pressure_hpa",
+      "wind_speed_mps",
+      "hour_sin",
+      "hour_cos",
+      "season_sin",
+      "season_cos"
+    ],
+    "ar_phi": [
+      0.937004875459765,
+      0.9452229891621462
+    ],
+    "joint_innovation_covariance": [
+      [
+        0.01947311210788513,
+        0.010307357940712277
+      ],
+      [
+        0.010307357940712277,
+        0.060421166594680185
+      ]
+    ],
+    "synthetic_pm25_rows": 48984,
+    "synthetic_pm10_rows": 48984,
+    "method": "LIGHTGBM_LOG_FINE_AND_COARSE_PM_WITH_PAIRED_AR_INNOVATIONS",
+    "purpose": "SIMULATION_OR_OPTIONAL_AUGMENTATION_NOT_OBSERVED_HISTORICAL_PM"
+  },
+  "validation_or_test_labels_generated": false,
+  "active_model_retrained": false,
+  "field_accuracy_established": false
+}

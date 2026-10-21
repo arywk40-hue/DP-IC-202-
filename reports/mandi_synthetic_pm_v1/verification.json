@@ -1,0 +1,59 @@
+{
+  "verified_at_utc": "2026-10-21T08:07:05.768867+00:00",
+  "dataset_sha256": "9c9f185663ff16ea9a3353a8aab136ccbd49a95d396a99f3cb45b1f58b976889",
+  "configuration_sha256": "016b76669e3c231e1a9d1dd3dbffae773fb0f86513f8ff1faba19a3d2691f8f7",
+  "generator_code_sha256": "3eecf576728f1b35e171439129ee9dd5189f6e0220af9dd5acb8bf850a3a40e7",
+  "generator_files": {
+    "fine_pm.txt": "0285aa5c3ff0b5fd905b2d4e1e6ed42a8a6f8d12e8d382361b2027abfc5e3174",
+    "coarse_pm.txt": "2a5edc8795342a09afbd59abbd4840a7701d98f2ff8193d722ad956defb74321"
+  },
+  "seeded_draw_reproduced": true,
+  "source_hashes_verified": true,
+  "coverage_start_utc": "2017-01-01T00:00:00+00:00",
+  "coverage_end_utc": "2022-09-30T23:00:00+00:00",
+  "quality": {
+    "rows": 50376,
+    "six_channel_complete_rows": 50376,
+    "weather_values_preserved": true,
+    "existing_pm_values_preserved": true,
+    "missing_before": {
+      "temperature_c": 0,
+      "relative_humidity_pct": 0,
+      "pressure_hpa": 0,
+      "pm25_ug_m3": 48984,
+      "pm10_ug_m3": 48984,
+      "wind_speed_mps": 0
+    },
+    "missing_after": {
+      "temperature_c": 0,
+      "relative_humidity_pct": 0,
+      "pressure_hpa": 0,
+      "pm25_ug_m3": 0,
+      "pm10_ug_m3": 0,
+      "wind_speed_mps": 0
+    },
+    "synthetic_pm_rows": 48984,
+    "original_complete_pm_rows": 1392,
+    "synthetic_pm_order_violations": 0,
+    "diagnostics": {
+      "pm25_ug_m3": {
+        "min": 1.0356287764326488,
+        "median": 21.537930751691036,
+        "p95": 54.25910361587681,
+        "max": 217.8813048330546,
+        "std": 15.664058936767,
+        "lag1_correlation": 0.9419497007886966
+      },
+      "pm10_ug_m3": {
+        "min": 1.0356287764326488,
+        "median": 32.260083275138456,
+        "p95": 80.54202157840938,
+        "max": 467.36939759969,
+        "std": 23.95493877246974,
+        "lag1_correlation": 0.9263455264653497
+      }
+    },
+    "interpretation": "PROVENANCE_AND_SIMULATION_QA_ONLY_NOT_REALISM_OR_FORECAST_ACCURACY"
+  },
+  "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS) global atmospheric composition forecasts"
+}

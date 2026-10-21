@@ -1,0 +1,11 @@
+{
+  "schema_version": "indra_synthetic_pm_v1",
+  "start_date": "2017-01-01",
+  "end_date": "2022-09-30",
+  "fit_before": "2026-08-01T00:00:00Z",
+  "reference_data": "data/himachal/mandi_expanded_v2",
+  "output": "data/himachal/synthetic_pm_v1",
+  "seed": 42,
+  "lightgbm_rounds": 150,
+  "purpose": "EXPERIMENTAL_AUGMENTATION_NOT_HISTORICAL_PM_TRUTH"
+}
