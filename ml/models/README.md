@@ -25,3 +25,5 @@ requires a new version, provenance, chronological selection and evaluation.
 See [current Mandi results](../../reports/submission/2026-10-21/REPORT.md) and
 [features and limitations](../../docs/FEATURES.md). None of these numerical
 models is a validated cloudburst/flood/landslide probability model.
+
+Current sensor-pattern classifier: [`himachal_sensor_patterns_v1`](himachal_sensor_patterns_v1/README.md), a synthetic-trained ten-label LightGBM/MLP blend. It classifies current patterns, not future events or calibrated hazard probabilities. It is separate from the v2 numerical forecaster.

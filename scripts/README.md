@@ -2,6 +2,8 @@
 
 | Script | Role | Data/model scope |
 | --- | --- | --- |
+| `test_weather_features.py` | Retest the saved category model and all six spatial HTTP layers | Synthetic proxy recovery only; does not retrain or establish event accuracy |
+| `train_weather_categories.py` | Offline LightGBM/MLP synthetic-pattern fitting | Independent episode splits, validation-selected blend/thresholds; refuses overwrite |
 | `train_mandi_v2.py` | Active v2 acquisition/train/frozen-evaluation entry point | Expanded LightGBM/MLP/legacy ensemble; `--prepare`, `--train`, `--evaluate` |
 | `online_mandi_worker.py` | Actual hourly arrival watcher or explicit research replay | Durable exact +6h delayed-label SGD shadow state; no automatic output promotion |
 | `benchmark_tabpfn_mandi.py` | Optional isolated local TabPFN v2 benchmark | 512 training-context / 96 test rows; separate runtime; no hosted inference |

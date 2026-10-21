@@ -1,0 +1,1185 @@
+{
+  "evidence": "SYNTHETIC_SOFTWARE_AND_PROXY_LABEL_TEST_NOT_REAL_WEATHER_VALIDATION",
+  "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+  "test_episodes": 4000,
+  "synthetic_exact_match": 0.9975,
+  "synthetic_macro_f1": 0.9987434939075346,
+  "matched_categories": {
+    "rain": 724,
+    "rainstorm": 515,
+    "snowstorm": 282,
+    "heatwave_like": 723,
+    "fog": 244,
+    "frost": 312,
+    "dust_storm": 262,
+    "smoke": 269,
+    "wildfire_weather": 397,
+    "cloudburst_like": 255
+  },
+  "surface_status": "AREA_ESTIMATE",
+  "surface_units_and_support": {
+    "temperature_c": {
+      "unit": "degC",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": -3.8535386282756523,
+      "maximum": 43.0174377499326
+    },
+    "relative_humidity_pct": {
+      "unit": "%",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": 17.851651005156683,
+      "maximum": 96.88643544788529
+    },
+    "pressure_hpa": {
+      "unit": "hPa",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": 696.8861560995877,
+      "maximum": 893.0820969246324
+    },
+    "pm25_ug_m3": {
+      "unit": "ug/m3",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": 21.237107805264213,
+      "maximum": 480.28346523195137
+    },
+    "pm10_ug_m3": {
+      "unit": "ug/m3",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": 42.9334263127115,
+      "maximum": 636.5682491967991
+    },
+    "wind_speed_mps": {
+      "unit": "m/s",
+      "node_count": 12,
+      "supported_cells": 360,
+      "minimum": 0.4333101096321858,
+      "maximum": 19.27135603240143
+    }
+  },
+  "scenarios": [
+    {
+      "id": "demo-01",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 20.0,
+        "relative_humidity_pct": 90.0,
+        "pressure_hpa": 876.0,
+        "pm25_ug_m3": 20.0,
+        "pm10_ug_m3": 40.0,
+        "wind_speed_mps": 5.0
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 0.9995651222217153,
+            "threshold": 0.35,
+            "matched": true
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979513,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.288984882107755e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 1.593605397423749e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797369621e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794025e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00017889402105599427,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.0001443720991685205,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153475e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "rain"
+        ],
+        "summary": "Rain-like pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-02",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 0.0,
+        "relative_humidity_pct": 90.0,
+        "pressure_hpa": 876.0,
+        "pm25_ug_m3": 20.0,
+        "pm10_ug_m3": 40.0,
+        "wind_speed_mps": 10.0
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 0.0008637878611823935,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979513,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 0.9999827859830109,
+            "threshold": 0.65,
+            "matched": true
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 1.5936053974237458e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797369621e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794688e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00017889362158407765,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.00014437209920038446,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153475e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "snowstorm"
+        ],
+        "summary": "Snowstorm pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-03",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 17.0,
+        "relative_humidity_pct": 90.0,
+        "pressure_hpa": 874.75,
+        "pm25_ug_m3": 20.0,
+        "pm10_ug_m3": 40.0,
+        "wind_speed_mps": 10.0
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [],
+        "matched": [],
+        "summary": "Outside the synthetic training domain",
+        "status": "OUTSIDE_SYNTHETIC_DOMAIN",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-04",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 20.0,
+        "relative_humidity_pct": 90.0,
+        "pressure_hpa": 900.0,
+        "pm25_ug_m3": 40.0,
+        "pm10_ug_m3": 80.0,
+        "wind_speed_mps": 5.0
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [],
+        "matched": [],
+        "summary": "Insufficient history",
+        "status": "UNAVAILABLE",
+        "missing_features": [
+          "six_complete_hours_of_native_measurements"
+        ],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-05",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 36.6,
+        "relative_humidity_pct": 44.0,
+        "pressure_hpa": 822.7,
+        "pm25_ug_m3": 84.3,
+        "pm10_ug_m3": 139.9,
+        "wind_speed_mps": 7.5
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.393333252070231e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979551,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.2889848821077596e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 0.9998838844010838,
+            "threshold": 0.35,
+            "matched": true
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797369863e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794226e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.0003405068879552643,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.0001523216639599116,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153846e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "heatwave_like"
+        ],
+        "summary": "Heat stress / heatwave-like",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-06",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 3.8,
+        "relative_humidity_pct": 98.1,
+        "pressure_hpa": 888.8,
+        "pm25_ug_m3": 42.4,
+        "pm10_ug_m3": 65.7,
+        "wind_speed_mps": 0.2
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 0.00011598456556017597,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979513,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.288984882107794e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 2.140586366703386e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 0.999982659576315,
+            "threshold": 0.5,
+            "matched": true
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.617691512774462e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.000178969768441158,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.00014437209916811952,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153499e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "fog"
+        ],
+        "summary": "Fog-like pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-07",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": -3.2,
+        "relative_humidity_pct": 37.6,
+        "pressure_hpa": 728.8,
+        "pm25_ug_m3": 48.4,
+        "pm10_ug_m3": 57.5,
+        "wind_speed_mps": 1.0
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.361508804533818e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979532,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.288984861564958e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 9.10405295432012e-06,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.355011275451564e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 0.9999827482053923,
+            "threshold": 0.65,
+            "matched": true
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00019709293881129336,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.0001443720991686405,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153452e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "frost"
+        ],
+        "summary": "Frost-like pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-08",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 22.9,
+        "relative_humidity_pct": 17.8,
+        "pressure_hpa": 682.8,
+        "pm25_ug_m3": 118.7,
+        "pm10_ug_m3": 535.6,
+        "wind_speed_mps": 19.3
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.361506112926795e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979513,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.2889848821079176e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 1.6775127078701563e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797369645e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794052e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 0.9995267775737929,
+            "threshold": 0.65,
+            "matched": true
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.000273352611680161,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.0010801652819639894,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173154445e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "dust_storm"
+        ],
+        "summary": "Dust storm pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-09",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 15.5,
+        "relative_humidity_pct": 50.7,
+        "pressure_hpa": 782.0,
+        "pm25_ug_m3": 497.6,
+        "pm10_ug_m3": 658.5,
+        "wind_speed_mps": 0.6
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.362998715829427e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979532,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.2889848821078396e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 2.2715963486508175e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.355010829689768e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915824241646e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 4.054940819634934e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.2586127534459334,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.00014437210390924254,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173154238e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [],
+        "summary": "No trained extreme pattern matched",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-10",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 46.2,
+        "relative_humidity_pct": 10.5,
+        "pressure_hpa": 791.8,
+        "pm25_ug_m3": 55.3,
+        "pm10_ug_m3": 92.0,
+        "wind_speed_mps": 10.5
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.361506112846991e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398980044,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.288984882109667e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 0.9999307160626705,
+            "threshold": 0.35,
+            "matched": true
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797386348e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.617691584881035e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00033850424745740244,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.998658022394425,
+            "threshold": 0.35,
+            "matched": true
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173169406e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "heatwave_like",
+          "wildfire_weather"
+        ],
+        "summary": "Multiple sensor patterns matched",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-11",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": -4.9,
+        "relative_humidity_pct": 95.3,
+        "pressure_hpa": 731.3,
+        "pm25_ug_m3": 24.0,
+        "pm10_ug_m3": 55.0,
+        "wind_speed_mps": 19.7
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 8.784706739004853e-05,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.00011526469398979696,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 0.9999827361416246,
+            "threshold": 0.65,
+            "matched": true
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 9.780240691419723e-06,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.355008879737056e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794342e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00017887444476480762,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.00014437209916812435,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 1.3016829173153636e-06,
+            "threshold": 0.65,
+            "matched": false
+          }
+        ],
+        "matched": [
+          "snowstorm"
+        ],
+        "summary": "Snowstorm pattern",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    },
+    {
+      "id": "demo-12",
+      "source": "synthetic_demo",
+      "sensors": {
+        "temperature_c": 21.8,
+        "relative_humidity_pct": 90.7,
+        "pressure_hpa": 818.0,
+        "pm25_ug_m3": 28.3,
+        "pm10_ug_m3": 47.5,
+        "wind_speed_mps": 15.1
+      },
+      "classification": {
+        "model_id": "himachal_sensor_patterns_v1",
+        "profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+        "task": "CURRENT_SENSOR_PATTERN_CLASSIFICATION",
+        "training_evidence": "SYNTHETIC_ENGINEERING_PROXY_LABELS",
+        "score_kind": "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY",
+        "field_validated": false,
+        "calibrated": false,
+        "probability": null,
+        "horizon_hours": 0,
+        "categories": [
+          {
+            "id": "rain",
+            "name": "Rain-like pattern",
+            "score": 0.9990484733151882,
+            "threshold": 0.35,
+            "matched": true
+          },
+          {
+            "id": "rainstorm",
+            "name": "Rainstorm pattern",
+            "score": 0.9992723621024783,
+            "threshold": 0.65,
+            "matched": true
+          },
+          {
+            "id": "snowstorm",
+            "name": "Snowstorm pattern",
+            "score": 1.2889848821077778e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "heatwave_like",
+            "name": "Heat stress / heatwave-like",
+            "score": 9.780240691419706e-06,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "fog",
+            "name": "Fog-like pattern",
+            "score": 1.3550088797370513e-06,
+            "threshold": 0.5,
+            "matched": false
+          },
+          {
+            "id": "frost",
+            "name": "Frost-like pattern",
+            "score": 1.6176915848794025e-06,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "dust_storm",
+            "name": "Dust storm pattern",
+            "score": 3.463795289621804e-05,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "smoke",
+            "name": "Smoke / pollution pattern",
+            "score": 0.00017887222422386423,
+            "threshold": 0.65,
+            "matched": false
+          },
+          {
+            "id": "wildfire_weather",
+            "name": "Hot / dry / windy pattern",
+            "score": 0.00014437209981573733,
+            "threshold": 0.35,
+            "matched": false
+          },
+          {
+            "id": "cloudburst_like",
+            "name": "Cloudburst-like sensor pattern",
+            "score": 0.9999826632665529,
+            "threshold": 0.65,
+            "matched": true
+          }
+        ],
+        "matched": [
+          "rain",
+          "rainstorm",
+          "cloudburst_like"
+        ],
+        "summary": "Multiple sensor patterns matched",
+        "status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+        "missing_features": [],
+        "public_alerts_enabled": false,
+        "observation_timestamp": 1792562400000,
+        "assessed_at_utc": "2026-10-21T06:00:00+00:00",
+        "source_class": "synthetic_demo"
+      }
+    }
+  ],
+  "field_validated": false,
+  "real_event_probability_available": false
+}

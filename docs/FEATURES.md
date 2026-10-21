@@ -13,10 +13,11 @@ Status: 21 October 2026. [Current v2 pipeline and results](MANDI_V2_PIPELINE.md)
 | Dashboard telemetry | Node list/map, six values/mini-histories, forecasts, model identity, coefficients, source and timestamps | Local backend/browser integration; Mandi replay is historical and stale |
 | Data quality and source | Units, pressure reference, source class, calibration identities and availability | Modeled source cannot silently become physical station evidence |
 | Current rain/snowstorm/cloudburst rule cards | Experimental current-condition matches and evidence/abstention | Synthetic contract tests; not calibrated probabilities or six-hour hazard predictions |
+| Weather category classification | Ten overlapping categories from a saved LightGBM/MLP blend | Trained/tested on independent synthetic proxy episodes; scores are not real-event probabilities. Six complete native hours required |
 | Storm sequence | Six-hour pressure fall and native 15-minute rebound/cooling/washout sequence | Requires appropriate cadence/source; hourly Mandi API cannot provide 15-minute evidence |
 | Anomaly detection | Bounded six-channel engineering detector and Python/C parity | Tested separately; not wired as a validated live dashboard alarm |
 | Neighbour inference | Registration, health, authenticated consensus and radio simulation modules | Engineering tests only; live radios and dashboard corroboration remain incomplete |
-| Spatial estimates | Retained node interpolation experiments and separate ERA5 feature grids | The active node heatmap is unavailable; one Mandi grid cannot validate interpolation |
+| Six parameter heatmaps | All six numerical surfaces, units and selectable geographic overlays using IDW | Hull masks, exact synchronization, per-channel missingness and line-only two-point support; one Mandi grid cannot support an area map. No field spatial validation |
 | ERA5 risk research panel | Optional owner-generated scores, anomaly markers and feature grids | Available example is synthetic engineering data, not actual Mandi event accuracy |
 | Offline/cache operation | Versioned cache, stale notices and unavailable states | Does not manufacture current readings or physical acknowledgements |
 | ESP32 research | Separate compiled C exports and firmware applications | Host/build receipts exist; physical execution and hybrid edge export remain untested |

@@ -6,6 +6,14 @@ and derived values come from these channels; they are not extra sensors.
 
 ## Numerical forecast: implemented, trained and retrospectively tested
 
+Two additional implemented paths are [six geographic parameter surfaces and
+ten current sensor-pattern categories](PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md).
+The spatial path uses synchronized same-source points → local metre projection →
+IDW → hull/line support masks → six unit-labelled layers. The classification
+path uses complete native history → 13 six-channel features → saved LightGBM/MLP
+blend → ten overlapping synthetic-pattern scores with domain abstention.
+They are separate from future numerical forecasting and empirical hazard training.
+
 ```mermaid
 flowchart LR
   A[Mandi API model grids] --> B[Monthly immutable snapshots and hashes]

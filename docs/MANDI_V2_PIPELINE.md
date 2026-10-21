@@ -1,7 +1,9 @@
 # Mandi v2 pipeline and online learning
 
-Current gateway: `india_mandi_tabular_v2`, API/PWA 0.4.0. The six physical channels
+Current gateway: `india_mandi_tabular_v2`, API/PWA 0.5.0. The six physical channels
 and +6h numerical task are unchanged. This is a local research prototype.
+The current [parameter-map and weather-category integration](PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md)
+adds separate current-pattern classification without changing these forecast weights.
 
 ## What changed
 

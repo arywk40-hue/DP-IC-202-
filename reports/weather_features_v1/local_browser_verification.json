@@ -1,0 +1,123 @@
+{
+  "checkedAt": "2026-10-21T08:33:35.586Z",
+  "evidence": "HISTORICAL_MANDI_MODELED_REPLAY_NOT_FIELD_ACCURACY",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173",
+      "model": "india_mandi_tabular_v2",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "nodeId": "mandi-api-grid",
+      "sourceClass": "modeled_grid",
+      "pressureReference": "grid_surface",
+      "stale": true,
+      "forecastTimestamp": "2026-10-20T05:00:00+00:00",
+      "input": {
+        "temperature_c": 9.7,
+        "relative_humidity_pct": 78,
+        "pressure_hpa": 927.7,
+        "pm25_ug_m3": 17.6,
+        "pm10_ug_m3": 20.4,
+        "wind_speed_mps": 1.31
+      },
+      "forecast6h": {
+        "temperature_c": 21.236301043185442,
+        "relative_humidity_pct": 44.085627813616036,
+        "pressure_hpa": 931.7971451213143,
+        "pm25_ug_m3": 13.152373711065534,
+        "pm10_ug_m3": 15.304556699484207,
+        "wind_speed_mps": 0.8439489013422743
+      },
+      "online": {
+        "enabled": true,
+        "status": "HISTORICAL_ONLY_NO_LIVE_UPDATE",
+        "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+        "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+        "scaler": "FROZEN_TRAIN_ONLY",
+        "updates": 0,
+        "forecasts": 1,
+        "eligible_forecasts": 0,
+        "scored_forecasts": 0,
+        "pending": 0,
+        "historical_ineligible_forecasts": 1,
+        "drift_warning": false,
+        "rolling_metrics": {},
+        "namespaces": [
+          {
+            "id": "live:26846f58a2241779563af8f4aa4e3258",
+            "updates": 0,
+            "last_processed_at": "2026-10-21T07:39:08+00:00",
+            "mode": "LIVE_SHADOW"
+          }
+        ],
+        "field_validated": false
+      },
+      "hazardAbstentions": [
+        "rain",
+        "snowstorm",
+        "cloudburst_risk"
+      ],
+      "pageErrors": []
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5173",
+      "model": "india_mandi_tabular_v2",
+      "status": "HYBRID_READY",
+      "historyRows": 25,
+      "nodeId": "mandi-api-grid",
+      "sourceClass": "modeled_grid",
+      "pressureReference": "grid_surface",
+      "stale": true,
+      "forecastTimestamp": "2026-10-20T05:00:00+00:00",
+      "input": {
+        "temperature_c": 9.7,
+        "relative_humidity_pct": 78,
+        "pressure_hpa": 927.7,
+        "pm25_ug_m3": 17.6,
+        "pm10_ug_m3": 20.4,
+        "wind_speed_mps": 1.31
+      },
+      "forecast6h": {
+        "temperature_c": 21.236301043185442,
+        "relative_humidity_pct": 44.085627813616036,
+        "pressure_hpa": 931.7971451213143,
+        "pm25_ug_m3": 13.152373711065534,
+        "pm10_ug_m3": 15.304556699484207,
+        "wind_speed_mps": 0.8439489013422743
+      },
+      "online": {
+        "enabled": true,
+        "status": "HISTORICAL_ONLY_NO_LIVE_UPDATE",
+        "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+        "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+        "scaler": "FROZEN_TRAIN_ONLY",
+        "updates": 0,
+        "forecasts": 1,
+        "eligible_forecasts": 0,
+        "scored_forecasts": 0,
+        "pending": 0,
+        "historical_ineligible_forecasts": 1,
+        "drift_warning": false,
+        "rolling_metrics": {},
+        "namespaces": [
+          {
+            "id": "live:26846f58a2241779563af8f4aa4e3258",
+            "updates": 0,
+            "last_processed_at": "2026-10-21T07:39:08+00:00",
+            "mode": "LIVE_SHADOW"
+          }
+        ],
+        "field_validated": false
+      },
+      "hazardAbstentions": [
+        "rain",
+        "snowstorm",
+        "cloudburst_risk"
+      ],
+      "pageErrors": []
+    }
+  ],
+  "backendServedUi": true
+}

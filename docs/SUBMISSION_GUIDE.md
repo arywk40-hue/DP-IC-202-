@@ -4,6 +4,12 @@ INDRA is a six-channel environmental forecasting and Himalayan risk research pro
 
 ## Files for the examiner
 
+The two newly completed features are documented in
+[parameter maps and weather categories](PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md)
+and the [feature report](../reports/weather_features_v1/REPORT.md).
+Use the separate 12-location synthetic demo on :8082 to show both end to end;
+the downloaded Mandi archive remains a one-location view on :8080.
+
 1. [Features](FEATURES.md), [overview](PROJECT_OVERVIEW.md) and [architecture](ARCHITECTURE.md).
 2. [Current Mandi report](../reports/mandi_pipeline_v2/REPORT.md), its `results.json` and `verification.json`: data provenance, inputs, exact +6h targets, comparisons, software/browser checks and limits.
 3. [Active profile](../ml/models/india_mandi_tabular_v2/profile.json) and [blend coefficients](../ml/models/india_mandi_tabular_v2/ensemble_weights.json). These reference checksummed learned artifacts; weights are not hidden in the frontend.
@@ -49,7 +55,7 @@ INDRA_PYTHON="$PWD/.venv/bin/python" npm run test:e2e --prefix apps/indra-himach
 npm run test:mandi --prefix apps/indra-himachal-ui
 ```
 
-Synthetic browser fixtures verify wiring only. The actual Mandi browser test separately checks source labels, numerical forecasts and hazard abstention; it saves evidence in `reports/mandi_pipeline_v2/`.
+Synthetic browser fixtures verify wiring only. The actual Mandi browser test separately checks source labels, numerical forecasts and hazard abstention; it saves current UI evidence in `reports/weather_features_v1/`.
 
 ## Questions to answer
 

@@ -51,13 +51,13 @@ def test_five_endpoint_handoff_and_restart_staleness(assessed):
         store.replace(assessed)
         epoch = assessed[0]["timestamp"]/1000
         with TestClient(create_app(db, clock=lambda: epoch)) as client:
-            assert client.get("/api/status").json()["appVersion"] == "0.4.0"
+            assert client.get("/api/status").json()["appVersion"] == "0.5.0"
             assert client.get('/api/status').json()['forecastModel'] == 'india_mandi_tabular_v2'
             assert len(client.get("/api/nodes").json()) == 4
             telemetry = client.get("/api/nodes/demo-03/telemetry").json()
             assert telemetry["assessmentUsableNow"]
             assert telemetry["risks"]["cloudburst_risk"]["probability"] is None
-            assert client.get("/api/kriging/heatmap").json()["features"] == []
+            assert client.get("/api/kriging/heatmap").json()["features"]
             assert client.post("/api/rpc/demo-01", json={"command": 1}).status_code == 501
             assert client.get("/api/nodes/missing/telemetry").status_code == 404
         with TestClient(create_app(db, clock=lambda: epoch+86400)) as client:

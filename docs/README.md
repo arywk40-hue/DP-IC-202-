@@ -32,3 +32,7 @@ Research references retain their original evidence categories:
 Older reports remain reproducible references. Their four-channel or foreign-model
 results are not six-channel Indian hazard validation. Model/raw data paths have
 not been renamed or removed where code and immutable manifests depend on them.
+# Current maps and categories
+
+[Six parameter heatmaps and ten synthetic-trained weather categories](PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md)
+documents the API/UI 0.5.0 integration and isolated 12-location demonstration.

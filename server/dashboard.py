@@ -27,10 +27,12 @@ from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
 from server.storm_run import StormRun
+from ml.himachal.weather_categories import WeatherCategories, synthetic_episodes
+from ml.himachal.parameter_maps import parameter_maps, geojson
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ACTIVE_MODEL
-API_VERSION = "0.4.0"
+API_VERSION = "0.5.0"
 MAX_ROWS = 50_000
 
 
@@ -69,6 +71,25 @@ def read_observations(path):
     if not isinstance(data, list) or not 1 <= len(data) <= MAX_ROWS:
         raise ValueError("Expected bounded nonempty list of native six-channel snapshots")
     return data
+
+
+def weather_demo_observations(now=None):
+    """Multi-location synthetic scenario demonstration, never measured Mandi data."""
+    end=pd.Timestamp(now or datetime.now(timezone.utc)).floor('h')
+    rows=demo_observations(end)
+    episodes,_,labels=synthetic_episodes(400,707)
+    for offset,j in enumerate([3,4,5,6,7,8,2,9],5):
+        episode=episodes[next(i for i in range(len(labels)) if labels[i,j])]
+        template=copy.deepcopy(rows[0])
+        template.update(node_id=f'demo-{offset:02d}',physical_site_id=f'synthetic-site-{offset}',
+            registration_id=f'synthetic-registration-{offset}',latitude=31.70+(offset%3)*.012,
+            longitude=76.91+(offset//3)*.014)
+        for tick in range(25):
+            r=copy.deepcopy(template);stamp=(end-pd.Timedelta(hours=24-tick)).isoformat()
+            r.update(native_interval_seconds=3600,timestamp_utc=stamp,valid_time_utc=stamp,available_at_utc=stamp,
+                measurements=dict(zip(RAW_SENSOR_COLUMNS,episode[max(0,tick-18)].tolist())))
+            rows.append(r)
+    return rows
 
 
 def apply_forecasts(nodes, histories, engine, clock):
@@ -127,6 +148,7 @@ def assess(rows, *, now=None, model_dir=MODEL):
     if len(groups) > 200:
         raise ValueError("Dashboard import supports at most 200 nodes")
     result = []
+    classifier=WeatherCategories()
     forecast_histories = {}
     for node_id, history in sorted(groups.items()):
         history.sort(key=lambda x: utc(x["timestamp_utc"]))
@@ -138,11 +160,15 @@ def assess(rows, *, now=None, model_dir=MODEL):
         age = (clock-utc(latest["timestamp_utc"])).total_seconds()
         stale = age > max(120, latest["native_interval_seconds"]*2)
         forecast_histories[node_id] = [dict(timestamp=r['timestamp_utc'], **r['measurements']) for r in history]
+        class_history=[dict(timestamp=r['timestamp_utc'],**r['measurements']) for r in history]
+        categories=classifier.predict(class_history,latest['native_interval_seconds'])
+        categories.update(observation_timestamp=timestamp,assessed_at_utc=clock.isoformat(),source_class=latest['source_class'])
         result.append(dict(id=node_id, name=node_id, lat=latest["latitude"], lng=latest["longitude"],
             lastSeen=timestamp, battery=None, anomalyIndex=None, anomalyLabel="Experimental risk assessment",
             stale=stale, reportingIntervalSeconds=latest["native_interval_seconds"],
             sourceClass=latest["source_class"], sourceId=latest["source_id"], sourceCellId=latest["source_cell_id"],
             pressureReference=latest["pressure_reference"], registrationId=latest["registration_id"],
+            physicalSiteId=latest['physical_site_id'],weatherCategories=categories,
             elevationM=latest["elevation_m"], timestamp=timestamp, sensors=latest["measurements"], units=UNITS.copy(),
             risks=rules["outputs"], stormSequence=rules["rainstorm_sequence"],
             history=[dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in history[-97:]],
@@ -181,6 +207,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
     engine = load_forecaster(model_dir)
+    classifier=WeatherCategories()
     app.state.forecaster = engine
     existing = store.all()
     if existing:
@@ -190,6 +217,12 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
             now = pd.Timestamp(clock() if clock else time.time(), unit='s', tz='UTC')
             histories = {n['id']: n.get('forecastHistory', n.get('history', [])) for n in existing}
             store.replace(apply_forecasts(existing, histories, engine, now))
+        existing=store.all()
+        if any(n.get('weatherCategories',{}).get('profile_sha256')!=classifier.sha256 for n in existing):
+            for n in existing:
+                n['weatherCategories']=classifier.predict(n.get('history',[]),n['reportingIntervalSeconds'])
+                n['weatherCategories'].update(observation_timestamp=n['timestamp'],assessed_at_utc=datetime.fromtimestamp(clock() if clock else time.time(),timezone.utc).isoformat(),source_class=n['sourceClass'])
+            store.replace(existing)
     storm = StormRun(storm_risk_run)
     online_learner=None
     if online_state is not None:
@@ -270,12 +303,16 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
             forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS', transport="HTTP_LOCAL_NO_RF",
             empty=not items, staleNodes=sum(n["stale"] for n in items))
 
+    @app.get('/api/parameter-heatmaps')
+    def all_parameter_maps(resolution: int=24):
+        try:return parameter_maps(nodes(),resolution)
+        except ValueError as exc:raise HTTPException(422,str(exc)) from exc
+
     @app.get("/api/kriging/heatmap")
-    def heatmap():
-        # No surface is invented by smoothing categorical or uncalibrated risk.
-        return dict(type="FeatureCollection", features=[], status="NOT_AVAILABLE",
-            reason="Spatial validation and sufficient independent node coverage required; node readings remain visible",
-            method=None, uncertainty=None, probability=None)
+    def heatmap(channel: str='temperature_c',resolution: int=24):
+        # Legacy route name retained; the actual method is explicitly IDW.
+        try:return geojson(parameter_maps(nodes(),resolution),channel)
+        except ValueError as exc:raise HTTPException(422,str(exc)) from exc
 
     @app.post("/api/rpc/{identity}")
     def rpc(identity: str):
@@ -296,7 +333,9 @@ def main():
     sources = parser.add_mutually_exclusive_group()
     sources.add_argument("--observations", type=Path)
     sources.add_argument("--demo", action="store_true", help="Replace store with clearly marked synthetic fixtures")
+    sources.add_argument('--weather-demo',action='store_true',help='All-category multi-location synthetic engineering demonstration')
     parser.add_argument("--port", type=int, default=8080)
+    parser.add_argument('--host',default='127.0.0.1',choices=['127.0.0.1','0.0.0.0','::1','::'],help='Listen address; loopback by default, explicit public interface for hosted deployments')
     parser.add_argument("--ui", type=Path)
     parser.add_argument('--storm-risk-run', type=Path, help='Owner-generated experimental ERA5 run directory')
     parser.add_argument('--forecast-model',type=Path,default=MODEL,help='Versioned gateway model; v1 remains available explicitly')
@@ -305,17 +344,17 @@ def main():
     if not 1024 <= args.port <= 65535:
         parser.error("Use a local unprivileged port")
     app = create_app(args.db, ui_dir=args.ui, storm_risk_run=args.storm_risk_run,model_dir=args.forecast_model,online_state=args.online_state)
-    if args.observations or args.demo:
-        raw = demo_observations() if args.demo else read_observations(args.observations)
+    if args.observations or args.demo or args.weather_demo:
+        raw = weather_demo_observations() if args.weather_demo else demo_observations() if args.demo else read_observations(args.observations)
         prepared = assess(raw,model_dir=args.forecast_model)
         app.state.store.replace(prepared)
         if args.online_state is not None:
             from ml.india_mandi.online import ingest_native
             ingest_native(raw,args.online_state,app.state.forecaster)
-        print(json.dumps(dict(nodes=len(prepared), mode="SYNTHETIC_DEMO" if args.demo else "OPERATOR_IMPORT",
+        print(json.dumps(dict(nodes=len(prepared), mode="SYNTHETIC_DEMO" if args.demo or args.weather_demo else "OPERATOR_IMPORT",
             probabilities="UNAVAILABLE", hardware_rpc=False)))
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=args.port)
+    uvicorn.run(app, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":

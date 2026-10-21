@@ -1,0 +1,89 @@
+{
+  "verified_at_utc": "2026-10-21T12:19:12.932199+00:00",
+  "baseline_commit": "53aff468c89ef8f9fe6509511a0c443e2da0e2d6",
+  "checks": [
+    {
+      "command": ".venv/bin/pytest -q",
+      "result": "PASS",
+      "tests": 348,
+      "subtests": 172,
+      "warnings": 3,
+      "seconds": 64.97
+    },
+    {
+      "command": ".venv/bin/pytest -q tests/test_dashboard_integration.py tests/test_weather_features.py",
+      "result": "PASS",
+      "tests": 14
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "PASS",
+      "tests": 12,
+      "viewports": [
+        "desktop",
+        "mobile"
+      ]
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 2
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run test:weather",
+      "result": "PASS",
+      "scope": "twelve-location simulated local preview"
+    },
+    {
+      "command": "INDRA_MANDI_URL=http://127.0.0.1:8080 INDRA_EXPECT_ONLINE=1 npm run test:mandi",
+      "result": "PASS",
+      "scope": "historical Mandi modeled source and shadow state"
+    },
+    {
+      "command": ".venv/bin/python scripts/test_weather_features.py",
+      "result": "PASS",
+      "scope": "synthetic definition recovery and six spatial HTTP layers"
+    },
+    {
+      "command": "ruff check and git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "original_artifact_integrity": {
+    "docs/plans/PROTECTED_PATHS.json": {
+      "verified_files": 129,
+      "mismatches": []
+    },
+    "configs/committed_exports_v1.json": {
+      "verified_files": 108,
+      "mismatches": []
+    }
+  },
+  "field_validated": false,
+  "real_event_probability_calibrated": false,
+  "publicly_deployed": false,
+  "forecast_profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "category_profile_sha256": "7c9856bd2b515c14eb9c19b90d4fae6066295985aaf6418a331c8c353cec2205",
+  "local_urls": {
+    "simulated_preview": "http://127.0.0.1:8082",
+    "historical_mandi": "http://127.0.0.1:8080"
+  },
+  "schema_version": "indra_weather_feature_verification_v1",
+  "evidence": "SYNTHETIC_PROXY_AND_SOFTWARE_TESTS_NOT_REAL_EVENT_ACCURACY",
+  "feature_code_sha256": {
+    "ml/himachal/weather_categories.py": "a70337d48291e89eb46a528b3a9728892d5bc81f2128b289faf05bd558921338",
+    "ml/himachal/parameter_maps.py": "b823e1df0f3c8b00a7a881d0576e5e03580415a636a8112a1cd2cedbb7c89a42",
+    "server/dashboard.py": "552e1738d6924411395ab1f61ea20c0b1b16c38e5f1e0da48eb412509dd09c2a",
+    "scripts/train_weather_categories.py": "b267255dacf881e2d7ba50de8c52b8cd517322edabffdfeaa0a199173440db56",
+    "scripts/test_weather_features.py": "fd93357e23bffc4f23ce35939dc8dcc8b728563e02f1726bced5a78fec85c65b"
+  },
+  "numeric_reports_sha256": {
+    "classification_results.json": "096e01dabd7517ec29a8cc696df74d305f8abd9744a8474a24d2f609b2926ba1",
+    "integration_results.json": "315248686c475519a5983c67aaf0f27eb6ec29aec5c5ab8ed2530eedb971c91f"
+  },
+  "current_ui_evidence": "reports/ui_refresh_v1/verification.json"
+}
