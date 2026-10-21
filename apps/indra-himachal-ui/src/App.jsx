@@ -210,7 +210,7 @@ export default function App() {
           {source === "synthetic_demo"
             ? "These are simulated readings, not measurements from actual stations."
             : source === "modeled_grid"
-              ? "Showing archived weather-model data, not live sensor readings."
+              ? "Showing weather-model estimates, not sensor measurements."
               : "Location readings and estimates are shown with their observation times."}
         </div>
         {error && (

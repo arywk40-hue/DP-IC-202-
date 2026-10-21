@@ -1,0 +1,88 @@
+{
+  "source_class": "modeled_grid",
+  "evidence": "CURRENT_MODEL_GRID_NOT_STATION_OBSERVATIONS",
+  "requested_coordinates": [
+    31.71,
+    76.93
+  ],
+  "weather_model": "ecmwf_ifs",
+  "air_domain": "cams_global",
+  "retrieved_at_utc": "2026-10-21T16:51:51.747493+00:00",
+  "rows": 89,
+  "new_hours": 0,
+  "provider_revisions_ignored": 0,
+  "future_hours_excluded": 7,
+  "latest_valid_utc": "2026-10-21T16:00:00+00:00",
+  "source_receipts": {
+    "weather": {
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m",
+      "sha256": "f39552ebd567df8c78a972774a4225b68e26b3d260faa290c014a58e08416061",
+      "returned_latitude": 31.669594,
+      "returned_longitude": 76.942444
+    },
+    "air": {
+      "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+      "sha256": "181d4d17f57e81a95fe74577e52954b89d99535d9f4707e67f29938c811a7e56",
+      "returned_latitude": 31.700005,
+      "returned_longitude": 76.899994
+    }
+  },
+  "history_sha256": "cc8a1a1ff5c900c53c25e4c0f79d0a6f025dd12c2f9d8c8287c3b2eeef49b750",
+  "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS)",
+  "station_accuracy": false,
+  "hazard_accuracy": false,
+  "dashboard_nodes": 1,
+  "latest_forecast": {
+    "timestamp": 1792598400000,
+    "forecastTimestamp": "2026-10-21T22:00:00+00:00",
+    "forecastStatus": "HYBRID_READY",
+    "sensors": {
+      "temperature_c": 16.4,
+      "relative_humidity_pct": 74.0,
+      "pressure_hpa": 931.3,
+      "pm25_ug_m3": 25.3,
+      "pm10_ug_m3": 27.6,
+      "wind_speed_mps": 0.38
+    },
+    "forecast6h": {
+      "temperature_c": 10.860896411478254,
+      "relative_humidity_pct": 87.3894274372831,
+      "pressure_hpa": 928.6644694475084,
+      "pm25_ug_m3": 16.080851244182035,
+      "pm10_ug_m3": 16.902458801290795,
+      "wind_speed_mps": 1.4822458925654118
+    },
+    "sourceClass": "modeled_grid"
+  },
+  "online": {
+    "enabled": true,
+    "status": "LEARNING_SHADOW",
+    "role": "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED",
+    "model_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+    "scaler": "FROZEN_TRAIN_ONLY",
+    "updates": 0,
+    "forecasts": 66,
+    "eligible_forecasts": 6,
+    "scored_forecasts": 0,
+    "pending": 6,
+    "historical_ineligible_forecasts": 60,
+    "drift_warning": false,
+    "rolling_metrics": {},
+    "namespaces": [
+      {
+        "id": "live:26846f58a2241779563af8f4aa4e3258",
+        "updates": 0,
+        "last_processed_at": "2026-10-21T07:39:08+00:00",
+        "mode": "LIVE_SHADOW"
+      },
+      {
+        "id": "live:75f010d5d44d2efa94b165c45b90a137",
+        "updates": 0,
+        "last_processed_at": "2026-10-21T16:48:21+00:00",
+        "mode": "LIVE_SHADOW"
+      }
+    ],
+    "field_validated": false,
+    "skipped_nonhourly_rows": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "python_tests": 22,
+  "desktop_mobile_current_browser_checks": 2,
+  "javascript_contract_tests": 2,
+  "build": "PASSED",
+  "lint": "PASSED",
+  "forecast_weights_changed": false,
+  "raw_data_committed": false,
+  "current_source": "MODELED_GRID",
+  "physical_nodes": 0,
+  "displayed_locations": 1,
+  "collector_interval_seconds": 900,
+  "initial_shadow_pending": 6,
+  "initial_shadow_updates": 0,
+  "station_or_hazard_accuracy_evaluated": false,
+  "code_sha256": {
+    "ml/india_mandi/live.py": "b2af94aa0dc183d7894f74f4f60e292fcb2471e52bcc02d9516a0eefb34f17d9",
+    "scripts/fetch_mandi_live.py": "e5780e2940d60ea527860d6fee8a2aec4f2439a1bf19c80521a30cc87b268a7a",
+    "scripts/evaluate_mandi_snapshot.py": "f2d4eb6dc79ff06b6f6512712520e56d712634172d0adeb963cfd13067255f3d"
+  }
+}

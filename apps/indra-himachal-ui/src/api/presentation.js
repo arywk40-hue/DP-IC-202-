@@ -2,14 +2,14 @@ export function locationName(node) {
   if (!node) return "Select a location";
   const name = node.name || node.id || "";
   if (/^demo-\d+$/.test(name)) return `Location ${name.split("-")[1]}`;
-  if (name === "mandi-api-grid") return "Mandi";
+  if (name === "mandi-api-grid" || name === "mandi-api-current") return "Mandi";
   return name;
 }
 export function sourceName(source) {
   return (
     {
       synthetic_demo: "Simulated readings",
-      modeled_grid: "Weather archive",
+      modeled_grid: "Weather model",
       physical_indra: "Sensor readings",
       observed_external_station: "Station readings",
     }[source] || "Source unavailable"

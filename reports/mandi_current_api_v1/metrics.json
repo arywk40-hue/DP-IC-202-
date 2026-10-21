@@ -1,0 +1,240 @@
+{
+  "source_evidence": "RETROSPECTIVE_MODEL_GRID_NOT_STATION_ACCURACY",
+  "model_id": "india_mandi_tabular_v2",
+  "profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "source_manifest": {
+    "schema_version": "indra_hourly_forecast_v1",
+    "source_name": "Mandi, India: Open-Meteo/ECMWF IFS and CAMS global modeled grid",
+    "country_code": "IN",
+    "evidence_kind": "MODELED_GRID_RETROSPECTIVE",
+    "requested_latitude": 31.71,
+    "requested_longitude": 76.93,
+    "source_url": "https://open-meteo.com/",
+    "license": "CC BY 4.0; provider attribution required",
+    "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS) global atmospheric composition forecasts",
+    "weather_documentation": "https://open-meteo.com/en/docs/historical-weather-api",
+    "air_documentation": "https://open-meteo.com/en/docs/air-quality-api",
+    "retrieved_at_utc": "2026-10-21T16:44:12.097545+00:00",
+    "experiment_config_sha256": "9bdb282901cc6cadfd7eac789ed2ad89dba4647139557adbd297f03a9fe7017b",
+    "observations_sha256": "6fb29a17ec956cd2985d85559da75e6fe617719c55fa8e1b108429d3bf35608d",
+    "context_sha256": "25807caaee3b72022c74f6880832d9f7e0ba6932cb1cb043467e877af0a12f70",
+    "sensor_columns": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "pressure_hpa",
+      "pm25_ug_m3",
+      "pm10_ug_m3",
+      "wind_speed_mps"
+    ],
+    "rows": 720,
+    "locations": [
+      "Mandi_OpenMeteo_Grid"
+    ],
+    "coverage_start_utc": "2026-09-21T00:00:00+00:00",
+    "coverage_end_utc": "2026-10-20T23:00:00+00:00",
+    "complete_six_channel_rows": 720,
+    "missing_measurements": {
+      "temperature_c": 0,
+      "relative_humidity_pct": 0,
+      "pressure_hpa": 0,
+      "pm25_ug_m3": 0,
+      "pm10_ug_m3": 0,
+      "wind_speed_mps": 0
+    },
+    "pressure_reference": "MODELED_GRID_SURFACE; not verified station pressure",
+    "temporal_resolution": "Hourly API positions; CAMS global underlying product is 3-hourly, approximately 45 km",
+    "co_location": "Different weather/air grids; returned grid coordinates recorded in each receipt; no physical co-location claim",
+    "label_provenance": "Exact +6h modeled values, no observed hazard labels",
+    "original_issue_time_availability": "Not verified; retrospective benchmark, not replay of information known at original issue time",
+    "geographically_independent_validation": false,
+    "deployment_approved": false,
+    "hazard_training_allowed": false,
+    "source_receipts": [
+      {
+        "start_date": "2026-09-21",
+        "end_date": "2026-09-30",
+        "weather": {
+          "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-09-21&end_date=2026-09-30&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+          "raw_file": "data/himachal/mandi_api/2026-09-21_2026-10-20/raw/weather_9cbe3dbae4497c5d2c72.json",
+          "sha256": "2323bcca487e8a10dea44f2e8f9caa0188e92726b33abed7abbeee5afe409741",
+          "returned_latitude": 31.669594,
+          "returned_longitude": 76.942444,
+          "elevation": 770.0,
+          "units": {
+            "time": "iso8601",
+            "temperature_2m": "\u00b0C",
+            "relative_humidity_2m": "%",
+            "surface_pressure": "hPa",
+            "wind_speed_10m": "m/s",
+            "precipitation": "mm",
+            "snowfall": "cm",
+            "wind_gusts_10m": "m/s"
+          }
+        },
+        "air": {
+          "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-09-21&end_date=2026-09-30&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+          "raw_file": "data/himachal/mandi_api/2026-09-21_2026-10-20/raw/air_cd23c1190fd9253cff65.json",
+          "sha256": "04b5ad3eeb0f84e3e6d7e413dcac9a527070aa70b654bc974121b1521f9d253f",
+          "returned_latitude": 31.700005,
+          "returned_longitude": 76.899994,
+          "elevation": 770.0,
+          "units": {
+            "time": "iso8601",
+            "pm2_5": "\u03bcg/m\u00b3",
+            "pm10": "\u03bcg/m\u00b3"
+          }
+        }
+      },
+      {
+        "start_date": "2026-10-01",
+        "end_date": "2026-10-20",
+        "weather": {
+          "url": "https://archive-api.open-meteo.com/v1/archive?latitude=31.71&longitude=76.93&start_date=2026-10-01&end_date=2026-10-20&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m%2Cprecipitation%2Csnowfall%2Cwind_gusts_10m",
+          "raw_file": "data/himachal/mandi_api/2026-09-21_2026-10-20/raw/weather_21f60d893b36d84c3d77.json",
+          "sha256": "b77d88f14752c6410d283f34db95df8aca31835caa3825b03b852eb5f50ca8c6",
+          "returned_latitude": 31.669594,
+          "returned_longitude": 76.942444,
+          "elevation": 770.0,
+          "units": {
+            "time": "iso8601",
+            "temperature_2m": "\u00b0C",
+            "relative_humidity_2m": "%",
+            "surface_pressure": "hPa",
+            "wind_speed_10m": "m/s",
+            "precipitation": "mm",
+            "snowfall": "cm",
+            "wind_gusts_10m": "m/s"
+          }
+        },
+        "air": {
+          "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&start_date=2026-10-01&end_date=2026-10-20&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+          "raw_file": "data/himachal/mandi_api/2026-09-21_2026-10-20/raw/air_deec811baf50eb09c236.json",
+          "sha256": "425ff9d43a40d9daa2b8a6b59176d854f0e11b647a5eb44730641285a0d0e5c7",
+          "returned_latitude": 31.700005,
+          "returned_longitude": 76.899994,
+          "elevation": 770.0,
+          "units": {
+            "time": "iso8601",
+            "pm2_5": "\u03bcg/m\u00b3",
+            "pm10": "\u03bcg/m\u00b3"
+          }
+        }
+      }
+    ],
+    "china_rows_used": 0,
+    "china_weights_used": false
+  },
+  "previous_archive_end": "2026-10-19T23:00:00+00:00",
+  "cohorts": {
+    "recent_30_days_reused_dates": {
+      "rows": 690,
+      "metrics": {
+        "temperature_c": {
+          "rows": 690,
+          "mae": 1.5218646775812938,
+          "rmse": 2.002105770069378,
+          "r2": 0.845972738445389,
+          "persistence_mae": 5.6702898398689605,
+          "mae_skill_vs_persistence": 0.7316072510296117
+        },
+        "relative_humidity_pct": {
+          "rows": 690,
+          "mae": 7.2720279112748045,
+          "rmse": 9.696755115738174,
+          "r2": 0.7431465844283964,
+          "persistence_mae": 21.597101449275364,
+          "mae_skill_vs_persistence": 0.6632868568796393
+        },
+        "pressure_hpa": {
+          "rows": 690,
+          "mae": 0.9541626217128628,
+          "rmse": 1.2246711124267406,
+          "r2": 0.8444553637677901,
+          "persistence_mae": 1.9159418520720102,
+          "mae_skill_vs_persistence": 0.5019876930602167
+        },
+        "pm25_ug_m3": {
+          "rows": 690,
+          "mae": 6.303253404465435,
+          "rmse": 8.61840747746631,
+          "r2": 0.7294761672560777,
+          "persistence_mae": 9.78999997926795,
+          "mae_skill_vs_persistence": 0.35615388990667163
+        },
+        "pm10_ug_m3": {
+          "rows": 690,
+          "mae": 8.346725878981035,
+          "rmse": 11.43188159618363,
+          "r2": 0.7015217125433606,
+          "persistence_mae": 12.397826063598412,
+          "mae_skill_vs_persistence": 0.3267589143319183
+        },
+        "wind_speed_mps": {
+          "rows": 690,
+          "mae": 0.3160246168250166,
+          "rmse": 0.403218574390567,
+          "r2": 0.3344252499558247,
+          "persistence_mae": 0.5658550719400678,
+          "mae_skill_vs_persistence": 0.4415096152774466
+        }
+      }
+    },
+    "targets_after_previous_archive": {
+      "rows": 24,
+      "metrics": {
+        "temperature_c": {
+          "rows": 24,
+          "mae": 1.09960519368527,
+          "rmse": 1.3131019037965665,
+          "r2": 0.9543751330059879,
+          "persistence_mae": 7.800000087420146,
+          "mae_skill_vs_persistence": 0.8590249767485625
+        },
+        "relative_humidity_pct": {
+          "rows": 24,
+          "mae": 5.1664908572598796,
+          "rmse": 6.3351089655042685,
+          "r2": 0.893697057299991,
+          "persistence_mae": 24.125,
+          "mae_skill_vs_persistence": 0.7858449385591759
+        },
+        "pressure_hpa": {
+          "rows": 24,
+          "mae": 0.7061140076005898,
+          "rmse": 0.9281022439051516,
+          "r2": 0.7019378186491814,
+          "persistence_mae": 2.3124989827473996,
+          "mae_skill_vs_persistence": 0.6946532677987688
+        },
+        "pm25_ug_m3": {
+          "rows": 24,
+          "mae": 4.096776684910679,
+          "rmse": 4.461727859738884,
+          "r2": 0.6866585969135456,
+          "persistence_mae": 8.770833571751913,
+          "mae_skill_vs_persistence": 0.5329090842511135
+        },
+        "pm10_ug_m3": {
+          "rows": 24,
+          "mae": 5.020719153870859,
+          "rmse": 5.539001218968155,
+          "r2": 0.5429313796351306,
+          "persistence_mae": 9.07500011920929,
+          "mae_skill_vs_persistence": 0.44675271758472257
+        },
+        "wind_speed_mps": {
+          "rows": 24,
+          "mae": 0.20272692969675257,
+          "rmse": 0.2628243526804679,
+          "r2": 0.648449715607152,
+          "persistence_mae": 0.5624999955793222,
+          "mae_skill_vs_persistence": 0.639596566595591
+        }
+      }
+    }
+  },
+  "models_retrained": false,
+  "weights_selected_on_this_snapshot": false,
+  "hazards_evaluated": false,
+  "source_revision_warning": "Upstream historical values may differ from earlier snapshots; first cohort reuses previously examined test dates."
+}

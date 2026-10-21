@@ -29,6 +29,9 @@ A durable delayed-label online learner is implemented in shadow mode.
 
 ## Run locally
 
+For newly fetched Mandi model values and automatic delayed shadow testing, see
+[the current feed guide](docs/CURRENT_MANDI_FEED.md).
+
 Complete synthetic maps/category showcase: `.venv/bin/python scripts/run_himachal_demo.py --offline --weather-demo --db data/himachal/weather_demo.sqlite --port 8082`, then open http://127.0.0.1:8082. It stays separate from the downloaded Mandi view.
 
 Python 3.13 and Node 22 are the tested setup. From the repository root:

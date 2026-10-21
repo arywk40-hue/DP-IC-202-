@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-21T16:52:48.868Z",
+  "evidence": "CURRENT_MODEL_GRID_NOT_STATION_VALIDATION",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "node": "mandi-api-current",
+      "timestamp": 1792598400000,
+      "source": "modeled_grid",
+      "status": "HYBRID_READY",
+      "forecast6h": {
+        "temperature_c": 10.860896411478254,
+        "relative_humidity_pct": 87.3894274372831,
+        "pressure_hpa": 928.6644694475084,
+        "pm25_ug_m3": 16.080851244182035,
+        "pm10_ug_m3": 16.902458801290795,
+        "wind_speed_mps": 1.4822458925654118
+      }
+    },
+    {
+      "viewport": "mobile",
+      "node": "mandi-api-current",
+      "timestamp": 1792598400000,
+      "source": "modeled_grid",
+      "status": "HYBRID_READY",
+      "forecast6h": {
+        "temperature_c": 10.860896411478254,
+        "relative_humidity_pct": 87.3894274372831,
+        "pressure_hpa": 928.6644694475084,
+        "pm25_ug_m3": 16.080851244182035,
+        "pm10_ug_m3": 16.902458801290795,
+        "wind_speed_mps": 1.4822458925654118
+      }
+    }
+  ]
+}

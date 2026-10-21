@@ -34,7 +34,7 @@ try {
     await page.getByRole("heading", { name: "Mandi", exact: true }).waitFor();
     assert.match(
       await page.locator(".data-context").innerText(),
-      /archived weather-model data/,
+      /weather-model estimates/,
     );
     const status = await (await page.request.get(`${base}/api/status`)).json();
     const node = await (
