@@ -27,6 +27,7 @@ from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
 from server.storm_run import StormRun
+from ml.provenance import append as audit_append, initialize as audit_initialize, batch as audit_batch
 from ml.himachal.weather_categories import WeatherCategories, synthetic_episodes
 from ml.himachal.hazard_scenarios import HazardScenarios
 from ml.himachal.parameter_maps import parameter_maps, geojson
@@ -190,6 +191,7 @@ class Store:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as db:
             db.execute("CREATE TABLE IF NOT EXISTS nodes (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
+            audit_initialize(db)
 
     def connect(self):
         return sqlite3.connect(self.path, timeout=5)
@@ -199,6 +201,7 @@ class Store:
         with self.connect() as db:
             db.execute("DELETE FROM nodes")
             db.executemany("INSERT INTO nodes VALUES (?, ?)", payloads)
+            audit_append(db, "DASHBOARD_SNAPSHOT", {"nodes": nodes})
 
     def all(self):
         with self.connect() as db:
@@ -313,6 +316,15 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
             forecastModelsInUse=sorted({n['forecastModel']['id'] for n in items}), forecastHistoryHours=24,
             forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS', transport="HTTP_LOCAL_NO_RF",
             empty=not items, staleNodes=sum(n["stale"] for n in items))
+
+    @app.get("/api/provenance")
+    def provenance():
+        try:
+            proof = audit_batch(store.path)
+            return {**proof['manifest'], 'batch_id': proof['batch_id'],
+                    'status': 'LOCAL_ONLY', 'on_chain_verified': False}
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
 
     @app.get('/api/parameter-heatmaps')
     def all_parameter_maps(resolution: int=24):

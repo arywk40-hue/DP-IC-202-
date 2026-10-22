@@ -17,6 +17,7 @@ from sklearn.linear_model import SGDRegressor
 
 from ml.india_mandi.hybrid import bounded
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
+from ml.provenance import append as audit_append
 
 
 def stamp(value):
@@ -167,6 +168,9 @@ class OnlineLearner:
             db.execute(
                 "INSERT INTO observations VALUES (?,?,?,?)", (namespace, t, a, payload)
             )
+            audit_append(db, "OBSERVATION", dict(namespace=namespace, valid=t,
+                         available=a, processed=clock, values=values, mode=mode,
+                         model_sha256=self.model_sha))
             if features is not None and base is not None:
                 x, b = np.asarray(features, float), np.asarray(base, float)
                 if (
@@ -199,6 +203,11 @@ class OnlineLearner:
                         eligible,
                     ),
                 )
+                audit_append(db, "FORECAST_ISSUED", dict(namespace=namespace,
+                             valid=t, target=t+21600, issued_at=clock,
+                             revision=revision, base=b.tolist(), shadow=shadow.tolist(),
+                             features=z.tolist(), model_sha256=self.model_sha,
+                             eligible=eligible))
             pending = db.execute(
                 "SELECT f.issue,f.features,f.base,o.measurements FROM forecasts f JOIN observations o ON f.namespace=o.namespace AND f.target=o.time WHERE f.namespace=? AND f.scored=0 AND f.eligible=1 AND o.available<=? AND f.target<=? ORDER BY f.target",
                 (namespace, clock, clock),
@@ -218,6 +227,11 @@ class OnlineLearner:
                     (truth_json, clock, namespace, issue),
                 )
                 updated += 1
+                audit_append(db, "SHADOW_UPDATE", dict(namespace=namespace,
+                             issue=issue, target=issue+21600, learned_at=clock,
+                             truth=truth, base=json.loads(b_json),
+                             revision=revision+updated,
+                             checkpoint=self.checkpoint(models)))
             db.execute(
                 "INSERT OR REPLACE INTO state VALUES (?,?,?,?,?)",
                 (

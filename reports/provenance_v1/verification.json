@@ -1,0 +1,13 @@
+{
+  "network": "EPHEMERAL_LOCAL_PYEVM",
+  "chain_id": 131277322940537,
+  "contract": "0xF2E246BB76DF876Cef8b38ae84130F4F55De395b",
+  "transaction": "835289b6c6ea1ac8d2841dac5f4861cc8d5aca785a30a0092de9e0990b265dda",
+  "gas_used": 46582,
+  "root_matches": true,
+  "duplicate_rejected": true,
+  "unauthorized_rejected": true,
+  "independently_witnessed": false,
+  "signature_verified": true,
+  "source": "synthetic functional test; not field data"
+}

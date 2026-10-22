@@ -1,0 +1,5 @@
+# Optional gateway signing and local EVM integration; not required for forecasting.
+cryptography>=43
+web3>=7,<8
+eth-tester[py-evm]>=0.13.0b1
+py-solc-x>=2,<3

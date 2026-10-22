@@ -54,6 +54,10 @@ def test_five_endpoint_handoff_and_restart_staleness(assessed):
             assert client.get("/api/status").json()["appVersion"] == "0.5.0"
             assert client.get('/api/status').json()['forecastModel'] == 'india_mandi_tabular_v2'
             assert len(client.get("/api/nodes").json()) == 4
+            provenance = client.get('/api/provenance').json()
+            assert provenance['status'] == 'LOCAL_ONLY'
+            assert provenance['on_chain_verified'] is False
+            assert provenance['count'] >= 1
             telemetry = client.get("/api/nodes/demo-03/telemetry").json()
             assert telemetry["assessmentUsableNow"]
             assert telemetry["risks"]["cloudburst_risk"]["probability"] is None

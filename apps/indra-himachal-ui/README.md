@@ -21,7 +21,7 @@ For development start `python -m server.dashboard --demo` in the root and
 `npm run dev` here; Vite proxies `/api` to port 8080. No silent mock fallback.
 
 Full setup, input contract, limitations and tests:
-[Dashboard integration](../../docs/HIMACHAL_DASHBOARD_INTEGRATION.md).
+[Dashboard integration](../../EVERYTHING.md#source-88c6383f55c9).
 
 ```sh
 npm test

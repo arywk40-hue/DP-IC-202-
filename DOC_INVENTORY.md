@@ -128,10 +128,10 @@ Dates are current filesystem timestamps. Original inventory dates above remain f
 |---|---|---|---|
 | [DOC_INVENTORY.md](DOC_INVENTORY.md) | Complete original/new inventory and created/moved/unchanged manifest | 2026-10-03T16:32:56+05:30 | current |
 | [README.md](README.md) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | current |
-| [docs/DATA_LICENSES.md](docs/DATA_LICENSES.md) | Recorded source rights and training-view admission gates | 2026-10-03T16:22:40+05:30 | current |
-| [docs/DOCUMENTATION_VERIFICATION.md](docs/DOCUMENTATION_VERIFICATION.md) | Checks run during consolidation and explicit unverified work | 2026-10-03T16:31:03+05:30 | current |
-| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Single current project guide and reconciled evidence | 2026-10-03T16:32:17+05:30 | current |
-| [docs/README.md](docs/README.md) | Short index of main guide, retained references and archive | 2026-10-03T16:22:40+05:30 | current |
+| [docs/DATA_LICENSES.md](EVERYTHING.md#source-8ef030a6160f) | Recorded source rights and training-view admission gates | 2026-10-03T16:22:40+05:30 | current |
+| [docs/DOCUMENTATION_VERIFICATION.md](EVERYTHING.md#source-bfd8778290ff) | Checks run during consolidation and explicit unverified work | 2026-10-03T16:31:03+05:30 | current |
+| [docs/PROJECT_OVERVIEW.md](EVERYTHING.md#source-f795de9ca89c) | Single current project guide and reconciled evidence | 2026-10-03T16:32:17+05:30 | current |
+| [docs/README.md](EVERYTHING.md#source-0b5ca119d2be) | Short index of main guide, retained references and archive | 2026-10-03T16:22:40+05:30 | current |
 | [docs/archive/README.md](docs/archive/README.md) | Archive scope and original-path mapping instructions | 2026-10-03T16:22:40+05:30 | current |
 | [docs/archive/diagrams/ARCHITECTURE__1.mmd](docs/archive/diagrams/ARCHITECTURE__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
 | [docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd](docs/archive/diagrams/reports__nwic_pipeline__INDIA_REPORT__1.mmd) | Verbatim original inline Mermaid diagram; historical reference | 2026-10-03T16:22:40+05:30 | superseded; archived original diagram |
@@ -144,13 +144,13 @@ The original inventory snapshot above remains historical evidence. No documentat
 
 | Path | Current purpose | Last modified (Asia/Kolkata) | Status |
 |---|---|---|---|
-| [docs/INDIA_SENSOR_RISK_PLAN.md](docs/INDIA_SENSOR_RISK_PLAN.md) | India sensor audit, capability matrix, source rights and incremental plan | 2026-10-05T19:57:23+05:30 | current; reference or main guide as stated |
+| [docs/INDIA_SENSOR_RISK_PLAN.md](EVERYTHING.md#source-895004202eb0) | India sensor audit, capability matrix, source rights and incremental plan | 2026-10-05T19:57:23+05:30 | current; reference or main guide as stated |
 | [ml/india_sensor/README.md](ml/india_sensor/README.md) | Sensor-only feature/label contract and exact prepare/train/calibrate/demo commands | 2026-10-05T19:48:49+05:30 | current; reference or main guide as stated |
 | [reports/india_sensor_phase/REPORT.md](reports/india_sensor_phase/REPORT.md) | Executed India research phase, measured results, losses and pending evidence | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
 | [reports/india_sensor_phase/RESULTS.md](reports/india_sensor_phase/RESULTS.md) | Frozen A-D/baseline tables and station-bootstrap Brier intervals | 2026-10-05T19:49:49+05:30 | current; reference or main guide as stated |
 | [reports/india_sensor_phase/patches/README.md](reports/india_sensor_phase/patches/README.md) | Ordered already-applied review patches and evidence exclusions | 2026-10-05T19:55:48+05:30 | current; reference or main guide as stated |
-| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Main guide: India research supplement and user-specified hardware, spatial results unchanged | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
-| [docs/README.md](docs/README.md) | Main guide and updated reference index | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+| [docs/PROJECT_OVERVIEW.md](EVERYTHING.md#source-f795de9ca89c) | Main guide: India research supplement and user-specified hardware, spatial results unchanged | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
+| [docs/README.md](EVERYTHING.md#source-0b5ca119d2be) | Main guide and updated reference index | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
 | [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Retained A/B/hidden-C protocol, specified parts and encoder/RTC/health requirements | 2026-10-05T19:53:36+05:30 | current; reference or main guide as stated |
 
 ## Offline update — 6 October 2026
@@ -166,8 +166,8 @@ October 5 reports/patches remain historical evidence; newer offline reports supe
 | [ml/models/india_sensor_v1/README.md](ml/models/india_sensor_v1/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
 | [ml/india_sensor/README.md](ml/india_sensor/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
 | [README.md](README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
-| [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
-| [docs/README.md](docs/README.md) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [docs/PROJECT_OVERVIEW.md](EVERYTHING.md#source-f795de9ca89c) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
+| [docs/README.md](EVERYTHING.md#source-0b5ca119d2be) | Updated commands, interface or main reference as named | 2026-10-06T10:49:32+05:30 | current |
 | [reports/nwic_pipeline/NODE_COLLECTION_SPEC.md](reports/nwic_pipeline/NODE_COLLECTION_SPEC.md) | Updated commands, interface or main reference as named | 2026-10-06T10:54:21+05:30 | current |
 
 ## Independent-label/context phase — 6 October 2026
@@ -176,7 +176,7 @@ Additive references; frozen earlier evidence was neither overwritten nor moved.
 
 | Path | Purpose | Last modified (Asia/Calcutta) | Status |
 |---|---|---|---|
-| [docs/hazard_label_audit.md](docs/hazard_label_audit.md) | hazard label audit phase reference | 2026-10-06T14:04:14+05:30 | current |
+| [docs/hazard_label_audit.md](EVERYTHING.md#source-233befa42eae) | hazard label audit phase reference | 2026-10-06T14:04:14+05:30 | current |
 | [ml/hazard_context/README.md](ml/hazard_context/README.md) | README phase reference | 2026-10-06T14:04:14+05:30 | current |
 | [reports/hazard_context_phase/PLAN.md](reports/hazard_context_phase/PLAN.md) | PLAN phase reference | 2026-10-06T13:43:49+05:30 | current |
 | [reports/hazard_context_phase/REPORT.md](reports/hazard_context_phase/REPORT.md) | REPORT phase reference | 2026-10-06T14:06:07+05:30 | current |

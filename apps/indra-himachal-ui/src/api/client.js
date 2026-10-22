@@ -22,6 +22,7 @@ async function request(path, options = {}) {
     throw error;
   } finally { clearTimeout(timer); }
 }
+export const getProvenance = () => request('/api/provenance');
 export const getNodes = () => request('/api/nodes');
 export const getStatus = () => request('/api/status');
 export const getModelLab = () => request('/api/model-lab');

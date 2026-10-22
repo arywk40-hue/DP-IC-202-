@@ -8,7 +8,7 @@ six-channel model. Independent Himalayan onset labels/training gates are now
 implemented in [`ml/hazard_context`](../hazard_context/README.md); real event
 training is still blocked. The spatial experiment remains a separate reference.
 
-**Confidential: do not publish before IP review.** [Audit/capabilities](../../docs/INDIA_SENSOR_RISK_PLAN.md), [phase evidence](../../reports/india_sensor_phase/REPORT.md), [main guide](../../docs/PROJECT_OVERVIEW.md).
+**Confidential: do not publish before IP review.** [Audit/capabilities](../../EVERYTHING.md#source-895004202eb0), [phase evidence](../../reports/india_sensor_phase/REPORT.md), [main guide](../../EVERYTHING.md#source-f795de9ca89c).
 
 This adds India-only **same-node six-hour forecasts of measured thresholds**. It does not replace the working current-weather two-node spatial ensemble, predict disasters, or interpolate risk between nodes. All cloudburst/flood/landslide/fire/storm heads remain unavailable. Their eventual probabilities require independent labeled data and validation.
 

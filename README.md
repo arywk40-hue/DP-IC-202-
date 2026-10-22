@@ -1,11 +1,11 @@
-# INDRA — six-channel Mandi forecasting prototype
+# INDRA — six-channel weather forecasting
 
 INDRA forecasts **temperature, humidity, pressure, PM2.5, PM10 and wind at +6 hours**.
 It also provides **six parameter heatmaps** from synchronized locations and
 **ten current weather-pattern categories** from a synthetic-trained classifier.
-See [the feature guide and complete local demo](docs/PARAMETER_MAPS_AND_WEATHER_CATEGORIES.md).
+See [the feature guide and complete local demo](EVERYTHING.md#source-4f516879b0b8).
 Category scores are not calibrated real-event probabilities.
-It also provides [cloudburst, flash-flood and landslide scenarios](docs/SYNTHETIC_HAZARD_SCENARIOS.md)
+It also provides [cloudburst, flash-flood and landslide scenarios](EVERYTHING.md#source-76ac9fbe3adb)
 using a documented Monte Carlo simulator. Their percentages describe simulated
 outcomes under assumed rainfall/soil/drainage, not real-event probabilities.
 The active Python backend uses LightGBM, a residual neural network, the retained
@@ -16,21 +16,24 @@ snapshots spanning 24 hours. Short histories explicitly use persistence warm-up.
 modeled-data evaluation. Physical Mandi accuracy, disaster prediction, promoted live adaptive outputs and ESP32/radio execution are not established.
 A durable delayed-label online learner is implemented in shadow mode.
 
-## Start here
+## Documentation and audit trail
 
-- [Current interface and deployment handoff](docs/UI_AND_DEPLOYMENT_STATUS.md)
+[EVERYTHING.md](EVERYTHING.md) is the consolidated operating handbook, including
+architecture, model evaluation, online learning, data provenance and blockchain
+setup. Original source paths are indexed in
+[the consolidation manifest](docs/documentation_consolidation.json).
+Historical evidence, component instructions and checksum-bound artifacts remain
+at their original paths.
 
-- [Current v2 pipeline, comparison and online-learning guide](docs/MANDI_V2_PIPELINE.md)
-- [Features and what is actually available](docs/FEATURES.md)
-- [Submission guide and demonstration steps](docs/SUBMISSION_GUIDE.md)
-- [Latest Mandi test report](reports/mandi_pipeline_v2/REPORT.md)
-- [Inputs, architecture and evidence](docs/PROJECT_OVERVIEW.md)
-- [Documentation index](docs/README.md)
+The backend records hash-linked audit events within its SQLite transactions.
+The System page shows local audit status; signed exports and a Solidity contract
+support local EVM anchoring. This does not yet provide independently witnessed
+public-network verification. See the handbook for commands and trust boundaries.
 
 ## Run locally
 
 For newly fetched Mandi model values and automatic delayed shadow testing, see
-[the current feed guide](docs/CURRENT_MANDI_FEED.md).
+[the current feed guide](EVERYTHING.md#source-6d85e1c96415).
 
 Complete synthetic maps/category showcase: `.venv/bin/python scripts/run_himachal_demo.py --offline --weather-demo --db data/himachal/weather_demo.sqlite --port 8082`, then open http://127.0.0.1:8082. It stays separate from the downloaded Mandi view.
 

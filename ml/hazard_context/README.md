@@ -1,6 +1,6 @@
 # Independent Indian labels and ERA5 context research
 
-**Confidential: do not publish before IP review.** [Audit](../../docs/hazard_label_audit.md) · [executed phase report](../../reports/hazard_context_phase/REPORT.md).
+**Confidential: do not publish before IP review.** [Audit](../../EVERYTHING.md#source-233befa42eae) · [executed phase report](../../reports/hazard_context_phase/REPORT.md).
 
 This additive package preserves the sensor-only baseline and China isolation. Direct sensor measurements, future sensor measurements, environmental-risk estimates, independently observed disaster records and retrospective reanalysis are different evidence. No new disaster output is deployed. No admitted real hazard corpus or real ERA5 files currently exists.
 
@@ -32,12 +32,12 @@ Here `python` means the isolated environment interpreter. Hazard fitting must re
 
 For the explicit next-six-hour onset experiment, use `warning-labels` or
 `train-hazards --label-mode next_h_hours` with
-`configs/himalayan_warning_v2.json` (now including independent storm). The [warning protocol](../../docs/HIMALAYAN_WARNING_PROTOCOL.md)
+`configs/himalayan_warning_v2.json` (now including independent storm). The [warning protocol](../../EVERYTHING.md#source-5f398dd76325)
 documents complete six-channel history, full monitoring windows, uncertainty,
 episode metrics and the validation alert budget. `exact_future_window` remains
 the historical default; neither mode currently has admitted real hazard data.
 
-The [event prediction update](../../docs/HIMALAYAN_EVENT_PREDICTIONS.md) defines
+The [event prediction update](../../EVERYTHING.md#source-d7ebb8545407) defines
 the cloudburst/storm work and the observed Indian weather-report audit. V1 is
 retained unchanged; explicitly pass its path to reproduce earlier manifests.
 
@@ -64,7 +64,7 @@ records the current six-channel gaps and the response to the supplied scope audi
 the requested Himalayan research heads. The default target list also includes
 snowstorm. All targets still require independent admission and held-out support;
 snowstorm specifically requires confirmed occurrence, not a cold/humidity or
-rainfall proxy. See [integration scope](../../docs/HIMALAYAN_EVENT_SCOPE.md).
+rainfall proxy. See [integration scope](../../EVERYTHING.md#source-3f8f2800b552).
 
 `configs/hazard_event_schema.json` and `events.FIELDS` define nullable factual attributes: stable report/event/group IDs and original reported event IDs, provider/dataset/version/record/hash/retrieval provenance, UTC interval, coordinates or GeoJSON Point/Polygon/MultiPolygon, location/time uncertainty, original date/location/time text, definition/measurement/unit, country/state/district, quality/confidence and rights. Unknown location/time/severity stays null. Country/type and source identity must be explicitly known for an Indian record; unsupported or malformed raw rows quarantine. Dates without verified UTC interpretation remain original text, never guessed midnight. No centroid or severity is invented.
 

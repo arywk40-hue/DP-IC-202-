@@ -5,6 +5,7 @@ import MapView from "./components/MapView";
 import TelemetryPanel, { TechnicalDetails } from "./components/TelemetryPanel";
 import RpcMenu from "./components/RpcMenu";
 import StormRiskPanel from "./components/StormRiskPanel";
+import ProvenancePanel from "./components/ProvenancePanel";
 import ModelLab from "./components/ModelLab";
 import ParameterMaps from "./components/ParameterMaps";
 import {
@@ -280,6 +281,7 @@ export default function App() {
               rpcAvailable={status?.rpcAvailable === true}
               onOpenRpc={() => setRpcTargetId(selectedId)}
             />
+            <ProvenancePanel />
             <ModelLab />
             <StormRiskPanel />
           </div>
