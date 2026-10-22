@@ -22,8 +22,9 @@ A durable delayed-label online learner is implemented in shadow mode.
 architecture, model evaluation, online learning, data provenance and blockchain
 setup. Original source paths are indexed in
 [the consolidation manifest](docs/documentation_consolidation.json).
-Historical evidence, component instructions and checksum-bound artifacts remain
-at their original paths.
+All Markdown documentation is in the handbook. Original Markdown evidence is
+preserved in `docs/archive/original_markdown.zip`; model and binary artifacts
+remain at their original paths.
 
 The backend records hash-linked audit events within its SQLite transactions.
 The System page shows local audit status; signed exports and a Solidity contract
@@ -81,7 +82,7 @@ ECMWF/CAMS grids; these are not six co-located station sensors.
 | Wind | 0.3019 | m/s |
 
 Candidate/baseline results, TabPFN’s bounded comparison, RMSE/R² and blend
-weights are in the [submission report](reports/mandi_pipeline_v2/REPORT.md).
+weights are in the [submission report](EVERYTHING.md#source-992f2b21c23a).
 Results are mixed versus v1; regression errors are not classification accuracy percentages. The test period
 was examined previously, so it is not a new untouched or field test.
 

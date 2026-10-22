@@ -109,4 +109,12 @@ def test_future_duplicate_relocation_and_forecast_checksum_fail_closed(tmp_path)
 def test_original_teammate_handoff_preserved():
     root = Path(__file__).resolve().parents[1]/"docs/reference/dp_mesh_dashboard_handoff"
     for entry in json.loads((root/"original_manifest.json").read_text())["files"]:
-        assert hashlib.sha256((root/entry["path"]).read_bytes()).hexdigest() == entry["sha256"]
+        original = root/entry["path"]
+        if original.is_file():
+            content = original.read_bytes()
+        else:
+            import zipfile
+            repository = Path(__file__).resolve().parents[1]
+            with zipfile.ZipFile(repository/'docs/archive/original_markdown.zip') as archive:
+                content = archive.read(original.relative_to(repository).as_posix())
+        assert hashlib.sha256(content).hexdigest() == entry["sha256"]
