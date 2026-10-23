@@ -18,6 +18,7 @@ import sklearn
 from sklearn.neural_network import MLPRegressor
 from threadpoolctl import threadpool_limits
 
+from ml.paths import read_config
 from ml.india_mandi.benchmark import arrays, evaluate, metric
 from ml.india_mandi.data import ROOT, load_config
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
@@ -155,7 +156,7 @@ def predict_observations(observations, directory):
 
 def run(path, *, train=False):
     cfg_path = Path(path)
-    cfg = json.loads(cfg_path.read_text())
+    cfg = read_config(cfg_path)
     if cfg.get("schema_version") != "indra_mandi_neural_benchmark_v1" or cfg.get("deployment_approved") is not False or cfg.get("online_learning_enabled") is not False:
         raise ValueError("Offline research configuration required")
     if not 1 <= cfg["max_epochs"] <= 200 or not 1 <= cfg["patience"] <= cfg["max_epochs"] or not 1 <= cfg["threads"] <= 8:
@@ -170,7 +171,7 @@ def run(path, *, train=False):
     current, y = frame[RAW_SENSOR_COLUMNS].to_numpy(float), truth.to_numpy(float)
     residual = y-current
     output, reports = (ROOT/cfg["models_output"]).resolve(), (ROOT/cfg["reports_output"]).resolve()
-    if not output.is_relative_to(ROOT/"ml/models") or not reports.is_relative_to(ROOT/"reports") or output == Path(base["models"]):
+    if not output.is_relative_to(ROOT/"ml/models") or not reports.is_relative_to(ROOT/"ml/reports") or output == Path(base["models"]):
         raise ValueError("Separate repository research model/report output required")
     if train and output.exists():
         raise ValueError("Versioned output already exists; evaluate it or choose a new experiment ID")

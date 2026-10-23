@@ -47,10 +47,10 @@ def revoke(record):
 
 
 def main():
-    path=Path('reports/physics_phase/results.json');report=json.loads(path.read_text())
+    path=Path('ml/reports/physics_phase/results.json');report=json.loads(path.read_text())
     report['experiments']=[e for e in report['experiments'] if e['configuration']!='capped2024_full_test']
-    net=HourlyNetwork(pd.read_parquet('data/physics_training/hours.parquet'),pd.read_csv('data/registry/india_stations.csv'),pd.read_csv('data/physics_training/station_qc.csv'))
-    base=Path('data/physics_training/features/national20km')
+    net=HourlyNetwork(pd.read_parquet('ml/data/physics_training/hours.parquet'),pd.read_csv('ml/data/registry/india_stations.csv'),pd.read_csv('ml/data/physics_training/station_qc.csv'))
+    base=Path('ml/data/physics_training/features/national20km')
     def load(role):
         root=base/role
         return {p.stem:np.load(p,mmap_mode='r') for p in root.glob('*.npy') if p.stem!='ids'},np.load(root/'ids.npy',mmap_mode='r')
@@ -69,7 +69,7 @@ def main():
     np.savez_compressed(base/'capped2024_full_test.test_predictions.npz',truth=test['y'],prediction=pred,physics=test['physics'],idw=test['idw'],distances=test['distance'],station_index=ids[:,0],episode_id=ids[:,2])
     for e in report['experiments']:
         revoke(e)
-        root=Path('data/physics_training/features')/e['scope']/'test'
+        root=Path('ml/data/physics_training/features')/e['scope']/'test'
         ei=np.load(root/'ids.npy',mmap_mode='r');ey=np.load(root/'y.npy',mmap_mode='r')
         if e['configuration']=='capped2024':
             sample=np.sort(np.random.default_rng(42).choice(len(ei),1000,replace=False));ei,ey=ei[sample],ey[sample]
@@ -88,5 +88,5 @@ def main():
     report['audit_policy']='December scores only revoke failed bands; never select models/shrinkage/widths. All nominal test coverages remain diagnostic.'
     path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     for scope in sorted({e['scope'] for e in report['experiments']}):
-        Path('reports/physics_phase/'+scope+'.json').write_text(json.dumps([e for e in report['experiments'] if e['scope']==scope],indent=2,allow_nan=False)+'\n')
+        Path('ml/reports/physics_phase/'+scope+'.json').write_text(json.dumps([e for e in report['experiments'] if e['scope']==scope],indent=2,allow_nan=False)+'\n')
 if __name__=='__main__':main()

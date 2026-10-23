@@ -1,6 +1,6 @@
 # Downloaded dataset; retain README and provenance manifest.
-data/uci_beijing_air_quality/source.zip
-data/uci_beijing_air_quality/observations.csv
+ml/data/uci_beijing_air_quality/source.zip
+ml/data/uci_beijing_air_quality/observations.csv
 *.partial
 
 # Python and test caches
@@ -11,13 +11,14 @@ venv/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.cache/
 *.egg-info/
 
 # Generated build/runtime outputs
 .pio/
 build/
 dist/
-results/
+ml/results/
 *.log
 
 # Local editor, OS and secrets
@@ -32,75 +33,75 @@ results/
 secrets.json
 
 # Indian source audit downloads; retain inventory, provenance and coverage report.
-data/india_station_audit/raw/
+ml/data/india_station_audit/raw/
 
 # Canonical Indian research observations; retain provenance.
-data/india_cpcb_research/observations.csv
+ml/data/india_cpcb_research/observations.csv
 
 # IMD access receipts refer to locally retained original web responses.
-data/imd_north_access/*.response
+ml/data/imd_north_access/*.response
 
 # Downloaded independent field observations
-data/field_sources/raw/
+ml/data/field_sources/raw/
 
 # User-supplied Delhi station exports; retain local originals and commit the audit.
-data/india_delhi_station_samples/raw/
+ml/data/india_delhi_station_samples/raw/
 
 # Supplied raw Himachal exports and generated local heatmap arrays
-/himachal 4-sensor dataset/*.csv
-/data/himachal_weather_audit/temperature_1961_2020_download.csv
-/reports/deployment/synthetic_heatmap/
+/ml/data/himachal_4_sensor/*.csv
+/ml/data/himachal_weather_audit/temperature_1961_2020_download.csv
+/ml/reports/deployment/synthetic_heatmap/
 
 # Generated firmware identity
 esp32/ml_integration/include/build_identity.h
 
 # Versioned registries/receipts are retained; downloaded rasters/stores are local.
-/data/nwic_himachal/*.sqlite
-/data/nwic_himachal/*.sqlite-*
-/data/nwic_himachal/*training*.csv
-/data/noaa_ghcnh/raw/
-/data/terrain/raw/
-/data/backgrounds/raw/
-/reports/nwic_pipeline/source_evidence/*.response
+/ml/data/nwic_himachal/*.sqlite
+/ml/data/nwic_himachal/*.sqlite-*
+/ml/data/nwic_himachal/*training*.csv
+/ml/data/noaa_ghcnh/raw/
+/ml/data/terrain/raw/
+/ml/data/backgrounds/raw/
+/ml/reports/nwic_pipeline/source_evidence/*.response
 
 # Reproducible local stores and bounded terrain caches
-/data/nwic_himachal/*.parquet
-/data/india_training/*.sqlite*
-/data/terrain/*.tif
-/data/terrain/*.part
-/data/terrain_nwic/*.tif
-/data/terrain_nwic/*.part
-/data/terrain_diagnostics/*.tif
-/data/terrain_diagnostics/*.part
+/ml/data/nwic_himachal/*.parquet
+/ml/data/india_training/*.sqlite*
+/ml/data/terrain/*.tif
+/ml/data/terrain/*.part
+/ml/data/terrain_nwic/*.tif
+/ml/data/terrain_nwic/*.part
+/ml/data/terrain_diagnostics/*.tif
+/ml/data/terrain_diagnostics/*.part
 
 # Local full-hour observations, lineage and memory-mapped experiment arrays
-/data/physics_training/*.parquet
-/data/physics_training/features/
+/ml/data/physics_training/*.parquet
+/ml/data/physics_training/features/
 
 # Two-node archive features and JSON models (generated locally)
-/data/two_node_training/
+/ml/data/two_node_training/
 
 # India sensor-only research: retain reports/manifests, not generated matrices.
-/data/india_sensor/processed/
-/data/india_sensor/features/
-/data/india_sensor/models/
-/data/india_sensor/offline/
-/data/india_sensor/offline_before_repro_policy/
+/ml/data/india_sensor/processed/
+/ml/data/india_sensor/features/
+/ml/data/india_sensor/models/
+/ml/data/india_sensor/offline/
+/ml/data/india_sensor/offline_before_repro_policy/
 
 # Independent-event research raw exports, normalized rows and working fits.
-/data/hazard_context/
+/ml/data/hazard_context/
 
 # Operational private stores, generated map bundles and owner device configuration.
-/data/operational/
+/ml/data/operational/
 /esp32/operational_node/include/device_config.h
 
 # Mandi API model-grid source snapshots and working data; retain manifest/README only.
-/data/india_mandi_modeled/raw/
-/data/india_mandi_modeled/observations.csv
-/data/india_mandi_modeled/context.csv
+/ml/data/india_mandi_modeled/raw/
+/ml/data/india_mandi_modeled/observations.csv
+/ml/data/india_mandi_modeled/context.csv
 
 # Local Himachal raw downloads, caches and private label working files.
-/data/himachal/
+/ml/data/himachal/
 /esp32/himachal_node/include/device_config.h
 
 # Local dashboard dependencies and browser test artifacts
@@ -109,7 +110,7 @@ playwright-report/
 test-results/
 
 # Storm context source files and local fitted artifacts; retain code/config/reports.
-/storm_risk/data/raw/
-/storm_risk/data/confirmed_labels.csv
-/storm_risk/data/confirmed_events.csv
-/outputs/
+/ml/storm_risk/data/raw/
+/ml/storm_risk/data/confirmed_labels.csv
+/ml/storm_risk/data/confirmed_events.csv
+/ml/outputs/

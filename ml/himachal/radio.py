@@ -17,7 +17,7 @@ FRAME_BYTES=BODY.size+16+2
 REQUEST,QUERY,VOTE,RESULT,HEARTBEAT,ACK=range(6)
 SCALES=(100,100,10,1,1,100)
 MISSING=-32768
-PROFILE=Path(__file__).resolve().parents[2]/"configs/india_radio_profile_v1.json"
+PROFILE=Path(__file__).resolve().parents[2]/"ml/configs/india_radio_profile_v1.json"
 
 
 @dataclass(frozen=True)

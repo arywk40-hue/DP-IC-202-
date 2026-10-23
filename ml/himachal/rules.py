@@ -8,7 +8,7 @@ from pathlib import Path
 
 from ml.operational.contracts import canonical_bytes, utc
 
-CONFIG = Path(__file__).resolve().parents[2] / "configs/himachal_rules_v1.json"
+CONFIG = Path(__file__).resolve().parents[2] / "ml/configs/himachal_rules_v1.json"
 TARGETS = ("rain", "snowstorm", "cloudburst_risk")
 OPERATORS = {">=": lambda x, y: x >= y, "<=": lambda x, y: x <= y,
              ">": lambda x, y: x > y, "==": lambda x, y: x == y}

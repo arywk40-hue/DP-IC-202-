@@ -42,6 +42,6 @@ def background(path,latitude,longitude,timestamp,available_at_utc=None):
         'grid_pressure_reference':'grid_surface_not_station','grid_resolution_deg':0.1,'available_at_utc':None if availability is None else availability.isoformat()}
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--year',type=int,default=2024);p.add_argument('--output',default='data/registry/cds_requests.json');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--year',type=int,default=2024);p.add_argument('--output',default='ml/data/registry/cds_requests.json');a=p.parse_args()
     jobs=[request(a.year,m,area) for area in [[38,68,6,98.5],[32.5,76,30.5,78]] for m in range(1,13)]
     Path(a.output).write_text(json.dumps({'authentication':'User CDS account, accepted dataset terms and personal API token required. No automatic download.','requests':jobs},indent=2)+'\n')

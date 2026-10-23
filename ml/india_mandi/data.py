@@ -14,6 +14,7 @@ import urllib.request
 import numpy as np
 import pandas as pd
 
+from ml.paths import read_config
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
 from ml.six_sensor_forecast.data import SCHEMA, sha256
 
@@ -26,7 +27,7 @@ AIR={'pm25_ug_m3':'pm2_5','pm10_ug_m3':'pm10'}
 
 
 def load_config(path):
-    cfg=json.loads(Path(path).read_text())
+    cfg=read_config(path)
     if cfg.get('schema_version')!='indra_mandi_modeled_forecast_v1' or cfg.get('country_code')!='IN':
         raise ValueError('India-only Mandi modeled-data configuration required')
     if (cfg.get('latitude'),cfg.get('longitude'))!=(31.71,76.93):

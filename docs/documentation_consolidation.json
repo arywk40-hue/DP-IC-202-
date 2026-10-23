@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "destination": "EVERYTHING.md",
+  "destination": "docs/EVERYTHING.md",
   "sources": {
     "docs/ARCHITECTURE.md": "source-ff21b6b9a3a3",
     "docs/CURRENT_MANDI_FEED.md": "source-6d85e1c96415",

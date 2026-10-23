@@ -20,23 +20,23 @@ def valid_dewpoint(raw,location_good,geography=True):
 
 
 def acquire_year(year=2023):
-    coverage=json.loads(Path('data/noaa_ghcnh/coverage.json').read_text());stations={s['location_id'] for s in coverage['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
+    coverage=json.loads(Path('ml/data/noaa_ghcnh/coverage.json').read_text());stations={s['location_id'] for s in coverage['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
     listing=list(keys(f'hourly/access/by-year/{year}/parquet/GHCNh_IN'));selected=[k for k in listing if k.rsplit('/',1)[1].removeprefix('GHCNh_').removesuffix(f'_{year}.parquet') in stations]
     def get(key):
-        path=Path('data/noaa_ghcnh/raw')/key.rsplit('/',1)[1]
+        path=Path('ml/data/noaa_ghcnh/raw')/key.rsplit('/',1)[1]
         try:
             if path.exists():return {'uri':key,'sha256':digest(path),'bytes':path.stat().st_size,'status':'CACHED'}
             return dict(download(key,path,50_000_000),status='ACQUIRED')
         except Exception as exc:return {'uri':key,'status':'FAILED','reason':str(exc)}
-    result=list(ThreadPoolExecutor(max_workers=4).map(get,selected));Path(f'reports/physics_phase/noaa_{year}_acquisition.json').write_text(json.dumps({'year':year,'candidate_station_files':len(selected),'year_not_available_for_stations':sorted(stations-{k.rsplit('/',1)[1].removeprefix('GHCNh_').removesuffix(f'_{year}.parquet') for k in selected}),'files':result},indent=2)+'\n')
+    result=list(ThreadPoolExecutor(max_workers=4).map(get,selected));Path(f'ml/reports/physics_phase/noaa_{year}_acquisition.json').write_text(json.dumps({'year':year,'candidate_station_files':len(selected),'year_not_available_for_stations':sorted(stations-{k.rsplit('/',1)[1].removeprefix('GHCNh_').removesuffix(f'_{year}.parquet') for k in selected}),'files':result},indent=2)+'\n')
     print('year acquired',year,len(result),flush=True)
 
 
 def build(years=(2023,2024)):
-    out=Path('data/physics_training');out.mkdir(parents=True,exist_ok=True)
-    registry=pd.read_csv('data/registry/india_stations.csv').set_index('location_id');parts=[];receipts=[]
-    allowed={s['location_id'] for s in json.loads(Path('data/noaa_ghcnh/coverage.json').read_text())['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
-    for n,path in enumerate(sorted(Path('data/noaa_ghcnh/raw').glob('*.parquet'))):
+    out=Path('ml/data/physics_training');out.mkdir(parents=True,exist_ok=True)
+    registry=pd.read_csv('ml/data/registry/india_stations.csv').set_index('location_id');parts=[];receipts=[]
+    allowed={s['location_id'] for s in json.loads(Path('ml/data/noaa_ghcnh/coverage.json').read_text())['stations'] if s['status']=='OBSERVATIONS_SCREENED'}
+    for n,path in enumerate(sorted(Path('ml/data/noaa_ghcnh/raw').glob('*.parquet'))):
         if int(path.stem.rsplit('_',1)[1]) not in years:continue
         sid=path.stem.removeprefix('GHCNh_').rsplit('_',1)[0]
         if sid not in allowed or sid not in registry.index:continue
@@ -82,8 +82,8 @@ def build(years=(2023,2024)):
         qc.append({'location_id':sid,'elevation_ok':not any('SRTM' in f or 'HEIGHT' in f for f in flags),'pressure_ok':not flags,
             'flags':json.dumps(flags),'prior_pressure_rows':int(valid.sum()),'prior_implausible_fraction':fraction,'srtm_elevation_m':z,'catalogue_elevation_m':catalog,'prior_cutoff_utc':'2024-07-01T00:00:00Z'})
     pd.DataFrame(qc).to_csv(out/'station_qc.csv',index=False)
-    manifest={'years':list(years),'source_files':receipts,'input_stations':int(frame.location_id.nunique()),'hourly_rows':len(frame),'calendar_2024_rows':int(frame.timestamp_utc.dt.year.eq(2024).sum()),'aggregation':'mean of QC-valid reports, UTC bucket END; no missing-hour imputation','lineage':'per raw file .lineage.parquet includes source_id,sha256,raw row id and bucket time','QC':'prior only before 2024-07-01; fixed broad p0 plausibility 870–1085 hPa; source quality flags and location agreement; SRTM/catalogue disagreement >250m; no target-test residual screening','hours_sha256':digest(out/'hours.parquet'),'qc_sha256':digest(out/'station_qc.csv'),'station_registry_sha256':digest('data/registry/india_stations.csv')}
-    Path('reports/physics_phase/hourly_manifest.json').write_text(json.dumps(manifest,indent=2,allow_nan=False)+'\n')
+    manifest={'years':list(years),'source_files':receipts,'input_stations':int(frame.location_id.nunique()),'hourly_rows':len(frame),'calendar_2024_rows':int(frame.timestamp_utc.dt.year.eq(2024).sum()),'aggregation':'mean of QC-valid reports, UTC bucket END; no missing-hour imputation','lineage':'per raw file .lineage.parquet includes source_id,sha256,raw row id and bucket time','QC':'prior only before 2024-07-01; fixed broad p0 plausibility 870–1085 hPa; source quality flags and location agreement; SRTM/catalogue disagreement >250m; no target-test residual screening','hours_sha256':digest(out/'hours.parquet'),'qc_sha256':digest(out/'station_qc.csv'),'station_registry_sha256':digest('ml/data/registry/india_stations.csv')}
+    Path('ml/reports/physics_phase/hourly_manifest.json').write_text(json.dumps(manifest,indent=2,allow_nan=False)+'\n')
     print('hourly complete',manifest['input_stations'],len(frame),flush=True)
 
 if __name__=='__main__':

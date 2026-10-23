@@ -20,7 +20,7 @@ def support(events,matched):
             'positive_districts':len({r['district'] for r in participating if r['district']}),'positive_states':len({r['state'] for r in participating if r['state']}),
             'median_event_duration_hours':float(np.median(durations)) if durations else None,
             'monitored_negative_days':float(negatives.drop_duplicates(['physical_site_id','timestamp_utc']).interval_seconds.sum()/86400) if len(negatives) else 0,
-            'definition':'Distinct conservative leakage groups, not repeated reports/hours; days assume native hourly records'}
+            'definition':'Distinct conservative leakage groups, not repeated ml/reports/hours; days assume native hourly records'}
 
 
 def training_gate(events,matched,target,minimum=None):

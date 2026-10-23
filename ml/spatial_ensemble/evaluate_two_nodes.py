@@ -14,7 +14,7 @@ from ml.spatial_ensemble.corridor import metrics,DEFAULT_LIMITS
 from ml.spatial_ensemble.network import guard
 from ml.spatial_ensemble.residual_artifact import export,load
 
-ROOT=Path('reports/two_node_phase')
+ROOT=Path('ml/reports/two_node_phase')
 
 def geometry(net,data,ids,k):
     positions=net.stations[['latitude','longitude']].to_numpy();neighbors=data['neighbor_ids'];q=positions[ids[:,0]]
@@ -29,7 +29,7 @@ def geometry(net,data,ids,k):
 
 def experiment(net,scope,held,k):
     train,val,test=splits(net.stations,held,buffer_km=5 if scope=='national5km' else 20)
-    root=Path('data/two_node_training')/scope/f'k{k}';data={};ids={};counts={}
+    root=Path('ml/data/two_node_training')/scope/f'k{k}';data={};ids={};counts={}
     for role,queries in [('train2023',train),('train2024',train),('select',val),('calibrate',val),('check',val),('test',test)]:
         print(scope,k,'features',role,flush=True)
         data[role],ids[role],counts[role]=net.examples(queries,train,net.parts[role],root/role,neighbor_count=k)
@@ -63,7 +63,7 @@ def experiment(net,scope,held,k):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scopes',nargs='+',default=['national5km','himalaya20km']);p.add_argument('--neighbors',nargs='+',type=int,default=[2,3,4,5]);args=p.parse_args()
     if any(k not in [2,3,4,5] for k in args.neighbors):raise ValueError('Use counts 2,3,4,5')
-    ROOT.mkdir(exist_ok=True);net=HourlyNetwork(pd.read_parquet('data/physics_training/hours.parquet'),pd.read_csv('data/registry/india_stations.csv'),pd.read_csv('data/physics_training/station_qc.csv'))
+    ROOT.mkdir(exist_ok=True);net=HourlyNetwork(pd.read_parquet('ml/data/physics_training/hours.parquet'),pd.read_csv('ml/data/registry/india_stations.csv'),pd.read_csv('ml/data/physics_training/station_qc.csv'))
     held=np.random.default_rng(42).permutation(net.ids)[:len(net.ids)//5];records=[]
     for scope in args.scopes:
         if scope not in ['national5km','himalaya20km']:raise ValueError('Unknown scope')
@@ -77,6 +77,6 @@ def main():
         for r,f,key in zip(cohort,files,keys):
             take=np.where(np.isin(key,common))[0];data={k:f[k][take] for k in ['y','physics','idw','nearest','mean','persistence','distance']};pred=f['prediction'][take];iid=f['ids'][take]
             comparisons.append({'scope':scope,'neighbor_count':r['neighbor_count'],'common_test_rows':len(take),'metrics':sample_metrics(data,pred,iid,net,f['fallback'][take])})
-    report={'experiments':records,'common_row_comparisons':comparisons,'input_sha256':{path:digest(path) for path in ['data/physics_training/hours.parquet','data/physics_training/station_qc.csv','data/registry/india_stations.csv']},'core_neighbor_rule':'exactly K distinct sites with valid T,RH,station P,wind, vetted height and plausible reference pressure; exclude query truth','seed':42,'limits':DEFAULT_LIMITS,'band_policy':'calibration/check/audit restricted to serving geometry; sparse or failed intervals withheld; no transfer to changed geometry limits','not_verified':['fixed A/B/C field performance','ESP32 JSON runtime','true weather episode independence','nearby physical aliases beyond exact-coordinate deduplication']}
+    report={'experiments':records,'common_row_comparisons':comparisons,'input_sha256':{path:digest(path) for path in ['ml/data/physics_training/hours.parquet','ml/data/physics_training/station_qc.csv','ml/data/registry/india_stations.csv']},'core_neighbor_rule':'exactly K distinct sites with valid T,RH,station P,wind, vetted height and plausible reference pressure; exclude query truth','seed':42,'limits':DEFAULT_LIMITS,'band_policy':'calibration/check/audit restricted to serving geometry; sparse or failed intervals withheld; no transfer to changed geometry limits','not_verified':['fixed A/B/C field performance','ESP32 JSON runtime','true weather episode independence','nearby physical aliases beyond exact-coordinate deduplication']}
     (ROOT/'results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
 if __name__=='__main__':main()

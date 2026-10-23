@@ -129,7 +129,7 @@ def indian_transfer_tests(cfg):
     """Existing India-trained profiles on both original Indian and Mandi modeled outcomes."""
     outputs=[]
     mandi,mandi_features,mandi_truth,mandi_masks,_=arrays(cfg)
-    native=ROOT/'data/india_cpcb_research/observations.csv'
+    native=ROOT/'ml/data/india_cpcb_research/observations.csv'
     readable=native.exists() and not (getattr(native.stat(),'st_flags',0)&0x40000000)
     local_frame=local_features=None
     if readable:local_frame,local_features=build_features(pd.read_csv(native))

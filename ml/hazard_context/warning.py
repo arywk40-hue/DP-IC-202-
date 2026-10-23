@@ -19,7 +19,7 @@ from ml.hazard_context.events import TARGETS, utc
 from ml.hazard_context.matching import DEFAULTS, distance, group_events, validate_monitoring
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
 
-PROTOCOL_PATH = Path(__file__).resolve().parents[2]/'configs/himalayan_warning_v2.json'
+PROTOCOL_PATH = Path(__file__).resolve().parents[2]/'ml/configs/himalayan_warning_v2.json'
 
 
 def load_protocol(path=PROTOCOL_PATH):

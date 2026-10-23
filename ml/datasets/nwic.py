@@ -21,7 +21,7 @@ def site_id(name, lat, lon):
     return 'nwic_hp_' + hashlib.sha256(identity.encode()).hexdigest()[:16]
 
 
-def build(directory, output, registry='data/registry/sources.json', compact=False):
+def build(directory, output, registry='ml/data/registry/sources.json', compact=False):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     destination = output/'observations.sqlite'
@@ -154,10 +154,10 @@ def build(directory, output, registry='data/registry/sources.json', compact=Fals
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--data',type=Path,default=Path('himachal 4-sensor dataset'))
-    p.add_argument('--output',type=Path,default=Path('data/nwic_himachal'))
+    p.add_argument('--data',type=Path,default=Path('ml/data/himachal_4_sensor'))
+    p.add_argument('--output',type=Path,default=Path('ml/data/nwic_himachal'))
     p.add_argument('--compact',action='store_true',help='Compressed long-form artifact for low-disk environments')
-    p.add_argument('--registry',type=Path,default=Path('data/registry/sources.json'))
+    p.add_argument('--registry',type=Path,default=Path('ml/data/registry/sources.json'))
     a=p.parse_args();build(a.data,a.output,a.registry,a.compact)
 
 

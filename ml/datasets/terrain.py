@@ -22,7 +22,7 @@ def tile(latitude,longitude):
     return f'{"N" if a>=0 else "S"}{abs(a):02d}{"E" if b>=0 else "W"}{abs(b):03d}.tif'
 
 
-def sample(latitude,longitude,cache='data/terrain',climate=True):
+def sample(latitude,longitude,cache='ml/data/terrain',climate=True):
     import rasterio
     from rasterio.windows import Window
     from ml.datasets.noaa import download
@@ -60,7 +60,7 @@ def sample(latitude,longitude,cache='data/terrain',climate=True):
     return result
 
 
-def enrich(input_path,output_path,climate=True,cache="data/terrain"):
+def enrich(input_path,output_path,climate=True,cache="ml/data/terrain"):
     from concurrent.futures import ThreadPoolExecutor
     import rasterio
     frame=pd.read_csv(input_path).astype(object);errors=[];groups={}
@@ -101,5 +101,5 @@ def enrich(input_path,output_path,climate=True,cache="data/terrain"):
     Path(str(output_path)+'.errors.json').write_text(json.dumps(errors,indent=2)+'\n')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--input',required=True);p.add_argument('--output',required=True);p.add_argument('--no-climate',action='store_true');p.add_argument('--cache',default='data/terrain')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--input',required=True);p.add_argument('--output',required=True);p.add_argument('--no-climate',action='store_true');p.add_argument('--cache',default='ml/data/terrain')
     a=p.parse_args();enrich(a.input,a.output,not a.no_climate,a.cache)

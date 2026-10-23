@@ -10,6 +10,7 @@ import pandas as pd
 from scipy.optimize import linprog
 from scipy.sparse import csr_matrix, eye, hstack, vstack
 
+from ml.paths import read_config
 from ml.india_mandi.hybrid import ROOT, Hybrid, bounded, blend as legacy_blend
 from ml.india_mandi.neural import SCHEMA, fit_candidate, forward, load_artifact
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
@@ -225,7 +226,7 @@ def train(config_path):
     from threadpoolctl import threadpool_limits
     from ml.india_mandi.benchmark import metric
 
-    cfg = json.loads(Path(config_path).read_text())
+    cfg = read_config(config_path)
     if (
         cfg.get("schema_version") != "indra_mandi_pipeline_v2"
         or cfg.get("field_validated") is not False
@@ -236,7 +237,7 @@ def train(config_path):
         (ROOT / cfg["reports"]).resolve(),
     )
     if not output.is_relative_to(ROOT / "ml/models") or not reports.is_relative_to(
-        ROOT / "reports"
+        ROOT / "ml/reports"
     ):
         raise ValueError(
             "Versioned model/report outputs must remain inside the repository"
@@ -445,7 +446,7 @@ def evaluate(config_path):
     from datetime import datetime, timezone
     from ml.india_mandi.benchmark import metric
 
-    cfg = json.loads(Path(config_path).read_text())
+    cfg = read_config(config_path)
     engine = TabularV2(ROOT / cfg["models"])
     frame, features, truth, masks, manifest = dataset(cfg)
     if (

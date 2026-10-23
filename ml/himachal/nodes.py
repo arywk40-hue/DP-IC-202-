@@ -12,7 +12,7 @@ import re
 import numpy as np
 from scipy.spatial import cKDTree
 
-CONFIG = Path(__file__).resolve().parents[2]/"configs/himachal_network_v1.json"
+CONFIG = Path(__file__).resolve().parents[2]/"ml/configs/himachal_network_v1.json"
 EARTH_RADIUS_M = 6371008.8
 
 

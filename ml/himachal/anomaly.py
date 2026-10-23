@@ -9,7 +9,7 @@ import struct
 
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
 
-CONFIG = Path(__file__).resolve().parents[2]/"configs/himachal_anomaly_v1.json"
+CONFIG = Path(__file__).resolve().parents[2]/"ml/configs/himachal_anomaly_v1.json"
 STATES = ("UNAVAILABLE", "WARMUP", "WITHIN_BASELINE", "ENVIRONMENTAL_ANOMALY", "SENSOR_FAULT")
 PACKET_STATES = ("ACCEPTED", "CRC_REJECTED", "TIME_REJECTED", "CLOCK_UNVERIFIED")
 

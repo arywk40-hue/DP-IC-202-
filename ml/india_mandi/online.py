@@ -17,7 +17,7 @@ from sklearn.linear_model import SGDRegressor
 
 from ml.india_mandi.hybrid import bounded
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
-from ml.provenance import append as audit_append
+from contracts.provenance import append as audit_append
 
 
 def stamp(value):

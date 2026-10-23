@@ -150,7 +150,7 @@ def evaluate(data: Path, models: Path, output: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=Path("data/india_cpcb_research"))
+    parser.add_argument("--data", type=Path, default=Path("ml/data/india_cpcb_research"))
     parser.add_argument("--models", type=Path, default=Path("ml/models"))
     parser.add_argument(
         "--output", type=Path, default=Path("ml/evaluation/india_transfer_report.json")

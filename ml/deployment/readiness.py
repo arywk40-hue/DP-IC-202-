@@ -42,7 +42,7 @@ def audit(model):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model', type=Path, default=Path('ml/models/uci_beijing_event_rules_6sensor'))
-    parser.add_argument('--output', type=Path, default=Path('reports/deployment/readiness.json'))
+    parser.add_argument('--output', type=Path, default=Path('ml/reports/deployment/readiness.json'))
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(audit(args.model), indent=2)+'\n')

@@ -3,7 +3,7 @@
 python -m ml.spatial_ensemble.evaluate --observations observations.csv
  --stations stations.csv --validation-stations A B --test-stations C D
  --validation-start 2024-01-01T00:00:00Z --test-start 2025-01-01T00:00:00Z
- --output reports/review/spatial_metrics.json
+ --output ml/reports/review/spatial_metrics.json
 
 Station table: location_id,latitude,longitude. Observation schema is the
 existing six-channel contract. No coordinates are guessed or geocoded here.

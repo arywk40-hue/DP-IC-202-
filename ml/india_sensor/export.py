@@ -136,7 +136,7 @@ def export(cfg, output, scope='national'):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('--config', default='configs/india_sensor_offline.json')
+    p.add_argument('--config', default='ml/configs/india_sensor_offline.json')
     p.add_argument('--output', default='esp32/india_sensor/export')
     p.add_argument('--scope', default='national')
     a = p.parse_args()

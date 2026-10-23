@@ -27,7 +27,7 @@ def download(client,requests,output,terms_accepted=False):
     return receipts
 
 
-def audit(request_path='data/registry/cds_physics_requests.json',data_root='data'):
+def audit(request_path='ml/data/registry/cds_physics_requests.json',data_root='data'):
     report=verify_requests(request_path)
     paths=sorted(str(p) for p in Path(data_root).rglob('*') if p.is_file() and p.suffix.lower() in ['.nc','.nc4','.grib','.grib2'])
     # Files are candidates, never automatically assumed to be authorized ERA5.

@@ -5,7 +5,7 @@
     "status": "SUPPLIED_AND_PRESERVED",
     "source": "/Users/ariyanbhakat/Downloads/DP_Mesh_Dashboard_Handoff",
     "original_copy": "docs/reference/dp_mesh_dashboard_handoff",
-    "working_integration": "apps/indra-himachal-ui",
+    "working_integration": "ui",
     "policy": "Original handoff retained byte-for-byte; intentional integration changes confined to working copy."
   },
   "policy": "Preserve trained weights, reports and existing exports. Changes require explicit documented migration. Add teammate/shared paths before integration.",
@@ -147,5 +147,6 @@
       "ml/models/india_mandi_neural_history_v1/README.md": "b08b53dc9dfbe3dfb46b8102a03d0bf01744309e75a9d4f89490b7c9a6b84b2c"
     },
     "policy": "Only Markdown migrated; original bytes preserved in the checksum-bound archive. Model/export checksums unchanged."
-  }
+  },
+  "repository_migration": "docs/repository_reorganization.json"
 }

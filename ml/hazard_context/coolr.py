@@ -172,7 +172,7 @@ def run(output, audit_output):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--output', required=True, help='Fresh local directory; use ignored results/')
+    p.add_argument('--output', required=True, help='Fresh local directory; use ignored ml/results/')
     p.add_argument('--audit-output', required=True, help='Fresh summary JSON path')
     args = p.parse_args()
     print(json.dumps(run(args.output, args.audit_output), indent=2, allow_nan=False))

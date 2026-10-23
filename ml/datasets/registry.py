@@ -7,7 +7,7 @@ import sqlite3
 from pathlib import Path
 import pandas as pd
 
-REGISTRY = Path('data/registry/sources.json')
+REGISTRY = Path('ml/data/registry/sources.json')
 
 
 def connect(path, registry=REGISTRY):

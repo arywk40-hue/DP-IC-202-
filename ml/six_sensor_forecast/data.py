@@ -114,7 +114,7 @@ def prepare(output: Path, archive: Path | None = None) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--output", type=Path, default=Path("data/uci_beijing_air_quality")
+        "--output", type=Path, default=Path("ml/data/uci_beijing_air_quality")
     )
     parser.add_argument("--archive", type=Path)
     args = parser.parse_args()

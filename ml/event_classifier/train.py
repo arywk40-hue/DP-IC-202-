@@ -214,7 +214,7 @@ def train(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--data", type=Path, default=Path("data/uci_beijing_air_quality")
+        "--data", type=Path, default=Path("ml/data/uci_beijing_air_quality")
     )
     parser.add_argument("--output", type=Path, default=Path("ml/models/uci_beijing_event_rules_6sensor"))
     parser.add_argument("--validation-start", default="2016-01-01T00:00:00Z")

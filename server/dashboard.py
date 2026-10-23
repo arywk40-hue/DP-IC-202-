@@ -27,7 +27,7 @@ from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
 from server.storm_run import StormRun
-from ml.provenance import append as audit_append, initialize as audit_initialize, batch as audit_batch
+from contracts.provenance import append as audit_append, initialize as audit_initialize, batch as audit_batch
 from ml.himachal.weather_categories import WeatherCategories, synthetic_episodes
 from ml.himachal.hazard_scenarios import HazardScenarios
 from ml.himachal.parameter_maps import parameter_maps, geojson
@@ -248,12 +248,12 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
     def model_lab():
         if engine.profile['id'] != 'india_mandi_tabular_v2':
             return dict(configured=False,active_model=engine.profile['id'],online=dict(enabled=False))
-        report=json.loads((ROOT/'reports/mandi_pipeline_v2/results.json').read_text())
+        report=json.loads((ROOT/'ml/reports/mandi_pipeline_v2/results.json').read_text())
         if report['profile_sha256'] != engine.profile_sha256:
             raise HTTPException(422,'Model evaluation/profile identity mismatch')
         online=dict(enabled=False,role='NOT_CONFIGURED',updates=0)
         if online_learner is not None: online=online_learner.summary()
-        replay_path=ROOT/'reports/mandi_pipeline_v2/online_replay.json'
+        replay_path=ROOT/'ml/reports/mandi_pipeline_v2/online_replay.json'
         replay=json.loads(replay_path.read_text()) if replay_path.exists() else None
         return dict(configured=True,active_model=engine.profile['id'],display_name=engine.profile['display_name'],
             data_rows=report['data_rows'],source_start=report['source_start'],source_end=report['source_end'],
@@ -352,7 +352,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--db", type=Path, default=ROOT/"data/himachal/dashboard.sqlite")
+    parser.add_argument("--db", type=Path, default=ROOT/"ml/data/himachal/dashboard.sqlite")
     sources = parser.add_mutually_exclusive_group()
     sources.add_argument("--observations", type=Path)
     sources.add_argument("--demo", action="store_true", help="Replace store with clearly marked synthetic fixtures")

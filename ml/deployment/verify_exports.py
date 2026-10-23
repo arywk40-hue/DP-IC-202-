@@ -26,6 +26,10 @@ SCHEMA = "indra_committed_exports_v1"
 
 
 def checked(root: Path, relative: str) -> Path:
+    # The byte-frozen model catalog still names the original config directory.
+    # Resolve that historical reference without rewriting its signed identity.
+    if relative.startswith("configs/"):
+        relative = "ml/" + relative
     path = (root / relative).resolve()
     if not path.is_relative_to(root.resolve()) or not path.is_file():
         raise ValueError(f"Missing or unsafe artifact path: {relative}")
@@ -363,7 +367,7 @@ def verify(catalog: Path, output: Path | None = None, root: Path | None = None) 
     verify_identities(root, manifest)
     fixture = checked(root, manifest["fixture"])
     if xgb.__version__ != manifest["runtime"]["xgboost"]:
-        raise ValueError("Use the pinned requirements-himachal.txt XGBoost version")
+        raise ValueError("Use the pinned ml/requirements/requirements-himachal.txt XGBoost version")
     checks = {"forecast": verify_forecast, "event_rules": verify_events, "india_measurements": verify_india}
     results = {}
     with tempfile.TemporaryDirectory(prefix="indra-export-verify-") as tmp:
@@ -388,7 +392,7 @@ def verify(catalog: Path, output: Path | None = None, root: Path | None = None) 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--catalog", type=Path, default=Path("configs/model_catalog.json"))
+    parser.add_argument("--catalog", type=Path, default=Path("ml/configs/model_catalog.json"))
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--offline", action="store_true", required=True)
     args = parser.parse_args()

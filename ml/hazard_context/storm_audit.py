@@ -121,7 +121,7 @@ def run(raw_root,registry,output,audit_output,code_receipt):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--raw-root',default='data/noaa_ghcnh/raw');p.add_argument('--registry',default='data/registry/india_stations.csv')
+    p.add_argument('--raw-root',default='ml/data/noaa_ghcnh/raw');p.add_argument('--registry',default='ml/data/registry/india_stations.csv')
     p.add_argument('--output',required=True);p.add_argument('--audit-output',required=True)
     p.add_argument('--code-receipt',required=True)
     args=p.parse_args();r=run(args.raw_root,args.registry,args.output,args.audit_output,args.code_receipt)

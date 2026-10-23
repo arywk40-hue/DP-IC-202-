@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', required=True)
     parser.add_argument('--environment', choices=['esp32-s3-ml', 'esp32-s3-ml-usb'], default='esp32-s3-ml')
-    parser.add_argument('--output', type=Path, default=Path('results/esp32_board_test.json'))
+    parser.add_argument('--output', type=Path, default=Path('ml/results/esp32_board_test.json'))
     args = parser.parse_args()
     import serial
     from build_identity import identity

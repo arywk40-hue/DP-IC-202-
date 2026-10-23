@@ -22,21 +22,21 @@ def write(path,value):
 
 def main():
     p=argparse.ArgumentParser();sub=p.add_subparsers(dest='command',required=True)
-    a=sub.add_parser('audit-era5');a.add_argument('--requests',default='data/registry/cds_physics_requests.json');a.add_argument('--data-root',default='data');a.add_argument('--output',default='reports/hazard_context_phase/era5_audit.json')
-    a=sub.add_parser('download-era5');a.add_argument('--requests',default='data/registry/cds_physics_requests.json');a.add_argument('--output',default='data/backgrounds/raw/era5_land');a.add_argument('--execute',action='store_true');a.add_argument('--accepted-terms',action='store_true')
-    a=sub.add_parser('schema');a.add_argument('--output',default='configs/hazard_event_schema.json')
+    a=sub.add_parser('audit-era5');a.add_argument('--requests',default='ml/data/registry/cds_physics_requests.json');a.add_argument('--data-root',default='data');a.add_argument('--output',default='ml/reports/hazard_context_phase/era5_audit.json')
+    a=sub.add_parser('download-era5');a.add_argument('--requests',default='ml/data/registry/cds_physics_requests.json');a.add_argument('--output',default='ml/data/backgrounds/raw/era5_land');a.add_argument('--execute',action='store_true');a.add_argument('--accepted-terms',action='store_true')
+    a=sub.add_parser('schema');a.add_argument('--output',default='ml/configs/hazard_event_schema.json')
     for name in ['normalize-events','match','warning-labels','train-hazards']:
-        a=sub.add_parser(name);a.add_argument('--events',required=True);a.add_argument('--sources',default='configs/hazard_sources.json');a.add_argument('--output',required=True);a.add_argument('--restricted',action='store_true')
+        a=sub.add_parser(name);a.add_argument('--events',required=True);a.add_argument('--sources',default='ml/configs/hazard_sources.json');a.add_argument('--output',required=True);a.add_argument('--restricted',action='store_true')
         if name in ['train-hazards','warning-labels']:
             a.add_argument('--targets',nargs='+',choices=sorted(TARGETS),
                            help='Independent event heads to evaluate for research training; admission checks still apply')
-            a.add_argument('--warning-protocol',default='configs/himalayan_warning_v2.json')
+            a.add_argument('--warning-protocol',default='ml/configs/himalayan_warning_v2.json')
         if name=='train-hazards':
             a.add_argument('--label-mode',choices=['exact_future_window','next_h_hours'],default='exact_future_window')
         if name!='normalize-events':
-            a.add_argument('--matching-config');a.add_argument('--stations',required=True);a.add_argument('--observations',required=True);a.add_argument('--monitoring',required=True);a.add_argument('--config',default='configs/india_sensor_offline.json')
+            a.add_argument('--matching-config');a.add_argument('--stations',required=True);a.add_argument('--observations',required=True);a.add_argument('--monitoring',required=True);a.add_argument('--config',default='ml/configs/india_sensor_offline.json')
     a=sub.add_parser('prepare-era5');a.add_argument('--input',nargs='+',required=True);a.add_argument('--stations',required=True);a.add_argument('--metadata',required=True);a.add_argument('--output',required=True)
-    a=sub.add_parser('compare');a.add_argument('--observations',required=True);a.add_argument('--background',required=True);a.add_argument('--manifest',required=True);a.add_argument('--output',required=True);a.add_argument('--config',default='configs/india_sensor_offline.json');a.add_argument('--scope',default='national',choices=['national','temporal','himalaya_only','himalaya_holdout'])
+    a=sub.add_parser('compare');a.add_argument('--observations',required=True);a.add_argument('--background',required=True);a.add_argument('--manifest',required=True);a.add_argument('--output',required=True);a.add_argument('--config',default='ml/configs/india_sensor_offline.json');a.add_argument('--scope',default='national',choices=['national','temporal','himalaya_only','himalaya_holdout'])
     a=sub.add_parser('episodes');a.add_argument('--input',required=True);a.add_argument('--threshold',required=True,type=float);a.add_argument('--output',required=True)
     a=p.parse_args()
     if a.command=='audit-era5':result=audit(a.requests,a.data_root);write(a.output,result)

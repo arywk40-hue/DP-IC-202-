@@ -90,7 +90,7 @@ def run(cfg, config_path):
             print(f'Prepared {i+1}/{len(stations)} Indian stations', flush=True)
     lineage = Path(cfg['hours']).parent / 'lineage.parquet'
     input_paths = [cfg['hours'], cfg['stations'], cfg['station_qc'], cfg['source_registry'], str(config_path)]
-    hourly_manifest = Path(cfg['hours']).parents[2] / 'reports/physics_phase/hourly_manifest.json'
+    hourly_manifest = Path(cfg['hours']).parents[2] / 'ml/reports/physics_phase/hourly_manifest.json'
     if hourly_manifest.exists():
         input_paths.append(str(hourly_manifest))
     if lineage.exists():

@@ -20,7 +20,7 @@ from ml.himachal.weather_categories import BOUNDS, episode_features
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 
 ROOT = Path(__file__).resolve().parents[2]
-CONFIG = ROOT / "configs/himalayan_synthetic_scenarios_v1.json"
+CONFIG = ROOT / "ml/configs/himalayan_synthetic_scenarios_v1.json"
 TARGETS = {
     "cloudburst": "Cloudburst rainfall threshold",
     "flash_flood": "Flash-flood runoff scenario",

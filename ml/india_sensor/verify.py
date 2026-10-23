@@ -68,6 +68,6 @@ def run(cfg):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
-    p.add_argument('--config',default='configs/india_sensor_offline.json')
+    p.add_argument('--config',default='ml/configs/india_sensor_offline.json')
     a=p.parse_args()
     print(json.dumps(run(load(a.config)),indent=2))

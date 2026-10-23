@@ -1,0 +1,31 @@
+{
+  "schema_version": "indra_himachal_network_v1",
+  "profile_id": 1,
+  "feature_version": "indra_himachal_features_v1",
+  "rule_version": "indra_himachal_rules_v1",
+  "model_version": "NO_EMPIRICAL_MODEL_RULE_FALLBACK_V1",
+  "maximum_peers": 6,
+  "maximum_candidate_scan": 64,
+  "maximum_radius_m": 5000,
+  "maximum_elevation_difference_m": 750,
+  "distance_scale_m": 3000,
+  "elevation_scale_m": 500,
+  "minimum_agreeing_physical_nodes": 3,
+  "minimum_failure_domains": 2,
+  "minimum_weighted_agreement": 0.6666666666666666,
+  "query_deadline_seconds": 30,
+  "maximum_clock_uncertainty_seconds": 30,
+  "maximum_query_cache": 10000,
+  "maximum_boots_per_key": 32,
+  "maximum_retries": 1,
+  "maximum_ttl": 1,
+  "health_recovery_observations": 3,
+  "drift_persistence_seconds": 21600,
+  "cadence_profiles": {
+    "native_minute": {"native_cadence_seconds": 60, "freshness_seconds": 120, "heartbeat_seconds": 60},
+    "hourly_research": {"native_cadence_seconds": 3600, "freshness_seconds": 3720, "heartbeat_seconds": 3600}
+  },
+  "simulation": {"rounds": 60, "round_seconds": 60, "positive_query_fraction": 0.2, "channels": 1, "topology": "dense", "seed_base": 20261014},
+  "radio_profile": "ml/configs/india_radio_profile_v1.json",
+  "public_notifications_enabled": false
+}

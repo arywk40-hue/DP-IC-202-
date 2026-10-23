@@ -36,4 +36,4 @@ def grid_provenance(ds,stations):
 
 
 if __name__=='__main__':
-    p=Path('configs/era5_operational_pilot.json');p.write_text(json.dumps(jobs(),indent=2)+'\n');print(p)
+    p=Path('ml/configs/era5_operational_pilot.json');p.write_text(json.dumps(jobs(),indent=2)+'\n');print(p)

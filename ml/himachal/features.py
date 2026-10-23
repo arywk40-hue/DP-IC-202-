@@ -11,7 +11,7 @@ from ml.himachal.meteorology import estimate, heat_index, humidity
 from ml.operational.contracts import UNITS, canonical_bytes, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 
-CONFIG_PATH = Path(__file__).resolve().parents[2] / "configs/himachal_features_v1.json"
+CONFIG_PATH = Path(__file__).resolve().parents[2] / "ml/configs/himachal_features_v1.json"
 
 
 def load_config():

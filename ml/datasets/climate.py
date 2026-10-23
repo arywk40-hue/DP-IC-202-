@@ -11,7 +11,7 @@ def enrich(path):
     import rasterio
     from rasterio.windows import from_bounds
     from ml.datasets.registry import digest
-    crop=Path('data/terrain/climate_india.tif');crop.parent.mkdir(parents=True,exist_ok=True)
+    crop=Path('ml/data/terrain/climate_india.tif');crop.parent.mkdir(parents=True,exist_ok=True)
     if not crop.exists():
         with rasterio.Env(GDAL_HTTP_TIMEOUT=60,GDAL_HTTP_MAX_RETRY=3,GDAL_HTTP_RETRY_DELAY=1,GDAL_DISABLE_READDIR_ON_OPEN='EMPTY_DIR'):
             with rasterio.open(CLIMATE) as ds:
@@ -31,4 +31,4 @@ def enrich(path):
     frame.to_csv(path,index=False);Path(str(path)+'.climate_errors.json').write_text(json.dumps(errors,indent=2)+'\n')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stations',default='data/registry/india_stations.csv');a=p.parse_args();enrich(a.stations)
+    p=argparse.ArgumentParser();p.add_argument('--stations',default='ml/data/registry/india_stations.csv');a=p.parse_args();enrich(a.stations)

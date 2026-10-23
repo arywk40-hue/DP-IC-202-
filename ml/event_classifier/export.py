@@ -262,7 +262,7 @@ def main() -> None:
     parser.add_argument(
         "--observations",
         type=Path,
-        default=Path("data/uci_beijing_air_quality/observations.csv"),
+        default=Path("ml/data/uci_beijing_air_quality/observations.csv"),
     )
     parser.add_argument(
         "--output",

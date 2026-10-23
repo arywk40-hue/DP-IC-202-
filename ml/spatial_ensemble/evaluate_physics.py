@@ -40,7 +40,7 @@ def coverage_report(report):
 def scenario(network,scope,heldout,buffer=20):
     station=network.stations;train,val,test=splits(station,heldout,buffer_km=buffer)
     if len(train)<3 or len(val)<3 or len(test)<3:raise ValueError('Too few buffered sites')
-    base=Path('data/physics_training/features')/scope
+    base=Path('ml/data/physics_training/features')/scope
     data={};ids={};counts={}
     roles={'train2024':(train,network.parts['train2024']),'train2023':(train,network.parts['train2023']),'select':(val,network.parts['select']),'calibrate':(val,network.parts['calibrate']),'check':(val,network.parts['check']),'test':(test,network.parts['test'])}
     for role,(queries,part) in roles.items():
@@ -86,21 +86,21 @@ def scenario(network,scope,heldout,buffer=20):
         output.append(record)
         # Small error/coverage artefact for plots; no pickle/model deserialization.
         np.savez_compressed(base/(label+'.test_predictions.npz'),truth=test_data['y'],prediction=pred,physics=test_data['physics'],idw=test_data['idw'],distances=test_data['distance'],station_index=test_ids[:,0],episode_id=test_ids[:,2])
-        Path('reports/physics_phase/'+scope+'.json').write_text(json.dumps(output,indent=2,allow_nan=False)+'\n')
+        Path('ml/reports/physics_phase/'+scope+'.json').write_text(json.dumps(output,indent=2,allow_nan=False)+'\n')
     return output
 
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--scopes',nargs='+',default=['national20km','national5km','himalaya20km']);args=parser.parse_args()
-    frame=pd.read_parquet('data/physics_training/hours.parquet');station=pd.read_csv('data/registry/india_stations.csv');qc=pd.read_csv('data/physics_training/station_qc.csv')
+    frame=pd.read_parquet('ml/data/physics_training/hours.parquet');station=pd.read_csv('ml/data/registry/india_stations.csv');qc=pd.read_csv('ml/data/physics_training/station_qc.csv')
     network=HourlyNetwork(frame,station,qc);rng=np.random.default_rng(42);held=rng.permutation(network.ids)[:len(network.ids)//5]
     results=[]
     for scope in args.scopes:
         selected=network.stations.loc[region(network.stations),'location_id'].tolist() if scope=='himalaya20km' else held
         results.extend(scenario(network,scope,selected,buffer=5 if scope=='national5km' else 20))
-    report={'schema_version':'physics_episode_experiment_v1','seed':42,'source_station_files_2024':375,'prepared_source_stations':network.raw_station_count,'unique_sites':len(network.ids),'removed_exact_coordinate_alias_ids':network.aliases,'source_station_qc':network.qc.to_dict('records'),'episodes':'Fixed72h UTC calendar blocks, same across sites; meteorological systems may cross blocks; not established exchangeability','era5_status':'No NetCDF/GRIB/Zarr files found in data folder; all era5_* features missing, no claimed contribution','observations':'UTC hour-end aggregated QC reports; no fill; calendar2023/24 plus final hour-end boundary','input_sha256':{p:digest(p) for p in ['data/physics_training/hours.parquet','data/physics_training/station_qc.csv','data/registry/india_stations.csv']},'experiments':results,'limitations':['375 source stations screened, not 375 independent QC-approved pressure sites','Physics reduction is modeled reference pressure, not WMO-certified MSL pressure','Selection-only non-inferiority is not a test/future pointwise guarantee','Whole calendar blocks are proxies for weather episodes','Full eastern Himalayan boundary still unverified','Model objects are in-memory, not a deployable ESP32 artifact']}
+    report={'schema_version':'physics_episode_experiment_v1','seed':42,'source_station_files_2024':375,'prepared_source_stations':network.raw_station_count,'unique_sites':len(network.ids),'removed_exact_coordinate_alias_ids':network.aliases,'source_station_qc':network.qc.to_dict('records'),'episodes':'Fixed72h UTC calendar blocks, same across sites; meteorological systems may cross blocks; not established exchangeability','era5_status':'No NetCDF/GRIB/Zarr files found in data folder; all era5_* features missing, no claimed contribution','observations':'UTC hour-end aggregated QC reports; no fill; calendar2023/24 plus final hour-end boundary','input_sha256':{p:digest(p) for p in ['ml/data/physics_training/hours.parquet','ml/data/physics_training/station_qc.csv','ml/data/registry/india_stations.csv']},'experiments':results,'limitations':['375 source stations screened, not 375 independent QC-approved pressure sites','Physics reduction is modeled reference pressure, not WMO-certified MSL pressure','Selection-only non-inferiority is not a test/future pointwise guarantee','Whole calendar blocks are proxies for weather episodes','Full eastern Himalayan boundary still unverified','Model objects are in-memory, not a deployable ESP32 artifact']}
     # NaN metadata fields are unknown; never output invalid JSON tokens.
     report['source_station_qc']=json.loads(pd.DataFrame(report['source_station_qc']).to_json(orient='records'))
-    Path('reports/physics_phase/results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    Path('ml/reports/physics_phase/results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
 
 if __name__=='__main__':main()

@@ -21,7 +21,7 @@ from ml.hazard_context.warning import mask_incomplete_history, warning_targets
 from ml.himachal.data.observations import sensor_frame
 from ml.operational.contracts import canonical_bytes, utc
 
-DEFAULT = Path(__file__).resolve().parents[3] / "configs/himachal_labels_v1.json"
+DEFAULT = Path(__file__).resolve().parents[3] / "ml/configs/himachal_labels_v1.json"
 
 
 def outcome(envelope, config, *, contract_mode=False):

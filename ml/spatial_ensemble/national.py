@@ -152,4 +152,4 @@ def run(observations,station_path,output):
     Path(output).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--observations',default='data/india_training/weather_sample.csv');p.add_argument('--stations',default='data/registry/india_stations.csv');p.add_argument('--output',default='reports/nwic_pipeline/india_evaluation.json');a=p.parse_args();run(a.observations,a.stations,a.output)
+    p=argparse.ArgumentParser();p.add_argument('--observations',default='ml/data/india_training/weather_sample.csv');p.add_argument('--stations',default='ml/data/registry/india_stations.csv');p.add_argument('--output',default='ml/reports/nwic_pipeline/india_evaluation.json');a=p.parse_args();run(a.observations,a.stations,a.output)

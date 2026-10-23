@@ -10,9 +10,9 @@ from ml.deployment.audit_himachal import audit, KEYS
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--rainfall', type=Path, default=Path('data/field_sources/raw/himachal_rainfall_2021_2025.csv'))
-    parser.add_argument('--weather', type=Path, default=Path('himachal 4-sensor dataset'))
-    parser.add_argument('--output', type=Path, default=Path('reports/deployment/rainfall_overlap.json'))
+    parser.add_argument('--rainfall', type=Path, default=Path('ml/data/field_sources/raw/himachal_rainfall_2021_2025.csv'))
+    parser.add_argument('--weather', type=Path, default=Path('ml/data/himachal_4_sensor'))
+    parser.add_argument('--output', type=Path, default=Path('ml/reports/deployment/rainfall_overlap.json'))
     args = parser.parse_args()
     _, weather = audit(args.weather, return_frame=True)
     column = 'Telemetry Hourly Rainfall (mm)'

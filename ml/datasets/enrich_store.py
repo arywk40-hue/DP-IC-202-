@@ -33,9 +33,9 @@ def enrich_parquet(path,stations_path):
         out.unlink(missing_ok=True)
 
 if __name__=='__main__':
-    enrich_sqlite('data/india_training/sample.sqlite','data/registry/india_stations.csv')
-    enrich_parquet('data/nwic_himachal/observations.parquet','data/registry/nwic_stations.csv')
-    for report,artifact,stations in [('data/nwic_himachal/build_report.json','data/nwic_himachal/observations.parquet','data/registry/nwic_stations.csv'),('data/india_training/manifest.json','data/india_training/sample.sqlite','data/registry/india_stations.csv')]:
+    enrich_sqlite('ml/data/india_training/sample.sqlite','ml/data/registry/india_stations.csv')
+    enrich_parquet('ml/data/nwic_himachal/observations.parquet','ml/data/registry/nwic_stations.csv')
+    for report,artifact,stations in [('ml/data/nwic_himachal/build_report.json','ml/data/nwic_himachal/observations.parquet','ml/data/registry/nwic_stations.csv'),('ml/data/india_training/manifest.json','ml/data/india_training/sample.sqlite','ml/data/registry/india_stations.csv')]:
         p=Path(report);r=json.loads(p.read_text())
         if 'sources' in r and 'wind_speed_mps' in r['sources']:
             r['sources']['wind_speed_mps']['flag_counts']['WIND_2007_UNCORROBORATED']=r['sources']['wind_speed_mps']['wind_rows_by_year'].get('2007',0)

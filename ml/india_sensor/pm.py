@@ -27,7 +27,7 @@ def eligibility(source, restricted=False):
     return 'ELIGIBLE_RESTRICTED' if source['license_class'] == 'restricted' else 'ELIGIBLE_OPEN'
 
 
-def audit(registry='data/registry/sources.json', output='reports/offline_phase/pm_admission.json'):
+def audit(registry='ml/data/registry/sources.json', output='ml/reports/offline_phase/pm_admission.json'):
     sources = json.loads(Path(registry).read_text())['sources']
     names = ['india_cpcb_kaggle_v2', 'delhi_opencity', 'openaq', 'sensor_community']
     report = {'heads': {p: 'UNTRAINED_NO_APPROVED_INDIAN_PM_LABELS' for p in PM},
@@ -88,8 +88,8 @@ def train(frame, source, cfg, stations, output, restricted=False):
 if __name__ == '__main__':
     from ml.india_sensor.config import DEFAULT, load
     parser = argparse.ArgumentParser()
-    parser.add_argument('--registry', default='data/registry/sources.json')
-    parser.add_argument('--output', default='reports/offline_phase/pm_admission.json')
+    parser.add_argument('--registry', default='ml/data/registry/sources.json')
+    parser.add_argument('--output', default='ml/reports/offline_phase/pm_admission.json')
     parser.add_argument('--input')
     parser.add_argument('--stations')
     parser.add_argument('--source-id')

@@ -136,5 +136,5 @@ def screen(output,year=2024,workers=4):
     return manifest
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',default='data/noaa_ghcnh');p.add_argument('--year',type=int,default=2024)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',default='ml/data/noaa_ghcnh');p.add_argument('--year',type=int,default=2024)
     a=p.parse_args();screen(a.output,a.year)

@@ -2,11 +2,11 @@
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-PROTECTED=['ml/india_sensor','ml/models','esp32','data/india_sensor','docs/archive']
+PROTECTED=['ml/india_sensor','ml/models','esp32','ml/data/india_sensor','docs/archive']
 
 def protected(p):
-    if p.is_relative_to(ROOT/'reports') and not p.is_relative_to(ROOT/'reports/hazard_context_phase'):return True
-    return any(p.is_relative_to(ROOT/folder) for folder in PROTECTED) or p in [ROOT/'configs/india_sensor_offline.json',ROOT/'configs/india_sensor_risk.json',ROOT/'data/registry/cds_physics_requests.json']
+    if p.is_relative_to(ROOT/'ml/reports') and not p.is_relative_to(ROOT/'ml/reports/hazard_context_phase'):return True
+    return any(p.is_relative_to(ROOT/folder) for folder in PROTECTED) or p in [ROOT/'ml/configs/india_sensor_offline.json',ROOT/'ml/configs/india_sensor_risk.json',ROOT/'ml/data/registry/cds_physics_requests.json']
 
 def new_file(path):
     p=Path(path).resolve()

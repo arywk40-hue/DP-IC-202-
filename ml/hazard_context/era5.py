@@ -16,7 +16,7 @@ FEATURES=[v[1] for v in VARIABLES.values()]+['era5_wind_speed_mps','era5_relativ
 MODES={'retrospective_background_context','availability_verified_context'}
 
 
-def verify_requests(path='data/registry/cds_physics_requests.json'):
+def verify_requests(path='ml/data/registry/cds_physics_requests.json'):
     import calendar
     jobs=json.loads(Path(path).read_text())['requests'];seen=set()
     for job in jobs:

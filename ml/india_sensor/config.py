@@ -9,7 +9,7 @@ import pandas as pd
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT = ROOT / 'configs/india_sensor_risk.json'
+DEFAULT = ROOT / 'ml/configs/india_sensor_risk.json'
 
 
 def load(path=DEFAULT):

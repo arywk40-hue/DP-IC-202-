@@ -35,11 +35,11 @@ def build(stations_path,raw_dir,output):
         if name not in wide:wide[name]=float('nan')
     wide.to_csv(output/'weather_sample.csv',index=False)
     manifest={'sampling':'exact minute zero, UTC hours 0/6/12/18, month days 1/8/15/22, 2024',
-        'registry_sha256':digest(stations_path),'source_registry_sha256':digest('data/registry/sources.json'),
+        'registry_sha256':digest(stations_path),'source_registry_sha256':digest('ml/data/registry/sources.json'),
         'source_reports':reports,'approved_long_rows':len(approved),'wide_rows':len(wide),
         'training_open_only':True,'pm_heads':'masked; no PM observations in NOAA core sample',
         'live_latency':'not verified; archive publication is retrospective','wide_sha256':digest(output/'weather_sample.csv')}
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');db.close();staging.replace(output/'sample.sqlite')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stations',default='data/registry/india_stations.csv');p.add_argument('--raw',default='data/noaa_ghcnh/raw');p.add_argument('--output',default='data/india_training');a=p.parse_args();build(a.stations,a.raw,a.output)
+    p=argparse.ArgumentParser();p.add_argument('--stations',default='ml/data/registry/india_stations.csv');p.add_argument('--raw',default='ml/data/noaa_ghcnh/raw');p.add_argument('--output',default='ml/data/india_training');a=p.parse_args();build(a.stations,a.raw,a.output)

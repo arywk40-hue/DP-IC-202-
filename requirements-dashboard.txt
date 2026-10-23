@@ -1,5 +1,0 @@
--r requirements-himachal.txt
-fastapi==0.115.12
-uvicorn==0.34.3
-httpx==0.28.1
-lightgbm==4.6.0

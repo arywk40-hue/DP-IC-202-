@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 
-DEFAULT = Path(__file__).resolve().parents[3] / "configs/himachal_sources_v1.json"
+DEFAULT = Path(__file__).resolve().parents[3] / "ml/configs/himachal_sources_v1.json"
 
 
 def load(path=DEFAULT):

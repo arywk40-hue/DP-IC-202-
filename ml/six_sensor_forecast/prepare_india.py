@@ -105,8 +105,8 @@ def prepare(source: Path, output: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=Path("data/india_station_audit"))
-    parser.add_argument("--output", type=Path, default=Path("data/india_cpcb_research"))
+    parser.add_argument("--source", type=Path, default=Path("ml/data/india_station_audit"))
+    parser.add_argument("--output", type=Path, default=Path("ml/data/india_cpcb_research"))
     args = parser.parse_args()
     result = prepare(args.source, args.output)
     print(

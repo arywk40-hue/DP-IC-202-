@@ -1,0 +1,83 @@
+schema_version: indra_storm_risk_v1
+evidence_kind: confirmed_event_records
+target:
+  name: cloudburst
+  lead_hours: 0
+  definition: Gauge-measured local rainfall intensity meeting the configured threshold
+  magnitude_unit: mm/h
+  minimum_magnitude: 100
+paths:
+  era5_glob: ml/storm_risk/data/raw/india_era5_monsoon_*.nc
+  labels: ml/storm_risk/data/confirmed_labels.csv
+  events: ml/storm_risk/data/confirmed_events.csv
+  outputs: ml/outputs
+  gate: ml/storm_risk/config/gate.yaml
+region: {south: 6.5, north: 37.5, west: 68.0, east: 97.5, grid_degrees: 0.25}
+years: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+time:
+  timezone: UTC
+  input_naive_is_utc: true
+  start: '2016-01-01T00:00:00Z'
+  end: '2026-01-01T00:00:00Z'
+  train_end: '2022-01-01T00:00:00Z'
+  calib_end: '2024-01-01T00:00:00Z'
+  feature_delay_hours: 0
+  label_delay_hours: 24
+  availability_note: Retrospective ERA5 context; as-issued availability has not been established
+limits: {max_rows: 500000, max_file_bytes: 2147483648, max_event_hours: 168, max_label_candidates: 2000000, max_grid_cells: 50000, max_feature_values: 50000000}
+variables:
+  tp: {aliases: [tp, total_precipitation], units: [m], scale: 1000, offset: 0, output_unit: mm/h}
+  cp: {aliases: [cp, convective_precipitation], units: [m], scale: 1000, offset: 0, output_unit: mm/h}
+  lsp: {aliases: [lsp, large_scale_precipitation], units: [m], scale: 1000, offset: 0, output_unit: mm/h}
+  t2m: {aliases: [t2m, 2m_temperature], units: [K], scale: 1, offset: -273.15, output_unit: degC}
+  d2m: {aliases: [d2m, 2m_dewpoint_temperature], units: [K], scale: 1, offset: -273.15, output_unit: degC}
+  sp: {aliases: [sp, surface_pressure], units: [Pa], scale: 0.01, offset: 0, output_unit: hPa}
+  u10: {aliases: [u10, 10m_u_component_of_wind], units: [m s**-1, m s-1, m/s], scale: 1, offset: 0, output_unit: m/s}
+  v10: {aliases: [v10, 10m_v_component_of_wind], units: [m s**-1, m s-1, m/s], scale: 1, offset: 0, output_unit: m/s}
+  fg10: {aliases: [fg10, i10fg, 10fg], units: [m s**-1, m s-1, m/s], scale: 1, offset: 0, output_unit: m/s}
+  cape: {aliases: [cape], units: [J kg**-1, J kg-1, J/kg], scale: 1, offset: 0, output_unit: J/kg}
+  cin: {aliases: [cin], units: [J kg**-1, J kg-1, J/kg], scale: 1, offset: 0, output_unit: J/kg}
+  tcwv: {aliases: [tcwv], units: [kg m**-2, kg m-2, kg/m2], scale: 1, offset: 0, output_unit: kg/m2}
+  kx: {aliases: [kx], units: [K], scale: 1, offset: 0, output_unit: K}
+  tt: {aliases: [tt], units: [K], scale: 1, offset: 0, output_unit: K}
+  blh: {aliases: [blh], units: [m], scale: 1, offset: 0, output_unit: m}
+  tcc: {aliases: [tcc], units: ['(0 - 1)', '1'], scale: 1, offset: 0, output_unit: '1'}
+  tclw: {aliases: [tclw], units: [kg m**-2, kg m-2, kg/m2], scale: 1, offset: 0, output_unit: kg/m2}
+precipitation_semantics: hourly_accumulation
+features: {history_hours: 24, inner_validation_fraction: 0.2}
+labels:
+  accepted_confidence: [confirmed, high]
+  negative_record_type: monitored_non_event
+  match_radius_deg: 0.125
+  require_distinct_domains: true
+  min_positives: 30
+models:
+  seed: 42
+  ridge: {variant: ridge_regression, alpha: 10.0, max_iter: 2000}
+  xgb: {n_estimators: 120, max_depth: 3, learning_rate: 0.05, early_stopping_rounds: 12, n_jobs: 2}
+  mlp: {hidden_layers: [64], epochs: 30, alpha: 0.01, learning_rate: 0.001, batch_size: 256}
+ensemble: {simplex_step: 0.05}
+calibration: {method: isotonic, min_positives_calib: 30, min_negatives_calib: 30}
+anomaly: {percentile: 99}
+confirmation: {threshold: 0.7, radius_deg: 0.4, n_min: 2, window_hours: 3}
+heatmaps: {features: all, time_stride_hours: 1, png_latest_only: true, max_frames: 10000, cmap: viridis}
+online:
+  enabled: false
+  warmup_days: 30
+  reference_days: 7
+  min_positives: 10
+  min_negatives: 10
+  min_reference_rows: 24
+  rolling_days: 30
+  checkpoint_days: 30
+  drift_brier_increase: 0.05
+  alpha: 0.0001
+  eta0: 0.01
+fixture:
+  start: '2020-06-01T00:00:00Z'
+  days: 60
+  latitudes: [31.5, 31.75]
+  longitudes: [76.75, 77.0]
+  event_rate: 0.12
+  train_fraction: 0.6
+  calib_fraction: 0.2

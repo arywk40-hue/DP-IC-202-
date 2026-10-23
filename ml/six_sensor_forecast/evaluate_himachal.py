@@ -29,7 +29,7 @@ def evaluate(root: Path) -> dict:
     merged = None
     sources = {}
     for target, uid in FILES.items():
-        path = root / "himachal 4-sensor dataset" / f"{uid}.csv"
+        path = root / "ml/data/himachal_4_sensor" / f"{uid}.csv"
         raw = pd.read_csv(path)
         value = raw.columns[-1]
         frame = raw[keys + [value]].copy().rename(columns={value: target})
@@ -124,7 +124,7 @@ def evaluate(root: Path) -> dict:
             sensitivity
         ),
     }
-    out = root / "data/himachal_weather_audit"
+    out = root / "ml/data/himachal_weather_audit"
     out.mkdir(parents=True, exist_ok=True)
     (out / "model_diagnostic.json").write_text(
         json.dumps(report, indent=2, allow_nan=False)

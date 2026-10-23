@@ -61,8 +61,8 @@ def audit(directory, return_frame=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data', type=Path, default=Path('himachal 4-sensor dataset'))
-    parser.add_argument('--output', type=Path, default=Path('reports/deployment/himachal_readiness.json'))
+    parser.add_argument('--data', type=Path, default=Path('ml/data/himachal_4_sensor'))
+    parser.add_argument('--output', type=Path, default=Path('ml/reports/deployment/himachal_readiness.json'))
     args = parser.parse_args()
     report = audit(args.data)
     args.output.parent.mkdir(parents=True, exist_ok=True)
