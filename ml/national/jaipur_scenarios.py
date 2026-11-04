@@ -212,3 +212,4 @@ def simulate_arid_wind_hazards(
             "Values are research simulation indicators, not certified municipal disaster alarms."
         )
     }
+

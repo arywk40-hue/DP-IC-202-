@@ -21,8 +21,11 @@ from ml.national.jaipur_scenarios import (
     JAIPUR_SCENARIOS,
     simulate_arid_wind_hazards,
 )
+from pathlib import Path
 from ml.six_sensor_forecast.contract import PHYSICAL_RANGES, RAW_SENSOR_COLUMNS
 from server.dashboard import create_app
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 @pytest.fixture(scope="module")
@@ -219,3 +222,40 @@ def test_fastapi_jaipur_endpoints(client):
     assert "wind_storm_assessment" in data_fc
     assert "andhi_dust_storm_assessment" in data_fc
     assert "heat_stress_assessment" in data_fc
+
+
+def test_esp32_jaipur_runtime_c_parity():
+    """Verify that the embedded C++17 runtime matches the Python assessment."""
+    import shutil
+    import subprocess
+    cxx = shutil.which("clang++") or shutil.which("g++")
+    if not cxx:
+        pytest.skip("C++ compiler not available for parity test")
+
+    header_path = ROOT / "esp32/ml_integration/include/indra_jaipur_wind_runtime.h"
+    assert header_path.is_file()
+
+    cpp_code = f"""
+    #include <iostream>
+    #include <cassert>
+    #include "{header_path}"
+
+    int main() {{
+        float raw[6] = {{30.5f, 22.0f, 971.2f, 240.0f, 1650.0f, 25.5f}};
+        auto assessment = indra_jaipur::assess_jaipur(raw, 6.5f, 11.5f);
+        assert(assessment.andhi.andhi_index >= 0.70f);
+        assert(assessment.wind.alert_code == 3);
+        assert(assessment.wind.wind_speed_kmh > 90.0f);
+        std::cout << "OK";
+        return 0;
+    }}
+    """
+    tmp_bin = "/tmp/test_jaipur_cpp"
+    res = subprocess.run([cxx, "-std=c++17", "-x", "c++", "-", "-o", tmp_bin],
+                         input=cpp_code, text=True, capture_output=True)
+    assert res.returncode == 0, f"Compilation failed: {res.stderr}"
+    run_res = subprocess.run([tmp_bin], capture_output=True, text=True)
+    assert run_res.returncode == 0
+    assert run_res.stdout.strip() == "OK"
+    Path(tmp_bin).unlink(missing_ok=True)
+

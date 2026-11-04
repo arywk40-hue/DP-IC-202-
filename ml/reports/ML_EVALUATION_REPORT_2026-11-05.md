@@ -123,3 +123,36 @@ Use the following step-by-step commands to test and demonstrate the ML and dashb
 MPLCONFIGDIR=/tmp/indra-mpl .venv/bin/python esp32/ml_integration/tools/test_mandi_v2_parity.py
 ```
 
+---
+
+## 6. Pan-India Expansion & Jaipur Arid Windstorm Engine
+
+### 6.1 Multi-Zone Geodetic Dispatch
+The flagship Mandi model now operates within a national geodetic routing mesh (`ml/national/service.py`) covering all six agro-climatic zones of India across 3.287 million km² and 587 calibrated ground stations:
+* Western Himalayas (Mandi Flagship): `india_mandi_tabular_v2`
+* Arid Northwest (Jaipur / Rajasthan): `JaipurAridWindEngine` (`jaipur_arid_convective_scaler_v1`)
+* Indo-Gangetic Plains (Delhi / UP / WB): Inversion & particulate trapping modeler
+* Western Ghats Coastal (Mumbai / Kerala): Orographic deluge & maritime boundary layer
+* Central Deccan Plateau (Nagpur / Hyderabad): Semi-arid squall & moisture deficit
+* Northeast Hills (Guwahati / Shillong): Subtropical high-precipitation modeler
+
+### 6.2 Jaipur Windstorm & Andhi Dust Storm Engine
+The dedicated Jaipur engine (`ml/national/jaipur_engine.py`) provides:
+* **Convective Windstorm & Gale Burst Classifier:** Evaluates kinetic wind power density ($P_{\text{wind}} = \frac{1}{2}\rho v^3$) and Beaufort/IMD squall alert categories (`CALM_OR_MODERATE`, `STRONG_WIND_WATCH`, `GALE_SQUALL_WARNING`, `SEVERE_WINDSTORM_WARNING`, `EXTREME_GALE_BURST_EMERGENCY`).
+* **Pre-Monsoon Dust Storm (*Andhi*) Diagnostic:** Evaluates wind acceleration, coarse particulate ratio ($PM_{10}/PM_{2.5} > 4.0$), cold-pool downdraft cooling ($\Delta T = -6\text{ to } -12^\circ\text{C}$), and barometric jump.
+* **Arid Heat Stress & Loo Heatwave Assessment:** Evaluates Vapor Pressure Deficit (VPD in kPa) and triggers emergency alerts when $T \ge 43.0^\circ\text{C}$ and $RH \le 25\%$.
+* **Embedded C++17 Header:** [`esp32/ml_integration/include/indra_jaipur_wind_runtime.h`](../../esp32/ml_integration/include/indra_jaipur_wind_runtime.h) provides zero-heap C++ execution on ESP32 microcontrollers.
+
+### 6.3 Test Runbook for National & Jaipur Endpoints:
+```sh
+# Run national multi-zone routing and Jaipur windstorm test suites:
+.venv/bin/python -m pytest ml/tests/test_jaipur_windstorms.py ml/tests/test_pan_india_service.py -v
+
+# Query Jaipur Wind Risk & Andhi Diagnostic via REST API:
+curl -s "http://127.0.0.1:8080/api/national/jaipur/wind-risk?wind_speed_mps=26.5&pm10_ug_m3=1650.0&temp_c=30.5" | jq .
+
+# Execute 512-draw Monte Carlo simulation of a violent Gale Burst:
+curl -s "http://127.0.0.1:8080/api/national/jaipur/simulate?scenario=extreme_gale_burst&draws=512" | jq .
+```
+
+

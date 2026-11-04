@@ -21,6 +21,7 @@ The firmware requires hourly input at exactly one-hour intervals. Forecast infer
 | C++ host parity: synthetic patterns | 32 episodes; maximum absolute difference `3.29729672455e-08` |
 | Firmware self-test fixture | Passed; synthetic software fixture only |
 | Scenario repeatability/bounds | Passed on 4 cases; firmware RNG `indra_xorshift64star_boxmuller_v1` |
+| Jaipur Windstorm/Andhi C++ Parity | Passed; exact match in `test_esp32_jaipur_runtime_c_parity` |
 | PlatformIO `esp32-s3-mandi-v2` | Passed; 2,967,109 / 3,342,336 bytes app flash, 19,916 / 327,680 bytes static RAM |
 | PlatformIO `esp32-s3-mandi-v2-usb` | Passed; 2,964,357 / 3,342,336 bytes app flash, 20,148 / 327,680 bytes static RAM |
 | Physical flash, boot, serial output and sensor data | Pending |
@@ -46,3 +47,4 @@ PLATFORMIO_CORE_DIR=/private/tmp/indra-platformio pio run -d esp32/ml_integratio
 ```
 
 See [ESP32 Mandi integration](../../esp32/ml_integration/README.md) for the model inputs, output schema, and detailed command protocol.
+For comprehensive multi-profile hardware deployment across all three firmware variants (Inference, Sensor Hub, and Mesh), see [ESP32 Deployment Specification](ESP32_DEPLOYMENT_SPECIFICATION_AND_READINESS.md).
