@@ -2661,3 +2661,109 @@ td {
   line-height: 1.4;
   color: #a8f0b5;
 }
+.simulator-presets-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.preset-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.preset-buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.preset-pill-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.preset-pill-btn:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+.serial-output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hardware-verified-tag {
+  font-size: 9px;
+  font-weight: 700;
+  background: #14532d;
+  color: #86efac;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.serial-stream-code {
+  background: #090d0b;
+  border: 1px solid #1f3d29;
+  border-radius: 4px;
+  padding: 6px 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.edge-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+.edge-metric-item {
+  background: #19271e;
+  border: 1px solid #233b2b;
+  border-radius: 4px;
+  padding: 5px 7px;
+  display: flex;
+  flex-direction: column;
+}
+.edge-metric-item small {
+  font-size: 9px;
+  color: #8ca394;
+  text-transform: uppercase;
+}
+.edge-metric-item strong {
+  font-size: 12px;
+  color: #e2f4e7;
+}
+.edge-alert-text {
+  color: #fbbf24 !important;
+}
+.edge-forecast-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #233b2b;
+}
+.edge-fc-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #79a882;
+}
+.edge-fc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.edge-fc-tags span {
+  font-size: 11px;
+  background: #1f3426;
+  color: #c7f3d2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.serial-error-msg {
+  color: #f87171;
+  font-size: 12px;
+}

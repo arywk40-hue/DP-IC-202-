@@ -56,13 +56,28 @@ export const getNationalStations = (zone = '', query = '', limit = 50) => {
   const qs = params.toString();
   return request(`/api/national/stations${qs ? '?' + qs : ''}`);
 };
-export const getNationalForecast = (lat = 31.71, lon = 76.93, locationName = '') => {
+export const getNationalForecast = (lat = 31.71, lon = 76.93, locationName = '', readings = null) => {
   const params = new URLSearchParams();
   params.set('lat', String(lat));
   params.set('lon', String(lon));
   if (locationName) params.set('location_name', locationName);
+  if (readings) {
+    if (readings.temperature_c != null) params.set('temp_c', String(readings.temperature_c));
+    if (readings.relative_humidity_pct != null) params.set('rh_pct', String(readings.relative_humidity_pct));
+    if (readings.pressure_hpa != null) params.set('pressure_hpa', String(readings.pressure_hpa));
+    if (readings.pm25_ug_m3 != null) params.set('pm25_ug_m3', String(readings.pm25_ug_m3));
+    if (readings.pm10_ug_m3 != null) params.set('pm10_ug_m3', String(readings.pm10_ug_m3));
+    if (readings.wind_speed_mps != null) params.set('wind_speed_mps', String(readings.wind_speed_mps));
+  }
   return request(`/api/national/forecast?${params.toString()}`);
 };
+
+export const postEsp32Infer = (payload) =>
+  request('/api/national/esp32/infer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
 
 // Jaipur & Arid Northwest Windstorm & Dust Hazards APIs
 export const getJaipurWindRisk = (windSpeedMps = 25.5, pm10 = 1650.0, tempC = 30.5) => {

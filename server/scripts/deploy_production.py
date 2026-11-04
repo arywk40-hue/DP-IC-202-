@@ -82,7 +82,7 @@ def main():
     parser.add_argument("--host", default="127.0.0.1", help="Bind locally by default; put hosted deployments behind TLS and an authenticated proxy")
     parser.add_argument("--port", type=int, default=8080, help="Listening port (default: 8080)")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB, help="SQLite database path")
-    parser.add_argument("--data-dir", type=Path, default=ROOT / "ml/data/himachal/mandi_api_live", help="Rolling Open-Meteo response cache")
+    parser.add_argument("--data-dir", type=Path, default=ROOT / "ml/data/himachal/mandi_current_api_v1", help="Rolling Open-Meteo response cache")
     parser.add_argument("--refresh-seconds", type=int, default=900, help="API refresh interval (minimum 60 seconds)")
     parser.add_argument("--model-dir", type=Path, default=ROOT / "ml/models/india_mandi_tabular_v2", help="Model catalog directory")
     parser.add_argument("--enable-demo-auth", action="store_true", help="Enable 1-click demo login for local operator testing (loopback only)")

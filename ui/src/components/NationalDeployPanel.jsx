@@ -5,7 +5,17 @@ import {
   getNationalForecast,
   getJaipurWindRisk,
   getJaipurScenarios,
+  postEsp32Infer,
 } from '../api/client';
+
+const PRESET_SCENARIOS = [
+  { label: 'Cloudburst Downpour (HP)', reading: '1767225600,16.0,94.0,910.0,15.0,25.0,14.5', zone: 'western_himalayas', stateIndex: 0 },
+  { label: 'Snowstorm / Blizzard (HP)', reading: '1767225600,-2.5,92.0,915.0,12.0,22.0,14.0', zone: 'western_himalayas', stateIndex: 0 },
+  { label: 'Andhi Dust Storm (Jaipur)', reading: '1767225600,30.5,22.0,971.2,240.0,1650.0,25.5', zone: 'arid_northwest', stateIndex: 1 },
+  { label: 'Extreme Gale Burst (Jaipur)', reading: '1767225600,34.0,18.0,968.0,180.0,950.0,29.0', zone: 'arid_northwest', stateIndex: 1 },
+  { label: 'Loo Heatwave (Jaipur)', reading: '1767225600,45.5,14.0,980.0,65.0,140.0,6.0', zone: 'arid_northwest', stateIndex: 1 },
+  { label: 'Winter Smog Inversion (Delhi)', reading: '1767225600,18.5,75.0,1015.0,380.0,520.0,1.2', zone: 'indo_gangetic_plains', stateIndex: 2 },
+];
 
 const STATE_OPTIONS = [
   {
@@ -91,6 +101,7 @@ export default function NationalDeployPanel() {
   const [serialInput, setSerialInput] = useState(STATE_OPTIONS[0].sampleReading);
   const [serialOutput, setSerialOutput] = useState(null);
   const [copiedFlash, setCopiedFlash] = useState(false);
+  const [inferring, setInferring] = useState(false);
 
   const selectedState = STATE_OPTIONS[selectedStateIndex];
 
@@ -126,57 +137,32 @@ export default function NationalDeployPanel() {
     };
   }, [selectedStateIndex]);
 
-  // Handle Serial Simulator execution
-  const handleSimulateSerial = () => {
+  // Handle Serial execution calling real backend ESP32 C++17 runtime
+  const handleSimulateSerial = async (overrideLine = null, overrideZone = null) => {
+    const lineToUse = overrideLine || serialInput;
+    const zoneToUse = overrideZone || selectedState.zoneId;
     try {
-      const parts = serialInput.trim().split(',').map(Number);
-      if (parts.length < 7 || parts.some(isNaN)) {
-        setSerialOutput({
-          error: 'Expected 7 comma-separated numbers: timestamp,temp,rh,pressure,pm25,pm10,wind',
-        });
-        return;
-      }
-      const [ts, temp, rh, press, pm25, pm10, wind] = parts;
-
-      // Simulated C++ ESP32 runtime output
-      const fcTemp = roundVal(selectedState.zoneId === 'arid_northwest' ? temp + 6.2 : temp + 3.8);
-      const fcRh = roundVal(selectedState.zoneId === 'arid_northwest' ? Math.max(rh * 0.62, 7.5) : Math.max(rh * 0.82, 20.0));
-      const fcPress = roundVal(press - 0.5);
-      const fcPm25 = roundVal(pm25 * 1.05);
-      const fcPm10 = roundVal(pm10 * 1.15);
-      const fcWind = roundVal(wind * 1.02);
-
-      const isAndhi = selectedState.zoneId === 'arid_northwest' && wind >= 15.0 && pm10 >= 500;
-      const andhiIndex = isAndhi ? 0.96 : (wind / 40.0 + pm10 / 2500.0) * 0.5;
-
-      const response = {
-        protocol_version: 2,
-        boot_id: 1,
-        sequence: 25,
-        target_hardware: 'ESP32-S3 Dual-Core Xtensa LX7 @ 240MHz',
-        runtime_language: 'C++17 Header-Only (Zero Dynamic Allocations)',
-        model_id: selectedState.modelId,
-        timestamp_utc: ts,
-        forecast_timestamp_utc: ts + 21600,
-        status: 'HYBRID_READY',
-        history_rows: 25,
-        latency_us: 1420,
-        forecast_6h: [fcTemp, fcRh, fcPress, fcPm25, fcPm10, fcWind],
-        edge_diagnostics: {
-          zone: selectedState.zoneId,
-          state: selectedState.state,
-          wind_speed_kmh: roundVal(wind * 3.6),
-          wind_alert: wind >= 28.5 ? 'EXTREME_GALE_BURST_EMERGENCY' : wind >= 24.5 ? 'SEVERE_WINDSTORM_WARNING' : wind >= 17.2 ? 'GALE_SQUALL_WARNING' : 'CALM_OR_MODERATE',
-          andhi_dust_storm_active: isAndhi,
-          andhi_index: roundVal(andhiIndex),
-          cloudburst_fraction: selectedState.zoneId === 'western_himalayas' ? 0.04 : null,
-          flash_flood_fraction: selectedState.zoneId === 'western_himalayas' ? 0.01 : null,
-        },
-      };
-      setSerialOutput(response);
+      setInferring(true);
+      const res = await postEsp32Infer({
+        raw_line: lineToUse,
+        zone_id: zoneToUse,
+        lat: selectedState.lat,
+        lon: selectedState.lon,
+      });
+      setSerialOutput(res);
     } catch (e) {
-      setSerialOutput({ error: e.message });
+      setSerialOutput({ error: e.message || 'ESP32 inference execution failed' });
+    } finally {
+      setInferring(false);
     }
+  };
+
+  const handleSelectPreset = (preset) => {
+    setSerialInput(preset.reading);
+    if (preset.stateIndex != null && preset.stateIndex !== selectedStateIndex) {
+      setSelectedStateIndex(preset.stateIndex);
+    }
+    handleSimulateSerial(preset.reading, preset.zone);
   };
 
   const getFlashCommand = () => {
@@ -416,6 +402,24 @@ export default function NationalDeployPanel() {
               <h4>Live ESP32 Serial Input Stream</h4>
               <small>unix_sec, temp, rh, pressure, pm25, pm10, wind</small>
             </div>
+
+            {/* Research Hazards Quick Presets */}
+            <div className="simulator-presets-bar">
+              <span className="preset-label">Research Hazard Vectors:</span>
+              <div className="preset-buttons-group">
+                {PRESET_SCENARIOS.map((p, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className="preset-pill-btn"
+                    onClick={() => handleSelectPreset(p)}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="simulator-input-row">
               <input
                 type="text"
@@ -424,17 +428,82 @@ export default function NationalDeployPanel() {
                 onChange={(e) => setSerialInput(e.target.value)}
                 placeholder="1767225600,20,50,1013,35,60,2"
               />
-              <button type="button" className="execute-serial-btn" onClick={handleSimulateSerial}>
-                Simulate ESP32
+              <button
+                type="button"
+                className="execute-serial-btn"
+                onClick={() => handleSimulateSerial()}
+                disabled={inferring}
+              >
+                {inferring ? 'Inferring…' : 'Run ESP32 C++17 Edge'}
               </button>
             </div>
 
             {serialOutput && (
               <div className="serial-output-panel">
-                <span className="output-tag">UART Serial JSON Output (115200 baud):</span>
-                <pre>
-                  <code>{JSON.stringify(serialOutput, null, 2)}</code>
-                </pre>
+                {serialOutput.error ? (
+                  <div className="serial-error-msg">{serialOutput.error}</div>
+                ) : (
+                  <>
+                    <div className="serial-output-header">
+                      <span className="output-tag">UART Serial Log (115200 baud):</span>
+                      <span className="hardware-verified-tag">Zero Dynamic Allocations (Fixed Stack)</span>
+                    </div>
+                    <pre className="serial-stream-code">
+                      <code>{serialOutput.serial_stream_line}</code>
+                    </pre>
+
+                    {/* Edge Execution Summary Metrics */}
+                    <div className="edge-metric-grid">
+                      <div className="edge-metric-item">
+                        <small>Edge Latency</small>
+                        <strong>{serialOutput.latency_us} µs</strong>
+                      </div>
+                      <div className="edge-metric-item">
+                        <small>Dynamic Heap</small>
+                        <strong>{serialOutput.ram_heap_allocated_bytes} Bytes</strong>
+                      </div>
+                      <div className="edge-metric-item">
+                        <small>Hazard Alert</small>
+                        <strong className="edge-alert-text">
+                          {serialOutput.edge_diagnostics?.hazard_alert || serialOutput.edge_diagnostics?.wind_alert || 'NORMAL'}
+                        </strong>
+                      </div>
+                      {serialOutput.edge_diagnostics?.air_density_kg_m3 != null && (
+                        <div className="edge-metric-item">
+                          <small>Air Density</small>
+                          <strong>{serialOutput.edge_diagnostics.air_density_kg_m3} kg/m³</strong>
+                        </div>
+                      )}
+                      {serialOutput.edge_diagnostics?.wind_power_density_w_m2 != null && (
+                        <div className="edge-metric-item">
+                          <small>Wind Power</small>
+                          <strong>{serialOutput.edge_diagnostics.wind_power_density_w_m2} W/m²</strong>
+                        </div>
+                      )}
+                      {serialOutput.edge_diagnostics?.vpd_kpa != null && (
+                        <div className="edge-metric-item">
+                          <small>Vapor Deficit</small>
+                          <strong>{serialOutput.edge_diagnostics.vpd_kpa} kPa</strong>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 6-Channel Edge Forecast Vector */}
+                    {serialOutput.forecast_6h && (
+                      <div className="edge-forecast-row">
+                        <span className="edge-fc-title">+6h Edge Prediction Vector:</span>
+                        <div className="edge-fc-tags">
+                          <span>T: {serialOutput.forecast_6h[0]}°C</span>
+                          <span>RH: {serialOutput.forecast_6h[1]}%</span>
+                          <span>P: {serialOutput.forecast_6h[2]} hPa</span>
+                          <span>PM2.5: {serialOutput.forecast_6h[3]} µg/m³</span>
+                          <span>PM10: {serialOutput.forecast_6h[4]} µg/m³</span>
+                          <span>W: {serialOutput.forecast_6h[5]} m/s</span>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -466,3 +535,4 @@ function formatChannelName(key) {
 function roundVal(v) {
   return Math.round(v * 100) / 100;
 }
+

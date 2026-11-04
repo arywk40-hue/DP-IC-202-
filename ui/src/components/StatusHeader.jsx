@@ -84,7 +84,7 @@ export default function StatusHeader({
                   </span>
                 )}
                 <span className="auth-header-name">{user.name}</span>
-                <span className="auth-header-tag">{user.provider === "google" ? "Google" : "Demo"}</span>
+                <span className="auth-header-tag">{user.provider === "google" ? "Google" : "Operator"}</span>
               </>
             ) : (
               <>

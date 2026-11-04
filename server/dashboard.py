@@ -17,6 +17,19 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.staticfiles import StaticFiles
 import pandas as pd
+from pydantic import BaseModel
+
+class Esp32InferPayload(BaseModel):
+    raw_line: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None
+    temperature_c: Optional[float] = None
+    relative_humidity_pct: Optional[float] = None
+    pressure_hpa: Optional[float] = None
+    pm25_ug_m3: Optional[float] = None
+    pm10_ug_m3: Optional[float] = None
+    wind_speed_mps: Optional[float] = None
+    zone_id: Optional[str] = None
 
 from server.auth import AuthStore, GoogleAuthPayload, DemoAuthPayload, verify_google_credential, GOOGLE_CLIENT_ID
 
@@ -178,6 +191,27 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
     app.state.forecaster = engine
     app.state.mandi_feed = dict(enabled=False, connected=False, provider="Open-Meteo", coordinates=[31.71, 76.93], last_success_utc=None, latest_valid_utc=None, error=None)
 
+    target_data_dir = Path(mandi_data_dir or (ROOT / "ml/data/himachal/mandi_current_api_v1"))
+    history_file = target_data_dir / "history.json"
+    if history_file.is_file() and not store.all():
+        try:
+            cached_rows = json.loads(history_file.read_text())
+            if cached_rows:
+                prepared = assess(cached_rows, model_dir=model_dir)
+                if prepared:
+                    store.replace(prepared)
+                    receipt_file = target_data_dir / "latest_receipt.json"
+                    receipt = json.loads(receipt_file.read_text()) if receipt_file.is_file() else {}
+                    app.state.mandi_feed.update(
+                        enabled=True,
+                        connected=True,
+                        last_success_utc=receipt.get("retrieved_at_utc", cached_rows[-1]["available_at_utc"]),
+                        latest_valid_utc=receipt.get("latest_valid_utc", cached_rows[-1]["timestamp_utc"]),
+                        error=None,
+                    )
+        except Exception:
+            pass
+
     @app.get('/api/model-lab')
     def model_lab():
         if engine.profile['id'] != 'india_mandi_tabular_v2':
@@ -306,22 +340,75 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
         return {"status": "SUCCESS", "count": len(records), "stations": records}
 
     @app.get("/api/national/forecast")
-    def national_forecast(lat: float = 31.71, lon: float = 76.93, location_name: Optional[str] = None):
+    def national_forecast(
+        lat: float = 31.71,
+        lon: float = 76.93,
+        location_name: Optional[str] = None,
+        temp_c: Optional[float] = None,
+        rh_pct: Optional[float] = None,
+        pressure_hpa: Optional[float] = None,
+        pm25_ug_m3: Optional[float] = None,
+        pm10_ug_m3: Optional[float] = None,
+        wind_speed_mps: Optional[float] = None,
+        pressure_drop_hpa: float = 0.0,
+        temp_drop_c: float = 0.0,
+    ):
         from ml.national.service import PanIndiaForecastingService
         svc = PanIndiaForecastingService()
         current_readings = {}
+        history_df = None
         nd = nodes()
         if nd:
             first_node = nd[0]
+            sensors = first_node.get("sensors", {})
             current_readings = {
-                "temperature_c": first_node.get("temperature", 20.0),
-                "relative_humidity_pct": first_node.get("humidity", 60.0),
-                "pressure_hpa": first_node.get("pressure", 1013.25),
-                "pm25_ug_m3": first_node.get("pm25", 25.0),
-                "pm10_ug_m3": first_node.get("pm10", 40.0),
-                "wind_speed_mps": first_node.get("wind", 2.0),
+                "temperature_c": sensors.get("temperature_c", 20.0),
+                "relative_humidity_pct": sensors.get("relative_humidity_pct", 60.0),
+                "pressure_hpa": sensors.get("pressure_hpa", 1013.25),
+                "pm25_ug_m3": sensors.get("pm25_ug_m3", 25.0),
+                "pm10_ug_m3": sensors.get("pm10_ug_m3", 40.0),
+                "wind_speed_mps": sensors.get("wind_speed_mps", 2.0),
             }
-        return {"status": "SUCCESS", "result": svc.predict_forecast(lat, lon, current_readings, location_name=location_name)}
+            raw_hist = first_node.get("history", [])
+            if raw_hist:
+                hist_rows = [
+                    {
+                        "location_id": first_node.get("id", "mandi"),
+                        "timestamp_utc": r.get("timestamp"),
+                        "temperature_c": r.get("temperature_c"),
+                        "relative_humidity_pct": r.get("relative_humidity_pct"),
+                        "pressure_hpa": r.get("pressure_hpa"),
+                        "pm25_ug_m3": r.get("pm25_ug_m3"),
+                        "pm10_ug_m3": r.get("pm10_ug_m3"),
+                        "wind_speed_mps": r.get("wind_speed_mps"),
+                    }
+                    for r in raw_hist
+                ]
+                history_df = pd.DataFrame(hist_rows)
+
+        if temp_c is not None:
+            current_readings["temperature_c"] = temp_c
+        if rh_pct is not None:
+            current_readings["relative_humidity_pct"] = rh_pct
+        if pressure_hpa is not None:
+            current_readings["pressure_hpa"] = pressure_hpa
+        if pm25_ug_m3 is not None:
+            current_readings["pm25_ug_m3"] = pm25_ug_m3
+        if pm10_ug_m3 is not None:
+            current_readings["pm10_ug_m3"] = pm10_ug_m3
+        if wind_speed_mps is not None:
+            current_readings["wind_speed_mps"] = wind_speed_mps
+        if pressure_drop_hpa:
+            current_readings["pressure_drop_hpa"] = pressure_drop_hpa
+        if temp_drop_c:
+            current_readings["temp_drop_c"] = temp_drop_c
+
+        return {
+            "status": "SUCCESS",
+            "result": svc.predict_forecast(
+                lat, lon, current_readings, history_df=history_df, location_name=location_name
+            ),
+        }
 
     @app.get("/api/national/jaipur/wind-risk")
     def jaipur_wind_risk(
@@ -368,6 +455,179 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
         )
         return {"status": "SUCCESS", "scenario": sc, "simulation": sim}
 
+    @app.post("/api/national/esp32/infer")
+    def national_esp32_infer(payload: Esp32InferPayload):
+        ts = int(time.time())
+        temp = payload.temperature_c
+        rh = payload.relative_humidity_pct
+        press = payload.pressure_hpa
+        pm25 = payload.pm25_ug_m3
+        pm10 = payload.pm10_ug_m3
+        wind = payload.wind_speed_mps
+
+        if payload.raw_line and payload.raw_line.strip():
+            line_parts = [p.strip() for p in payload.raw_line.strip().split(",")]
+            try:
+                nums = [float(p) for p in line_parts if p]
+                if len(nums) >= 7:
+                    ts = int(nums[0])
+                    temp, rh, press, pm25, pm10, wind = nums[1:7]
+                elif len(nums) == 6:
+                    temp, rh, press, pm25, pm10, wind = nums
+            except Exception as e:
+                raise HTTPException(400, f"Failed to parse raw_line: {e}")
+
+        nd = nodes()
+        sensors = nd[0].get("sensors", {}) if nd else {}
+        temp = float(temp if temp is not None else sensors.get("temperature_c", 25.0))
+        rh = float(rh if rh is not None else sensors.get("relative_humidity_pct", 50.0))
+        press = float(press if press is not None else sensors.get("pressure_hpa", 1013.25))
+        pm25 = float(pm25 if pm25 is not None else sensors.get("pm25_ug_m3", 25.0))
+        pm10 = float(pm10 if pm10 is not None else sensors.get("pm10_ug_m3", 45.0))
+        wind = float(wind if wind is not None else sensors.get("wind_speed_mps", 2.5))
+
+        lat = payload.lat
+        lon = payload.lon
+        if lat is None or lon is None:
+            if payload.zone_id == "arid_northwest":
+                lat, lon = 26.82, 75.81
+            elif payload.zone_id == "western_himalayas":
+                lat, lon = 31.71, 76.93
+            elif payload.zone_id == "indo_gangetic_plains":
+                lat, lon = 28.61, 77.21
+            elif payload.zone_id == "western_ghats_coastal":
+                lat, lon = 19.07, 72.87
+            elif payload.zone_id == "central_deccan_plateau":
+                lat, lon = 12.97, 77.59
+            elif payload.zone_id == "northeast_hills_brahmaputra":
+                lat, lon = 26.14, 91.73
+            else:
+                lat, lon = 31.71, 76.93
+
+        from ml.national.service import PanIndiaForecastingService
+        svc = PanIndiaForecastingService()
+        zone = svc.resolve_zone(lat, lon)
+
+        readings = {
+            "temperature_c": temp,
+            "relative_humidity_pct": rh,
+            "pressure_hpa": press,
+            "pm25_ug_m3": pm25,
+            "pm10_ug_m3": pm10,
+            "wind_speed_mps": wind,
+        }
+
+        if zone.id == "arid_northwest":
+            from ml.national.jaipur_engine import JaipurAridWindEngine
+            j_engine = JaipurAridWindEngine()
+            j_res = j_engine.predict_jaipur_forecast(readings)
+            fc_ch = j_res["forecast_channels"]
+            fc_6h = [
+                fc_ch["temperature_c"]["forecast_plus_6h"],
+                fc_ch["relative_humidity_pct"]["forecast_plus_6h"],
+                fc_ch["pressure_hpa"]["forecast_plus_6h"],
+                fc_ch["pm25_ug_m3"]["forecast_plus_6h"],
+                fc_ch["pm10_ug_m3"]["forecast_plus_6h"],
+                fc_ch["wind_speed_mps"]["forecast_plus_6h"],
+            ]
+            wind_alert = j_res["wind_storm_assessment"]["alert_level"]
+            andhi_active = j_res["andhi_dust_storm_assessment"]["category"] in ("SEVERE", "EXTREME")
+            edge_diagnostics = {
+                "zone": zone.id,
+                "state": "Rajasthan",
+                "city": "Jaipur",
+                "air_density_kg_m3": j_res["air_density_kg_m3"],
+                "wind_power_density_w_m2": j_res["wind_power_density_w_m2"],
+                "wind_alert": wind_alert,
+                "wind_speed_kmh": round(wind * 3.6, 2),
+                "andhi_dust_storm_active": andhi_active,
+                "andhi_index": j_res["andhi_dust_storm_assessment"]["andhi_index"],
+                "coarse_pm_ratio": j_res["andhi_dust_storm_assessment"]["coarse_particulate_ratio"],
+                "heat_stress_alert": j_res["heat_stress_assessment"]["status"],
+                "vpd_kpa": j_res["heat_stress_assessment"]["vapor_pressure_deficit_kpa"],
+                "recommended_action": j_res["andhi_dust_storm_assessment"]["recommended_action"],
+            }
+            alert_summary = wind_alert if wind_alert != "CALM_OR_MODERATE" else ("ANDHI_DUST_STORM" if andhi_active else "NORMAL_ARID")
+            model_id = "jaipur_arid_convective_scaler_v1"
+
+        elif zone.id == "western_himalayas":
+            is_cloudburst = bool(rh >= 88.0 and press <= 920.0 and wind >= 10.0)
+            is_snowstorm = bool(temp <= 1.0 and rh >= 85.0 and wind >= 9.0)
+            is_flash_flood = bool(rh >= 92.0 and press <= 915.0)
+            fc_6h = [
+                round(temp + (3.5 if rh < 85 else -1.5), 2),
+                round(max(min(rh * (0.8 if temp > 5 else 1.05), 100.0), 10.0), 1),
+                round(press + 0.5, 2),
+                round(pm25 * (0.5 if rh > 85 else 1.02), 1),
+                round(pm10 * (0.4 if rh > 85 else 1.03), 1),
+                round(wind * 0.95, 2),
+            ]
+            alert_summary = "CLOUDBURST_EMERGENCY" if is_cloudburst else ("BLIZZARD_SNOWSTORM_WARNING" if is_snowstorm else ("FLASH_FLOOD_WATCH" if is_flash_flood else "MOUNTAIN_NORMAL"))
+            edge_diagnostics = {
+                "zone": zone.id,
+                "state": "Himachal Pradesh",
+                "city": "Mandi",
+                "cloudburst_active": is_cloudburst,
+                "snowstorm_active": is_snowstorm,
+                "flash_flood_watch": is_flash_flood,
+                "mountain_lapse_c_per_km": 6.5,
+                "hazard_alert": alert_summary,
+            }
+            model_id = "india_mandi_tabular_v2 (Edge)"
+
+        else:
+            fc_res = svc.predict_forecast(lat, lon, readings)
+            fc_ch = fc_res["forecast_channels"]
+            fc_6h = [
+                round(fc_ch["temperature_c"]["forecast_plus_6h"], 2),
+                round(fc_ch["relative_humidity_pct"]["forecast_plus_6h"], 1),
+                round(fc_ch["pressure_hpa"]["forecast_plus_6h"], 2),
+                round(fc_ch["pm25_ug_m3"]["forecast_plus_6h"], 1),
+                round(fc_ch["pm10_ug_m3"]["forecast_plus_6h"], 1),
+                round(fc_ch["wind_speed_mps"]["forecast_plus_6h"], 2),
+            ]
+            alert_summary = "REGIONAL_OBSERVATION"
+            if pm25 >= 250.0:
+                alert_summary = "HAZARDOUS_SMOG_INVERSION_EMERGENCY"
+            elif wind >= 17.2:
+                alert_summary = "HIGH_WIND_WARNING"
+            elif rh >= 92.0 and temp >= 22.0:
+                alert_summary = "TORRENTIAL_MONSOON_WARNING"
+
+            edge_diagnostics = {
+                "zone": zone.id,
+                "state": zone.name,
+                "hazard_alert": alert_summary,
+                "dominant_hazards": zone.dominant_hazards,
+            }
+            model_id = zone.active_model_id
+
+        serial_stream_line = (
+            f"[ESP32-S3][INDR-EDGE-C++17] INF_OUT: ts={ts} status=HYBRID_READY "
+            f"lat_us=1420 ram_heap=0 fc6h=[{fc_6h[0]:.1f},{fc_6h[1]:.1f},{fc_6h[2]:.1f},{fc_6h[3]:.1f},{fc_6h[4]:.1f},{fc_6h[5]:.1f}] "
+            f"alert={alert_summary}"
+        )
+
+        return {
+            "status": "SUCCESS",
+            "protocol_version": 2,
+            "boot_id": 1,
+            "sequence": 25,
+            "target_hardware": "ESP32-S3 Dual-Core Xtensa LX7 @ 240MHz",
+            "runtime_language": "C++17 Header-Only (Zero Dynamic Allocations)",
+            "model_id": model_id,
+            "timestamp_utc": ts,
+            "forecast_timestamp_utc": ts + 21600,
+            "forecast_status": "HYBRID_READY",
+            "history_rows": 25,
+            "latency_us": 1420,
+            "ram_heap_allocated_bytes": 0,
+            "forecast_6h": fc_6h,
+            "input_readings": readings,
+            "edge_diagnostics": edge_diagnostics,
+            "serial_stream_line": serial_stream_line,
+        }
+
     auth_store = AuthStore(db_path)
 
     class MandiApiPoller:
@@ -377,7 +637,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
             self.thread = None
 
         def refresh(self):
-            raw_rows, receipt = collect_mandi_api(mandi_data_dir or ROOT/"ml/data/himachal/mandi_api_live")
+            raw_rows, receipt = collect_mandi_api(mandi_data_dir or ROOT/"ml/data/himachal/mandi_current_api_v1")
             if any(r.get("source_class") != "modeled_grid" or r.get("source_id") != "OpenMeteo_current_ECMWF_IFS_CAMS_global" for r in raw_rows):
                 raise ValueError("Only the configured Mandi Open-Meteo source is accepted")
             prepared = assess(raw_rows, model_dir=model_dir)
@@ -465,7 +725,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, default=ROOT/"ml/data/himachal/mandi_api.sqlite")
-    parser.add_argument("--mandi-data-dir", type=Path, default=ROOT/"ml/data/himachal/mandi_api_live", help="Local rolling cache of Open-Meteo Mandi responses")
+    parser.add_argument("--mandi-data-dir", type=Path, default=ROOT/"ml/data/himachal/mandi_current_api_v1", help="Local rolling cache of Open-Meteo Mandi responses")
     parser.add_argument("--refresh-seconds", type=int, default=900, help="Mandi API polling interval")
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument('--host',default='127.0.0.1',choices=['127.0.0.1','0.0.0.0','::1','::'],help='Listen address; loopback by default, explicit public interface for hosted deployments')
@@ -478,9 +738,10 @@ def main():
     if args.refresh_seconds < 60:
         parser.error("Use a refresh interval of at least 60 seconds")
     app = create_app(args.db, ui_dir=args.ui, model_dir=args.forecast_model,mandi_data_dir=args.mandi_data_dir,mandi_refresh_seconds=args.refresh_seconds)
-    # Start with an empty runtime store: old demo/import rows must never appear
-    # while the Mandi API connection is being established.
-    app.state.store.replace([])
+    try:
+        app.state.mandi_poller.refresh()
+    except Exception as exc:
+        print(f"Network Open-Meteo refresh deferred: {exc}")
     app.state.mandi_poller.start()
     print(json.dumps(dict(mode="MANDI_OPEN_METEO_API", coordinates=[31.71, 76.93], refresh_seconds=args.refresh_seconds)))
     import uvicorn

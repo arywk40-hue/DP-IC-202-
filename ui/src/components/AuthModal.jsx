@@ -37,7 +37,7 @@ export default function AuthModal({ isOpen, onClose }) {
         <div className="auth-modal-header">
           <div>
             <span className="eyebrow">Identity</span>
-            <h3>{user ? (user.provider === 'google' ? 'Google account' : 'Local demo account') : 'Sign in to INDRA'}</h3>
+            <h3>{user ? (user.provider === 'google' ? 'Google account' : 'Local Operator Session') : 'Sign in to INDRA'}</h3>
           </div>
           <button type="button" className="auth-modal-close" onClick={onClose} aria-label="Close dialog">&times;</button>
         </div>
@@ -51,7 +51,7 @@ export default function AuthModal({ isOpen, onClose }) {
                 <div className="auth-avatar-placeholder">{user.name?.[0]?.toUpperCase() || 'U'}</div>}
               <div className="auth-user-info">
                 <strong>{user.name}</strong><span>{user.email}</span>
-                <span className="auth-badge-verified">{user.provider === 'google' ? 'Google identity verified' : 'Local demo identity'}</span>
+                <span className="auth-badge-verified">{user.provider === 'google' ? 'Google identity verified' : 'Local Operator Identity'}</span>
               </div>
             </div>
             <p className="auth-footer-note">This account displays identity only. Dashboard data is read-only; station control is not connected.</p>
@@ -65,10 +65,10 @@ export default function AuthModal({ isOpen, onClose }) {
             <p className="auth-signin-lead">Sign in to view the account attached to this browser session. Signing in does not grant hardware control.</p>
             {authConfig?.googleClientId && <div className="google-btn-wrapper"><div ref={googleBtnRef} /></div>}
             {authConfig?.demoAuthEnabled && <button type="button" className="btn-quick-operator" onClick={handleDemoSignIn} disabled={loading}>
-              {loading ? 'Signing in…' : 'Continue with local demo account'}
+              {loading ? 'Signing in…' : 'Continue as Local Operator'}
             </button>}
             {!authConfig?.authEnabled && <p role="status">Sign-in is not configured on this server.</p>}
-            <div className="auth-footer-note">{authConfig?.googleClientId ? 'Google identity verification' : authConfig?.demoAuthEnabled ? 'Local demo sign-in' : 'No authentication provider configured'}</div>
+            <div className="auth-footer-note">{authConfig?.googleClientId ? 'Google identity verification' : authConfig?.demoAuthEnabled ? 'Local Operator Access' : 'No authentication provider configured'}</div>
           </>
         )}
       </div>

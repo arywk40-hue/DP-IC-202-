@@ -13,7 +13,7 @@ def main():
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--refresh-seconds", type=int, default=900)
     parser.add_argument("--db", type=Path, default=ROOT / "ml/data/himachal/mandi_api.sqlite")
-    parser.add_argument("--data-dir", type=Path, default=ROOT / "ml/data/himachal/mandi_api_live")
+    parser.add_argument("--data-dir", type=Path, default=ROOT / "ml/data/himachal/mandi_current_api_v1")
     parser.add_argument("--forecast-model", type=Path, help="Versioned Mandi six-channel model directory")
     args = parser.parse_args()
     if not (UI / "node_modules/.bin/vite").exists():
