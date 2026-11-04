@@ -7,6 +7,7 @@ import ProvenancePanel from "./components/ProvenancePanel";
 import ModelLab from "./components/ModelLab";
 import ParameterMaps from "./components/ParameterMaps";
 import ApiExplorer from "./components/ApiExplorer";
+import NationalDeployPanel from "./components/NationalDeployPanel";
 import AuthModal from "./components/AuthModal";
 import {
   getNodes,
@@ -188,16 +189,22 @@ export default function App() {
         <div className="workspace-heading">
           <div>
             <span className="eyebrow">
-              {view === "apis" ? "Developer Suite" : "Your weather network"}
+              {view === "apis"
+                ? "Developer Suite"
+                : view === "national"
+                  ? "National Operations"
+                  : "Your weather network"}
             </span>
             <h1>
               {view === "observations"
                 ? "Across your locations"
                 : view === "parameters"
                   ? "Explore the area"
-                  : view === "apis"
-                    ? "INDRA API & Developer Explorer"
-                    : "Data & system"}
+                  : view === "national"
+                    ? "Pan-India Multi-Zone Operations & ESP32"
+                    : view === "apis"
+                      ? "INDRA API & Developer Explorer"
+                      : "Data & system"}
             </h1>
           </div>
           <div className="workspace-meta">
@@ -258,6 +265,7 @@ export default function App() {
           />
         )}
         {view === "apis" && <ApiExplorer />}
+        {view === "national" && <NationalDeployPanel />}
         {view === "system" && (
           <div className="system-view">
             <section className="system-intro">

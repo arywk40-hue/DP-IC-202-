@@ -48,6 +48,7 @@ export default function StatusHeader({
           {[
             ["observations", "Observations"],
             ["parameters", "Parameters"],
+            ["national", "Pan-India & ESP32"],
             ["system", "System"],
             ["apis", "APIs"],
           ].map(([id, label]) => (

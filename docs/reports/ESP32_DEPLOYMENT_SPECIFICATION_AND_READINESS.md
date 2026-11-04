@@ -211,3 +211,4 @@ Send one line per hourly observation:
 | Flash Partition Fit | $< 3.34\text{ MB}$ application limit | `pio run -e esp32-s3-mandi-v2` | **PASSED (2.96 MB)** |
 | Static RAM Budget | $< 320\text{ KB}$ internal SRAM | `pio run -e esp32-s3-mandi-v2` | **PASSED (19.9 KB)** |
 | Serial Input Bounds | Strict rejection of out-of-bounds telemetry | Unit test in `test_esp32_ml_integration.py` | **PASSED (4/4)** |
+
