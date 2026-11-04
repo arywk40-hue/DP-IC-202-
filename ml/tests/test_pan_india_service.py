@@ -154,3 +154,4 @@ def test_fastapi_national_endpoints(api_client):
     assert data_fc["status"] == "SUCCESS"
     assert data_fc["result"]["zone_id"] == "western_himalayas"
     assert "forecast_channels" in data_fc["result"]
+

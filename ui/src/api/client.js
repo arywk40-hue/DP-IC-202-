@@ -63,3 +63,19 @@ export const getNationalForecast = (lat = 31.71, lon = 76.93, locationName = '')
   if (locationName) params.set('location_name', locationName);
   return request(`/api/national/forecast?${params.toString()}`);
 };
+
+// Jaipur & Arid Northwest Windstorm & Dust Hazards APIs
+export const getJaipurWindRisk = (windSpeedMps = 25.5, pm10 = 1650.0, tempC = 30.5) => {
+  const params = new URLSearchParams();
+  params.set('wind_speed_mps', String(windSpeedMps));
+  params.set('pm10_ug_m3', String(pm10));
+  params.set('temp_c', String(tempC));
+  return request(`/api/national/jaipur/wind-risk?${params.toString()}`);
+};
+export const getJaipurScenarios = () => request('/api/national/jaipur/scenarios');
+export const getJaipurSimulate = (scenario = 'andhi_dust_storm', draws = 512) => {
+  const params = new URLSearchParams();
+  params.set('scenario', scenario);
+  params.set('draws', String(draws));
+  return request(`/api/national/jaipur/simulate?${params.toString()}`);
+};

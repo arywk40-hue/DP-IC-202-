@@ -80,10 +80,10 @@ ZONES: Dict[str, PanIndiaZone] = {
         lon_max=77.5,
         elevation_band="20m – 500m",
         flagship_station="Jaipur / Kota (26.91° N, 75.78° E)",
-        active_model_id="india_sensor_v1",
-        service_status="CALIBRATED_RESEARCH",
-        dominant_hazards=["dust_storm_andhi", "extreme_heat_stress", "agricultural_drought"],
-        description="Desert and scrubland experiencing extreme pre-monsoon convective dust storms (Andhi), daytime temperatures exceeding 48°C, and soil moisture deficits.",
+        active_model_id="jaipur_arid_convective_scaler_v1",
+        service_status="CALIBRATED_RESEARCH_OPERATIONAL",
+        dominant_hazards=["dust_storm_andhi", "wind_storms_gale_burst", "extreme_heat_stress_loo", "agricultural_drought"],
+        description="Desert and scrubland experiencing extreme pre-monsoon convective dust storms (Andhi), gale-force wind gusts, daytime temperatures exceeding 48°C, and soil moisture deficits.",
     ),
     "western_ghats_coastal": PanIndiaZone(
         id="western_ghats_coastal",
@@ -150,6 +150,7 @@ class PanIndiaForecastingService:
         self.stations_path = Path(stations_path)
         self._stations_df: Optional[pd.DataFrame] = None
         self._mandi_model = None
+        self._jaipur_engine = None
 
     @property
     def stations(self) -> pd.DataFrame:
@@ -169,6 +170,13 @@ class PanIndiaForecastingService:
             from ml.india_mandi.tabular_v2 import TabularV2
             self._mandi_model = TabularV2(MANDI_MODEL_DIR)
         return self._mandi_model
+
+    @property
+    def jaipur_engine(self):
+        if self._jaipur_engine is None:
+            from ml.national.jaipur_engine import JaipurAridWindEngine
+            self._jaipur_engine = JaipurAridWindEngine()
+        return self._jaipur_engine
 
     def list_zones(self) -> List[Dict[str, Any]]:
         """List all 6 Pan-India agro-climatic zones with active metadata."""
@@ -275,7 +283,35 @@ class PanIndiaForecastingService:
                 "dominant_hazards": zone.dominant_hazards,
             }
 
-        # Case 2: National Ensemble / Single-Point Physics Route
+        # Case 2: Arid & Semi-Arid Northwest -> Dispatches to JaipurAridWindEngine
+        if zone.id == "arid_northwest":
+            jaipur_res = self.jaipur_engine.predict_jaipur_forecast(
+                current_readings,
+                pressure_drop_hpa=float(current_readings.get("pressure_drop_hpa", 0.0)),
+                temp_drop_c=float(current_readings.get("temp_drop_c", 0.0))
+            )
+            nearest = self.find_nearest_stations(lat, lon, limit=1)
+            nearest_name = nearest[0]["station_name"] if nearest else "Jaipur Regional Node"
+            return {
+                "location_name": location_name or f"Arid Site ({lat:.2f}N, {lon:.2f}E) - {nearest_name}",
+                "latitude": lat,
+                "longitude": lon,
+                "zone_id": zone.id,
+                "zone_name": zone.name,
+                "model_id": zone.active_model_id,
+                "model_status": zone.service_status,
+                "evidence": "ARID_CONVECTIVE_SCALER_AND_WINDSTORM_DIAGNOSTIC",
+                "forecast_channels": jaipur_res["forecast_channels"],
+                "wind_storm_assessment": jaipur_res["wind_storm_assessment"],
+                "andhi_dust_storm_assessment": jaipur_res["andhi_dust_storm_assessment"],
+                "heat_stress_assessment": jaipur_res["heat_stress_assessment"],
+                "air_density_kg_m3": jaipur_res["air_density_kg_m3"],
+                "wind_power_density_w_m2": jaipur_res["wind_power_density_w_m2"],
+                "ml_calibrated_probabilities": jaipur_res["ml_calibrated_probabilities"],
+                "dominant_hazards": zone.dominant_hazards,
+            }
+
+        # Case 3: National Boundary Layer Ensemble / Single-Point Physics Route
         # Uses physical diurnal lapse rates and regional boundary layer priors
         temp = float(current_readings.get("temperature_c", 20.0))
         rh = float(current_readings.get("relative_humidity_pct", 60.0))

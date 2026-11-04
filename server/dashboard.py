@@ -323,6 +323,51 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
             }
         return {"status": "SUCCESS", "result": svc.predict_forecast(lat, lon, current_readings, location_name=location_name)}
 
+    @app.get("/api/national/jaipur/wind-risk")
+    def jaipur_wind_risk(
+        lat: float = 26.82,
+        lon: float = 75.81,
+        wind_speed_mps: Optional[float] = None,
+        pm10_ug_m3: Optional[float] = None,
+        pm25_ug_m3: Optional[float] = None,
+        temp_c: Optional[float] = None,
+        rh_pct: Optional[float] = None,
+        pressure_hpa: Optional[float] = None,
+        pressure_drop_hpa: float = 0.0,
+        temp_drop_c: float = 0.0,
+    ):
+        from ml.national.jaipur_engine import JaipurAridWindEngine
+        engine = JaipurAridWindEngine()
+        readings = {
+            "temperature_c": temp_c if temp_c is not None else 32.0,
+            "relative_humidity_pct": rh_pct if rh_pct is not None else 25.0,
+            "pressure_hpa": pressure_hpa if pressure_hpa is not None else 975.0,
+            "pm25_ug_m3": pm25_ug_m3 if pm25_ug_m3 is not None else 45.0,
+            "pm10_ug_m3": pm10_ug_m3 if pm10_ug_m3 is not None else 120.0,
+            "wind_speed_mps": wind_speed_mps if wind_speed_mps is not None else 4.5,
+        }
+        res = engine.predict_jaipur_forecast(readings, pressure_drop_hpa=pressure_drop_hpa, temp_drop_c=temp_drop_c)
+        return {"status": "SUCCESS", "latitude": lat, "longitude": lon, "assessment": res}
+
+    @app.get("/api/national/jaipur/scenarios")
+    def jaipur_scenarios():
+        from ml.national.jaipur_scenarios import JAIPUR_SCENARIOS
+        return {"status": "SUCCESS", "scenarios": JAIPUR_SCENARIOS}
+
+    @app.get("/api/national/jaipur/simulate")
+    def jaipur_simulate(scenario: str = "andhi_dust_storm", draws: int = 512):
+        from ml.national.jaipur_scenarios import JAIPUR_SCENARIOS, simulate_arid_wind_hazards
+        if scenario not in JAIPUR_SCENARIOS:
+            raise HTTPException(404, f"Scenario '{scenario}' not found. Valid: {list(JAIPUR_SCENARIOS.keys())}")
+        sc = JAIPUR_SCENARIOS[scenario]
+        sim = simulate_arid_wind_hazards(
+            sc["readings"],
+            draws=draws,
+            pressure_drop_hpa=sc["perturbation"]["pressure_drop_hpa"],
+            temp_drop_c=sc["perturbation"]["temp_drop_c"],
+        )
+        return {"status": "SUCCESS", "scenario": sc, "simulation": sim}
+
     auth_store = AuthStore(db_path)
 
     class MandiApiPoller:

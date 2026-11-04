@@ -12,6 +12,9 @@ import {
   getNationalZones,
   getNationalStations,
   getNationalForecast,
+  getJaipurWindRisk,
+  getJaipurScenarios,
+  getJaipurSimulate,
 } from '../api/client';
 
 const API_GROUPS = [
@@ -162,6 +165,48 @@ const API_GROUPS = [
           return getNationalForecast(parseFloat(lat), parseFloat(lon), name);
         },
       },
+      {
+        id: 'get-jaipur-wind-risk',
+        method: 'GET',
+        path: '/api/national/jaipur/wind-risk?wind_speed_mps={wind}&pm10_ug_m3={pm10}&temp_c={temp}',
+        description: 'Evaluates convective Wind Storm, Dust Storm (Andhi), and Arid Heat Stress diagnostics for Jaipur & Arid Northwest.',
+        hasSelect: true,
+        selectLabel: 'Hazard Vector Preset',
+        selectOptions: [
+          { value: '25.5,1650,30.5', label: 'Severe Andhi Dust Storm (25.5 m/s, PM10=1650, 30.5°C)' },
+          { value: '31.0,450,36.0', label: 'Extreme Gale Windstorm Burst (31.0 m/s, PM10=450, 36.0°C)' },
+          { value: '7.2,180,47.8', label: 'Hyper-Arid Loo Heatwave (47.8°C, RH=10.5%, 7.2 m/s)' },
+          { value: '4.2,85,28.5', label: 'Nominal Arid Fair-Weather Day (4.2 m/s, PM10=85, 28.5°C)' },
+        ],
+        defaultSelect: '25.5,1650,30.5',
+        action: (param) => {
+          const [wind, pm10, temp] = (param || '25.5,1650,30.5').split(',');
+          return getJaipurWindRisk(parseFloat(wind), parseFloat(pm10), parseFloat(temp));
+        },
+      },
+      {
+        id: 'get-jaipur-scenarios',
+        method: 'GET',
+        path: '/api/national/jaipur/scenarios',
+        description: 'Returns ground-truth research atmospheric scenarios for Jaipur (Andhi, Gale Squall, Loo Heatwave).',
+        action: () => getJaipurScenarios(),
+      },
+      {
+        id: 'get-jaipur-simulate',
+        method: 'GET',
+        path: '/api/national/jaipur/simulate?scenario={scenario}',
+        description: 'Runs bounded Monte Carlo simulations for convective dust storms, squalls, and extreme heatwaves.',
+        hasSelect: true,
+        selectLabel: 'Select Simulation Scenario',
+        selectOptions: [
+          { value: 'andhi_dust_storm', label: 'Convective Dust Storm (Andhi)' },
+          { value: 'extreme_gale_burst', label: 'Extreme Gale Windstorm Burst' },
+          { value: 'loo_heatwave', label: 'Hyper-Arid Loo Heatwave' },
+          { value: 'calm_arid_diurnal', label: 'Nominal Arid Diurnal Cycle' },
+        ],
+        defaultSelect: 'andhi_dust_storm',
+        action: (param) => getJaipurSimulate(param || 'andhi_dust_storm'),
+      },
     ],
   },
 ];
@@ -219,10 +264,14 @@ export default function ApiExplorer() {
     if (activeEndpoint.hasSelect) {
       const sVal = customParams[activeEndpoint.id] || activeEndpoint.defaultSelect || 'temperature_c';
       if (sVal.includes(',')) {
-        const [lat, lon] = sVal.split(',');
-        path = path.replace('{lat}', lat).replace('{lon}', lon);
+        const parts = sVal.split(',');
+        if (parts.length === 3 && activeEndpoint.path.includes('{wind}')) {
+          path = path.replace('{wind}', parts[0]).replace('{pm10}', parts[1]).replace('{temp}', parts[2]);
+        } else if (parts.length >= 2 && activeEndpoint.path.includes('{lat}')) {
+          path = path.replace('{lat}', parts[0]).replace('{lon}', parts[1]);
+        }
       } else {
-        path = path.replace('{channel}', sVal);
+        path = path.replace('{channel}', sVal).replace('{scenario}', sVal);
       }
     }
     return `curl -sS "${window.location.origin}${path}"${authHeader} | jq .`;
