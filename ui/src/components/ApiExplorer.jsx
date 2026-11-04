@@ -9,6 +9,9 @@ import {
   getProvenance,
   getAuthConfig,
   getAuthMe,
+  getNationalZones,
+  getNationalStations,
+  getNationalForecast,
 } from '../api/client';
 
 const API_GROUPS = [
@@ -116,6 +119,51 @@ const API_GROUPS = [
       },
     ],
   },
+  {
+    id: 'national',
+    title: '5. Pan-India Mesh & Multi-Zone APIs',
+    subtitle: '587-station geodetic routing across all 6 agro-climatic zones of India',
+    endpoints: [
+      {
+        id: 'get-national-zones',
+        method: 'GET',
+        path: '/api/national/zones',
+        description: 'Lists all 6 Pan-India agro-climatic zones with station tallies, active models, and regional hazards.',
+        action: () => getNationalZones(),
+      },
+      {
+        id: 'get-national-stations',
+        method: 'GET',
+        path: '/api/national/stations?query={query}',
+        description: 'Queries 587 calibrated ground mesh stations by city name, station code, or agro-climatic zone.',
+        hasParam: true,
+        paramName: 'Search Query (e.g. MANDI, DELHI, MUMBAI)',
+        defaultParam: 'MANDI',
+        action: (param) => getNationalStations('', param || 'MANDI'),
+      },
+      {
+        id: 'get-national-forecast',
+        method: 'GET',
+        path: '/api/national/forecast?lat={lat}&lon={lon}',
+        description: 'Generates geodetically routed multi-sensor forecasts using TabularV2 (Himalayan) or regional boundary ensembles.',
+        hasSelect: true,
+        selectLabel: 'Target Location / Agro-Climatic Zone',
+        selectOptions: [
+          { value: '31.71,76.93,Mandi (Himalayan)', label: 'Mandi (31.71°N, 76.93°E) - Western Himalaya' },
+          { value: '28.61,77.20,Delhi (Indo-Gangetic)', label: 'Delhi (28.61°N, 77.20°E) - Indo-Gangetic Plains' },
+          { value: '26.91,75.78,Jaipur (Arid)', label: 'Jaipur (26.91°N, 75.78°E) - Arid Northwest' },
+          { value: '19.07,72.87,Mumbai (Coastal)', label: 'Mumbai (19.07°N, 72.87°E) - Western Ghats Coastal' },
+          { value: '12.97,77.59,Bengaluru (Deccan)', label: 'Bengaluru (12.97°N, 77.59°E) - Deccan Plateau' },
+          { value: '26.14,91.73,Guwahati (Northeast)', label: 'Guwahati (26.14°N, 91.73°E) - Northeast Hills' },
+        ],
+        defaultSelect: '31.71,76.93,Mandi (Himalayan)',
+        action: (param) => {
+          const [lat, lon, name] = (param || '31.71,76.93,Mandi (Himalayan)').split(',');
+          return getNationalForecast(parseFloat(lat), parseFloat(lon), name);
+        },
+      },
+    ],
+  },
 ];
 
 export default function ApiExplorer() {
@@ -165,18 +213,17 @@ export default function ApiExplorer() {
     const authHeader = token ? ` -H "Authorization: Bearer ${token}"` : '';
     let path = activeEndpoint.path;
     if (activeEndpoint.hasParam) {
-      path = path.replace(
-        '{id}',
-        customParams[activeEndpoint.id] || activeEndpoint.defaultParam || 'mandi-api-current',
-      );
+      const pVal = customParams[activeEndpoint.id] || activeEndpoint.defaultParam || 'mandi-api-current';
+      path = path.replace('{id}', pVal).replace('{query}', encodeURIComponent(pVal));
     }
     if (activeEndpoint.hasSelect) {
-      path = path.replace(
-        '{channel}',
-        customParams[activeEndpoint.id] ||
-          activeEndpoint.defaultSelect ||
-          'temperature_c',
-      );
+      const sVal = customParams[activeEndpoint.id] || activeEndpoint.defaultSelect || 'temperature_c';
+      if (sVal.includes(',')) {
+        const [lat, lon] = sVal.split(',');
+        path = path.replace('{lat}', lat).replace('{lon}', lon);
+      } else {
+        path = path.replace('{channel}', sVal);
+      }
     }
     return `curl -sS "${window.location.origin}${path}"${authHeader} | jq .`;
   };
@@ -286,7 +333,7 @@ export default function ApiExplorer() {
 
               {activeEndpoint.hasSelect && (
                 <label className="param-field">
-                  <span>Parameter Channel:</span>
+                  <span>{activeEndpoint.selectLabel || 'Parameter Channel'}:</span>
                   <select
                     value={
                       customParams[activeEndpoint.id] ??

@@ -12,6 +12,7 @@ from pathlib import Path
 import sqlite3
 import threading
 import time
+from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.staticfiles import StaticFiles
@@ -282,6 +283,45 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
         # Legacy route name retained; the actual method is explicitly IDW.
         try:return geojson(parameter_maps(nodes(),resolution),channel)
         except ValueError as exc:raise HTTPException(422,str(exc)) from exc
+
+    @app.get("/api/national/zones")
+    def national_zones():
+        from ml.national.service import PanIndiaForecastingService
+        return {"status": "SUCCESS", "zones": PanIndiaForecastingService().list_zones()}
+
+    @app.get("/api/national/stations")
+    def national_stations(zone: Optional[str] = None, query: Optional[str] = None, limit: int = 50):
+        from ml.national.service import PanIndiaForecastingService, ZONES
+        svc = PanIndiaForecastingService()
+        df = svc.stations
+        if df.empty:
+            return {"status": "NO_STATIONS", "stations": [], "count": 0}
+        if zone and zone in ZONES:
+            z = ZONES[zone]
+            df = df[df.latitude.between(z.lat_min, z.lat_max) & df.longitude.between(z.lon_min, z.lon_max)]
+        if query:
+            q = query.strip().upper()
+            df = df[df.station_name.astype(str).str.contains(q, na=False) | df.location_id.astype(str).str.contains(q, na=False)]
+        records = df.head(limit).to_dict("records")
+        return {"status": "SUCCESS", "count": len(records), "stations": records}
+
+    @app.get("/api/national/forecast")
+    def national_forecast(lat: float = 31.71, lon: float = 76.93, location_name: Optional[str] = None):
+        from ml.national.service import PanIndiaForecastingService
+        svc = PanIndiaForecastingService()
+        current_readings = {}
+        nd = nodes()
+        if nd:
+            first_node = nd[0]
+            current_readings = {
+                "temperature_c": first_node.get("temperature", 20.0),
+                "relative_humidity_pct": first_node.get("humidity", 60.0),
+                "pressure_hpa": first_node.get("pressure", 1013.25),
+                "pm25_ug_m3": first_node.get("pm25", 25.0),
+                "pm10_ug_m3": first_node.get("pm10", 40.0),
+                "wind_speed_mps": first_node.get("wind", 2.0),
+            }
+        return {"status": "SUCCESS", "result": svc.predict_forecast(lat, lon, current_readings, location_name=location_name)}
 
     auth_store = AuthStore(db_path)
 

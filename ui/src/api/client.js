@@ -45,3 +45,21 @@ export const authDemo = () => request('/api/auth/demo-login', {
 });
 export const getAuthMe = () => request('/api/auth/me');
 export const authLogout = () => request('/api/auth/logout', { method: 'POST' });
+
+// Pan-India National Mesh & Multi-Zone Forecasting APIs
+export const getNationalZones = () => request('/api/national/zones');
+export const getNationalStations = (zone = '', query = '', limit = 50) => {
+  const params = new URLSearchParams();
+  if (zone) params.set('zone', zone);
+  if (query) params.set('query', query);
+  if (limit) params.set('limit', String(limit));
+  const qs = params.toString();
+  return request(`/api/national/stations${qs ? '?' + qs : ''}`);
+};
+export const getNationalForecast = (lat = 31.71, lon = 76.93, locationName = '') => {
+  const params = new URLSearchParams();
+  params.set('lat', String(lat));
+  params.set('lon', String(lon));
+  if (locationName) params.set('location_name', locationName);
+  return request(`/api/national/forecast?${params.toString()}`);
+};

@@ -2,7 +2,7 @@
 
 **INVENTION TITLE:** SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING  
 **INVENTOR(S):** Ariyan Bhakat, et al.  
-**DATE OF COMPILATION:** 2026-11-04 21:09:49 UTC  
+**DATE OF COMPILATION:** 2026-11-04 22:23:10 UTC  
 **REPOSITORY COMMIT CONTEXT:** `INDRA / Dp-indra-six-sensor`  
 
 ---
@@ -269,6 +269,7 @@ Cardinality guard **810, 820** intercepts all spatial queries:
 Systems, methods, embedded microcontroller devices, and storage media are disclosed for multi-channel micro-meteorological edge forecasting, latent hydrological hazard simulation, and cryptographic provenance anchoring. The system buffers twenty-five consecutive hourly observations across six canonical channels (temperature, humidity, surface pressure, PM2.5, PM10, wind speed) and derives sixty-six strictly causal features without temporal leakage. A multi-model ensemble (LightGBM, residual MLP, autoregressive hybrid) combined via validation-selected convex simplex linear programming weights generates six-hour future predictions. A tri-family Monte Carlo simulator couples atmospheric telemetry to precipitation intensity through an empirical liquid-phase sigmoid function, evaluating cloudburst, Rational Method runoff, and intensity-duration landslide thresholds across drier, central, and wetter catchment assumptions. A spatial cardinality guard suppresses continuous 2D surface generation when fewer than three non-collinear nodes exist. All observations and forecasts are recorded in a transactional journal, organized into a domain-separated Merkle tree, and anchored to an immutable smart contract on an EVM distributed ledger. An embedded C++ runtime executes the ensemble and simulation on an ESP32-S3 microcontroller within 2.97 MB flash and 20 KB RAM.
 
 
+
 ---
 
 # PATENT CLAIMS
@@ -445,6 +446,7 @@ automatically invalidating session tokens upon expiration of a 7-day time-to-liv
 
 #### 25. The non-transitory computer-readable storage medium of claim 23, wherein the operations further comprise:
 rendering an interactive web dashboard providing an observations map, an interactive parameter heat surface, an API explorer enabling in-browser query execution, and a system provenance audit viewer verifying local Merkle batch proofs against on-chain transaction hashes.
+
 
 
 ---
@@ -896,6 +898,7 @@ rendering an interactive web dashboard providing an observations map, an interac
 ```
 
 
+
 ---
 
 
@@ -915,6 +918,6 @@ The following source code modules establish the physical reduction to practice o
 | `contracts/IndraAnchor.sol` | 652 | `6d210b76a58f52a56502dccba3f69af68d87358e3a344684188f842c77ddf372` |
 | `contracts/provenance.py` | 2,990 | `310e2c79141010fa9d558e1791e712e4447d2478813330841f66103c2a5bad5e` |
 | `server/auth.py` | 6,954 | `c9863b4c832b68a95d3001b31de827983e13974cad23b778ba23b788a0a8c731` |
-| `server/dashboard.py` | 21,789 | `b8557d3d13c43241272dc52b11943bf17d618380953d55930d35ee4ab902a494` |
+| `server/dashboard.py` | 23,825 | `6ec123b5d10245d6d79792c16da50cc186c459a06aad110f3b1e44938e9c0b7b` |
 | `server/scripts/deploy_production.py` | 4,813 | `423ab8c6de20459bf6d980077903966aa35a237d832734516124768341c95f25` |
 | `ui/src/App.jsx` | 10,374 | `1104b4b4e2e6f66e4e61596782f75e7bb5f15aef8e191c58ef4b46e432c5a1f2` |
