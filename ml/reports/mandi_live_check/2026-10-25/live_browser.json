@@ -1,0 +1,38 @@
+{
+  "schema_version": "indra_live_dashboard_browser_check_v1",
+  "verified_at_utc": "2026-10-25T18:19:39.820Z",
+  "data_evidence": "LIVE_OPEN_METEO_MODELED_GRID_NOT_PHYSICAL_SENSOR_DATA",
+  "browser": "Chrome via Playwright",
+  "browser_version": "155.0.8059.85",
+  "base_url": "http://127.0.0.1:8094",
+  "source_class": "modeled_grid",
+  "source_id": "OpenMeteo_current_ECMWF_IFS_CAMS_global",
+  "observation_time_utc": "2026-10-25T18:00:00.000Z",
+  "forecast_target_time_utc": "2026-10-26T00:00:00+00:00",
+  "forecast_model_id": "india_mandi_tabular_v2",
+  "forecast_profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "channels_rendered": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "map_status": "UNAVAILABLE",
+  "map_location_count": 1,
+  "map_layers": [],
+  "viewport_checks": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "status": "PASS"
+    }
+  ],
+  "browser_errors": []
+}

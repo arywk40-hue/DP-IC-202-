@@ -1,4 +1,4 @@
-"""Reproduce saved synthetic-category metrics and all six spatial API layers."""
+"""Reproduce synthetic-category metrics and verify one-point heatmap abstention."""
 
 import sys
 from pathlib import Path
@@ -16,7 +16,8 @@ from ml.himachal.weather_categories import (
     synthetic_episodes,
 )
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
-from server.dashboard import assess, create_app, weather_demo_observations
+from server.dashboard import assess, create_app
+from server.tests.mandi_fixture import NOW, mandi_api_rows
 
 
 def main():
@@ -28,21 +29,19 @@ def main():
     report.mkdir(parents=True, exist_ok=True)
     local = ROOT / "ml/data/himachal/weather_features_v1"
     local.mkdir(parents=True, exist_ok=True)
-    now = "2026-10-21T06:00:00Z"
-    raw = weather_demo_observations(now)
-    nodes = assess(raw, now=now)
-    (local / "demo_observations.json").write_text(
-        json.dumps(raw, indent=2, allow_nan=False) + "\n"
-    )
+    raw = mandi_api_rows(now=NOW, hours=73)
+    nodes = assess(raw, now=NOW.isoformat())
     with TestClient(create_app(local / "verification.sqlite")) as c:
         c.app.state.store.replace(nodes)
         bundle = c.get("/api/parameter-heatmaps").json()
-        assert len(bundle["layers"]) == 6 and bundle["status"] == "AREA_ESTIMATE"
+        assert not bundle["layers"] and bundle["status"] == "UNAVAILABLE"
         for channel in RAW_SENSOR_COLUMNS:
             response = c.get("/api/kriging/heatmap", params={"channel": channel})
-            assert response.status_code == 200 and response.json()["features"]
+            assert response.status_code == 200 and not response.json()["features"]
     result = {
         "evidence": "SYNTHETIC_SOFTWARE_AND_PROXY_LABEL_TEST_NOT_REAL_WEATHER_VALIDATION",
+        "api_input": "DETERMINISTIC_TEST_FIXTURE_NOT_LIVE_OPEN_METEO",
+        "fixture_only": True,
         "profile_sha256": engine.sha256,
         "test_episodes": 4000,
         "synthetic_exact_match": float(accuracy_score(y, pred)),
@@ -53,19 +52,7 @@ def main():
             k: int(pred[:, j].sum()) for j, k in enumerate(CATEGORIES)
         },
         "surface_status": bundle["status"],
-        "surface_units_and_support": {
-            k: {
-                field: v[field]
-                for field in [
-                    "unit",
-                    "node_count",
-                    "supported_cells",
-                    "minimum",
-                    "maximum",
-                ]
-            }
-            for k, v in bundle["layers"].items()
-        },
+        "surface_reason": bundle["reason"],
         "scenarios": [
             {
                 "id": n["id"],
@@ -78,7 +65,7 @@ def main():
         "field_validated": False,
         "real_event_probability_available": False,
     }
-    (report / "integration_results.json").write_text(
+    (report / "integration_results_mandi_single_point.json").write_text(
         json.dumps(result, indent=2, allow_nan=False) + "\n"
     )
     print(

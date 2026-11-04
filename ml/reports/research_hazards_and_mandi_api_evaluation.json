@@ -1,0 +1,353 @@
+{
+  "metadata": {
+    "evaluation_timestamp": "2026-11-04T22:05:13.690693+00:00",
+    "methodology": "Research-grounded synthetic atmospheric vectors and real Mandi observation dataset",
+    "safety_boundary": "Uncalibrated conditional Monte Carlo simulation fractions and pattern proxies; not real public hazard warnings or event probabilities."
+  },
+  "mandi_live_observation": {
+    "timestamp_utc": "2026-10-24 23:00:00+00:00",
+    "forecast_valid_utc": "2026-10-25 05:00:00+00:00",
+    "model_id": "india_mandi_tabular_v2",
+    "model_status": "HYBRID_READY",
+    "forecast_channels": {
+      "temperature_c": {
+        "observed_current": 11.4,
+        "forecast_plus_6h": 21.589181155384118,
+        "delta": 10.189181155384118
+      },
+      "relative_humidity_pct": {
+        "observed_current": 90.0,
+        "forecast_plus_6h": 50.660022815742806,
+        "delta": -39.339977184257194
+      },
+      "pressure_hpa": {
+        "observed_current": 926.7,
+        "forecast_plus_6h": 929.7671814475261,
+        "delta": 3.0671814475260817
+      },
+      "pm25_ug_m3": {
+        "observed_current": 10.9,
+        "forecast_plus_6h": 7.762046215911025,
+        "delta": -3.1379537840889755
+      },
+      "pm10_ug_m3": {
+        "observed_current": 11.3,
+        "forecast_plus_6h": 10.936470684961089,
+        "delta": -0.36352931503891206
+      },
+      "wind_speed_mps": {
+        "observed_current": 1.27,
+        "forecast_plus_6h": 1.1381600157783742,
+        "delta": -0.1318399842216258
+      }
+    },
+    "weather_categories": {
+      "rain": {
+        "score": 0.00011505725002092503,
+        "threshold": 0.35,
+        "matched": false
+      },
+      "rainstorm": {
+        "score": 0.00011526469398979513,
+        "threshold": 0.65,
+        "matched": false
+      },
+      "snowstorm": {
+        "score": 1.2889848821077344e-06,
+        "threshold": 0.65,
+        "matched": false
+      },
+      "heatwave_like": {
+        "score": 2.459352244127096e-05,
+        "threshold": 0.35,
+        "matched": false
+      },
+      "fog": {
+        "score": 2.539539414827432e-06,
+        "threshold": 0.5,
+        "matched": false
+      },
+      "frost": {
+        "score": 1.6176915592731586e-06,
+        "threshold": 0.65,
+        "matched": false
+      },
+      "dust_storm": {
+        "score": 3.463795289621804e-05,
+        "threshold": 0.65,
+        "matched": false
+      },
+      "smoke": {
+        "score": 0.0001789813240301725,
+        "threshold": 0.65,
+        "matched": false
+      },
+      "wildfire_weather": {
+        "score": 0.00014437209916811985,
+        "threshold": 0.35,
+        "matched": false
+      },
+      "cloudburst_like": {
+        "score": 1.3016829173153569e-06,
+        "threshold": 0.65,
+        "matched": false
+      }
+    },
+    "hazard_simulations": {
+      "drier": {
+        "cloudburst_pct": 0.048828125,
+        "flash_flood_pct": 0.146484375,
+        "landslide_pct": 0.48828125
+      },
+      "central": {
+        "cloudburst_pct": 0.244140625,
+        "flash_flood_pct": 2.34375,
+        "landslide_pct": 2.099609375
+      },
+      "wetter": {
+        "cloudburst_pct": 0.927734375,
+        "flash_flood_pct": 12.20703125,
+        "landslide_pct": 7.12890625
+      }
+    }
+  },
+  "research_scenarios": {
+    "cloudburst": {
+      "current_vector": {
+        "temperature_c": 17.5,
+        "relative_humidity_pct": 96.0,
+        "pressure_hpa": 925.0,
+        "pm25_ug_m3": 10.0,
+        "pm10_ug_m3": 16.0,
+        "wind_speed_mps": 14.5
+      },
+      "weather_categories": {
+        "rain": {
+          "score": 0.9943760505976478,
+          "threshold": 0.35,
+          "matched": true
+        },
+        "rainstorm": {
+          "score": 0.0001473543981054198,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "snowstorm": {
+          "score": 1.2889848821077664e-06,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "heatwave_like": {
+          "score": 9.780240691419723e-06,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "fog": {
+          "score": 1.3550088797370513e-06,
+          "threshold": 0.5,
+          "matched": false
+        },
+        "frost": {
+          "score": 1.6176915848794025e-06,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "dust_storm": {
+          "score": 3.463795289621804e-05,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "smoke": {
+          "score": 0.00017888203059981088,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "wildfire_weather": {
+          "score": 0.0001443720996989486,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "cloudburst_like": {
+          "score": 0.9999785460345949,
+          "threshold": 0.65,
+          "matched": true
+        }
+      },
+      "hazard_simulations": {
+        "drier": {
+          "cloudburst_pct": 3.173828125,
+          "flash_flood_pct": 10.44921875,
+          "landslide_pct": 7.373046875
+        },
+        "central": {
+          "cloudburst_pct": 11.376953125,
+          "flash_flood_pct": 40.234375,
+          "landslide_pct": 27.05078125
+        },
+        "wetter": {
+          "cloudburst_pct": 27.5390625,
+          "flash_flood_pct": 74.755859375,
+          "landslide_pct": 52.783203125
+        }
+      }
+    },
+    "snowstorm": {
+      "current_vector": {
+        "temperature_c": -5.0,
+        "relative_humidity_pct": 94.0,
+        "pressure_hpa": 874.0,
+        "pm25_ug_m3": 8.0,
+        "pm10_ug_m3": 12.0,
+        "wind_speed_mps": 13.5
+      },
+      "weather_categories": {
+        "rain": {
+          "score": 0.00015042145258638151,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "rainstorm": {
+          "score": 0.00014735439810541925,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "snowstorm": {
+          "score": 0.9999811205972357,
+          "threshold": 0.65,
+          "matched": true
+        },
+        "heatwave_like": {
+          "score": 9.780240691419723e-06,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "fog": {
+          "score": 1.3550088797370776e-06,
+          "threshold": 0.5,
+          "matched": false
+        },
+        "frost": {
+          "score": 1.6176915848794342e-06,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "dust_storm": {
+          "score": 3.463795289621804e-05,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "smoke": {
+          "score": 0.000178929409701553,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "wildfire_weather": {
+          "score": 0.00014437209934937864,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "cloudburst_like": {
+          "score": 0.999960826672216,
+          "threshold": 0.65,
+          "matched": true
+        }
+      },
+      "hazard_simulations": {
+        "drier": {
+          "cloudburst_pct": 0.0,
+          "flash_flood_pct": 0.048828125,
+          "landslide_pct": 0.048828125
+        },
+        "central": {
+          "cloudburst_pct": 0.048828125,
+          "flash_flood_pct": 0.146484375,
+          "landslide_pct": 0.09765625
+        },
+        "wetter": {
+          "cloudburst_pct": 0.09765625,
+          "flash_flood_pct": 0.732421875,
+          "landslide_pct": 0.341796875
+        }
+      }
+    },
+    "rain_burst": {
+      "current_vector": {
+        "temperature_c": 20.0,
+        "relative_humidity_pct": 92.0,
+        "pressure_hpa": 924.4,
+        "pm25_ug_m3": 12.0,
+        "pm10_ug_m3": 20.0,
+        "wind_speed_mps": 11.5
+      },
+      "weather_categories": {
+        "rain": {
+          "score": 0.9928108233343633,
+          "threshold": 0.35,
+          "matched": true
+        },
+        "rainstorm": {
+          "score": 0.9992723621024783,
+          "threshold": 0.65,
+          "matched": true
+        },
+        "snowstorm": {
+          "score": 1.2889848821077732e-06,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "heatwave_like": {
+          "score": 1.593605397423749e-05,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "fog": {
+          "score": 1.3550088797369621e-06,
+          "threshold": 0.5,
+          "matched": false
+        },
+        "frost": {
+          "score": 1.6176915848794025e-06,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "dust_storm": {
+          "score": 3.463795289621804e-05,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "smoke": {
+          "score": 0.00017907968166518495,
+          "threshold": 0.65,
+          "matched": false
+        },
+        "wildfire_weather": {
+          "score": 0.00014437209997156443,
+          "threshold": 0.35,
+          "matched": false
+        },
+        "cloudburst_like": {
+          "score": 1.3016829173153613e-06,
+          "threshold": 0.65,
+          "matched": false
+        }
+      },
+      "hazard_simulations": {
+        "drier": {
+          "cloudburst_pct": 1.123046875,
+          "flash_flood_pct": 4.736328125,
+          "landslide_pct": 4.443359375
+        },
+        "central": {
+          "cloudburst_pct": 5.517578125,
+          "flash_flood_pct": 25.48828125,
+          "landslide_pct": 19.3359375
+        },
+        "wetter": {
+          "cloudburst_pct": 14.94140625,
+          "flash_flood_pct": 59.1796875,
+          "landslide_pct": 40.52734375
+        }
+      }
+    }
+  }
+}

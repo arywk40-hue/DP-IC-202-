@@ -39,7 +39,10 @@ def rainfall_strength(x, config):
         + c["pressure_fall"] * np.clip(-dp6 / 3, -2, 3)
         + c["wind"] * np.clip(wind / 10, 0, 3)
         + c["cooling"] * np.clip(-dt / 3, -2, 3)
-    ) * expit((t - 1) / 2)  # Assumed liquid phase fraction, not snow detection.
+    ) * expit(
+        (t - config["rain_link"]["liquid_phase_center_c"])
+        / config["rain_link"]["liquid_phase_scale_c"]
+    )  # Assumed liquid phase fraction, not snow detection.
 
 
 def event_outcomes(
@@ -82,7 +85,12 @@ def event_outcomes(
             * hours ** config["landslide_id_exponent"]
         )
         # Wetness correction is an explicit assumption, not Dahal's fitted law.
-        threshold = threshold * (1.4 - 0.7 * moisture[..., ticks - 1 :])
+        wetness_adjustment = config["landslide_wetness_adjustment"]
+        threshold = threshold * (
+            wetness_adjustment["base"]
+            - wetness_adjustment["wetness_coefficient"]
+            * moisture[..., ticks - 1 :]
+        )
         trigger |= (means >= threshold).any(-1)
     return np.stack([cloud, flood, trigger & susceptible], -1)
 
@@ -116,7 +124,7 @@ def simulate(episodes, *, seed=20261021, draws=2048, config=None, retain=False):
         ar = c["temporal_ar"] * ar + np.sqrt(1 - c["temporal_ar"] ** 2) * r.normal(
             size=shape
         )
-        rain.append(base * np.exp(0.45 * ar) * active)
+        rain.append(base * np.exp(c["temporal_log_rate_sigma"] * ar) * active)
     rain = np.stack(rain, -1)
     lr = config["latent_ranges"]
     wet_u, capacity_u, susceptibility_u = r.random((3, *shape))
@@ -175,6 +183,8 @@ class HazardScenarios:
         if (
             self.config["id"] != "himalayan_synthetic_scenarios_v1"
             or self.config["field_validated"] is not False
+            or not self.config.get("parameter_provenance")
+            or not self.config.get("sources")
         ):
             raise ValueError("Invalid synthetic scenario identity")
 
@@ -243,6 +253,13 @@ class HazardScenarios:
         )
         for j, (key, name) in enumerate(TARGETS.items()):
             fractions = {k: float(v["fraction"][0, j]) for k, v in runs.items()}
+            cases = {
+                name: {
+                    "label": {"drier": "Drier assumptions", "central": "Central assumptions", "wetter": "Wetter assumptions"}[name],
+                    "scenario_fraction": value,
+                }
+                for name, value in fractions.items()
+            }
             result["targets"].append(
                 dict(
                     id=key,
@@ -250,6 +267,7 @@ class HazardScenarios:
                     **{key + "_risk_uncal": fractions["central"]},
                     scenario_fraction=fractions["central"],
                     assumption_range=[min(fractions.values()), max(fractions.values())],
+                    assumption_cases=cases,
                     families=fractions,
                     probability=None,
                     mc_standard_error=float(runs["central"]["mc_standard_error"][0, j]),
@@ -262,11 +280,17 @@ class HazardScenarios:
             forecast_timestamp=(end + pd.Timedelta(hours=6)).isoformat(),
             draws_per_family=self.config["draws"],
             seed=seed,
+            parameter_provenance=self.config["parameter_provenance"],
+            research_sources=self.config["sources"],
             unknown_drivers=[
                 "actual_rainfall",
+                "one_hour_rainfall_footprint",
                 "soil_wetness",
                 "terrain_susceptibility",
+                "catchment_area",
                 "catchment_capacity",
+                "river_stage_and_routing",
+                "lightning",
             ],
             range_kind="ASSUMPTION_SENSITIVITY_NOT_CONFIDENCE_INTERVAL",
         )

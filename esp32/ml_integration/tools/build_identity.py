@@ -5,7 +5,18 @@ from pathlib import Path
 
 def identity(project, environment="esp32-s3-ml"):
     root = project.parents[1]
-    files = {
+    if environment.startswith("esp32-s3-mandi-v2"):
+        files = {
+            'model': project/'generated/mandi_v2/mandi_v2_trees.h',
+            'manifest': project/'generated/mandi_v2/manifest.json',
+            'runtime': project/'include/indra_mandi_v2_runtime.h',
+            'application': project/'src/mandi_v2_main.cpp',
+            'selftest': project/'generated/mandi_v2/mandi_v2_selftest.h',
+            'platform': project/'platformio.ini',
+            'exporter': project/'tools/export_mandi_v2.py',
+        }
+    else:
+        files = {
         'forecast': root/'ml/models/uci_beijing_6h/esp32_student/export/indra_six_sensor_forecast.h',
         'events': root/'ml/models/uci_beijing_event_rules_6sensor/esp32_student/export/indra_event_classifier.h',
         'runtime': project/'include/indra_ml_runtime.h',
@@ -13,7 +24,7 @@ def identity(project, environment="esp32-s3-ml"):
         'fixture': project/'include/self_test_fixture.h',
         'platform': project/'platformio.ini',
         'identity_script': project/'tools/build_identity.py',
-    }
+        }
     hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in files.items()}
     hashes['environment'] = hashlib.sha256(environment.encode()).hexdigest()
     hashes['build'] = hashlib.sha256(''.join(f'{k}:{v}\n' for k,v in sorted(hashes.items())).encode()).hexdigest()

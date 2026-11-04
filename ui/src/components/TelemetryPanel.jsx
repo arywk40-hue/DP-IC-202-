@@ -1,7 +1,7 @@
 import React from "react";
+import { readingTime, sourceName } from "../api/presentation";
 import WeatherCategories from "./WeatherCategories";
 import HazardScenarios from "./HazardScenarios";
-import { readingTime, sourceName } from "../api/presentation";
 const CHANNELS = {
   temperature_c: ["Temperature", "°C"],
   relative_humidity_pct: ["Humidity", "%"],
@@ -46,7 +46,7 @@ function History({ rows, channel }) {
     </svg>
   );
 }
-export function TechnicalDetails({ telemetry: t, rpcAvailable, onOpenRpc }) {
+export function TechnicalDetails({ telemetry: t }) {
   if (!t)
     return (
       <p className="empty-message">
@@ -97,9 +97,8 @@ export function TechnicalDetails({ telemetry: t, rpcAvailable, onOpenRpc }) {
         </div>
       </dl>
       <p className="evidence-note">
-        Forecasting uses Mandi modeled grids for training. Field accuracy is not
-        established. Pattern classification uses simulated scenarios and has no
-        calibrated real-event probabilities.
+        Readings come from the Open-Meteo modeled grid for Mandi, not physical
+        sensors. Local field accuracy has not been established.
       </p>
       {t.forecastModel?.blendWeights && (
         <details className="forecast-components">
@@ -116,58 +115,6 @@ export function TechnicalDetails({ telemetry: t, rpcAvailable, onOpenRpc }) {
             ))}
           </ul>
         </details>
-      )}
-      <details className="legacy-assessments">
-        <summary>Additional sensor-rule checks</summary>
-        <p className="evidence-note">
-          Current-condition rules. These checks do not confirm events or predict
-          hazards six hours ahead.
-        </p>
-        {Object.values(t.risks || {}).map((r) => (
-          <article className="risk-card" key={r.target}>
-            <h4>{r.display_name}</h4>
-            <strong>
-              {r.abstain
-                ? "Insufficient evidence"
-                : r.level.replaceAll("_", " ")}
-            </strong>
-            <p>Rule score: {fmt(r.score)} / 1 · Calibration: unavailable</p>
-            <details>
-              <summary>Rule evidence</summary>
-              <ul>
-                {r.evidence.map((e) => (
-                  <li key={e.feature}>
-                    {e.feature}:{" "}
-                    {e.value == null ? "Unavailable" : String(e.value)} {e.unit}{" "}
-                    ·{" "}
-                    {e.matched == null
-                      ? "unknown"
-                      : e.matched
-                        ? "matched"
-                        : "not matched"}
-                  </li>
-                ))}
-              </ul>
-            </details>
-          </article>
-        ))}
-        <p className="evidence-note">
-          Storm sequence:{" "}
-          {t.stormSequence?.matched == null
-            ? "Unavailable"
-            : t.stormSequence.matched
-              ? "Sequence matched"
-              : "Not matched"}
-          . Flash flood and landslide predictors are unavailable. Public alerts
-          are disabled.
-        </p>
-      </details>
-      {rpcAvailable ? (
-        <button className="secondary-button" onClick={onOpenRpc}>
-          Device commands
-        </button>
-      ) : (
-        <p className="evidence-note">Device controls are not connected.</p>
       )}
     </section>
   );

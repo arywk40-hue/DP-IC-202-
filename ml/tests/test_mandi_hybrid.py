@@ -12,7 +12,8 @@ import pytest
 from ml.india_mandi.hybrid import DEFAULT_MODEL, PROFILE_ID, Hybrid, select_blend
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.six_sensor_forecast.predict import predict as compact_predict
-from server.dashboard import Store, assess, create_app, demo_observations
+from server.dashboard import Store, assess, create_app
+from server.tests.mandi_fixture import mandi_api_rows
 
 NOW = '2026-10-16T06:00:00Z'
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,8 +31,8 @@ def hourly(rows):
 
 
 def test_active_api_runs_actual_neural_blend_and_differs_from_compact(engine):
-    raw = [r for r in demo_observations(NOW) if r['node_id'] == 'demo-01']
-    assert len(raw) == 97
+    raw = mandi_api_rows(now=pd.Timestamp(NOW).to_pydatetime(), hours=73)
+    assert len(raw) == 73 and all(r['source_class'] == 'modeled_grid' for r in raw)
     frame = hourly(raw)
     direct = engine.predict(frame).iloc[-1]
     node = assess(raw, now=NOW, model_dir=DEFAULT_MODEL)[0]
@@ -44,7 +45,7 @@ def test_active_api_runs_actual_neural_blend_and_differs_from_compact(engine):
 
 
 def test_gaps_and_missing_current_never_become_fabricated_history(engine):
-    rows = [r for r in demo_observations(NOW) if r['node_id'] == 'demo-01']
+    rows = mandi_api_rows(now=pd.Timestamp(NOW).to_pydatetime(), hours=73)
     frame = hourly(rows)
     missing_hour = frame.drop(index=frame.index[-3])
     result = engine.predict(missing_hour).iloc[-1]
@@ -63,16 +64,17 @@ def test_gaps_and_missing_current_never_become_fabricated_history(engine):
     np.testing.assert_allclose([earlier['forecast_'+c] for c in RAW_SENSOR_COLUMNS], [expected['forecast_'+c] for c in RAW_SENSOR_COLUMNS], rtol=0, atol=1e-12)
 
 
-def test_off_top_of_hour_native_snapshots_use_exact_hourly_phase():
-    rows = [r for r in demo_observations('2026-10-16T06:15:00Z') if r['node_id'] == 'demo-01']
-    node = assess(rows, now='2026-10-16T06:15:01Z',model_dir=DEFAULT_MODEL)[0]
+def test_mandi_api_hourly_snapshots_keep_exact_hour_phase():
+    rows = mandi_api_rows(now=pd.Timestamp('2026-10-16T06:00:00Z').to_pydatetime(), hours=73)
+    node = assess(rows, now='2026-10-16T06:00:01Z',model_dir=DEFAULT_MODEL)[0]
     assert node['forecastStatus'] == 'HYBRID_READY'
-    assert node['forecastTimestamp'] == '2026-10-16T12:15:00+00:00'
-    assert all(pd.Timestamp(r['timestamp']).minute == 15 for r in node['forecastHistory'])
+    assert node['forecastTimestamp'] == '2026-10-16T12:00:00+00:00'
+    assert all(pd.Timestamp(r['timestamp']).minute == 0 for r in node['forecastHistory'])
 
 
 def test_cache_migration_recomputes_values_instead_of_relabelling(tmp_path):
-    nodes = assess(demo_observations(NOW), now=NOW,model_dir=DEFAULT_MODEL)
+    rows = mandi_api_rows(now=pd.Timestamp(NOW).to_pydatetime(), hours=73)
+    nodes = assess(rows, now=NOW,model_dir=DEFAULT_MODEL)
     expected = copy.deepcopy(nodes[0]['forecast6h'])
     for n in nodes:
         n['forecastModel'] = dict(id='india_mandi_modeled_6h_v1')
@@ -81,16 +83,16 @@ def test_cache_migration_recomputes_values_instead_of_relabelling(tmp_path):
     path = tmp_path/'cache.sqlite'
     Store(path).replace(nodes)
     with TestClient(create_app(path, clock=lambda: pd.Timestamp(NOW).timestamp(),model_dir=DEFAULT_MODEL)) as client:
-        result = client.get('/api/nodes/demo-01/telemetry').json()
+        result = client.get('/api/nodes/mandi-api-current/telemetry').json()
         assert result['forecastModel']['id'] == PROFILE_ID
         assert result['forecast6h'] == expected
         assert client.get('/api/status').json()['forecastArchitecture'] == 'NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE'
     # A legacy seven-hour cache cannot be presented as a warmed-up hybrid.
     for n in nodes:
-        n['history'] = n['history'][-29:]
+        n['history'] = n['history'][-7:]
     Store(path).replace(nodes)
     with TestClient(create_app(path,model_dir=DEFAULT_MODEL)) as client:
-        result = client.get('/api/nodes/demo-01/telemetry').json()
+        result = client.get('/api/nodes/mandi-api-current/telemetry').json()
         assert result['forecastStatus'] == 'WARMING_UP_PERSISTENCE'
         assert result['forecast6h'] == result['sensors']
 

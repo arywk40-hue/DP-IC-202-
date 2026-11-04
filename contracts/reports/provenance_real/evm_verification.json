@@ -1,0 +1,19 @@
+{
+  "network": "EPHEMERAL_LOCAL_PYEVM",
+  "chain_id": 131277322940537,
+  "contract": "0xF2E246BB76DF876Cef8b38ae84130F4F55De395b",
+  "transaction": "13b7ce7e67602784d6c0f3d3b1bbb1095589b8b8026753977a2e2051b993137d",
+  "gas_used": 46582,
+  "root_matches": true,
+  "duplicate_rejected": true,
+  "unauthorized_rejected": true,
+  "independently_witnessed": false,
+  "signature_verified": true,
+  "public_key": "a67d7ec4c2ee2ec92d7129cae77a2abd8dba6ed8b8d506923a8ec452f016c7a6",
+  "batch_id": "a18e4bad4c9354fd2a71ca6ab930f2b50dc81a7ade1a54e04ca1d56b5e60af26",
+  "merkle_root": "6b06dfb866c46f653ae6dee762e18ffcb5f2ac0b5e387eb4fc9d106e5554fc30",
+  "event_count": 7,
+  "source_database": "ml/data/himachal/dashboard_e2e.sqlite",
+  "verified_at_utc": "2026-11-04T21:31:00Z"
+}
+

@@ -6,6 +6,69 @@
   "draws": 2048,
   "field_validated": false,
   "prior_evidence": "ENGINEERING_ASSUMPTIONS_NOT_EMPIRICALLY_ESTIMATED_PRIORS",
+  "parameter_provenance": {
+    "scope": "Every numerical simulator input is classified below. Literature citations support only the stated definition or method; they do not estimate Mandi priors or conditional event probabilities.",
+    "runtime_inputs": {
+      "temperature_c": {"kind": "measured_channel_proxy", "role": "liquid_phase and temperature-change terms in the assumed rain link", "evidence": "Open-Meteo modeled-grid input; link coefficients are engineering assumptions"},
+      "relative_humidity_pct": {"kind": "measured_channel_proxy", "role": "humidity term in the assumed rain link", "evidence": "Open-Meteo modeled-grid input; link coefficients are engineering assumptions"},
+      "pressure_hpa": {"kind": "measured_channel_proxy", "role": "six-hour pressure change in the assumed rain link", "evidence": "Open-Meteo grid-surface pressure; not local station pressure"},
+      "wind_speed_mps": {"kind": "measured_channel_proxy", "role": "wind term in the assumed rain link", "evidence": "Open-Meteo modeled-grid input; link coefficient is an engineering assumption"},
+      "pm25_ug_m3": {"kind": "measured_channel_not_used_by_hazard_simulator", "role": "Used only by the separate synthetic sensor-pattern classifier", "evidence": "No causal rain-link claim is made"},
+      "pm10_ug_m3": {"kind": "measured_channel_not_used_by_hazard_simulator", "role": "Used only by the separate synthetic sensor-pattern classifier", "evidence": "No causal rain-link claim is made"},
+      "temperature_c_delta_1h": {"kind": "derived_feature", "role": "Cooling proxy in assumed rain link", "evidence": "Computed from the six-channel history; coefficient is an engineering assumption"},
+      "pressure_hpa_delta_6h": {"kind": "derived_feature", "role": "Pressure-fall proxy in assumed rain link", "evidence": "Computed from the six-channel history; coefficient is an engineering assumption"}
+    },
+    "thresholds_and_methods": {
+      "cloudburst_threshold_mm_in_1h": {"kind": "published_definition_transferred_as_threshold", "source_id": "singh_thapliyal_2022", "limitation": "Uttarakhand definition; this feed has no rainfall gauge or spatial footprint evidence and cannot confirm a Mandi cloudburst"},
+      "landslide_id_coefficient": {"kind": "empirical_threshold_transferred_from_nepal", "source_id": "dahal_hasegawa_2008", "limitation": "Rainfall-trigger threshold from Nepal; not fitted or validated for Mandi slopes"},
+      "landslide_id_exponent": {"kind": "empirical_threshold_transferred_from_nepal", "source_id": "dahal_hasegawa_2008", "limitation": "Rainfall-trigger threshold from Nepal; not a slope-failure probability"},
+      "landslide_duration_hours": {"kind": "engineering_selection_within_paper_domain", "source_id": "dahal_hasegawa_2008", "limitation": "Only 5 and 6 hour windows are simulated; the full published domain is not implemented"},
+      "rational_method_runoff_equation": {"kind": "published_method_not_local_calibration", "source_id": "txdot_rational_method", "limitation": "Simplified peak-flow proxy; no Mandi catchment geometry, routing or observed river flow"}
+    },
+    "engineering_assumptions": {
+      "horizon_hours": "Selected six-hour scenario horizon; not a literature-derived hazard lead time",
+      "step_hours": "Selected 30-minute simulator step; not a claimed sensor measurement cadence",
+      "draws": "Monte Carlo computation setting; not sample size of observed events",
+      "rain_link": "All coefficients, intercepts, logistic transforms, rainfall occurrence, log-rate distribution, temporal persistence, rate cap and liquid-phase approximation are engineering assumptions; no cited paper estimates P(rain|these six channels)",
+      "latent_ranges": "Uniform ranges for soil storage, runoff coefficients, catchment area and concentration time are illustrative engineering assumptions, not Mandi surveys or fitted distributions",
+      "families": "Drier, central and wetter are unweighted sensitivity cases, not climatological frequencies, posterior intervals or confidence intervals",
+      "landslide_wetness_adjustment": "The soil-wetness multiplier applied to the transferred intensity-duration line is an engineering assumption",
+      "susceptibility_fraction": "Assumed simulated fraction of susceptible terrain; not a mapped Mandi slope inventory",
+      "Monte_Carlo_seed": "Deterministic reproducibility seed derived from the six-channel episode and configuration hash; not a source of evidence"
+    },
+    "engineering_parameters": {
+      "rain_link.intercept": {"kind": "engineering_assumption_sensitivity_only", "role": "base rainfall-strength logit"},
+      "rain_link.humidity": {"kind": "engineering_assumption_sensitivity_only", "role": "relative-humidity contribution to rainfall-strength logit"},
+      "rain_link.pressure_fall": {"kind": "engineering_assumption_sensitivity_only", "role": "six-hour pressure-fall contribution to rainfall-strength logit"},
+      "rain_link.wind": {"kind": "engineering_assumption_sensitivity_only", "role": "wind contribution to rainfall-strength logit"},
+      "rain_link.cooling": {"kind": "engineering_assumption_sensitivity_only", "role": "one-hour cooling contribution to rainfall-strength logit"},
+      "rain_link.log_rate_intercept": {"kind": "engineering_assumption_sensitivity_only", "role": "base log rainfall-rate distribution location"},
+      "rain_link.log_rate_strength": {"kind": "engineering_assumption_sensitivity_only", "role": "relationship between assumed strength and log rainfall-rate location"},
+      "rain_link.log_rate_sigma": {"kind": "engineering_assumption_sensitivity_only", "role": "log rainfall-rate dispersion"},
+      "rain_link.temporal_ar": {"kind": "engineering_assumption_sensitivity_only", "role": "half-hour synthetic rainfall temporal autocorrelation"},
+      "rain_link.temporal_log_rate_sigma": {"kind": "engineering_assumption_sensitivity_only", "role": "half-hour synthetic rainfall log-rate dispersion"},
+      "rain_link.liquid_phase_center_c": {"kind": "engineering_assumption_sensitivity_only", "role": "center of simplified temperature-based liquid-phase multiplier"},
+      "rain_link.liquid_phase_scale_c": {"kind": "engineering_assumption_sensitivity_only", "role": "scale of simplified temperature-based liquid-phase multiplier"},
+      "rain_link.rain_rate_cap_mm_h": {"kind": "engineering_assumption_sensitivity_only", "role": "synthetic rainfall-rate truncation cap"},
+      "latent_ranges.soil_storage_mm": {"kind": "illustrative_uniform_assumption_sensitivity_only", "role": "unobserved soil storage range in mm"},
+      "latent_ranges.dry_runoff_coefficient": {"kind": "illustrative_uniform_assumption_sensitivity_only", "role": "unobserved dry-end runoff coefficient range"},
+      "latent_ranges.wet_runoff_coefficient": {"kind": "engineering_assumption_sensitivity_only", "role": "unobserved wet-end runoff coefficient"},
+      "latent_ranges.catchment_area_km2": {"kind": "illustrative_uniform_assumption_sensitivity_only", "role": "unsurveyed catchment area range"},
+      "latent_ranges.concentration_time_hours": {"kind": "discrete_engineering_assumption_sensitivity_only", "role": "unsurveyed catchment concentration-time choices"},
+      "families.drier.rain_multiplier": {"kind": "unweighted_sensitivity_case", "role": "drier-case rainfall scaling"},
+      "families.central.rain_multiplier": {"kind": "unweighted_sensitivity_case", "role": "central-case rainfall scaling"},
+      "families.wetter.rain_multiplier": {"kind": "unweighted_sensitivity_case", "role": "wetter-case rainfall scaling"},
+      "families.*.soil_wetness": {"kind": "unweighted_sensitivity_case", "role": "latent soil-wetness range; not measured"},
+      "families.*.capacity_m3_s_km2": {"kind": "unweighted_sensitivity_case", "role": "assumed runoff-capacity range; not drainage survey"},
+      "families.*.susceptible_fraction": {"kind": "unweighted_sensitivity_case", "role": "synthetic fraction of assumed susceptible terrain; no local inventory"},
+      "landslide_wetness_adjustment.base": {"kind": "engineering_assumption_sensitivity_only", "role": "multiplier base for transferred rainfall threshold"},
+      "landslide_wetness_adjustment.wetness_coefficient": {"kind": "engineering_assumption_sensitivity_only", "role": "wetness adjustment for transferred rainfall threshold"}
+    },
+    "context_only_sources": {
+      "manali_2023_case": "Regional event context only; supplies no numeric simulator prior or six-sensor event probability",
+      "wmo_ffg_guide": "Supports the need for soil water deficit and catchment context; no local numeric prior is imported"
+    }
+  },
   "cloudburst_threshold_mm_in_1h": 100,
   "landslide_id_coefficient": 73.9,
   "landslide_id_exponent": -0.79,
@@ -20,6 +83,9 @@
     "log_rate_strength": 2.6,
     "log_rate_sigma": 1.0,
     "temporal_ar": 0.75,
+    "temporal_log_rate_sigma": 0.45,
+    "liquid_phase_center_c": 1,
+    "liquid_phase_scale_c": 2,
     "rain_rate_cap_mm_h": 400
   },
   "families": {
@@ -34,6 +100,7 @@
     "catchment_area_km2": [0.2, 5.0],
     "concentration_time_hours": [0.5, 1.0, 2.0]
   },
+  "landslide_wetness_adjustment": {"base": 1.4, "wetness_coefficient": 0.7},
   "assumptions": {
     "rain_link": "Every coefficient, distribution, cap, and temporal relationship is an engineering assumption; no paper supplies P(rain|these six channels).",
     "families": "Unweighted sensitivity cases, not estimated climate frequencies, posterior credible intervals, or known Mandi catchments.",
@@ -44,10 +111,10 @@
     "particulates": "PM channels are validated and preserved in the six-channel contract, but do not drive the rain generator; no supported causal rain link is claimed."
   },
   "sources": [
-    {"id": "singh_thapliyal_2022", "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/5084", "doi": "10.54302/mausam.v73i1.5084", "supports": "100 mm in one hour cloudburst threshold; upper-air conditions and radar matter. Does not supply six-sensor probabilities."},
-    {"id": "dahal_hasegawa_2008", "url": "https://doi.org/10.1016/j.geomorph.2008.01.014", "supports": "Nepal lower-envelope rainfall threshold I=73.90*D^-0.79, intensity mm/h, duration hours. Not an event probability or Mandi calibration."},
-    {"id": "txdot_rational_method", "url": "https://www.txdot.gov/content/txdotoms/us/en/manuals/des/hyd/chapter-4--hydrology/section-12--rational-method/procedure-for-using-the-rational-method.html", "supports": "Q depends on runoff coefficient, rainfall intensity over concentration time, and area. Metric conversion 1/3.6 for area in km2."},
-    {"id": "wmo_ffg_guide", "url": "https://etrp.wmo.int/pluginfile.php/99357/mod_resource/content/1/BSMEFFG_UserGuide-opt.pdf?forcedownload=1", "supports": "Flood guidance requires catchment/drainage characteristics and soil water deficit; these are unobserved latent variables here."},
-    {"id": "manali_2023_case", "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/6447", "doi": "10.54302/mausam.v75i4.6447", "supports": "Regional monsoon, western-disturbance and terrain context. Does not provide numeric priors for this simulator."}
+    {"id": "singh_thapliyal_2022", "title": "Cloudburst events observed over Uttarakhand during monsoon season 2017 and their analysis", "year": 2022, "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/5084", "doi": "10.54302/mausam.v73i1.5084", "supports": "100 mm in one hour cloudburst threshold; upper-air conditions and radar matter. Does not supply six-sensor probabilities."},
+    {"id": "dahal_hasegawa_2008", "title": "Representative rainfall thresholds for landslides in the Nepal Himalaya", "year": 2008, "url": "https://doi.org/10.1016/j.geomorph.2008.01.014", "supports": "Nepal lower-envelope rainfall threshold I=73.90*D^-0.79, intensity mm/h, duration hours. Not an event probability or Mandi calibration."},
+    {"id": "txdot_rational_method", "title": "TxDOT Hydraulic Design Manual: Rational Method", "year": null, "url": "https://www.txdot.gov/content/txdotoms/us/en/manuals/des/hyd/chapter-4--hydrology/section-12--rational-method/procedure-for-using-the-rational-method.html", "supports": "Q depends on runoff coefficient, rainfall intensity over concentration time, and area. Metric conversion 1/3.6 for area in km2."},
+    {"id": "wmo_ffg_guide", "title": "South Asia Flash Flood Guidance System User Guide", "year": null, "url": "https://etrp.wmo.int/pluginfile.php/99357/mod_resource/content/1/BSMEFFG_UserGuide-opt.pdf?forcedownload=1", "supports": "Flood guidance requires catchment/drainage characteristics and soil water deficit; these are unobserved latent variables here."},
+    {"id": "manali_2023_case", "title": "Study of Natural Disaster in Manali Valley, Himachal Pradesh, during 09 July 2023", "year": 2024, "url": "https://mausamjournal.imd.gov.in/index.php/MAUSAM/article/view/6447", "doi": "10.54302/mausam.v75i4.6447", "supports": "Regional monsoon, western-disturbance and terrain context. Does not provide numeric priors for this simulator."}
   ]
 }

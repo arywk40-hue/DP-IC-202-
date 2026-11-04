@@ -1,0 +1,75 @@
+{
+  "title": "SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING",
+  "inventors": [
+    "Ariyan Bhakat"
+  ],
+  "compiled_at_utc": "2026-11-04T21:09:49.762418+00:00",
+  "application_markdown_sha256": "63092d953e7c759444d86595ca1529918014afe77ba99c4d3700c404484c02f6",
+  "codebase_evidence": {
+    "ml/six_sensor_forecast/contract.py": {
+      "sha256": "67d1825b5bcfdf2b7bac47715448bb1c385d4ee010fa033d071888ab760c251a",
+      "bytes": 918,
+      "status": "VERIFIED_PRESENT"
+    },
+    "ml/six_sensor_forecast/features.py": {
+      "sha256": "ccb1ac829f443f43b3b092be88081dd8efa29d9572d5b938e4c3a11c4959a6ac",
+      "bytes": 5624,
+      "status": "VERIFIED_PRESENT"
+    },
+    "ml/india_mandi/tabular_v2.py": {
+      "sha256": "bfde54988abebd46c1f972a9ce396192f5430740b2657367b9e219c72069224e",
+      "bytes": 18847,
+      "status": "VERIFIED_PRESENT"
+    },
+    "ml/himachal/hazard_scenarios.py": {
+      "sha256": "0260052553321f7a2933f635882a16339c6b023e1312e5ad9881709c23499c17",
+      "bytes": 12336,
+      "status": "VERIFIED_PRESENT"
+    },
+    "ml/himachal/parameter_maps.py": {
+      "sha256": "b823e1df0f3c8b00a7a881d0576e5e03580415a636a8112a1cd2cedbb7c89a42",
+      "bytes": 10548,
+      "status": "VERIFIED_PRESENT"
+    },
+    "esp32/ml_integration/src/mandi_v2_main.cpp": {
+      "sha256": "2d6f2197425d09707717363ba65dda3481a7edeaa865d78a9b22d596c62bc10c",
+      "bytes": 7499,
+      "status": "VERIFIED_PRESENT"
+    },
+    "esp32/ml_integration/include/indra_mandi_v2_runtime.h": {
+      "sha256": "8335094c24da3ab229aeafc96d2dce5ab3025859d85b9e449f98d89d9f5c26a0",
+      "bytes": 15799,
+      "status": "VERIFIED_PRESENT"
+    },
+    "contracts/IndraAnchor.sol": {
+      "sha256": "6d210b76a58f52a56502dccba3f69af68d87358e3a344684188f842c77ddf372",
+      "bytes": 652,
+      "status": "VERIFIED_PRESENT"
+    },
+    "contracts/provenance.py": {
+      "sha256": "310e2c79141010fa9d558e1791e712e4447d2478813330841f66103c2a5bad5e",
+      "bytes": 2990,
+      "status": "VERIFIED_PRESENT"
+    },
+    "server/auth.py": {
+      "sha256": "c9863b4c832b68a95d3001b31de827983e13974cad23b778ba23b788a0a8c731",
+      "bytes": 6954,
+      "status": "VERIFIED_PRESENT"
+    },
+    "server/dashboard.py": {
+      "sha256": "b8557d3d13c43241272dc52b11943bf17d618380953d55930d35ee4ab902a494",
+      "bytes": 21789,
+      "status": "VERIFIED_PRESENT"
+    },
+    "server/scripts/deploy_production.py": {
+      "sha256": "423ab8c6de20459bf6d980077903966aa35a237d832734516124768341c95f25",
+      "bytes": 4813,
+      "status": "VERIFIED_PRESENT"
+    },
+    "ui/src/App.jsx": {
+      "sha256": "1104b4b4e2e6f66e4e61596782f75e7bb5f15aef8e191c58ef4b46e432c5a1f2",
+      "bytes": 10374,
+      "status": "VERIFIED_PRESENT"
+    }
+  }
+}

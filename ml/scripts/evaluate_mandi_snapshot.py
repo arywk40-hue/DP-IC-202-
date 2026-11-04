@@ -34,12 +34,14 @@ def evaluate(directory, output):
     truth = future_targets(frame, 6).to_numpy(float)
     p = predictions[["forecast_" + c for c in RAW_SENSOR_COLUMNS]].to_numpy(float)
     now = frame[RAW_SENSOR_COLUMNS].to_numpy(float)
-    ready = (predictions.status == "HYBRID_READY").to_numpy() & np.isfinite(truth).all(
-        1
-    )
+    pipeline_ready = (predictions.status == "HYBRID_READY").to_numpy()
+    label_available = np.isfinite(truth).all(1)
+    ready = pipeline_ready & label_available
     cfg = read_config(ROOT / "ml/configs/mandi_pipeline_v2.json")
     previous_end = pd.Timestamp(cfg["end_date"], tz="UTC") + pd.Timedelta(hours=23)
-    new_date = (predictions.forecast_timestamp_utc > previous_end).to_numpy()
+    issue_times = pd.to_datetime(frame.timestamp_utc, utc=True)
+    target_times = pd.to_datetime(predictions.forecast_timestamp_utc, utc=True)
+    new_date = (target_times > previous_end).to_numpy()
     cohorts = {}
     for name, mask in [
         ("recent_30_days_reused_dates", ready),
@@ -51,13 +53,36 @@ def evaluate(directory, output):
                 c: metric(truth[mask, j], p[mask, j], now[mask, j])
                 for j, c in enumerate(RAW_SENSOR_COLUMNS)
             }
-        cohorts[name] = {"rows": int(mask.sum()), "metrics": metrics}
+        if mask.any():
+            selected_issues = issue_times[mask]
+            selected_targets = target_times[mask]
+            period = {
+                "issue_start_utc": selected_issues.min().isoformat(),
+                "issue_end_utc": selected_issues.max().isoformat(),
+                "target_start_utc": selected_targets.min().isoformat(),
+                "target_end_utc": selected_targets.max().isoformat(),
+            }
+        else:
+            period = dict.fromkeys(
+                ["issue_start_utc", "issue_end_utc", "target_start_utc", "target_end_utc"]
+            )
+        cohorts[name] = {"rows": int(mask.sum()), **period, "metrics": metrics}
     report = {
         "source_evidence": "RETROSPECTIVE_MODEL_GRID_NOT_STATION_ACCURACY",
         "model_id": engine.profile["id"],
         "profile_sha256": engine.profile_sha256,
         "source_manifest": manifest,
         "previous_archive_end": previous_end.isoformat(),
+        "snapshot_rows": len(frame),
+        "complete_six_channel_rows": int(np.isfinite(now).all(1).sum()),
+        "missing_channel_counts": {
+            c: int(frame[c].isna().sum()) for c in RAW_SENSOR_COLUMNS
+        },
+        "cohort_exclusions": {
+            "positions_without_hybrid_ready_history": int((~pipeline_ready).sum()),
+            "positions_without_complete_plus_6h_target": int((pipeline_ready & ~label_available).sum()),
+            "ready_labeled_targets_not_after_previous_archive": int((ready & ~new_date).sum()),
+        },
         "cohorts": cohorts,
         "models_retrained": False,
         "weights_selected_on_this_snapshot": False,
@@ -79,6 +104,8 @@ def evaluate(directory, output):
     for name, row in cohorts.items():
         lines += [
             f"## {name} — {row['rows']} pairs",
+            "",
+            f"Issue times: {row['issue_start_utc']} to {row['issue_end_utc']}; target-valid times: {row['target_start_utc']} to {row['target_end_utc']}.",
             "",
             "| Target | Model MAE | Persistence MAE | MAE skill vs persistence |",
             "| --- | ---: | ---: | ---: |",

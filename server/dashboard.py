@@ -1,97 +1,44 @@
-"""Read-only, loopback dashboard adapter over validated INDRA observations.
-
-Inputs are operator-imported snapshots, never untrusted API claims of physical
-identity. No RPC, RF, public warnings, empirical hazard probabilities or cloud
-credentials are implemented by this adapter.
-"""
+"""Read-only dashboard backed by the Open-Meteo modeled grid at Mandi."""
 from __future__ import annotations
 
 import argparse
 from collections import defaultdict
 import copy
 from datetime import datetime, timezone
+from functools import lru_cache
 import json
 import math
 from pathlib import Path
 import sqlite3
+import threading
 import time
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.staticfiles import StaticFiles
 import pandas as pd
 
-from ml.himachal.contracts import METADATA, snapshot
-from ml.himachal.features import build_packet
-from ml.himachal.rules import evaluate
+from server.auth import AuthStore, GoogleAuthPayload, DemoAuthPayload, verify_google_credential, GOOGLE_CLIENT_ID
+
+from ml.himachal.contracts import snapshot
 from ml.operational.contracts import UNITS, utc
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
 from ml.india_mandi.registry import ACTIVE_MODEL, load_forecaster
-from server.storm_run import StormRun
 from contracts.provenance import append as audit_append, initialize as audit_initialize, batch as audit_batch
-from ml.himachal.weather_categories import WeatherCategories, synthetic_episodes
-from ml.himachal.hazard_scenarios import HazardScenarios
 from ml.himachal.parameter_maps import parameter_maps, geojson
+from ml.himachal.weather_categories import WeatherCategories
+from ml.himachal.hazard_scenarios import HazardScenarios
+from ml.india_mandi.live import collect as collect_mandi_api
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ACTIVE_MODEL
-API_VERSION = "0.5.0"
+API_VERSION = "0.7.0"
 MAX_ROWS = 50_000
 
 
-def demo_observations(now=None):
-    """Deterministic engineering fixtures; not downloaded or observed weather."""
-    end = pd.Timestamp(now or datetime.now(timezone.utc)).floor("15min")
-    rows = []
-    for number, scenario in enumerate(("rain", "snow", "cloudburst", "incomplete"), 1):
-        for tick in range(97 if scenario != "incomplete" else 1):
-            stamp = (end - pd.Timedelta(minutes=15 * (96-tick) if scenario != "incomplete" else 0)).isoformat()
-            temperature, humidity, pressure, pm25, pm10, wind = 20., 90., 900.-tick*.25, 40., 80., 5.
-            if scenario == "snow":
-                temperature, wind = 0., 10.
-            if tick == 96:
-                pm25, pm10 = 20., 40.
-                if scenario == "cloudburst":
-                    temperature, pressure, wind = 17., pressure-1.25, 10.
-            rows.append(dict(node_id=f"demo-{number:02d}", physical_site_id=f"synthetic-site-{number}",
-                registration_id=f"synthetic-registration-{number}", latitude=31.71+(number%2)*.012,
-                longitude=76.93+(number//2)*.012, elevation_m=1000.+number*100,
-                elevation_datum="surveyed_orthometric", sensor_height_m=2., wind_height_m=10.,
-                native_interval_seconds=900, source_class="synthetic_demo", source_id="dashboard_engineering_fixture",
-                source_cell_id=None, pressure_reference="station", timestamp_utc=stamp, valid_time_utc=stamp,
-                available_at_utc=stamp, sensor_model="synthetic_not_hardware",
-                calibration_ids={c: "synthetic_contract_only" for c in RAW_SENSOR_COLUMNS},
-                measurements=dict(zip(RAW_SENSOR_COLUMNS, (temperature,humidity,pressure,pm25,pm10,wind))),
-                units=UNITS.copy()))
-    return rows
-
-
-def read_observations(path):
-    path = Path(path)
-    if path.stat().st_size > 64*1024*1024:
-        raise ValueError("Observation file exceeds 64 MiB")
-    data = json.loads(path.read_text(), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
-    if not isinstance(data, list) or not 1 <= len(data) <= MAX_ROWS:
-        raise ValueError("Expected bounded nonempty list of native six-channel snapshots")
-    return data
-
-
-def weather_demo_observations(now=None):
-    """Multi-location synthetic scenario demonstration, never measured Mandi data."""
-    end=pd.Timestamp(now or datetime.now(timezone.utc)).floor('h')
-    rows=demo_observations(end)
-    episodes,_,labels=synthetic_episodes(400,707)
-    for offset,j in enumerate([3,4,5,6,7,8,2,9],5):
-        episode=episodes[next(i for i in range(len(labels)) if labels[i,j])]
-        template=copy.deepcopy(rows[0])
-        template.update(node_id=f'demo-{offset:02d}',physical_site_id=f'synthetic-site-{offset}',
-            registration_id=f'synthetic-registration-{offset}',latitude=31.70+(offset%3)*.012,
-            longitude=76.91+(offset//3)*.014)
-        for tick in range(25):
-            r=copy.deepcopy(template);stamp=(end-pd.Timedelta(hours=24-tick)).isoformat()
-            r.update(native_interval_seconds=3600,timestamp_utc=stamp,valid_time_utc=stamp,available_at_utc=stamp,
-                measurements=dict(zip(RAW_SENSOR_COLUMNS,episode[max(0,tick-18)].tolist())))
-            rows.append(r)
-    return rows
+@lru_cache(maxsize=1)
+def hazard_engines():
+    """Load the versioned synthetic pattern and scenario engines once."""
+    return WeatherCategories(), HazardScenarios()
 
 
 def apply_forecasts(nodes, histories, engine, clock):
@@ -145,42 +92,55 @@ def assess(rows, *, now=None, model_dir=MODEL):
             raise ValueError("Future or not-yet-available observations cannot be displayed")
         if len(row["node_id"]) > 80 or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" for c in row["node_id"]):
             raise ValueError("Node IDs must be bounded URL-safe identifiers")
-        # build_packet revalidates canonical fields, not its own extra outputs.
-        groups[row["node_id"]].append({k: row[k] for k in METADATA | {"measurements", "units", "quality_flags"}})
+        groups[row["node_id"]].append(row)
     if len(groups) > 200:
         raise ValueError("Dashboard import supports at most 200 nodes")
     result = []
-    classifier=WeatherCategories()
-    scenario_engine=HazardScenarios()
+    classifier, scenario_engine = hazard_engines()
     forecast_histories = {}
     for node_id, history in sorted(groups.items()):
         history.sort(key=lambda x: utc(x["timestamp_utc"]))
+        timestamps = [utc(x["timestamp_utc"]) for x in history]
+        if len(set(timestamps)) != len(timestamps):
+            raise ValueError("Duplicate Mandi API timestamps are not accepted")
+        identity = (history[0]["source_id"], history[0]["source_cell_id"],
+                    history[0]["latitude"], history[0]["longitude"], history[0]["pressure_reference"])
+        if any((r["source_id"], r["source_cell_id"], r["latitude"], r["longitude"], r["pressure_reference"]) != identity for r in history):
+            raise ValueError("Mandi API source identity or fixed site changed inside the history")
+        if identity[2:] != (31.71, 76.93, "grid_surface"):
+            raise ValueError("Dashboard accepts only the configured Mandi model-grid point")
         latest = history[-1]
-        packet = build_packet(history, latest["timestamp_utc"])
-        profile = "hourly_companion" if latest["native_interval_seconds"] == 3600 else "native_15min"
-        rules = evaluate(packet, profile=profile)
         timestamp = int(utc(latest["timestamp_utc"]).timestamp()*1000)
         age = (clock-utc(latest["timestamp_utc"])).total_seconds()
         stale = age > max(120, latest["native_interval_seconds"]*2)
         forecast_histories[node_id] = [dict(timestamp=r['timestamp_utc'], **r['measurements']) for r in history]
-        class_history=[dict(timestamp=r['timestamp_utc'],**r['measurements']) for r in history]
-        categories=classifier.predict(class_history,latest['native_interval_seconds'])
-        categories.update(observation_timestamp=timestamp,assessed_at_utc=clock.isoformat(),source_class=latest['source_class'])
-        scenarios=scenario_engine.predict(class_history,latest['native_interval_seconds'])
-        scenarios.update(source_class=latest['source_class'],assessed_at_utc=clock.isoformat())
+        class_history = [dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in history]
+        source_provenance = dict(
+            source_class=latest["source_class"],
+            source_id=latest["source_id"],
+            source_cell_id=latest["source_cell_id"],
+            pressure_reference=latest["pressure_reference"],
+            coordinates=[latest["latitude"], latest["longitude"]],
+        )
+        categories = classifier.predict(class_history, latest["native_interval_seconds"])
+        categories.update(
+            observation_timestamp=utc(latest["timestamp_utc"]).isoformat(),
+            assessed_at_utc=clock.isoformat(),
+            **source_provenance,
+        )
+        scenarios = scenario_engine.predict(class_history, latest["native_interval_seconds"])
+        scenarios.update(assessed_at_utc=clock.isoformat(), **source_provenance)
         result.append(dict(id=node_id, name=node_id, lat=latest["latitude"], lng=latest["longitude"],
-            lastSeen=timestamp, battery=None, anomalyIndex=None, anomalyLabel="Experimental risk assessment",
+            lastSeen=timestamp,
             stale=stale, reportingIntervalSeconds=latest["native_interval_seconds"],
             sourceClass=latest["source_class"], sourceId=latest["source_id"], sourceCellId=latest["source_cell_id"],
             pressureReference=latest["pressure_reference"], registrationId=latest["registration_id"],
-            physicalSiteId=latest['physical_site_id'],weatherCategories=categories,hazardScenarios=scenarios,
+            physicalSiteId=latest['physical_site_id'],
             elevationM=latest["elevation_m"], timestamp=timestamp, sensors=latest["measurements"], units=UNITS.copy(),
-            risks=rules["outputs"], stormSequence=rules["rainstorm_sequence"],
             history=[dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in history[-97:]],
-            featureAvailability=packet["history_availability"],
-            empiricalValidation="NOT_EVALUATED", probability=None, publicNotificationsEnabled=False,
-            unavailableTargets=["flash_flood", "landslide"],
-            syntheticDemo=latest["source_class"] == "synthetic_demo"))
+            featureAvailability={"history_rows": len(history), "history_hours": max(0, len(history) - 1)},
+            weatherCategories=categories, hazardScenarios=scenarios,
+            syntheticDemo=False))
     return apply_forecasts(result, forecast_histories, load_forecaster(Path(model_dir)), clock)
 
 
@@ -208,41 +168,14 @@ class Store:
             return [json.loads(r[0]) for r in db.execute("SELECT payload FROM nodes ORDER BY id LIMIT 201")]
 
 
-def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_dir=MODEL, online_state=None):
+def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_enabled=False, mandi_data_dir=None, mandi_refresh_seconds=900):
     store = Store(db_path)
     started = time.monotonic()
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
     engine = load_forecaster(model_dir)
-    classifier=WeatherCategories()
-    scenario_engine=HazardScenarios()
     app.state.forecaster = engine
-    existing = store.all()
-    if existing:
-        if any(n.get('forecastModel', {}).get('profileSha256') != engine.profile_sha256 for n in existing):
-            # Recompute old persisted predictions from retained canonical history.
-            # A new model label is never attached to an old XGBoost prediction.
-            now = pd.Timestamp(clock() if clock else time.time(), unit='s', tz='UTC')
-            histories = {n['id']: n.get('forecastHistory', n.get('history', [])) for n in existing}
-            store.replace(apply_forecasts(existing, histories, engine, now))
-        existing=store.all()
-        if any(n.get('weatherCategories',{}).get('profile_sha256')!=classifier.sha256 for n in existing):
-            for n in existing:
-                n['weatherCategories']=classifier.predict(n.get('history',[]),n['reportingIntervalSeconds'])
-                n['weatherCategories'].update(observation_timestamp=n['timestamp'],assessed_at_utc=datetime.fromtimestamp(clock() if clock else time.time(),timezone.utc).isoformat(),source_class=n['sourceClass'])
-            store.replace(existing)
-        existing=store.all()
-        if any(n.get('hazardScenarios',{}).get('config_sha256')!=scenario_engine.sha256 or n.get('hazardScenarios',{}).get('implementation_sha256')!=scenario_engine.implementation_sha256 for n in existing):
-            for n in existing:
-                n['hazardScenarios']=scenario_engine.predict(n.get('history',[]),n['reportingIntervalSeconds'])
-                n['hazardScenarios'].update(source_class=n['sourceClass'],assessed_at_utc=datetime.fromtimestamp(clock() if clock else time.time(),timezone.utc).isoformat())
-            store.replace(existing)
-    storm = StormRun(storm_risk_run)
-    online_learner=None
-    if online_state is not None:
-        if engine.profile['id']!='india_mandi_tabular_v2': raise ValueError('Online shadow learning requires the v2 fixed scaler')
-        from ml.india_mandi.online import for_model
-        online_learner=for_model(online_state,engine)
+    app.state.mandi_feed = dict(enabled=False, connected=False, provider="Open-Meteo", coordinates=[31.71, 76.93], last_success_utc=None, latest_valid_utc=None, error=None)
 
     @app.get('/api/model-lab')
     def model_lab():
@@ -252,7 +185,6 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
         if report['profile_sha256'] != engine.profile_sha256:
             raise HTTPException(422,'Model evaluation/profile identity mismatch')
         online=dict(enabled=False,role='NOT_CONFIGURED',updates=0)
-        if online_learner is not None: online=online_learner.summary()
         replay_path=ROOT/'ml/reports/mandi_pipeline_v2/online_replay.json'
         replay=json.loads(replay_path.read_text()) if replay_path.exists() else None
         return dict(configured=True,active_model=engine.profile['id'],display_name=engine.profile['display_name'],
@@ -262,28 +194,43 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
             blend=engine.weights,online=online,online_replay=replay,field_validated=False,
             test_status=report['test_status'],tabpfn_status=report['tabpfn'])
 
-    def storm_read(method, *args):
-        try:
-            return method(*args)
-        except (ValueError, KeyError, OSError) as exc:
-            raise HTTPException(422, str(exc)) from exc
-
-    @app.get('/api/storm-risk/report')
-    def storm_report():
-        return storm_read(storm.report)
-
-    @app.get('/api/storm-risk/scores')
-    def storm_scores(limit: int = 200):
-        return storm_read(storm.scores, limit)
-
-    @app.get('/api/storm-risk/heatmap')
-    def storm_heatmap(feature: str | None = None, time: str | None = None):
-        return storm_read(storm.heatmap, feature, time)
-
     def nodes():
         now_ms = (clock() if clock else time.time())*1000
         values = copy.deepcopy(store.all())
+        legacy = [n for n in values if n.get("forecastModel", {}).get("id") != engine.profile["id"]]
+        if legacy:
+            histories = {
+                n["id"]: n.get("history", n.get("forecastHistory", []))
+                for n in legacy
+            }
+            issued = pd.Timestamp(datetime.fromtimestamp(now_ms / 1000, timezone.utc))
+            apply_forecasts(legacy, histories, engine, issued)
         for n in values:
+            replacement = next((item for item in legacy if item["id"] == n["id"]), None)
+            if replacement is not None:
+                n.update(replacement)
+            if "weatherCategories" not in n or n["weatherCategories"].get("model_id") != "himachal_sensor_patterns_v1":
+                source = dict(
+                    source_class=n.get("sourceClass"), source_id=n.get("sourceId"),
+                    source_cell_id=n.get("sourceCellId"),
+                    pressure_reference=n.get("pressureReference"),
+                    coordinates=[n.get("lat"), n.get("lng")],
+                )
+                history = n.get("history", n.get("forecastHistory", []))
+                classification = hazard_engines()[0].predict(history, n.get("reportingIntervalSeconds", 3600))
+                classification.update(observation_timestamp=datetime.fromtimestamp(n["lastSeen"] / 1000, timezone.utc).isoformat(), **source)
+                n["weatherCategories"] = classification
+            if "hazardScenarios" not in n or n["hazardScenarios"].get("model_id") != "himalayan_synthetic_scenarios_v1":
+                source = dict(
+                    source_class=n.get("sourceClass"), source_id=n.get("sourceId"),
+                    source_cell_id=n.get("sourceCellId"),
+                    pressure_reference=n.get("pressureReference"),
+                    coordinates=[n.get("lat"), n.get("lng")],
+                )
+                history = n.get("history", n.get("forecastHistory", []))
+                scenarios = hazard_engines()[1].predict(history, n.get("reportingIntervalSeconds", 3600))
+                scenarios.update(assessed_at_utc=issued.isoformat(), **source)
+                n["hazardScenarios"] = scenarios
             n["stale"] = now_ms-n["lastSeen"] > max(120, n["reportingIntervalSeconds"]*2)*1000
             n["ageSeconds"] = max(0., (now_ms-n["lastSeen"])/1000)
             n["assessmentUsableNow"] = not n["stale"]
@@ -297,7 +244,7 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
 
     @app.get("/api/nodes")
     def list_nodes():
-        return [{k: n[k] for k in ("id", "name", "lat", "lng", "lastSeen", "battery", "anomalyIndex", "stale",
+        return [{k: n[k] for k in ("id", "name", "lat", "lng", "lastSeen", "stale",
                 "sourceClass", "reportingIntervalSeconds")} for n in nodes()]
 
     @app.get("/api/nodes/{identity}/telemetry")
@@ -307,14 +254,13 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
     @app.get("/api/status")
     def status():
         items = nodes()
-        return dict(appVersion=API_VERSION, uptimeSeconds=int(time.monotonic()-started), batteryVoltage=None,
-            meshNodeCount=len(items), sourceClasses=sorted({n["sourceClass"] for n in items}),
-            syntheticDemo=any(n["syntheticDemo"] for n in items), adapter="INDRA_READ_ONLY_LOCAL",
-            rpcAvailable=False, hardwareConnected=False, empiricalHazardModels="NOT_READY",
-            empiricalAccuracy="NOT_EVALUATED", publicNotificationsEnabled=False,
+        return dict(appVersion=API_VERSION, uptimeSeconds=int(time.monotonic()-started),
+            locationCount=len(items), sourceClasses=sorted({n["sourceClass"] for n in items}),
+            syntheticDemo=False, adapter="OPEN_METEO_MANDI_READ_ONLY",
+            mandiApi=copy.deepcopy(app.state.mandi_feed),
             forecastModel=engine.profile['id'], forecastArchitecture=engine.profile.get('family','NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE'),
             forecastModelsInUse=sorted({n['forecastModel']['id'] for n in items}), forecastHistoryHours=24,
-            forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS', transport="HTTP_LOCAL_NO_RF",
+            forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS',
             empty=not items, staleNodes=sum(n["stale"] for n in items))
 
     @app.get("/api/provenance")
@@ -337,10 +283,91 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
         try:return geojson(parameter_maps(nodes(),resolution),channel)
         except ValueError as exc:raise HTTPException(422,str(exc)) from exc
 
-    @app.post("/api/rpc/{identity}")
-    def rpc(identity: str):
-        node(identity)
-        raise HTTPException(501, "No connected hardware RPC transport; command not sent or acknowledged")
+    auth_store = AuthStore(db_path)
+
+    class MandiApiPoller:
+        """Refresh the single Mandi grid record from Open-Meteo on a fixed cadence."""
+        def __init__(self):
+            self.stop_event = threading.Event()
+            self.thread = None
+
+        def refresh(self):
+            raw_rows, receipt = collect_mandi_api(mandi_data_dir or ROOT/"ml/data/himachal/mandi_api_live")
+            if any(r.get("source_class") != "modeled_grid" or r.get("source_id") != "OpenMeteo_current_ECMWF_IFS_CAMS_global" for r in raw_rows):
+                raise ValueError("Only the configured Mandi Open-Meteo source is accepted")
+            prepared = assess(raw_rows, model_dir=model_dir)
+            if not prepared or any(n["sourceClass"] != "modeled_grid" for n in prepared):
+                raise ValueError("Mandi API returned no valid modeled-grid observations")
+            store.replace(prepared)
+            app.state.mandi_feed.update(enabled=True, connected=True,
+                last_success_utc=receipt["retrieved_at_utc"], latest_valid_utc=receipt["latest_valid_utc"], error=None)
+
+        def run(self):
+            while not self.stop_event.is_set():
+                try:
+                    self.refresh()
+                except Exception as exc:
+                    app.state.mandi_feed.update(enabled=True, connected=False, error=f"{type(exc).__name__}: {exc}")
+                self.stop_event.wait(mandi_refresh_seconds)
+
+        def start(self):
+            if self.thread is None:
+                self.stop_event.clear()
+                app.state.mandi_feed.update(enabled=True)
+                self.thread = threading.Thread(target=self.run, name="indra-mandi-open-meteo", daemon=True)
+                self.thread.start()
+
+        def stop(self):
+            self.stop_event.set()
+            if self.thread is not None:
+                self.thread.join(timeout=2)
+
+    app.state.mandi_poller = MandiApiPoller()
+
+    @app.get('/api/auth/config')
+    def auth_config():
+        return dict(googleClientId=GOOGLE_CLIENT_ID, demoAuthEnabled=demo_auth_enabled,
+                    authEnabled=bool(GOOGLE_CLIENT_ID) or demo_auth_enabled,
+                    mode='google_oauth' if GOOGLE_CLIENT_ID else 'demo' if demo_auth_enabled else 'disabled')
+
+    @app.post('/api/auth/google')
+    def auth_google(payload: GoogleAuthPayload):
+        try:
+            user_info = verify_google_credential(payload.credential, GOOGLE_CLIENT_ID)
+            user = auth_store.upsert_user(user_info)
+            token = auth_store.create_session(user['id'])
+            return dict(token=token, user=user)
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(503, 'Google sign-in is not configured') from exc
+
+    @app.post('/api/auth/demo-login')
+    def auth_demo(payload: DemoAuthPayload = None):
+        if not demo_auth_enabled:
+            raise HTTPException(404, 'Demo sign-in is disabled')
+        user_info = dict(id='demo_local_operator', email='demo@localhost',
+                         name='Local Demo Operator', picture='', provider='demo')
+        user = auth_store.upsert_user(user_info)
+        token = auth_store.create_session(user['id'])
+        return dict(token=token, user=user)
+
+    @app.get('/api/auth/me')
+    def auth_me(authorization: str | None = Header(None)):
+        if not authorization or not authorization.startswith('Bearer '):
+            raise HTTPException(401, 'Authentication required')
+        token = authorization[7:].strip()
+        user = auth_store.get_user_by_token(token)
+        if not user:
+            raise HTTPException(401, 'Invalid or expired session')
+        return dict(user=user)
+
+    @app.post('/api/auth/logout')
+    def auth_logout(authorization: str | None = Header(None)):
+        if authorization and authorization.startswith('Bearer '):
+            token = authorization[7:].strip()
+            auth_store.delete_session(token)
+        return dict(ok=True)
 
     if ui_dir is not None:
         path = Path(ui_dir)
@@ -352,32 +379,30 @@ def create_app(db_path, *, ui_dir=None, clock=None, storm_risk_run=None, model_d
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--db", type=Path, default=ROOT/"ml/data/himachal/dashboard.sqlite")
-    sources = parser.add_mutually_exclusive_group()
-    sources.add_argument("--observations", type=Path)
-    sources.add_argument("--demo", action="store_true", help="Replace store with clearly marked synthetic fixtures")
-    sources.add_argument('--weather-demo',action='store_true',help='All-category multi-location synthetic engineering demonstration')
+    parser.add_argument("--db", type=Path, default=ROOT/"ml/data/himachal/mandi_api.sqlite")
+    parser.add_argument("--mandi-data-dir", type=Path, default=ROOT/"ml/data/himachal/mandi_api_live", help="Local rolling cache of Open-Meteo Mandi responses")
+    parser.add_argument("--refresh-seconds", type=int, default=900, help="Mandi API polling interval")
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument('--host',default='127.0.0.1',choices=['127.0.0.1','0.0.0.0','::1','::'],help='Listen address; loopback by default, explicit public interface for hosted deployments')
     parser.add_argument("--ui", type=Path)
-    parser.add_argument('--storm-risk-run', type=Path, help='Owner-generated experimental ERA5 run directory')
     parser.add_argument('--forecast-model',type=Path,default=MODEL,help='Versioned gateway model; v1 remains available explicitly')
-    parser.add_argument('--online-state',type=Path,help='Optional delayed-label shadow checkpoint, never overwrites offline outputs')
+    parser.add_argument('--enable-demo-auth', action='store_true', help='Enable a fixed local demo identity; never use for hosted deployments')
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("Use a local unprivileged port")
-    app = create_app(args.db, ui_dir=args.ui, storm_risk_run=args.storm_risk_run,model_dir=args.forecast_model,online_state=args.online_state)
-    if args.observations or args.demo or args.weather_demo:
-        raw = weather_demo_observations() if args.weather_demo else demo_observations() if args.demo else read_observations(args.observations)
-        prepared = assess(raw,model_dir=args.forecast_model)
-        app.state.store.replace(prepared)
-        if args.online_state is not None:
-            from ml.india_mandi.online import ingest_native
-            ingest_native(raw,args.online_state,app.state.forecaster)
-        print(json.dumps(dict(nodes=len(prepared), mode="SYNTHETIC_DEMO" if args.demo or args.weather_demo else "OPERATOR_IMPORT",
-            probabilities="UNAVAILABLE", hardware_rpc=False)))
+    if args.refresh_seconds < 60:
+        parser.error("Use a refresh interval of at least 60 seconds")
+    app = create_app(args.db, ui_dir=args.ui, model_dir=args.forecast_model,mandi_data_dir=args.mandi_data_dir,mandi_refresh_seconds=args.refresh_seconds)
+    # Start with an empty runtime store: old demo/import rows must never appear
+    # while the Mandi API connection is being established.
+    app.state.store.replace([])
+    app.state.mandi_poller.start()
+    print(json.dumps(dict(mode="MANDI_OPEN_METEO_API", coordinates=[31.71, 76.93], refresh_seconds=args.refresh_seconds)))
     import uvicorn
-    uvicorn.run(app, host=args.host, port=args.port)
+    try:
+        uvicorn.run(app, host=args.host, port=args.port)
+    finally:
+        app.state.mandi_poller.stop()
 
 
 if __name__ == "__main__":

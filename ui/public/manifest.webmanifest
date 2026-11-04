@@ -1,0 +1,16 @@
+{
+  "name": "INDRA — Local weather",
+  "short_name": "INDRA",
+  "description": "Location readings, parameter maps and weather patterns",
+  "theme_color": "#1d4938",
+  "background_color": "#f4f5f0",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+

@@ -3,11 +3,11 @@ import StatusHeader from "./components/StatusHeader";
 import NodeList from "./components/NodeList";
 import MapView from "./components/MapView";
 import TelemetryPanel, { TechnicalDetails } from "./components/TelemetryPanel";
-import RpcMenu from "./components/RpcMenu";
-import StormRiskPanel from "./components/StormRiskPanel";
 import ProvenancePanel from "./components/ProvenancePanel";
 import ModelLab from "./components/ModelLab";
 import ParameterMaps from "./components/ParameterMaps";
+import ApiExplorer from "./components/ApiExplorer";
+import AuthModal from "./components/AuthModal";
 import {
   getNodes,
   getStatus,
@@ -44,11 +44,11 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [telemetry, setTelemetry] = useState(null);
   const [telemetryLoading, setTelemetryLoading] = useState(false);
-  const [rpcTargetId, setRpcTargetId] = useState(null);
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [error, setError] = useState(null);
   const [telemetryCached, setTelemetryCached] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const refreshCore = useCallback(async () => {
     // Stagger status after nodes so we do not burst the Master's 10 req/s ceiling.
@@ -163,19 +163,11 @@ export default function App() {
   }, [selectedId, refreshTick]);
 
   const selectedNode = nodes.find((n) => n.id === selectedId);
-  const rpcTargetNode = nodes.find((n) => n.id === rpcTargetId);
 
   const latest = nodes.length
     ? Math.max(...nodes.map((n) => n.lastSeen))
     : null;
-  const source =
-    status?.syntheticDemo ||
-    nodes.some((n) => n.sourceClass === "synthetic_demo")
-      ? "synthetic_demo"
-      : status?.sourceClasses?.includes("modeled_grid") ||
-          nodes.some((n) => n.sourceClass === "modeled_grid")
-        ? "modeled_grid"
-        : status?.sourceClasses?.[0] || nodes[0]?.sourceClass;
+  const source = "modeled_grid";
   const selectParameter = (key) => {
     setParameter(key);
     setShowHeatmap(true);
@@ -185,21 +177,27 @@ export default function App() {
     <div className="app-shell">
       <StatusHeader
         isLive={isLive}
+        mandiConnected={status?.mandiApi?.connected === true}
         cachedAt={cachedAt}
         versionMismatch={versionMismatch}
         view={view}
         onViewChange={setView}
+        onOpenAuth={() => setAuthModalOpen(true)}
       />
       <main className="main-content">
         <div className="workspace-heading">
           <div>
-            <span className="eyebrow">Your weather network</span>
+            <span className="eyebrow">
+              {view === "apis" ? "Developer Suite" : "Your weather network"}
+            </span>
             <h1>
               {view === "observations"
                 ? "Across your locations"
                 : view === "parameters"
                   ? "Explore the area"
-                  : "Data & system"}
+                  : view === "apis"
+                    ? "INDRA API & Developer Explorer"
+                    : "Data & system"}
             </h1>
           </div>
           <div className="workspace-meta">
@@ -208,11 +206,13 @@ export default function App() {
           </div>
         </div>
         <div className="data-context" role="note">
-          {source === "synthetic_demo"
-            ? "These are simulated readings, not measurements from actual stations."
-            : source === "modeled_grid"
-              ? "Showing weather-model estimates, not sensor measurements."
-              : "Location readings and estimates are shown with their observation times."}
+          {!status
+            ? "Connecting to the Mandi weather and air-quality APIs…"
+            : status.mandiApi?.connected
+              ? `Open-Meteo Mandi model-grid data · ${readingTime(status.mandiApi.latest_valid_utc)} · not physical sensor readings.`
+              : nodes.length && status.mandiApi?.last_success_utc
+                ? `Mandi API is offline · showing its last saved model-grid data from ${readingTime(status.mandiApi.last_success_utc)}.`
+                : `Mandi API is not connected. Waiting for Open-Meteo data${status.mandiApi?.error ? ` (${status.mandiApi.error})` : ""}.`}
         </div>
         {error && (
           <div className="version-banner" role="alert">
@@ -257,6 +257,7 @@ export default function App() {
             onSelect={selectParameter}
           />
         )}
+        {view === "apis" && <ApiExplorer />}
         {view === "system" && (
           <div className="system-view">
             <section className="system-intro">
@@ -278,12 +279,9 @@ export default function App() {
             </section>
             <TechnicalDetails
               telemetry={telemetry}
-              rpcAvailable={status?.rpcAvailable === true}
-              onOpenRpc={() => setRpcTargetId(selectedId)}
             />
             <ProvenancePanel />
             <ModelLab />
-            <StormRiskPanel />
           </div>
         )}
         <footer className="app-footer">
@@ -296,14 +294,10 @@ export default function App() {
           </button>
         </footer>
       </main>
-      {rpcTargetId && (
-        <RpcMenu
-          nodeId={rpcTargetId}
-          nodeName={locationName(rpcTargetNode)}
-          onClose={() => setRpcTargetId(null)}
-          available={status?.rpcAvailable === true}
-        />
-      )}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </div>
   );
 }

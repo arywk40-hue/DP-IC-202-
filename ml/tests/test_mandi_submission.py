@@ -34,8 +34,10 @@ def test_replay_retains_retrieval_time_and_never_claims_physical_hazards():
     node = assess(records, now=manifest['retrieved_at_utc'])[0]
     assert node['forecastStatus'] == 'HYBRID_READY' and node['stale']
     assert not node['syntheticDemo']  # Fixture uses the modeled-source contract, not field truth.
-    assert all(r['abstain'] and r['probability'] is None and r['assessment_state'] == 'SOURCE_REFERENCE_UNSUPPORTED'
-               for r in node['risks'].values())
+    assert 'risks' not in node
+    assert node['hazardScenarios']['probability'] is None
+    assert node['hazardScenarios']['field_validated'] is False
+    assert node['hazardScenarios']['calibrated'] is False
 
 
 @pytest.mark.parametrize('case', ['short', 'gap', 'missing_channel', 'retrieved_too_early'])

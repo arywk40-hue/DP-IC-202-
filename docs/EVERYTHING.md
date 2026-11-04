@@ -2490,8 +2490,8 @@ event chance. Multiple categories can match; no match is not a safety certificat
 ## Reproduce and inspect
 
 ```sh
-.venv/bin/python scripts/test_weather_features.py
-.venv/bin/pytest -q tests/test_weather_features.py
+.venv/bin/python ml/scripts/test_weather_features.py
+.venv/bin/python -m pytest ml/tests/test_weather_features.py -q
 ```
 
 The first retests the committed model without retraining and saves compact
@@ -2503,7 +2503,9 @@ separately from the new synthetic-trained classification.
 
 Results: [feature report](#source-07c08e1cb257),
 [classifier comparison](../ml/reports/weather_features_v1/classification_results.json),
-[API/scenario results](../ml/reports/weather_features_v1/integration_results.json).
+[historical synthetic multi-location fixture results](../ml/reports/weather_features_v1/integration_results.json),
+[current single-Mandi-point API check](../ml/reports/weather_features_v1/integration_results_mandi_single_point.json).
+The historical fixture report is retained for provenance; it is not current dashboard evidence.
 
 
 ---
@@ -3162,6 +3164,25 @@ family settings are **engineering assumptions**, not fitted research results.
    Report Monte Carlo standard error, which covers sampling noise under the fixed
    assumptions only. It does not cover error in those assumptions.
 
+The active feed is Open-Meteo modeled-grid data at 31.71° N, 76.93° E. It is not
+a physical sensor record. Its pressure is grid-surface pressure. Scenario responses
+carry the input timestamp, six-hour endpoint, source and provider cell, coordinates,
+model/config/code hashes, deterministic seed, draw count, and explicit unknown drivers
+(including rainfall footprint, soil wetness, catchment/drainage, slope susceptibility,
+river routing and lightning). `field_validated` and `calibrated` are false; public alerts
+are disabled. The UI reports “fraction of simulated outcomes under [case] assumptions”;
+the sensitivity range is not a confidence interval. Research citations and parameter-by-
+parameter provenance are available in the expandable explanation and versioned config.
+
+The current dashboard and test commands are:
+
+```sh
+.venv/bin/python server/scripts/run_mandi_api.py --port 8080
+.venv/bin/python -m pytest ml/tests server/tests -q
+npm test --prefix ui
+INDRA_E2E_PORT=8091 npm run test:e2e --prefix ui
+```
+
 Equal six-channel histories can produce very different outcomes when unmeasured
 rainfall or drainage changes. The tests explicitly demonstrate this identifiability
 limit. Changing a random seed does not create independent observational evidence.
@@ -3171,8 +3192,8 @@ limit. Changing a random seed does not create independent observational evidence
 Run from the repository root:
 
 ```sh
-.venv/bin/python scripts/generate_hazard_scenarios.py
-.venv/bin/python -m pytest tests/test_hazard_scenarios.py -q
+.venv/bin/python ml/scripts/generate_hazard_scenarios.py
+.venv/bin/python -m pytest ml/tests/test_hazard_scenarios.py -q
 ```
 
 The default run creates **2,048 parent sensor histories × 128 latent worlds ×
@@ -3196,9 +3217,11 @@ worlds per family. The average absolute fraction difference was **0.002081**
 This measures numerical consistency of the simulator, not forecasting accuracy.
 No observed-event accuracy is available; the results explicitly store it as null.
 
-To view it locally, use the existing Mandi dashboard on port 8080 or the simulated
-multi-location view on port 8082. Source labels and older-reading indicators remain
-visible. These are Python/backend scenarios, not a new ESP32 firmware export.
+To view it locally, start the Mandi dashboard command above. If the API is unavailable,
+the service reports offline and does not create replacement demo readings. With the
+single Mandi point, the parameter map shows the point and leaves unsupported area cells
+empty. Synchronized additional measured locations are required for an area estimate.
+These are Python/backend scenarios, not a new ESP32 firmware export.
 
 
 ---

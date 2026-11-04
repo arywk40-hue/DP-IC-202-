@@ -1,38 +1,34 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { VitePWA } from "vite-plugin-pwa";
 
-// This config packages the dashboard as an installable, offline-first PWA —
-// per the project's design requirement that the admin device works even
-// when disconnected from the Master Node's WiFi AP.
+// Native PWA plugin: registers the service worker and generates manifest
+// without invoking slow external Babel/Workbox child processes on Node 22/macOS.
+function pwaPlugin() {
+  const virtualModuleId = "virtual:pwa-register";
+  const resolvedVirtualModuleId = "\0" + virtualModuleId;
+  return {
+    name: "indra-pwa-plugin",
+    resolveId(id) {
+      if (id === virtualModuleId) return resolvedVirtualModuleId;
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export function registerSW(options = {}) {
+          if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').catch((err) => {
+                console.warn('PWA service worker registration failed:', err);
+              });
+            });
+          }
+        }`;
+      }
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [
-    react(),
-    VitePWA({
-      registerType: "autoUpdate",
-      includeAssets: ["favicon.svg"],
-      manifest: {
-        name: "INDRA — Local weather",
-        short_name: "INDRA",
-        description: "Location readings, parameter maps and weather patterns",
-        theme_color: "#1d4938",
-        background_color: "#f4f5f0",
-        display: "standalone",
-        icons: [
-          {
-            src: "favicon.svg",
-            sizes: "any",
-            type: "image/svg+xml",
-          },
-        ],
-      },
-      workbox: {
-        // Cache the app shell aggressively; API calls are handled separately
-        // in src/api/client.js with an IndexedDB fallback (see that file).
-        globPatterns: ["**/*.{js,css,html,svg}"],
-      },
-    }),
-  ],
+  plugins: [react(), pwaPlugin()],
   server: {
     host: "127.0.0.1",
     port: 5173,

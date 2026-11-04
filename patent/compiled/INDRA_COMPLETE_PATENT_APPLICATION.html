@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>INDRA — Complete Patent Specification</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; }
+  h1, h2, h3, h4 { color: #0d233a; border-bottom: 1px solid #eaeaea; padding-bottom: 6px; }
+  pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; font-family: "Courier New", Courier, monospace; font-size: 13px; line-height: 1.35; border: 1px solid #d0d7de; }
+  code { background: #f6f8fa; padding: 2px 5px; border-radius: 4px; font-size: 88%; font-family: monospace; }
+  table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+  th, td { border: 1px solid #d0d7de; padding: 8px 12px; text-align: left; font-size: 14px; }
+  th { background: #f3f4f6; }
+  @media print { body { max-width: 100%; margin: 0; } }
+</style>
+</head>
+<body>
+<pre style="white-space: pre-wrap;"># COMPLETE PATENT APPLICATION SPECIFICATION & PROOF OF INVENTORSHIP
+
+**INVENTION TITLE:** SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING  
+**INVENTOR(S):** Ariyan Bhakat, et al.  
+**DATE OF COMPILATION:** 2026-11-04 21:09:49 UTC  
+**REPOSITORY COMMIT CONTEXT:** `INDRA / Dp-indra-six-sensor`  
+
+---
+
+## TABLE OF CONTENTS
+1. [Official Patent Specification](#patent-specification)
+2. [Statutory Patent Claims](#patent-claims)
+3. [Formal Patent Drawings & Logic Diagrams](#formal-patent-drawings-specification)
+4. [Evidentiary Codebase Manifest & Cryptographic Hashes](#evidentiary-codebase-manifest)
+
+---
+
+
+# PATENT SPECIFICATION
+
+**TITLE OF THE INVENTION:**  
+**SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING**
+
+---
+
+## 1. TECHNICAL FIELD
+
+The present disclosure relates generally to environmental monitoring, automated meteorological forecasting, edge artificial intelligence (Edge AI), and distributed data integrity systems. More particularly, embodiments of the present disclosure relate to systems, computer-implemented methods, non-transitory computer-readable media, and embedded microcontroller devices for:
+1. Ingesting multi-channel atmospheric and particulate telemetry vectors;
+2. Deriving strictly causal, leak-free sliding-window feature representations;
+3. Generating six-hour future numerical forecasts via a constrained convex unit-simplex ensemble of heterogeneous machine learning models;
+4. Executing an embedded tri-family Monte Carlo simulation of catastrophic Himalayan disaster scenarios (cloudbursts, flash floods, and landslides) conditioned on physical atmospheric variables and latent subterranean hydrology;
+5. Guarding against spatial surface hallucinations through strict node cardinality verification; and
+6. Ensuring end-to-end data provenance and tamper-evident auditability using domain-separated Merkle trees anchored to immutable distributed ledgers.
+
+---
+
+## 2. BACKGROUND OF THE INVENTION AND PRIOR ART LIMITATIONS
+
+Accurate short-term micro-meteorological forecasting and sudden-onset disaster anticipation in complex, mountainous terrain (such as the Himalayan region of Himachal Pradesh, India) represent acute scientific, logistical, and computational challenges. Mountainous microclimates exhibit rapid non-linear dynamics, intense localized orographic precipitation, and severe micro-topographical variability that cannot be captured by synoptic-scale Numerical Weather Prediction (NWP) models (e.g., standard ECMWF or GFS models running at 9 km to 25 km grid spacings).
+
+Conventional meteorological and hazard warning solutions suffer from severe technical drawbacks:
+1. **Excessive Computational Burden and Latency:** Synoptic NWP models require high-performance computing clusters and multi-hour data assimilation pipelines, rendering them incapable of sub-hourly edge inference or localized tactical warning.
+2. **Bandwidth and Power Constraints at the Remote Edge:** Remote Himalayan outposts frequently experience power outages and cellular backhaul severances. Existing edge devices lack optimized, low-memory embedded ML architectures capable of executing complex non-linear ensemble models directly on ultra-low-power microcontrollers (e.g., microcontrollers with $\le 320\text{ KB}$ of SRAM) without memory exhaustion.
+3. **Temporal Data Leakage and Non-Causal Feature Artifacts:** Conventional machine learning time-series pipelines frequently introduce subtle temporal leakage (e.g., global normalization, bidirectional filtering, or misaligned interpolation over missing intervals), leading to inflated laboratory accuracy that catastrophically fails in live operational deployment.
+4. **False Alarm Fatigue and Uncalibrated Disaster Predictions:** Existing disaster warning algorithms typically emit binary alarms or uncalibrated risk probabilities derived from oversimplified thresholding or synthetic labels. In mountainous catchments, catastrophic hazards such as flash floods and landslides depend heavily on unobservable latent variables (subterranean soil saturation, unmapped drainage chokepoints, structural slope fatigue). Asserting authoritative "real-event probabilities" without observed ground truth causes rampant false alarms and fatal alert fatigue.
+5. **Spatial Hallucination in Sparse Sensor Networks:** Conventional spatial interpolation engines (such as Kriging or radial basis functions) often generate continuous 2D contour heatmaps even when only a single sensor node or collinear sensor nodes exist. This presents an illusory impression of spatial coverage, misleading disaster management authorities.
+6. **Data Tampering and Vulnerability in Regulatory Audit Trails:** Critical telemetry used in climate compliance, infrastructure monitoring, or disaster accountability is commonly stored in vulnerable centralized databases where privileged operators can retroactively mutate records, alter historical baselines, or inject synthetic entries without cryptographic detection.
+
+Consequently, there exists an urgent, unfulfilled technological need for an integrated, hardware-efficient, strictly causal, mathematically rigorous, and cryptographically verifiable edge forecasting and hazard simulation architecture.
+
+---
+
+## 3. SUMMARY OF THE INVENTION
+
+The present invention overcomes the aforementioned limitations by providing systems, methods, embedded microcontroller devices, and storage media for multi-channel micro-meteorological edge forecasting, latent hydrological hazard simulation, and cryptographic provenance anchoring.
+
+### Principle Features and Technical Advantages:
+
+1. **Six-Channel Environmental Input Vector:**  
+   The system ingests six co-located physical parameters: ambient temperature ($T$), relative humidity ($RH$), surface atmospheric pressure ($P$), fine particulate matter ($PM_{2.5}$), coarse particulate matter ($PM_{10}$), and wind speed ($W$).
+
+2. **25-Hour Sliding Window Causal Feature Representation:**  
+   The system buffers up to 25 consecutive hourly readings spanning 24 elapsed hours. It computes exactly sixty-six (66) strictly causal features consisting of raw values, multi-horizon lag deltas (1h, 3h, 6h, 12h, 24h), one-hour first derivatives, and rolling statistical moments (means and standard deviations over 6h and 24h windows). The feature engine strictly enforces physical validity bounds and exact one-hour spacing without temporal interpolation, eliminating future data leakage.
+
+3. **Multi-Model Tabular Ensemble with Non-Negative Convex Simplex Optimization:**  
+   To achieve high predictive fidelity across heterogeneous atmospheric dynamics, the system executes an ensemble comprising LightGBM gradient boosted decision trees, a residual Multi-Layer Perceptron (MLP) neural network, an autoregressive historical hybrid model, and a persistence warm-up head. The blend weights across the candidate models are constrained to a non-negative unit simplex ($\sum w_i = 1, w_i \ge 0$) optimized via linear programming to minimize validation Mean Absolute Error (MAE) independently for each target channel.
+
+4. **Tri-Family Monte Carlo Hazard & Hydrological Simulation:**  
+   Rather than emitting uncalibrated event probabilities, the system couples atmospheric telemetry to rainfall intensity through an empirical activation function incorporating an explicit liquid-phase transition sigmoid. It simulates catastrophic events over $\ge 2,048$ Monte Carlo iterations across three paired latent parameter regimes:
+   - **Cloudburst Simulation:** Evaluates exceedance of a 100 mm/hour extreme rainfall threshold.
+   - **Flash-Flood Runoff Simulation:** Computes peak catchment discharge $Q$ via the Rational Method ($Q = \frac{1}{3.6} C \cdot I \cdot A$) against channel conveyance capacity $Q_{cap}$, dynamically adjusting for antecedent moisture and subterranean storage.
+   - **Landslide Simulation:** Evaluates an empirical power-law intensity-duration stability threshold ($I_{crit} = \alpha \cdot D^{-\gamma}$) on susceptible terrain.
+   - **Sensitivity Reporting:** Outputs simulated outcome fractions across Drier, Central, and Wetter assumption families with complete parameter provenance, explicitly declaring that fractions are simulation results under stated assumptions and not calibrated real-event probabilities.
+
+5. **Ultra-Compact Embedded C++ Runtime for Microcontrollers:**  
+   The entire forecasting ensemble, causal feature engine, and Monte Carlo simulator are compiled into a standalone, heap-allocation-free C++ runtime executable on an ESP32-S3 microcontroller. The compiled firmware fits within 2.97 MB of flash and uses less than 20 KB of static RAM, achieving floating-point forecast parity with 64-bit reference models of $&lt; 1.2 \times 10^{-4}$ maximum absolute error.
+
+6. **Guarded Continuous Spatial Interpolation:**  
+   A spatial interpolation engine implements Inverse Distance Weighting (IDW) with an automated cardinality guard. If fewer than three ($K &lt; 3$) synchronized, non-collinear nodes are active, the system automatically suppresses 2D surface generation and displays discrete point markers with an explanatory constraint notice, preventing spatial hallucination.
+
+7. **Cryptographic Audit Journal & Domain-Separated Merkle Blockchain Anchor:**  
+   All observations, model digests, and simulation outputs are recorded in a transactional, append-only SQLite journal. Batched entries are hashed into a domain-separated Merkle tree using `0x00`-prefixed leaf hashes and `0x01`-prefixed branch hashes. The resulting Merkle root is anchored to an immutable EVM-compatible smart contract (`IndraAnchor.sol`) enforcing replay protection and caller authentication.
+
+---
+
+## 4. BRIEF DESCRIPTION OF THE DRAWINGS
+
+- **FIG. 1** illustrates the overall system architecture, including external model-grid ingestion, edge processing, gateway orchestration, distributed ledger anchoring, and client dashboard interfaces.
+- **FIG. 2** is a schematic diagram of the embedded edge microcontroller device (ESP32-S3), illustrating the dual-core processor, static memory allocation, transpiled C++ inference pipeline, circular observation buffer, and serial command parser.
+- **FIG. 3** is a time-series diagram depicting the 25-hour sliding window buffer and the derivation of the 66 strictly causal features.
+- **FIG. 4** is an architectural flowchart of the multi-model tabular ensemble inference engine and the convex simplex optimization problem.
+- **FIG. 5** is a detailed flowchart of the tri-family Monte Carlo hazard simulation engine, showing atmospheric coupling, hydrograph generation, and multi-regime outcome fraction derivation.
+- **FIG. 6** is a block diagram of the cryptographic provenance audit engine, depicting the hash-linked journal, canonical JSON encoding, and domain-separated Merkle tree construction.
+- **FIG. 7** is a state transition diagram of the append-only distributed ledger smart contract (`IndraAnchor.sol`).
+- **FIG. 8** is a spatial processing flowchart illustrating continuous Inverse Distance Weighting (IDW) interpolation and the multi-node cardinality guard.
+
+---
+
+## 5. DETAILED DESCRIPTION OF PREFERRED EMBODIMENTS
+
+Referring now to the drawings in detail, wherein like reference numerals designate identical or corresponding parts throughout the several views:
+
+### 5.1 System Architecture & Data Ingestion (FIG. 1)
+
+Referring to **FIG. 1**, the overall platform comprises an environmental observation interface communicatively coupled to an external data source **102**. In an exemplary embodiment, data source **102** comprises the Open-Meteo numerical weather prediction API querying the European Centre for Medium-Range Weather Forecasts (ECMWF) Integrated Forecasting System (IFS) at 0.1° resolution and the Copernicus Atmosphere Monitoring Service (CAMS) Global atmospheric composition model at 0.4° resolution, centered at coordinates 31.71° N, 76.93° E (Mandi, Himachal Pradesh). In alternative embodiments, data source **102** includes co-located in-situ physical sensor transducers **104**.
+
+The ingested raw telemetry vector comprises six canonical physical measurements:
+$$x(t) = [T(t), RH(t), P(t), PM_{2.5}(t), PM_{10}(t), W(t)]^T$$
+where $T$ is temperature in degrees Celsius (°C), $RH$ is relative humidity in percentage (%), $P$ is atmospheric pressure in hectopascals (hPa) referenced to grid surface, $PM_{2.5}$ and $PM_{10}$ are particulate matter concentrations in micrograms per cubic meter (µg/m³), and $W$ is wind speed at 10 meters in meters per second (m/s).
+
+Ingestion engine **110** validates that all measurements fall strictly within physically bounded ranges:
+- $T \in [-60.0, +85.0]$ °C
+- $RH \in [0.0, 100.0]$ %
+- $P \in [300.0, 1100.0]$ hPa
+- $PM_{2.5} \in [0.0, 5000.0]$ µg/m³
+- $PM_{10} \in [0.0, 5000.0]$ µg/m³
+- $W \in [0.0, 100.0]$ m/s
+
+Observations failing these constraints or containing non-finite values (`NaN`, $\pm\infty$) are immediately rejected, preventing corrupted data from entering downstream inference.
+
+---
+
+### 5.2 25-Hour Sliding Window Causal Feature Engineering (FIG. 3)
+
+Referring to **FIG. 3**, feature engineering engine **120** maintains a rolling history buffer of exactly twenty-five (25) consecutive hourly observations:
+$$\mathcal{H}(t) = \{x(t - 24\Delta t), x(t - 23\Delta t), \dots, x(t - \Delta t), x(t)\}$$
+where $\Delta t = 3600\text{ seconds}$ (1 hour).
+
+The feature engine **300** constructs exactly sixty-six (66) strictly causal features across the six channels:
+1. **Raw Telemetry (6 features):** The instantaneous readings at current time $t$:
+   $$x_j(t) \quad \text{for } j \in \{1, \dots, 6\}$$
+2. **Multi-Horizon Temporal Lag Differences (30 features):** Computed across five distinct lag horizons $L \in \{1, 3, 6, 12, 24\}$ hours for each channel:
+   $$\Delta_{j,L}(t) = x_j(t) - x_j(t - L) \quad \text{for } j \in \{1, \dots, 6\}, L \in \{1, 3, 6, 12, 24\}$$
+3. **First-Order Differential Rates of Change (6 features):**
+   $$\dot{x}_j(t) = \frac{x_j(t) - x_j(t - 1)}{\Delta t} \quad \text{for } j \in \{1, \dots, 6\}$$
+4. **Rolling Statistical Window Moments (24 features):** Computed across rolling time windows $W \in \{6, 24\}$ hours:
+   - Rolling Arithmetic Mean (12 features):
+     $$\mu_{j,W}(t) = \frac{1}{W} \sum_{k=0}^{W-1} x_j(t - k)$$
+   - Rolling Standard Deviation (12 features, with 0 degrees of freedom):
+     $$\sigma_{j,W}(t) = \sqrt{\frac{1}{W} \sum_{k=0}^{W-1} (x_j(t - k) - \mu_{j,W}(t))^2}$$
+
+Total feature count: $6 + 30 + 6 + 12 + 12 = 66\text{ features}$.
+
+Crucially, feature building requires exact one-hour spacing. If an hourly reading is absent or missing within the 25-reading buffer, the engine suppresses interpolation, declares history incomplete, and routes downstream forecasting to the persistence warm-up pathway with status `WARMING_UP_PERSISTENCE`.
+
+---
+
+### 5.3 Multi-Model Tabular Ensemble & Convex Simplex Optimization (FIG. 4)
+
+Referring to **FIG. 4**, the 66-dimensional feature vector **400** is broadcast simultaneously to a plurality of heterogeneous forecasting heads:
+1. **LightGBM Gradient Boosted Decision Trees (410):** Fast, non-linear regression capturing complex multivariate interaction thresholds.
+2. **Residual Multi-Layer Perceptron (MLP) Neural Network (420):** A deep feed-forward architecture with batch normalization and ReLU activations modeling continuous atmospheric gradients.
+3. **Autoregressive Historical Hybrid (430):** An XGBoost and Ridge regression hybrid leveraging longer historical baselines.
+4. **Persistence Model (440):** An invariant baseline projecting current values $\hat{y}(t+6h) = x(t)$.
+
+The ensemble blending engine **450** combines the predictions of the $M=4$ candidate models for each target channel $j$:
+$$\hat{y}_j(t+6h) = \sum_{m=1}^M w_{j,m} \hat{y}_{j,m}(t+6h)$$
+
+The blend weights $w_j = [w_{j,1}, \dots, w_{j,M}]^T$ are determined by solving a constrained linear programming minimization problem on a validation holdout dataset of $N$ samples:
+$$\min_{w_j} \frac{1}{N} \sum_{k=1}^N \left| \sum_{m=1}^M w_{j,m} \hat{y}_{j,m,k} - y_{j,k} \right|$$
+subject to:
+$$\sum_{m=1}^M w_{j,m} = 1.0, \quad w_{j,m} \ge 0 \quad \forall m \in \{1, \dots, M\}$$
+
+This formulation guarantees that blend weights lie strictly on a non-negative convex unit simplex, eliminating out-of-bounds weight divergence. The problem is solved using the High-Performance Simplex (HiGHS) dual-simplex solver, yielding optimal weights tailored independently to each atmospheric channel.
+
+---
+
+### 5.4 Tri-Family Monte Carlo Hazard & Hydrological Simulator (FIG. 5)
+
+Referring to **FIG. 5**, the system incorporates an experimental Monte Carlo simulation engine **500** for anticipating extreme mountain disasters over a six-hour forward horizon.
+
+#### Atmospheric-Precipitation Coupling Function (510):
+The engine links surface atmospheric conditions to rainfall potential using an empirical non-linear activation function:
+$$S_{rain} = \sigma\left(\beta_0 + \beta_{rh} \frac{RH - 70}{20} + \beta_p \left(\frac{-\Delta P_6}{3}\right) + \beta_w \left(\frac{W}{10}\right) + \beta_t \left(\frac{-\Delta T}{3}\right)\right) \times \sigma\left(\frac{T - T_{liquid}}{s_{liquid}}\right)$$
+where $\sigma(z) = \frac{1}{1 + e^{-z}}$, $\Delta P_6 = P(t) - P(t-6h)$, $\Delta T = T(t) - T(t-1h)$, $T_{liquid} = 1.5^\circ\text{C}$ (liquid-solid phase center), and $s_{liquid} = 1.0^\circ\text{C}$ (phase scaling factor). This ensures precipitation is attenuated when temperatures drop below freezing, distinguishing rain from snow.
+
+#### Parallel Hazard Evaluation Engines (530, 540, 550):
+From coupling strength $S_{rain}$, the generator **520** draws $N \ge 2,048$ stochastic six-hour hydrographs consisting of 12 half-hour rainfall rates $R_k \text{ (mm/h)}$:
+1. **Cloudburst Threshold (530):** Evaluates whether any half-hour rate scaled to an hourly equivalent exceeds the standard Himalayan cloudburst threshold:
+   $$\max_{k \in \{1, \dots, 12\}} R_k \ge 100.0\text{ mm/h}$$
+2. **Flash-Flood Runoff Model (540):** Computes peak surface runoff $Q$ using the Rational Method:
+   $$Q_k = \frac{1}{3.6} \cdot C \cdot R_k \cdot A \quad [\text{m}^3/\text{s}]$$
+   where $C \in [0.1, 0.95]$ is the runoff coefficient, $A$ is effective catchment area (km²), and $3.6$ is the unit conversion factor. The engine tracks dynamic subterranean storage $S(t)$ and antecedent soil moisture $M(t)$. A flash-flood event is flagged when $Q_k \ge Q_{capacity}$.
+3. **Landslide Stability Exceedance (550):** Evaluates rainfall intensity $I$ and accumulation duration $D$ over 5-hour and 6-hour windows against an empirical power-law stability threshold:
+   $$I_{crit} = \alpha \cdot D^{-\gamma}$$
+   where $\alpha = 73.9$, $\gamma = 0.79$, evaluated over terrain marked with susceptibility index $S_{slope} &gt; 0$.
+
+#### Tri-Family Latent Regime Sensitivity (560):
+Because real-world catchment storage and subterranean moisture are unobservable, the engine runs Monte Carlo draws across three paired parameter families:
+- **Drier Case:** Low rain scale, maximum soil storage capacity ($S = 100\text{ mm}$), high drainage capacity ($Q_{cap} = 20\text{ m}^3/\text{s}$).
+- **Central Case:** Baseline median catchment parameters.
+- **Wetter Case:** High rain scale, saturated soil storage ($S = 20\text{ mm}$), constricted drainage capacity ($Q_{cap} = 10\text{ m}^3/\text{s}$), elevated slope susceptibility.
+
+The engine outputs outcome fractions for each regime alongside full parameter provenance, explicitly declaring `field_validated: false`, `calibrated: false`, and disabling automated public alarms.
+
+---
+
+### 5.5 Embedded Edge Microcontroller Runtime (FIG. 2)
+
+Referring to **FIG. 2**, in a physical embodiment, the platform is implemented on an ultra-compact embedded edge microcontroller **200** (e.g., Espressif ESP32-S3 DevKitC-1).
+
+The microcontroller hardware comprises:
+- Dual-core 32-bit Xtensa LX7 CPU **202** running at 240 MHz;
+- 8 MB Octal SPI Flash memory **206**;
+- 320 KB internal Static RAM (SRAM) **208**; and
+- USB-to-UART serial interface **210** operating at 115,200 baud.
+
+Firmware runtime **220** executes entirely within static SRAM:
+- Observation history is stored in a fixed circular FIFO buffer `Observation buffer[25]` **224** occupying $&lt; 2\text{ KB}$.
+- Causal feature builder **226** computes the 66 features in-place without dynamic heap reallocation (`malloc`/`new`), eliminating heap fragmentation.
+- The multi-model ensemble **228** is transpiled into static C++ decision tree functions (LightGBM) and dense matrix operations (MLP), utilizing 2.97 MB of flash and 19.9 KB of static RAM.
+- Monte Carlo engine **230** uses an embedded 64-bit integer PRNG `indra_xorshift64star_boxmuller_v1` executing 2,048 iterations in under 45 milliseconds on chip.
+- Floating-point parity with 64-bit IEEE-754 Python reference models achieves a maximum absolute difference of $&lt; 1.203 \times 10^{-4}$ on forecasts and $&lt; 3.3 \times 10^{-8}$ on pattern scores.
+
+---
+
+### 5.6 Cryptographic Provenance & Domain-Separated Merkle Blockchain Anchor (FIG. 6 & FIG. 7)
+
+Referring to **FIG. 6**, data integrity is maintained by audit engine **160**. Every observation, forecast, model hash, and simulation result is written to a transactional SQLite journal `indra_audit_json_v1` **600** with schema:
+$$\text{Event}_i = \{\text{sequence}: i, \text{previous}: H_{i-1}, \text{kind}: K, \text{payload}: P\}$$
+where $H_0 = 0x00\dots00$ and $H_i = \text{SHA-256}(\text{CanonicalJSON}(\text{Event}_i))$.
+
+Batched events are organized into a domain-separated Merkle tree **620**:
+- Leaf hashes: $H_{leaf} = \text{SHA-256}(0x00 \mathbin{\Vert} H_i)$
+- Interior branch hashes: $H_{branch} = \text{SHA-256}(0x01 \mathbin{\Vert} H_{left} \mathbin{\Vert} H_{right})$
+- Odd tail handling: If the node count at any level is odd, the final hash is duplicated.
+
+Referring to **FIG. 7**, the resulting root hash and unique batch ID are anchored to an EVM-compatible distributed ledger **170** executing smart contract `IndraAnchor.sol`:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract IndraAnchor {
+    address public immutable owner;
+    mapping(bytes32 =&gt; bytes32) public roots;
+    event Anchored(bytes32 indexed batchId, bytes32 root);
+
+    constructor() { owner = msg.sender; }
+
+    function anchor(bytes32 batchId, bytes32 root) external {
+        require(msg.sender == owner, "Unauthorized");
+        require(root != bytes32(0), "Empty root");
+        require(roots[batchId] == bytes32(0), "Duplicate batch");
+        roots[batchId] = root;
+        emit Anchored(batchId, root);
+    }
+}
+```
+The contract enforces caller authorization (**700**), non-null root validation (**710**), and replay protection (**720**), rendering audit history immutable and globally verifiable.
+
+---
+
+### 5.7 Continuous Spatial IDW Interpolation & Cardinality Guard (FIG. 8)
+
+Referring to **FIG. 8**, spatial engine **150** computes continuous 2D surface heatmaps across active observation nodes using Inverse Distance Weighting:
+$$u(x) = \frac{\sum_{i=1}^K d(x, x_i)^{-p} u_i}{\sum_{i=1}^K d(x, x_i)^{-p}}$$
+where $p=2.0$ and $d(x, x_i)$ is Euclidean/geodesic distance.
+
+Cardinality guard **810, 820** intercepts all spatial queries:
+1. It verifies that active node count $K \ge 3$.
+2. It verifies that active nodes are geographically non-collinear.
+3. If $K &lt; 3$ or nodes are collinear, 2D surface generation is suppressed (**830**). The system emits discrete coordinate markers and returns an explicit explanatory constraint notice. This prevents spatial hallucination from single-point observations.
+
+---
+
+## 6. ABSTRACT OF THE DISCLOSURE
+
+Systems, methods, embedded microcontroller devices, and storage media are disclosed for multi-channel micro-meteorological edge forecasting, latent hydrological hazard simulation, and cryptographic provenance anchoring. The system buffers twenty-five consecutive hourly observations across six canonical channels (temperature, humidity, surface pressure, PM2.5, PM10, wind speed) and derives sixty-six strictly causal features without temporal leakage. A multi-model ensemble (LightGBM, residual MLP, autoregressive hybrid) combined via validation-selected convex simplex linear programming weights generates six-hour future predictions. A tri-family Monte Carlo simulator couples atmospheric telemetry to precipitation intensity through an empirical liquid-phase sigmoid function, evaluating cloudburst, Rational Method runoff, and intensity-duration landslide thresholds across drier, central, and wetter catchment assumptions. A spatial cardinality guard suppresses continuous 2D surface generation when fewer than three non-collinear nodes exist. All observations and forecasts are recorded in a transactional journal, organized into a domain-separated Merkle tree, and anchored to an immutable smart contract on an EVM distributed ledger. An embedded C++ runtime executes the ensemble and simulation on an ESP32-S3 microcontroller within 2.97 MB flash and 20 KB RAM.
+
+
+---
+
+# PATENT CLAIMS
+
+**TITLE: SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING**
+
+**APPLICANT / INVENTOR:** Ariyan Bhakat, et al.  
+**ASSIGNEE:** INDRA Project / Advanced Environmental Sensing Initiative  
+
+---
+
+### WHAT IS CLAIMED IS:
+
+#### 1. A micro-meteorological edge forecasting and hazard simulation system, comprising:
+an environmental observation interface configured to receive, at regular hourly intervals, a synchronized multi-channel environmental telemetry vector comprising six distinct physical parameters: ambient temperature ($T$), relative humidity ($RH$), atmospheric surface pressure ($P$), fine particulate matter concentration ($PM_{2.5}$), coarse particulate matter concentration ($PM_{10}$), and wind speed ($W$);  
+a sliding-window causal feature engineering engine communicatively coupled to the environmental observation interface, configured to buffer up to twenty-five (25) consecutive hourly telemetry vectors spanning a 24-hour observation horizon and to derive, without future temporal leakage, a feature vector consisting of exactly sixty-six (66) causal features comprising:
+- the six current raw physical parameter measurements;
+- thirty (30) temporal lag differences spanning lag horizons of 1, 3, 6, 12, and 24 hours across each of the six physical parameters;
+- six (6) first-order one-hour differential rates of change across each of the six physical parameters; and
+- twenty-four (24) rolling window statistical moments comprising rolling arithmetic means and rolling standard deviations evaluated across rolling time windows of 6 hours and 24 hours for each of the six physical parameters;
+
+a multi-model tabular ensemble inference engine communicatively coupled to the feature engineering engine, configured to generate a six-hour future numerical forecast for each of the six physical parameters by executing a convex weighted blend across a plurality of heterogeneous forecasting heads comprising a gradient boosted decision tree model, a residual multi-layer perceptron neural network, and a historical autoregressive hybrid model, wherein blend weights across the heterogeneous forecasting heads are constrained to a non-negative unit simplex minimizing validation mean absolute error;  
+a tri-family Monte Carlo hazard simulation engine configured to receive the multi-channel environmental telemetry vector, link surface atmospheric variables to simulated precipitation intensity via an empirical liquid-phase activation function, and evaluate in parallel a plurality of stochastic disaster scenarios comprising cloudburst rainfall exceedance, Rational Method flash-flood runoff exceedance, and intensity-duration landslide triggers across three paired latent parameter regimes representing drier, central, and wetter catchment conditions; and  
+a cryptographic provenance audit engine configured to record each observation, model configuration, and forecast snapshot as a hash-linked transactional journal entry, compute a domain-separated Merkle tree root over batched journal entries, and transmit the Merkle tree root to an immutable distributed ledger contract.
+
+---
+
+#### 2. The system of claim 1, wherein the empirical liquid-phase activation function of the hazard simulation engine computes rainfall strength $S_{rain}$ as:
+$$S_{rain} = \sigma\left(\beta_0 + \beta_{rh} \frac{RH - 70}{20} + \beta_p \Delta P_6 + \beta_w W + \beta_t \Delta T\right) \times \sigma\left(\frac{T - T_{liquid}}{s_{liquid}}\right)$$
+wherein $\sigma(\cdot)$ is a logistic sigmoid function, $\Delta P_6$ is a six-hour pressure differential, $\Delta T$ is a one-hour temperature differential, $T_{liquid}$ is an assumed liquid-solid precipitation phase center temperature, and $s_{liquid}$ is a phase transition scaling factor.
+
+---
+
+#### 3. The system of claim 1, wherein the tri-family Monte Carlo hazard simulation engine performs at least 2,048 stochastic draws per parameter regime using an on-device pseudo-random number generator, and outputs conditional outcome fractions separately for the drier, central, and wetter catchment conditions accompanied by deterministic seed data and configuration hash manifests, without asserting real-world probability calibration.
+
+---
+
+#### 4. The system of claim 1, wherein the Rational Method flash-flood runoff exceedance evaluates simulated peak catchment discharge $Q$ according to:
+$$Q = \frac{1}{3.6} \cdot C \cdot I \cdot A$$
+wherein $C$ is a runoff coefficient, $I$ is simulated rainfall intensity in millimeters per hour, $A$ is effective catchment area in square kilometers, and $Q$ is compared against a local drainage channel capacity threshold $Q_{cap}$ adjusted dynamically by an antecedent soil moisture state and subterranean reservoir storage depletion.
+
+---
+
+#### 5. The system of claim 1, wherein the intensity-duration landslide trigger evaluates an empirical power-law stability threshold:
+$$I_{crit} = \alpha \cdot D^{-\gamma}$$
+wherein $D$ represents rainfall accumulation duration over five-hour and six-hour sliding intervals, $\alpha$ is a regional geotechnical scaling coefficient, and $\gamma$ is a power-law decay exponent evaluated over terrain marked as susceptible.
+
+---
+
+#### 6. The system of claim 1, further comprising:
+a continuous two-dimensional spatial interpolation engine configured to apply Inverse Distance Weighting across multi-point sensor telemetry; and  
+a multi-node cardinality guard configured to intercept spatial interpolation requests, determine whether a quantity of synchronized, non-collinear observation nodes is greater than or equal to three ($K \ge 3$), and in response to determining that fewer than three non-collinear observation nodes exist, suppress two-dimensional area surface generation and emit a single discrete location marker accompanied by a data constraint notice.
+
+---
+
+#### 7. The system of claim 1, wherein the cryptographic provenance audit engine generates domain-separated Merkle trees by:
+- prefixing every leaf event hash with a one-byte domain separator of value `0x00` prior to hashing;
+- prefixing every interior node concatenation with a one-byte domain separator of value `0x01` prior to hashing; and
+- duplicating an odd terminal leaf hash when a number of nodes at any tree level is odd.
+
+---
+
+#### 8. The system of claim 1, wherein the distributed ledger contract comprises an append-only Solidity smart contract storing a mapping of batch identifiers to Merkle roots, configured to reject non-owner callers, reject null Merkle roots, and reject duplicate batch identifier submissions to enforce replay prevention.
+
+---
+
+#### 9. The system of claim 1, wherein when the sliding-window causal feature engineering engine contains fewer than twenty-five (25) buffered hourly observations, the multi-model tabular ensemble inference engine suppresses multi-model execution and falls back to a persistence warm-up forecast while explicitly emitting a `WARMING_UP_PERSISTENCE` status indicator.
+
+---
+
+#### 10. The system of claim 1, wherein the multi-model tabular ensemble inference engine determines the convex blend weights $w$ by solving a linear programming problem formulated as:
+$$\min_{w \ge 0, \mathbf{1}^T w = 1} \frac{1}{N} \sum_{k=1}^N \left| \sum_{m=1}^M w_m \hat{y}_{m,k} - y_k \right|$$
+using a dual-simplex solver over chronological validation splits, independently for each of the six physical parameters.
+
+---
+
+#### 11. A computer-implemented method for micro-meteorological edge forecasting and conditional hazard simulation, the method comprising:
+receiving, via a communication interface, an environmental observation vector comprising six physical channels: ambient temperature ($T$), relative humidity ($RH$), surface barometric pressure ($P$), fine particulate matter ($PM_{2.5}$), coarse particulate matter ($PM_{10}$), and wind velocity ($W$);  
+maintaining a rolling history buffer of up to twenty-five (25) consecutive hourly observation vectors representing a 24-hour historical window;  
+calculating, strictly from causal historical observations in the rolling history buffer, sixty-six (66) feature values comprising raw values, lag differences at 1h, 3h, 6h, 12h, and 24h, one-hour first derivatives, and rolling means and standard deviations over 6-hour and 24-hour windows across all six physical channels;  
+evaluating a multi-model forecasting ensemble comprising gradient boosted trees, an MLP residual network, an autoregressive hybrid, and persistence, combined according to non-negative convex weights pre-computed on a validation simplex to produce a +6-hour prediction for all six physical channels;  
+executing a tri-family Monte Carlo simulation coupling atmospheric variables to rainfall strength and computing simulated cloudburst, flash-flood, and landslide outcome fractions under drier, central, and wetter latent catchment assumptions; and  
+appending an immutable cryptographic journal entry linking the observation vector, feature values, forecast, and simulation fractions to a prior event hash in an append-only audit store.
+
+---
+
+#### 12. The method of claim 11, further comprising:
+periodically batching journal entries from the append-only audit store into an audit manifest;  
+calculating a domain-separated Merkle root over the batch manifest using `0x00`-prefixed leaf hashes and `0x01`-prefixed branch hashes; and  
+transmitting a blockchain transaction containing the Merkle root and a unique batch identifier to an append-only smart contract deployed on an EVM-compatible distributed ledger.
+
+---
+
+#### 13. The method of claim 11, wherein the multi-channel environmental telemetry vector is acquired by polling an external numerical weather prediction model-grid API at a defined geographic coordinate, and wherein the method further comprises tagging the ingested vector with a `modeled_grid` provenance attribute and identifying that values represent model estimates rather than co-located physical station transducers.
+
+---
+
+#### 14. The method of claim 11, wherein the tri-family Monte Carlo simulation is executed on an embedded microcontroller using an integer XORSHIFT pseudo-random number generator combined with a Box-Muller Gaussian transformation algorithm.
+
+---
+
+#### 15. The method of claim 11, further comprising:
+receiving a spatial parameter query requesting a continuous heat surface;  
+verifying that a count of active synchronized sensor stations in a spatial cluster is at least three ($K \ge 3$);  
+confirming that geographic coordinates of the active sensor stations are non-collinear; and  
+in response to confirming that the count is at least three and non-collinear, generating a GeoJSON polygon feature collection using two-dimensional Inverse Distance Weighting interpolation across the spatial cluster.
+
+---
+
+#### 16. The method of claim 15, wherein in response to determining that the count of active synchronized sensor stations is less than three, the method suppresses GeoJSON contour generation, emits a single point coordinate, and returns an explicit status indicating that continuous surface interpolation requires multiple synchronized spatial stations.
+
+---
+
+#### 17. The method of claim 11, wherein the multi-model forecasting ensemble achieves a mean absolute error (MAE) over retrospective model-grid holdout validation of less than 1.45 °C for temperature, less than 6.9 percentage points for relative humidity, less than 0.95 hPa for pressure, less than 6.6 µg/m³ for PM2.5, less than 8.7 µg/m³ for PM10, and less than 0.31 m/s for wind speed.
+
+---
+
+#### 18. The method of claim 11, wherein the journal entry is serialized according to a canonical JSON encoding ensuring deterministic UTF-8 key sorting, whitespace elimination, and exclusion of non-finite floating point numbers prior to SHA-256 hash calculation.
+
+---
+
+#### 19. An embedded edge microcontroller device for autonomous micro-meteorological forecasting and hazard scenario simulation, comprising:
+a dual-core 32-bit microprocessor;  
+a non-volatile flash memory having a capacity of at least 8 megabytes;  
+a static random-access memory (SRAM) having a capacity of at least 320 kilobytes;  
+a serial hardware interface configured to receive formatted comma-separated telemetry streams at a baud rate of 115,200 baud; and  
+a firmware program stored in the non-volatile flash memory and executed by the dual-core 32-bit microprocessor, the firmware program configuring the microprocessor to:
+- maintain a circular FIFO observation buffer storing twenty-five (25) hourly observations across six canonical channels comprising temperature, humidity, atmospheric pressure, PM2.5, PM10, and wind speed;
+- compute sixty-six (66) causal lag and rolling window features directly in SRAM without dynamic heap reallocation;
+- execute a transpiled C++ inference model comprising a gradient boosted tree ensemble, a multi-layer neural network, and a legacy hybrid model to predict six-hour future values for all six canonical channels;
+- execute an embedded tri-family Monte Carlo hazard simulator evaluating at least 2,048 iterations per family using an on-device integer pseudo-random number generator; and
+- stream structured JSON telemetry responses over the serial hardware interface reporting numerical forecasts, model SHA-256 digests, and conditional hazard outcome fractions;
+
+wherein the firmware program occupies less than 3.34 megabytes of application flash partition space and uses less than 25 kilobytes of static RAM.
+
+---
+
+#### 20. The embedded edge microcontroller device of claim 19, wherein the transpiled C++ inference model achieves numerical parity with a 64-bit IEEE 754 reference implementation with a maximum absolute forecast deviation across all channels of less than $0.00015$.
+
+---
+
+#### 21. The embedded edge microcontroller device of claim 19, wherein the serial hardware interface processes command strings comprising `INFO` for device identity and model hashes, `SELFTEST` for executing a fixed-vector verification sequence, and `RESET` for purging the circular FIFO observation buffer.
+
+---
+
+#### 22. The embedded edge microcontroller device of claim 19, wherein the firmware program bounds input telemetry to valid physical ranges comprising:
+- temperature between −60.0 °C and +85.0 °C;
+- relative humidity between 0.0% and 100.0%;
+- atmospheric pressure between 300.0 hPa and 1100.0 hPa;
+- PM2.5 concentration between 0.0 µg/m³ and 5000.0 µg/m³;
+- PM10 concentration between 0.0 µg/m³ and 5000.0 µg/m³; and
+- wind speed between 0.0 m/s and 100.0 m/s;  
+and wherein out-of-bounds telemetry causes the microprocessor to flag a validation error and withhold multi-model inference.
+
+---
+
+#### 23. A non-transitory computer-readable storage medium having instructions stored thereon that, when executed by one or more processors, cause the one or more processors to perform operations comprising:
+ingesting an hourly observation stream comprising temperature, humidity, surface pressure, PM2.5, PM10, and wind velocity;  
+constructing a 66-dimensional feature vector from 25 consecutive hourly observation samples without future temporal leakage;  
+predicting six-hour future values for all six channels using a non-negative convex simplex ensemble of gradient boosted trees and a neural residual network;  
+generating conditional hazard outcome fractions across cloudburst, flash-flood, and landslide thresholds via a 2,048-draw Monte Carlo simulator evaluating drier, central, and wetter subterranean assumption sets;  
+writing a hash-linked transaction record to an append-only database journal;  
+generating a domain-separated Merkle root over a batch of transaction records using `0x00` leaf and `0x01` branch prefixes; and  
+publishing the Merkle root to an immutable distributed ledger contract.
+
+---
+
+#### 24. The non-transitory computer-readable storage medium of claim 23, wherein the operations further comprise:
+authenticating client requests using bearer session tokens;  
+storing only SHA-256 hashes of the bearer session tokens in a local SQLite session database; and  
+automatically invalidating session tokens upon expiration of a 7-day time-to-live threshold.
+
+---
+
+#### 25. The non-transitory computer-readable storage medium of claim 23, wherein the operations further comprise:
+rendering an interactive web dashboard providing an observations map, an interactive parameter heat surface, an API explorer enabling in-browser query execution, and a system provenance audit viewer verifying local Merkle batch proofs against on-chain transaction hashes.
+
+
+---
+
+# FORMAL PATENT DRAWINGS SPECIFICATION
+
+**TITLE: SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING**
+
+---
+
+## LIST OF FIGURES
+
+- **FIG. 1** is a high-level architectural block diagram illustrating the overall system environment, including data ingestion from external model grids or physical transducers, edge microcontroller processing, gateway server orchestration, distributed ledger anchoring, and client user interface presentation.
+- **FIG. 2** is a detailed schematic diagram of the embedded edge microcontroller device (ESP32-S3), showing internal bus architecture, static memory partition allocation, transpiled C++ inference pipeline, circular observation buffer, and serial command interface.
+- **FIG. 3** is a time-series feature engineering pipeline diagram illustrating the 25-hour sliding window buffer and the derivation of the 66 strictly causal features without future temporal leakage.
+- **FIG. 4** is an architectural flowchart of the multi-model tabular ensemble inference engine, showing the parallel execution of heterogeneous models and the convex unit simplex linear programming optimization.
+- **FIG. 5** is a detailed flowchart of the tri-family Monte Carlo hazard and hydrological simulation engine, illustrating atmospheric rain strength coupling, parallel scenario evaluation, and tri-regime sensitivity reporting.
+- **FIG. 6** is a block diagram of the cryptographic provenance audit engine, depicting the hash-linked transactional SQLite journal, canonical JSON serialization, and domain-separated Merkle tree construction.
+- **FIG. 7** is a state transition and logic flow diagram of the append-only distributed ledger smart contract (`IndraAnchor.sol`), demonstrating owner authorization, zero-root rejection, and replay protection.
+- **FIG. 8** is a spatial processing flowchart illustrating continuous Inverse Distance Weighting (IDW) interpolation and the multi-node cardinality guard preventing false 2D heatmap generation.
+
+---
+
+```
+                                  FIG. 1
+                        OVERALL SYSTEM ARCHITECTURE
+
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 102 External Meteorological Data Source                                │
+ │     • Open-Meteo Grid API (ECMWF IFS 0.1° & CAMS Global 0.4°)          │
+ │     • [Optional Physical In-Situ Sensor Transducers (104)]             │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │ Periodic Ingestion (e.g. 15 min)
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 100 Multi-Channel Meteorological Edge & Gateway Platform               │
+ │                                                                        │
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 110 Environmental Ingestion & Verification Engine               │   │
+ │   │     • Physical bounds validation [-60..85°C, 300..1100 hPa]    │   │
+ │   │     • Exact 1-hour temporal grid enforcement                   │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   │ Validated 6-Channel Vector
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 120 25-Hour Sliding Window Causal Feature Engine               │   │
+ │   │     • Circular buffer (t-24h to t)                             │   │
+ │   │     • Derives 66 causal features (lags, deltas, rolling std)   │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   │ 66-Dimensional Vector
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 130 Multi-Model Tabular Forecasting Ensemble                   │   │
+ │   │     • LightGBM + Residual MLP + Autoregressive Hybrid          │   │
+ │   │     • Convex Simplex Linear Programming Weights                │   │
+ │   │     • Yields +6h Forecast for all 6 physical channels          │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   │
+ │       ┌───────────────────────────┴───────────────────────────┐
+ │       ▼                                                       ▼
+ │ ┌───────────────────────────────────┐   ┌──────────────────────────────────┐
+ │ │ 140 Tri-Family Monte Carlo Hazard │   │ 150 Continuous Spatial IDW       │
+ │ │     Simulation Engine             │   │     Interpolation Engine         │
+ │ │     • Atmospheric rain coupling   │   │     • Multi-node guard (K ≥ 3)   │
+ │ │     • Cloudburst, Flood, Landslide│   │     • Continuous GeoJSON surface │
+ │ └─────────────────┬─────────────────┘   └─────────────────┬────────────────┘
+ │                   │                                       │
+ │                   └───────────────────┬───────────────────┘
+ │                                       │
+ │                                       ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 160 Cryptographic Provenance Audit Engine                      │   │
+ │   │     • Transactional SQLite hash-linked journal                 │   │
+ │   │     • Domain-separated Merkle batch builder (0x00 / 0x01)      │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ └───────────────────────────────────┼────────────────────────────────────┘
+                                     │
+             ┌───────────────────────┴───────────────────────┐
+             │ Merkle Root Anchor                            │ REST / WebSockets
+             ▼                                               ▼
+ ┌──────────────────────┐                        ┌──────────────────────┐
+ │ 170 Distributed      │                        │ 180 Client Dashboard │
+ │     Ledger (EVM)     │                        │     & API Explorer   │
+ │ • IndraAnchor.sol    │                        │ • Observations Map   │
+ │ • Replay Prevention  │                        │ • Parameter Heatmaps │
+ │ • Immutable Roots    │                        │ • In-Browser API Test│
+ └──────────────────────┘                        └──────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 2
+               EMBEDDED MICROCONTROLLER SUBSYSTEM (ESP32-S3)
+
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 200 Microcontroller Hardware Enclosure (ESP32-S3 DevKitC-1)            │
+ │                                                                        │
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 202 Dual-Core 32-Bit Xtensa LX7 Microprocessor (240 MHz)       │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   │ Internal Bus (204)
+ │          ┌────────────────────────┼────────────────────────┐
+ │          ▼                        ▼                        ▼
+ │   ┌───────────────┐        ┌───────────────┐        ┌──────────────┐
+ │   │ 206 8MB Flash │        │ 208 320KB RAM │        │ 210 Serial   │
+ │   │   Partition   │        │   (SRAM)      │        │ Hardware     │
+ │   └───────┬───────┘        └───────┬───────┘        └──────┬───────┘
+ │           │                        │                       │
+ └───────────┼────────────────────────┼───────────────────────┼───────────┘
+             │                        │                       │
+             ▼                        ▼                       ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 220 Standalone C++ Firmware Runtime (indra_mandi_v2_runtime.h)         │
+ │                                                                        │
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 222 Serial Protocol Parser (115200 Baud)                       │   │
+ │   │     • Handles CSV stream (unix_sec, T, RH, P, PM2.5, PM10, W)  │   │
+ │   │     • Dispatches INFO, SELFTEST, RESET commands                │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 224 Circular FIFO Observation History Buffer                   │   │
+ │   │     • Fixed array: struct Observation buffer[25]               │   │
+ │   │     • Validates exact 3600-second progression                  │   │
+ │   │     • Occupies &lt; 2 KB static SRAM                              │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 226 Transpiled C++ Causal Feature Builder                      │   │
+ │   │     • Computes 66 features in-place without dynamic malloc     │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 228 Transpiled Tabular Ensemble Predictor                      │   │
+ │   │     • Nested C++ conditional trees (LightGBM)                  │   │
+ │   │     • Compact forward-pass matrix multiplication (MLP)         │   │
+ │   │     • Autoregressive history ridge blend                       │   │
+ │   │     • Execution footprint: 2.97 MB Flash, 19.9 KB RAM          │   │
+ │   │     • Numerical parity error &lt; 0.00013 vs 64-bit IEEE float    │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 230 Embedded PRNG Monte Carlo Engine                           │   │
+ │   │     • indra_xorshift64star_boxmuller_v1 integer RNG            │   │
+ │   │     • 2,048 draws per family directly on chip                  │   │
+ │   └───────────────────────────────┬────────────────────────────────┘   │
+ │                                   ▼
+ │   ┌────────────────────────────────────────────────────────────────┐   │
+ │   │ 232 Serial JSON Emitter                                        │   │
+ │   │     • Streams structured telemetry response                    │   │
+ │   │     • Outputs build_sha256, model_sha256, scenario_config_sha  │   │
+ │   └────────────────────────────────────────────────────────────────┘   │
+ └────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 3
+            25-HOUR SLIDING WINDOW CAUSAL FEATURE DERIVATION
+
+ Observation Horizon: 24 Hours Elapsed | 25 Exact Hourly Readings
+ ────────────────────────────────────────────────────────────────────────► Time (t)
+   [t-24h] [t-23h]  ...  [t-12h]  ...  [t-6h]  ...  [t-3h]  [t-1h]   [t]
+     │       │             │             │            │       │       │
+     └───────┴─────────────┴─────────────┴────────────┴───────┴───────┤
+                                                                      │
+                                                       Buffer of 25 Hourly Vectors
+                                                       (T, RH, P, PM2.5, PM10, W)
+                                                                      │
+                                                                      ▼
+ ┌────────────────────────────────────────────────────────────────────────────────┐
+ │ 300 Causal Feature Derivation (Exactly 66 Features)                            │
+ │                                                                                │
+ │ 1. Raw Telemetry at Time t (6 Features):                                       │
+ │    • T(t), RH(t), P(t), PM2.5(t), PM10(t), W(t)                                │
+ │                                                                                │
+ │ 2. Multi-Horizon Lag Deltas (30 Features = 6 channels × 5 horizons):           │
+ │    • Δ_1h  = x(t) - x(t-1h)                                                    │
+ │    • Δ_3h  = x(t) - x(t-3h)                                                    │
+ │    • Δ_6h  = x(t) - x(t-6h)                                                    │
+ │    • Δ_12h = x(t) - x(t-12h)                                                   │
+ │    • Δ_24h = x(t) - x(t-24h)                                                   │
+ │                                                                                │
+ │ 3. First-Order Rate of Change (6 Features):                                    │
+ │    • dx/dt = (x(t) - x(t-1h)) / 1.0 hour                                       │
+ │                                                                                │
+ │ 4. Rolling Statistical Window Moments (24 Features = 6 channels × 2 stats × 2):│
+ │    • 6-Hour Rolling Window:                                                    │
+ │        - Mean_6h = (1/6) Σ x(t-k) for k=0..5                                   │
+ │        - Std_6h  = sqrt( (1/6) Σ (x(t-k) - Mean_6h)^2 )                        │
+ │    • 24-Hour Rolling Window:                                                   │
+ │        - Mean_24h = (1/24) Σ x(t-k) for k=0..23                                │
+ │        - Std_24h  = sqrt( (1/24) Σ (x(t-k) - Mean_24h)^2 )                     │
+ │                                                                                │
+ │ Total Feature Dimension = 6 + 30 + 6 + 24 = 66 Strictly Causal Features        │
+ └────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 4
+               MULTI-MODEL TABULAR ENSEMBLE ARCHITECTURE
+
+                 ┌─────────────────────────────────────────┐
+                 │ 400 66-Dimensional Causal Feature Vector│
+                 └────────────────────┬────────────────────┘
+                                      │ Broadcast to Candidate Models
+          ┌───────────────────────────┼───────────────────────────┐
+          ▼                           ▼                           ▼
+ ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
+ │ 410 LightGBM    │         │ 420 Residual    │         │ 430 Autoregress │
+ │     Boosted Tree│         │     MLP Neural  │         │     Hybrid (XGB │
+ │     Ensemble    │         │     Network     │         │     + Ridge)    │
+ └────────┬────────┘         └────────┬────────┘         └────────┬────────┘
+          │ ŷ_LGB                     │ ŷ_MLP                     │ ŷ_HYB
+          └───────────────────────────┼───────────────────────────┘
+                                      │
+                                      ▼
+                 ┌─────────────────────────────────────────┐
+                 │ 440 Fallback Persistence Head (ŷ_PER)   │
+                 │     • Inactive when History = 25 Rows   │
+                 │     • Active when History &lt; 25 Rows     │
+                 └────────────────────┬────────────────────┘
+                                      │
+                                      ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 450 Non-Negative Convex Simplex Optimization Engine                    │
+ │                                                                        │
+ │   Objective Formulation:                                               │
+ │     min_{w} (1/N) Σ | w_LGB*ŷ_LGB + w_MLP*ŷ_MLP + w_HYB*ŷ_HYB - y |     │
+ │                                                                        │
+ │   Constraints:                                                         │
+ │     w_LGB + w_MLP + w_HYB + w_PER = 1.0                                │
+ │     w_i ≥ 0 for all i ∈ {LGB, MLP, HYB, PER}                           │
+ │                                                                        │
+ │   Solved via High-Performance Simplex (HiGHS LP)                       │
+ │   Independently optimized for each of the 6 physical target channels   │
+ └────────────────────────────────────┬───────────────────────────────────┘
+                                      │ Optimal Convex Blend
+                                      ▼
+                 ┌─────────────────────────────────────────┐
+                 │ 460 +6-Hour Future Numerical Forecast   │
+                 │     [T, RH, P, PM2.5, PM10, W] at t+6h  │
+                 └─────────────────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 5
+               TRI-FAMILY MONTE CARLO HAZARD SIMULATOR
+
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 500 Real-Time 6-Channel Sliding Observation Vector                     │
+ │     • Features: T, RH, P, PM2.5, PM10, W, ΔT, ΔP_6h, ΔW                │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 510 Empirical Liquid-Phase Atmospheric Rain Coupling Function          │
+ │                                                                        │
+ │   S_rain = σ( β0 + β_rh*(RH-70)/20 + β_p*(-ΔP6/3) + β_w*(W/10)        │
+ │              + β_t*(-ΔT/3) ) * σ( (T - T_liquid) / s_liquid )          │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │ Coupling Strength S_rain
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 520 Stochastic Precipitation Rate Generator                            │
+ │     • Generates 12 half-hour rainfall rates R(t) in mm/h               │
+ │     • Driven by seed and pseudo-random normal draws                    │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │ Synthetic 6-Hour Rain Hydrograph
+          ┌──────────────────────────┼──────────────────────────┐
+          ▼                          ▼                          ▼
+ ┌──────────────────┐       ┌──────────────────┐       ┌──────────────────┐
+ │ 530 Cloudburst   │       │ 540 Flash Flood  │       │ 550 Landslide    │
+ │     Threshold    │       │     Runoff Model │       │     Trigger      │
+ │                  │       │                  │       │                  │
+ │   Evaluate:      │       │   Rational Method│       │   Power-Law ID:  │
+ │   max(R) ≥ 100   │       │   Q = (1/3.6)*C* │       │   I_crit =       │
+ │   mm/hour        │       │       I * A      │       │   α * D^(-γ)     │
+ │                  │       │   Q ≥ Q_capacity │       │   Trigger on     │
+ │                  │       │   (accounting    │       │   susceptible    │
+ │                  │       │   for soil/store)│       │   terrain        │
+ └────────┬─────────┘       └────────┬─────────┘       └────────┬─────────┘
+          │                          │                          │
+          └──────────────────────────┼──────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 560 Tri-Family Latent Parameter Regime Sensitivity Engine              │
+ │     (Evaluated across N ≥ 2,048 draws per family)                      │
+ │                                                                        │
+ │   Regime A: "Drier Case"                                               │
+ │     • Low rainfall scaling, maximum soil storage, low slope risk       │
+ │   Regime B: "Central Case"                                             │
+ │     • Median parameters representing baseline assumed catchment        │
+ │   Regime C: "Wetter Case"                                              │
+ │     • High rainfall scaling, saturated soil storage, high slope risk   │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 570 Output Fraction Reporting & Provenance Manifest                    │
+ │     • Reports outcome percentages for each regime                      │
+ │     • Emits config_sha256, deterministic seed, draw count              │
+ │     • Attaches field_validated=false and calibrated=false disclaimers  │
+ └────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 6
+         CRYPTOGRAPHIC PROVENANCE & DOMAIN-SEPARATED MERKLE ENGINE
+
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 600 Transactional SQLite Audit Event Journal (indra_audit_json_v1)    │
+ │                                                                        │
+ │   Sequence 1:  [0x00...00] ──► SHA256(Body_1) ──► EventHash_1         │
+ │   Sequence 2:  [EventHash_1] ──► SHA256(Body_2) ──► EventHash_2       │
+ │   Sequence 3:  [EventHash_2] ──► SHA256(Body_3) ──► EventHash_3       │
+ │   ...                                                                  │
+ │   Sequence M:  [EventHash_M-1] ──► SHA256(Body_M) ──► EventHash_M     │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 610 Canonical RFC 8785 JSON Serializer                                 │
+ │     • Deterministic key ordering, no extraneous whitespace             │
+ │     • Finite numbers only (rejection of NaN and Infinite values)       │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 620 Domain-Separated Merkle Tree Builder                               │
+ │                                                                        │
+ │                         [ Merkle Root ]                                │
+ │                                │                                       │
+ │              ┌─────────────────┴─────────────────┐                     │
+ │        [Branch Hash L1]                    [Branch Hash L2]            │
+ │        = SHA256( 0x01 ||                   = SHA256( 0x01 ||           │
+ │           Leaf0 || Leaf1 )                    Leaf2 || Leaf3 )         │
+ │              │                                   │                     │
+ │       ┌──────┴──────┐                     ┌──────┴──────┐              │
+ │    [Leaf 0]      [Leaf 1]              [Leaf 2]      [Leaf 3]          │
+ │    = SHA256(     = SHA256(             = SHA256(     = SHA256(         │
+ │      0x00 ||       0x00 ||               0x00 ||       0x00 ||         │
+ │      Hash_1 )      Hash_2 )              Hash_3 )      Hash_4 )        │
+ └───────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 630 Batch Manifest & Digital Signature Generator                      │
+ │     • batch_id = SHA256(manifest_json)                                 │
+ │     • Ed25519 Elliptic Curve Signature over batch_id                   │
+ │     • Ready for On-Chain Publication                                   │
+ └────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 7
+         DISTRIBUTED LEDGER SMART CONTRACT (IndraAnchor.sol)
+
+                Transaction Submitted: anchor(batchId, root)
+                                      │
+                                      ▼
+                      ┌───────────────────────────────┐
+                      │ 700 msg.sender == owner?      │
+                      └───────────────┬───────────────┘
+                                      │
+                         Yes ─────────┴───────── No
+                          │                       │
+                          ▼                       ▼
+          ┌───────────────────────────────┐   ┌───────────────────────────┐
+          │ 710 root != bytes32(0)?       │   │ Revert: "Unauthorized"   │
+          └───────────────┬───────────────┘   └───────────────────────────┘
+                          │
+             Yes ─────────┴───────── No
+              │                       │
+              ▼                       ▼
+┌───────────────────────────────┐   ┌───────────────────────────┐
+│ 720 roots[batchId] == 0?      │   │ Revert: "Empty root"      │
+│ (Replay Prevention)           │   └───────────────────────────┘
+└───────────────┬───────────────┘
+                │
+   Yes ─────────┴───────── No
+    │                       │
+    ▼                       ▼
+┌───────────────────────────────┐   ┌───────────────────────────┐
+│ 730 Record State:             │   │ Revert: "Duplicate batch" │
+│ roots[batchId] = root         │   └───────────────────────────┘
+└───────────────┬───────────────┘
+                │
+                ▼
+┌───────────────────────────────┐
+│ 740 Emit Event:               │
+│ emit Anchored(batchId, root)  │
+└───────────────────────────────┘
+```
+
+---
+
+```
+                                  FIG. 8
+            SPATIAL IDW SURFACE GENERATION WITH CARDINALITY GUARD
+
+                      Incoming Spatial Heatmap Request
+                                      │
+                                      ▼
+                      ┌───────────────────────────────┐
+                      │ 800 Retrieve Active Nodes     │
+                      └───────────────┬───────────────┘
+                                      │
+                                      ▼
+                      ┌───────────────────────────────┐
+                      │ 810 Node Count K ≥ 3?         │
+                      └───────────────┬───────────────┘
+                                      │
+                         Yes ─────────┴───────── No
+                          │                       │
+                          ▼                       │
+          ┌───────────────────────────────┐       │
+          │ 820 Nodes Non-Collinear?      │       │
+          └───────────────┬───────────────┘       │
+                          │                       │
+             Yes ─────────┴───────── No           │
+              │                       │           │
+              ▼                       └─────► ┌───┴───────────────────────┐
+┌───────────────────────────────┐             │ 830 Multi-Node Guard      │
+│ 840 Continuous 2D Inverse     │             │     Triggered             │
+│     Distance Weighting (IDW)  │             │ • Suppress 2D Heatmap     │
+│ • Compute grid weights:       │             │ • Emit Discrete Point(s)  │
+│   w_i = 1 / d(x, x_i)^p       │             │ • Return Explanatory Data │
+│ • Interpolate parameter values│             │   Constraint Reason       │
+│ • Construct GeoJSON Polygons  │             └───────────────────────────┘
+└───────────────┬───────────────┘
+                │
+                ▼
+┌───────────────────────────────┐
+│ 850 Return Multi-Layer Heatmap│
+│     GeoJSON to Client Map     │
+└───────────────────────────────┘
+```
+
+
+---
+
+
+## EVIDENTIARY CODEBASE MANIFEST
+
+The following source code modules establish the physical reduction to practice of the claimed invention:
+
+| Source File | Bytes | SHA-256 Checksum |
+| :--- | :---: | :--- |
+| `ml/six_sensor_forecast/contract.py` | 918 | `67d1825b5bcfdf2b7bac47715448bb1c385d4ee010fa033d071888ab760c251a` |
+| `ml/six_sensor_forecast/features.py` | 5,624 | `ccb1ac829f443f43b3b092be88081dd8efa29d9572d5b938e4c3a11c4959a6ac` |
+| `ml/india_mandi/tabular_v2.py` | 18,847 | `bfde54988abebd46c1f972a9ce396192f5430740b2657367b9e219c72069224e` |
+| `ml/himachal/hazard_scenarios.py` | 12,336 | `0260052553321f7a2933f635882a16339c6b023e1312e5ad9881709c23499c17` |
+| `ml/himachal/parameter_maps.py` | 10,548 | `b823e1df0f3c8b00a7a881d0576e5e03580415a636a8112a1cd2cedbb7c89a42` |
+| `esp32/ml_integration/src/mandi_v2_main.cpp` | 7,499 | `2d6f2197425d09707717363ba65dda3481a7edeaa865d78a9b22d596c62bc10c` |
+| `esp32/ml_integration/include/indra_mandi_v2_runtime.h` | 15,799 | `8335094c24da3ab229aeafc96d2dce5ab3025859d85b9e449f98d89d9f5c26a0` |
+| `contracts/IndraAnchor.sol` | 652 | `6d210b76a58f52a56502dccba3f69af68d87358e3a344684188f842c77ddf372` |
+| `contracts/provenance.py` | 2,990 | `310e2c79141010fa9d558e1791e712e4447d2478813330841f66103c2a5bad5e` |
+| `server/auth.py` | 6,954 | `c9863b4c832b68a95d3001b31de827983e13974cad23b778ba23b788a0a8c731` |
+| `server/dashboard.py` | 21,789 | `b8557d3d13c43241272dc52b11943bf17d618380953d55930d35ee4ab902a494` |
+| `server/scripts/deploy_production.py` | 4,813 | `423ab8c6de20459bf6d980077903966aa35a237d832734516124768341c95f25` |
+| `ui/src/App.jsx` | 10,374 | `1104b4b4e2e6f66e4e61596782f75e7bb5f15aef8e191c58ef4b46e432c5a1f2` |
+</pre>
+</body>
+</html>

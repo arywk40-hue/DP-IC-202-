@@ -16,7 +16,8 @@ from ml.himachal.weather_categories import (
     synthetic_episodes,
 )
 from ml.six_sensor_forecast.contract import RAW_SENSOR_COLUMNS
-from server.dashboard import assess, create_app, weather_demo_observations
+from server.dashboard import assess, create_app
+from server.tests.mandi_fixture import NOW as MANDI_NOW, mandi_api_rows
 
 NOW = "2026-10-21T06:00:00Z"
 
@@ -131,31 +132,22 @@ def test_synthetic_episodes_are_reproducible_independent_and_bounded():
 
 def test_runtime_abstains_on_missing_history_gaps_and_domain():
     e = WeatherCategories()
-    raw = weather_demo_observations(NOW)
-
-    def history(node):
-        return [
-            dict(timestamp=r["timestamp_utc"], **r["measurements"])
-            for r in raw
-            if r["node_id"] == node
-        ]
-
-    heat = history("demo-05")
-    r = e.predict(heat, 3600)
-    assert (
-        r["status"] == "SYNTHETIC_PATTERN_SCORES_ONLY"
-        and "heatwave_like" in r["matched"]
-    )
+    raw = mandi_api_rows(now=MANDI_NOW, hours=73)
+    observations = [dict(timestamp=r["timestamp_utc"], **r["measurements"]) for r in raw]
+    r = e.predict(observations, 3600)
+    assert r["status"] in {"SYNTHETIC_PATTERN_SCORES_ONLY", "OUTSIDE_SYNTHETIC_DOMAIN"}
+    assert r["feature_count"] == 13
+    assert r["training_rows_by_role"] == {"train": 16000, "validation": 4000, "test": 4000}
     assert not r["field_validated"] and r["probability"] is None and not r["calibrated"]
     assert len(r["categories"]) == 10 and all(
         0 <= v["score"] <= 1 for v in r["categories"]
     )
-    assert e.predict(heat[-1:], 3600)["status"] == "UNAVAILABLE"
-    assert e.predict(heat[:-3] + heat[-2:], 3600)["status"] == "UNAVAILABLE"
-    altered = copy.deepcopy(heat)
+    assert e.predict(observations[-1:], 3600)["status"] == "UNAVAILABLE"
+    assert e.predict(observations[:-3] + observations[-2:], 3600)["status"] == "UNAVAILABLE"
+    altered = copy.deepcopy(observations)
     altered[-1]["pm10_ug_m3"] = None
     assert e.predict(altered, 3600)["status"] == "UNAVAILABLE"
-    altered = copy.deepcopy(heat)
+    altered = copy.deepcopy(observations)
     altered[-1]["temperature_c"] = 70
     assert e.predict(altered, 3600)["status"] == "OUTSIDE_SYNTHETIC_DOMAIN"
 
@@ -169,24 +161,25 @@ def test_classifier_artifact_tampering_fails_closed(tmp_path):
 
 
 def test_complete_feature_api_and_persisted_migration(tmp_path):
+    rows = mandi_api_rows(now=MANDI_NOW, hours=73)
+    node = assess(rows, now=MANDI_NOW.isoformat())[0]
     with TestClient(
-        create_app(tmp_path / "nodes.sqlite", clock=lambda: 1792562400)
+        create_app(tmp_path / "nodes.sqlite", clock=lambda: MANDI_NOW.timestamp())
     ) as client:
-        client.app.state.store.replace(assess(weather_demo_observations(NOW), now=NOW))
+        client.app.state.store.replace([node])
         b = client.get("/api/parameter-heatmaps").json()
-        assert b["status"] == "AREA_ESTIMATE" and len(b["layers"]) == 6
-        for name in RAW_SENSOR_COLUMNS:
-            response = client.get("/api/kriging/heatmap", params={"channel": name})
-            assert response.status_code == 200 and response.json()["features"]
+        assert b["status"] == "UNAVAILABLE" and not b["layers"]
+        assert "two synchronized distinct locations" in b["reason"]
+        assert client.get("/api/kriging/heatmap", params={"channel": "temperature_c"}).json()["features"] == []
         assert client.get("/api/kriging/heatmap?channel=rainfall").status_code == 422
         assert client.get("/api/parameter-heatmaps?resolution=1000").status_code == 422
-        c = client.get("/api/nodes/demo-05/telemetry").json()["weatherCategories"]
-        assert "heatwave_like" in c["matched"] and c["probability"] is None
+        c = client.get("/api/nodes/mandi-api-current/telemetry").json()["weatherCategories"]
+        assert c["probability"] is None
         stored = client.app.state.store.all()
         for n in stored:
             n.pop("weatherCategories")
         client.app.state.store.replace(stored)
     with TestClient(create_app(tmp_path / "nodes.sqlite")) as restarted:
-        assert restarted.get("/api/nodes/demo-05/telemetry").json()[
+        assert restarted.get("/api/nodes/mandi-api-current/telemetry").json()[
             "weatherCategories"
         ]["profile_sha256"]

@@ -7,10 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test tests/contract.test.js",
+    "test": "node --test tests/contract.test.js tests/auth.test.js",
     "test:e2e": "npm run build && playwright test",
-    "test:mandi": "node tests/verify-mandi.mjs",
-    "test:weather": "node tests/verify-weather.mjs"
+    "test:mandi": "node tests/verify-current-mandi.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

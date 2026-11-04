@@ -8,13 +8,15 @@ import { CACHE_SCOPE } from './client.js';
 
 const DB_NAME = 'mesh-dashboard';
 const STORE_NAME = 'snapshots';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 function openDb() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = () => {
-      req.result.createObjectStore(STORE_NAME);
+    req.onupgradeneeded = (event) => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
+      else if (event.oldVersion < 2) req.transaction.objectStore(STORE_NAME).clear();
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);

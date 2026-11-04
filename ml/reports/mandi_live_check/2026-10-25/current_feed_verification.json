@@ -1,0 +1,149 @@
+{
+  "schema_version": "indra_live_mandi_dashboard_verification_v1",
+  "verified_at_utc": "2026-10-25T18:19:23.931866+00:00",
+  "evidence": "LIVE_OPEN_METEO_MODELED_GRID_NOT_PHYSICAL_SENSOR_DATA",
+  "dashboard_base_url": "http://127.0.0.1:8094",
+  "source_class": "modeled_grid",
+  "source_id": "OpenMeteo_current_ECMWF_IFS_CAMS_global",
+  "provider_grid_receipt": {
+    "source_class": "modeled_grid",
+    "evidence": "CURRENT_MODEL_GRID_NOT_STATION_OBSERVATIONS",
+    "requested_coordinates": [
+      31.71,
+      76.93
+    ],
+    "weather_model": "ecmwf_ifs",
+    "air_domain": "cams_global",
+    "retrieved_at_utc": "2026-10-25T18:13:54.075922+00:00",
+    "rows": 91,
+    "new_hours": 0,
+    "provider_revisions_ignored": 0,
+    "future_hours_excluded": 5,
+    "latest_valid_utc": "2026-10-25T18:00:00+00:00",
+    "source_receipts": {
+      "weather": {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m",
+        "sha256": "91b63754b0d643d06dddc833f0b952e1240d7c9f0e554ce7bf607de4d3d16c91",
+        "returned_latitude": 31.669594,
+        "returned_longitude": 76.942444
+      },
+      "air": {
+        "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+        "sha256": "9f485c629f39455ae09e21eb152f36ce04c2190a66116adf161d667e7fff3796",
+        "returned_latitude": 31.700005,
+        "returned_longitude": 76.899994
+      }
+    },
+    "history_sha256": "943d31e9b70eef3c3dad32d897c896215a86b5ceec99f514038ebf31d59fb736",
+    "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS)",
+    "station_accuracy": false,
+    "hazard_accuracy": false
+  },
+  "provider_response_details": {
+    "weather": {
+      "sha256": "91b63754b0d643d06dddc833f0b952e1240d7c9f0e554ce7bf607de4d3d16c91",
+      "returned_coordinates": [
+        31.669594,
+        76.942444
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "\u00b0C",
+        "relative_humidity_2m": "%",
+        "surface_pressure": "hPa",
+        "wind_speed_10m": "m/s"
+      }
+    },
+    "air": {
+      "sha256": "9f485c629f39455ae09e21eb152f36ce04c2190a66116adf161d667e7fff3796",
+      "returned_coordinates": [
+        31.700005,
+        76.899994
+      ],
+      "hourly_units": {
+        "time": "iso8601",
+        "pm2_5": "\u03bcg/m\u00b3",
+        "pm10": "\u03bcg/m\u00b3"
+      }
+    }
+  },
+  "observation_time_utc": "2026-10-25T18:00:00+00:00",
+  "forecast_target_time_utc": "2026-10-26T00:00:00+00:00",
+  "pressure_reference": "grid_surface",
+  "canonical_channels_present": [
+    "temperature_c",
+    "relative_humidity_pct",
+    "pressure_hpa",
+    "pm25_ug_m3",
+    "pm10_ug_m3",
+    "wind_speed_mps"
+  ],
+  "canonical_units": {
+    "temperature_c": "degC",
+    "relative_humidity_pct": "%",
+    "pressure_hpa": "hPa",
+    "pm25_ug_m3": "ug/m3",
+    "pm10_ug_m3": "ug/m3",
+    "wind_speed_mps": "m/s"
+  },
+  "latest_values": {
+    "temperature_c": 11.1,
+    "relative_humidity_pct": 88.0,
+    "pressure_hpa": 928.7,
+    "pm25_ug_m3": 26.4,
+    "pm10_ug_m3": 35.6,
+    "wind_speed_mps": 0.85
+  },
+  "forecast_values": {
+    "temperature_c": 9.42224168799806,
+    "relative_humidity_pct": 87.27609223601097,
+    "pressure_hpa": 927.4822143273068,
+    "pm25_ug_m3": 10.426004426120366,
+    "pm10_ug_m3": 12.866440148714476,
+    "wind_speed_mps": 1.4285226411341456
+  },
+  "forecast_model_id": "india_mandi_tabular_v2",
+  "forecast_profile_sha256": "79eae97fa522973e69db6b8ef825e849534e26060c00f132d4fe6b9482486fc6",
+  "forecast_status": "HYBRID_READY",
+  "history_rows": 25,
+  "history_required": 25,
+  "pattern_model_id": "himachal_sensor_patterns_v1",
+  "pattern_status": "SYNTHETIC_PATTERN_SCORES_ONLY",
+  "matched_patterns": [],
+  "pattern_scores_are_calibrated_probabilities": false,
+  "scenario_model_id": "himalayan_synthetic_scenarios_v1",
+  "scenario_config_sha256": "0a8d85eb4027939fd7de86f0557082779d6d7dd2372d96309b0fbf03081952a8",
+  "scenario_seed": 18053103458661546708,
+  "scenario_targets": [
+    {
+      "id": "cloudburst",
+      "central_fraction": 0.0009765625,
+      "assumption_range": [
+        0.00048828125,
+        0.0068359375
+      ]
+    },
+    {
+      "id": "flash_flood",
+      "central_fraction": 0.0185546875,
+      "assumption_range": [
+        0.00146484375,
+        0.107421875
+      ]
+    },
+    {
+      "id": "landslide",
+      "central_fraction": 0.01513671875,
+      "assumption_range": [
+        0.00146484375,
+        0.05908203125
+      ]
+    }
+  ],
+  "scenario_calibrated": false,
+  "public_alerts_enabled": false,
+  "spatial_map_status": "UNAVAILABLE",
+  "spatial_point_count": 1,
+  "spatial_layers_emitted": [],
+  "live_api_failure_fallback": "NO DEMO FALLBACK; backend test asserts an empty store remains empty after API failure"
+}

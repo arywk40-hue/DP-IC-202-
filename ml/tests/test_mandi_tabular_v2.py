@@ -72,9 +72,7 @@ def test_default_backend_model_lab_and_shadow_state_are_distinct_from_replay(tmp
     from server.dashboard import create_app
     from ml.india_mandi.hybrid import DEFAULT_MODEL as legacy
 
-    with TestClient(
-        create_app(tmp_path / "nodes.sqlite", online_state=tmp_path / "online.sqlite")
-    ) as client:
+    with TestClient(create_app(tmp_path / "nodes.sqlite")) as client:
         assert (
             client.get("/api/status").json()["forecastModel"]
             == "india_mandi_tabular_v2"
@@ -85,7 +83,7 @@ def test_default_backend_model_lab_and_shadow_state_are_distinct_from_replay(tmp
             and lab["features"] == 66
             and not lab["field_validated"]
         )
-        assert lab["online"]["enabled"] and lab["online"]["updates"] == 0
-        assert lab["online"]["role"] == "SHADOW_ONLY_OFFLINE_OUTPUTS_UNCHANGED"
+        assert not lab["online"]["enabled"] and lab["online"]["updates"] == 0
+        assert lab["online"]["role"] == "NOT_CONFIGURED"
     with TestClient(create_app(tmp_path / "legacy.sqlite", model_dir=legacy)) as client:
         assert not client.get("/api/model-lab").json()["configured"]

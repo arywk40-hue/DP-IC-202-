@@ -87,11 +87,30 @@ def test_complete_native_history_provenance_no_probabilities_or_alerts():
         assert a["implementation_sha256"] == engine.implementation_sha256
         assert a["probability"] is None and not a["public_alerts_enabled"]
         assert not a["calibrated"] and not a["field_validated"]
+        assert a["range_kind"] == "ASSUMPTION_SENSITIVITY_NOT_CONFIDENCE_INTERVAL"
+        assert {source["id"] for source in a["research_sources"]} == {
+            "singh_thapliyal_2022", "dahal_hasegawa_2008", "txdot_rational_method",
+            "wmo_ffg_guide", "manali_2023_case",
+        }
+        assert a["parameter_provenance"]["thresholds_and_methods"][
+            "cloudburst_threshold_mm_in_1h"
+        ]["kind"] == "published_definition_transferred_as_threshold"
         assert (
             len(a["targets"]) == 3
             and a["forecast_timestamp"] == "2026-10-21T12:00:00+00:00"
         )
         assert all(t["probability"] is None for t in a["targets"])
+        for target in a["targets"]:
+            assert set(target["assumption_cases"]) == {"drier", "central", "wetter"}
+            assert target["scenario_fraction"] == target["families"]["central"]
+            assert target["assumption_range"] == [
+                min(target["families"].values()), max(target["families"].values())
+            ]
+            assert all(
+                target["assumption_cases"][case]["scenario_fraction"]
+                == target["families"][case]
+                for case in target["families"]
+            )
         # Removing even a native non-hourly reading must abstain.
         assert engine.predict(h[:1] + h[2:], cadence)["status"] == "UNAVAILABLE"
         json.dumps(a, allow_nan=False)
@@ -116,30 +135,92 @@ def test_bad_inputs_and_no_fake_rainfall_measurements():
     assert set(h[0]) == {"timestamp", *RAW_SENSOR_COLUMNS}
 
 
-def test_backend_migrates_stored_nodes_without_changing_forecast_or_event_gates(
-    tmp_path,
-):
-    from server.dashboard import Store, assess, create_app, demo_observations
+def test_live_mandi_adapter_exposes_simulated_hazards_separately_from_forecast(tmp_path):
+    from server.dashboard import Store, assess, create_app
+    from server.tests.mandi_fixture import NOW, mandi_api_rows
 
-    nodes = assess(
-        demo_observations("2026-10-21T06:00:00Z"), now="2026-10-21T06:00:00Z"
-    )
+    nodes = assess(mandi_api_rows(), now=NOW.isoformat())
     original = copy.deepcopy(nodes[0]["forecast6h"])
+    assert nodes[0]["sourceClass"] == "modeled_grid"
+    assert nodes[0]["hazardScenarios"]["source_class"] == "modeled_grid"
     assert nodes[0]["hazardScenarios"]["status"] == "SYNTHETIC_SCENARIOS_ONLY"
-    for i, n in enumerate(nodes):
-        if i == 0:
-            n["hazardScenarios"]["implementation_sha256"] = "old-code-fingerprint"
-        else:
-            n.pop("hazardScenarios")
+    assert nodes[0]["hazardScenarios"]["probability"] is None
+    assert nodes[0]["hazardScenarios"]["source_id"] == "OpenMeteo_current_ECMWF_IFS_CAMS_global"
+    assert nodes[0]["hazardScenarios"]["coordinates"] == [31.71, 76.93]
+    assert nodes[0]["weatherCategories"]["source_class"] == "modeled_grid"
+    assert nodes[0]["weatherCategories"]["feature_count"] == 13
+    assert nodes[0]["weatherCategories"]["training_rows_by_role"] == {
+        "train": 16000, "validation": 4000, "test": 4000
+    }
+    assert nodes[0]["weatherCategories"]["score_kind"] == "SYNTHETIC_PATTERN_SCORE_NOT_EVENT_PROBABILITY"
     db = tmp_path / "nodes.sqlite"
     Store(db).replace(nodes)
     with TestClient(create_app(db)) as client:
-        t = client.get("/api/nodes/demo-01/telemetry").json()
-        assert t["forecast6h"] == original
-        assert t["hazardScenarios"]["source_class"] == "synthetic_demo"
-        assert (
-            t["hazardScenarios"]["implementation_sha256"]
-            == HazardScenarios().implementation_sha256
-        )
-        assert t["hazardScenarios"]["status"] == "SYNTHETIC_SCENARIOS_ONLY"
-        assert client.get("/api/status").json()["empiricalHazardModels"] == "NOT_READY"
+        telemetry = client.get("/api/nodes/mandi-api-current/telemetry").json()
+        assert telemetry["forecast6h"] == original
+        assert telemetry["hazardScenarios"]["status"] == "SYNTHETIC_SCENARIOS_ONLY"
+        assert telemetry["hazardScenarios"]["calibrated"] is False
+        assert telemetry["weatherCategories"]["calibrated"] is False
+
+
+def test_missing_hours_and_gap_abstention():
+    """Missing hourly observations or irregular intervals must abstain completely."""
+    engine = HazardScenarios()
+    h = history(3600)
+    assert len(h) == 7  # 6-hour span: 0h, 1h, 2h, 3h, 4h, 5h, 6h
+
+    # Dropping any middle hour leaves a gap: must return UNAVAILABLE
+    for i in range(1, 6):
+        gap = h[:i] + h[i + 1:]
+        res = engine.predict(gap, 3600)
+        assert res["status"] == "UNAVAILABLE"
+        assert "six_complete_hours_of_native_measurements" in res["missing_features"] or "cadence" in res["reason"]
+
+    # History too short (< 6 hours total)
+    short = h[2:]  # only 4 hours
+    res = engine.predict(short, 3600)
+    assert res["status"] == "UNAVAILABLE"
+
+    # Particulate domain violation (PM2.5 > PM10) must abstain
+    inverted_pm = copy.deepcopy(h)
+    inverted_pm[-1]["pm25_ug_m3"] = 80
+    inverted_pm[-1]["pm10_ug_m3"] = 40
+    res = engine.predict(inverted_pm, 3600)
+    assert res["status"] == "OUTSIDE_SYNTHETIC_DOMAIN"
+
+    # Out-of-bounds temperature (-30 C is below -25 C lower bound)
+    extreme_temp = copy.deepcopy(h)
+    extreme_temp[-1]["temperature_c"] = -30
+    res = engine.predict(extreme_temp, 3600)
+    assert res["status"] == "OUTSIDE_SYNTHETIC_DOMAIN"
+
+
+def test_deterministic_repeatability_and_provenance():
+    """Identical history and configuration must produce identical seeds and outcomes."""
+    engine = HazardScenarios()
+    h1 = history(3600)
+    h2 = copy.deepcopy(h1)
+
+    res1 = engine.predict(h1, 3600)
+    res2 = engine.predict(h2, 3600)
+
+    assert res1["seed"] == res2["seed"]
+    assert res1["config_sha256"] == res2["config_sha256"]
+    assert res1["implementation_sha256"] == res2["implementation_sha256"]
+    assert res1["field_validated"] is False
+    assert res1["calibrated"] is False
+    assert res1["public_alerts_enabled"] is False
+
+    for t1, t2 in zip(res1["targets"], res2["targets"]):
+        assert t1["id"] == t2["id"]
+        assert t1["scenario_fraction"] == t2["scenario_fraction"]
+        assert t1["assumption_range"] == t2["assumption_range"]
+        assert t1["assumption_cases"] == t2["assumption_cases"]
+        assert t1["mc_standard_error"] == t2["mc_standard_error"]
+
+    # Changing any past measurement alters the deterministic seed
+    modified = copy.deepcopy(h1)
+    modified[0]["temperature_c"] += 0.5
+    res_mod = engine.predict(modified, 3600)
+    assert res_mod["seed"] != res1["seed"]
+

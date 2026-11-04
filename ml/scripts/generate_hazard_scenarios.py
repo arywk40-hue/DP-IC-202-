@@ -94,6 +94,8 @@ def generate(episodes=2048, draws=128, seed=20261021):
         "accuracy_reason": "No independent observed labels; simulation prevalence is not accuracy.",
         "split_policy": "No classifier fitted. For later ML, split parent episode IDs before expanding latent worlds; never split worlds from one history across train/test.",
         "families": families,
+        "parameter_provenance": engine.config["parameter_provenance"],
+        "research_sources": engine.config["sources"],
         "fresh_seed_convergence": {
             "parent_episodes": 64,
             "draws_each": 4096,

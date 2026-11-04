@@ -1,4 +1,5 @@
 import React from "react";
+import { readingTime } from "../api/presentation";
 
 const percent = (v) => `${(100 * v).toFixed(1)}%`;
 
@@ -7,30 +8,62 @@ export default function HazardScenarios({ assessment: a }) {
   return (
     <section className="weather-categories hazard-scenarios" aria-label="Hazard scenarios">
       <div className="section-heading">
-        <h3>Hazard scenarios</h3>
-        <span className="section-tag">Next six hours · simulated</span>
+        <h3>Himalayan hazard scenarios</h3>
+        <span className="section-tag">Six-hour simulated outcomes</span>
       </div>
       <p className="pattern-source-note">
-        Simulated outcomes under assumed rainfall and ground conditions. These
-        percentages are not the chance of a real event.
+        These percentages are conditional fractions from simulated rainfall,
+        soil and catchment assumptions. They are not calibrated probabilities
+        of real events or operational warnings.
       </p>
-      {ready ? a.targets.map((t) => (
-        <div className="category-row" key={t.id} data-testid={`scenario-${t.id}`}>
-          <span>{t.name}<small>Across assumptions: {t.assumption_range.map(percent).join(" – ")}</small></span>
-          <span className="category-score">{percent(t.scenario_fraction)}<small>Central case</small></span>
+      {ready ? a.targets.map((target) => (
+        <div className="category-row" key={target.id} data-testid={`scenario-${target.id}`}>
+          <span>
+            {target.name}
+            <small>{percent(target.scenario_fraction)} of simulated outcomes under central assumptions · assumption sensitivity: {percent(target.assumption_range[0])}–{percent(target.assumption_range[1])}</small>
+            <span className="scenario-cases">
+              {Object.entries(target.assumption_cases || {}).map(([key, item]) => (
+                <span key={key}>{item.label}: <strong>{percent(item.scenario_fraction)} of simulated outcomes</strong></span>
+              ))}
+            </span>
+          </span>
+          <span className="category-score">{percent(target.scenario_fraction)}<small>Central simulated outcome fraction</small></span>
         </div>
-      )) : <p className="reading-note">{a?.reason || "Six complete hours of readings are needed."}</p>}
+      )) : <p className="reading-note">{a?.reason || "Six complete hourly readings are needed."}</p>}
+      {ready && <p className="pattern-source-note">
+        Source input: {a.source_class} · {a.source_id} · cell {a.source_cell_id} at {a.coordinates?.join(", ")}.
+        <br />Observation {readingTime(a.observation_timestamp)}; assessed {readingTime(a.assessed_at_utc)}; six-hour endpoint {readingTime(a.forecast_timestamp)}.
+        <br />Model {a.model_id} · config {a.config_sha256?.slice(0, 12)}… · code {a.implementation_sha256?.slice(0, 12)}… · seed {a.seed} · {a.draws_per_family} simulations per assumption family.
+        <br />Pressure source: {a.pressure_reference}. Field validated: no. Calibrated: no. Public alerts: disabled.
+      </p>}
       <details className="hazard-explanation">
         <summary>How are these calculated?</summary>
-        <p>Each reading is tested against simulated six-hour rainfall paths, soil
-          wetness and drainage capacity. The central case is one assumed setting;
-          the range compares drier and wetter settings, not a confidence interval.</p>
-        <p>Cloudburst means the simulated one-hour rainfall crosses 100 mm. Flood
-          means simplified runoff exceeds an assumed channel capacity. Landslide
-          means a transferred rainfall threshold is exceeded on assumed susceptible
-          terrain; it does not model an actual slope failure.</p>
-        <p>Rainfall, soil and catchment properties are not measured by these six
-          channels. No alerts are sent from these estimates. Even 0% does not mean safe.</p>
+        <p>Past six-channel readings condition synthetic half-hour rainfall paths. PM2.5 and PM10 are retained in the model input contract but do not drive this rainfall generator.
+          Monte Carlo runs then vary assumed soil wetness, drainage capacity,
+          catchment size and slope susceptibility.</p>
+        <p>Cloudburst is a simulated one-hour rainfall threshold exceedance.
+          Flash flood is a simplified runoff-capacity scenario. Landslide is a
+          transferred rainfall-trigger scenario on assumed susceptible terrain.</p>
+        <p>Actual rainfall, soil, river flow and slope stability are not measured
+          by these six channels. The range compares assumptions; it is not a
+          confidence interval. No public alerts are issued.</p>
+        {ready && <p>Unknown drivers for this run: {a.unknown_drivers?.join(", ") || "not listed"}. Field validated: false; calibrated: false; public alerts: disabled.</p>}
+        {a?.research_sources?.length > 0 && <>
+          <h4>Research used</h4>
+          <ul>{a.research_sources.map((source) => <li key={source.id}>
+            <a href={source.url} target="_blank" rel="noreferrer">{source.title || source.id}</a>: {source.supports}
+          </li>)}</ul>
+        </>}
+        {a?.parameter_provenance && <details className="parameter-provenance">
+          <summary>Parameter and prior provenance</summary>
+          <p>{a.parameter_provenance.scope}</p>
+          {Object.entries(a.parameter_provenance).filter(([key]) => key !== "scope").map(([section, values]) => <section key={section}>
+            <h4>{section.replaceAll("_", " ")}</h4>
+            <ul>{Object.entries(values).map(([key, value]) => <li key={key}>
+              <code>{key}</code>: {typeof value === "string" ? value : [value.kind, value.role, value.evidence, value.limitation, value.source_id].filter(Boolean).join(" · ") || JSON.stringify(value)}
+            </li>)}</ul>
+          </section>)}
+        </details>}
       </details>
     </section>
   );
