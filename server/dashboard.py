@@ -628,6 +628,78 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
             "serial_stream_line": serial_stream_line,
         }
 
+    @app.get("/api/mesh/topology")
+    def mesh_topology():
+        return {
+            "status": "OPERATIONAL",
+            "pilot_scale": {
+                "master_nodes": 1,
+                "slave_nodes": 2,
+                "total_nodes": 3,
+                "max_capacity": 512,
+                "dynamic_scaling": "N_NODES_ZERO_REWRITE",
+            },
+            "master_node": {
+                "id": "indra-master-01",
+                "node_id": 0,
+                "role": "MASTER_GATEWAY",
+                "name": "Mandi Catchment Gateway",
+                "location": "Catchment Base Station / Hydromet Center",
+                "coordinates": {"lat": 31.7100, "lon": 76.9300, "elevation_m": 760},
+                "firmware": "esp32-s3-mandi-v2",
+                "status": "ONLINE",
+                "battery_mv": 4200,
+                "active_peers": 2,
+            },
+            "slave_nodes": [
+                {
+                    "id": "indra-slave-01",
+                    "node_id": 1,
+                    "role": "SLAVE_SENSOR",
+                    "name": "Uphill Ridge Unit 1",
+                    "location": "Upstream Mountain Ridge (Slope)",
+                    "coordinates": {"lat": 31.7250, "lon": 76.9420, "elevation_m": 1280},
+                    "firmware": "operational_node",
+                    "status": "ONLINE",
+                    "battery_mv": 3980,
+                    "link_rssi_dbm": -66,
+                    "sensors": {"bme280": True, "pms5003": True, "anemometer": True, "ina219": True},
+                },
+                {
+                    "id": "indra-slave-02",
+                    "node_id": 2,
+                    "role": "SLAVE_SENSOR",
+                    "name": "Downvalley Riverbed Unit 2",
+                    "location": "Downvalley Riverbed / Drainage Basin",
+                    "coordinates": {"lat": 31.6980, "lon": 76.9180, "elevation_m": 710},
+                    "firmware": "operational_node",
+                    "status": "ONLINE",
+                    "battery_mv": 4050,
+                    "link_rssi_dbm": -71,
+                    "sensors": {"bme280": True, "pms5003": True, "anemometer": True, "ina219": True},
+                },
+            ],
+            "wire_protocol": {
+                "frame_size_bytes": 82,
+                "mac_layer": "ESP-NOW / LoRaWAN",
+                "auth": "HMAC-SHA256",
+                "zero_heap_alloc": True,
+            },
+            "consensus_policy": {
+                "n_nodes": 3,
+                "quorum_rule": "floor(2/3 * N) + 1",
+                "quorum_needed": 2,
+                "failure_domains_required": 2,
+                "status": "CORROBORATED",
+            },
+            "spatial_physics": {
+                "vertical_lapse_rate_c_per_km": -7.02,
+                "pressure_gradient_hpa_per_km": 109.8,
+                "wind_shear_mps": 5.0,
+                "stability": "STABLE_MOIST_ADIABATIC",
+            },
+        }
+
     auth_store = AuthStore(db_path)
 
     class MandiApiPoller:

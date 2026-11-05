@@ -3,8 +3,8 @@
   "inventors": [
     "Ariyan Bhakat"
   ],
-  "compiled_at_utc": "2026-11-05T10:53:38.641774+00:00",
-  "application_markdown_sha256": "d6d1ddd12acd9a7969c37c872471f49bb407ffa6c4a77e7fcd7cfcc085e485de",
+  "compiled_at_utc": "2026-11-05T17:11:41.388397+00:00",
+  "application_markdown_sha256": "c102d316253b8bcd23eece4fa5b2b79804cf7d05e0c8eea220125ee4f8d19cf3",
   "codebase_evidence": {
     "ml/six_sensor_forecast/contract.py": {
       "sha256": "67d1825b5bcfdf2b7bac47715448bb1c385d4ee010fa033d071888ab760c251a",
@@ -57,8 +57,8 @@
       "status": "VERIFIED_PRESENT"
     },
     "server/dashboard.py": {
-      "sha256": "6fb95c65108f57a5fb53f94a6cf5e56564db52ac2287c7d5261c07e9ab6359d2",
-      "bytes": 37768,
+      "sha256": "8dfe7edec76d506983662ed2fa348daf3989173b0f6820991bc5eee13b1f844d",
+      "bytes": 40723,
       "status": "VERIFIED_PRESENT"
     },
     "server/scripts/deploy_production.py": {

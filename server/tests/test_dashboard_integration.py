@@ -94,6 +94,22 @@ def test_mandi_status_empty_start_heatmap_limit_and_staleness(assessed):
             assert client.get("/api/status").json()["staleNodes"] == 1
 
 
+def test_mesh_topology_endpoint(tmp_path):
+    app = create_app(tmp_path / "mesh_test.sqlite")
+    with TestClient(app) as client:
+        res = client.get("/api/mesh/topology")
+        assert res.status_code == 200
+        data = res.json()
+        assert data["status"] == "OPERATIONAL"
+        assert data["pilot_scale"]["master_nodes"] == 1
+        assert data["pilot_scale"]["slave_nodes"] == 2
+        assert data["pilot_scale"]["total_nodes"] == 3
+        assert data["master_node"]["role"] == "MASTER_GATEWAY"
+        assert len(data["slave_nodes"]) == 2
+        assert data["consensus_policy"]["quorum_needed"] == 2
+        assert data["wire_protocol"]["frame_size_bytes"] == 82
+
+
 def test_feed_refresh_replaces_old_rows_with_only_open_meteo(monkeypatch, tmp_path, assessed, mandi_rows):
     db = tmp_path / "mandi.sqlite"
     store = Store(db)
