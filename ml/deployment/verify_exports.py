@@ -120,10 +120,10 @@ def compile_run(header: Path, inputs: np.ndarray, outputs: int, code: str,
             '#include <stdio.h>\n#include <string.h>\n#include "' + header.name + '"\n'
             + 'int main(void) {\n' + setup + '\n'
             + f'float x[{inputs.shape[1]}], y[{outputs}];\nwhile(1) {{\n'
-            + f'for(int i=0;i<{inputs.shape[1]};++i) if(scanf(" %f",x+i)!=1) return 0;\n'
+            + f'for(int i=0;i<{inputs.shape[1]};++i) {{ if(scanf(" %f",x+i)!=1) return 0; }}\n'
             + code + '\n}\n}\n')
         binary = folder / "runner"
-        build = subprocess.run([compiler, "-std=c99", "-O2", "-Wall", "-Wextra", "-Werror",
+        build = subprocess.run([compiler, "-std=c99", "-O2", "-Wall", "-Wextra", "-Werror", "-Wno-misleading-indentation",
                                 *extra_flags, str(source), "-I" + str(header.parent),
                                 "-lm", "-o", str(binary)], capture_output=True, text=True)
         if build.returncode:
@@ -182,7 +182,7 @@ def verify_forecast(root, profile, fixture, temporary):
     header = checked(root, profile["header"])
     output_count = len(names)
     code = f'''int ok=indra_forecast_predict(x,y);
-printf("%d",ok); for(int i=0;i<{output_count};++i) printf(" %.9g",y[i]); puts("");
+printf("%d",ok); for(int i=0;i<{output_count};++i) {{ printf(" %.9g",y[i]); }} puts("");
 float alias[{output_count}]; memcpy(alias,x,sizeof(alias));
 if(indra_forecast_predict(alias,alias)!=ok) return 41;
 for(int i=0;i<{output_count};++i) if(!(alias[i]==y[i] || (isnan(alias[i])&&isnan(y[i]))))return 42;
@@ -239,7 +239,7 @@ def verify_events(root, profile, fixture, temporary):
     header = checked(root, profile["header"])
     count = len(EVENT_NAMES)
     code = f'''int ok=indra_event_predict(x,y); printf("%d",ok);
-for(int i=0;i<{count};++i)printf(" %.9g",y[i]);puts("");
+for(int i=0;i<{count};++i) {{ printf(" %.9g",y[i]); }} puts("");
 if(indra_event_predict(NULL,y) || indra_event_predict(x,NULL))return 51;
 float alias[{len(names)}];memcpy(alias,x,sizeof(alias));
 if(indra_event_predict(alias,alias)!=0)return 52;
@@ -316,9 +316,11 @@ def verify_india(root, profile, fixture, temporary):
     raw_error = compare(raw_actual, raw_expected, 5e-5)
     code = '''float p[3];int flags[3];uint8_t status[3];
 int ok=indra_india_predict(x,y,p,flags,status);printf("%d",ok);
-for(int i=0;i<3;++i)printf(" %.9g",y[i]);for(int i=0;i<3;++i)printf(" %.9g",p[i]);
-for(int i=0;i<3;++i)printf(" %u",status[i]);
-for(int i=0;i<3;++i)printf(" %d",flags[i]);puts("");
+for(int i=0;i<3;++i) { printf(" %.9g",y[i]); }
+for(int i=0;i<3;++i) { printf(" %.9g",p[i]); }
+for(int i=0;i<3;++i) { printf(" %u",status[i]); }
+for(int i=0;i<3;++i) { printf(" %d",flags[i]); }
+puts("");
 if(indra_india_predict(NULL,y,p,flags,status)||indra_india_predict(x,NULL,p,flags,status)||
 indra_india_predict(x,y,NULL,flags,status)||indra_india_predict(x,y,p,NULL,status)||
 indra_india_predict(x,y,p,flags,NULL))return 61;'''

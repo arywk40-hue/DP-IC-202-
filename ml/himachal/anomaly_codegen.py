@@ -124,7 +124,7 @@ static indra_anomaly_state state;
 int indra_object_probe(uint32_t t,const float *x,indra_anomaly_result *r){return indra_anomaly_push(&state,t,60,x,1,2,0,r);}
 int main(void){unsigned t,crc,fault;float uncertainty,x[6];indra_anomaly_result r;
 printf("%zu\n",sizeof(state));
-while(scanf("%u %u %f %u",&t,&crc,&uncertainty,&fault)==4){for(int i=0;i<6;++i)if(scanf("%f",x+i)!=1)return 1;
+while(scanf("%u %u %f %u",&t,&crc,&uncertainty,&fault)==4){for(int i=0;i<6;++i){if(scanf("%f",x+i)!=1)return 1;}
 if(!indra_anomaly_push(&state,t,60,x,crc,uncertainty,fault,&r))return 2;
 printf("%u %u %u %u",r.packet,r.valid_mask,r.environmental_mask,r.fault_mask);
 for(int i=0;i<6;++i)printf(" %u",r.state[i]);for(int i=0;i<6;++i)printf(" %u",state.count[i]);
@@ -138,7 +138,7 @@ return 0;}'''
         path=folder/"runner.c"
         path.write_text(source)
         binary=folder/"runner"
-        flags=[compiler,"-std=c99","-O2","-Wall","-Wextra","-Werror"]
+        flags=[compiler,"-std=c99","-O2","-Wall","-Wextra","-Werror","-Wno-misleading-indentation"]
         subprocess.run([*flags,str(path),"-lm","-o",str(binary)],check=True,capture_output=True)
         obj=folder/"anomaly.o"
         subprocess.run([*flags,"-c",str(path),"-o",str(obj)],check=True,capture_output=True)

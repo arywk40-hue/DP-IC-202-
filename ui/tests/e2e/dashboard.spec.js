@@ -231,8 +231,8 @@ test("google authentication flow logs in and out successfully", async ({
   // 5. Open profile modal again
   await authBtn.click();
   await expect(modal).toBeVisible();
-  await expect(modal.getByRole("heading", { name: "Local demo account" })).toBeVisible();
-  await expect(modal.locator(".auth-badge-verified")).toContainText("Local demo identity");
+  await expect(modal.getByRole("heading", { name: "Local Operator Session" })).toBeVisible();
+  await expect(modal.locator(".auth-badge-verified")).toContainText("Local Operator Identity");
 
   // 6. Sign out
   await modal.locator(".btn-signout").click();
@@ -243,7 +243,7 @@ test("google authentication flow logs in and out successfully", async ({
   expect(errors).toEqual([]);
 });
 
-test("api explorer displays and executes endpoints across 4 subsystems", async ({
+test("api explorer displays and executes endpoints across subsystems", async ({
   page,
 }) => {
   const errors = [];
@@ -255,13 +255,14 @@ test("api explorer displays and executes endpoints across 4 subsystems", async (
   await expect(page.locator(".api-explorer-wrap")).toBeVisible();
   await expect(page.getByRole("heading", { name: "API & Model Endpoints" })).toBeVisible();
 
-  // 2. Verify 4 subsystem tabs
+  // 2. Verify subsystem tabs
   const groupTabs = page.locator(".api-group-btn");
-  await expect(groupTabs).toHaveCount(4);
+  await expect(groupTabs).toHaveCount(5);
   await expect(groupTabs.nth(0)).toContainText("Telemetry");
   await expect(groupTabs.nth(1)).toContainText("Spatial");
   await expect(groupTabs.nth(2)).toContainText("Machine Learning");
   await expect(groupTabs.nth(3)).toContainText("Provenance");
+  await expect(groupTabs.nth(4)).toContainText("Pan-India");
 
   // 3. Test executing /api/nodes
   const execBtn = page.locator(".btn-execute-api");

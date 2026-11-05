@@ -74,3 +74,4 @@ def test_national_forecast_with_custom_readings(client):
     assert result["zone_id"] == "arid_northwest"
     assert "andhi_dust_storm_assessment" in result
     assert result["wind_storm_assessment"]["alert_level"] == "SEVERE_WINDSTORM_WARNING"
+

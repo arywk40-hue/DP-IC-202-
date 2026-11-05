@@ -63,7 +63,7 @@ jobs:
       - name: Build isolated ESP32-S3 model test
         run: pio run -d esp32/model_test
       - name: Build six-channel forecast and event integration (UART and native USB)
-        run: pio run -d esp32/ml_integration -e esp32-s3-ml -e esp32-s3-ml-usb
+        run: pio run -d esp32/ml_integration -e esp32-s3-ml -e esp32-s3-ml-usb -e esp32-s3-mandi-v2
 
       - name: Build India sensor research export (compile only)
         run: pio run -d esp32/india_sensor

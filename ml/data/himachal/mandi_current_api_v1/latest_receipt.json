@@ -1,0 +1,34 @@
+{
+  "source_class": "modeled_grid",
+  "evidence": "CURRENT_MODEL_GRID_NOT_STATION_OBSERVATIONS",
+  "requested_coordinates": [
+    31.71,
+    76.93
+  ],
+  "weather_model": "ecmwf_ifs",
+  "air_domain": "cams_global",
+  "retrieved_at_utc": "2026-11-04T23:08:10.226899+00:00",
+  "rows": 187,
+  "new_hours": 96,
+  "provider_revisions_ignored": 0,
+  "future_hours_excluded": 0,
+  "latest_valid_utc": "2026-11-04T23:00:00+00:00",
+  "source_receipts": {
+    "weather": {
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&models=ecmwf_ifs&wind_speed_unit=ms&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cwind_speed_10m",
+      "sha256": "028a5521bb404546289e5b4740f824309fc5436674fe751d993ce46f4b8cccbb",
+      "returned_latitude": 31.669594,
+      "returned_longitude": 76.942444
+    },
+    "air": {
+      "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=31.71&longitude=76.93&past_days=3&forecast_days=1&timezone=UTC&domains=cams_global&hourly=pm2_5%2Cpm10",
+      "sha256": "786ef82a3d8c01ad8b4fe608720ba8ded5b3108163f37fde752d35bbb1e3d884",
+      "returned_latitude": 31.700005,
+      "returned_longitude": 76.899994
+    }
+  },
+  "history_sha256": "1e12603d761d7f6b42f8c39464ffcb4ae085efcc0bd81c151b905fa28e8e90c4",
+  "attribution": "Open-Meteo; ECMWF IFS; Copernicus Atmosphere Monitoring Service (CAMS)",
+  "station_accuracy": false,
+  "hazard_accuracy": false
+}

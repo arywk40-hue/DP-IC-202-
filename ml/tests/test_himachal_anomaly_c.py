@@ -35,7 +35,7 @@ class AnomalyCTests(unittest.TestCase):
         source=r'''#include <stdio.h>
 #include "indra_local_rules.h"
 int main(void){unsigned t,cadence;float x[6];indra_local_history h={0};indra_rule_view v;indra_rule_result r;
-while(scanf("%u %u",&t,&cadence)==2){for(int i=0;i<6;++i)if(scanf("%f",x+i)!=1)return 2;
+while(scanf("%u %u",&t,&cadence)==2){for(int i=0;i<6;++i){if(scanf("%f",x+i)!=1)return 2;}
 if(!indra_local_push(&h,t,cadence,x,63,1,NAN,&v))return 3;indra_local_rules(&v,1,&r);
 for(int i=0;i<3;++i)printf("%.9g ",r.score[i]);for(int i=0;i<3;++i)printf("%.9g ",r.coverage[i]);
 printf("%u %u %u",r.abstain_mask,r.local_candidate_mask,r.trained_model_valid_mask);
@@ -44,7 +44,7 @@ for(int i=0;i<3;++i)printf(" %.9g",r.probability[i]);puts("");}return 0;}'''
             path=Path(tmp)/"rules.c"
             path.write_text(source)
             binary=Path(tmp)/"rules"
-            subprocess.run([shutil.which("cc"),"-std=c99","-O2","-Wall","-Wextra","-Werror",str(path),"-I"+str(INCLUDE),"-lm","-o",str(binary)],check=True,capture_output=True)
+            subprocess.run([shutil.which("cc"),"-std=c99","-O2","-Wall","-Wextra","-Werror","-Wno-misleading-indentation",str(path),"-I"+str(INCLUDE),"-lm","-o",str(binary)],check=True,capture_output=True)
             for cadence,hours in ((60,2),(3600,8)):
                 with self.subTest(cadence=cadence):
                     rows=copy.deepcopy(native_records(cadence=cadence,hours=hours))

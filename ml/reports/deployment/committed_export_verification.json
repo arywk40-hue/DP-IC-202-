@@ -4,7 +4,7 @@
   "evidence_kind": "SYNTHETIC_SOFTWARE_CONTRACT_ONLY",
   "offline": true,
   "fixture_sha256": "affc261e59307480482caa268a0dd1499d7784fbc09bfe7667fa39acf2c1b12a",
-  "manifest_sha256": "8e57b6bbe2a6dd0db0c0c7e0289412a120bc2b9ff0e61d7e198a703485159777",
+  "manifest_sha256": "2efa62396dc705e1415494f03c1a1dac2aaa23441fb091cba9bc9e86743c2469",
   "runtime": {
     "python": "3.13.0",
     "xgboost": "3.1.1",

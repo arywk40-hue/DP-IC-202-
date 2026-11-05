@@ -1,0 +1,10 @@
+{
+  "schema_version": "indra_mandi_download_request_v1",
+  "latitude": 31.71,
+  "longitude": 76.93,
+  "start_date": "2026-09-25",
+  "end_date": "2026-10-24",
+  "weather_model": "ecmwf_ifs",
+  "air_domain": "cams_global",
+  "purpose": "SEPARATE_MODELED_REFRESH_NO_RETRAINING"
+}

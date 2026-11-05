@@ -62,7 +62,8 @@ static inline int indra_peer_pack(const indra_peer_values *v,const uint8_t *key,
 static inline int indra_peer_unpack(const indra_peer_frame *frame,const uint8_t *key,size_t key_size,indra_peer_values *v){
  if(!frame||!v||indra_peer_get16(frame->crc)!=indra_peer_crc((const uint8_t *)frame,80))return 0;
  uint8_t tag[16],difference=0;if(!indra_peer_hmac(key,key_size,frame->body,tag))return 0;
- for(int i=0;i<16;++i)difference|=tag[i]^frame->tag[i];if(difference)return 0;
+ for(int i=0;i<16;++i){difference|=tag[i]^frame->tag[i];}
+ if(difference)return 0;
  const uint8_t *b=frame->body;if(b[0]!='I'||b[1]!='H'||b[2]!=1||b[3]>5||(b[4]&~63)||b[5]>1||b[44]>7||b[45]>63||b[60]>63)return 0;
  v->kind=b[3];v->flags=b[4];v->ttl=b[5];v->peer_id=indra_peer_get32(b+6);v->origin_id=indra_peer_get32(b+10);
  v->boot_id=indra_peer_get64(b+14);v->query_id=indra_peer_get64(b+22);v->sequence=indra_peer_get32(b+30);v->observed=indra_peer_get32(b+34);v->deadline=indra_peer_get32(b+38);v->profile_id=indra_peer_get16(b+42);
@@ -70,6 +71,7 @@ static inline int indra_peer_unpack(const indra_peer_frame *frame,const uint8_t 
  if((v->kind==0||v->kind==2||v->kind==3)&&(v->event_mask&(v->flags&7)))return 0;
  const float scale[6]={100,100,10,1,1,100},lo[6]={-60,0,300,0,0,0},hi[6]={85,100,1100,5000,5000,100};
  for(int i=0;i<6;++i){int16_t n=(int16_t)indra_peer_get16(b+48+2*i);v->raw[i]=n==-32768?NAN:n/scale[i];if((v->valid_mask&(1u<<i))&&(!isfinite(v->raw[i])||v->raw[i]<lo[i]||v->raw[i]>hi[i]))return 0;}
- for(int i=0;i<3;++i)v->score[i]=b[61+i]==255?NAN:b[61+i]/254.f;return 1;
+ for(int i=0;i<3;++i){v->score[i]=b[61+i]==255?NAN:b[61+i]/254.f;}
+ return 1;
 }
 #endif

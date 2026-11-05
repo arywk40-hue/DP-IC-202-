@@ -99,7 +99,7 @@ v.kind=2;v.peer_id=1;v.origin_id=2;v.boot_id=3;v.query_id=4;v.sequence=5;v.obser
 v.clock_uncertainty=CLOCK;float raw[6]={VALUES};for(int i=0;i<6;++i)v.raw[i]=raw[i];v.score[0]=1;v.score[1]=NAN;v.score[2]=SCORE;
 indra_peer_frame wire;if(!indra_peer_pack(&v,key,32,&wire)||!indra_peer_unpack(&wire,key,32,&decoded))return 1;
 if(sizeof(wire)!=82||offsetof(indra_peer_frame,tag)!=64)return 2;
-for(size_t i=0;i<sizeof(wire);++i)printf("%02x",((uint8_t *)&wire)[i]);puts("");
+for(size_t i=0;i<sizeof(wire);++i){printf("%02x",((uint8_t *)&wire)[i]);}puts("");
 wire.body[48]^=1;if(indra_peer_unpack(&wire,key,32,&decoded))return 3;
 indra_peer_u16(wire.crc,indra_peer_crc((uint8_t *)&wire,80));if(indra_peer_unpack(&wire,key,32,&decoded))return 4;
 indra_consensus_vote votes[3]={{1,1,1,1,0,2,1,1,1,1,1,63},{2,2,2,1,0,2,1,1,1,0,1,63},{3,3,2,1,0,2,1,1,1,0,1,63}};
@@ -112,7 +112,7 @@ return 0;}'''
                 path=Path(tmp)/"codec.c"
                 path.write_text(source)
                 binary=Path(tmp)/"codec"
-                result=subprocess.run([shutil.which("cc"),"-std=c99","-O2","-Wall","-Wextra","-Werror",str(path),"-I"+str(root/"esp32/himachal_node/include"),*flags,"-lm","-o",str(binary)],capture_output=True,text=True)
+                result=subprocess.run([shutil.which("cc"),"-std=c99","-O2","-Wall","-Wextra","-Werror","-Wno-misleading-indentation",str(path),"-I"+str(root/"esp32/himachal_node/include"),*flags,"-lm","-o",str(binary)],capture_output=True,text=True)
                 self.assertEqual(result.returncode,0,result.stderr)
                 output=subprocess.run([str(binary)],capture_output=True,text=True,check=True).stdout.strip()
                 self.assertEqual(bytes.fromhex(output),encode(frame,key))
