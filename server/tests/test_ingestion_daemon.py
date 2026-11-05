@@ -33,3 +33,4 @@ def test_daemon_run_once_failure(tmp_path):
         daemon = IngestionDaemon(data_dir=tmp_path)
         success = daemon.run_once()
         assert success is False
+

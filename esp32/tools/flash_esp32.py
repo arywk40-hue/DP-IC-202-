@@ -213,10 +213,22 @@ def main(argv: Optional[List[str]] = None) -> int:
         help="Target serial port (e.g. /dev/cu.usbserial-0001, /dev/ttyUSB0). If omitted, scans automatically.",
     )
     parser.add_argument(
+        "--role",
+        choices=["master", "slave", "mesh"],
+        default=None,
+        help="High-level node role: 'master' (ML Forecaster & Gateway), 'slave' (Physical Sensor Unit), or 'mesh' (P2P Consensus Node). Automatically selects target environment.",
+    )
+    parser.add_argument(
+        "--node-id",
+        type=int,
+        default=None,
+        help="Assigned Node ID in the mesh (e.g. 0 for Master, 1 or 2 for Slaves, N for generic peer).",
+    )
+    parser.add_argument(
         "--env",
         choices=list(ENV_DIRECTORY_MAP.keys()),
-        default="esp32-s3-mandi-v2",
-        help="Target PlatformIO environment profile to flash.",
+        default=None,
+        help="Target PlatformIO environment profile to flash. If omitted, deduced from --role (default: esp32-s3-mandi-v2).",
     )
     parser.add_argument(
         "--baud",
@@ -249,10 +261,23 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     args = parser.parse_args(argv)
 
+    # Resolve environment from role if not explicitly provided
+    if not args.env:
+        if args.role == "master":
+            args.env = "esp32-s3-mandi-v2"
+        elif args.role == "slave":
+            args.env = "operational_node"
+        elif args.role == "mesh":
+            args.env = "himachal_node"
+        else:
+            args.env = "esp32-s3-mandi-v2"
+
     print("=" * 68)
     print("  INDRA ESP32-S3 PRODUCTION FLASHING & HARDWARE PROVISIONING TOOL")
     print("=" * 68)
-    print(f"Target Environment: {args.env}")
+    if args.role:
+        print(f"Node Role:           {args.role.upper()} (Node ID: {args.node_id if args.node_id is not None else 'auto'})")
+    print(f"Target Environment:  {args.env}")
 
     sub_dir, env_name = ENV_DIRECTORY_MAP[args.env]
     project_dir = ROOT / sub_dir
@@ -287,6 +312,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.dry_run:
         summary = {
             "status": "DRY_RUN_PASSED",
+            "role": args.role,
+            "node_id": args.node_id,
             "environment": args.env,
             "project_dir": str(project_dir.relative_to(ROOT)),
             "port": port,
@@ -328,6 +355,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     summary = {
         "status": "SUCCESS" if handshake.get("verified") else "UPLOADED_UNVERIFIED",
+        "role": args.role,
+        "node_id": args.node_id,
         "environment": args.env,
         "project_dir": str(project_dir.relative_to(ROOT)),
         "port": port,
@@ -343,3 +372,4 @@ def main(argv: Optional[List[str]] = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

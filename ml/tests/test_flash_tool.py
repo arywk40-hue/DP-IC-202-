@@ -34,6 +34,25 @@ def test_detect_serial_ports_fallback():
         assert isinstance(ports, list)
 
 
+def test_flash_tool_role_resolution(tmp_path):
+    report_master = tmp_path / "master.json"
+    ret = main(["--dry-run", "--role", "master", "--node-id", "0", "--output", str(report_master)])
+    assert ret == 0
+    data = json.loads(report_master.read_text())
+    assert data["environment"] == "esp32-s3-mandi-v2"
+    assert data["role"] == "master"
+    assert data["node_id"] == 0
+
+    report_slave = tmp_path / "slave.json"
+    ret = main(["--dry-run", "--role", "slave", "--node-id", "2", "--output", str(report_slave)])
+    assert ret == 0
+    data = json.loads(report_slave.read_text())
+    assert data["environment"] == "operational_node"
+    assert data["role"] == "slave"
+    assert data["node_id"] == 2
+
+
 def test_invalid_environment_rejected():
     with pytest.raises(SystemExit):
         main(["--env", "non_existent_env"])
+

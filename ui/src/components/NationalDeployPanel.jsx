@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import MeshTopologyPanel from './MeshTopologyPanel';
 import {
   getNationalZones,
   getNationalStations,
@@ -396,6 +397,15 @@ export default function NationalDeployPanel() {
           >
             ☁️ National Sovereign Cluster (587 Stations)
           </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={targetEngine === 'mesh'}
+            className={`engine-tab-btn ${targetEngine === 'mesh' ? 'active' : ''}`}
+            onClick={() => setTargetEngine('mesh')}
+          >
+            📡 Catchment Mesh (1 Master + 2 Slaves → N Nodes)
+          </button>
         </div>
 
         {/* Web Serial Physical USB Connect Action */}
@@ -504,8 +514,11 @@ export default function NationalDeployPanel() {
         )}
       </div>
 
-      {/* Active State Forecast & Hazard Dashboard */}
-      <div className="national-content-layout">
+      {/* Conditional: Multi-Node Mesh View vs Single-Station Inference */}
+      {targetEngine === 'mesh' ? (
+        <MeshTopologyPanel />
+      ) : (
+        <div className="national-content-layout">
         {/* Left Column: Live Forecast & Hazards */}
         <div className="national-forecast-stage">
           <div className="stage-card-header">
@@ -775,6 +788,7 @@ export default function NationalDeployPanel() {
           </div>
         </div>
       </div>
+      )}
     </section>
   );
 }
