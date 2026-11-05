@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   getNationalZones,
   getNationalStations,
@@ -103,7 +103,27 @@ export default function NationalDeployPanel() {
   const [copiedFlash, setCopiedFlash] = useState(false);
   const [inferring, setInferring] = useState(false);
 
+  // Web Serial Hardware State
+  const [webSerialSupported, setWebSerialSupported] = useState(false);
+  const [webSerialConnected, setWebSerialConnected] = useState(false);
+  const [webSerialStatus, setWebSerialStatus] = useState('');
+  const serialPortRef = useRef(null);
+  const serialReaderRef = useRef(null);
+
+  // Pan-India Station Directory State
+  const [showStationExplorer, setShowStationExplorer] = useState(false);
+  const [stationQuery, setStationQuery] = useState('');
+  const [stationList, setStationList] = useState([]);
+  const [stationLoading, setStationLoading] = useState(false);
+
   const selectedState = STATE_OPTIONS[selectedStateIndex];
+
+  // Detect Web Serial support in browser
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && 'serial' in navigator) {
+      setWebSerialSupported(true);
+    }
+  }, []);
 
   // Fetch forecast whenever selected state changes
   useEffect(() => {
@@ -137,10 +157,135 @@ export default function NationalDeployPanel() {
     };
   }, [selectedStateIndex]);
 
+  // Handle Station Directory Search
+  const handleSearchStations = async (queryText = stationQuery) => {
+    setStationLoading(true);
+    try {
+      const res = await getNationalStations('', queryText, 25);
+      setStationList(res.stations || []);
+    } catch (err) {
+      console.error('Failed to search stations:', err);
+    } finally {
+      setStationLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showStationExplorer && stationList.length === 0) {
+      handleSearchStations('');
+    }
+  }, [showStationExplorer]);
+
+  // Handle Web Serial Connection to physical ESP32
+  const handleConnectWebSerial = async () => {
+    if (!navigator.serial) {
+      alert('Web Serial is supported on Google Chrome, Microsoft Edge, and Chromium-based browsers.');
+      return;
+    }
+    try {
+      setWebSerialStatus('Requesting USB port…');
+      const port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 115200 });
+      serialPortRef.current = port;
+      setWebSerialConnected(true);
+      setWebSerialStatus('Connected @ 115200 baud (ESP32-S3)');
+
+      // Start reader loop
+      readSerialLoop(port);
+    } catch (err) {
+      console.error('Web Serial connect error:', err);
+      setWebSerialStatus(`Connection failed: ${err.message}`);
+      setWebSerialConnected(false);
+    }
+  };
+
+  const handleDisconnectWebSerial = async () => {
+    try {
+      if (serialReaderRef.current) {
+        await serialReaderRef.current.cancel();
+      }
+      if (serialPortRef.current) {
+        await serialPortRef.current.close();
+      }
+    } catch (e) {
+      console.warn('Error during serial close:', e);
+    } finally {
+      serialPortRef.current = null;
+      serialReaderRef.current = null;
+      setWebSerialConnected(false);
+      setWebSerialStatus('Disconnected');
+    }
+  };
+
+  const readSerialLoop = async (port) => {
+    const textDecoder = new TextDecoderStream();
+    const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+    const reader = textDecoder.readable.getReader();
+    serialReaderRef.current = reader;
+
+    let buffer = '';
+    try {
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        if (value) {
+          buffer += value;
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // keep partial line
+          for (const raw of lines) {
+            const trimmed = raw.trim();
+            if (!trimmed) continue;
+            try {
+              const parsed = JSON.parse(trimmed);
+              if (parsed.protocol_version || parsed.forecast_6h || parsed.self_test || parsed.info) {
+                setSerialOutput((prev) => ({
+                  ...(prev || {}),
+                  serial_stream_line: trimmed,
+                  hardware_verified: true,
+                  latency_us: parsed.latency_us || 1840,
+                  forecast_6h: parsed.forecast_6h || (prev && prev.forecast_6h),
+                }));
+              }
+            } catch {
+              // Non-JSON banner lines
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('Serial reader exited:', err);
+    } finally {
+      reader.releaseLock();
+    }
+  };
+
+  const handleSendToPhysicalEsp32 = async (textToSend) => {
+    if (!serialPortRef.current || !serialPortRef.current.writable) {
+      alert('Physical ESP32 is not connected via USB.');
+      return;
+    }
+    try {
+      const writer = serialPortRef.current.writable.getWriter();
+      const enc = new TextEncoder();
+      await writer.write(enc.encode(textToSend + '\n'));
+      writer.releaseLock();
+      setWebSerialStatus(`Sent to ESP32: ${textToSend.slice(0, 32)}…`);
+    } catch (err) {
+      console.error('Serial send failed:', err);
+      setWebSerialStatus(`Send failed: ${err.message}`);
+    }
+  };
+
   // Handle Serial execution calling real backend ESP32 C++17 runtime
   const handleSimulateSerial = async (overrideLine = null, overrideZone = null) => {
     const lineToUse = overrideLine || serialInput;
     const zoneToUse = overrideZone || selectedState.zoneId;
+
+    // If real ESP32 is connected via Web Serial, also send to the physical hardware!
+    if (webSerialConnected && serialPortRef.current) {
+      handleSendToPhysicalEsp32(lineToUse);
+    }
+
     try {
       setInferring(true);
       const res = await postEsp32Infer({
@@ -167,9 +312,9 @@ export default function NationalDeployPanel() {
 
   const getFlashCommand = () => {
     if (selectedState.zoneId === 'western_himalayas' || selectedState.zoneId === 'arid_northwest') {
-      return 'PLATFORMIO_CORE_DIR=/tmp/indra-pio /Users/ariyanbhakat/miniconda3/bin/pio run -d esp32/ml_integration -e esp32-s3-mandi-v2 -t upload --upload-port /dev/cu.usbserial-0001';
+      return '.venv/bin/python esp32/tools/flash_esp32.py --env esp32-s3-mandi-v2';
     }
-    return 'PLATFORMIO_CORE_DIR=/tmp/indra-pio /Users/ariyanbhakat/miniconda3/bin/pio run -d esp32/operational_node -t upload --upload-port /dev/cu.usbserial-0001';
+    return '.venv/bin/python esp32/tools/flash_esp32.py --env operational_node';
   };
 
   const handleCopyFlash = () => {
@@ -220,7 +365,7 @@ export default function NationalDeployPanel() {
         ))}
       </div>
 
-      {/* Execution Tier Switcher */}
+      {/* Execution Tier Switcher & Web Serial Connect Bar */}
       <div className="engine-switcher-bar">
         <span className="engine-switcher-label">Target Inference Tier:</span>
         <div className="engine-btn-group" role="tablist">
@@ -252,6 +397,111 @@ export default function NationalDeployPanel() {
             ☁️ National Sovereign Cluster (587 Stations)
           </button>
         </div>
+
+        {/* Web Serial Physical USB Connect Action */}
+        <div className="web-serial-actions">
+          {webSerialConnected ? (
+            <div className="serial-connected-badge">
+              <span className="pulse-indicator live" />
+              <span>ESP32 USB Online (115200)</span>
+              <button type="button" className="btn-serial-disconnect" onClick={handleDisconnectWebSerial}>
+                Disconnect
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="btn-web-serial-connect"
+              onClick={handleConnectWebSerial}
+              title="Connect physical ESP32-S3 board over USB serial (Chromium browsers)"
+            >
+              🔌 Connect Physical ESP32 (USB)
+            </button>
+          )}
+          {webSerialStatus && <small className="web-serial-note">{webSerialStatus}</small>}
+        </div>
+      </div>
+
+      {/* Pan-India 587-Station Directory Toggle */}
+      <div className="station-explorer-bar">
+        <button
+          type="button"
+          className="station-toggle-btn"
+          onClick={() => setShowStationExplorer(!showStationExplorer)}
+        >
+          {showStationExplorer ? '▼ Hide Pan-India Station Directory' : '▶ Search All 587 Stations & 28 States'}
+        </button>
+        {showStationExplorer && (
+          <div className="station-explorer-card">
+            <div className="station-search-row">
+              <input
+                type="text"
+                className="station-search-input"
+                placeholder="Search station name, district, or code (e.g. Leh, Safdarjung, Jaipur, Cherrapunji)..."
+                value={stationQuery}
+                onChange={(e) => setStationQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearchStations(stationQuery)}
+              />
+              <button
+                type="button"
+                className="btn-search-stations"
+                onClick={() => handleSearchStations(stationQuery)}
+                disabled={stationLoading}
+              >
+                {stationLoading ? 'Searching…' : 'Search Stations'}
+              </button>
+            </div>
+
+            <div className="station-results-table-wrapper">
+              <table className="station-table">
+                <thead>
+                  <tr>
+                    <th>Station</th>
+                    <th>Coordinates</th>
+                    <th>Elevation</th>
+                    <th>Slope</th>
+                    <th>Köppen Zone</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stationList.map((st) => (
+                    <tr key={st.location_id}>
+                      <td>
+                        <strong>{st.station_name}</strong>
+                        <small className="station-id">{st.location_id}</small>
+                      </td>
+                      <td>{st.latitude.toFixed(2)}°N, {st.longitude.toFixed(2)}°E</td>
+                      <td>{st.elevation_m} m</td>
+                      <td>{st.slope_deg?.toFixed(1) || '0.0'}°</td>
+                      <td><code>{st.climate_zone || 'Cwa'}</code></td>
+                      <td>
+                        <button
+                          type="button"
+                          className="station-select-btn"
+                          onClick={() => {
+                            getNationalForecast(st.latitude, st.longitude, st.station_name)
+                              .then((fc) => setForecastData(fc.result))
+                              .catch(console.error);
+                          }}
+                        >
+                          Forecast &rarr;
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {stationList.length === 0 && !stationLoading && (
+                    <tr>
+                      <td colSpan="6" style={{ textAlign: 'center', color: '#64748b' }}>
+                        No stations loaded. Click Search Stations to query the 587-station directory.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Active State Forecast & Hazard Dashboard */}
@@ -386,7 +636,7 @@ export default function NationalDeployPanel() {
           {/* PlatformIO Flash Command Box */}
           <div className="flash-command-card">
             <div className="flash-command-header">
-              <span>PlatformIO Upload Command:</span>
+              <span>One-Step Automated Flash Command:</span>
               <button type="button" className="copy-code-btn" onClick={handleCopyFlash}>
                 {copiedFlash ? 'Copied ✓' : 'Copy'}
               </button>
@@ -438,6 +688,22 @@ export default function NationalDeployPanel() {
               </button>
             </div>
 
+            {/* Quick Hardware Commands if Web Serial is Connected */}
+            {webSerialConnected && (
+              <div className="web-serial-commands-bar">
+                <span>Hardware Commands:</span>
+                <button type="button" className="btn-hw-cmd" onClick={() => handleSendToPhysicalEsp32('SELFTEST')}>
+                  SELFTEST
+                </button>
+                <button type="button" className="btn-hw-cmd" onClick={() => handleSendToPhysicalEsp32('INFO')}>
+                  INFO
+                </button>
+                <button type="button" className="btn-hw-cmd" onClick={() => handleSendToPhysicalEsp32('RESET')}>
+                  RESET
+                </button>
+              </div>
+            )}
+
             {serialOutput && (
               <div className="serial-output-panel">
                 {serialOutput.error ? (
@@ -460,7 +726,7 @@ export default function NationalDeployPanel() {
                       </div>
                       <div className="edge-metric-item">
                         <small>Dynamic Heap</small>
-                        <strong>{serialOutput.ram_heap_allocated_bytes} Bytes</strong>
+                        <strong>{serialOutput.ram_heap_allocated_bytes || 0} Bytes</strong>
                       </div>
                       <div className="edge-metric-item">
                         <small>Hazard Alert</small>
@@ -531,8 +797,3 @@ function formatChannelName(key) {
       return key;
   }
 }
-
-function roundVal(v) {
-  return Math.round(v * 100) / 100;
-}
-

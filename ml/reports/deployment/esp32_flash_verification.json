@@ -1,0 +1,8 @@
+{
+  "status": "DRY_RUN_PASSED",
+  "environment": "esp32-s3-mandi-v2",
+  "project_dir": "esp32/ml_integration",
+  "port": "/dev/cu.usbserial-auto",
+  "detected_ports": [],
+  "timestamp": "2026-11-05T01:03:13Z"
+}

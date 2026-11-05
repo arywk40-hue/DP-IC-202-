@@ -2767,3 +2767,171 @@ td {
   color: #f87171;
   font-size: 12px;
 }
+
+/* Web Serial Hardware Connection Styles */
+.web-serial-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-web-serial-connect {
+  background: #1e3a2b;
+  color: #a7f3d0;
+  border: 1px solid #059669;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-web-serial-connect:hover {
+  background: #059669;
+  color: #fff;
+}
+.serial-connected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #064e3b;
+  color: #ecfdf5;
+  border: 1px solid #10b981;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.btn-serial-disconnect {
+  background: #7f1d1d;
+  color: #fecaca;
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.web-serial-note {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.web-serial-commands-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.btn-hw-cmd {
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-hw-cmd:hover {
+  background: #475569;
+}
+
+/* Pan-India 587 Station Explorer */
+.station-explorer-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.station-toggle-btn {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+  text-align: left;
+  cursor: pointer;
+}
+.station-toggle-btn:hover {
+  background: var(--green-soft);
+}
+.station-explorer-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.station-search-row {
+  display: flex;
+  gap: 10px;
+}
+.station-search-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.btn-search-stations {
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.station-results-table-wrapper {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.station-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.station-table th,
+.station-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.station-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: var(--text-muted);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.station-id {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.station-select-btn {
+  background: #e2e8f0;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.station-select-btn:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}

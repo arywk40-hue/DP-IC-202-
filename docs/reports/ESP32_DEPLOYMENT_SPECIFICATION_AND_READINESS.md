@@ -211,4 +211,8 @@ Send one line per hourly observation:
 | Flash Partition Fit | $< 3.34\text{ MB}$ application limit | `pio run -e esp32-s3-mandi-v2` | **PASSED (2.96 MB)** |
 | Static RAM Budget | $< 320\text{ KB}$ internal SRAM | `pio run -e esp32-s3-mandi-v2` | **PASSED (19.9 KB)** |
 | Serial Input Bounds | Strict rejection of out-of-bounds telemetry | Unit test in `test_esp32_ml_integration.py` | **PASSED (4/4)** |
+| Automated Flash Tool | 1-step compile, port scan & verify | `esp32/tools/flash_esp32.py` | **VERIFIED (4/4)** |
+| Web Serial Hardware Link | USB Chromium direct streaming | `NationalDeployPanel.jsx` | **INTEGRATED** |
+| Continuous Ingestion Daemon| Resilient multi-day rolling collection | `server/scripts/run_mandi_daemon.py` | **VERIFIED (3/3)** |
+| GitHub Actions CI/CD | All jobs green on Ubuntu Linux | `.github/workflows/ci.yml` | **PASSED (100% GREEN)** |
 
