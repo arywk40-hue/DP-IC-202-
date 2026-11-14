@@ -213,6 +213,10 @@ export default function MeshTopologyPanel() {
 
   return (
     <div className="mesh-topology-container">
+      <div className="reading-note" role="note">
+        Reference pilot layout with design values, not live measurements. Real readings from
+        your boards are in the <strong>Live sensors</strong> tab.
+      </div>
       {/* Mesh Configuration Header */}
       <div className="mesh-header-card">
         <div className="mesh-header-title">

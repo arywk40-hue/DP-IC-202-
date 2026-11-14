@@ -94,3 +94,29 @@ export const getJaipurSimulate = (scenario = 'andhi_dust_storm', draws = 512) =>
   params.set('draws', String(draws));
   return request(`/api/national/jaipur/simulate?${params.toString()}`);
 };
+
+// Physical ESP32 sensors (server/sensors.py). Never mixed with the modeled grid.
+export const getSensorsCombined = (forecast = true) =>
+  request(`/api/sensors/combined?forecast=${forecast ? 'true' : 'false'}`);
+export const getSensorNodes = () => request('/api/sensors');
+export const getSensorHistory = (nodeId, hours = 24, limit = 2000) =>
+  request(`/api/sensors/${encodeURIComponent(nodeId)}/history?hours=${hours}&limit=${limit}`);
+export const getSensorForecast = (nodeId) =>
+  request(`/api/sensors/${encodeURIComponent(nodeId)}/forecast`);
+export const postSensorReadings = (payload, token = '') =>
+  request('/api/ingest', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...(token ? { 'X-Indra-Token': token } : {}) },
+    body: JSON.stringify(payload),
+  });
+export const registerSensor = (nodeId, meta, token = '') =>
+  request(`/api/sensors/${encodeURIComponent(nodeId)}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...(token ? { 'X-Indra-Token': token } : {}) },
+    body: JSON.stringify(meta),
+  });
+export const getSensorHeatmap = (channel = 'temperature_c', { mode = 'radius', radiusKm = null, resolution = 40 } = {}) => {
+  const params = new URLSearchParams({ channel, mode, resolution: String(resolution) });
+  if (radiusKm) params.set('radius_km', String(radiusKm));
+  return request(`/api/sensors/heatmap?${params.toString()}`);
+};
