@@ -28,8 +28,10 @@ ENV_DIRECTORY_MAP = {
     "esp32-s3-mandi-v2-manual": ("esp32/ml_integration", "esp32-s3-mandi-v2-manual"),
     "esp32-s3-ml": ("esp32/ml_integration", "esp32-s3-ml"),
     "esp32-s3-ml-usb": ("esp32/ml_integration", "esp32-s3-ml-usb"),
-    "operational_node": ("esp32/operational_node", "operational_node_base"),
-    "himachal_node": ("esp32/himachal_node", "himachal_node_base"),
+    "operational_node": ("esp32/operational_node", "operational-driver-preparation"),
+    "mesh-master": ("esp32/operational_node", "mesh-master"),
+    "mesh-slave": ("esp32/operational_node", "mesh-slave"),
+    "himachal_node": ("esp32/himachal_node", "himachal-research"),
 }
 
 USB_PORT_PATTERNS = [
@@ -81,7 +83,24 @@ def detect_serial_ports() -> List[Dict[str, str]]:
     return ports
 
 
-def run_platformio_build(project_dir: Path, env_name: str) -> bool:
+def build_environment(node_name: Optional[str]) -> Dict[str, str]:
+    """Process environment for pio; bakes the node id into the firmware when given."""
+    env = dict(os.environ)
+    if node_name:
+        flag = f'-DINDRA_NODE_ID=\\"{node_name}\\"'
+        env["PLATFORMIO_BUILD_FLAGS"] = (env.get("PLATFORMIO_BUILD_FLAGS", "") + " " + flag).strip()
+    return env
+
+
+def node_name_for(args) -> Optional[str]:
+    if getattr(args, "node_name", None):
+        return args.node_name
+    if args.node_id is not None:
+        return f"indra-node-{args.node_id:02d}"
+    return None
+
+
+def run_platformio_build(project_dir: Path, env_name: str, node_name: Optional[str] = None) -> bool:
     """Build the targeted PlatformIO environment."""
     pio_path = shutil.which("pio")
     if not pio_path:
@@ -90,7 +109,7 @@ def run_platformio_build(project_dir: Path, env_name: str) -> bool:
     cmd = [pio_path, "run", "-d", str(project_dir), "-e", env_name]
     print(f"[*] Compiling firmware: {' '.join(cmd)}")
     start = time.monotonic()
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, env=build_environment(node_name))
     elapsed = time.monotonic() - start
 
     if result.returncode != 0:
@@ -101,7 +120,8 @@ def run_platformio_build(project_dir: Path, env_name: str) -> bool:
     return True
 
 
-def run_platformio_upload(project_dir: Path, env_name: str, port: str, baud: int = 115200) -> bool:
+def run_platformio_upload(project_dir: Path, env_name: str, port: str, baud: int = 115200,
+                          node_name: Optional[str] = None) -> bool:
     """Upload compiled firmware to connected ESP32 hardware."""
     pio_path = shutil.which("pio")
     if not pio_path:
@@ -116,7 +136,7 @@ def run_platformio_upload(project_dir: Path, env_name: str, port: str, baud: int
 
     print(f"[*] Uploading firmware to {port}: {' '.join(cmd)}")
     start = time.monotonic()
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, env=build_environment(node_name))
     elapsed = time.monotonic() - start
 
     if result.returncode != 0:
@@ -159,9 +179,19 @@ def verify_board_handshake(port: str, timeout_seconds: float = 6.0) -> Dict[str,
                 if not raw_line:
                     continue
                 report["messages"].append(raw_line)
+                if raw_line.startswith("INDRA node ") or raw_line.startswith("status node="):
+                    report["info"] = {"firmware": "operational_node", "banner": raw_line}
+                    report["self_test"] = "NOT_APPLICABLE"
+                    report["verified"] = True
+                    break
                 try:
                     data = json.loads(raw_line)
                     if isinstance(data, dict):
+                        if data.get("schema_version") == "indra_weather_records_v1":
+                            report["info"] = {"firmware": "operational_node", "sample": data["observations"][0]}
+                            report["self_test"] = "NOT_APPLICABLE"
+                            report["verified"] = True
+                            break
                         if "self_test" in data:
                             report["self_test"] = data["self_test"]
                         if data.get("info") is True:
@@ -174,7 +204,7 @@ def verify_board_handshake(port: str, timeout_seconds: float = 6.0) -> Dict[str,
                     break
 
             # If info not received yet, query INFO explicitly
-            if not report["info"]:
+            if not report["info"] and not report["verified"]:
                 ser.write(b"INFO\n")
                 ser.flush()
                 time.sleep(0.5)
@@ -216,13 +246,19 @@ def main(argv: Optional[List[str]] = None) -> int:
         "--role",
         choices=["master", "slave", "mesh"],
         default=None,
-        help="High-level node role: 'master' (ML Forecaster & Gateway), 'slave' (Physical Sensor Unit), or 'mesh' (P2P Consensus Node). Automatically selects target environment.",
+        help="High-level node role: 'master' (sensor gateway receiving slaves over ESP-NOW), 'slave' (sensor unit sending to the master), or 'mesh' (himachal research node). Automatically selects target environment.",
     )
     parser.add_argument(
         "--node-id",
         type=int,
         default=None,
         help="Assigned Node ID in the mesh (e.g. 0 for Master, 1 or 2 for Slaves, N for generic peer).",
+    )
+    parser.add_argument(
+        "--node-name",
+        default=None,
+        help="Node id string baked into sensor firmware (default: indra-node-NN from --node-id). "
+             "This is the node_id the server shows.",
     )
     parser.add_argument(
         "--env",
@@ -264,9 +300,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     # Resolve environment from role if not explicitly provided
     if not args.env:
         if args.role == "master":
-            args.env = "esp32-s3-mandi-v2"
+            args.env = "mesh-master"      # sensors + ESP-NOW receiver; use --env esp32-s3-mandi-v2 for the on-device forecaster
         elif args.role == "slave":
-            args.env = "operational_node"
+            args.env = "mesh-slave"
         elif args.role == "mesh":
             args.env = "himachal_node"
         else:
@@ -277,6 +313,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     print("=" * 68)
     if args.role:
         print(f"Node Role:           {args.role.upper()} (Node ID: {args.node_id if args.node_id is not None else 'auto'})")
+    if node_name_for(args):
+        print(f"Firmware node_id:    {node_name_for(args)}")
     print(f"Target Environment:  {args.env}")
 
     sub_dir, env_name = ENV_DIRECTORY_MAP[args.env]
@@ -326,7 +364,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
 
     # Step 2: Compile firmware
-    if not run_platformio_build(project_dir, env_name):
+    if not run_platformio_build(project_dir, env_name, node_name_for(args)):
         return 2
 
     if args.build_only:
@@ -334,7 +372,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
 
     # Step 3: Upload firmware
-    if not run_platformio_upload(project_dir, env_name, port, baud=args.baud):
+    if not run_platformio_upload(project_dir, env_name, port, baud=args.baud, node_name=node_name_for(args)):
         return 3
 
     # Step 4: Verification Handshake

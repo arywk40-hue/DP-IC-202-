@@ -171,6 +171,84 @@ Open **http://127.0.0.1:5173** (API calls are automatically proxied to port 8080
 
 ---
 
+## Live Sensor Integration (ESP32 → Server → Dashboard)
+
+Physical readings take their own path, separate from the Open-Meteo model grid:
+
+```
+ESP32 (esp32/operational_node) ──WiFi POST──┐
+ESP32 ──USB── serial_bridge.py ─────────────┼──► POST /api/ingest ──► ml/data/sensors/sensors.sqlite
+ESP32 ──USB── browser "Connect board" ──────┘                              │
+                                     GET /api/sensors/combined ◄───────────┘ ──► "Live sensors" tab
+```
+
+**1. Start the server** (`--host 0.0.0.0` only if boards upload over WiFi):
+```bash
+.venv/bin/pip install -r server/requirements.txt
+.venv/bin/python -m server.dashboard --port 8080 --host 0.0.0.0 --ingest-token CHANGE_ME
+```
+
+**2. Configure each board** — copy `esp32/operational_node/include/device_config.example.h` to
+`device_config.h` (git-ignored), set `physical_mode=true`, your real pins (`-1` for any sensor not fitted),
+the site elevation, and fixed lat/lon if there is no GPS. For WiFi, also set SSID, password,
+`indra_server_url()` (your computer's LAN IP, e.g. `http://192.168.1.20:8080`) and the token.
+
+**3. Flash** — the node id is baked in from `--node-id` (or `--node-name`):
+```bash
+.venv/bin/python esp32/tools/flash_esp32.py --role slave --node-id 1 --node-name ridge-01
+```
+
+**4. Get readings in** — WiFi boards post on their own. For USB boards either click
+**Live sensors → Connect board** in Chrome/Edge, or run:
+```bash
+.venv/bin/python server/scripts/serial_bridge.py --token CHANGE_ME                 # all plugged-in boards
+.venv/bin/python server/scripts/serial_bridge.py --port /dev/cu.usbmodem1101 --node-id lab-01 \
+    --lat 28.61 --lon 77.21 --elevation 216 --token CHANGE_ME
+```
+
+**Test without hardware:**
+```bash
+curl -X POST http://127.0.0.1:8080/api/ingest -H 'Content-Type: application/json' -H 'X-Indra-Token: CHANGE_ME' \
+  -d '{"node_id":"test-01","temperature_c":21.4,"relative_humidity_pct":60,"pressure_hpa":1008}'
+```
+
+| Endpoint | Purpose |
+| :--- | :--- |
+| `POST /api/ingest` | Firmware JSON, flat reading, list of readings, or `indra_hmac_v1` signed envelope |
+| `GET /api/sensors/combined` | Every node's latest reading + network mean/min/max/spread, lapse rate (nodes within 50 km), +6 h forecast per node |
+| `GET /api/sensors` | Node list with ONLINE (<2 min) / STALE (<15 min) / OFFLINE status |
+| `GET /api/sensors/{id}/history?hours=24` · `/hourly` · `/forecast` · `/latest` | Per-node data |
+| `POST /api/sensors/{id}/register` | Set name / lat / lon / elevation for a node without GPS |
+
+The +6 h forecast runs on hourly means and needs 25 consecutive complete hours; until then it reports
+`WARMING_UP_PERSISTENCE`. Out-of-range values are stored as null, never clamped. Use `--cors-origins
+http://localhost:3000` if a frontend on another origin calls the API. Signed packets: set
+`INDRA_INGEST_HMAC_KEY` (hex, ≥32 bytes).
+
+### Master + slaves without WiFi (ESP-NOW)
+
+```
+Slave 1 ─┐  ESP-NOW (128-byte HMAC-signed frame, every 10 s)
+Slave 2 ─┼──────────► Master ──USB──► serial_bridge.py ──► POST /api/ingest
+```
+
+1. **Flash the master first** and note the MAC it prints (`INDRA node master-00 role=master mac=AA:BB:...`):
+   `.venv/bin/python esp32/tools/flash_esp32.py --role master --node-id 0 --node-name master-00`
+2. In `device_config.h` set on **all three** boards: the same `indra_espnow_channel()` and the same
+   `indra_mesh_key_hex()` (`python3 -c "import secrets; print(secrets.token_hex(32))"`). On the slaves also
+   set `indra_master_mac()` to the master's MAC, plus each slave's `fixed_latitude/longitude` and elevation.
+3. Flash the slaves:
+   `flash_esp32.py --role slave --node-id 1 --node-name ridge-01` and `--node-id 2 --node-name basin-02`.
+4. Plug **only the master** into the laptop and run
+   `.venv/bin/python server/scripts/serial_bridge.py --token CHANGE_ME` (no `--node-id`).
+
+The master prints its own reading and every verified slave reading as JSON; the bridge forwards each under its
+own node id (`transport: espnow`, with RSSI). Duplicates and replays are dropped by sequence number; frames with
+a wrong key are rejected and counted (`rx_bad` in the master's status line, alongside per-slave `lost` counts).
+If the master later joins WiFi, set every board's channel to the router's channel.
+
+---
+
 ## Physical Hardware Deployment & Flashing Guide
 
 INDRA includes an automated flashing and diagnostic tool ([`esp32/tools/flash_esp32.py`](esp32/tools/flash_esp32.py)) that automatically detects serial ports, builds the correct PlatformIO environment, uploads the firmware, and validates post-flash health over UART:

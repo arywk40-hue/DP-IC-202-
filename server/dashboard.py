@@ -14,7 +14,10 @@ import threading
 import time
 from typing import Optional
 
+import os
+
 from fastapi import FastAPI, HTTPException, Header
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import pandas as pd
 from pydantic import BaseModel
@@ -42,6 +45,7 @@ from ml.himachal.parameter_maps import parameter_maps, geojson
 from ml.himachal.weather_categories import WeatherCategories
 from ml.himachal.hazard_scenarios import HazardScenarios
 from ml.india_mandi.live import collect as collect_mandi_api
+from server.sensors import SensorStore, combined_view, register_routes as register_sensor_routes
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ACTIVE_MODEL
@@ -182,13 +186,23 @@ class Store:
             return [json.loads(r[0]) for r in db.execute("SELECT payload FROM nodes ORDER BY id LIMIT 201")]
 
 
-def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_enabled=False, mandi_data_dir=None, mandi_refresh_seconds=900):
+def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_enabled=False, mandi_data_dir=None, mandi_refresh_seconds=900,
+               sensor_db_path=None, cors_origins=None, ingest_token=None):
     store = Store(db_path)
     started = time.monotonic()
     app = FastAPI(title="INDRA local dashboard adapter", version=API_VERSION)
     app.state.store = store
     engine = load_forecaster(model_dir)
     app.state.forecaster = engine
+
+    # Physical ESP32 sensors: separate store, never mixed with the modeled grid.
+    sensor_store = SensorStore(sensor_db_path or Path(db_path).with_name("sensors.sqlite"))
+    register_sensor_routes(app, sensor_store, engine, ingest_token=ingest_token)
+
+    origins = [o.strip() for o in (cors_origins or os.environ.get("INDRA_CORS_ORIGINS", "")).split(",") if o.strip()]
+    if origins:
+        app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True,
+                           allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["*"])
     app.state.mandi_feed = dict(enabled=False, connected=False, provider="Open-Meteo", coordinates=[31.71, 76.93], last_success_utc=None, latest_valid_utc=None, error=None)
 
     target_data_dir = Path(mandi_data_dir or (ROOT / "ml/data/himachal/mandi_current_api_v1"))
@@ -296,7 +310,8 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
             forecastModel=engine.profile['id'], forecastArchitecture=engine.profile.get('family','NEURAL_XGB_RIDGE_HISTORY_ENSEMBLE'),
             forecastModelsInUse=sorted({n['forecastModel']['id'] for n in items}), forecastHistoryHours=24,
             forecastFallback='PERSISTENCE_WITH_EXPLICIT_WARMUP_STATUS',
-            empty=not items, staleNodes=sum(n["stale"] for n in items))
+            empty=not items, staleNodes=sum(n["stale"] for n in items),
+            physicalSensors={s: sum(n["status"] == s for n in sensor_store.nodes()) for s in ("ONLINE", "STALE", "OFFLINE", "NO_DATA")})
 
     @app.get("/api/provenance")
     def provenance():
@@ -630,7 +645,11 @@ def create_app(db_path, *, ui_dir=None, clock=None, model_dir=MODEL, demo_auth_e
 
     @app.get("/api/mesh/topology")
     def mesh_topology():
+        live = combined_view(sensor_store, include_forecast=False)
         return {
+            "data_source": "STATIC_REFERENCE_LAYOUT",
+            "note": "Pilot design values below are not measurements. Real node data is in 'live' and at /api/sensors/combined.",
+            "live": {k: live[k] for k in ("node_count", "online", "stale", "offline", "network")},
             "status": "OPERATIONAL",
             "pilot_scale": {
                 "master_nodes": 1,
@@ -804,12 +823,17 @@ def main():
     parser.add_argument("--ui", type=Path)
     parser.add_argument('--forecast-model',type=Path,default=MODEL,help='Versioned gateway model; v1 remains available explicitly')
     parser.add_argument('--enable-demo-auth', action='store_true', help='Enable a fixed local demo identity; never use for hosted deployments')
+    parser.add_argument("--sensor-db", type=Path, default=ROOT/"ml/data/sensors/sensors.sqlite", help="SQLite store for physical ESP32 readings")
+    parser.add_argument("--cors-origins", default=None, help="Comma-separated origins allowed to call the API from another host, e.g. http://localhost:3000")
+    parser.add_argument("--ingest-token", default=None, help="Shared secret nodes must send as X-Indra-Token (or set INDRA_INGEST_TOKEN)")
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("Use a local unprivileged port")
     if args.refresh_seconds < 60:
         parser.error("Use a refresh interval of at least 60 seconds")
-    app = create_app(args.db, ui_dir=args.ui, model_dir=args.forecast_model,mandi_data_dir=args.mandi_data_dir,mandi_refresh_seconds=args.refresh_seconds)
+    app = create_app(args.db, ui_dir=args.ui, model_dir=args.forecast_model,mandi_data_dir=args.mandi_data_dir,mandi_refresh_seconds=args.refresh_seconds,
+                     demo_auth_enabled=args.enable_demo_auth, sensor_db_path=args.sensor_db, cors_origins=args.cors_origins,
+                     ingest_token=args.ingest_token)
     try:
         app.state.mandi_poller.refresh()
     except Exception as exc:

@@ -8,6 +8,7 @@ import ModelLab from "./components/ModelLab";
 import ParameterMaps from "./components/ParameterMaps";
 import ApiExplorer from "./components/ApiExplorer";
 import NationalDeployPanel from "./components/NationalDeployPanel";
+import LiveSensorsPanel from "./components/LiveSensorsPanel";
 import AuthModal from "./components/AuthModal";
 import {
   getNodes,
@@ -191,6 +192,8 @@ export default function App() {
             <span className="eyebrow">
               {view === "apis"
                 ? "Developer Suite"
+                : view === "sensors"
+                  ? "Your ESP32 boards"
                 : view === "national"
                   ? "National Operations"
                   : "Your weather network"}
@@ -198,7 +201,9 @@ export default function App() {
             <h1>
               {view === "observations"
                 ? "Across your locations"
-                : view === "parameters"
+                : view === "sensors"
+                  ? "Live sensor network"
+                  : view === "parameters"
                   ? "Explore the area"
                   : view === "national"
                     ? "Pan-India Multi-Zone Operations & ESP32"
@@ -207,11 +212,14 @@ export default function App() {
                       : "Data & system"}
             </h1>
           </div>
+          {view !== "sensors" && (
           <div className="workspace-meta">
             <span className="source-chip">{sourceName(source)}</span>
             <span>{latest ? readingTime(latest) : "Waiting for readings"}</span>
           </div>
+          )}
         </div>
+        {view !== "sensors" && (
         <div className="data-context" role="note">
           {!status
             ? "Connecting to the Mandi weather and air-quality APIs…"
@@ -221,6 +229,7 @@ export default function App() {
                 ? `Mandi API is offline · showing its last saved model-grid data from ${readingTime(status.mandiApi.last_success_utc)}.`
                 : `Mandi API is not connected. Waiting for Open-Meteo data${status.mandiApi?.error ? ` (${status.mandiApi.error})` : ""}.`}
         </div>
+        )}
         {error && (
           <div className="version-banner" role="alert">
             Unable to refresh. Your last saved readings may still be available.
@@ -264,6 +273,7 @@ export default function App() {
             onSelect={selectParameter}
           />
         )}
+        {view === "sensors" && <LiveSensorsPanel />}
         {view === "apis" && <ApiExplorer />}
         {view === "national" && <NationalDeployPanel />}
         {view === "system" && (

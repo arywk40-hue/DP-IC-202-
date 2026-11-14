@@ -47,6 +47,7 @@ export default function StatusHeader({
         <nav className="primary-nav" aria-label="Main navigation">
           {[
             ["observations", "Observations"],
+            ["sensors", "Live sensors"],
             ["parameters", "Parameters"],
             ["national", "Pan-India & ESP32"],
             ["system", "System"],
