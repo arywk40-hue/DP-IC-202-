@@ -127,7 +127,7 @@ def test_sensor_heatmap_transect_area_and_sync_window(client):
                                   ("basin-02", 31.698, 76.918, 710, 18.8)):
         client.post("/api/ingest", json={"node_id": node, "temperature_c": t, "pressure_hpa": 900, "lat": lat,
                                          "lon": lon, "elevation_m": el, **base})
-    line = client.get("/api/sensors/heatmap?channel=temperature_c").json()
+    line = client.get("/api/sensors/heatmap?channel=temperature_c&mode=hull").json()
     assert line["status"] == "LINE_ESTIMATE" and line["features"]
     assert line["minimum"] == pytest.approx(14.8) and line["maximum"] == pytest.approx(18.8)
     assert "elevation" in line["elevation_note"]
