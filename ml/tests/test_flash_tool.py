@@ -39,7 +39,7 @@ def test_flash_tool_role_resolution(tmp_path):
     ret = main(["--dry-run", "--role", "master", "--node-id", "0", "--output", str(report_master)])
     assert ret == 0
     data = json.loads(report_master.read_text())
-    assert data["environment"] == "esp32-s3-mandi-v2"
+    assert data["environment"] == "mesh-master"
     assert data["role"] == "master"
     assert data["node_id"] == 0
 
@@ -47,7 +47,7 @@ def test_flash_tool_role_resolution(tmp_path):
     ret = main(["--dry-run", "--role", "slave", "--node-id", "2", "--output", str(report_slave)])
     assert ret == 0
     data = json.loads(report_slave.read_text())
-    assert data["environment"] == "operational_node"
+    assert data["environment"] == "mesh-slave"
     assert data["role"] == "slave"
     assert data["node_id"] == 2
 
@@ -56,3 +56,22 @@ def test_invalid_environment_rejected():
     with pytest.raises(SystemExit):
         main(["--env", "non_existent_env"])
 
+
+
+def test_every_mapped_environment_is_defined_in_its_platformio_ini():
+    """Regression: slave/mesh roles used to point at env names that did not exist."""
+    import configparser
+    root = Path(__file__).resolve().parents[2]
+    for env_name, (sub_dir, target_env) in ENV_DIRECTORY_MAP.items():
+        ini = configparser.ConfigParser(interpolation=None)
+        ini.read(root / sub_dir / "platformio.ini")
+        assert f"env:{target_env}" in ini.sections(), f"{env_name}: env:{target_env} missing in {sub_dir}"
+
+
+def test_node_id_is_baked_into_build_flags():
+    from types import SimpleNamespace
+    from esp32.tools.flash_esp32 import build_environment, node_name_for
+    assert node_name_for(SimpleNamespace(node_id=2, node_name=None)) == "indra-node-02"
+    assert node_name_for(SimpleNamespace(node_id=2, node_name="ridge-01")) == "ridge-01"
+    env = build_environment("ridge-01")
+    assert '-DINDRA_NODE_ID=\\"ridge-01\\"' in env["PLATFORMIO_BUILD_FLAGS"]

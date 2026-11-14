@@ -46,7 +46,7 @@ The audit trail was generated from real Mandi environmental observation telemetr
 
 Using the Ed25519 elliptic curve algorithm, the batch manifest was cryptographically signed:
 - **Signer Public Key:**  
-  `a67d7ec4c2ee2ec92d7129cae77a2abd8dba6ed8b8d506923a8ec452f016c7a6`
+  `bf67eaa8c01891833085fb7fea684a0aa70595a3053038287db904a0257c3397`
 - **Manifest Signature:**  
   Verified against external pinned public key; ensures that even if a local database administrator mutates past history, the modified manifest will fail signature verification.
 
@@ -108,12 +108,12 @@ To reproduce and verify the blockchain provenance pipeline tomorrow:
 # 2. Verify proof content and signature against public key
 .venv/bin/python contracts/scripts/provenance.py verify \
   --proof contracts/reports/provenance_real/batch_proof.json \
-  --trusted-key a67d7ec4c2ee2ec92d7129cae77a2abd8dba6ed8b8d506923a8ec452f016c7a6
+  --trusted-key bf67eaa8c01891833085fb7fea684a0aa70595a3053038287db904a0257c3397
 
 # 3. Execute local EVM contract anchor verification
 .venv/bin/python contracts/scripts/provenance.py evm-test \
   --proof contracts/reports/provenance_real/batch_proof.json \
-  --trusted-key a67d7ec4c2ee2ec92d7129cae77a2abd8dba6ed8b8d506923a8ec452f016c7a6
+  --trusted-key bf67eaa8c01891833085fb7fea684a0aa70595a3053038287db904a0257c3397
 ```
 
 ### C. Live Dashboard Verification:

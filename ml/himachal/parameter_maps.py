@@ -28,8 +28,12 @@ def idw(xy, values, query):
     return estimates
 
 
-def parameter_maps(nodes, resolution=24):
-    """One exact observation time/source/reference; no ffill or extrapolation."""
+def parameter_maps(nodes, resolution=24, collinear_ratio=0.0):
+    """One exact observation time/source/reference; no ffill or extrapolation.
+
+    collinear_ratio: treat locations as a line (transect) when the second principal
+    spread is below this fraction of the first. 0 keeps the strict rank test only.
+    """
     if type(resolution) is not int or not 8 <= resolution <= 40:
         raise ValueError("Resolution must be an integer from 8 to 40")
     result = {
@@ -117,6 +121,9 @@ def parameter_maps(nodes, resolution=24):
     ]
     rank = np.linalg.matrix_rank(xy - xy[0], tol=1e-3)
     line = rank < 2
+    if not line and collinear_ratio > 0:
+        spread = np.linalg.svd(xy - xy.mean(0), compute_uv=False)
+        line = spread[1] < collinear_ratio * spread[0]
     if line:
         _, _, v = np.linalg.svd(xy - xy[0])
         axis = v[0]

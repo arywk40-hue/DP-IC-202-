@@ -8,6 +8,7 @@ export function sourceName(source) {
   return (
     {
       modeled_grid: "Mandi modeled data",
+      physical_sensor: "Your ESP32 sensor",
     }[source] || "Source unavailable"
   );
 }

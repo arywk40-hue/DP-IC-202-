@@ -22,6 +22,7 @@ export default function MapView({
   parameter,
   onParameterChange,
   onToggleHeatmap,
+  areaBounds = null, // optional [south, west, north, east] to frame an area estimate
 }) {
   const mapRef = useRef(null);
   const containerRef = useRef(null);
@@ -115,14 +116,20 @@ export default function MapView({
     );
     if (!validNodes.length) return;
 
-    const boundsKey = validNodes
-      .map((n) => `${n.id}:${n.lat.toFixed(5)},${n.lng.toFixed(5)}`)
-      .sort()
-      .join("|");
+    const boundsKey =
+      validNodes
+        .map((n) => `${n.id}:${n.lat.toFixed(5)},${n.lng.toFixed(5)}`)
+        .sort()
+        .join("|") + (areaBounds ? `|area:${areaBounds.map((v) => v.toFixed(3)).join(",")}` : "");
 
     if (boundsKey !== lastBoundsKeyRef.current) {
       lastBoundsKeyRef.current = boundsKey;
-      if (validNodes.length === 1) {
+      if (areaBounds) {
+        map.fitBounds(
+          [[areaBounds[0], areaBounds[1]], [areaBounds[2], areaBounds[3]]],
+          { maxZoom: 16, animate: false, padding: [12, 12] },
+        );
+      } else if (validNodes.length === 1) {
         map.setView([validNodes[0].lat, validNodes[0].lng], 15, {
           animate: false,
         });
@@ -131,7 +138,7 @@ export default function MapView({
         map.fitBounds(bounds.pad(0.35), { maxZoom: 16, animate: false });
       }
     }
-  }, [nodes]);
+  }, [nodes, areaBounds]);
 
   // Smoothly pan to the selected node when clicked in the list or map
   useEffect(() => {
@@ -215,11 +222,16 @@ export default function MapView({
         color: parameterColor(f.properties.intensity),
         fillColor: parameterColor(f.properties.intensity),
         weight: f.geometry.type === "LineString" ? 8 : 0,
-        fillOpacity: 0.62,
+        // Area estimates fade with distance from the nearest node (confidence 1 -> 0).
+        fillOpacity:
+          f.properties.confidence == null ? 0.62 : 0.12 + 0.6 * f.properties.confidence,
+        opacity: f.properties.confidence == null ? 1 : 0.2 + 0.8 * f.properties.confidence,
       }),
       onEachFeature: (f, layer) =>
         layer.bindTooltip(
-          `${PARAMETERS[f.properties.channel]?.[0]}: ${f.properties.value.toFixed(2)} ${f.properties.unit} (interpolated)`,
+          `${PARAMETERS[f.properties.channel]?.[0]}: ${f.properties.value.toFixed(2)} ${f.properties.unit} (estimated` +
+            (f.properties.distance_km != null ? `, ${f.properties.distance_km} km from nearest node` : "") +
+            ")",
         ),
     }).addTo(map);
     Object.values(markersRef.current).forEach((marker) =>

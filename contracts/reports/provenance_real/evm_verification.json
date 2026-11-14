@@ -9,7 +9,7 @@
   "unauthorized_rejected": true,
   "independently_witnessed": false,
   "signature_verified": true,
-  "public_key": "a67d7ec4c2ee2ec92d7129cae77a2abd8dba6ed8b8d506923a8ec452f016c7a6",
+  "public_key": "bf67eaa8c01891833085fb7fea684a0aa70595a3053038287db904a0257c3397",
   "batch_id": "a18e4bad4c9354fd2a71ca6ab930f2b50dc81a7ade1a54e04ca1d56b5e60af26",
   "merkle_root": "6b06dfb866c46f653ae6dee762e18ffcb5f2ac0b5e387eb4fc9d106e5554fc30",
   "event_count": 7,
