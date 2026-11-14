@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   model:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
         run: python -m ml.deployment.verify_exports --catalog ml/configs/model_catalog.json --output ml/reports/deployment/committed_export_verification.json --offline
 
   dashboard:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
         working-directory: ui
 
   esp32-model:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
