@@ -2,7 +2,7 @@
 
 **INVENTION TITLE:** SYSTEMS AND METHODS FOR MULTI-CHANNEL MICRO-METEOROLOGICAL EDGE FORECASTING, LATENT HYDROLOGICAL HAZARD SIMULATION, AND CRYPTOGRAPHIC PROVENANCE ANCHORING  
 **INVENTOR(S):** Ariyan Bhakat, et al.  
-**DATE OF COMPILATION:** 2026-11-11 19:20:03 UTC  
+**DATE OF COMPILATION:** 2026-11-14 19:27:56 UTC  
 **REPOSITORY COMMIT CONTEXT:** `INDRA / Dp-indra-six-sensor`  
 
 ---
@@ -912,12 +912,12 @@ The following source code modules establish the physical reduction to practice o
 | `ml/six_sensor_forecast/features.py` | 5,624 | `ccb1ac829f443f43b3b092be88081dd8efa29d9572d5b938e4c3a11c4959a6ac` |
 | `ml/india_mandi/tabular_v2.py` | 18,847 | `bfde54988abebd46c1f972a9ce396192f5430740b2657367b9e219c72069224e` |
 | `ml/himachal/hazard_scenarios.py` | 12,336 | `0260052553321f7a2933f635882a16339c6b023e1312e5ad9881709c23499c17` |
-| `ml/himachal/parameter_maps.py` | 10,548 | `b823e1df0f3c8b00a7a881d0576e5e03580415a636a8112a1cd2cedbb7c89a42` |
+| `ml/himachal/parameter_maps.py` | 10,904 | `488eb6f05ef3d5e67f68ae0d9d7191225a29edc7537f935d37216a4deda9973e` |
 | `esp32/ml_integration/src/mandi_v2_main.cpp` | 7,499 | `2d6f2197425d09707717363ba65dda3481a7edeaa865d78a9b22d596c62bc10c` |
 | `esp32/ml_integration/include/indra_mandi_v2_runtime.h` | 15,799 | `8335094c24da3ab229aeafc96d2dce5ab3025859d85b9e449f98d89d9f5c26a0` |
 | `contracts/IndraAnchor.sol` | 652 | `6d210b76a58f52a56502dccba3f69af68d87358e3a344684188f842c77ddf372` |
 | `contracts/provenance.py` | 2,990 | `310e2c79141010fa9d558e1791e712e4447d2478813330841f66103c2a5bad5e` |
 | `server/auth.py` | 6,954 | `c9863b4c832b68a95d3001b31de827983e13974cad23b778ba23b788a0a8c731` |
-| `server/dashboard.py` | 40,723 | `8dfe7edec76d506983662ed2fa348daf3989173b0f6820991bc5eee13b1f844d` |
+| `server/dashboard.py` | 42,633 | `3649301ffc3e94fb1e2e41e01e40a3eb50c89ced3b40910e08c5d122ec5ec24b` |
 | `server/scripts/deploy_production.py` | 4,819 | `22c8f412e501112891a333fd0b81cd61a33006f387edc0e6a86d894d8042cfa7` |
-| `ui/src/App.jsx` | 10,723 | `6d7ce54d3920fff362f99b2357995f3399f6f35088a36ae387bf1b0218f5ee70` |
+| `ui/src/App.jsx` | 11,088 | `26cb50f9e6f53c31f85b4f925b667f4e696c51ef1e6cb1ad2dc2915862959c1c` |
