@@ -17,10 +17,10 @@ export default function StatusHeader({
       <header className="status-header">
         <a
           className="brand"
-          href="#observations"
+          href="#master"
           onClick={(e) => {
             e.preventDefault();
-            onViewChange("observations");
+            onViewChange("master");
           }}
           aria-label="INDRA home"
         >
@@ -41,11 +41,12 @@ export default function StatusHeader({
           </svg>
           <span>
             <strong>INDRA</strong>
-            <small>Local weather</small>
+            <small>Local weather & mesh</small>
           </span>
         </a>
         <nav className="primary-nav" aria-label="Main navigation">
           {[
+            ["master", "Master Network"],
             ["observations", "Observations"],
             ["sensors", "Live sensors"],
             ["parameters", "Parameters"],

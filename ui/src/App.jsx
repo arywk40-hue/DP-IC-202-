@@ -9,6 +9,7 @@ import ParameterMaps from "./components/ParameterMaps";
 import ApiExplorer from "./components/ApiExplorer";
 import NationalDeployPanel from "./components/NationalDeployPanel";
 import LiveSensorsPanel from "./components/LiveSensorsPanel";
+import MasterNetworkDashboard from "./components/MasterNetworkDashboard";
 import AuthModal from "./components/AuthModal";
 import {
   getNodes,
@@ -27,7 +28,22 @@ const NODES_POLL_MS = 8000;
 const HEATMAP_POLL_MS = 60000;
 
 export default function App() {
-  const [view, setView] = useState("observations");
+  const [view, setView] = useState(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) return hash;
+    }
+    return "master";
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) setView(hash);
+    };
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
   const [nodes, setNodes] = useState([]);
   const telemetryIdentity = useRef(null);
   const [status, setStatus] = useState(null);
@@ -187,7 +203,11 @@ export default function App() {
         onOpenAuth={() => setAuthModalOpen(true)}
       />
       <main className="main-content">
-        <div className="workspace-heading">
+        {view === "master" ? (
+          <MasterNetworkDashboard onBackToObs={() => setView("observations")} />
+        ) : (
+          <>
+            <div className="workspace-heading">
           <div>
             <span className="eyebrow">
               {view === "apis"
@@ -311,6 +331,8 @@ export default function App() {
             Data & model information <span aria-hidden="true">↗</span>
           </button>
         </footer>
+          </>
+        )}
       </main>
       <AuthModal
         isOpen={authModalOpen}

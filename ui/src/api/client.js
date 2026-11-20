@@ -98,6 +98,7 @@ export const getJaipurSimulate = (scenario = 'andhi_dust_storm', draws = 512) =>
 // Physical ESP32 sensors (server/sensors.py). Never mixed with the modeled grid.
 export const getSensorsCombined = (forecast = true) =>
   request(`/api/sensors/combined?forecast=${forecast ? 'true' : 'false'}`);
+export const getCombinedView = getSensorsCombined;
 export const getSensorNodes = () => request('/api/sensors');
 export const getSensorHistory = (nodeId, hours = 24, limit = 2000) =>
   request(`/api/sensors/${encodeURIComponent(nodeId)}/history?hours=${hours}&limit=${limit}`);
@@ -120,3 +121,13 @@ export const getSensorHeatmap = (channel = 'temperature_c', { mode = 'radius', r
   if (radiusKm) params.set('radius_km', String(radiusKm));
   return request(`/api/sensors/heatmap?${params.toString()}`);
 };
+
+// ---- Master Node Network Management (Codex Spec §13) ----
+export const getMasterStatus = () => request('/api/master/status');
+export const startDiscovery = () => request('/api/discovery/start', { method: 'POST' });
+export const fetchNodeData = (nodeId) => request(`/api/nodes/${encodeURIComponent(nodeId)}/fetch`, { method: 'POST' });
+export const deleteNode = (nodeId) => request(`/api/nodes/${encodeURIComponent(nodeId)}`, { method: 'DELETE' });
+export const deleteAllNodes = () => request('/api/nodes', { method: 'DELETE' });
+export const getNodeSensors = (nodeId) => request(`/api/nodes/${encodeURIComponent(nodeId)}/sensors`);
+export const getNodeLocation = (nodeId) => request(`/api/nodes/${encodeURIComponent(nodeId)}/location`);
+export const getNetworkTopology = () => request('/api/network/topology');

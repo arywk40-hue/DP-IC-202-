@@ -62,6 +62,7 @@ esp32/ml_integration/include/build_identity.h
 /ml/data/noaa_ghcnh/raw/
 /ml/data/terrain/raw/
 /ml/data/backgrounds/raw/
+/ml/data/himachal/mandi_current_api_v1/raw/
 /ml/reports/nwic_pipeline/source_evidence/*.response
 
 # Reproducible local stores and bounded terrain caches
